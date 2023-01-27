@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     /// work correctly together in addition to DiagnosticScope logic inside Azure.Messaging.EventHubs
     /// </summary>
     [NonParallelizable]
-    [LiveOnly]
+    [LiveOnly(true)]
     public class EventHubApplicationInsightsTests : WebJobsEventHubTestBase
     {
         private static EventWaitHandle _eventWait;
@@ -47,6 +47,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             EventHubTestMultipleDispatchJobs.LinksCount.Clear();
             EventHubTestMultipleDispatchJobs.MessagesCount = 0;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _eventWait.Dispose();
+            _channel.Dispose();
         }
 
         private readonly JsonSerializerSettings jsonSettingThrowOnError = new JsonSerializerSettings
@@ -105,13 +112,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(sendRequestOperationId, messageDependency.Context.Operation.Id);
             }
 
-            Assert.True(processRequest.Properties.TryGetValue("_MS.links", out var linksStr));
-            var links = JsonConvert.DeserializeObject<TestLink[]>(linksStr, jsonSettingThrowOnError).ToArray();
-            Assert.AreEqual(1, links.Length);
-            foreach (var link in links)
-            {
-                Assert.True(messageDependencies.Any(m => m.Id == link.id && m.Context.Operation.Id == link.operation_Id));
-            }
+            Assert.AreEqual(messageDependencies.Single().Id, processRequest.Context.Operation.ParentId);
         }
 
         [Test]

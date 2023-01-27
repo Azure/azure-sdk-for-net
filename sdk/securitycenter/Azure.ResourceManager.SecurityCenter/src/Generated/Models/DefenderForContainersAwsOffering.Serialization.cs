@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask");
                 writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask);
             }
-            if (Optional.IsDefined(EnableContainerVulnerabilityAssessment))
+            if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
             {
                 writer.WritePropertyName("enableContainerVulnerabilityAssessment");
-                writer.WriteBooleanValue(EnableContainerVulnerabilityAssessment.Value);
+                writer.WriteBooleanValue(IsContainerVulnerabilityAssessmentEnabled.Value);
             }
-            if (Optional.IsDefined(AutoProvisioning))
+            if (Optional.IsDefined(IsAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("autoProvisioning");
-                writer.WriteBooleanValue(AutoProvisioning.Value);
+                writer.WriteBooleanValue(IsAutoProvisioningEnabled.Value);
             }
             if (Optional.IsDefined(KubeAuditRetentionTime))
             {

@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "Discovery": return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element);
                 }
             }
-            SapConfigurationType configurationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("configurationType"))
-                {
-                    configurationType = new SapConfigurationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSapConfiguration(configurationType);
+            return UnknownSapConfiguration.DeserializeUnknownSapConfiguration(element);
         }
     }
 }

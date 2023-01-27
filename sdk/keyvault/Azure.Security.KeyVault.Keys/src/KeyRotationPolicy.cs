@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys
         public IList<KeyRotationLifetimeAction> LifetimeActions { get; } = new List<KeyRotationLifetimeAction>();
 
         /// <summary>
-        /// Gets or sets the ISO 8601 duration when the <see cref="KeyRotationPolicy"/> will expire. It should be at least 28 days.
+        /// Gets or sets the ISO 8601 duration when a new <see cref="KeyVaultKey"/> version created from this policy will expire. It should be at least 28 days.
         /// </summary>
         /// <remarks>
         /// ISO 8601 duration examples:

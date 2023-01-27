@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -53,8 +55,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
-            var expTelemetryItem = new TelemetryItem(telemetryItem, default, default, default);
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
+            var expTelemetryItem = new TelemetryItem("Exception", telemetryItem, default, default, default);
 
             if (SampleRate is float)
             {
@@ -84,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
 
             if (SampleRate is float)
             {

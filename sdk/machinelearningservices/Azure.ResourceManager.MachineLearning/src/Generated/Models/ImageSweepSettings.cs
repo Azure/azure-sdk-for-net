@@ -5,51 +5,37 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
     public partial class ImageSweepSettings
     {
         /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
-        /// <param name="limits"> [Required] Limit settings for model sweeping and hyperparameter sweeping. </param>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="limits"/> is null. </exception>
-        public ImageSweepSettings(ImageSweepLimitSettings limits, SamplingAlgorithmType samplingAlgorithm)
+        public ImageSweepSettings(SamplingAlgorithmType samplingAlgorithm)
         {
-            if (limits == null)
-            {
-                throw new ArgumentNullException(nameof(limits));
-            }
-
-            Limits = limits;
             SamplingAlgorithm = samplingAlgorithm;
         }
 
         /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
         /// <param name="earlyTermination">
         /// Type of early termination policy.
-        /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </param>
-        /// <param name="limits"> [Required] Limit settings for model sweeping and hyperparameter sweeping. </param>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
-        internal ImageSweepSettings(EarlyTerminationPolicy earlyTermination, ImageSweepLimitSettings limits, SamplingAlgorithmType samplingAlgorithm)
+        internal ImageSweepSettings(MachineLearningEarlyTerminationPolicy earlyTermination, SamplingAlgorithmType samplingAlgorithm)
         {
             EarlyTermination = earlyTermination;
-            Limits = limits;
             SamplingAlgorithm = samplingAlgorithm;
         }
 
         /// <summary>
         /// Type of early termination policy.
-        /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </summary>
-        public EarlyTerminationPolicy EarlyTermination { get; set; }
-        /// <summary> [Required] Limit settings for model sweeping and hyperparameter sweeping. </summary>
-        public ImageSweepLimitSettings Limits { get; set; }
+        public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
         /// <summary> [Required] Type of the hyperparameter sampling algorithms. </summary>
         public SamplingAlgorithmType SamplingAlgorithm { get; set; }
     }

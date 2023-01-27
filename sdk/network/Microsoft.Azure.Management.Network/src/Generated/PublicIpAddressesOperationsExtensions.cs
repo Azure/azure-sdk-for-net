@@ -203,9 +203,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='publicIpAddressName'>
             /// The name of the public IP address.
             /// </param>
-            public static void Delete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            public static PublicIPAddressesDeleteHeaders Delete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
             {
-                operations.DeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,9 +223,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIPAddressesDeleteHeaders> DeleteAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -652,9 +655,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='publicIpAddressName'>
             /// The name of the public IP address.
             /// </param>
-            public static void BeginDelete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            public static PublicIPAddressesDeleteHeaders BeginDelete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+                return operations.BeginDeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -672,9 +675,12 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIPAddressesDeleteHeaders> BeginDeleteAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>

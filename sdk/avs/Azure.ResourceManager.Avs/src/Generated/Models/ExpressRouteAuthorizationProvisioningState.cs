@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static ExpressRouteAuthorizationProvisioningState Succeeded { get; } = new ExpressRouteAuthorizationProvisioningState(SucceededValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static ExpressRouteAuthorizationProvisioningState Failed { get; } = new ExpressRouteAuthorizationProvisioningState(FailedValue);
         /// <summary> Updating. </summary>
         public static ExpressRouteAuthorizationProvisioningState Updating { get; } = new ExpressRouteAuthorizationProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static ExpressRouteAuthorizationProvisioningState Canceled { get; } = new ExpressRouteAuthorizationProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ExpressRouteAuthorizationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteAuthorizationProvisioningState left, ExpressRouteAuthorizationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteAuthorizationProvisioningState"/> values are not the same. </summary>

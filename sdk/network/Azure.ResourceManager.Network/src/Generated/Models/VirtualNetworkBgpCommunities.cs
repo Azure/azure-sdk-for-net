@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkCommunity"/> is null. </exception>
         public VirtualNetworkBgpCommunities(string virtualNetworkCommunity)
         {
-            if (virtualNetworkCommunity == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkCommunity));
-            }
+            Argument.AssertNotNull(virtualNetworkCommunity, nameof(virtualNetworkCommunity));
 
             VirtualNetworkCommunity = virtualNetworkCommunity;
         }

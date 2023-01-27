@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataLakeStore
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        internal HttpMessage CreateListRequest(string subscriptionId, string filter, int? top, int? skip, string select, string orderBy, bool? count)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 uri.AppendQuery("$select", select, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             if (count != null)
             {
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataLakeStoreAccountListResult>> ListAsync(string subscriptionId, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreAccountListResult>> ListAsync(string subscriptionId, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListRequest(subscriptionId, filter, top, skip, select, orderby, count);
+            using var message = CreateListRequest(subscriptionId, filter, top, skip, select, orderBy, count);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -115,16 +115,16 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataLakeStoreAccountListResult> List(string subscriptionId, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreAccountListResult> List(string subscriptionId, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListRequest(subscriptionId, filter, top, skip, select, orderby, count);
+            using var message = CreateListRequest(subscriptionId, filter, top, skip, select, orderBy, count);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, int? top, int? skip, string select, string orderBy, bool? count)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 uri.AppendQuery("$select", select, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             if (count != null)
             {
@@ -190,17 +190,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> A Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataLakeStoreAccountListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreAccountListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, top, skip, select, orderby, count);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, top, skip, select, orderBy, count);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -223,17 +223,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> A Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataLakeStoreAccountListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreAccountListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, top, skip, select, orderby, count);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, top, skip, select, orderBy, count);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameAvailabilityInformation>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreAccountNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -669,9 +669,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        NameAvailabilityInformation value = default;
+                        DataLakeStoreAccountNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NameAvailabilityInformation.DeserializeNameAvailabilityInformation(document.RootElement);
+                        value = DataLakeStoreAccountNameAvailabilityResult.DeserializeDataLakeStoreAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameAvailabilityInformation> CheckNameAvailability(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreAccountNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -697,9 +697,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        NameAvailabilityInformation value = default;
+                        DataLakeStoreAccountNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NameAvailabilityInformation.DeserializeNameAvailabilityInformation(document.RootElement);
+                        value = DataLakeStoreAccountNameAvailabilityResult.DeserializeDataLakeStoreAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top, int? skip, string select, string orderBy, bool? count)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -728,17 +728,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataLakeStoreAccountListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreAccountListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top, skip, select, orderby, count);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top, skip, select, orderBy, count);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -761,17 +761,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataLakeStoreAccountListResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreAccountListResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top, skip, select, orderby, count);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top, skip, select, orderBy, count);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, int? top, int? skip, string select, string orderBy, bool? count)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -809,18 +809,18 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> A Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataLakeStoreAccountListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreAccountListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, top, skip, select, orderby, count);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, top, skip, select, orderBy, count);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -844,18 +844,18 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> A Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataLakeStoreAccountListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreAccountListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, top, skip, select, orderby, count);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, top, skip, select, orderBy, count);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

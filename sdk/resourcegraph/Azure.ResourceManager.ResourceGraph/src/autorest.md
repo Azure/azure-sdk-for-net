@@ -8,15 +8,21 @@ azure-arm: true
 csharp: true
 library-name: ResourceGraph
 namespace: Azure.ResourceManager.ResourceGraph
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28/specification/resourcegraph/resource-manager/readme.md
-tag: package-preview-2021-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+rename-mapping:
+  ErrorDetails: FacetErrorDetails
+  QueryRequest: ResourceQueryContent
+  QueryRequestOptions: ResourceQueryRequestOptions
+  QueryResponse: ResourceQueryResult
+  DateTimeInterval.start: StartOn
+  DateTimeInterval.end: EndOn
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -24,6 +30,10 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+override-operation-name:
+  Resources: GetResources
+  ResourcesHistory: GetResourceHistory
 
 rename-rules:
   CPU: Cpu

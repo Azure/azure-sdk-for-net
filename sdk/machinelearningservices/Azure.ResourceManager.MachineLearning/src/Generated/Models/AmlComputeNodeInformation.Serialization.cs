@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,10 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element)
         {
             Optional<string> nodeId = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> publicIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
+            Optional<IPAddress> publicIPAddress = default;
             Optional<int> port = default;
-            Optional<NodeState> nodeState = default;
+            Optional<MachineLearningNodeState> nodeState = default;
             Optional<string> runId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,12 +30,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        privateIPAddress = null;
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"))
                 {
-                    publicIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publicIPAddress = null;
+                        continue;
+                    }
+                    publicIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))
@@ -54,11 +65,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nodeState = new NodeState(property.Value.GetString());
+                    nodeState = new MachineLearningNodeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("runId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        runId = null;
+                        continue;
+                    }
                     runId = property.Value.GetString();
                     continue;
                 }

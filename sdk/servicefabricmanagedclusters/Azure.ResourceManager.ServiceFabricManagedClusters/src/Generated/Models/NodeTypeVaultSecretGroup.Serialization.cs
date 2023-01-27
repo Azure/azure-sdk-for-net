@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 if (property.NameEquals("sourceVault"))
                 {
-                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("vaultCertificates"))

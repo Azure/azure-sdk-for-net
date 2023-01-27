@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
-    // Data plane generated sub-client. The PurviewCollection sub-client.
+    // Data plane generated sub-client.
     /// <summary> The PurviewCollection sub-client. </summary>
     public partial class PurviewCollection
     {
@@ -56,57 +53,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCollectionAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// Response response = await client.GetCollectionAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
-        /// Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Collection</c>:
-        /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-        ///   description: string, # Optional. Gets or sets the description.
-        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///   name: string, # Optional. Gets the name.
-        ///   parentCollection: {
-        ///     referenceName: string, # Optional. Gets or sets the reference name.
-        ///     type: string, # Optional. Gets the reference type property.
-        ///   }, # Optional. Gets or sets the parent collection reference.
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-        ///     createdBy: string, # Optional. The identity that created the resource.
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetCollectionAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetCollectionAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollection");
@@ -127,57 +74,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCollection and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// Response response = client.GetCollection();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
-        /// Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Collection</c>:
-        /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-        ///   description: string, # Optional. Gets or sets the description.
-        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///   name: string, # Optional. Gets the name.
-        ///   parentCollection: {
-        ///     referenceName: string, # Optional. Gets or sets the reference name.
-        ///     type: string, # Optional. Gets the reference type property.
-        ///   }, # Optional. Gets or sets the parent collection reference.
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-        ///     createdBy: string, # Optional. The identity that created the resource.
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetCollection(RequestContext)']/*" />
         public virtual Response GetCollection(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollection");
@@ -200,101 +97,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateCollectionAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateCollectionAsync with all request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// var data = new {
-        ///     description = "<description>",
-        ///     friendlyName = "<friendlyName>",
-        ///     parentCollection = new {
-        ///         referenceName = "<referenceName>",
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
-        /// Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>Collection</c>:
-        /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-        ///   description: string, # Optional. Gets or sets the description.
-        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///   name: string, # Optional. Gets the name.
-        ///   parentCollection: {
-        ///     referenceName: string, # Optional. Gets or sets the reference name.
-        ///     type: string, # Optional. Gets the reference type property.
-        ///   }, # Optional. Gets or sets the parent collection reference.
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-        ///     createdBy: string, # Optional. The identity that created the resource.
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Collection</c>:
-        /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-        ///   description: string, # Optional. Gets or sets the description.
-        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///   name: string, # Optional. Gets the name.
-        ///   parentCollection: {
-        ///     referenceName: string, # Optional. Gets or sets the reference name.
-        ///     type: string, # Optional. Gets the reference type property.
-        ///   }, # Optional. Gets or sets the parent collection reference.
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-        ///     createdBy: string, # Optional. The identity that created the resource.
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='CreateOrUpdateCollectionAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateCollectionAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -319,101 +122,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateCollection and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdateCollection(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateCollection with all request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// var data = new {
-        ///     description = "<description>",
-        ///     friendlyName = "<friendlyName>",
-        ///     parentCollection = new {
-        ///         referenceName = "<referenceName>",
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdateCollection(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
-        /// Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>Collection</c>:
-        /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-        ///   description: string, # Optional. Gets or sets the description.
-        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///   name: string, # Optional. Gets the name.
-        ///   parentCollection: {
-        ///     referenceName: string, # Optional. Gets or sets the reference name.
-        ///     type: string, # Optional. Gets the reference type property.
-        ///   }, # Optional. Gets or sets the parent collection reference.
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-        ///     createdBy: string, # Optional. The identity that created the resource.
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Collection</c>:
-        /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-        ///   description: string, # Optional. Gets or sets the description.
-        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///   name: string, # Optional. Gets the name.
-        ///   parentCollection: {
-        ///     referenceName: string, # Optional. Gets or sets the reference name.
-        ///     type: string, # Optional. Gets the reference type property.
-        ///   }, # Optional. Gets or sets the parent collection reference.
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-        ///     createdBy: string, # Optional. The identity that created the resource.
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='CreateOrUpdateCollection(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateCollection(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -436,17 +145,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteCollectionAsync.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// Response response = await client.DeleteCollectionAsync();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='DeleteCollectionAsync(RequestContext)']/*" />
         public virtual async Task<Response> DeleteCollectionAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
@@ -467,17 +166,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteCollection.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// Response response = client.DeleteCollection();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='DeleteCollection(RequestContext)']/*" />
         public virtual Response DeleteCollection(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
@@ -498,33 +187,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCollectionPathAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// Response response = await client.GetCollectionPathAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CollectionPathResponse</c>:
-        /// <code>{
-        ///   parentFriendlyNameChain: [string], # Optional. The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.
-        ///   parentNameChain: [string], # Optional. The names of ancestors starting from the default (root) collection and ending with the immediate parent.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetCollectionPathAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetCollectionPathAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
@@ -545,33 +208,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCollectionPath and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// Response response = client.GetCollectionPath();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CollectionPathResponse</c>:
-        /// <code>{
-        ///   parentFriendlyNameChain: [string], # Optional. The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.
-        ///   parentNameChain: [string], # Optional. The names of ancestors starting from the default (root) collection and ending with the immediate parent.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetCollectionPath(RequestContext)']/*" />
         public virtual Response GetCollectionPath(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
@@ -593,66 +230,12 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetChildCollectionNamesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// await foreach (var data in client.GetChildCollectionNamesAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetChildCollectionNamesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// await foreach (var data in client.GetChildCollectionNamesAsync("<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CollectionNameResponseListValue</c>:
-        /// <code>{
-        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///   name: string, # Optional. Gets the name.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetChildCollectionNamesAsync(String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetChildCollectionNamesAsync(string skipToken = null, RequestContext context = null)
         {
-            return GetChildCollectionNamesImplementationAsync("PurviewCollection.GetChildCollectionNames", skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetChildCollectionNamesImplementationAsync(string diagnosticsScopeName, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetChildCollectionNamesRequest(skipToken, context)
-                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetChildCollectionNamesRequest(skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
         }
 
         /// <summary> Lists the child collections names in the collection. </summary>
@@ -660,66 +243,12 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetChildCollectionNames and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// foreach (var data in client.GetChildCollectionNames())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetChildCollectionNames with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-        /// 
-        /// foreach (var data in client.GetChildCollectionNames("<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CollectionNameResponseListValue</c>:
-        /// <code>{
-        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///   name: string, # Optional. Gets the name.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetChildCollectionNames(String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetChildCollectionNames(string skipToken = null, RequestContext context = null)
         {
-            return GetChildCollectionNamesImplementation("PurviewCollection.GetChildCollectionNames", skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetChildCollectionNamesImplementation(string diagnosticsScopeName, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetChildCollectionNamesRequest(skipToken, context)
-                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetChildCollectionNamesRequest(skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetCollectionRequest(RequestContext context)

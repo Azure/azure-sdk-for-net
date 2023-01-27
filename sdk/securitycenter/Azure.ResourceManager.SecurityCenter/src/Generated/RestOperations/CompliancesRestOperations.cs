@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="complianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComplianceData>> GetAsync(string scope, string complianceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityComplianceData>> GetAsync(string scope, string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        ComplianceData value = default;
+                        SecurityComplianceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComplianceData.DeserializeComplianceData(document.RootElement);
+                        value = SecurityComplianceData.DeserializeSecurityComplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ComplianceData)null, message.Response);
+                    return Response.FromValue((SecurityComplianceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="complianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComplianceData> Get(string scope, string complianceName, CancellationToken cancellationToken = default)
+        public Response<SecurityComplianceData> Get(string scope, string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        ComplianceData value = default;
+                        SecurityComplianceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComplianceData.DeserializeComplianceData(document.RootElement);
+                        value = SecurityComplianceData.DeserializeSecurityComplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ComplianceData)null, message.Response);
+                    return Response.FromValue((SecurityComplianceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

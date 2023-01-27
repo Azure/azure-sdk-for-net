@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested manifest file. </summary>
-    internal partial class ManifestWrapper : Manifest
+    internal partial class ManifestWrapper : ArtifactManifest
     {
         /// <summary> Initializes a new instance of ManifestWrapper. </summary>
-        internal ManifestWrapper()
+        public ManifestWrapper()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             Layers = new ChangeTrackingList<OciBlobDescriptor>();
@@ -37,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal ManifestWrapper(int? schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, OciBlobDescriptor config, IReadOnlyList<OciBlobDescriptor> layers, OciAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion)
+        internal ManifestWrapper(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, OciBlobDescriptor config, IList<OciBlobDescriptor> layers, OciAnnotations annotations, string architecture, string name, string tag, IList<FsLayer> fsLayers, IList<History> history, IList<ImageSignature> signatures) : base(schemaVersion)
         {
             MediaType = mediaType;
             Manifests = manifests;
@@ -53,26 +53,26 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; }
+        public string MediaType { get; set; }
         /// <summary> (ManifestList, OCIIndex) List of V2 image layer information. </summary>
-        public IReadOnlyList<ManifestListAttributes> Manifests { get; }
+        public IList<ManifestListAttributes> Manifests { get; }
         /// <summary> (V2, OCI) Image config descriptor. </summary>
-        public OciBlobDescriptor Config { get; }
+        public OciBlobDescriptor Config { get; set; }
         /// <summary> (V2, OCI) List of V2 image layer information. </summary>
-        public IReadOnlyList<OciBlobDescriptor> Layers { get; }
+        public IList<OciBlobDescriptor> Layers { get; }
         /// <summary> (OCI, OCIIndex) Additional metadata. </summary>
-        public OciAnnotations Annotations { get; }
+        public OciAnnotations Annotations { get; set; }
         /// <summary> (V1) CPU architecture. </summary>
-        public string Architecture { get; }
+        public string Architecture { get; set; }
         /// <summary> (V1) Image name. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> (V1) Image tag. </summary>
-        public string Tag { get; }
+        public string Tag { get; set; }
         /// <summary> (V1) List of layer information. </summary>
-        public IReadOnlyList<FsLayer> FsLayers { get; }
+        public IList<FsLayer> FsLayers { get; }
         /// <summary> (V1) Image history. </summary>
-        public IReadOnlyList<History> History { get; }
+        public IList<History> History { get; }
         /// <summary> (V1) Image signature. </summary>
-        public IReadOnlyList<ImageSignature> Signatures { get; }
+        public IList<ImageSignature> Signatures { get; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.6.0" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.3" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.7.2" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.10" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.35.0" />
   </ItemGroup>
 </Project>

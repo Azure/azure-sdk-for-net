@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Selected regulatory compliance control details and state
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}
-        /// Operation Id: RegulatoryComplianceControls_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceControls_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Selected regulatory compliance control details and state
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}
-        /// Operation Id: RegulatoryComplianceControls_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceControls_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,94 +128,62 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// All supported regulatory compliance controls details and state for selected standard
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls
-        /// Operation Id: RegulatoryComplianceControls_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceControls_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RegulatoryComplianceControlResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RegulatoryComplianceControlResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RegulatoryComplianceControlResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _regulatoryComplianceControlRestClient.ListAsync(Id.SubscriptionId, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegulatoryComplianceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RegulatoryComplianceControlResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _regulatoryComplianceControlRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegulatoryComplianceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceControlRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceControlRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceControlResource(Client, RegulatoryComplianceControlData.DeserializeRegulatoryComplianceControlData(e)), _regulatoryComplianceControlClientDiagnostics, Pipeline, "RegulatoryComplianceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// All supported regulatory compliance controls details and state for selected standard
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls
-        /// Operation Id: RegulatoryComplianceControls_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceControls_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RegulatoryComplianceControlResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RegulatoryComplianceControlResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<RegulatoryComplianceControlResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _regulatoryComplianceControlRestClient.List(Id.SubscriptionId, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegulatoryComplianceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RegulatoryComplianceControlResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _regulatoryComplianceControlRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegulatoryComplianceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceControlRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceControlRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceControlResource(Client, RegulatoryComplianceControlData.DeserializeRegulatoryComplianceControlData(e)), _regulatoryComplianceControlClientDiagnostics, Pipeline, "RegulatoryComplianceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}
-        /// Operation Id: RegulatoryComplianceControls_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceControls_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,8 +209,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}
-        /// Operation Id: RegulatoryComplianceControls_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceControls_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

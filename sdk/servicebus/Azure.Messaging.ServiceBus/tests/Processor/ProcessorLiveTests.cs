@@ -1065,6 +1065,69 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanUpdatePrefetchCount()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 200;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 20
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    // decrease prefetch
+                    if (count == 100)
+                    {
+                        processor.UpdatePrefetchCount(1);
+                        Assert.AreEqual(20, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(1, processor.PrefetchCount);
+                    }
+
+                    // increase prefetch
+                    if (count == 150)
+                    {
+                        Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 20);
+                        processor.UpdatePrefetchCount(10);
+                        Assert.AreEqual(20, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(10, processor.PrefetchCount);
+                    }
+                    if (count == 175)
+                    {
+                        Assert.GreaterOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 15);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
         public async Task StopProcessingDoesNotResultInRedeliveredMessages()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.1 (2023-01-12)
+
+### Features Added
+
+- Added support for JSON schemas. Currently only Draft 3 of JSON is supported by the service.
+- Added support for custom schema formats.
+
+## 1.3.0 (2022-10-11)
+
+### Features Added
+
+- Added a `GetSchema` overload that gets a schema version using its group name, schema name, and version number.
 
 ## 1.2.0 (2022-05-11)
 

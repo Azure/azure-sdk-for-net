@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Certificate resource specific properties. </param>
-        internal ContainerAppCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CertificateProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppCertificateProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
         /// <summary> Certificate resource specific properties. </summary>
-        public CertificateProperties Properties { get; set; }
+        public ContainerAppCertificateProperties Properties { get; set; }
     }
 }

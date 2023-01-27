@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-09-01";
+            _apiVersion = apiVersion ?? "2022-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -921,6 +921,97 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                 case 202:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAfsShareMetadataCertificatePublicKeysRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/afsShareMetadataCertificatePublicKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the AFS file share metadata signing certificate public keys. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CloudEndpointAfsShareMetadataCertificatePublicKeys>> AfsShareMetadataCertificatePublicKeysAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+
+            using var message = CreateAfsShareMetadataCertificatePublicKeysRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the AFS file share metadata signing certificate public keys. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CloudEndpointAfsShareMetadataCertificatePublicKeys> AfsShareMetadataCertificatePublicKeys(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+
+            using var message = CreateAfsShareMetadataCertificatePublicKeysRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -22,6 +22,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                             "}}" +
                                         "]," +
                                         "\"source\": {{" +
+                                             "\"displayName\": \"displayName\"," +
                                              "\"identifier\":{{" +
                                                   "\"rawId\":\"sourceId\"," +
                                                   "\"kind\":\"communicationUser\"," +
@@ -39,6 +40,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string CallConnectionId = "someCallConnectionId";
         protected const string Subject = "dummySubject";
         protected const string CallBackUri = "https://bot.contoso.com/callback";
+        protected const string DisplayName = "displayName";
 
         private const string NoneMediaSubscriptionId = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
@@ -97,8 +99,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
             Assert.AreEqual(TargetId, targetUser.Id);
             Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(Subject, callConnectionProperties.Subject);
             Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackEndpoint.ToString());
+            Assert.AreEqual(DisplayName, callConnectionProperties.CallSource.DisplayName);
         }
     }
 }

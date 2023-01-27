@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignVerifyDataRoundTrip([EnumValues]SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataRoundTrip([EnumValues] SignatureAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -125,7 +125,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignVerifyDataStreamRoundTrip([EnumValues]SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataStreamRoundTrip([EnumValues] SignatureAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -175,7 +175,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
 
         [RecordedTest]
-        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
 #if NET461
             if (algorithm.GetEcKeyCurveName() != default)
@@ -252,7 +252,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
 #if NET461
             if (algorithm.GetEcKeyCurveName() != default)
@@ -461,7 +461,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(new CryptographyClient(key, options));
         }
 
-        private async Task<KeyVaultKey> CreateTestKey(SignatureAlgorithm algorithm)
+        protected async Task<KeyVaultKey> CreateTestKey(SignatureAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
 

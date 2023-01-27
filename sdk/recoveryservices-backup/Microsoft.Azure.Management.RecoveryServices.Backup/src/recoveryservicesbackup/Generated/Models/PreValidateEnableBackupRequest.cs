@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'FileFolder', 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint',
         /// 'VMwareVM', 'SystemState', 'Client', 'GenericDataSource',
         /// 'SQLDataBase', 'AzureFileShare', 'SAPHanaDatabase',
-        /// 'SAPAseDatabase'</param>
+        /// 'SAPAseDatabase', 'SAPHanaDBInstance'</param>
         /// <param name="resourceId">ARM Virtual Machine Id</param>
         /// <param name="vaultId">ARM id of the Recovery Services Vault</param>
         /// <param name="properties">Configuration of VM if any needs to be
@@ -65,7 +65,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// etc. Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase',
+        /// 'SAPHanaDBInstance'
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }

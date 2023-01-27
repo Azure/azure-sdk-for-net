@@ -13,16 +13,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identitiy;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio
+    /// Enables authentication to Azure Active Directory using data from Visual Studio 2017 or later. See
+    /// <seealso href="https://learn.microsoft.com/dotnet/azure/configure-visual-studio" /> for more information
+    /// on how to configure Visual Studio for Azure development.
     /// </summary>
     public class VisualStudioCredential : TokenCredential
     {
-        private const string TokenProviderFilePath = @".IdentityService\AzureServiceAuth\tokenprovider.json";
+        private static readonly string TokenProviderFilePath = Path.Combine(
+            Environment.GetFolderPath(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
+                Environment.SpecialFolder.LocalApplicationData :
+                Environment.SpecialFolder.UserProfile),
+            ".IdentityService",
+            "AzureServiceAuth",
+            "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
 
@@ -80,8 +87,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
                 }
 
-                var tokenProviderPath = GetTokenProviderPath();
-                var tokenProviders = GetTokenProviders(tokenProviderPath);
+                var tokenProviders = GetTokenProviders(TokenProviderFilePath);
 
                 var resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
                 var processStartInfos = GetProcessStartInfos(tokenProviders, resource, requestContext, cancellationToken);
@@ -105,16 +111,6 @@ namespace Azure.Identity
             {
                 throw scope.FailWrapAndThrow(e);
             }
-        }
-
-        private static string GetTokenProviderPath()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
-            }
-
-            throw new CredentialUnavailableException($"Operating system {RuntimeInformation.OSDescription} isn't supported.");
         }
 
         private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)

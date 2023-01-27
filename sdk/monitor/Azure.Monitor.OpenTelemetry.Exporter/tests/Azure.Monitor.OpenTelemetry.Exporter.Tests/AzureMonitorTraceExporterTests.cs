@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using OpenTelemetry.Trace;
 using System;
 using System.Reflection;
@@ -8,6 +10,7 @@ using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 
 using Xunit;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {

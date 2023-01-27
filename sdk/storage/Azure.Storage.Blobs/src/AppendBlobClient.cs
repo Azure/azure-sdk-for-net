@@ -1116,7 +1116,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             AppendBlockInternal(
                 content,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 false, // async
@@ -1159,7 +1159,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             await AppendBlockInternal(
                 content,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
@@ -1181,7 +1181,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Stream"/> containing the content of the block to
         /// append.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Validation options for content verification.
         /// </param>
         /// <param name="conditions">
@@ -1207,13 +1207,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
-            UploadTransferValidationOptions validationOptionsOverride,
+            UploadTransferValidationOptions transferValidationOverride,
             AppendBlobRequestConditions conditions,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
@@ -2004,7 +2004,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Response<BlobProperties> propertiesResponse = await GetPropertiesInternal(
                             conditions: options?.OpenConditions,
                             async: async,
-                            cancellationToken: cancellationToken)
+                            context: new RequestContext() { CancellationToken = cancellationToken })
                             .ConfigureAwait(false);
 
                         position = propertiesResponse.Value.ContentLength;
@@ -2041,7 +2041,7 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    options?.TransferValidationOptions
+                    options?.TransferValidation
                     );
             }
             catch (Exception ex)

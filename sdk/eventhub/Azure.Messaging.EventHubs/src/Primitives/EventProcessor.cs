@@ -31,6 +31,10 @@ namespace Azure.Messaging.EventHubs.Primitives
     /// <typeparam name="TPartition">The context of the partition for which an operation is being performed.</typeparam>
     ///
     /// <remarks>
+    ///   To enable coordination for sharing of partitions between <see cref="EventProcessor{TPartition}"/> instances, they will assert exclusive read access to partitions
+    ///   for the consumer group.  No other readers should be active in the consumer group other than processors intending to collaborate.  Non-exclusive readers will
+    ///   be denied access; exclusive readers, including processors using a different storage locations, will interfere with the processor's operation and performance.
+    ///
     ///   The <see cref="EventProcessor{TPartition}" /> is safe to cache and use for the lifetime of an application, which is the recommended approach.
     ///   The processor is responsible for ensuring efficient network, CPU, and memory use.  Calling either <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" />
     ///   when all processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
@@ -226,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -250,7 +254,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
@@ -279,7 +283,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="options">The set of options to use for the processor.</param>
@@ -328,7 +332,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -350,7 +354,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The shared signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -372,7 +376,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -402,7 +406,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the protected constructors.</param>
@@ -593,16 +597,30 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {
+                var isBatch = (EventBatchMaximumCount > 1);
+
                 foreach (var eventData in eventBatch)
                 {
                     if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
                     {
-                        var attributes = new Dictionary<string, string>(1)
+                        if (isBatch)
                         {
-                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
-                        };
+                            var attributes = new Dictionary<string, string>(1)
+                            {
+                                { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
+                            };
 
-                        diagnosticScope.AddLink(diagnosticId, null, attributes);
+                            // Use links only when the batch size is not set to a single event.
+
+                            diagnosticScope.AddLink(diagnosticId, null, attributes);
+                        }
+                        else
+                        {
+                            diagnosticScope.SetTraceparent(diagnosticId);
+                            diagnosticScope.AddAttribute(
+                                DiagnosticProperty.EnqueuedTimeAttribute,
+                                eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture));
+                        }
                     }
                 }
             }
@@ -1543,7 +1561,9 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    Logger.EventProcessorLoadBalancingCycleStart(Identifier, EventHubName, partitionIds?.Length ?? 0, LoadBalancer.OwnedPartitionCount);
+                    var startingOwnedPartitionCount = LoadBalancer.OwnedPartitionCount;
+
+                    Logger.EventProcessorLoadBalancingCycleStart(Identifier, EventHubName, partitionIds?.Length ?? 0, startingOwnedPartitionCount);
                     cycleDuration = ValueStopwatch.StartNew();
 
                     try
@@ -1568,11 +1588,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                         partitionIds = default;
                     }
 
-                    var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
-                    var cycleElapsedSeconds = cycleDuration.GetElapsedTime().TotalSeconds;
-                    var totalPartitions = partitionIds?.Length ?? 0;
+                    // Execute the current load balancing cycle.
 
-                    Logger.EventProcessorLoadBalancingCycleComplete(Identifier, EventHubName, totalPartitions, LoadBalancer.OwnedPartitionCount, cycleElapsedSeconds, remainingTimeUntilNextCycle.TotalSeconds);
+                    var totalPartitions = partitionIds?.Length ?? 0;
+                    var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
+                    var endingOwnedPartitionCount = LoadBalancer.OwnedPartitionCount;
+                    var cycleElapsedSeconds = cycleDuration.GetElapsedTime().TotalSeconds;
+
+                    Logger.EventProcessorLoadBalancingCycleComplete(Identifier, EventHubName, totalPartitions, endingOwnedPartitionCount, cycleElapsedSeconds, remainingTimeUntilNextCycle.TotalSeconds);
 
                     // If the duration of the load balancing cycle was long enough to potentially impact ownership stability,
                     // emit warnings.  This is impactful enough that the error handler will be pinged to ensure visibility for the
@@ -1588,12 +1611,12 @@ namespace Azure.Messaging.EventHubs.Primitives
                         _ = InvokeOnProcessingErrorAsync(slowException, null, Resources.OperationEventProcessingLoop, CancellationToken.None);
                     }
 
-                    // If the number of partitions owned is maximum advisable set, emit a warning.  This is an inaccurate heuristic and does
-                    // not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
+                    // If the number of partitions owned has changed since the cycle started and is above maximum advisable set, emit a warning.  This is
+                    // a loose heuristic and does not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
 
-                    if (LoadBalancer.OwnedPartitionCount > MaximumAdvisedOwnedPartitions)
+                    if ((startingOwnedPartitionCount != endingOwnedPartitionCount) && (endingOwnedPartitionCount > MaximumAdvisedOwnedPartitions))
                     {
-                        Logger.EventProcessorHighPartitionOwnershipWarning(Identifier, EventHubName, totalPartitions, LoadBalancer.OwnedPartitionCount, MaximumAdvisedOwnedPartitions);
+                        Logger.EventProcessorHighPartitionOwnershipWarning(Identifier, EventHubName, totalPartitions, endingOwnedPartitionCount, MaximumAdvisedOwnedPartitions);
                     }
 
                     // Evaluate the time remaining before the next cycle and delay.
@@ -2027,12 +2050,18 @@ namespace Azure.Messaging.EventHubs.Primitives
 
         /// <summary>
         ///   Calculates the maximum number of partitions that it is advised this processor
-        ///   own, based on the host environment.
+        ///   own, based on the host environment and some general heuristics.
         /// </summary>
         ///
         /// <returns>The maximum number of partitions that it is advised this processor own.</returns>
         ///
-        private static int CalculateMaximumAdvisedOwnedPartitions() => (int)Math.Floor(Environment.ProcessorCount * 1.5);
+        /// <remarks>
+        ///   The safe number of partitions owned will vary quite a bit by application logic, event structure, and the
+        ///   host environment.  This is a general approximation based on support issues observed since the initial
+        ///   processor release.
+        /// </remarks>
+        ///
+        private static int CalculateMaximumAdvisedOwnedPartitions() => (Environment.ProcessorCount * 2);
 
         /// <summary>
         ///   A virtual <see cref="CheckpointStore" /> instance that delegates calls to the

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -21,17 +23,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal class LogsHelper
     {
         private const int Version = 2;
-        private static readonly ConcurrentDictionary<int, string> DepthCache = new ConcurrentDictionary<int, string>();
-        private static readonly Func<int, string> ConvertDepthToStringRef = ConvertDepthToString;
+        private static readonly ConcurrentDictionary<int, string> s_depthCache = new ConcurrentDictionary<int, string>();
+        private static readonly Func<int, string> s_convertDepthToStringRef = ConvertDepthToString;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, string roleName, string roleInstance, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = new TelemetryItem(logRecord, roleName, roleInstance, instrumentationKey);
+                telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
                 if (logRecord.Exception != null)
                 {
                     telemetryItem.Data = new MonitorBase
@@ -107,7 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else if (scopeItem.Key == "{OriginalFormat}")
                     {
-                        properties.Add($"OriginalFormatScope_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
+                        properties.Add($"OriginalFormatScope_{s_depthCache.GetOrAdd(originalScopeDepth, s_convertDepthToStringRef)}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
                     }
                     else if (!properties.TryGetValue(scopeItem.Key, out _))
                     {
@@ -115,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else
                     {
-                        properties.Add($"{scopeItem.Key}_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}_{DepthCache.GetOrAdd(valueDepth, ConvertDepthToStringRef)}",
+                        properties.Add($"{scopeItem.Key}_{s_depthCache.GetOrAdd(originalScopeDepth, s_convertDepthToStringRef)}_{s_depthCache.GetOrAdd(valueDepth, s_convertDepthToStringRef)}",
                                         Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
                         valueDepth++;
                     }

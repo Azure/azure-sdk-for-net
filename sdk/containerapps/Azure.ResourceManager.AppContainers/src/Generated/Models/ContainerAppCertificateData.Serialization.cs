@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppCertificateData DeserializeContainerAppCertificateData(JsonElement element)
         {
-            Optional<CertificateProperties> properties = default;
+            Optional<ContainerAppCertificateProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = CertificateProperties.DeserializeCertificateProperties(property.Value);
+                    properties = ContainerAppCertificateProperties.DeserializeContainerAppCertificateProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }

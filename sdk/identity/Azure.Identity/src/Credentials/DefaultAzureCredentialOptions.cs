@@ -213,6 +213,11 @@ namespace Azure.Identity
         public bool ExcludeManagedIdentityCredential { get; set; }
 
         /// <summary>
+        /// Specifies whether the <see cref="AzureDeveloperCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeAzureDeveloperCliCredential { get; set; }
+
+        /// <summary>
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables single sign on authentication with development tools which write to the shared token cache.
         /// The default is <c>true</c>.
@@ -238,8 +243,9 @@ namespace Azure.Identity
 
         /// <summary>
         /// Specifies whether the <see cref="VisualStudioCodeCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// The default is <c>true</c>.
         /// </summary>
-        public bool ExcludeVisualStudioCodeCredential { get; set; }
+        public bool ExcludeVisualStudioCodeCredential { get; set; } = true;
 
         /// <summary>
         /// Specifies whether the <see cref="AzurePowerShellCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
@@ -262,6 +268,7 @@ namespace Azure.Identity
                 DeveloperCredentialTimeout = DeveloperCredentialTimeout,
                 ExcludeEnvironmentCredential = ExcludeEnvironmentCredential,
                 ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential,
+                ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential,
                 ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential,
                 ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential,
                 ExcludeAzureCliCredential = ExcludeAzureCliCredential,

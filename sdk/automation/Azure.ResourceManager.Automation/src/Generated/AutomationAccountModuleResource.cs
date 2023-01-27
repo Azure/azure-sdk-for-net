@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         private readonly ObjectDataTypesRestOperations _objectDataTypesRestClient;
         private readonly ClientDiagnostics _fieldsClientDiagnostics;
         private readonly FieldsRestOperations _fieldsRestClient;
-        private readonly ModuleData _data;
+        private readonly AutomationModuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AutomationAccountModuleResource"/> class for mocking. </summary>
         protected AutomationAccountModuleResource()
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of the <see cref = "AutomationAccountModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutomationAccountModuleResource(ArmClient client, ModuleData data) : this(client, data.Id)
+        internal AutomationAccountModuleResource(ArmClient client, AutomationModuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ModuleData Data
+        public virtual AutomationModuleData Data
         {
             get
             {
@@ -102,8 +102,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the module identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AutomationAccountModuleResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -126,8 +134,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the module identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AutomationAccountModuleResource> Get(CancellationToken cancellationToken = default)
@@ -150,8 +166,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Delete the module by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,8 +200,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Delete the module by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -202,8 +234,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Update the module identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> The update parameters for module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -228,8 +268,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Update the module identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> The update parameters for module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -254,14 +302,22 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the activity in the module identified by module name and activity name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}
-        /// Operation Id: Activity_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Activity_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="activityName"> The name of activity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityName"/> is null. </exception>
-        public virtual async Task<Response<Activity>> GetActivityAsync(string activityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationActivity>> GetActivityAsync(string activityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityName, nameof(activityName));
 
@@ -281,14 +337,22 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the activity in the module identified by module name and activity name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}
-        /// Operation Id: Activity_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Activity_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="activityName"> The name of activity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityName"/> is null. </exception>
-        public virtual Response<Activity> GetActivity(string activityName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationActivity> GetActivity(string activityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityName, nameof(activityName));
 
@@ -308,220 +372,164 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a list of activities in the module identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities
-        /// Operation Id: Activity_ListByModule
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Activity_ListByModule</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Activity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Activity> GetActivitiesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationActivity" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationActivity> GetActivitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Activity>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
-                scope.Start();
-                try
-                {
-                    var response = await _activityRestClient.ListByModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<Activity>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
-                scope.Start();
-                try
-                {
-                    var response = await _activityRestClient.ListByModuleNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationActivity.DeserializeAutomationActivity, _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of activities in the module identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities
-        /// Operation Id: Activity_ListByModule
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Activity_ListByModule</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Activity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Activity> GetActivities(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationActivity" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationActivity> GetActivities(CancellationToken cancellationToken = default)
         {
-            Page<Activity> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
-                scope.Start();
-                try
-                {
-                    var response = _activityRestClient.ListByModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Activity> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
-                scope.Start();
-                try
-                {
-                    var response = _activityRestClient.ListByModuleNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationActivity.DeserializeAutomationActivity, _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of fields of a given type identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/objectDataTypes/{typeName}/fields
-        /// Operation Id: ObjectDataTypes_ListFieldsByModuleAndType
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/objectDataTypes/{typeName}/fields</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ObjectDataTypes_ListFieldsByModuleAndType</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TypeField> GetFieldsByModuleAndTypeObjectDataTypesAsync(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByModuleAndTypeAsync(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            async Task<Page<TypeField>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndTypeObjectDataTypes");
-                scope.Start();
-                try
-                {
-                    var response = await _objectDataTypesRestClient.ListFieldsByModuleAndTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of fields of a given type identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/objectDataTypes/{typeName}/fields
-        /// Operation Id: ObjectDataTypes_ListFieldsByModuleAndType
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/objectDataTypes/{typeName}/fields</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ObjectDataTypes_ListFieldsByModuleAndType</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> A collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TypeField> GetFieldsByModuleAndTypeObjectDataTypes(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationModuleField> GetFieldsByModuleAndType(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Page<TypeField> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndTypeObjectDataTypes");
-                scope.Start();
-                try
-                {
-                    var response = _objectDataTypesRestClient.ListFieldsByModuleAndType(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of fields of a given type identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/types/{typeName}/fields
-        /// Operation Id: Fields_ListByType
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/types/{typeName}/fields</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fields_ListByType</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TypeField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            async Task<Page<TypeField>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _fieldsClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByType");
-                scope.Start();
-                try
-                {
-                    var response = await _fieldsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of fields of a given type identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/types/{typeName}/fields
-        /// Operation Id: Fields_ListByType
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/types/{typeName}/fields</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fields_ListByType</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> A collection of <see cref="TypeField" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TypeField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationModuleField" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationModuleField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Page<TypeField> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _fieldsClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByType");
-                scope.Start();
-                try
-                {
-                    var response = _fieldsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -566,8 +574,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -612,8 +628,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -653,8 +677,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -694,8 +726,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -738,8 +778,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SoftwaresList DeserializeSoftwaresList(JsonElement element)
         {
-            Optional<IReadOnlyList<SoftwareData>> value = default;
+            Optional<IReadOnlyList<SoftwareInventoryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SoftwareData> array = new List<SoftwareData>();
+                    List<SoftwareInventoryData> array = new List<SoftwareInventoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SoftwareData.DeserializeSoftwareData(item));
+                        array.Add(SoftwareInventoryData.DeserializeSoftwareInventoryData(item));
                     }
                     value = array;
                     continue;

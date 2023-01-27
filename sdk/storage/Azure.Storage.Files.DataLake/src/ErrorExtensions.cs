@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.DataLake
             else if (response.Headers.ContentType != null
                 && response.Headers.ContentType.Contains("application/json"))
             {
-                JsonDocument json = JsonDocument.Parse(body);
+                using JsonDocument json = JsonDocument.Parse(body);
                 JsonElement error = json.RootElement.GetProperty("error");
 
                 IDictionary<string, string> details = default;

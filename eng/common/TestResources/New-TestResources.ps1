@@ -22,6 +22,9 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
+    [string] $TestResourcesDirectory,
+
+    [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationId,
 
@@ -136,7 +139,7 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5)
                 Write-Warning "Attempt $attempt failed: $_. Trying again in $sleep seconds..."
                 Start-Sleep -Seconds $sleep
             } else {
-                Write-Error -ErrorRecord $_
+                throw
             }
         }
     }
@@ -155,9 +158,26 @@ function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGrou
         Write-Warning "Update-Module Az.Resources -RequiredVersion 5.3.1"
         exit 1
     }
-    $servicePrincipal = Retry {
-        New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+
+    try {
+        $servicePrincipal = Retry {
+            New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+        }
+    } catch {
+        # The underlying error "The directory object quota limit for the Principal has been exceeded" gets overwritten by the module trying
+        # to call New-AzADApplication with a null object instead of stopping execution, which makes this case hard to diagnose because it prints the following:
+        #      "Cannot bind argument to parameter 'ObjectId' because it is an empty string."
+        # Provide a more helpful diagnostic prompt to the user if appropriate:
+        $totalApps = (Get-AzADApplication -OwnedApplication).Length
+        $msg = "App Registrations owned by you total $totalApps and may exceed the max quota (likely around 135)." + `
+               "`nTry removing some at https://ms.portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps" + `
+               " or by running the following command to remove apps created by this script:" + `
+               "`n    Get-AzADApplication -DisplayNameStartsWith '$baseName' | Remove-AzADApplication" + `
+               "`nNOTE: You may need to wait for the quota number to be updated after removing unused applications."
+        Write-Warning $msg
+        throw
     }
+
     $spPassword = ""
     $appId = ""
     if (Get-Member -Name "Secret" -InputObject $servicePrincipal -MemberType property) {
@@ -351,6 +371,14 @@ try {
     # Enumerate test resources to deploy. Fail if none found.
     $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
+    if ($TestResourcesDirectory) {
+        $root = $TestResourcesDirectory | Resolve-Path
+        # Add an explicit check below in case ErrorActionPreference is overridden and Resolve-Path doesn't stop execution
+        if (!$root) {
+            throw "TestResourcesDirectory '$TestResourcesDirectory' does not exist."
+        }
+        Write-Verbose "Overriding test resources search directory to '$root'"
+    }
     $templateFiles = @()
 
     "$ResourceType-resources.json", "$ResourceType-resources.bicep" | ForEach-Object {
@@ -723,29 +751,27 @@ try {
         Log $msg
 
         $deployment = Retry {
-            $lastDebugPreference = $DebugPreference
-            try {
-                if ($CI) {
-                    $DebugPreference = 'Continue'
-                }
-                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile.jsonFilePath -TemplateParameterObject $templateFileParameters -Force:$Force
-            } catch {
-                Write-Output @'
-#####################################################
-# For help debugging live test provisioning issues, #
-# see http://aka.ms/azsdk/engsys/live-test-help,    #
-#####################################################
-'@
-                throw
-            } finally {
-                $DebugPreference = $lastDebugPreference
-            }
+            New-AzResourceGroupDeployment `
+                    -Name $BaseName `
+                    -ResourceGroupName $resourceGroup.ResourceGroupName `
+                    -TemplateFile $templateFile.jsonFilePath `
+                    -TemplateParameterObject $templateFileParameters `
+                    -Force:$Force
         }
 
-        if ($deployment.ProvisioningState -eq 'Succeeded') {
-            # New-AzResourceGroupDeployment would've written an error and stopped the pipeline by default anyway.
-            Write-Verbose "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
+        if ($deployment.ProvisioningState -ne 'Succeeded') {
+            Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
+            Write-Host @'
+#####################################################
+# For help debugging live test provisioning issues, #
+# see http://aka.ms/azsdk/engsys/live-test-help     #
+#####################################################
+'@
+            exit 1
         }
+
+        Write-Host "Deployment '$($deployment.DeploymentName)' has CorrelationId '$($deployment.CorrelationId)'"
+        Write-Host "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
 
         $deploymentOutputs = SetDeploymentOutputs $serviceName $context $deployment $templateFile
 
@@ -811,7 +837,13 @@ group that will be created.
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
 specified - in which to discover ARM templates named 'test-resources.json' and
-Bicep templates named 'test-resources.bicep'. This can also be an absolute path
+Bicep templates named 'test-resources.bicep'. This can be an absolute path
+or specify parent directories. ServiceDirectory is also used for resource and
+environment variable naming.
+
+.PARAMETER TestResourcesDirectory
+An override directory in which to discover ARM templates named 'test-resources.json' and
+Bicep templates named 'test-resources.bicep'. This can be an absolute path
 or specify parent directories.
 
 .PARAMETER TestApplicationId

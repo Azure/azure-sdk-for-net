@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<SystemData> systemData = default;
             Optional<string> sourceControlSyncJobId = default;
             Optional<DateTimeOffset> creationTime = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SourceControlProvisioningState> provisioningState = default;
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
-            Optional<SyncType> syncType = default;
+            Optional<SourceControlSyncType> syncType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new SourceControlProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            syncType = new SyncType(property0.Value.GetString());
+                            syncType = new SourceControlSyncType(property0.Value.GetString());
                             continue;
                         }
                     }

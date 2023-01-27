@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -17,24 +18,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of IncidentAlertList. </summary>
         /// <param name="value"> Array of incident alerts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal IncidentAlertList(IEnumerable<SecurityAlert> value)
+        internal IncidentAlertList(IEnumerable<SecurityInsightsAlert> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of IncidentAlertList. </summary>
         /// <param name="value"> Array of incident alerts. </param>
-        internal IncidentAlertList(IReadOnlyList<SecurityAlert> value)
+        internal IncidentAlertList(IReadOnlyList<SecurityInsightsAlert> value)
         {
             Value = value;
         }
 
         /// <summary> Array of incident alerts. </summary>
-        public IReadOnlyList<SecurityAlert> Value { get; }
+        public IReadOnlyList<SecurityInsightsAlert> Value { get; }
     }
 }

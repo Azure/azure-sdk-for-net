@@ -31,14 +31,15 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> lastActiveTime = default;
             Optional<string> fqdn = default;
             Optional<ContainerAppTemplate> template = default;
             Optional<bool> active = default;
             Optional<int> replicas = default;
             Optional<int> trafficWeight = default;
             Optional<string> provisioningError = default;
-            Optional<RevisionHealthState> healthState = default;
-            Optional<RevisionProvisioningState> provisioningState = default;
+            Optional<ContainerAppRevisionHealthState> healthState = default;
+            Optional<ContainerAppRevisionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -83,6 +84,16 @@ namespace Azure.ResourceManager.AppContainers
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("lastActiveTime"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastActiveTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("fqdn"))
@@ -142,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            healthState = new RevisionHealthState(property0.Value.GetString());
+                            healthState = new ContainerAppRevisionHealthState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -152,14 +163,14 @@ namespace Azure.ResourceManager.AppContainers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new RevisionProvisioningState(property0.Value.GetString());
+                            provisioningState = new ContainerAppRevisionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState));
+            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastActiveTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState));
         }
     }
 }

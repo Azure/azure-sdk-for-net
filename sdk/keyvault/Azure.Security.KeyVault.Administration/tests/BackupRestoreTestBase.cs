@@ -11,6 +11,8 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
+    [IgnoreServiceError(404, "NotFound", Message = "The given jobId is not found", Reason = "Backup/restore tests have inherent concurrency issues")]
+    [IgnoreServiceError(409, "Conflict", Message = "User triggered Restore operation is in progress", Reason = "Backup/restore tests have inherent concurrency issues")]
     public abstract class BackupRestoreTestBase : AdministrationTestBase
     {
         public KeyVaultBackupClient Client { get; private set; }
@@ -31,15 +33,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var client = new KeyVaultBackupClient(
                 Uri,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new KeyVaultAdministrationClientOptions
+                InstrumentClientOptions(new KeyVaultAdministrationClientOptions(ServiceVersion)
                 {
                     Diagnostics =
+                    {
+                        LoggedHeaderNames =
                         {
-                            LoggedHeaderNames =
-                            {
-                                "x-ms-request-id",
-                            },
+                            "x-ms-request-id",
                         },
+                    },
                 }));
 
             return InstrumentClient(client);

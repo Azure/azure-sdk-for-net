@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -50,8 +49,16 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Checks that the redis cache name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/CheckNameAvailability
-        /// Operation Id: Redis_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,8 +80,16 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Checks that the redis cache name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/CheckNameAvailability
-        /// Operation Id: Redis_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,92 +111,60 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// Gets all Redis caches in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/redis
-        /// Operation Id: Redis_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/redis</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisResource> GetAllRedisAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
-                scope.Start();
-                try
-                {
-                    var response = await RedisRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
-                scope.Start();
-                try
-                {
-                    var response = await RedisRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllRedis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all Redis caches in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/redis
-        /// Operation Id: Redis_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/redis</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Redis_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisResource> GetAllRedis(CancellationToken cancellationToken = default)
         {
-            Page<RedisResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
-                scope.Start();
-                try
-                {
-                    var response = RedisRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
-                scope.Start();
-                try
-                {
-                    var response = RedisRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllRedis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// For checking the ongoing status of an operation
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/asyncOperations/{operationId}
-        /// Operation Id: AsyncOperationStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/asyncOperations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AsyncOperationStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location at which operation was triggered. </param>
         /// <param name="operationId"> The ID of asynchronous operation. </param>
@@ -204,8 +187,16 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary>
         /// For checking the ongoing status of an operation
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/asyncOperations/{operationId}
-        /// Operation Id: AsyncOperationStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/asyncOperations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AsyncOperationStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location at which operation was triggered. </param>
         /// <param name="operationId"> The ID of asynchronous operation. </param>

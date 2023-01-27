@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Creates or updates Advanced Threat Protection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
@@ -87,8 +94,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Creates or updates Advanced Threat Protection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
@@ -118,8 +133,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get a managed instance&apos;s Advanced Threat Protection state.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,8 +166,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get a managed instance&apos;s Advanced Threat Protection state.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,92 +199,60 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get the managed instance&apos;s Advanced Threat Protection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_ListByInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_ListByInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceAdvancedThreatProtectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceAdvancedThreatProtectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedInstanceAdvancedThreatProtectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdvancedThreatProtectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedInstanceAdvancedThreatProtectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedInstanceAdvancedThreatProtectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdvancedThreatProtectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceAdvancedThreatProtectionResource(Client, ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(e)), _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedInstanceAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the managed instance&apos;s Advanced Threat Protection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_ListByInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_ListByInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceAdvancedThreatProtectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceAdvancedThreatProtectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedInstanceAdvancedThreatProtectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdvancedThreatProtectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedInstanceAdvancedThreatProtectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedInstanceAdvancedThreatProtectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdvancedThreatProtectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceAdvancedThreatProtectionResource(Client, ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(e)), _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedInstanceAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,8 +274,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

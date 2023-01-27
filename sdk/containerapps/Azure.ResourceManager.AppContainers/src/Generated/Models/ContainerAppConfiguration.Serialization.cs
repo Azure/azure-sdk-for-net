@@ -51,16 +51,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("dapr");
                 writer.WriteObjectValue(Dapr);
             }
+            if (Optional.IsDefined(MaxInactiveRevisions))
+            {
+                writer.WritePropertyName("maxInactiveRevisions");
+                writer.WriteNumberValue(MaxInactiveRevisions.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static ContainerAppConfiguration DeserializeContainerAppConfiguration(JsonElement element)
         {
-            Optional<IList<AppSecret>> secrets = default;
-            Optional<ActiveRevisionsMode> activeRevisionsMode = default;
-            Optional<IngressProvider> ingress = default;
-            Optional<IList<RegistryCredentials>> registries = default;
-            Optional<DaprProvider> dapr = default;
+            Optional<IList<ContainerAppWritableSecret>> secrets = default;
+            Optional<ContainerAppActiveRevisionsMode> activeRevisionsMode = default;
+            Optional<ContainerAppIngressConfiguration> ingress = default;
+            Optional<IList<ContainerAppRegistryCredentials>> registries = default;
+            Optional<ContainerAppDaprConfiguration> dapr = default;
+            Optional<int> maxInactiveRevisions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"))
@@ -70,10 +76,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AppSecret> array = new List<AppSecret>();
+                    List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppSecret.DeserializeAppSecret(item));
+                        array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
                     }
                     secrets = array;
                     continue;
@@ -85,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    activeRevisionsMode = new ActiveRevisionsMode(property.Value.GetString());
+                    activeRevisionsMode = new ContainerAppActiveRevisionsMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ingress"))
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ingress = IngressProvider.DeserializeIngressProvider(property.Value);
+                    ingress = ContainerAppIngressConfiguration.DeserializeContainerAppIngressConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("registries"))
@@ -105,10 +111,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RegistryCredentials> array = new List<RegistryCredentials>();
+                    List<ContainerAppRegistryCredentials> array = new List<ContainerAppRegistryCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegistryCredentials.DeserializeRegistryCredentials(item));
+                        array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item));
                     }
                     registries = array;
                     continue;
@@ -120,11 +126,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dapr = DaprProvider.DeserializeDaprProvider(property.Value);
+                    dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("maxInactiveRevisions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maxInactiveRevisions = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value);
+            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value, Optional.ToNullable(maxInactiveRevisions));
         }
     }
 }

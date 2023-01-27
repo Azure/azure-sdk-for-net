@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Creates a Job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
-        /// Operation Id: Jobs_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> The Job name. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Creates a Job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
-        /// Operation Id: Jobs_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> The Job name. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets a Job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
-        /// Operation Id: Jobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The Job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets a Job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
-        /// Operation Id: Jobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The Job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +210,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Lists all of the Jobs for the Transform.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs
-        /// Operation Id: Jobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
@@ -188,43 +227,23 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaJobResource> GetAllAsync(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MediaJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaJobJobsClientDiagnostics.CreateScope("MediaJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaJobJobsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaJobResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MediaJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mediaJobJobsClientDiagnostics.CreateScope("MediaJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaJobJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaJobResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaJobResource(Client, MediaJobData.DeserializeMediaJobData(e)), _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the Jobs for the Transform.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs
-        /// Operation Id: Jobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
@@ -232,43 +251,23 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaJobResource> GetAll(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<MediaJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaJobJobsClientDiagnostics.CreateScope("MediaJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaJobJobsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaJobResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MediaJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mediaJobJobsClientDiagnostics.CreateScope("MediaJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaJobJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaJobResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaJobResource(Client, MediaJobData.DeserializeMediaJobData(e)), _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
-        /// Operation Id: Jobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The Job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,8 +293,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
-        /// Operation Id: Jobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The Job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> containerIds = default;
             Optional<IReadOnlyList<A2AZoneDetails>> zones = default;
+            Optional<IReadOnlyList<A2AExtendedLocationDetails>> extendedLocations = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,13 +62,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     zones = array;
                     continue;
                 }
+                if (property.NameEquals("extendedLocations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<A2AExtendedLocationDetails> array = new List<A2AExtendedLocationDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(A2AExtendedLocationDetails.DeserializeA2AExtendedLocationDetails(item));
+                    }
+                    extendedLocations = array;
+                    continue;
+                }
                 if (property.NameEquals("instanceType"))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureFabricSpecificDetails(instanceType, Optional.ToNullable(location), Optional.ToList(containerIds), Optional.ToList(zones));
+            return new AzureFabricSpecificDetails(instanceType, Optional.ToNullable(location), Optional.ToList(containerIds), Optional.ToList(zones), Optional.ToList(extendedLocations));
         }
     }
 }

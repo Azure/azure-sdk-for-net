@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,9 +54,17 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Creates a new certificate inside the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}
-        /// Operation Id: Certificate_Create
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
@@ -90,9 +97,17 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Creates a new certificate inside the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}
-        /// Operation Id: Certificate_Create
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
@@ -125,9 +140,17 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Gets information about the specified certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}
-        /// Operation Id: Certificate_Get
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,9 +177,17 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Gets information about the specified certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}
-        /// Operation Id: Certificate_Get
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,9 +214,17 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Lists all of the certificates in the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates
-        /// Operation Id: Certificate_ListByBatchAccount
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_ListByBatchAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
@@ -194,43 +233,23 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchAccountCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountCertificateResource> GetAllAsync(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchAccountCertificateResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountCertificateCertificateClientDiagnostics.CreateScope("BatchAccountCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountCertificateCertificateRestClient.ListByBatchAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchAccountCertificateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountCertificateCertificateClientDiagnostics.CreateScope("BatchAccountCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountCertificateCertificateRestClient.ListByBatchAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountCertificateResource(Client, BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e)), _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists all of the certificates in the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates
-        /// Operation Id: Certificate_ListByBatchAccount
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_ListByBatchAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
@@ -239,43 +258,23 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchAccountCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountCertificateResource> GetAll(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<BatchAccountCertificateResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountCertificateCertificateClientDiagnostics.CreateScope("BatchAccountCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountCertificateCertificateRestClient.ListByBatchAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchAccountCertificateResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountCertificateCertificateClientDiagnostics.CreateScope("BatchAccountCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountCertificateCertificateRestClient.ListByBatchAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountCertificateResource(Client, BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e)), _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}
-        /// Operation Id: Certificate_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -301,8 +300,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}
-        /// Operation Id: Certificate_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateName"> The identifier for the certificate. This must be made up of algorithm and thumbprint separated by a dash, and must match the certificate data in the request. For example SHA1-a3d1c5. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

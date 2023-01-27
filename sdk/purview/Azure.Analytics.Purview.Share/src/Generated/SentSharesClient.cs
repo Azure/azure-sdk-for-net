@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
-    // Data plane generated client. The SentShares service client.
+    // Data plane generated client.
     /// <summary> The SentShares service client. </summary>
     public partial class SentSharesClient
     {
@@ -70,51 +67,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSentShareAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetSentShareAsync("<sentShareName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Get a sent share
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-        /// <code>{
-        ///   properties: {
-        ///     collection: {
-        ///       referenceName: string, # Required. Gets or sets the reference name.
-        ///       type: string, # Required. Gets or sets the reference type property.
-        ///     }, # Required. Reference to a Collection.
-        ///     createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
-        ///     description: string, # Optional. Share description.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     senderEmail: string, # Optional. Email of the sender who created the sent share.
-        ///     senderName: string, # Optional. Name of the sender who created the sent share.
-        ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-        ///   }, # Required. Properties of in place sent share.
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetSentShareAsync(string sentShareName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -140,51 +93,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSentShare with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetSentShare("<sentShareName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Get a sent share
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-        /// <code>{
-        ///   properties: {
-        ///     collection: {
-        ///       referenceName: string, # Required. Gets or sets the reference name.
-        ///       type: string, # Required. Gets or sets the reference type property.
-        ///     }, # Required. Reference to a Collection.
-        ///     createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
-        ///     description: string, # Optional. Share description.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     senderEmail: string, # Optional. Email of the sender who created the sent share.
-        ///     senderName: string, # Optional. Name of the sender who created the sent share.
-        ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-        ///   }, # Required. Properties of in place sent share.
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShare(String,RequestContext)']/*" />
         public virtual Response GetSentShare(string sentShareName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -211,107 +120,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         collection = new {
-        ///             referenceName = "<referenceName>",
-        ///             type = "<type>",
-        ///         },
-        ///     },
-        ///     shareKind = "InPlace",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         collection = new {
-        ///             referenceName = "<referenceName>",
-        ///             type = "<type>",
-        ///         },
-        ///         description = "<description>",
-        ///     },
-        ///     shareKind = "InPlace",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Create a sent share
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-        /// <code>{
-        ///   properties: {
-        ///     collection: {
-        ///       referenceName: string, # Required. Gets or sets the reference name.
-        ///       type: string, # Required. Gets or sets the reference type property.
-        ///     }, # Required. Reference to a Collection.
-        ///     createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
-        ///     description: string, # Optional. Share description.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     senderEmail: string, # Optional. Email of the sender who created the sent share.
-        ///     senderName: string, # Optional. Name of the sender who created the sent share.
-        ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-        ///   }, # Required. Properties of in place sent share.
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-        /// <code>{
-        ///   properties: {
-        ///     collection: {
-        ///       referenceName: string, # Required. Gets or sets the reference name.
-        ///       type: string, # Required. Gets or sets the reference type property.
-        ///     }, # Required. Reference to a Collection.
-        ///     createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
-        ///     description: string, # Optional. Share description.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     senderEmail: string, # Optional. Email of the sender who created the sent share.
-        ///     senderName: string, # Optional. Name of the sender who created the sent share.
-        ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-        ///   }, # Required. Properties of in place sent share.
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sentShareName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -339,107 +148,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         collection = new {
-        ///             referenceName = "<referenceName>",
-        ///             type = "<type>",
-        ///         },
-        ///     },
-        ///     shareKind = "InPlace",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sentShareName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         collection = new {
-        ///             referenceName = "<referenceName>",
-        ///             type = "<type>",
-        ///         },
-        ///         description = "<description>",
-        ///     },
-        ///     shareKind = "InPlace",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sentShareName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Create a sent share
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-        /// <code>{
-        ///   properties: {
-        ///     collection: {
-        ///       referenceName: string, # Required. Gets or sets the reference name.
-        ///       type: string, # Required. Gets or sets the reference type property.
-        ///     }, # Required. Reference to a Collection.
-        ///     createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
-        ///     description: string, # Optional. Share description.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     senderEmail: string, # Optional. Email of the sender who created the sent share.
-        ///     senderName: string, # Optional. Name of the sender who created the sent share.
-        ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-        ///   }, # Required. Properties of in place sent share.
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-        /// <code>{
-        ///   properties: {
-        ///     collection: {
-        ///       referenceName: string, # Required. Gets or sets the reference name.
-        ///       type: string, # Required. Gets or sets the reference type property.
-        ///     }, # Required. Reference to a Collection.
-        ///     createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
-        ///     description: string, # Optional. Share description.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     senderEmail: string, # Optional. Email of the sender who created the sent share.
-        ///     senderName: string, # Optional. Name of the sender who created the sent share.
-        ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-        ///   }, # Required. Properties of in place sent share.
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sentShareName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -466,71 +175,12 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSentSharesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// await foreach (var data in client.GetSentSharesAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSentSharesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// await foreach (var data in client.GetSentSharesAsync("<skipToken>", "<filter>", "<orderby>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Get list of sent shares
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SentShareListValue</c>:
-        /// <code>{
-        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentSharesAsync(String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSentSharesAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
-            return GetSentSharesImplementationAsync("SentSharesClient.GetSentShares", skipToken, filter, orderby, context);
-        }
-
-        private AsyncPageable<BinaryData> GetSentSharesImplementationAsync(string diagnosticsScopeName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentSharesRequest(skipToken, filter, orderby, context)
-                        : CreateGetSentSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentSharesRequest(skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetSentShares", "value", "nextLink", context);
         }
 
         /// <summary> Get list of sent shares in the given Purview account. </summary>
@@ -540,71 +190,12 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSentShares and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// foreach (var data in client.GetSentShares())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSentShares with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// foreach (var data in client.GetSentShares("<skipToken>", "<filter>", "<orderby>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Get list of sent shares
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SentShareListValue</c>:
-        /// <code>{
-        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShares(String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSentShares(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
-            return GetSentSharesImplementation("SentSharesClient.GetSentShares", skipToken, filter, orderby, context);
-        }
-
-        private Pageable<BinaryData> GetSentSharesImplementation(string diagnosticsScopeName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentSharesRequest(skipToken, filter, orderby, context)
-                        : CreateGetSentSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentSharesRequest(skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetSentShares", "value", "nextLink", context);
         }
 
         /// <summary> Deletes a sent share. </summary>
@@ -615,19 +206,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareName>");
-        /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks> Delete a sent share. </remarks>
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteAsync(WaitUntil,String,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string sentShareName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -654,19 +233,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var operation = client.Delete(WaitUntil.Completed, "<sentShareName>");
-        /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
-        /// ]]></code>
-        /// </example>
-        /// <remarks> Delete a sent share. </remarks>
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='Delete(WaitUntil,String,RequestContext)']/*" />
         public virtual Operation Delete(WaitUntil waitUntil, string sentShareName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));

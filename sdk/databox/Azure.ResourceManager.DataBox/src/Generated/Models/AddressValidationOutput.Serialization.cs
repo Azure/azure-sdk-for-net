@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.ToString());
+                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("validationStatus"))

@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Automation
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            UpdateConfiguration updateConfiguration = default;
-            SUCScheduleProperties scheduleInfo = default;
+            SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
+            SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
             Optional<string> provisioningState = default;
-            Optional<ErrorResponse> error = default;
+            Optional<AutomationResponseError> error = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Automation
                     {
                         if (property0.NameEquals("updateConfiguration"))
                         {
-                            updateConfiguration = UpdateConfiguration.DeserializeUpdateConfiguration(property0.Value);
+                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"))
                         {
-                            scheduleInfo = SUCScheduleProperties.DeserializeSUCScheduleProperties(property0.Value);
+                            scheduleInfo = SoftwareUpdateConfigurationScheduleProperties.DeserializeSoftwareUpdateConfigurationScheduleProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = ErrorResponse.DeserializeErrorResponse(property0.Value);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"))

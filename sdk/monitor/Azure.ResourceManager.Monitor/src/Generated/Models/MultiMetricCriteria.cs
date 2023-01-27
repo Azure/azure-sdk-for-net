@@ -25,14 +25,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
         public MultiMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (metricName == null)
-            {
-                throw new ArgumentNullException(nameof(metricName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(metricName, nameof(metricName));
 
             Name = name;
             MetricName = metricName;

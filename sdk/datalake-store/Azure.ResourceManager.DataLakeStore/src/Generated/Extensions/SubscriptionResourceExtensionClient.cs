@@ -49,111 +49,69 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Lists the Data Lake Store accounts within the subscription. The response includes a link to the next page of results, if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts
-        /// Operation Id: Accounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="top"> The number of items to return. Optional. </param>
-        /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
-        /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataLakeStoreAccountBasic> GetAccountsAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(SubscriptionGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeStoreAccountBasic>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await DataLakeStoreAccountAccountsRestClient.ListAsync(Id.SubscriptionId, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataLakeStoreAccountBasic>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await DataLakeStoreAccountAccountsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeStoreAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeStoreAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the Data Lake Store accounts within the subscription. The response includes a link to the next page of results, if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts
-        /// Operation Id: Accounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="top"> The number of items to return. Optional. </param>
-        /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
-        /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreAccountBasic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataLakeStoreAccountBasic> GetAccounts(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataLakeStoreAccountBasicData> GetAccounts(SubscriptionGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            Page<DataLakeStoreAccountBasic> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
-                scope.Start();
-                try
-                {
-                    var response = DataLakeStoreAccountAccountsRestClient.List(Id.SubscriptionId, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataLakeStoreAccountBasic> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
-                scope.Start();
-                try
-                {
-                    var response = DataLakeStoreAccountAccountsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeStoreAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeStoreAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks whether the specified account name is available or taken.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="content"> Parameters supplied to check the Data Lake Store account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailabilityInformation>> CheckNameAvailabilityAccountAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreAccountNameAvailabilityResult>> CheckDataLakeStoreAccountNameAvailabilityAsync(AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityAccount");
+            using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataLakeStoreAccountNameAvailability");
             scope.Start();
             try
             {
@@ -169,15 +127,23 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Checks whether the specified account name is available or taken.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="content"> Parameters supplied to check the Data Lake Store account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailabilityInformation> CheckNameAvailabilityAccount(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreAccountNameAvailabilityResult> CheckDataLakeStoreAccountNameAvailability(AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityAccount");
+            using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataLakeStoreAccountNameAvailability");
             scope.Start();
             try
             {
@@ -193,14 +159,22 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets subscription-level properties and limits for Data Lake Store specified by resource location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/capability
-        /// Operation Id: Locations_GetCapability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/capability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CapabilityInformation>> GetCapabilityLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreCapabilityInformation>> GetCapabilityByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilityByLocation");
             scope.Start();
             try
             {
@@ -216,14 +190,22 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets subscription-level properties and limits for Data Lake Store specified by resource location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/capability
-        /// Operation Id: Locations_GetCapability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/capability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CapabilityInformation> GetCapabilityLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreCapabilityInformation> GetCapabilityByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilityByLocation");
             scope.Start();
             try
             {
@@ -239,58 +221,46 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets the current usage count and the limit for the resources of the location under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/usages
-        /// Operation Id: Locations_GetUsage
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetUsage</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataLakeStoreUsage> GetUsageLocationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataLakeStoreUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeStoreUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageLocations");
-                scope.Start();
-                try
-                {
-                    var response = await LocationsRestClient.GetUsageAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateGetUsageRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataLakeStoreUsage.DeserializeDataLakeStoreUsage, LocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets the current usage count and the limit for the resources of the location under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/usages
-        /// Operation Id: Locations_GetUsage
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetUsage</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataLakeStoreUsage> GetUsageLocations(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataLakeStoreUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<DataLakeStoreUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageLocations");
-                scope.Start();
-                try
-                {
-                    var response = LocationsRestClient.GetUsage(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateGetUsageRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataLakeStoreUsage.DeserializeDataLakeStoreUsage, LocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", null, cancellationToken);
         }
     }
 }

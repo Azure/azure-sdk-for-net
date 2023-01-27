@@ -974,5 +974,30 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
             }
         }
+
+        [RecordedTest]
+        public void BlobBaseClient_SetNameFields_TrimBlobNameSlashes([Values("blobname", "/blobname", "//blobname", "vdir//blobname", "/vdir//blobname")] string blobName, [Values(true, false)] bool trimBlobNameSlashes)
+        {
+            // arrange
+            var accountName = "account";
+            var containerName = "container";
+            var uriPrefix = $"https://{accountName}.blob.core.windows.net/{containerName}/";
+            var options = new BlobClientOptions() { TrimBlobNameSlashes = trimBlobNameSlashes };
+
+            // act
+            var blobBase = new BlobBaseClient(new Uri(string.Concat(uriPrefix, blobName)), options);
+
+            // verify
+            if (trimBlobNameSlashes)
+            {
+                Assert.AreEqual(blobName.Trim('/'), blobBase.Name);
+            }
+            else
+            {
+                Assert.AreEqual(blobName, blobBase.Name);
+            }
+            Assert.AreEqual(containerName, blobBase.BlobContainerName);
+            Assert.AreEqual(accountName, blobBase.AccountName);
+        }
     }
 }

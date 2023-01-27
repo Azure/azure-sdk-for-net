@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Create or update an ExpressRoute Circuit Authorization in a private cloud
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}
-        /// Operation Id: Authorizations_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Create or update an ExpressRoute Circuit Authorization in a private cloud
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}
-        /// Operation Id: Authorizations_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Get an ExpressRoute Circuit Authorization by name in a private cloud
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}
-        /// Operation Id: Authorizations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Get an ExpressRoute Circuit Authorization by name in a private cloud
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}
-        /// Operation Id: Authorizations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// List ExpressRoute Circuit Authorizations in a private cloud
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations
-        /// Operation Id: Authorizations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteAuthorizationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteAuthorizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRouteAuthorizationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _expressRouteAuthorizationAuthorizationsClientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteAuthorizationAuthorizationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteAuthorizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRouteAuthorizationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _expressRouteAuthorizationAuthorizationsClientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteAuthorizationAuthorizationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteAuthorizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List ExpressRoute Circuit Authorizations in a private cloud
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations
-        /// Operation Id: Authorizations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteAuthorizationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteAuthorizationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ExpressRouteAuthorizationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _expressRouteAuthorizationAuthorizationsClientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _expressRouteAuthorizationAuthorizationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteAuthorizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpressRouteAuthorizationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _expressRouteAuthorizationAuthorizationsClientDiagnostics.CreateScope("ExpressRouteAuthorizationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _expressRouteAuthorizationAuthorizationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteAuthorizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}
-        /// Operation Id: Authorizations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}
-        /// Operation Id: Authorizations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Authorizations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

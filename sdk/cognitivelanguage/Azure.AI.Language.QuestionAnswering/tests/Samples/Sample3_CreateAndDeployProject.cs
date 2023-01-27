@@ -78,13 +78,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
-#if SNIPPET
             // Knowledge Sources can be retrieved as follows
             Pageable<BinaryData> sources = updateSourcesOperation.Value;
-#else
-            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            Pageable<BinaryData> sources = client.GetSources(newProjectName);
-#endif
 
             Console.WriteLine("Sources: ");
             foreach (BinaryData source in sources)
@@ -186,13 +181,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
-#if SNIPPET
             // Knowledge Sources can be retrieved as follows
             AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
-#else
-            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
-#endif
 
             Console.WriteLine("Sources: ");
             await foreach (BinaryData source in sources)

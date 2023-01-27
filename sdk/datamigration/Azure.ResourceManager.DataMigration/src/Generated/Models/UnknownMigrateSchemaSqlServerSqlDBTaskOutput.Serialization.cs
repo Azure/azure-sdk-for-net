@@ -10,20 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMigrateSchemaSqlServerSqlDBTaskOutput : IUtf8JsonSerializable
+    internal partial class UnknownMigrateSchemaSqlServerSqlDBTaskOutput
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("resultType");
-            writer.WriteStringValue(ResultType);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownMigrateSchemaSqlServerSqlDBTaskOutput DeserializeUnknownMigrateSchemaSqlServerSqlDBTaskOutput(JsonElement element)
         {
             Optional<string> id = default;
-            string resultType = default;
+            string resultType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))

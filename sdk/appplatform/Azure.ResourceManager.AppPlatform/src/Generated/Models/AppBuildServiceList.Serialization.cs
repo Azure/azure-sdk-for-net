@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppBuildServiceList DeserializeAppBuildServiceList(JsonElement element)
         {
-            Optional<IReadOnlyList<AppBuildServiceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformBuildServiceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AppBuildServiceData> array = new List<AppBuildServiceData>();
+                    List<AppPlatformBuildServiceData> array = new List<AppPlatformBuildServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppBuildServiceData.DeserializeAppBuildServiceData(item));
+                        array.Add(AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(item));
                     }
                     value = array;
                     continue;

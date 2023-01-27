@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ResyncContent(ResyncInputProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
@@ -29,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal ResyncInputProperties Properties { get; }
         /// <summary>
         /// The provider specific details.
+        /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtResyncInput"/>.
         /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtResyncInput"/>.
         /// </summary>

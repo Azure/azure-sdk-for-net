@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,6 +24,11 @@ namespace Azure.AI.TextAnalytics
             writer.WriteNumberValue(InvalidDocumentCount);
             writer.WritePropertyName("transactionsCount");
             writer.WriteNumberValue(TransactionCount);
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +38,8 @@ namespace Azure.AI.TextAnalytics
             int validDocumentsCount = default;
             int erroneousDocumentsCount = default;
             long transactionsCount = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentsCount"))
@@ -54,8 +62,10 @@ namespace Azure.AI.TextAnalytics
                     transactionsCount = property.Value.GetInt64();
                     continue;
                 }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
-            return new TextDocumentBatchStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount);
+            additionalProperties = additionalPropertiesDictionary;
+            return new TextDocumentBatchStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalProperties);
         }
     }
 }

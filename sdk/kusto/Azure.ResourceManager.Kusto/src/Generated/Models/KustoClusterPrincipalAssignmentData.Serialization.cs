@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Kusto
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
+            if (Optional.IsDefined(ClusterPrincipalId))
             {
                 writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId.Value);
+                writer.WriteStringValue(ClusterPrincipalId);
             }
             if (Optional.IsDefined(Role))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Kusto
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Guid> principalId = default;
+            Optional<string> principalId = default;
             Optional<KustoClusterPrincipalRole> role = default;
             Optional<Guid> tenantId = default;
             Optional<KustoPrincipalAssignmentType> principalType = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kusto
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -96,12 +96,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         if (property0.NameEquals("principalId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            principalId = property0.Value.GetGuid();
+                            principalId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("role"))
@@ -168,7 +163,7 @@ namespace Azure.ResourceManager.Kusto
                     continue;
                 }
             }
-            return new KustoClusterPrincipalAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(principalId), Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId));
+            return new KustoClusterPrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId));
         }
     }
 }
