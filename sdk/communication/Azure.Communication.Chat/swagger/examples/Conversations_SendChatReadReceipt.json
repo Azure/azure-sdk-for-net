@@ -1,0 +1,45 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-10-01-preview7",
+    "chatThreadId": "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345",
+    "sendReadReceiptRequest": {
+      "chatMessageId": "1591137790240"
+    }
+  },
+  "responses": {
+    "200": {},
+    "401": {
+      "body": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is not authorized."
+        }
+      }
+    },
+    "403": {
+      "body": {
+        "error": {
+          "code": "Forbidden",
+          "message": "User is not allowed to perform specified action."
+        }
+      }
+    },
+    "429": {
+      "body": {
+        "error": {
+          "code": "TooManyRequests",
+          "message": "Rate limit exceeded."
+        }
+      }
+    },
+    "503": {
+      "body": {
+        "error": {
+          "code": "ServiceUnavailable",
+          "message": "The server is currently unable to handle the request."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-10-01-preview7",
+    "chatThreadId": "19:f2167429acf6482880c6b7790a9086c1@thread.v2",
+    "chatParticipant": {
+      "communicationIdentifier": {
+        "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_c94ff260-162d-46d6-94fd-e79f4d213715",
+        "communicationUser": {
+          "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_c94ff260-162d-46d6-94fd-e79f4d213715"
+        }
+      },
+      "displayName": "Alex",
+      "roleIds": [
+        "8540c0de-899f-5cce-acb5-3ec493af3800_ce2142fd-aa87-435d-bacf-16efe5ae70aa"
+      ]
+    }
+  },
+  "responses": {
+    "204": {},
+    "401": {
+      "body": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is not authorized."
+        }
+      }
+    },
+    "403": {
+      "body": {
+        "error": {
+          "code": "Forbidden",
+          "message": "User is not allowed to perform specified action."
+        }
+      }
+    },
+    "429": {
+      "body": {
+        "error": {
+          "code": "TooManyRequests",
+          "message": "Rate limit exceeded."
+        }
+      }
+    },
+    "503": {
+      "body": {
+        "error": {
+          "code": "ServiceUnavailable",
+          "message": "The server is currently unable to handle the request."
+        }
+      }
+    }
+  }
+}

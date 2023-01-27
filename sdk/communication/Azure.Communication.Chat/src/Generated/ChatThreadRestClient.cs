@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -33,7 +34,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-09-07")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-11-15-preview8")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -327,7 +328,7 @@ namespace Azure.Communication.Chat
 
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="chatThreadId"> The thread id of the message. </param>
-        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. The limit can be found at https://docs.microsoft.com/en-us/azure/communication-services/concepts/service-limits#size-limits. </param>
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
@@ -356,7 +357,7 @@ namespace Azure.Communication.Chat
 
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="chatThreadId"> The thread id of the message. </param>
-        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. The limit can be found at https://docs.microsoft.com/en-us/azure/communication-services/concepts/service-limits#size-limits. </param>
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
@@ -872,6 +873,99 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal HttpMessage CreateUpdateChatParticipantRequest(string chatThreadId, CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime, IEnumerable<string> roleIds)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/participants/:update", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            ChatParticipantInternal chatParticipantInternal = new ChatParticipantInternal(communicationIdentifier)
+            {
+                DisplayName = displayName,
+                ShareHistoryTime = shareHistoryTime
+            };
+            if (roleIds != null)
+            {
+                foreach (var value in roleIds)
+                {
+                    chatParticipantInternal.RoleIds.Add(value);
+                }
+            }
+            var model = chatParticipantInternal;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Update a participant from a thread. </summary>
+        /// <param name="chatThreadId"> Id of the parent chat thread. </param>
+        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <param name="displayName"> Display name for the chat participant. </param>
+        /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="roleIds"> Identifiers of roles for this chat participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="communicationIdentifier"/> is null. </exception>
+        public async Task<Response> UpdateChatParticipantAsync(string chatThreadId, CommunicationIdentifierModel communicationIdentifier, string displayName = null, DateTimeOffset? shareHistoryTime = null, IEnumerable<string> roleIds = null, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (communicationIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(communicationIdentifier));
+            }
+
+            using var message = CreateUpdateChatParticipantRequest(chatThreadId, communicationIdentifier, displayName, shareHistoryTime, roleIds);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Update a participant from a thread. </summary>
+        /// <param name="chatThreadId"> Id of the parent chat thread. </param>
+        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <param name="displayName"> Display name for the chat participant. </param>
+        /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="roleIds"> Identifiers of roles for this chat participant. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="communicationIdentifier"/> is null. </exception>
+        public Response UpdateChatParticipant(string chatThreadId, CommunicationIdentifierModel communicationIdentifier, string displayName = null, DateTimeOffset? shareHistoryTime = null, IEnumerable<string> roleIds = null, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (communicationIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(communicationIdentifier));
+            }
+
+            using var message = CreateUpdateChatParticipantRequest(chatThreadId, communicationIdentifier, displayName, shareHistoryTime, roleIds);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic)
         {
             var message = _pipeline.CreateMessage();
@@ -1080,6 +1174,198 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal HttpMessage CreateTeamsInteropGetImageRequest(string chatThreadId, string chatMessageId, string imageId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(chatMessageId, true);
+            uri.AppendPath("/teamsinterop/image/", false);
+            uri.AppendPath(imageId, true);
+            uri.AppendPath("/$value", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream, application/json");
+            return message;
+        }
+
+        /// <summary> Get a teams interop image by id. </summary>
+        /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
+        /// <param name="chatMessageId"> The message id. </param>
+        /// <param name="imageId"> The id of the image to download. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/>, <paramref name="chatMessageId"/> or <paramref name="imageId"/> is null. </exception>
+        public async Task<Response<Stream>> TeamsInteropGetImageAsync(string chatThreadId, string chatMessageId, string imageId, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (chatMessageId == null)
+            {
+                throw new ArgumentNullException(nameof(chatMessageId));
+            }
+            if (imageId == null)
+            {
+                throw new ArgumentNullException(nameof(imageId));
+            }
+
+            using var message = CreateTeamsInteropGetImageRequest(chatThreadId, chatMessageId, imageId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get a teams interop image by id. </summary>
+        /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
+        /// <param name="chatMessageId"> The message id. </param>
+        /// <param name="imageId"> The id of the image to download. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/>, <paramref name="chatMessageId"/> or <paramref name="imageId"/> is null. </exception>
+        public Response<Stream> TeamsInteropGetImage(string chatThreadId, string chatMessageId, string imageId, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (chatMessageId == null)
+            {
+                throw new ArgumentNullException(nameof(chatMessageId));
+            }
+            if (imageId == null)
+            {
+                throw new ArgumentNullException(nameof(imageId));
+            }
+
+            using var message = CreateTeamsInteropGetImageRequest(chatThreadId, chatMessageId, imageId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateTeamsInteropGetImageBySizeRequest(string chatThreadId, string chatMessageId, string imageId, string imageSize)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(chatMessageId, true);
+            uri.AppendPath("/teamsinterop/image/", false);
+            uri.AppendPath(imageId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(imageSize, true);
+            uri.AppendPath("/$value", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream, application/json");
+            return message;
+        }
+
+        /// <summary> Get a teams interop image by id and size. </summary>
+        /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
+        /// <param name="chatMessageId"> The message id. </param>
+        /// <param name="imageId"> The id of the image to download. </param>
+        /// <param name="imageSize"> The size of the image to download. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/>, <paramref name="chatMessageId"/>, <paramref name="imageId"/> or <paramref name="imageSize"/> is null. </exception>
+        public async Task<Response<Stream>> TeamsInteropGetImageBySizeAsync(string chatThreadId, string chatMessageId, string imageId, string imageSize, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (chatMessageId == null)
+            {
+                throw new ArgumentNullException(nameof(chatMessageId));
+            }
+            if (imageId == null)
+            {
+                throw new ArgumentNullException(nameof(imageId));
+            }
+            if (imageSize == null)
+            {
+                throw new ArgumentNullException(nameof(imageSize));
+            }
+
+            using var message = CreateTeamsInteropGetImageBySizeRequest(chatThreadId, chatMessageId, imageId, imageSize);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get a teams interop image by id and size. </summary>
+        /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
+        /// <param name="chatMessageId"> The message id. </param>
+        /// <param name="imageId"> The id of the image to download. </param>
+        /// <param name="imageSize"> The size of the image to download. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/>, <paramref name="chatMessageId"/>, <paramref name="imageId"/> or <paramref name="imageSize"/> is null. </exception>
+        public Response<Stream> TeamsInteropGetImageBySize(string chatThreadId, string chatMessageId, string imageId, string imageSize, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (chatMessageId == null)
+            {
+                throw new ArgumentNullException(nameof(chatMessageId));
+            }
+            if (imageId == null)
+            {
+                throw new ArgumentNullException(nameof(imageId));
+            }
+            if (imageSize == null)
+            {
+                throw new ArgumentNullException(nameof(imageSize));
+            }
+
+            using var message = CreateTeamsInteropGetImageBySizeRequest(chatThreadId, chatMessageId, imageId, imageSize);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListChatReadReceiptsNextPageRequest(string nextLink, string chatThreadId, int? maxPageSize, int? skip)
         {
             var message = _pipeline.CreateMessage();
@@ -1177,7 +1463,7 @@ namespace Azure.Communication.Chat
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="chatThreadId"> The thread id of the message. </param>
-        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. The limit can be found at https://docs.microsoft.com/en-us/azure/communication-services/concepts/service-limits#size-limits. </param>
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
@@ -1211,7 +1497,7 @@ namespace Azure.Communication.Chat
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="chatThreadId"> The thread id of the message. </param>
-        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. The limit can be found at https://docs.microsoft.com/en-us/azure/communication-services/concepts/service-limits#size-limits. </param>
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>

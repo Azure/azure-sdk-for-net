@@ -13,7 +13,7 @@ If any of the new objects needs to be overwritten, add the required changes to t
 title: Chat
 tag: package-chat-2021-09-07
 model-namespace: false
-require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d0d60267975bf5823a9173ce0c926659bc9775bb/specification/communication/data-plane/Chat/readme.md
+input-file:
+    -  ../swagger/communicationserviceschat.json
 payload-flattening-threshold: 10
 generation1-convenience-client: true

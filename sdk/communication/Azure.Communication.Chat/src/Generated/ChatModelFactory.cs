@@ -28,6 +28,18 @@ namespace Azure.Communication.Chat
             return new ChatError(code, message, target, details?.ToList(), innerError);
         }
 
+        /// <summary> Initializes a new instance of ChatAttachment. </summary>
+        /// <param name="id"> Id of the attachment. </param>
+        /// <param name="attachmentType"> The type of attachment. </param>
+        /// <param name="contentType"> The type of content of the attachment as mime type, if available. </param>
+        /// <param name="name"> The name of the attachment content. </param>
+        /// <param name="url"> The URL where the attachment can be downloaded. </param>
+        /// <returns> A new <see cref="Chat.ChatAttachment"/> instance for mocking. </returns>
+        public static ChatAttachment ChatAttachment(string id = null, AttachmentType? attachmentType = null, string contentType = null, string name = null, string url = null)
+        {
+            return new ChatAttachment(id, attachmentType, contentType, name, url);
+        }
+
         /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
         /// <returns> A new <see cref="Chat.AddChatParticipantsResult"/> instance for mocking. </returns>

@@ -1,0 +1,166 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-10-01-preview7",
+    "chatThreadId": "19:453dafb77b26481ea2e73bcada0324af@thread.v2",
+    "maxPageSize": 5
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "id": "1593107077690",
+            "type": "text",
+            "version": "1593107077683",
+            "sequenceId": "5",
+            "content": {
+              "message": "So where should we get lunch from today?"
+            },
+            "senderDisplayName": "Jane",
+            "createdOn": "2020-06-25T17:44:37.6830000Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b",
+              "communicationUser": {
+                "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+              }
+            }
+          },
+          {
+            "id": "1593107077683",
+            "type": "text",
+            "sequenceId": "4",
+            "version": "1593107077683",
+            "content": {
+              "message": "Let's use this chat to decide what to get for lunch today."
+            },
+            "senderDisplayName": "Jane",
+            "createdOn": "2020-06-25T17:44:37.6830000Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b",
+              "communicationUser": {
+                "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+              }
+            }
+          },
+          {
+            "id": "1593107046498",
+            "type": "text",
+            "sequenceId": "3",
+            "version": "1593107046498",
+            "content": {
+              "message": "Good morning everyone!"
+            },
+            "senderDisplayName": "Jane",
+            "createdOn": "2020-06-25T17:44:06.4980000Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b",
+              "communicationUser": {
+                "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+              }
+            }
+          },
+          {
+            "id": "1593106976785",
+            "type": "topicUpdated",
+            "sequenceId": "2",
+            "version": "1593106976785",
+            "content": {
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b",
+                "communicationUser": {
+                  "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+                }
+              },
+              "topic": "Lunch"
+            },
+            "createdOn": "2020-06-25T17:42:56.7850000Z"
+          },
+          {
+            "id": "1593106976753",
+            "type": "participantAdded",
+            "version": "1593106976753",
+            "sequenceId": "1",
+            "content": {
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b",
+                "communicationUser": {
+                  "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+                }
+              },
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b",
+                    "communicationUser": {
+                      "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+                    }
+                  },
+                  "roleIds": [
+                    "8540c0de-899f-5cce-acb5-3ec493af3800_ce2142fd-aa87-435d-bacf-16efe5ae70aa"
+                  ]
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_c94ff260-162d-46d6-94fd-e79f4d213715",
+                    "communicationUser": {
+                      "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_c94ff260-162d-46d6-94fd-e79f4d213715"
+                    }
+                  },
+                  "roleIds": [
+                    "8540c0de-899f-5cce-acb5-3ec493af3800_ce2142fd-aa87-435d-bacf-16efe5ae70aa"
+                  ]
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_f13a9208-0bb8-45c0-916c-f3ed922728ce",
+                    "communicationUser": {
+                      "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_f13a9208-0bb8-45c0-916c-f3ed922728ce"
+                    }
+                  },
+                  "roleIds": [
+                    "8540c0de-899f-5cce-acb5-3ec493af3800_ce2142fd-aa87-435d-bacf-16efe5ae70aa"
+                  ]
+                }
+              ]
+            },
+            "createdOn": "2020-06-25T17:42:56.7530000Z"
+          }
+        ],
+        "nextLink": "https://contoso.westus.communications.azure.com/chat/threads/19:453dafb77b26481ea2e73bcada0324af@thread.v2/messages?syncState=3e4700000031393a756e6930315f7a626e68336e74326466756666657a6333736f7837646f67377766686b36793571653272776c6e66686c68647a69726968647071407468726561642e763201451fe6e77201000004357fea72010000&startTime=0&maxPageSize=5&api-version=2021-10-01-preview7"
+      }
+    },
+    "401": {
+      "body": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is not authorized."
+        }
+      }
+    },
+    "403": {
+      "body": {
+        "error": {
+          "code": "Forbidden",
+          "message": "User is not allowed to perform specified action."
+        }
+      }
+    },
+    "429": {
+      "body": {
+        "error": {
+          "code": "TooManyRequests",
+          "message": "Rate limit exceeded."
+        }
+      }
+    },
+    "503": {
+      "body": {
+        "error": {
+          "code": "ServiceUnavailable",
+          "message": "The server is currently unable to handle the request."
+        }
+      }
+    }
+  }
+}

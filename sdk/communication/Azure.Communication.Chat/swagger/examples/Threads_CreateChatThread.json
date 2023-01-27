@@ -1,0 +1,111 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-10-01-preview7",
+    "createChatThreadRequest": {
+      "topic": "Lunch",
+      "participants": [
+        {
+          "communicationIdentifier": {
+            "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_c94ff260-162d-46d6-94fd-e79f4d213715",
+            "communicationUser": {
+              "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_c94ff260-162d-46d6-94fd-e79f4d213715"
+            }
+          },
+          "displayName": "Jane"
+        },
+        {
+          "communicationIdentifier": {
+            "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b",
+            "communicationUser": {
+              "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+            }
+          },
+          "displayName": "Alex"
+        },
+        {
+          "communicationIdentifier": {
+            "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_a34d2d65-d72f-4c48-a12c-2d5c9ac75a1a",
+            "communicationUser": {
+              "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_a34d2d65-d72f-4c48-a12c-2d5c9ac75a1a"
+            }
+          },
+          "displayName": "Bob"
+        },
+        {
+          "communicationIdentifier": {
+            "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_f6762773-e33a-4727-985f-50bd1d197c7b",
+            "communicationUser": {
+              "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_f6762773-e33a-4727-985f-50bd1d197c7b"
+            }
+          },
+          "displayName": "Peter"
+        }
+      ]
+    }
+  },
+  "responses": {
+    "201": {
+      "headers": {
+        "Location": "https://contoso.westus.communications.azure.com/chat/threads/19%3Auni01_zbnh3nt2dfuffezc3sox7dog7wfhk6y5qe2rwlnfhlhdzirihdpq@thread.v2"
+      },
+      "body": {
+        "chatThread": {
+          "id": "19:uni01_zbnh3nt2dfuffezc3sox7dog7wfhk6y5qe2rwlnfhlhdzirihdpq@thread.v2",
+          "topic": "Lunch",
+          "createdOn": "2020-06-06T05:55:41.6460000Z",
+          "createdByCommunicationIdentifier": {
+            "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_c94ff260-162d-46d6-94fd-e79f4d213715",
+            "communicationUser": {
+              "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_c94ff260-162d-46d6-94fd-e79f4d213715"
+            }
+          }
+        },
+        "invalidParticipants": [
+          {
+            "target": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_a34d2d65-d72f-4c48-a12c-2d5c9ac75a1a",
+            "code": "403",
+            "message": "Permissions check failed"
+          },
+          {
+            "target": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_f6762773-e33a-4727-985f-50bd1d197c7b",
+            "code": "404",
+            "message": "Not found"
+          }
+        ]
+      }
+    },
+    "401": {
+      "body": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is not authorized."
+        }
+      }
+    },
+    "403": {
+      "body": {
+        "error": {
+          "code": "Forbidden",
+          "message": "User is not allowed to perform specified action."
+        }
+      }
+    },
+    "429": {
+      "body": {
+        "error": {
+          "code": "TooManyRequests",
+          "message": "Rate limit exceeded."
+        }
+      }
+    },
+    "503": {
+      "body": {
+        "error": {
+          "code": "ServiceUnavailable",
+          "message": "The server is currently unable to handle the request."
+        }
+      }
+    }
+  }
+}

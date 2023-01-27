@@ -1,0 +1,57 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-10-01-preview7",
+    "chatThreadId": "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345",
+    "sendChatMessageRequest": {
+      "content": "Let's head out for lunch in 15 minutes.",
+      "senderDisplayName": "Jane",
+      "metadata": {
+        "someKey1": "someValue1",
+        "someKey2": "someValue2"
+      }
+    }
+  },
+  "responses": {
+    "201": {
+      "headers": {
+        "Location": "https://contoso.westus.communications.azure.com/chat/threads/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/messages/1593072104708"
+      },
+      "body": {
+        "id": "1593072104708"
+      }
+    },
+    "401": {
+      "body": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is not authorized."
+        }
+      }
+    },
+    "403": {
+      "body": {
+        "error": {
+          "code": "Forbidden",
+          "message": "User is not allowed to perform specified action."
+        }
+      }
+    },
+    "429": {
+      "body": {
+        "error": {
+          "code": "TooManyRequests",
+          "message": "Rate limit exceeded."
+        }
+      }
+    },
+    "503": {
+      "body": {
+        "error": {
+          "code": "ServiceUnavailable",
+          "message": "The server is currently unable to handle the request."
+        }
+      }
+    }
+  }
+}

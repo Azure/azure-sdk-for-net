@@ -1,0 +1,74 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-10-01-preview7",
+    "maxPageSize": 5
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "id": "19:uni01_zbnh3nt2dfuffezc3sox7dog7wfhk6y5qe2rwlnfhlhdzirihdpq@thread.v2",
+            "topic": "Chat with Samantha",
+            "lastMessageReceivedOn": "2020-06-06T05:55:41.6460000Z"
+          },
+          {
+            "id": "19:a0dfe5fc10e04a7f8d8a64d455f4196d@thread.v2",
+            "topic": "Presentation Brainstorming",
+            "lastMessageReceivedOn": "2020-06-06T05:55:41.6460000Z"
+          },
+          {
+            "id": "19:uni01_n242d2bzammtwxiib7pbjtozeevjqzavzn654ku3dajocexfo2na@thread.v2",
+            "topic": "Chat with Alex",
+            "lastMessageReceivedOn": "2020-06-06T05:55:41.6460000Z"
+          },
+          {
+            "id": "19:0062022a28be4e0983734f7e45cd8566@thread.v2",
+            "topic": "Lunch",
+            "deletedOn": "2020-07-07T05:55:41.6460000Z",
+            "lastMessageReceivedOn": "2020-06-06T05:55:41.6460000Z"
+          },
+          {
+            "id": "19:uni01_zbnh3nt2dfuffezc3sox7dog7wfhk6y5qe2rwlnfhlhdzirihdpe@thread.v2",
+            "topic": "Chat with Bob",
+            "lastMessageReceivedOn": "2020-06-06T05:55:41.6460000Z"
+          }
+        ],
+        "nextLink": "https://contoso.westus.communications.azure.com/chat/threads?syncState=W3sic3RhcnQiOiIyMDIwLTA2LTIzVDIzOjMyOjQ3LjMwNSswMDowMCIsImVuZCI6IjIwMjAtMDYtMjVUMDY6NTY6MjMuNjk2KzAwOjAwIn0seyJzdGFydCI6IjE5NzAtMDEtMDFUMDA6MDA6MDArMDA6MDAiLCJlbmQiOiIxOTcwLTAxLTAxVDAwOjAwOjAwKzAwOjAwIn1d&api-version=2021-10-01-preview7&maxPageSize=5"
+      }
+    },
+    "401": {
+      "body": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is not authorized."
+        }
+      }
+    },
+    "403": {
+      "body": {
+        "error": {
+          "code": "Forbidden",
+          "message": "User is not allowed to perform specified action."
+        }
+      }
+    },
+    "429": {
+      "body": {
+        "error": {
+          "code": "TooManyRequests",
+          "message": "Rate limit exceeded."
+        }
+      }
+    },
+    "503": {
+      "body": {
+        "error": {
+          "code": "ServiceUnavailable",
+          "message": "The server is currently unable to handle the request."
+        }
+      }
+    }
+  }
+}

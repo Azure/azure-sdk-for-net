@@ -1,0 +1,54 @@
+{
+  "parameters": {
+    "endpoint": "https://contoso.westus.communications.azure.com",
+    "api-version": "2021-10-01-preview7",
+    "chatThreadId": "19:uni01_zbnh3nt2dfuffezc3sox7dog7wfhk6y5qe2rwlnfhlhdzirihdpq@thread.v2"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "19:uni01_zbnh3nt2dfuffezc3sox7dog7wfhk6y5qe2rwlnfhlhdzirihdpq@thread.v2",
+        "topic": "Lunch",
+        "createdOn": "2020-06-06T05:55:41.6460000Z",
+        "createdByCommunicationIdentifier": {
+          "rawId": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b",
+          "communicationUser": {
+            "id": "8:acs:8540c0de-899f-5cce-acb5-3ec493af3800_0e59221d-0c1d-46ae-9544-c963ce56c10b"
+          }
+        }
+      }
+    },
+    "401": {
+      "body": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is not authorized."
+        }
+      }
+    },
+    "403": {
+      "body": {
+        "error": {
+          "code": "Forbidden",
+          "message": "User is not allowed to perform specified action."
+        }
+      }
+    },
+    "429": {
+      "body": {
+        "error": {
+          "code": "TooManyRequests",
+          "message": "Rate limit exceeded."
+        }
+      }
+    },
+    "503": {
+      "body": {
+        "error": {
+          "code": "ServiceUnavailable",
+          "message": "The server is currently unable to handle the request."
+        }
+      }
+    }
+  }
+}

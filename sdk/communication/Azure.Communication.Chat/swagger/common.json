@@ -1,0 +1,154 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Communication",
+    "description": "Communication Services API common types.",
+    "version": "2021-03-07"
+  },
+  "paths": {},
+  "definitions": {
+    "CommunicationErrorResponse": {
+      "description": "The Communication Services error.",
+      "type": "object",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "description": "The Communication Services error.",
+          "$ref": "#/definitions/CommunicationError"
+        }
+      }
+    },
+    "CommunicationError": {
+      "description": "The Communication Services error.",
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The error code."
+        },
+        "message": {
+          "type": "string",
+          "description": "The error message."
+        },
+        "target": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The error target."
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationError"
+          },
+          "readOnly": true,
+          "description": "Further details about specific errors that led to this error."
+        },
+        "innererror": {
+          "x-ms-client-name": "innerError",
+          "readOnly": true,
+          "$ref": "#/definitions/CommunicationError",
+          "description": "The inner error if any."
+        }
+      }
+    },
+    "CommunicationCloudEnvironmentModel": {
+      "description": "The cloud that the identifier belongs to.",
+      "type": "string",
+      "enum": [
+        "public",
+        "dod",
+        "gcch"
+      ],
+      "x-ms-enum": {
+        "name": "CommunicationCloudEnvironmentModel",
+        "modelAsString": true
+      }
+    },
+    "CommunicationIdentifierModel": {
+      "description": "Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set.",
+      "type": "object",
+      "properties": {
+        "rawId": {
+          "type": "string",
+          "description": "Raw Id of the identifier. Optional in requests, required in responses."
+        },
+        "communicationUser": {
+          "$ref": "#/definitions/CommunicationUserIdentifierModel",
+          "description": "The communication user."
+        },
+        "phoneNumber": {
+          "$ref": "#/definitions/PhoneNumberIdentifierModel",
+          "description": "The phone number."
+        },
+        "microsoftTeamsUser": {
+          "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel",
+          "description": "The Microsoft Teams user."
+        }
+      }
+    },
+    "CommunicationUserIdentifierModel": {
+      "description": "A user that got created with an Azure Communication Services resource.",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The Id of the communication user."
+        }
+      }
+    },
+    "PhoneNumberIdentifierModel": {
+      "description": "A phone number.",
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "The phone number in E.164 format."
+        }
+      }
+    },
+    "MicrosoftTeamsUserIdentifierModel": {
+      "description": "A Microsoft Teams user.",
+      "type": "object",
+      "required": [
+        "userId"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user."
+        },
+        "isAnonymous": {
+          "type": "boolean",
+          "description": "True if the Microsoft Teams user is anonymous. By default false if missing."
+        },
+        "cloud": {
+          "$ref": "#/definitions/CommunicationCloudEnvironmentModel",
+          "description": "The cloud that the Microsoft Teams user belongs to. By default 'public' if missing."
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow.",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  }
+}

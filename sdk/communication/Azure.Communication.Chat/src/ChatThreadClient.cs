@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -829,6 +830,78 @@ namespace Azure.Communication.Chat
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
         #endregion
+
+        #region Attachment Operations
+        /// <summary>
+        /// Downloads an attachment of a message
+        /// </summary>
+        /// <param name="attachment">An attachment object from a chat message</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public virtual async Task<Response<Stream>> DownloadTeamsInteropImageAsync(ChatAttachment attachment, CancellationToken cancellationToken = default)
+        {
+            if (attachment.AttachmentType == AttachmentType.TeamsInlineImage)
+            {
+                return await _chatThreadRestClient.TeamsInteropGetImageAsync(Id, "MessageId", attachment.Id, cancellationToken).ConfigureAwait(false);
+            }
+
+            throw new NotSupportedException($"AttachmentType {attachment.AttachmentType} is not supported");
+        }
+
+        /// <summary>
+        /// Downloads an attachment of a message
+        /// </summary>
+        /// <param name="attachment">An attachment object from a chat message</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public virtual Response<Stream> DownloadTeamsInteropImage(ChatAttachment attachment, CancellationToken cancellationToken = default)
+        {
+            if (attachment.AttachmentType == AttachmentType.TeamsInlineImage)
+            {
+                return _chatThreadRestClient.TeamsInteropGetImage(Id, "MessageId", attachment.Id, cancellationToken);
+            }
+
+            throw new NotSupportedException($"AttachmentType {attachment.AttachmentType} is not supported");
+        }
+
+        /// <summary>
+        /// Downloads an attachment of a message
+        /// </summary>
+        /// <param name="attachment">An attachment object from a chat message</param>
+        /// <param name="size">The size of the image to download</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public virtual async Task<Response<Stream>> DownloadTeamsInteropImageBySizeAsync(ChatAttachment attachment, ImageSize size, CancellationToken cancellationToken = default)
+        {
+            if (attachment.AttachmentType == AttachmentType.TeamsInlineImage)
+            {
+                return await _chatThreadRestClient.TeamsInteropGetImageBySizeAsync(Id, "MessageId", attachment.Id, size.ToString(), cancellationToken).ConfigureAwait(false);
+            }
+
+            throw new NotSupportedException($"AttachmentType {attachment.AttachmentType} is not supported");
+        }
+
+        /// <summary>
+        /// Downloads an attachment of a message
+        /// </summary>
+        /// <param name="attachment">An attachment object from a chat message</param>
+        /// <param name="size">The size of the image to download</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public virtual Response<Stream> DownloadTeamsInteropImageBySize(ChatAttachment attachment, ImageSize size, CancellationToken cancellationToken = default)
+        {
+            if (attachment.AttachmentType == AttachmentType.TeamsInlineImage)
+            {
+                return _chatThreadRestClient.TeamsInteropGetImageBySize(Id, "MessageId", attachment.Id, size.ToString(), cancellationToken);
+            }
+
+            throw new NotSupportedException($"AttachmentType {attachment.AttachmentType} is not supported");
+        }
+        #endregion Attachment Operations
 
         private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationTokenCredential communicationTokenCredential)
         {
