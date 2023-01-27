@@ -384,7 +384,7 @@ namespace Azure.Core.Tests
                 true,
                 false);
 
-            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             scope.SetTraceparent(parentId);
             scope.Start();
             scope.Dispose();
@@ -408,7 +408,7 @@ namespace Azure.Core.Tests
                 true,
                 false);
 
-            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             scope.Start();
             scope.SetTraceparent(parentId);
             scope.Dispose();
