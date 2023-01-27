@@ -16,8 +16,19 @@ namespace Azure.Core.Dynamic
         private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
+        /// <summary>
+        /// Gets a value indicating whether the current instance has a valid value of its underlying type.
+        /// </summary>
+        // TODO: Decide if this is the API we want for this.  We could also expose ValueKind.
+        public bool HasValue => _element.ValueKind != JsonValueKind.Null;
+
         private object GetProperty(string name)
         {
+            if (name == nameof(HasValue))
+            {
+                return HasValue;
+            }
+
             return new DynamicJson(_element.GetProperty(name));
         }
 

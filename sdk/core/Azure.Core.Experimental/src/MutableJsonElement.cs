@@ -32,6 +32,20 @@ namespace Azure.Core.Dynamic
         // TODO: Implement indexer
 
         /// <summary>
+        /// Gets the type of the current JSON value.
+        /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public JsonValueKind ValueKind
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+        {
+            get
+            {
+                JsonElement element = GetJsonElement();
+                return element.ValueKind;
+            }
+        }
+
+        /// <summary>
         /// Gets the MutableJsonElement for the value of the property with the specified name.
         /// </summary>
         public MutableJsonElement GetProperty(string name)

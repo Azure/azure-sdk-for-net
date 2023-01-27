@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
@@ -17,69 +18,69 @@ namespace Azure.Core.Dynamic
             .ToDictionary(method => method.ReturnType);
 
         /// <summary>
-        /// Converts the value to a <see cref="bool"/>
+        /// Converts the value to a <see cref="bool"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         public static implicit operator bool(DynamicJson value) => value._element.GetBoolean();
 
         /// <summary>
-        /// Converts the value to a <see cref="int"/>
+        /// Converts the value to a <see cref="int"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         public static implicit operator int(DynamicJson value) => value._element.GetInt32();
 
         /// <summary>
-        /// Converts the value to a <see cref="long"/>
+        /// Converts the value to a <see cref="long"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         public static implicit operator long(DynamicJson value) => value._element.GetInt64();
 
         /// <summary>
-        /// Converts the value to a <see cref="string"/>
+        /// Converts the value to a <see cref="string"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         public static implicit operator string?(DynamicJson value) => value._element.GetString();
 
         /// <summary>
-        /// Converts the value to a <see cref="float"/>
+        /// Converts the value to a <see cref="float"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         public static implicit operator float(DynamicJson value) => value._element.GetFloat();
 
         /// <summary>
-        /// Converts the value to a <see cref="double"/>
+        /// Converts the value to a <see cref="double"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         public static implicit operator double(DynamicJson value) => value._element.GetDouble();
 
-        ///// <summary>
-        ///// Converts the value to a <see cref="bool"/> or null.
-        ///// </summary>
-        ///// <param name="element">The value to convert.</param>
-        //public static implicit operator bool?(JsonDataElement element) => element.Kind == JsonValueKind.Null ? null : element.GetBoolean();
+        /// <summary>
+        /// Converts the value to a <see cref="bool"/> or null.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator bool?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetBoolean();
 
-        ///// <summary>
-        ///// Converts the value to a <see cref="int"/> or null.
-        ///// </summary>
-        ///// <param name="element">The value to convert.</param>
-        //public static implicit operator int?(JsonDataElement element) => element.Kind == JsonValueKind.Null ? null : element.GetInt32();
+        /// <summary>
+        /// Converts the value to a <see cref="int"/> or null.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator int?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetInt32();
 
-        ///// <summary>
-        ///// Converts the value to a <see cref="long"/> or null.
-        ///// </summary>
-        ///// <param name="element">The value to convert.</param>
-        //public static implicit operator long?(JsonDataElement element) => element.Kind == JsonValueKind.Null ? null : element.GetLong();
+        /// <summary>
+        /// Converts the value to a <see cref="long"/> or null.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator long?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetInt64();
 
-        ///// <summary>
-        ///// Converts the value to a <see cref="float"/> or null.
-        ///// </summary>
-        ///// <param name="element">The value to convert.</param>
-        //public static implicit operator float?(JsonDataElement element) => element.Kind == JsonValueKind.Null ? null : element.GetFloat();
+        /// <summary>
+        /// Converts the value to a <see cref="float"/> or null.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator float?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetFloat();
 
-        ///// <summary>
-        ///// Converts the value to a <see cref="double"/> or null.
-        ///// </summary>
-        ///// <param name="element">The value to convert.</param>
-        //public static implicit operator double?(JsonDataElement element) => element.Kind == JsonValueKind.Null ? null : element.GetDouble();
+        /// <summary>
+        /// Converts the value to a <see cref="double"/> or null.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        public static implicit operator double?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetDouble();
     }
 }

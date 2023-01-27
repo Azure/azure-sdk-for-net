@@ -12,7 +12,7 @@ namespace Azure.Core.Experimental.Tests
     internal class MutableJsonElementTests
     {
         [Test]
-        public void CanGetElementAsString()
+        public void ToStringWorksWithNoChanges()
         {
             string json = @"
                 {
@@ -68,6 +68,42 @@ namespace Azure.Core.Experimental.Tests
                   ""Bar"" : ""hello""
                 }"),
                 MutableJsonDocumentWriteToTests.RemoveWhiteSpace(rootElement.ToString()));
+        }
+
+        [Test]
+        public void CanGetNullElement()
+        {
+            string json = @"
+                {
+                  ""Bar"" : null
+                }";
+
+            var jd = MutableJsonDocument.Parse(json);
+
+            MutableJsonElement bar = jd.RootElement.GetProperty("Bar");
+
+            Assert.AreEqual(JsonValueKind.Null, bar.ValueKind);
+        }
+
+        [Test]
+        public void ValueKindReflectsChanges()
+        {
+            string json = @"
+                {
+                  ""Bar"" : ""Hi!""
+                }";
+
+            var jd = MutableJsonDocument.Parse(json);
+
+            Assert.AreEqual(JsonValueKind.String, jd.RootElement.GetProperty("Bar").ValueKind);
+
+            jd.RootElement.GetProperty("Bar").Set(1.2);
+
+            Assert.AreEqual(JsonValueKind.Number, jd.RootElement.GetProperty("Bar").ValueKind);
+
+            jd.RootElement.GetProperty("Bar").Set(null);
+
+            Assert.AreEqual(JsonValueKind.Null, jd.RootElement.GetProperty("Bar").ValueKind);
         }
     }
 }

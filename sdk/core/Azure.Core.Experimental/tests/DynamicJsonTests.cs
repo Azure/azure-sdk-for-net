@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
 
@@ -178,14 +177,47 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void CanGetNullPropertyValue()
+        {
+            dynamic jsonData = GetDynamicJson(@"{ ""Foo"" : null }");
+
+            Assert.IsFalse(jsonData.Foo.HasValue);
+            Assert.IsNull((CustomType)jsonData.Foo);
+            Assert.IsNull((int?)jsonData.Foo);
+        }
+
+        [Test]
+        public void CanGetNullArrayValue()
+        {
+            dynamic jsonData = GetDynamicJson(@"[ null ]");
+
+            Assert.IsFalse(jsonData[0].HasValue);
+            Assert.IsNull((CustomType)jsonData[0]);
+            Assert.IsNull((int?)jsonData[0]);
+        }
+
+        [Test]
+        public void CanSetPropertyValueToNull()
+        {
+            dynamic jsonData = GetDynamicJson(@"{ ""Foo"" : null }");
+
+            jsonData.Foo = null;
+
+            Assert.IsFalse(jsonData.Foo.HasValue);
+            Assert.IsNull((CustomType)jsonData.Foo);
+            Assert.IsNull((int?)jsonData.Foo);
+        }
+
+        [Test]
         public void CanSetArrayValueToNull()
         {
             dynamic jsonData = GetDynamicJson(@"[0]");
 
             jsonData[0] = null;
 
-            Assert.IsNull(jsonData[0]);
-            Assert.AreEqual(null, jsonData[0]);
+            Assert.IsFalse(jsonData[0].HasValue);
+            Assert.IsNull((CustomType)jsonData[0]);
+            Assert.IsNull((int?)jsonData[0]);
         }
 
         [Test]
@@ -216,11 +248,15 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(4, (int)jsonData.Foo["Bar"]);
         }
 
-        #region Helpers
+#region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
             return new BinaryData(json).ToDynamic();
         }
-        #endregion
+
+        internal class CustomType
+        {
+        }
+#endregion
     }
 }
