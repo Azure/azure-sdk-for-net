@@ -2,20 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
-using System.Linq;
 
 namespace Azure.Core.Dynamic
 {
     public partial class DynamicJson : IDynamicMetaObjectProvider
     {
-        internal static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
-        internal static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
-        internal static readonly MethodInfo SetMethod = typeof(DynamicJson).GetMethod(nameof(Set), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null)!;
+        private static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo SetMethod = typeof(DynamicJson).GetMethod(nameof(Set), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null)!;
 
         internal object GetProperty(string name)
         {
@@ -82,9 +80,6 @@ namespace Azure.Core.Dynamic
 
         private class MetaObject : DynamicMetaObject
         {
-            // Operators that cast from DynamicJson to another type
-            private static readonly Dictionary<Type, MethodInfo> CastFromOperators = GetCastFromOperators();
-
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
             }
@@ -148,14 +143,6 @@ namespace Azure.Core.Dynamic
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(setCall, restrictions);
-            }
-
-            private static Dictionary<Type, MethodInfo> GetCastFromOperators()
-            {
-                return typeof(DynamicJson)
-                    .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                    .Where(method => method.Name == "op_Explicit" || method.Name == "op_Implicit")
-                    .ToDictionary(method => method.ReturnType);
             }
         }
     }

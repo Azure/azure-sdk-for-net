@@ -3,12 +3,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
     public partial class DynamicJson
     {
+        // Operators that cast from DynamicJson to another type
+        private static readonly Dictionary<Type, MethodInfo> CastFromOperators = typeof(DynamicJson)
+            .GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .Where(method => method.Name == "op_Explicit" || method.Name == "op_Implicit")
+            .ToDictionary(method => method.ReturnType);
+
         /// <summary>
         /// Converts the value to a <see cref="bool"/>
         /// </summary>
