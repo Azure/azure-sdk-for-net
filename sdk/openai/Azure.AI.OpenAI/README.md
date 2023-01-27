@@ -106,7 +106,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredential, then generates text responses to input prompts.
 
-```C# Snippet:GenerateChatbotResponses
+```C# Snippet:GenerateChatbotResponse
 string endpoint = "http://myaccount.openai.azure.com/";
 OpenAIClient client = new OpenAIClient("myDeploymentId", new Uri(endpoint), new DefaultAzureCredential());
 
