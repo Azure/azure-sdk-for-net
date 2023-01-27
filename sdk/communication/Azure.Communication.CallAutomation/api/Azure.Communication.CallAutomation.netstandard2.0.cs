@@ -14,14 +14,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class AddParticipantsOptions
     {
-        public AddParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participantsToAdd) { }
+        public AddParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallTarget> participantsToAdd) { }
+        public Azure.Communication.CallAutomation.CustomContext CustomContext { get { throw null; } set { } }
         public int? InvitationTimeoutInSeconds { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> ParticipantsToAdd { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallTarget> ParticipantsToAdd { get { throw null; } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
-        public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
-        public string SourceDisplayName { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier SourceIdentifier { get { throw null; } set { } }
     }
     public partial class AddParticipantsResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
     {
@@ -69,14 +67,20 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult>> AnswerCallAsync(Azure.Communication.CallAutomation.AnswerCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult>> AnswerCallAsync(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateCall(Azure.Communication.CallAutomation.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateCall(string targetPhoneNumber, string callerIdNumber, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateCall(string targetIdentity, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateCallAsync(Azure.Communication.CallAutomation.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateCallAsync(string targetPhoneNumber, string callerIdNumber, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateCallAsync(string targetIdentity, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateSimRingCall(Azure.Communication.CallAutomation.CreateSimRingCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateSimRingCallAsync(Azure.Communication.CallAutomation.CreateSimRingCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.CallAutomation.CallConnection GetCallConnection(string callConnectionId) { throw null; }
         public virtual Azure.Communication.CallAutomation.CallRecording GetCallRecording() { throw null; }
         public virtual Azure.Communication.CallAutomation.EventProcessor GetEventProcessor() { throw null; }
         public virtual Azure.Response RedirectCall(Azure.Communication.CallAutomation.RedirectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RedirectCall(string incomingCallContext, Azure.Communication.CommunicationIdentifier target, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RedirectCall(string incomingCallContext, Azure.Communication.CallAutomation.CallTarget target, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RedirectCallAsync(Azure.Communication.CallAutomation.RedirectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RedirectCallAsync(string incomingCallContext, Azure.Communication.CommunicationIdentifier target, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RedirectCallAsync(string incomingCallContext, Azure.Communication.CallAutomation.CallTarget target, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RejectCall(Azure.Communication.CallAutomation.RejectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RejectCall(string incomingCallContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RejectCallAsync(Azure.Communication.CallAutomation.RejectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -86,6 +90,7 @@ namespace Azure.Communication.CallAutomation
     {
         public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2023_01_15_Preview) { }
         public Azure.Communication.CallAutomation.EventProcessorOptions EventProcessorOptions { get { throw null; } }
+        public Azure.Communication.CommunicationUserIdentifier SourceIdenty { get { throw null; } }
         public enum ServiceVersion
         {
             V2023_01_15_Preview = 1,
@@ -129,7 +134,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.AddParticipantsSucceeded AddParticipantsSucceeded(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participants = null) { throw null; }
         public static Azure.Communication.CallAutomation.AnswerCallResult AnswerCallResult(Azure.Communication.CallAutomation.CallConnection callConnection = null, Azure.Communication.CallAutomation.CallConnectionProperties callConnectionProperties = null) { throw null; }
         public static Azure.Communication.CallAutomation.CallConnected CallConnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
-        public static Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties(string callConnectionId = null, string serverCallId = null, Azure.Communication.CallAutomation.CallSource callSource = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets = null, Azure.Communication.CallAutomation.CallConnectionState callConnectionState = default(Azure.Communication.CallAutomation.CallConnectionState), System.Uri callbackEndpoint = null, string mediaSubscriptionId = null) { throw null; }
+        public static Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties(string callConnectionId = null, string serverCallId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets = null, Azure.Communication.CallAutomation.CallConnectionState callConnectionState = default(Azure.Communication.CallAutomation.CallConnectionState), System.Uri callbackEndpoint = null, string mediaSubscriptionId = null) { throw null; }
         public static Azure.Communication.CallAutomation.CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.CallParticipant CallParticipant(Azure.Communication.CommunicationIdentifier identifier = null, bool isMuted = false) { throw null; }
         public static Azure.Communication.CallAutomation.CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
@@ -347,10 +352,22 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CallSource
     {
-        public CallSource(Azure.Communication.CommunicationIdentifier identifier) { }
+        public CallSource() { }
         public Azure.Communication.PhoneNumberIdentifier CallerId { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Identifier { get { throw null; } }
+    }
+    public partial class CallTarget
+    {
+        public CallTarget(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
+        public CallTarget(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
+        public CallTarget(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber) { }
+        public CallTarget(string targetRawId) { }
+        public CallTarget(string targetPhoneNumber, string callerIdNumber) { }
+        public Azure.Communication.CallAutomation.CustomContext CustomContext { get { throw null; } set { } }
+        public string SourceDisplayName { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier SourceIdentifier { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier TargetIdentity { get { throw null; } }
     }
     public partial class CallTransferAccepted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -408,14 +425,13 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CreateCallOptions
     {
-        public CreateCallOptions(Azure.Communication.CallAutomation.CallSource callSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
+        public CreateCallOptions(Azure.Communication.CallAutomation.CallTarget callTarget, System.Uri callbackUri) { }
         public System.Uri AzureCognitiveServicesEndpointUrl { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
-        public Azure.Communication.CallAutomation.CallSource CallSource { get { throw null; } }
+        public Azure.Communication.CallAutomation.CallTarget CallTarget { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
     }
     public partial class CreateCallResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
     {
@@ -423,6 +439,27 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
         public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CreateCallEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+    }
+    public partial class CreateSimRingCallOptions
+    {
+        public CreateSimRingCallOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
+        public System.Uri AzureCognitiveServicesEndpointUrl { get { throw null; } set { } }
+        public System.Uri CallbackUri { get { throw null; } }
+        public Azure.Communication.CallAutomation.CustomContext CustomContext { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
+        public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
+        public string SourceDisplayName { get { throw null; } set { } }
+        public Azure.Communication.PhoneNumberIdentifier SourcePhoneNumberIdentifier { get { throw null; } set { } }
+        public Azure.Communication.MicrosoftTeamsUserIdentifier SourceTeamsUserIdentifier { get { throw null; } set { } }
+        public Azure.Communication.CommunicationUserIdentifier SourceUserIdentifier { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
+    }
+    public partial class CustomContext
+    {
+        public CustomContext() { }
+        public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DtmfTone : System.IEquatable<Azure.Communication.CallAutomation.DtmfTone>
@@ -856,10 +893,10 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class RedirectCallOptions
     {
-        public RedirectCallOptions(string incomingCallContext, Azure.Communication.CommunicationIdentifier target) { }
+        public RedirectCallOptions(string incomingCallContext, Azure.Communication.CallAutomation.CallTarget target) { }
         public string IncomingCallContext { get { throw null; } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
+        public Azure.Communication.CallAutomation.CallTarget Target { get { throw null; } }
     }
     public partial class RejectCallOptions
     {
@@ -951,12 +988,10 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TransferToParticipantOptions
     {
-        public TransferToParticipantOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
+        public TransferToParticipantOptions(Azure.Communication.CallAutomation.CallTarget targetParticipant) { }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
-        public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
-        public string UserToUserInformation { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.CallTarget TargetParticipant { get { throw null; } }
     }
     public partial class UnmuteAllParticipantsOptions
     {
