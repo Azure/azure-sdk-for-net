@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             // The AMQP message bytes go after the lock token bytes
             messageBytes.CopyTo(combinedBytes.AsMemory(lockTokenLength));
 
-            return new ParameterBindingData("1.0", "AzureServiceBus", BinaryData.FromBytes(combinedBytes), "application/octet-stream");
+            return new ParameterBindingData("1.0", "AzureServiceBusReceivedMessage", BinaryData.FromBytes(combinedBytes), "application/octet-stream");
         }
 
         internal static void LogExceptionReceivedEvent(ProcessErrorEventArgs e, ILoggerFactory loggerFactory)

@@ -241,7 +241,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     case AmqpMessageConstants.ScheduledEnqueueTimeUtcName:
                         DateTimeOffset scheduledEnqueueTime = annotatedMessage.GetScheduledEnqueueTime();
-                        if (scheduledEnqueueTime != default && scheduledEnqueueTime > DateTimeOffset.MinValue)
+                        if (scheduledEnqueueTime != default)
                         {
                             amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ScheduledEnqueueTimeUtcName, scheduledEnqueueTime.UtcDateTime);
                         }
@@ -568,14 +568,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if (bytes.Length == GuidSizeInBytes)
             {
-                Span<byte> guidBytes = stackalloc byte[GuidSizeInBytes];
-                bytes.Span.CopyTo(guidBytes);
-                if (!MemoryMarshal.TryRead<Guid>(guidBytes, out var lockTokenGuid))
-                {
-                    lockTokenGuid = new Guid(guidBytes.ToArray());
-                }
-
-                return lockTokenGuid;
+                return new Guid(bytes.Span.ToArray());
             }
 
             return default;
