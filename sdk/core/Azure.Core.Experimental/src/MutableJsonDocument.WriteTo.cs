@@ -9,7 +9,7 @@ namespace Azure.Core.Dynamic
 {
     public partial class MutableJsonDocument
     {
-        internal void WriteElementTo(Utf8JsonWriter writer)
+        internal void WriteRootElementTo(Utf8JsonWriter writer)
         {
             // TODO: Optimize path manipulations with Span<byte>
             string path = string.Empty;
@@ -32,7 +32,7 @@ namespace Azure.Core.Dynamic
             writer.Flush();
         }
 
-        private void WriteElement(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        internal void WriteElement(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             while (reader.Read())
             {

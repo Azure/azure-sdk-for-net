@@ -64,7 +64,7 @@ namespace Azure.Core.Dynamic
                 return;
             }
 
-            WriteElementTo(writer);
+            WriteRootElementTo(writer);
         }
 
         private static void Write(Stream stream, ReadOnlySpan<byte> buffer)

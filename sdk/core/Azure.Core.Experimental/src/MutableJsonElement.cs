@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Text.Json;
 
 namespace Azure.Core.Dynamic
@@ -359,6 +361,12 @@ namespace Azure.Core.Dynamic
                 return change.Value.ToString()!;
             }
 
+            // Account for changes to descendants of this element as well
+            if (Changes.DescendantChanged(_path, _highWaterMark))
+            {
+                return Encoding.UTF8.GetString(GetRawBytes());
+            }
+
             return _element.ToString();
         }
 
@@ -371,7 +379,30 @@ namespace Azure.Core.Dynamic
                 return change.AsJsonElement();
             }
 
+            // Account for changes to descendants of this element as well
+            if (Changes.DescendantChanged(_path, _highWaterMark))
+            {
+                JsonDocument document = JsonDocument.Parse(GetRawBytes());
+                return document.RootElement;
+            }
+
             return _element;
+        }
+
+        private byte[] GetRawBytes()
+        {
+            using MemoryStream origElementStream = new();
+            Utf8JsonWriter origElementWriter = new(origElementStream);
+            _element.WriteTo(origElementWriter);
+            origElementWriter.Flush();
+            Utf8JsonReader reader = new(origElementStream.ToArray());
+
+            using MemoryStream changedElementStream = new();
+            Utf8JsonWriter changedElementWriter = new(changedElementStream);
+            _root.WriteElement(_path, _highWaterMark, ref reader, changedElementWriter);
+            changedElementWriter.Flush();
+
+            return changedElementStream.ToArray();
         }
 
         private void EnsureObject()

@@ -25,5 +25,49 @@ namespace Azure.Core.Experimental.Tests
                 MutableJsonDocumentWriteToTests.RemoveWhiteSpace(json),
                 MutableJsonDocumentWriteToTests.RemoveWhiteSpace(jd.RootElement.ToString()));
         }
+
+        [Test]
+        public void ChangesToElementAppearInToString()
+        {
+            string json = @"
+                {
+                  ""Bar"" : ""Hi!""
+                }";
+
+            var jd = MutableJsonDocument.Parse(json);
+
+            jd.RootElement.GetProperty("Bar").Set("hello");
+
+            Assert.AreEqual(
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Bar"" : ""hello""
+                }"),
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(jd.RootElement.ToString()));
+        }
+
+        [Test]
+        public void ChangesToElementAppearInJsonElement()
+        {
+            string json = @"
+                {
+                  ""Bar"" : ""Hi!""
+                }";
+
+            var jd = MutableJsonDocument.Parse(json);
+
+            jd.RootElement.GetProperty("Bar").Set("hello");
+
+            JsonElement barElement = jd.RootElement.GetProperty("Bar").GetJsonElement();
+            Assert.AreEqual("hello", barElement.GetString());
+
+            JsonElement rootElement = jd.RootElement.GetJsonElement();
+            Assert.AreEqual(
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Bar"" : ""hello""
+                }"),
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(rootElement.ToString()));
+        }
     }
 }

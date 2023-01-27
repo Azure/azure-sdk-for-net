@@ -25,5 +25,11 @@ namespace Azure.Core.Dynamic
         {
             _element = element;
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return _element.ToString();
+        }
     }
 }

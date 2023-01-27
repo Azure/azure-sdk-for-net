@@ -34,6 +34,27 @@ namespace Azure.Core.Dynamic
                 return changed;
             }
 
+            internal bool DescendantChanged(string path, int highWaterMark)
+            {
+                if (_changes == null)
+                {
+                    return false;
+                }
+
+                bool changed = false;
+
+                for (int i = _changes!.Count - 1; i > highWaterMark; i--)
+                {
+                    var c = _changes[i];
+                    if (c.Path.StartsWith(path, StringComparison.Ordinal))
+                    {
+                        return true;
+                    }
+                }
+
+                return changed;
+            }
+
             internal bool TryGetChange(ReadOnlySpan<byte> path, out MutableJsonChange change)
             {
                 if (_changes == null)
