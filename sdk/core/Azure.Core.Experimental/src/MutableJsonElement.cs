@@ -257,7 +257,7 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Object does not have property: {name}.");
             }
 
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString())!;            dict.Remove(name);
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString())!;
             dict.Remove(name);
 
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
@@ -362,7 +362,6 @@ namespace Azure.Core.Dynamic
             return _element.ToString();
         }
 
-/*
         internal JsonElement GetJsonElement()
         {
             EnsureValid();
@@ -374,7 +373,6 @@ namespace Azure.Core.Dynamic
 
             return _element;
         }
-*/
 
         private void EnsureObject()
         {
