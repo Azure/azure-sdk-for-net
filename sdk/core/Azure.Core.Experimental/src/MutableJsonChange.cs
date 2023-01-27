@@ -30,16 +30,7 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException("Unable to get Utf8JsonReader for this change.");
             }
 
-            // TODO: This is super inefficient, come back to and optimize
-            // Must have lowercase for reader to work with boolean value.
-            JsonElement element = AsJsonElement();
-            string json = element.ValueKind switch
-            {
-                JsonValueKind.True => "true",
-                JsonValueKind.False => "false",
-                _ => element.ToString(),
-            };
-            return new Utf8JsonReader(Encoding.UTF8.GetBytes(json));
+            return MutableJsonElement.GetReaderForElement(AsJsonElement());
         }
 
         internal JsonElement AsJsonElement()

@@ -391,6 +391,38 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void CanChangeArrayElementType()
+        {
+            string json = @"
+                {
+                  ""Foo"" : [ 1, 2, 3 ]
+                }";
+
+            var jd = MutableJsonDocument.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(5);
+            jd.RootElement.GetProperty("Foo").GetIndexElement(1).Set("string");
+            jd.RootElement.GetProperty("Foo").GetIndexElement(2).Set(true);
+
+            Assert.AreEqual(5, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.AreEqual("string", jd.RootElement.GetProperty("Foo").GetIndexElement(1).GetString());
+            Assert.AreEqual(true, jd.RootElement.GetProperty("Foo").GetIndexElement(2).GetBoolean());
+
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
+
+            Assert.AreEqual(5, doc.RootElement.GetProperty("Foo")[0].GetInt32());
+            Assert.AreEqual("string", doc.RootElement.GetProperty("Foo")[1].GetString());
+            Assert.AreEqual(true, doc.RootElement.GetProperty("Foo")[2].GetBoolean());
+
+            Assert.AreEqual(
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Foo"" : [ 5, ""string"", true ]
+                }"),
+                jsonString);
+        }
+
+        [Test]
         public void HandlesReferenceSemantics()
         {
             string json = @"[ { ""Foo"" : 4 } ]";

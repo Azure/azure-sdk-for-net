@@ -29,6 +29,8 @@ namespace Azure.Core.Dynamic
             _highWaterMark = highWaterMark;
         }
 
+        // TODO: Implement indexer
+
         /// <summary>
         /// Gets the MutableJsonElement for the value of the property with the specified name.
         /// </summary>
@@ -391,11 +393,7 @@ namespace Azure.Core.Dynamic
 
         private byte[] GetRawBytes()
         {
-            using MemoryStream origElementStream = new();
-            Utf8JsonWriter origElementWriter = new(origElementStream);
-            _element.WriteTo(origElementWriter);
-            origElementWriter.Flush();
-            Utf8JsonReader reader = new(origElementStream.ToArray());
+            Utf8JsonReader reader = GetReaderForElement(_element);
 
             using MemoryStream changedElementStream = new();
             Utf8JsonWriter changedElementWriter = new(changedElementStream);
@@ -403,6 +401,15 @@ namespace Azure.Core.Dynamic
             changedElementWriter.Flush();
 
             return changedElementStream.ToArray();
+        }
+
+        internal static Utf8JsonReader GetReaderForElement(JsonElement element)
+        {
+            using MemoryStream stream = new();
+            Utf8JsonWriter writer = new(stream);
+            element.WriteTo(writer);
+            writer.Flush();
+            return new Utf8JsonReader(stream.ToArray());
         }
 
         private void EnsureObject()

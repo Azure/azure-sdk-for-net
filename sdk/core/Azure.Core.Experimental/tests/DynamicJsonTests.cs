@@ -114,7 +114,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanSetArrayValue()
+        public void CanSetArrayValues()
         {
             dynamic jsonData = GetDynamicJson(@"[0, 1, 2]");
 
@@ -128,7 +128,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanSetNestedArrayValue()
+        public void CanSetNestedArrayValues()
         {
             dynamic jsonData = GetDynamicJson(@"
                 {
@@ -142,6 +142,50 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(4, (int)jsonData.Foo[0]);
             Assert.AreEqual(5, (int)jsonData.Foo[1]);
             Assert.AreEqual(6, (int)jsonData.Foo[2]);
+        }
+
+        [Test]
+        public void CanSetArrayValuesToDifferentTypes()
+        {
+            dynamic jsonData = GetDynamicJson(@"[0, 1, 2, 3]");
+
+            jsonData[1] = 4;
+            jsonData[2] = true;
+            jsonData[3] = "string";
+
+            Assert.AreEqual(0, (int)jsonData[0]);
+            Assert.AreEqual(4, (int)jsonData[1]);
+            Assert.AreEqual(true, (bool)jsonData[2]);
+            Assert.AreEqual("string", (string)jsonData[3]);
+        }
+
+        [Test]
+        public void CanSetNestedArrayValuesToDifferentTypes()
+        {
+            dynamic jsonData = GetDynamicJson(@"
+                {
+                  ""Foo"": [0, 1, 2, 3]
+                }");
+
+            jsonData.Foo[1] = 4;
+            jsonData.Foo[2] = true;
+            jsonData.Foo[3] = "string";
+
+            Assert.AreEqual(0, (int)jsonData.Foo[0]);
+            Assert.AreEqual(4, (int)jsonData.Foo[1]);
+            Assert.AreEqual(true, (bool)jsonData.Foo[2]);
+            Assert.AreEqual("string", (string)jsonData.Foo[3]);
+        }
+
+        [Test]
+        public void CanSetArrayValueToNull()
+        {
+            dynamic jsonData = GetDynamicJson(@"[0]");
+
+            jsonData[0] = null;
+
+            Assert.IsNull(jsonData[0]);
+            Assert.AreEqual(null, jsonData[0]);
         }
 
         [Test]
