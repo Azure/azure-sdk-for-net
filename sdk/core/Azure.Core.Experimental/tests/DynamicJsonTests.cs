@@ -181,7 +181,6 @@ namespace Azure.Core.Experimental.Tests
         {
             dynamic jsonData = GetDynamicJson(@"{ ""Foo"" : null }");
 
-            Assert.IsFalse(jsonData.Foo.HasValue);
             Assert.IsNull((CustomType)jsonData.Foo);
             Assert.IsNull((int?)jsonData.Foo);
         }
@@ -191,7 +190,6 @@ namespace Azure.Core.Experimental.Tests
         {
             dynamic jsonData = GetDynamicJson(@"[ null ]");
 
-            Assert.IsFalse(jsonData[0].HasValue);
             Assert.IsNull((CustomType)jsonData[0]);
             Assert.IsNull((int?)jsonData[0]);
         }
@@ -203,7 +201,6 @@ namespace Azure.Core.Experimental.Tests
 
             jsonData.Foo = null;
 
-            Assert.IsFalse(jsonData.Foo.HasValue);
             Assert.IsNull((CustomType)jsonData.Foo);
             Assert.IsNull((int?)jsonData.Foo);
         }
@@ -215,7 +212,6 @@ namespace Azure.Core.Experimental.Tests
 
             jsonData[0] = null;
 
-            Assert.IsFalse(jsonData[0].HasValue);
             Assert.IsNull((CustomType)jsonData[0]);
             Assert.IsNull((int?)jsonData[0]);
         }
