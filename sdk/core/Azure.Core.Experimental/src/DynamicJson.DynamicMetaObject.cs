@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.Json;
+using System.Linq;
 
 namespace Azure.Core.Dynamic
 {
@@ -48,11 +51,21 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
+        internal T ConvertTo<T>()
+        {
+            // TODO: Respect user-provided serialization options
+            // TODO: Could we optimize this by serializing from the byte array instead?  We don't currently slice into this in WriteTo(), but could look at storing that.
+            return JsonSerializer.Deserialize<T>(_element.ToString() , MutableJsonDocument.DefaultJsonSerializerOptions);
+        }
+
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
         private class MetaObject : DynamicMetaObject
         {
+            // Operators that cast from DynamicJson to another type
+            private static readonly Dictionary<Type, MethodInfo> CastFromOperators = GetCastFromOperators();
+
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
             }
@@ -66,6 +79,29 @@ namespace Azure.Core.Dynamic
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(getPropertyCall, restrictions);
+            }
+
+            public override DynamicMetaObject BindConvert(ConvertBinder binder)
+            {
+                Expression targetObject = Expression.Convert(Expression, LimitType);
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                Expression convertCall;
+
+                //if (binder.Type == typeof(IEnumerable))
+                //{
+                //    convertCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
+                //    return new DynamicMetaObject(convertCall, restrictions);
+                //}
+
+                if (CastFromOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
+                {
+                    convertCall = Expression.Call(castOperator, targetObject);
+                    return new DynamicMetaObject(convertCall, restrictions);
+                }
+
+                convertCall = Expression.Call(targetObject, nameof(ConvertTo), new Type[] { binder.Type });
+                return new DynamicMetaObject(convertCall, restrictions);
             }
 
             public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
@@ -82,6 +118,14 @@ namespace Azure.Core.Dynamic
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(setCall, restrictions);
+            }
+
+            private static Dictionary<Type, MethodInfo> GetCastFromOperators()
+            {
+                return typeof(DynamicJson)
+                    .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                    .Where(method => method.Name == "op_Explicit" || method.Name == "op_Implicit")
+                    .ToDictionary(method => method.ReturnType);
             }
         }
     }

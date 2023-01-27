@@ -67,7 +67,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         #region Helpers
-        internal dynamic GetDynamicJson(string json)
+        internal static dynamic GetDynamicJson(string json)
         {
             return new BinaryData(json).ToDynamic();
         }

@@ -346,6 +346,22 @@ namespace Azure.Core.Dynamic
             Changes.AddChange(_path, element, true);
         }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                if (change.Value == null)
+                    return "null";
+
+                return change.Value.ToString();
+            }
+
+            return _element.ToString();
+        }
+
         private void EnsureObject()
         {
             if (_element.ValueKind != JsonValueKind.Object)
