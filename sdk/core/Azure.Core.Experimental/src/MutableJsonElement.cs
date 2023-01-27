@@ -230,7 +230,7 @@ namespace Azure.Core.Dynamic
             }
 
             // If it's not already there, we'll add a change to the JsonElement instead.
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString());
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString())!;
             dict[name] = value;
 
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
@@ -257,7 +257,7 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Object does not have property: {name}.");
             }
 
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString());
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString())!;            dict.Remove(name);
             dict.Remove(name);
 
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
@@ -356,7 +356,7 @@ namespace Azure.Core.Dynamic
                 if (change.Value == null)
                     return "null";
 
-                return change.Value.ToString();
+                return change.Value.ToString()!;
             }
 
             return _element.ToString();

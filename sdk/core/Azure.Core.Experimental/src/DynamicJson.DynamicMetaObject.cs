@@ -13,9 +13,9 @@ namespace Azure.Core.Dynamic
 {
     public partial class DynamicJson : IDynamicMetaObjectProvider
     {
-        internal static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
-        internal static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance);
-        internal static readonly MethodInfo SetMethod = typeof(DynamicJson).GetMethod(nameof(Set), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null);
+        internal static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        internal static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        internal static readonly MethodInfo SetMethod = typeof(DynamicJson).GetMethod(nameof(Set), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null)!;
 
         internal object GetProperty(string name)
         {
@@ -69,7 +69,7 @@ namespace Azure.Core.Dynamic
         {
             // TODO: Respect user-provided serialization options
             // TODO: Could we optimize this by serializing from the byte array instead?  We don't currently slice into this in WriteTo(), but could look at storing that.
-            return JsonSerializer.Deserialize<T>(_element.ToString() , MutableJsonDocument.DefaultJsonSerializerOptions);
+            return JsonSerializer.Deserialize<T>(_element.ToString() , MutableJsonDocument.DefaultJsonSerializerOptions)!;
         }
 
         /// <inheritdoc />
