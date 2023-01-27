@@ -12,10 +12,11 @@ namespace Azure.Core.Dynamic
     public partial class DynamicJson : IDynamicMetaObjectProvider
     {
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
-        private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetMethod = typeof(DynamicJson).GetMethod(nameof(Set), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null)!;
+        private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-        internal object GetProperty(string name)
+        private object GetProperty(string name)
         {
             return new DynamicJson(_element.GetProperty(name));
         }
@@ -33,7 +34,7 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
-        internal object? Set(object value)
+        private object? Set(object value)
         {
             switch (value)
             {
@@ -63,7 +64,13 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        internal T ConvertTo<T>()
+        private object? SetViaIndexer(object index, object value)
+        {
+            DynamicJson element = (DynamicJson)GetViaIndexer(index);
+            return element.Set(value);
+        }
+
+        private T ConvertTo<T>()
         {
             // TODO: Respect user-provided serialization options
 
@@ -100,9 +107,9 @@ namespace Azure.Core.Dynamic
                 UnaryExpression this_ = Expression.Convert(Expression, LimitType);
 
                 Expression[] arguments = new Expression[] { Expression.Convert(indexes[0].Expression, typeof(object)) };
-                var getViaIndexerCall = Expression.Call(this_, GetViaIndexerMethod, arguments);
+                MethodCallExpression getViaIndexerCall = Expression.Call(this_, GetViaIndexerMethod, arguments);
 
-                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(getViaIndexerCall, restrictions);
             }
 
@@ -140,6 +147,20 @@ namespace Azure.Core.Dynamic
 
                 Expression[] setDynamicArgs = new Expression[] { Expression.Convert(value.Expression, typeof(object)) };
                 MethodCallExpression setCall = Expression.Call(property, SetMethod, setDynamicArgs);
+
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(setCall, restrictions);
+            }
+
+            public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
+            {
+                UnaryExpression this_ = Expression.Convert(Expression, LimitType);
+
+                Expression[] setArgs = new Expression[2] {
+                    Expression.Convert(indexes[0].Expression, typeof(object)),
+                    Expression.Convert(value.Expression, typeof(object))
+                };
+                MethodCallExpression setCall = Expression.Call(this_, SetViaIndexerMethod, setArgs);
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(setCall, restrictions);
