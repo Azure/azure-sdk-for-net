@@ -99,12 +99,13 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void DynamicArrayFor()
+        public void DynamicArrayForEach()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
-            for (int i = 0; i < jsonData.Length; i++)
+            int expected = 0;
+            foreach (int i in jsonData)
             {
-                Assert.AreEqual(i, (int)jsonData[i]);
+                Assert.AreEqual(expected++, i);
             }
         }
 

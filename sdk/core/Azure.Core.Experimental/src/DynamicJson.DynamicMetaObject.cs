@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -43,24 +44,24 @@ namespace Azure.Core.Dynamic
 
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
             {
-                Expression targetObject = Expression.Convert(Expression, LimitType);
+                Expression this_ = Expression.Convert(Expression, LimitType);
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
 
-                Expression convertCall;
+                MethodCallExpression convertCall;
 
                 //if (binder.Type == typeof(IEnumerable))
                 //{
-                //    convertCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
+                //    convertCall = Expression.Call(this_, GetDynamicEnumerableMethod);
                 //    return new DynamicMetaObject(convertCall, restrictions);
                 //}
 
                 if (CastFromOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
                 {
-                    convertCall = Expression.Call(castOperator, targetObject);
+                    convertCall = Expression.Call(castOperator, this_);
                     return new DynamicMetaObject(convertCall, restrictions);
                 }
 
-                convertCall = Expression.Call(targetObject, nameof(ConvertTo), new Type[] { binder.Type });
+                convertCall = Expression.Call(this_, nameof(ConvertTo), new Type[] { binder.Type });
                 return new DynamicMetaObject(convertCall, restrictions);
             }
 
