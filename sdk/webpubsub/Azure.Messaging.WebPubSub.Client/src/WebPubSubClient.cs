@@ -627,7 +627,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                         }
                         catch (Exception ex)
                         {
-                            SafeInvokeRestoreGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
+                            SafeInvokeRejoinGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
                         }
                     }
                 }
@@ -704,7 +704,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        private async Task SafeInvokeRestoreGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
+        private async Task SafeInvokeRejoinGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
         {
             try
             {
