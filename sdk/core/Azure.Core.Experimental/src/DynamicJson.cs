@@ -19,7 +19,7 @@ namespace Azure.Core.Dynamic
     {
         // TODO: Decide whether or not to support equality
 
-        private readonly MutableJsonElement _element;
+        private MutableJsonElement _element;
 
         internal DynamicJson(MutableJsonElement element)
         {

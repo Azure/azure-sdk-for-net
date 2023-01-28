@@ -266,31 +266,25 @@ namespace Azure.Core.Dynamic
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public void SetProperty(string name, object value)
+        public MutableJsonElement SetProperty(string name, object value)
         {
-            EnsureValid();
-
-            EnsureObject();
-
-            // Per copying Dictionary semantics, if the property already exists, just replace the value.
-            // If the property already exists, just set it.
-
-            var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-
-            if (_element.TryGetProperty(name, out _))
+            if (TryGetProperty(name, out MutableJsonElement element))
             {
-                Changes.AddChange(path, value, true);
-                return;
+                element.Set(value);
+                return this;
             }
 
-            // If it's not already there, we'll add a change to the JsonElement instead.
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString())!;
+            // If it's not already there, we'll add a change to this element's JsonElement instead.
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes())!;
             dict[name] = value;
 
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
             JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
 
-            Changes.AddChange(_path, newElement, true);
+            int index = Changes.AddChange(_path, newElement, true);
+
+            // Element has changed, return the new valid one.
+            return new MutableJsonElement(_root, newElement, _path, index);
         }
 
         /// <summary>
@@ -311,7 +305,7 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Object does not have property: {name}.");
             }
 
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString())!;
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes())!;
             dict.Remove(name);
 
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
@@ -336,6 +330,28 @@ namespace Azure.Core.Dynamic
         /// </summary>
         /// <param name="value"></param>
         public void Set(int value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(long value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(float value)
         {
             EnsureValid();
 
@@ -374,7 +390,33 @@ namespace Azure.Core.Dynamic
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, true);
+            switch (value)
+            {
+                case int i:
+                    Set(i);
+                    break;
+                case double d:
+                    Set(d);
+                    break;
+                case string s:
+                    Set(s);
+                    break;
+                case bool b:
+                    Set(b);
+                    break;
+                case long l:
+                    Set(l);
+                    break;
+                case float f:
+                    Set(f);
+                    break;
+                case MutableJsonElement e:
+                    Set(e);
+                    break;
+                default:
+                    Changes.AddChange(_path, value, true);
+                    break;
+            }
         }
 
         /// <summary>

@@ -244,7 +244,41 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(4, (int)jsonData.Foo["Bar"]);
         }
 
-#region Helpers
+        [Test]
+        public void CanAddNewProperty()
+        {
+            dynamic jsonData = GetDynamicJson(@"
+                {
+                  ""Foo"" : 1
+                }");
+
+            jsonData.Bar = 2;
+
+            Assert.AreEqual(1, (int)jsonData.Foo);
+            Assert.AreEqual(2, (int)jsonData.Bar);
+        }
+
+        [Test]
+        public void CanMakeChangesAndAddNewProperty()
+        {
+            dynamic jsonData = GetDynamicJson(@"
+                {
+                  ""Foo"" : 1
+                }");
+
+            Assert.AreEqual(1, (int)jsonData.Foo);
+
+            jsonData.Foo = "hi";
+
+            Assert.AreEqual("hi", (string)jsonData.Foo);
+
+            jsonData.Bar = 2;
+
+            Assert.AreEqual("hi", (string)jsonData.Foo);
+            Assert.AreEqual(2, (int)jsonData.Bar);
+        }
+
+        #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
             return new BinaryData(json).ToDynamic();

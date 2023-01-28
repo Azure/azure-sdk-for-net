@@ -110,20 +110,24 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            internal void AddChange(string path, object? value, bool replaceJsonElement = false)
+            internal int AddChange(string path, object? value, bool replaceJsonElement = false)
             {
                 if (_changes == null)
                 {
                     _changes = new List<MutableJsonChange>();
                 }
 
+                int index = _changes.Count;
+
                 _changes.Add(new MutableJsonChange()
                 {
                     Path = path,
                     Value = value,
-                    Index = _changes.Count,
+                    Index = index,
                     ReplacesJsonElement = replaceJsonElement
                 });
+
+                return index;
             }
 
             internal static string PushIndex(string path, int index)
