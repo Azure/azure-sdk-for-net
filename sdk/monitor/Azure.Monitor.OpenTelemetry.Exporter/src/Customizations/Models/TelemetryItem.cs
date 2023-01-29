@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
@@ -15,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryItem
     {
-        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
+        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, AzureMonitorResource resource, string instrumentationKey) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
@@ -41,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref monitorTags.MappedTags);
             }
 
-            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
+            SetResourceSdkVersionAndIkey(resource, instrumentationKey);
             if (AzMonList.GetTagValue(ref monitorTags.MappedTags, "sampleRate") is float sampleRate)
             {
                 SampleRate = sampleRate;
@@ -75,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             SampleRate = telemetryItem.SampleRate;
         }
 
-        public TelemetryItem (LogRecord logRecord, string roleName, string roleInstance, string instrumentationKey) :
+        public TelemetryItem (LogRecord logRecord, AzureMonitorResource resource, string instrumentationKey) :
             this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)
@@ -89,20 +87,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             InstrumentationKey = instrumentationKey;
-            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
+            SetResourceSdkVersionAndIkey(resource, instrumentationKey);
         }
 
-        public TelemetryItem(DateTime time, string roleName, string roleInstance, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))
+        public TelemetryItem(DateTime time, AzureMonitorResource resource, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))
         {
-            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
+            SetResourceSdkVersionAndIkey(resource, instrumentationKey);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetResourceSdkVersionAndIkey(string roleName, string roleInstance, string instrumentationKey)
+        private void SetResourceSdkVersionAndIkey(AzureMonitorResource resource, string instrumentationKey)
         {
             InstrumentationKey = instrumentationKey;
-            Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName;
-            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance;
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName;
+            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance;
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
         }
 

@@ -112,8 +112,8 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample4QueryPagination
 
             string continuationToken = null;
-            bool hadResults = true;
-            while (hadResults)
+            bool moreResultsAvailable = true;
+            while (moreResultsAvailable)
             {
                 Page<TableEntity> page = tableClient
                     .Query<TableEntity>()
@@ -128,7 +128,7 @@ namespace Azure.Data.Tables.Samples
                 continuationToken = page.ContinuationToken;
 
                 IReadOnlyList<TableEntity> pageResults = page.Values;
-                hadResults = pageResults.Any();
+                moreResultsAvailable = pageResults.Any() && continuationToken != null;
 
                 // Print out the results for this page.
                 foreach (TableEntity result in pageResults)

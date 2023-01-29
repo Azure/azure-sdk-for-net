@@ -401,11 +401,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case KeyType.OctHsmValue:
                     return new JsonWebKey(Aes.Create(), keyOps);
 
-                case KeyType.OkpValue:
-                case KeyType.OkpHsmValue:
-                    // TODO: Support OKP keys and Ed25519 curves: https://github.com/Azure/azure-sdk-for-net/issues/32232
-                    throw new IgnoreException("Creating client-side OKP keys is not supported.");
-
                 default:
                     throw new NotSupportedException(@$"Key type ""{type}"" is not supported");
             }

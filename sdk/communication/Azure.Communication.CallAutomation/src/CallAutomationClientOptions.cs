@@ -44,5 +44,10 @@ namespace Azure.Communication.CallAutomation
             V2023_01_15_Preview = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        /// <summary>
+        /// Configure options for Call Automation's <see cref="EventProcessor"/>.
+        /// </summary>
+        public EventProcessorOptions EventProcessorOptions { get; } = new();
     }
 }

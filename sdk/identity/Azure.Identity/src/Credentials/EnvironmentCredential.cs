@@ -104,10 +104,6 @@ namespace Azure.Identity
                 {
                     Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _options, _pipeline, null);
                 }
-                else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                {
-                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
-                }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
                     bool sendCertificateChain = !string.IsNullOrEmpty(clientSendCertificateChain) &&
@@ -122,6 +118,10 @@ namespace Azure.Identity
                         SendCertificateChain = sendCertificateChain
                     };
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificatePassword, clientCertificateCredentialOptions, _pipeline, null);
+                }
+                else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                {
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
                 }
             }
         }
