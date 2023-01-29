@@ -1,4 +1,4 @@
-# Analyze a conversation with Conversation Summarization
+# Meeting Transcript Segmentation
 
 This sample demonstrates how to do topic segmentation task only with Conversation Summarization API. To get started, you'll need to create a Cognitive Language service endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
