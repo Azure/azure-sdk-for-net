@@ -2668,7 +2668,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class RecoveryPointProperties
     {
         public RecoveryPointProperties() { }
-        public string ExpiryTime { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiryOn { get { throw null; } set { } }
         public string RuleName { get { throw null; } set { } }
     }
     public partial class RecoveryPointRehydrationInfo

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,10 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpiryTime))
+            if (Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiryTime");
-                writer.WriteStringValue(ExpiryTime);
+                writer.WriteStringValue(ExpiryOn.Value, "O");
             }
             if (Optional.IsDefined(RuleName))
             {
@@ -30,13 +31,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RecoveryPointProperties DeserializeRecoveryPointProperties(JsonElement element)
         {
-            Optional<string> expiryTime = default;
+            Optional<DateTimeOffset> expiryTime = default;
             Optional<string> ruleName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiryTime"))
                 {
-                    expiryTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expiryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("ruleName"))
@@ -45,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointProperties(expiryTime.Value, ruleName.Value);
+            return new RecoveryPointProperties(Optional.ToNullable(expiryTime), ruleName.Value);
         }
     }
 }

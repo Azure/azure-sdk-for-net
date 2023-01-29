@@ -156,4 +156,9 @@ directive:
               '$ref': '#/definitions/BackupResourceConfigResource'
             }
           };
+  # Here the format date-time isn't specified in swagger, hence adding it explicitly 
+  - from: bms.json
+    where: $.definitions.RecoveryPointProperties.properties.expiryTime
+    transform: >
+      $["format"] = "date-time";
 ```

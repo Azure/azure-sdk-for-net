@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Properties of Recovery Point. </summary>
@@ -16,16 +18,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
-        /// <param name="expiryTime"> Expiry time of Recovery Point in UTC. </param>
+        /// <param name="expiryOn"> Expiry time of Recovery Point in UTC. </param>
         /// <param name="ruleName"> Rule name tagged on Recovery Point that governs life cycle. </param>
-        internal RecoveryPointProperties(string expiryTime, string ruleName)
+        internal RecoveryPointProperties(DateTimeOffset? expiryOn, string ruleName)
         {
-            ExpiryTime = expiryTime;
+            ExpiryOn = expiryOn;
             RuleName = ruleName;
         }
 
         /// <summary> Expiry time of Recovery Point in UTC. </summary>
-        public string ExpiryTime { get; set; }
+        public DateTimeOffset? ExpiryOn { get; set; }
         /// <summary> Rule name tagged on Recovery Point that governs life cycle. </summary>
         public string RuleName { get; set; }
     }
