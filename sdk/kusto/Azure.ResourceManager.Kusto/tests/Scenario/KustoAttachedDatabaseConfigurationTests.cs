@@ -59,7 +59,9 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                     ExternalTablesToInclude = { "externalInclude" },
                     ExternalTablesToExclude = { "externalExclude" },
                     MaterializedViewsToInclude = { "materializedViewInclude" },
-                    MaterializedViewsToExclude = { "materializedViewExclude" }
+                    MaterializedViewsToExclude = { "materializedViewExclude" },
+       				TablesToExclude {"tablesToExclude" }
+       				TablesToInclude { "tablesToInclude" }
                 }
             };
 
@@ -188,6 +190,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             CollectionAssert.AreEqual(expected.ExternalTablesToInclude, actual.ExternalTablesToInclude);
             CollectionAssert.AreEqual(expected.MaterializedViewsToExclude, actual.MaterializedViewsToExclude);
             CollectionAssert.AreEqual(expected.MaterializedViewsToInclude, actual.MaterializedViewsToInclude);
+            CollectionAssert.AreEqual(expected.TablesToExclude, actual.TablesToExclude);
+            CollectionAssert.AreEqual(expected.TablesToInclude, actual.TablesToInclude);
         }
 
         private void ValidateReadOnlyFollowingDatabase(
