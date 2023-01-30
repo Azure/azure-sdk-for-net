@@ -7,6 +7,8 @@ Project("{A680DC7E-E5EE-4026-9B2B-E72E2365BF3E}") = "Azure.ResourceManager.Guest
 EndProject
 Project("{A680DC7E-E5EE-4026-9B2B-E72E2365BF3E}") = "Azure.ResourceManager.GuestConfiguration.Tests", "tests\Azure.ResourceManager.GuestConfiguration.Tests.csproj", "{F30D65EF-52E6-4311-B782-F7D9725825C8}"
 EndProject
+Project("{A680DC7E-E5EE-4026-9B2B-E72E2365BF3E}") = "Azure.ResourceManager.GuestConfiguration.Samples", "samples\Azure.ResourceManager.GuestConfiguration.Samples.csproj", "{A21343E3-EDDA-487F-9ACD-A6375227C60F}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
