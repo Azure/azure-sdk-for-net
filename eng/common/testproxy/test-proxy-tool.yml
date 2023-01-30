@@ -20,7 +20,7 @@ steps:
         $version = $overrideVersion
       }
 
-      dotnet tool install azure.sdk.tools.testproxy `
+      dotnet tool install test-proxy `
         --tool-path $(Build.BinariesDirectory)/test-proxy `
         --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json `
         --version $version
