@@ -1,4 +1,4 @@
-# For details see https://github.com/Azure/azure-sdk-tools/doc/common/CadlSyncAndGenerateScripts.md
+# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Cadl-Project-Scripts.md
 
 [CmdletBinding()]
 param (
