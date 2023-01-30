@@ -57,6 +57,7 @@ rename-rules:
 
 override-operation-name:
   BackupStatus_Get: GetBackupStatus
+  DeletedProtectionContainers_List: GetSoftDeletedProtectionContainers
 
 list-exception:
   - /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
