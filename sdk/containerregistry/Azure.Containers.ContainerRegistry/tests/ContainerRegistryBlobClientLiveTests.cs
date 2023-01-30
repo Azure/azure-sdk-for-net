@@ -179,7 +179,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             var manifest = CreateManifest();
-            var uploadResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions(tag));
+            var uploadResult = await client.UploadManifestAsync(manifest, tag);
             var digest = uploadResult.Value.Digest;
 
             // Assert
@@ -230,7 +230,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 "}";
 
             using Stream manifest = new MemoryStream(Encoding.ASCII.GetBytes(payload));
-            var uploadResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions(tag));
+            var uploadResult = await client.UploadManifestAsync(manifest, tag);
             var digest = uploadResult.Value.Digest;
 
             // Assert
@@ -252,6 +252,30 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Clean up
             await client.DeleteManifestAsync(digest);
         }
+
+        //[RecordedTest]
+        //public async Task CanUploadDockerManifest()
+        //{
+        //    // Arrange
+        //    var repositoryId = Recording.Random.NewGuid().ToString();
+        //    var client = CreateBlobClient(repositoryId);
+
+        //    await UploadManifestPrerequisites(client);
+
+        //    // Act
+        //    var manifest = CreateManifest();
+        //    var uploadResult = await client.UploadManifestAsync(manifest, mediaType: ManifestMediaType.DockerManifest);
+        //    string digest = uploadResult.Value.Digest;
+
+        //    // Assert
+        //    DownloadManifestResult downloadResult = (await client.DownloadManifestAsync(digest)).Value;
+        //    Assert.AreEqual(digest, downloadResult.Digest);
+        //    Assert.AreEqual(ManifestMediaType.DockerManifest, downloadResult.MediaType);
+        //    ValidateManifest(downloadResult.AsOciManifest());
+
+        //    // Clean up
+        //    await client.DeleteManifestAsync(digest);
+        //}
 
         private async Task UploadManifestPrerequisites(ContainerRegistryBlobClient client)
         {
@@ -724,7 +748,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Finally, upload manifest
-            return await client.UploadManifestAsync(manifest, new UploadManifestOptions("v1"));
+            return await client.UploadManifestAsync(manifest, "v1");
         }
 
         [RecordedTest]
