@@ -10,7 +10,7 @@ require: ../src/autorest.md
 include-x-ms-examples-original-file: true
 testgen:
   sample: true
-  skipped-operations: # only to test if the configuration works
+  skipped-operations:
   - EventSubscriptions_ListGlobalBySubscriptionForTopicType
   - EventSubscriptions_ListGlobalByResourceGroupForTopicType
   - EventSubscriptions_ListRegionalBySubscription
