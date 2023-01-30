@@ -6,28 +6,39 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    public partial class EmbeddingsUsage : IUtf8JsonSerializable
+    public partial class EmbeddingsUsage
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static EmbeddingsUsage DeserializeEmbeddingsUsage(JsonElement element)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("prompt_tokens");
-            writer.WriteNumberValue(PromptTokens);
-            writer.WritePropertyName("total_tokens");
-            writer.WriteNumberValue(TotalTokens);
-            writer.WriteEndObject();
+            int promptTokens = default;
+            int totalTokens = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("prompt_tokens"))
+                {
+                    promptTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("total_tokens"))
+                {
+                    totalTokens = property.Value.GetInt32();
+                    continue;
+                }
+            }
+            return new EmbeddingsUsage(promptTokens, totalTokens);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EmbeddingsUsage FromResponse(Response response)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEmbeddingsUsage(document.RootElement);
         }
     }
 }

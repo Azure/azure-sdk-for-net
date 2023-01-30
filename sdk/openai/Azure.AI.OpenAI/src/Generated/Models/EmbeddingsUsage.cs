@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Models
         /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
         /// <param name="promptTokens"></param>
         /// <param name="totalTokens"></param>
-        public EmbeddingsUsage(int promptTokens, int totalTokens)
+        internal EmbeddingsUsage(int promptTokens, int totalTokens)
         {
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;

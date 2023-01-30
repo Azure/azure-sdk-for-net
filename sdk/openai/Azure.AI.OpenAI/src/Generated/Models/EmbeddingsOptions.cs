@@ -10,20 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    /// <summary> The EmbeddingsOptions. </summary>
+    /// <summary> Schema to create a prompt completion from a deployment. </summary>
     public partial class EmbeddingsOptions
     {
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
         /// <param name="input"></param>
-        /// <param name="usage"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> or <paramref name="usage"/> is null. </exception>
-        public EmbeddingsOptions(string input, EmbeddingsUsage usage)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public EmbeddingsOptions(string input)
         {
             Argument.AssertNotNull(input, nameof(input));
-            Argument.AssertNotNull(usage, nameof(usage));
 
             Input = input;
-            Usage = usage;
         }
 
         /// <summary> Gets or sets the user. </summary>
@@ -34,7 +31,5 @@ namespace Azure.AI.OpenAI.Models
         public string Model { get; set; }
         /// <summary> Gets the input. </summary>
         public string Input { get; }
-        /// <summary> Gets the usage. </summary>
-        public EmbeddingsUsage Usage { get; }
     }
 }

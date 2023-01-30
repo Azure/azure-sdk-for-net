@@ -11,10 +11,6 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
     input = new {},
-    usage = new {
-        prompt_tokens = 1234,
-        total_tokens = 1234,
-    },
 };
 
 Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
@@ -24,6 +20,8 @@ Console.WriteLine(result.GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 This sample shows how to call GetEmbeddingsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -36,10 +34,6 @@ var data = new {
     input_type = "<input_type>",
     model = "<model>",
     input = new {},
-    usage = new {
-        prompt_tokens = 1234,
-        total_tokens = 1234,
-    },
 };
 
 Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
@@ -49,6 +43,9 @@ Console.WriteLine(result.GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -62,10 +59,6 @@ Schema for <c>EmbeddingsOptions</c>:
   input_type: string, # Optional.
   model: string, # Optional.
   input: Union, # Required.
-  usage: {
-    prompt_tokens: number, # Required.
-    total_tokens: number, # Required.
-  }, # Required.
 }
 </code>
 
@@ -81,6 +74,11 @@ Schema for <c>Embeddings</c>:
       index: number, # Required.
     }
   ], # Required.
+  model: string, # Optional.
+  usage: {
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 
@@ -96,10 +94,6 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
     input = new {},
-    usage = new {
-        prompt_tokens = 1234,
-        total_tokens = 1234,
-    },
 };
 
 Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
@@ -109,6 +103,8 @@ Console.WriteLine(result.GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 This sample shows how to call GetEmbeddings with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -121,10 +117,6 @@ var data = new {
     input_type = "<input_type>",
     model = "<model>",
     input = new {},
-    usage = new {
-        prompt_tokens = 1234,
-        total_tokens = 1234,
-    },
 };
 
 Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
@@ -134,6 +126,9 @@ Console.WriteLine(result.GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -147,10 +142,6 @@ Schema for <c>EmbeddingsOptions</c>:
   input_type: string, # Optional.
   model: string, # Optional.
   input: Union, # Required.
-  usage: {
-    prompt_tokens: number, # Required.
-    total_tokens: number, # Required.
-  }, # Required.
 }
 </code>
 
@@ -166,6 +157,11 @@ Schema for <c>Embeddings</c>:
       index: number, # Required.
     }
   ], # Required.
+  model: string, # Optional.
+  usage: {
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 

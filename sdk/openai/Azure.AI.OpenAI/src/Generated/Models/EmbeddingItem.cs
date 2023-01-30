@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    /// <summary> The EmbeddingItem. </summary>
+    /// <summary> Expected response schema to embeddings object list item request. </summary>
     public partial class EmbeddingItem
     {
         /// <summary> Initializes a new instance of EmbeddingItem. </summary>

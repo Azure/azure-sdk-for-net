@@ -104,7 +104,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Return the embeddings for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
-        /// <param name="embeddingsOptions"> The EmbeddingsOptions to use. </param>
+        /// <param name="embeddingsOptions"> Schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="embeddingsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -120,7 +120,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Return the embeddings for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
-        /// <param name="embeddingsOptions"> The EmbeddingsOptions to use. </param>
+        /// <param name="embeddingsOptions"> Schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="embeddingsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
