@@ -359,7 +359,7 @@ namespace Azure.Core.Pipeline
             {
                 if (_currentActivity != null)
                 {
-                    throw new InvalidOperationException("Traceparent can not be set after the activity is started");
+                    throw new InvalidOperationException("Traceparent can not be set after the activity is started.");
                 }
                 _traceparent = traceparent;
             }
