@@ -35,10 +35,10 @@ resource serviceBusQueueWithSessions 'Microsoft.ServiceBus/namespaces/queues@202
 }
 
 // Shared Resource output
-output AZURE_CLIENT_OID string = testApplicationOid
-output RESOURCE_GROUP string = resourceGroup().name
-output SERVICEBUS_NAMESPACE_CONNECTION_STRING string = listkeys(serviceBusAuthRuleResourceId, '2015-08-01').primaryConnectionString
+output STRESS_AZURE_CLIENT_OID string = testApplicationOid
+output STRESS_RESOURCE_GROUP string = resourceGroup().name
+output STRESS_SERVICEBUS_NAMESPACE_CONNECTION_STRING string = listkeys(serviceBusAuthRuleResourceId, '2015-08-01').primaryConnectionString
 
 // Individual test outputs
-output SERVICEBUS_QUEUE string = serviceBusQueue.name
-output SERVICEBUS_SESSION_QUEUE string = serviceBusQueueWithSessions.name
+output STRESS_SERVICEBUS_QUEUE string = serviceBusQueue.name
+output STRESS_SERVICEBUS_SESSION_QUEUE string = serviceBusQueueWithSessions.name

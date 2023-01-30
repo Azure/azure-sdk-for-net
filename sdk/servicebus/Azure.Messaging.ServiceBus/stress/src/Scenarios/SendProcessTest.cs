@@ -15,24 +15,24 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///
 public class SendProcessTest : TestScenario
 {
-    /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
+    /// <summary> The array of <see cref="Role" />s needed to run this test scenario.</summary>
     public override Role[] Roles { get; } = {Role.Sender, Role.Processor};
 
     /// <summary> The name of this test.</summary>
     public override string Name { get; } = "SendProcessTest";
 
-    /// <summary>The identifier of the <see cref="Processor"/> used by this instance.</summary>
+    /// <summary>The identifier of the <see cref="Processor" /> used by this instance.</summary>
     private string _identifier;
 
     /// <summary>Holds the set of messages that have been read by this instance. The key is the unique Id set by the sender.</summary>
     private ConcurrentDictionary<string, byte> _readMessages = new ConcurrentDictionary<string, byte>();
 
     /// <summary>
-    ///  Initializes a new <see cref="SendProcessTest"/> instance.
+    ///  Initializes a new <see cref="SendProcessTest" /> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
+    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> to use to configure this test run.</param>
+    /// <param name="metrics">The <see cref="Metrics" /> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public SendProcessTest(TestParameters testParameters,
@@ -45,8 +45,8 @@ public class SendProcessTest : TestScenario
     ///   Creates a role instance using all of the default configuration values and runs that role.
     /// </summary>
     ///
-    /// <param name="role">The <see cref="Role"/> to run.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="role">The <see cref="Role" /> to run.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
     internal override Task RunRoleAsync(Role role, CancellationToken cancellationToken)
     {

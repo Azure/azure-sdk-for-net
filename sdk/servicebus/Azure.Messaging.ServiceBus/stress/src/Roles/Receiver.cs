@@ -12,9 +12,9 @@ using System.Security.Cryptography;
 namespace Azure.Messaging.ServiceBus.Stress;
 
 /// <summary>
-///   The role responsible for running a <see cref="ServiceBusReceiver" \>, and testing its performance over
+///   The role responsible for running a <see cref="ServiceBusReceiver" />, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
-///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
+///   <see cref="TelemetryClient" />. The metrics collected are garbage collection information, any exceptions
 ///   thrown or heard, and how many messages are received and read. It stops reading messages and cleans up resources
 ///   at the end of the test run.
 /// </summary>
@@ -34,7 +34,7 @@ internal class Receiver
     private ConcurrentDictionary<string, byte> _readMessages;
 
     /// <summary>
-    ///   Initializes a new <see cref="Receiver" \> instance.
+    ///   Initializes a new <see cref="Receiver" /> instance.
     /// </summary>
     ///
     /// <param name="testParameters">The <see cref="TestParameters"/> used to configure the test scenario run.</param>

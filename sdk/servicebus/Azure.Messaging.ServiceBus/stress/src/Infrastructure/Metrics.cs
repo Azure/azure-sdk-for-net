@@ -8,7 +8,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 namespace Azure.Messaging.ServiceBus.Stress;
 
 /// <summary>
-///   The set of metrics and the <see cref="TelementryClient" /> used to collect information
+///   The set of metrics and the <see cref="TelemetryClient" /> used to collect information
 ///   from test runs and send them to Application Insights.
 /// </summary>
 ///

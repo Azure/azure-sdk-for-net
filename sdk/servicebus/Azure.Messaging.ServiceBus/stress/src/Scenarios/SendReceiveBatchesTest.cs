@@ -14,18 +14,18 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///
 public class SendReceiveBatchesTest : TestScenario
 {
-    /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
+    /// <summary> The array of <see cref="Role" />s needed to run this test scenario.</summary>
     public override Role[] Roles { get; } = {Role.Sender, Role.Receiver};
 
     /// <summary> The name of this test.</summary>
     public override string Name { get; } = "SendReceiveBatchesTest";
 
     /// <summary>
-    ///  Initializes a new <see cref="SendReceiveTest"/> instance.
+    ///  Initializes a new <see cref="SendReceiveTest" /> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
+    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> to use to configure this test run.</param>
+    /// <param name="metrics">The <see cref="Metrics" /> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public SendReceiveBatchesTest(TestParameters testParameters,
@@ -38,8 +38,8 @@ public class SendReceiveBatchesTest : TestScenario
     ///   Creates a role instance and runs that role.
     /// </summary>
     ///
-    /// <param name="role">The <see cref="Role"/> to run.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="role">The <see cref="Role" /> to run.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
     internal override Task RunRoleAsync(Role role,
                               CancellationToken cancellationToken)

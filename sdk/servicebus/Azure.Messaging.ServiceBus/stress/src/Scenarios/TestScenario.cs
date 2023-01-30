@@ -34,8 +34,8 @@ public abstract class TestScenario
     ///  Initializes a new Test instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
+    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> to use to configure this test run.</param>
+    /// <param name="metrics">The <see cref="Metrics" /> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public TestScenario(TestParameters testParameters,
@@ -53,7 +53,7 @@ public abstract class TestScenario
     ///   Runs all of the roles required for this instance of the send process test scenario.
     /// </summary>
     ///
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
     public async Task RunTestAsync(CancellationToken cancellationToken)
     {
@@ -80,7 +80,7 @@ public abstract class TestScenario
     /// </summary>
     ///
     /// <param name="role">The <see cref="Role"/> to run.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
     internal virtual Task RunRoleAsync(Role role, CancellationToken cancellationToken)
     {
@@ -97,7 +97,7 @@ public abstract class TestScenario
                 return Task.Run(() => receiver.RunAsync(cancellationToken));
 
             case Role.SessionSender:
-                var sessionSenderConfiguration = new SessionSenderConfiguration();
+                var sessionSenderConfiguration = new SenderConfiguration();
                 var sessionSender = new SessionSender(_testParameters, sessionSenderConfiguration, _metrics);
                 return Task.Run(() => sessionSender.RunAsync(cancellationToken));
 

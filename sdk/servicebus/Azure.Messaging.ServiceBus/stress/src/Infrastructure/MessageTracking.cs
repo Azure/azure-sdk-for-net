@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Stress;
 /// <summary>
 ///   A class that allows for keeping track of messages as they are sent from a sender or session sender
 ///   until they are received by the processor or receiver. It is used by the sender to
-///   add property values to the <see cref="ServiceBusMessage"/>. It is used by the processors and receivers
+///   add property values to the <see cref="ServiceBusMessage" />. It is used by the processors and receivers
 ///   to keep track of previously read messages and determine if messages being processed are out of order,
 ///   duplicated, or have corrupted bodies.
 /// </summary>
@@ -21,57 +21,57 @@ namespace Azure.Messaging.ServiceBus.Stress;
 public static class MessageTracking
 {
     /// <summary>
-    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the sender-assigned index number.
+    ///   The name of the <see cref="ServiceBusMessage" /> property that holds the sender-assigned index number.
     /// </summary>
     ///
     public static readonly string IndexNumberPropertyName = "IndexNumber";
 
     /// <summary>
-    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the sender-assigned transaction index number.
+    ///   The name of the <see cref="ServiceBusMessage" /> property that holds the sender-assigned transaction index number.
     /// </summary>
     ///
     public static readonly string TransactionIndexNumberPropertyName = "TransactionIndexNumber";
 
     /// <summary>
-    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the time the message was sent.
+    ///   The name of the <see cref="ServiceBusMessage" /> property that holds the time the message was sent.
     /// </summary>
     ///
     public static readonly string SendTimePropertyName = "SendTime";
 
     /// <summary>
-    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the session Id the sender
+    ///   The name of the <see cref="ServiceBusMessage" /> property that holds the session Id the sender
     ///   was intending to send to, if any.
     /// </summary>
     ///
     public static readonly string SessionIdPropertyName = "SessionId";
 
     /// <summary>
-    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the transaction Id of the current
+    ///   The name of the <see cref="ServiceBusMessage" /> property that holds the transaction Id of the current
     ///   transaction.
     /// </summary>
     ///
     public static readonly string TransactionIdPropertyName = "TransactionId";
 
     /// <summary>
-    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the ID assigned to this event by
+    ///   The name of the <see cref="ServiceBusMessage" /> property that holds the ID assigned to this event by
     ///   the sender.
     /// </summary>
     ///
     public static readonly string IdPropertyName = "MessageId";
 
     /// <summary>
-    ///   The name of the <see cref="ServiceBusMessage"/> property that holds the hash of the message body assigned by the sender.
+    ///   The name of the <see cref="ServiceBusMessage" /> property that holds the hash of the message body assigned by the sender.
     /// </summary>
     ///
     public static readonly string MessageBodyHashPropertyName = "MessageBodyHash";
 
     /// <summary>
-    ///   Adds properties to the given <see cref="ServiceBusMessage"/> instance, allowing for the processor to determine that events
+    ///   Adds properties to the given <see cref="ServiceBusMessage" /> instance, allowing for the processor to determine that events
     ///   were not duplicated and have valid event bodies.
     /// </summary>
     ///
-    /// <param name="message">The <see cref="ServiceBusMessage"/> instance to augment.</param>
-    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
+    /// <param name="message">The <see cref="ServiceBusMessage" /> instance to augment.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256" /> instance to hash the event body.</param>
     /// <param name="indexNumber">The producer assigned index number for this event.</param>
     /// <param name="sessionId">The session id, if any, that this message was intended to be sent to.</param>
     ///
@@ -85,13 +85,13 @@ public static class MessageTracking
     }
 
     /// <summary>
-    ///   Processes the <see cref="ServiceBusReceivedMessage"/> in order to determine
+    ///   Processes the <see cref="ServiceBusReceivedMessage" /> in order to determine
     ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
     /// </summary>
     ///
-    /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> received from the receiver.</param>
-    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
+    /// <param name="message">The <see cref="ServiceBusReceivedMessage" /> received from the receiver.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256" /> instance to hash the event body.</param>
+    /// <param name="metrics">The <see cref="Metrics" /> instance used to send information about the processed event to Application Insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
     public static void ReceiveMessage(ServiceBusReceivedMessage message,
@@ -104,9 +104,9 @@ public static class MessageTracking
     ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
     /// </summary>
     ///
-    /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> received from the receiver.</param>
-    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
+    /// <param name="message">The <see cref="ServiceBusReceivedMessage" /> received from the receiver.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256" /> instance to hash the event body.</param>
+    /// <param name="metrics">The <see cref="Metrics" /> instance used to send information about the processed event to Application Insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
     public static void ReceiveSessionMessage(ServiceBusReceivedMessage message,
@@ -115,11 +115,11 @@ public static class MessageTracking
                                         ConcurrentDictionary<string, byte> readMessages) => CheckMessage(message, sha256Hash, message.SessionId, metrics, readMessages);
 
     /// <summary>
-    ///   Processes the <see cref="ServiceBusReceivedMessage"/> instance held in the <see cref="ProcessMessageEventArgs"/> in order to determine
+    ///   Processes the <see cref="ServiceBusReceivedMessage" /> instance held in the <see cref="ProcessMessageEventArgs" /> in order to determine
     ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
     /// </summary>
     ///
-    /// <param name="args">The <see cref="ProcessMessageEventArgs"/> received from the processor to be used for processing.</param>
+    /// <param name="args">The <see cref="ProcessMessageEventArgs" /> received from the processor to be used for processing.</param>
     /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
@@ -134,9 +134,9 @@ public static class MessageTracking
     ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
     /// </summary>
     ///
-    /// <param name="args">The <see cref="ProcessSessionMessageEventArgs"/> received from the processor to be used for processing.</param>
-    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
+    /// <param name="args">The <see cref="ProcessSessionMessageEventArgs" /> received from the processor to be used for processing.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256" /> instance to hash the event body.</param>
+    /// <param name="metrics">The <see cref="Metrics" /> instance used to send information about the processed event to Application Insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
     public static void ProcessSessionMessage(ProcessSessionMessageEventArgs args,
@@ -150,8 +150,8 @@ public static class MessageTracking
     ///   the body is valid.
     /// </summary>
     ///
-    /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to be checked.</param>
-    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the message body.</param>
+    /// <param name="message">The <see cref="ServiceBusReceivedMessage" /> to be checked.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256" /> instance to hash the message body.</param>
     /// <param name="metrics">The metrics instance used to send metrics to application insights.</param>
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///

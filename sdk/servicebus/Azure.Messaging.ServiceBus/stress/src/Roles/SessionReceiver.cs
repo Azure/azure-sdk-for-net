@@ -12,9 +12,9 @@ using System.Security.Cryptography;
 namespace Azure.Messaging.ServiceBus.Stress;
 
 /// <summary>
-///   The role responsible for running a <see cref="ServiceBusSessionReceiver" \>, and testing its performance over
+///   The role responsible for running a <see cref="ServiceBusSessionReceiver" />, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
-///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
+///   <see cref="TelemetryClient" />. The metrics collected are garbage collection information, any exceptions
 ///   thrown or heard, and how many messages are received and read. It stops reading messages and cleans up resources
 ///   at the end of the test run.
 /// </summary>
@@ -37,9 +37,9 @@ internal class SessionReceiver
     ///   Initializes a new <see cref="Receiver" \> instance.
     /// </summary>
     ///
-    /// <param name="testParameters">The <see cref="TestParameters"/> used to configure the test scenario run.</param>
-    /// <param name="sessionReceiverConfiguration">The <see cref="SessionReceiverConfiguration"/> instance used to configure this instance of <see cref="Receiver" />.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> instance used to send metrics to Application Insights.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the test scenario run.</param>
+    /// <param name="sessionReceiverConfiguration">The <see cref="SessionReceiverConfiguration" /> instance used to configure this instance of <see cref="Receiver" />.</param>
+    /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
     public SessionReceiver(TestParameters testParameters,
                      SessionReceiverConfiguration sessionReceiverConfiguration,
@@ -52,12 +52,12 @@ internal class SessionReceiver
     }
 
     /// <summary>
-    ///   Starts an instance of a <see cref="Receiver"/> role. This role creates an <see cref="ServiceBusSessionReceiver"/>
+    ///   Starts an instance of a <see cref="Receiver" /> role. This role creates an <see cref="ServiceBusSessionReceiver" />
     ///   and monitors it while it reads messages that have been sent to this test's Service Bus queue by independent
-    ///   <see cref="Sender"/> role(s).
+    ///   <see cref="Sender" /> role(s).
     /// </summary>
     ///
-    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
     public async Task RunAsync(CancellationToken cancellationToken)
     {

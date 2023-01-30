@@ -28,11 +28,11 @@ public class SessionSendProcessTest : TestScenario
     private ConcurrentDictionary<string, byte> _readMessages = new ConcurrentDictionary<string, byte>();
 
     /// <summary>
-    ///  Initializes a new <see cref="SessionSendProcessTest"/> instance.
+    ///  Initializes a new <see cref="SessionSendProcessTest" /> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
+    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> to use to configure this test run.</param>
+    /// <param name="metrics">The <see cref="Metrics" /> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public SessionSendProcessTest(TestParameters testParameters,
@@ -45,15 +45,15 @@ public class SessionSendProcessTest : TestScenario
     ///   Creates a role instance using all of the default configuration values and runs that role.
     /// </summary>
     ///
-    /// <param name="role">The <see cref="Role"/> to run.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="role">The <see cref="Role" /> to run.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
     internal override Task RunRoleAsync(Role role, CancellationToken cancellationToken)
     {
        switch (role)
         {
             case Role.SessionSender:
-                var senderConfiguration = new SessionSenderConfiguration();
+                var senderConfiguration = new SenderConfiguration();
                 var sender = new SessionSender(_testParameters, senderConfiguration, _metrics);
                 return Task.Run(() => sender.RunAsync(cancellationToken));
 

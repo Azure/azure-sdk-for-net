@@ -11,26 +11,26 @@ using Azure.Messaging.ServiceBus;
 namespace Azure.Messaging.ServiceBus.Stress;
 
 /// <summary>
-///   The role responsible for running a <see cref="ServiceBusSender" \>, and testing its performance over
+///   The role responsible for running a <see cref="ServiceBusSender" />, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
-///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
+///   <see cref="TelemetryClient" />. The metrics collected are garbage collection information, any exceptions
 ///   thrown or heard, and how many messages are processed and read. It stops sending messages and cleans up resources
 ///   at the end of the test run.
 /// </summary>
 ///
 internal class Sender
 {
-    /// <summary>The <see cref="Metrics"/> instance associated with this <see cref="Sender"/> instance.</summary>
-    private readonly Metrics _metrics;
+    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Sender" /> instance.</summary>
+    internal readonly Metrics _metrics;
 
     /// <summary>The <see cref="SenderConfiguration"/> used to configure the instance of this role.</summary>
-    private readonly SenderConfiguration _senderConfiguration;
+    internal readonly SenderConfiguration _senderConfiguration;
 
     /// <summary>The <see cref="TestParameters"/> used to configure this test run.</summary>
-    private readonly TestParameters _testParameters;
+    internal readonly TestParameters _testParameters;
 
     /// <summary>
-    ///   Initializes a new <see cref="Sender"\> instance.
+    ///   Initializes a new <see cref="Sender"/> instance.
     /// </summary>
     ///
     /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the send and receive test scenario run.</param>
@@ -38,8 +38,8 @@ internal class Sender
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
     public Sender(TestParameters testParameters,
-                             SenderConfiguration senderConfiguration,
-                             Metrics metrics)
+                  SenderConfiguration senderConfiguration,
+                  Metrics metrics)
     {
         _metrics = metrics;
         _testParameters = testParameters;
@@ -47,11 +47,11 @@ internal class Sender
     }
 
     /// <summary>
-    ///   Starts an instance of a <see cref="Sender"/> role. This role creates a <see cref="ServiceBusSender"/>
+    ///   Starts an instance of a <see cref="Sender" /> role. This role creates a <see cref="ServiceBusSender" />
     ///   and monitors it while it sends events to this test's dedicated Service Bus queue.
     /// </summary>
     ///
-    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
     public async Task RunAsync(CancellationToken cancellationToken)
     {
@@ -113,9 +113,9 @@ internal class Sender
     /// </summary>
     ///
     /// <param name="sender">The <see cref="ServiceBusSender" /> to use to send messages to for this test scenario run.</param>
-    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
     ///
-    private async Task PerformSend(ServiceBusSender sender,
+    internal virtual async Task PerformSend(ServiceBusSender sender,
                                       CancellationToken cancellationToken)
     {
         var batch = await sender.CreateMessageBatchAsync().ConfigureAwait(false);
