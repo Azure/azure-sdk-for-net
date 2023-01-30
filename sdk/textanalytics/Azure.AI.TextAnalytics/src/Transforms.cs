@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -349,6 +349,14 @@ namespace Azure.AI.TextAnalytics
 
         #region Healthcare
 
+        internal static BinaryData ConvertToFhirBundle(JsonElement fhirBundle) =>
+            fhirBundle.ValueKind switch
+            {
+                JsonValueKind.Undefined => null, // A FHIR bundle was not included in the response.
+                JsonValueKind.Object => new BinaryData(fhirBundle),
+                _ => throw new InvalidOperationException($"This value's ValueKind is not Object.")
+            };
+
         internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities)
         {
             return healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
@@ -367,16 +375,12 @@ namespace Azure.AI.TextAnalytics
             // Read entities.
             foreach (var document in results.Documents)
             {
-                BinaryData fhirBundle = document.FhirBundle.ValueKind is System.Text.Json.JsonValueKind.Object
-                    ? new BinaryData(document.FhirBundle)
-                    : null;
-
                 healthcareEntitiesResults.Add(new AnalyzeHealthcareEntitiesResult(
                     document.Id,
                     document.Statistics ?? default,
                     ConvertToHealthcareEntityCollection(document.Entities),
                     ConvertToHealthcareEntityRelationsCollection(document.Entities, document.Relations),
-                    fhirBundle,
+                    ConvertToFhirBundle(document.FhirBundle),
                     document.DetectedLanguage,
                     ConvertToWarnings(document.Warnings)));
             }
