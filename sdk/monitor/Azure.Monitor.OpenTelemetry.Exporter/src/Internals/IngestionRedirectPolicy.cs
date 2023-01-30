@@ -15,9 +15,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         // To prevent circular redirects, max redirect is set to 10.
         internal const int MaxRedirect = 10;
-        internal readonly TimeSpan DefaultCacheExpirationDuration = TimeSpan.FromHours(12);
+        internal readonly TimeSpan _defaultCacheExpirationDuration = TimeSpan.FromHours(12);
 
-        private readonly Cache<Uri> cache = new Cache<Uri>();
+        private readonly Cache<Uri> _cache = new Cache<Uri>();
 
         internal async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             Request request = message.Request;
 
-            if (cache.TryRead(out Uri redirectUri))
+            if (_cache.TryRead(out Uri redirectUri))
             {
                 // Set up for the redirect
                 request.Uri.Reset(redirectUri);
@@ -75,10 +75,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     // if failed to read cache, use default
                     AzureMonitorExporterEventSource.Log.WriteWarning("ParseRedirectCacheFailed", "Failed to parse redirect cache, using default.");
-                    cacheExpirationDuration = DefaultCacheExpirationDuration;
+                    cacheExpirationDuration = _defaultCacheExpirationDuration;
                 }
 
-                cache.Set(redirectUri, cacheExpirationDuration);
+                _cache.Set(redirectUri, cacheExpirationDuration);
 
                 redirectCount++;
             }

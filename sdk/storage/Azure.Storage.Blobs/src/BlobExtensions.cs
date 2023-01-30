@@ -11,6 +11,7 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Core;
 using System.IO;
 using System.Globalization;
+using System.ComponentModel;
 
 namespace Azure.Storage.Blobs
 {
@@ -1386,6 +1387,17 @@ namespace Azure.Storage.Blobs
             return new BlobLegalHoldResult
             {
                 HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
+            };
+        }
+        #endregion
+
+        #region ToEncryptionAlgorithmString
+        internal static string ToEncryptionAlgorithmString(this EncryptionAlgorithmType type)
+        {
+            return type switch
+            {
+                EncryptionAlgorithmType.Aes256 => EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                _ => throw new InvalidEnumArgumentException(),
             };
         }
         #endregion

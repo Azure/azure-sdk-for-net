@@ -45,6 +45,18 @@ namespace Azure.Identity.Tests.Mock
             return new AzureCliCredential(Pipeline, _processService, options);
         }
 
+        public override TokenCredential CreateAzureDeveloperCliCredential()
+        {
+            var options = new AzureDeveloperCliCredentialOptions
+            {
+                TenantId = Options.TenantId,
+                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList(),
+				AzdCliProcessTimeout = Options.DeveloperCredentialTimeout
+            };
+
+            return new AzureDeveloperCliCredential(Pipeline, _processService, options);
+        }
+
         public override TokenCredential CreateVisualStudioCredential()
         {
             var options = new VisualStudioCredentialOptions

@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Media.Models
         private const string UploadValue = "Upload";
         private const string ConfigurationValue = "Configuration";
         private const string ContentValue = "Content";
+        private const string AccountValue = "Account";
 
         /// <summary> The error is service related. </summary>
         public static MediaJobErrorCategory Service { get; } = new MediaJobErrorCategory(ServiceValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaJobErrorCategory Configuration { get; } = new MediaJobErrorCategory(ConfigurationValue);
         /// <summary> The error is related to data in the input files. </summary>
         public static MediaJobErrorCategory Content { get; } = new MediaJobErrorCategory(ContentValue);
+        /// <summary> The error is related to account information. </summary>
+        public static MediaJobErrorCategory Account { get; } = new MediaJobErrorCategory(AccountValue);
         /// <summary> Determines if two <see cref="MediaJobErrorCategory"/> values are the same. </summary>
         public static bool operator ==(MediaJobErrorCategory left, MediaJobErrorCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobErrorCategory"/> values are not the same. </summary>

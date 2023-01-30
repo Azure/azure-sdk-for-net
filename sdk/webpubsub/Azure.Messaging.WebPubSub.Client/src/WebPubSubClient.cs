@@ -613,19 +613,22 @@ namespace Azure.Messaging.WebPubSub.Clients
 
         internal async void HandleConnectionConnected(ConnectedMessage connectedMessage, CancellationToken token)
         {
-            foreach (var pair in _groups)
+            if (_options.AutoRejoinGroups)
             {
-                var name = pair.Key;
-                var g = pair.Value;
-                if (g.Joined)
+                foreach (var pair in _groups)
                 {
-                    try
+                    var name = pair.Key;
+                    var g = pair.Value;
+                    if (g.Joined)
                     {
-                        await JoinGroupAttemptAsync(name, cancellationToken: token).ConfigureAwait(false);
-                    }
-                    catch (Exception ex)
-                    {
-                        SafeInvokeRestoreGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
+                        try
+                        {
+                            await JoinGroupAttemptAsync(name, cancellationToken: token).ConfigureAwait(false);
+                        }
+                        catch (Exception ex)
+                        {
+                            SafeInvokeRejoinGroupFailedAsync(new WebPubSubRejoinGroupFailedEventArgs(name, ex, token)).FireAndForget();
+                        }
                     }
                 }
             }
@@ -701,7 +704,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        private async Task SafeInvokeRestoreGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
+        private async Task SafeInvokeRejoinGroupFailedAsync(WebPubSubRejoinGroupFailedEventArgs eventArgs)
         {
             try
             {
