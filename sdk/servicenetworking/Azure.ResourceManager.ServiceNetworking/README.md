@@ -1,6 +1,8 @@
 # Microsoft Azure ServiceNetworking management client library for .NET
 
-**[Describe the service briefly first.]**
+Microsoft Azure Service Networking provides managing of following fully managed azure services:
+
+- Traffic Controller: Fully managed Azure Service which provides L7 Load Balancing and Dynamic Traffic Management capabilities for container workloads. Traffic Controller extends Azure's L7 Load Balancing portfolio and is offered as new SKU under Application Gateway product family.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
