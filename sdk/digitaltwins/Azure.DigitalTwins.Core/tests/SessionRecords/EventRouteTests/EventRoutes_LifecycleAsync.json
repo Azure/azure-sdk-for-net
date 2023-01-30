@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1110533101?api-version=2022-05-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-2018365043?api-version=2023-02-27-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Connection": "keep-alive",
         "Content-Length": "165",
         "Content-Type": "application/json",
-        "traceparent": "00-ab28bf9f8fd78f4bbde599fef1a03400-bdba72d98db6784d-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220629.1 (.NET Core 3.1.26; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "85c0ecbe1ce6f4796f80f19d44516304",
+        "traceparent": "00-05482b0292a33a499c810528ec1b16a5-571b81a18bb0a64a-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230119.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6f253f2e21cd449188e3f82168e72116",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -20,22 +21,22 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 29 Jun 2022 09:17:44 GMT",
-        "mise-correlation-id": "5ec66e70-45a3-4b33-be0a-79e71be6d3c4",
+        "Date": "Tue, 24 Jan 2023 01:03:41 GMT",
+        "mise-correlation-id": "58966ad2-3592-43b0-9c25-d24351b09331",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-ab28bf9f8fd78f4bbde599fef1a03400-c99144562e94ea17-01"
+        "traceresponse": "00-05482b0292a33a499c810528ec1b16a5-c8d38933ea1bf1ac-01"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1110533101?api-version=2022-05-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-2018365043?api-version=2023-02-27-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b96af9810f6ed042831176b6f83c778e-12903b1547706944-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220629.1 (.NET Core 3.1.26; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "0d9f45438a72b6cb2c2a0d85e20a5927",
+        "traceparent": "00-37b33277034ce2488f6c859eb8afa9e9-e65d5f51dcb06544-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230119.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d9cbb990ba8107aef4dde9c0e47ee979",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -43,47 +44,42 @@
       "ResponseHeaders": {
         "Content-Length": "180",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Jun 2022 09:17:54 GMT",
-        "mise-correlation-id": "e128781f-4f97-424f-b306-161596f88622",
+        "Date": "Tue, 24 Jan 2023 01:03:51 GMT",
+        "mise-correlation-id": "32ffd0dc-d65d-4ef3-a302-15d1977bbd53",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-b96af9810f6ed042831176b6f83c778e-15c2d8d37fc54454-01"
+        "traceresponse": "00-37b33277034ce2488f6c859eb8afa9e9-eaf379b34335b377-01"
       },
       "ResponseBody": {
-        "id": "someEventRouteId-1110533101",
+        "id": "someEventRouteId-2018365043",
         "endpointName": "someEventHubEndpoint",
         "filter": "$eventType = \u0027DigitalTwinTelemetryMessages\u0027 or $eventType = \u0027DigitalTwinLifecycleNotification\u0027"
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes?api-version=2022-05-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes?api-version=2023-02-27-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7626b730c99ab4468adf21370d327dae-99265082e4aab140-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220629.1 (.NET Core 3.1.26; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "20af77b6d9d6cb973d6ce97b8516bf87",
+        "traceparent": "00-fcf892d409fc304cb5c3d2630d9db828-e064ac5883da5d4b-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230119.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "7e7a41eab9c0cd357c31500958e4d61c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "389",
+        "Content-Length": "208",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Jun 2022 09:17:54 GMT",
-        "mise-correlation-id": "1ca41c1b-d801-412b-9ff7-e43b841a1050",
+        "Date": "Tue, 24 Jan 2023 01:03:51 GMT",
+        "mise-correlation-id": "ef31311b-7e25-4de6-bef4-d6f3e4e87fed",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-7626b730c99ab4468adf21370d327dae-6b52691e16542230-01"
+        "traceresponse": "00-fcf892d409fc304cb5c3d2630d9db828-62e40e0d3d2fc81e-01"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "someEventRouteId-1641947162",
-            "endpointName": "someEventHubEndpoint",
-            "filter": "$eventType = \u0027DigitalTwinTelemetryMessages\u0027 or $eventType = \u0027DigitalTwinLifecycleNotification\u0027"
-          },
-          {
-            "id": "someEventRouteId-1110533101",
+            "id": "someEventRouteId-2018365043",
             "endpointName": "someEventHubEndpoint",
             "filter": "$eventType = \u0027DigitalTwinTelemetryMessages\u0027 or $eventType = \u0027DigitalTwinLifecycleNotification\u0027"
           }
@@ -92,36 +88,36 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1110533101?api-version=2022-05-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-2018365043?api-version=2023-02-27-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9252665eff214346a9e0e0cc08258658-837e61b782fc0940-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220629.1 (.NET Core 3.1.26; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "65a0c2d8dec0347b200a59bc0ff31164",
+        "traceparent": "00-f73f59ffb7e730498e03c11bbde735c3-1ceaa205ab26424e-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230119.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e6ec68a0137474f2911d7bef37d15f09",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 29 Jun 2022 09:17:54 GMT",
-        "mise-correlation-id": "dea45128-b870-48bd-bb3f-49196824415c",
+        "Date": "Tue, 24 Jan 2023 01:03:51 GMT",
+        "mise-correlation-id": "d5e57c5c-d781-41b4-b76c-43a950f8fa57",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-9252665eff214346a9e0e0cc08258658-92acca0322e6821c-01"
+        "traceresponse": "00-f73f59ffb7e730498e03c11bbde735c3-7af6e628dff46af1-01"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1110533101?api-version=2022-05-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-2018365043?api-version=2023-02-27-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2189c7372ad36343b23f45e76dc3bc02-0e7feec1d7939047-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220629.1 (.NET Core 3.1.26; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "cde6ca2743a16a2dadd3d005a14f3116",
+        "traceparent": "00-aa6427433eb90a49b4f024ba00efa1ba-736d4f052b5f4346-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230119.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "27367ff9a36dd65583fd5d4f69a4af0f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -129,10 +125,10 @@
       "ResponseHeaders": {
         "Content-Length": "223",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Jun 2022 09:18:04 GMT",
-        "mise-correlation-id": "7021c22a-0660-40aa-9f14-e85622b14630",
+        "Date": "Tue, 24 Jan 2023 01:04:01 GMT",
+        "mise-correlation-id": "7a540b8f-cf69-4494-81a4-a73e23e2714a",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-2189c7372ad36343b23f45e76dc3bc02-b6b153a7cc49ff5e-01"
+        "traceresponse": "00-aa6427433eb90a49b4f024ba00efa1ba-abb6fda1fcf9a4af-01"
       },
       "ResponseBody": {
         "error": {
@@ -145,6 +141,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "1614974822"
+    "RandomSeed": "499927877"
   }
 }
