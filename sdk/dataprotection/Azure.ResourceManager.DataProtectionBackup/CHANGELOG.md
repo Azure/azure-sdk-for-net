@@ -1,8 +1,13 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2023-01-04)
 
 ### Features Added
+
+- Added support for Immutable vaults.
+- Added support for Cross Subscription Restore.
+- Added support for AKS workload.
+- Added support for Soft Delete.
 
 ### Breaking Changes
 
@@ -10,15 +15,6 @@
 
 ### Other Changes
 
-## 1.1.0 (2023-01-30)
-This release adds support for mutliple features for Microsoft Azure Data Protection Backup management client library.
-
-### Other Changes
-
-- Added support for Immutable vaults.
-- Added support for Cross Subscription Restore.
-- Added support for AKS workload.
-- Added support for Soft Delete.
 - Changed API version from 2022-05-01 to 2023-01-01.
 
 ## 1.0.0 (2022-11-04)
