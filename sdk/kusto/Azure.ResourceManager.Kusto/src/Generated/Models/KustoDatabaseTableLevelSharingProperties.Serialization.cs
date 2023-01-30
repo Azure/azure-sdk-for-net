@@ -76,6 +76,26 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(FunctionsToInclude))
+            {
+                writer.WritePropertyName("functionsToInclude");
+                writer.WriteStartArray();
+                foreach (var item in FunctionsToInclude)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(FunctionsToExclude))
+            {
+                writer.WritePropertyName("functionsToExclude");
+                writer.WriteStartArray();
+                foreach (var item in FunctionsToExclude)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -87,6 +107,8 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<IList<string>> externalTablesToExclude = default;
             Optional<IList<string>> materializedViewsToInclude = default;
             Optional<IList<string>> materializedViewsToExclude = default;
+            Optional<IList<string>> functionsToInclude = default;
+            Optional<IList<string>> functionsToExclude = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tablesToInclude"))
@@ -179,8 +201,38 @@ namespace Azure.ResourceManager.Kusto.Models
                     materializedViewsToExclude = array;
                     continue;
                 }
+                if (property.NameEquals("functionsToInclude"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    functionsToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("functionsToExclude"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    functionsToExclude = array;
+                    continue;
+                }
             }
-            return new KustoDatabaseTableLevelSharingProperties(Optional.ToList(tablesToInclude), Optional.ToList(tablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(externalTablesToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(materializedViewsToExclude));
+            return new KustoDatabaseTableLevelSharingProperties(Optional.ToList(tablesToInclude), Optional.ToList(tablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(externalTablesToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(materializedViewsToExclude), Optional.ToList(functionsToInclude), Optional.ToList(functionsToExclude));
         }
     }
 }
