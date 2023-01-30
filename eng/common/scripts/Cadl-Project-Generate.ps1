@@ -49,6 +49,7 @@ function NpmInstallForProject([string]$workingDirectory) {
     }
 }
 
+$resolvedProjectDirectory = Resolve-Path $ProjectDirectory
 $emitterName = &$GetEmitterNameFn
 $cadlConfigurationFile = Resolve-Path "$ProjectDirectory/cadl-location.yaml"
 
@@ -69,10 +70,14 @@ try {
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
     if (Test-Path "Function:$GetEmitterAdditionalOptionsFn") {
-        $emitterAdditionalOptions = &$GetEmitterAdditionalOptionsFn
+        $emitterAdditionalOptions = &$GetEmitterAdditionalOptionsFn $resolvedProjectDirectory
+        if ($emitterAdditionalOptions.Length -gt 0) {
+            $emitterAdditionalOptions = " $emitterAdditionalOptions"
+        }
     }
-    Write-Host("npx cadl compile $mainCadlFile --emit $emitterName $emitterAdditionalOptions")
-    npx cadl compile $mainCadlFile --emit $emitterName $emitterAdditionalOptions
+    $cadlCompileCommand = "npx cadl compile $mainCadlFile --emit $emitterName$emitterAdditionalOptions"
+    Write-Host($cadlCompileCommand)
+    Invoke-Expression $cadlCompileCommand
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }

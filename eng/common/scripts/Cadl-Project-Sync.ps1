@@ -18,11 +18,12 @@ function AddSparseCheckoutPath([string]$subDirectory) {
 
 function CopySpecToProjectIfNeeded([string]$specCloneRoot, [string]$mainSpecDir, [string]$dest, [string[]]$specAdditionalSubDirectories) {
     $source = "$specCloneRoot/$mainSpecDir"
-    Write-Host "Copying spec from $source"
+    Copy-Item -Path $source -Destination $dest -Recurse -Force
+    Write-Host "Copying spec from $source to $dest"
 
     foreach ($additionalDir in $specAdditionalSubDirectories) {
         $source = "$specCloneRoot/$additionalDir"
-        Write-Host "Copying spec from $source"
+        Write-Host "Copying spec from $source to $dest"
         Copy-Item -Path $source -Destination $dest -Recurse -Force
     }
 }
