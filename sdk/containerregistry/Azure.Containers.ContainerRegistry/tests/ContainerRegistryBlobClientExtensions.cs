@@ -55,7 +55,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public static async Task AddTagAsync(this ContainerRegistryBlobClient client, string reference, string tag)
         {
             // Get the image manifest
-            var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions(reference));
+            var manifestResult = await client.DownloadManifestAsync(reference);
 
             // Upload the manifest with the new tag
             await client.UploadManifestAsync(manifestResult.Value.Content.ToStream(), new UploadManifestOptions(tag));

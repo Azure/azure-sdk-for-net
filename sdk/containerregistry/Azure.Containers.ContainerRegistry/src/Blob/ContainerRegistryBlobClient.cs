@@ -6,6 +6,7 @@ using System.Buffers;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -482,29 +483,30 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Downloads the manifest for an OCI artifact.
         /// </summary>
-        /// <param name="options">Options for the operation.</param>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
+        /// <param name="mediaType">The media type of the manifest to download.  If not specified, all media types will be requested.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The download manifest result.</returns>
-        public virtual Response<DownloadManifestResult> DownloadManifest(DownloadManifestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DownloadManifestResult> DownloadManifest(string tagOrDigest, ManifestMediaType? mediaType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
             try
             {
-                string accept = options.MediaType.HasValue ? options.MediaType.ToString() : ManifestMediaType.OciManifest.ToString();
+                string accept = GetAcceptHeader(mediaType);
 
-                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, accept, cancellationToken);
+                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, tagOrDigest, accept, cancellationToken);
                 Response rawResponse = response.GetRawResponse();
 
                 rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string digest);
-                rawResponse.Headers.TryGetValue("Content-Type", out string mediaType);
+                rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
                 ValidateDigest(contentDigest, digest);
 
-                return Response.FromValue(new DownloadManifestResult(digest, mediaType, rawResponse.Content), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
             }
             catch (Exception e)
             {
@@ -516,35 +518,58 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Downloads the manifest for an OCI artifact.
         /// </summary>
-        /// <param name="options">Options for the download operation.</param>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
+        /// <param name="mediaType">The media type of the manifest to download.  If not specified, all media types will be requested.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The download manifest result.</returns>
-        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(DownloadManifestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string tagOrDigest, ManifestMediaType? mediaType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
             try
             {
-                string accept = options.MediaType.HasValue ? options.MediaType.ToString() : ManifestMediaType.OciManifest.ToString();
+                string accept = GetAcceptHeader(mediaType);
 
-                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, accept, cancellationToken).ConfigureAwait(false);
+                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, tagOrDigest, accept, cancellationToken).ConfigureAwait(false);
                 Response rawResponse = response.GetRawResponse();
 
                 rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
-                rawResponse.Headers.TryGetValue("Content-Type", out string mediaType);
+                rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
                 ValidateDigest(contentDigest, digest);
 
-                return Response.FromValue(new DownloadManifestResult(digest, mediaType, rawResponse.Content), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static string GetAcceptHeader(ManifestMediaType? mediaType)
+        {
+            if (mediaType.HasValue)
+            {
+                return (string)mediaType.Value;
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(ManifestMediaType.DockerManifest);
+            sb.Append(", ");
+            sb.Append(ManifestMediaType.DockerManifestList);
+            sb.Append(", ");
+            sb.Append(ManifestMediaType.DockerManifestV1);
+            sb.Append(", ");
+            sb.Append(ManifestMediaType.OciManifest);
+            sb.Append(", ");
+            sb.Append(ManifestMediaType.OciIndex);
+
+            return sb.ToString();
         }
 
         private static void ValidateDigest(string clientDigest, string serverDigest)

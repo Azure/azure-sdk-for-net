@@ -74,8 +74,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string digest = uploadResult.Value.Digest;
 
             // Assert
-            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.AsOciManifest());
 
@@ -117,8 +116,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string digest = uploadResult.Value.Digest;
 
             // Assert
-            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.AsOciManifest());
 
@@ -160,8 +158,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string digest = uploadResult.Value.Digest;
 
             // Assert
-            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.AsOciManifest());
 
@@ -186,8 +183,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var digest = uploadResult.Value.Digest;
 
             // Assert
-            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.AsOciManifest());
 
@@ -238,8 +234,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var digest = uploadResult.Value.Digest;
 
             // Assert
-            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.AsOciManifest());
 
@@ -250,8 +245,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var firstTag = await tags.FirstAsync();
             Assert.AreEqual(tag, firstTag.Name);
 
-            downloadOptions = new DownloadManifestOptions(tag, null);
-            var downloadResultValue2 = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            var downloadResultValue2 = (await client.DownloadManifestAsync(tag)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.AsOciManifest());
 
@@ -743,7 +737,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
 
             // Download Manifest
-            var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions("v1"));
+            var manifestResult = await client.DownloadManifestAsync("v1");
 
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);
