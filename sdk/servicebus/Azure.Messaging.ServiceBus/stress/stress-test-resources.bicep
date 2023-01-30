@@ -11,7 +11,7 @@ var serviceBusAuthRuleResourceId = resourceId('Microsoft.ServiceBus/namespaces/a
 var queueName = 'stresstestsb-${uniqueString(resourceGroup().id)}'
 var sessionQueueName = 'stresstestsbsess-${uniqueString(resourceGroup().id)}'
 
-// Event Hubs Namespace Creation
+// Service Bus Namespace Creation
 resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: servicebusNamespaceName
   location: location

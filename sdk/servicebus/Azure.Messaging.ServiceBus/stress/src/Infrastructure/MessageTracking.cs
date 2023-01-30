@@ -76,7 +76,7 @@ public static class MessageTracking
     /// <param name="sessionId">The session id, if any, that this message was intended to be sent to.</param>
     ///
     public static void AugmentMessage(ServiceBusMessage message,
-                                    SHA256 sha256Hash)
+                                       SHA256 sha256Hash)
     {
         message.ApplicationProperties.Add(SendTimePropertyName, DateTimeOffset.UtcNow);
         message.ApplicationProperties.Add(IdPropertyName, Guid.NewGuid().ToString());
@@ -95,9 +95,9 @@ public static class MessageTracking
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
     public static void ReceiveMessage(ServiceBusReceivedMessage message,
-                                           SHA256 sha256Hash,
-                                           Metrics metrics,
-                                           ConcurrentDictionary<string, byte> readMessages) => CheckMessage(message, sha256Hash, null, metrics, readMessages);
+                                        SHA256 sha256Hash,
+                                        Metrics metrics,
+                                        ConcurrentDictionary<string, byte> readMessages) => CheckMessage(message, sha256Hash, null, metrics, readMessages);
 
     /// <summary>
     ///   Processes the <see cref="ServiceBusReceivedMessage"/> instance held in the <see cref="ProcessMessageEventArgs"/> in order to determine
@@ -110,9 +110,9 @@ public static class MessageTracking
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
     public static void ProcessMessage(ProcessMessageEventArgs args,
-                                               SHA256 sha256Hash,
-                                               Metrics metrics,
-                                               ConcurrentDictionary<string, byte> readMessages) => CheckMessage(args.Message, sha256Hash, null, metrics, readMessages);
+                                            SHA256 sha256Hash,
+                                            Metrics metrics,
+                                            ConcurrentDictionary<string, byte> readMessages) => CheckMessage(args.Message, sha256Hash, null, metrics, readMessages);
 
     /// <summary>
     ///   Processes the <see cref="ServiceBusReceivedMessage"/> instance held in the <see cref="ProcessSessionMessageEventArgs"/> in order to determine
@@ -148,10 +148,10 @@ public static class MessageTracking
     /// </remarks>
     ///
     private static int CheckMessage(ServiceBusReceivedMessage message,
-                                  SHA256 sha256Hash,
-                                  string sessionId,
-                                  Metrics metrics,
-                                  ConcurrentDictionary<string, byte> readMessages)
+                                    SHA256 sha256Hash,
+                                    string sessionId,
+                                    Metrics metrics,
+                                    ConcurrentDictionary<string, byte> readMessages)
     {
         // Id Checks
         var hasId = message.ApplicationProperties.TryGetValue(IdPropertyName, out var messageIdProperty);

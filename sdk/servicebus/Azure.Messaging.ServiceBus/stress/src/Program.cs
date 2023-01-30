@@ -53,7 +53,7 @@ public class Program
         var testParameters = new TestParameters();
         testParameters.ServiceBusConnectionString = serviceBusConnectionString;
 
-        var cancellationSource = new CancellationTokenSource();
+        using var cancellationSource = new CancellationTokenSource();
         var runDuration = TimeSpan.FromHours(testParameters.DurationInHours);
         cancellationSource.CancelAfter(runDuration);
 

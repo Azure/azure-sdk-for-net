@@ -75,7 +75,7 @@ public class SendProcessTest : TestScenario
     ///
     /// <param name="args">The <see cref="ProcessMessageEventArgs" /> used to pass information to the message handler.</param>
     ///
-    private Task messageHandler(ProcessMessageEventArgs args)
+    private Task MessageHandler(ProcessMessageEventArgs args)
     {
         try
         {
@@ -105,7 +105,7 @@ public class SendProcessTest : TestScenario
     ///
     /// <param name="args">The <see cref="ProcessErrorEventArgs" /> used to pass information to the error handler.</param>
     ///
-    private Task errorHandler(ProcessErrorEventArgs args)
+    private Task ErrorHandler(ProcessErrorEventArgs args)
     {
         _metrics.Client.TrackException(args.Exception);
         return Task.CompletedTask;

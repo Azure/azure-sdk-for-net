@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 
 namespace Azure.Messaging.ServiceBus.Stress;
+
 internal static class MessageBuilder
 {
     /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
@@ -131,7 +132,6 @@ internal static class MessageBuilder
     ///
     /// <returns>The requested message.</returns>
     ///
-
     internal static async Task<IEnumerable<ServiceBusMessageBatch>> BuildBatchesAsync(IEnumerable<ServiceBusMessage> messages,
                                                                             ServiceBusSender sender,
                                                                             CancellationToken cancellationToken = default)

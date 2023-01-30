@@ -18,7 +18,7 @@ public class Metrics
     ///   The Client used to communicate with Application Insights.
     /// </summary>
     ///
-    public TelemetryClient Client;
+    public TelemetryClient Client { get; }
 
     /// <summary>
     ///   This is the metric name used to collect metrics on generation zero

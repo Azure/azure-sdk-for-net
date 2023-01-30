@@ -21,7 +21,6 @@ To run the compiled .dll file, navigate to the `<git root>/artifacts/bin/Azure.M
 
 The user is required to input the connection strings upon request on the command line when the test is being run, or include them in a .env file. To use the CLI input, add the `-i` or `--interactive` flag to the call:
 
-
 #### Running stress tests locally
 
 To deploy stress tests from the command line, run the following command:

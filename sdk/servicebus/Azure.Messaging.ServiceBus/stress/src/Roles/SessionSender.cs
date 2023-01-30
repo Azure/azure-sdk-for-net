@@ -11,7 +11,7 @@ using Azure.Messaging.ServiceBus;
 namespace Azure.Messaging.ServiceBus.Stress;
 
 /// <summary>
-///   The role responsible for running a <see cref="ServiceBusSender" \> with sessions, and testing its performance over
+///   The role responsible for running a <see cref="ServiceBusSender" /> with sessions, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
 ///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
 ///   thrown or heard, and how many messages are processed and read. It stops sending messages and cleans up resources
