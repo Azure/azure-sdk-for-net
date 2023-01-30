@@ -15,12 +15,6 @@ This release uses GA api version 2022-12-01 for PostgreSQL flexible server.
 - Server backups
 - Major version upgrade
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0 (2022-09-05)
 
 This release is the first stable release of the PostgreSql Management client library.
