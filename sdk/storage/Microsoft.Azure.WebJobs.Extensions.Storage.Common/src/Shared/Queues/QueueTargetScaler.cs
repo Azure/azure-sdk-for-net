@@ -20,6 +20,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private readonly TargetScalerDescriptor _targetScalerDescriptor;
         private QueuesOptions _options;
         private readonly ILogger _logger;
+
+        // internal mock testing only
+        internal QueueTargetScaler()
+        {
+        }
+
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
