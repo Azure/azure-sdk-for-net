@@ -11,6 +11,10 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
     input = new {},
+    usage = new {
+        prompt_tokens = 1234,
+        total_tokens = 1234,
+    },
 };
 
 Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
@@ -32,6 +36,10 @@ var data = new {
     input_type = "<input_type>",
     model = "<model>",
     input = new {},
+    usage = new {
+        prompt_tokens = 1234,
+        total_tokens = 1234,
+    },
 };
 
 Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
@@ -54,6 +62,10 @@ Schema for <c>EmbeddingsOptions</c>:
   input_type: string, # Optional.
   model: string, # Optional.
   input: Union, # Required.
+  usage: {
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 
@@ -84,6 +96,10 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
     input = new {},
+    usage = new {
+        prompt_tokens = 1234,
+        total_tokens = 1234,
+    },
 };
 
 Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
@@ -105,6 +121,10 @@ var data = new {
     input_type = "<input_type>",
     model = "<model>",
     input = new {},
+    usage = new {
+        prompt_tokens = 1234,
+        total_tokens = 1234,
+    },
 };
 
 Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
@@ -127,6 +147,10 @@ Schema for <c>EmbeddingsOptions</c>:
   input_type: string, # Optional.
   model: string, # Optional.
   input: Union, # Required.
+  usage: {
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 
@@ -161,6 +185,9 @@ Response response = await client.GetCompletionsAsync("<deploymentId>", RequestCo
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 This sample shows how to call GetCompletionsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -207,6 +234,9 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetPr
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -256,6 +286,11 @@ Schema for <c>Completions</c>:
       finish_reason: string, # Optional.
     }
   ], # Optional.
+  usage: {
+    completion_token: number, # Required.
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 
@@ -275,6 +310,9 @@ Response response = client.GetCompletions("<deploymentId>", RequestContent.Creat
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 This sample shows how to call GetCompletions with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -321,6 +359,9 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetPr
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -370,6 +411,11 @@ Schema for <c>Completions</c>:
       finish_reason: string, # Optional.
     }
   ], # Optional.
+  usage: {
+    completion_token: number, # Required.
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 

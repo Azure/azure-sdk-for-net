@@ -15,12 +15,15 @@ namespace Azure.AI.OpenAI.Models
     {
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
         /// <param name="input"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public EmbeddingsOptions(string input)
+        /// <param name="usage"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> or <paramref name="usage"/> is null. </exception>
+        public EmbeddingsOptions(string input, EmbeddingsUsage usage)
         {
             Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(usage, nameof(usage));
 
             Input = input;
+            Usage = usage;
         }
 
         /// <summary> Gets or sets the user. </summary>
@@ -31,5 +34,7 @@ namespace Azure.AI.OpenAI.Models
         public string Model { get; set; }
         /// <summary> Gets the input. </summary>
         public string Input { get; }
+        /// <summary> Gets the usage. </summary>
+        public EmbeddingsUsage Usage { get; }
     }
 }

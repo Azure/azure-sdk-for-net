@@ -21,6 +21,7 @@ namespace Azure.AI.OpenAI.Models
             Optional<int?> created = default;
             Optional<string> model = default;
             Optional<IReadOnlyList<Choice>> choices = default;
+            CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -63,8 +64,13 @@ namespace Azure.AI.OpenAI.Models
                     choices = array;
                     continue;
                 }
+                if (property.NameEquals("usage"))
+                {
+                    usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value);
+                    continue;
+                }
             }
-            return new Completions(id, @object, Optional.ToNullable(created), model, Optional.ToList(choices));
+            return new Completions(id, @object, Optional.ToNullable(created), model, Optional.ToList(choices), usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

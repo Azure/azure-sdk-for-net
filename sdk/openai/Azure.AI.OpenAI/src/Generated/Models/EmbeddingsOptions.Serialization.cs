@@ -32,6 +32,8 @@ namespace Azure.AI.OpenAI.Models
             }
             writer.WritePropertyName("input");
             writer.WriteStringValue(Input);
+            writer.WritePropertyName("usage");
+            writer.WriteObjectValue(Usage);
             writer.WriteEndObject();
         }
 
