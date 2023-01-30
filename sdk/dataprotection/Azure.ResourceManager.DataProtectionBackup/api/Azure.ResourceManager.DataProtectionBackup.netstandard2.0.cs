@@ -454,6 +454,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class BackupInstancePolicyInfo
     {
         public BackupInstancePolicyInfo(Azure.Core.ResourceIdentifier policyId) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DataStoreParametersList is obsolete and will be removed in a future release. Please do not use it any longer.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataStoreSettings> DataStoreParametersList { get { throw null; } }
         public Azure.Core.ResourceIdentifier PolicyId { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.PolicyParameters PolicyParameters { get { throw null; } set { } }
         public string PolicyVersion { get { throw null; } }
