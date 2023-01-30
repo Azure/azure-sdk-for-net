@@ -55,6 +55,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         // for mock testing only
         internal QueueListener()
         {
+            _scaleMonitor = new Lazy<QueueScaleMonitor>(() => new QueueScaleMonitor());
+            _targetScaler = new Lazy<QueueTargetScaler>(() => new QueueTargetScaler());
         }
 
         public QueueListener(QueueClient queue,

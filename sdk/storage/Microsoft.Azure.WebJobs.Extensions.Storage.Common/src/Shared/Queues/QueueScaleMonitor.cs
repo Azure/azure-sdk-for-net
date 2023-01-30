@@ -25,6 +25,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private ScaleMonitorDescriptor _scaleMonitorDescriptor;
         private QueueMetricsProvider _queueMetricsProvider;
 
+        // mock testing only
+        internal QueueScaleMonitor()
+        {
+        }
+
         /// <summary>
         /// Public constructor used to instantiate a QueueScaleMonitor for retrieving metrics and making scale decisions.
         /// </summary>
