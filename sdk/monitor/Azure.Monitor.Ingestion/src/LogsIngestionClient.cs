@@ -444,22 +444,22 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        internal async Task<ProcessEventHandler> ProcessCompletedTaskEventHandlerAsync(Task<Response> runningTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)//, ref bool shouldAbort, ref List<Exception> exceptions)
+        internal async Task<ProcessEventHandler> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)
         {
             bool shouldAbort = false;
             List<Exception> exceptions = new List<Exception>();
             UploadFailedEventArgs eventArgs;
-            if (runningTask.Exception != null)
+            if (completedTask.Exception != null)
             {
-                eventArgs = new UploadFailedEventArgs(logs, runningTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
+                eventArgs = new UploadFailedEventArgs(logs, completedTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
                 var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
                 shouldAbort = exceptionOnUpload != null;
                 if (shouldAbort)
                     AddException(ref exceptions, exceptionOnUpload);
             }
-            else if (runningTask.Result.Status != 204)
+            else if (completedTask.Result.Status != 204)
             {
-                eventArgs = new UploadFailedEventArgs(logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
+                eventArgs = new UploadFailedEventArgs(logs, new RequestFailedException(completedTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
                 var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
                 shouldAbort = exceptionOnUpload != null;
                 if (shouldAbort)

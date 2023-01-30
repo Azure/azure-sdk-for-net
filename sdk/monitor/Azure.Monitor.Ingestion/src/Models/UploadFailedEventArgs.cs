@@ -10,11 +10,10 @@ using Azure.Core.Serialization;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary>
-    /// The options model to configure the request to upload logs to Azure Monitor.
+    /// The event argument models configured with the EventHandler to upload logs to Azure Monitor.
     /// </summary>
     public class UploadFailedEventArgs : SyncAsyncEventArgs
     {
-        //Add internal one with ClientDiagnostics
         /// <summary>
         /// Initializes a new instance of the <see cref="UploadFailedEventArgs"/> class.
         /// </summary>
@@ -25,7 +24,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="cancellationToken"></param>
         internal UploadFailedEventArgs(List<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
         {
-            _clientDiagnostics = clientDiagnostics;
+            ClientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
@@ -42,14 +41,14 @@ namespace Azure.Monitor.Ingestion
         }
 
         /// <summary>
-        /// test
+        /// The list of logs in the batch that failed to upload.
         /// </summary>
         public IReadOnlyList<object> FailedLogs { get; }
         /// <summary>
-        /// test
+        /// The exception from the batch that failed to upload.
         /// </summary>
         public Exception Exception { get; }
 
-        internal ClientDiagnostics _clientDiagnostics;
+        internal ClientDiagnostics ClientDiagnostics;
     }
 }

@@ -250,7 +250,6 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.IsFalse(isTriggered);
             Task Options_UploadFailed(UploadFailedEventArgs e)
             {
-                TestContext.Progress.WriteLine(e.Exception);
                 isTriggered = true;
                 return Task.CompletedTask;
             }

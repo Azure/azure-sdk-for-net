@@ -30,24 +30,15 @@ namespace Azure.Monitor.Ingestion
         public int MaxConcurrency { get; set; } = 5;
 
         /// <summary>
-        /// test
+        /// An optional EventHandler that provides the list of failed logs and the corresponding exception.
         /// </summary>
         public event SyncAsyncEventHandler<UploadFailedEventArgs> UploadFailedEventHandler;
 
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="uploadFailedArgs"></param>
-        /// <returns></returns>
         internal virtual async Task InvokeEvent(UploadFailedEventArgs uploadFailedArgs)
         {
-            await UploadFailedEventHandler.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", uploadFailedArgs._clientDiagnostics).ConfigureAwait(false);
+            await UploadFailedEventHandler.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", uploadFailedArgs.ClientDiagnostics).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="eventArgs"></param>
         internal virtual async Task<Exception> OnUploadFailedAsync(UploadFailedEventArgs eventArgs)
         {
             try
