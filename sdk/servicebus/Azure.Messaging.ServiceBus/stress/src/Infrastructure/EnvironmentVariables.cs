@@ -23,7 +23,7 @@ public static class EnvironmentVariables
     ///   Event Hubs Namespace resource for the test runs.
     /// </summary>
     ///
-    public const string ServiceBusConnectionString = "SERVICEBUS_NAMESPACE_CONNECTION_STRING";
+    public const string ServiceBusConnectionString = "STRESS_SERVICEBUS_NAMESPACE_CONNECTION_STRING";
 
     // Queue Names
 
@@ -32,14 +32,14 @@ public static class EnvironmentVariables
     ///   for each test.
     /// </summary>
     ///
-    public const string ServiceBusQueue = "SERVICEBUS_QUEUE";
+    public const string ServiceBusQueue = "STRESS_SERVICEBUS_QUEUE";
 
     /// <summary>
     ///   The name of the environment variable that holds the name of the Service Bus queue
     ///   for each test that requires a sessionful queue.
     /// </summary>
     ///
-    public const string ServiceBusSessionQueue = "SERVICEBUS_SESSION_QUEUE";
+    public const string ServiceBusSessionQueue = "STRESS_SERVICEBUS_SESSION_QUEUE";
 
     // Job Index Information
 

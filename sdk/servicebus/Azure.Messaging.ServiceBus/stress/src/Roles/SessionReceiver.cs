@@ -22,16 +22,16 @@ namespace Azure.Messaging.ServiceBus.Stress;
 internal class SessionReceiver
 {
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Receiver" /> instance.</summary>
-    private Metrics _metrics { get; }
+    private Metrics _metrics;
 
     /// <summary>The <see cref="TestParameters" /> used to run this test.</summary>
-    private TestParameters _testParameters { get; }
+    private TestParameters _testParameters;
 
     /// <summary>The <see cref="ReceiverConfiguration" /> used to configure the instance of this role.</summary>
-    private SessionReceiverConfiguration _sessionReceiverConfiguration { get; }
+    private SessionReceiverConfiguration _sessionReceiverConfiguration;
 
     /// <summary>Holds the set of messages that have been read by this instance. The key is the event's unique Id set by the sender.</summary>
-    private ConcurrentDictionary<string, byte> _readMessages { get; }
+    private ConcurrentDictionary<string, byte> _readMessages;
 
     /// <summary>
     ///   Initializes a new <see cref="Receiver" \> instance.
@@ -48,6 +48,7 @@ internal class SessionReceiver
         _testParameters = testParameters;
         _sessionReceiverConfiguration = sessionReceiverConfiguration;
         _metrics = metrics;
+        _readMessages = new ConcurrentDictionary<string, byte>();
     }
 
     /// <summary>
@@ -61,15 +62,20 @@ internal class SessionReceiver
     public async Task RunAsync(CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        var receiver = await client.AcceptNextSessionAsync(_testParameters.SessionQueueName);
 
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                var message = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
-                _metrics.Client.GetMetric(Metrics.MessagesRead).TrackValue(1);
-                // TODO: check event
+                var receiver = await client.AcceptNextSessionAsync(_testParameters.SessionQueueName);
+
+                await foreach (var message in receiver.ReceiveMessagesAsync(cancellationToken))
+                {
+                    _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
+                    MessageTracking.ReceiveSessionMessage(message, _testParameters.Sha256Hash, _metrics, _readMessages);
+                    await receiver.CompleteMessageAsync(message).ConfigureAwait(false);
+                    _metrics.Client.GetMetric(Metrics.MessagesCompleted).TrackValue(1);
+                }
             }
             catch (TaskCanceledException)
             {
@@ -84,8 +90,7 @@ internal class SessionReceiver
             }
             catch (Exception ex)
             {
-                // TODO: determine metrics
-                //_metrics.Client.GetMetric(Metrics.ConsumerRestarted).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.ReceiverRestarted).TrackValue(1);
                 _metrics.Client.TrackException(ex);
             }
         }

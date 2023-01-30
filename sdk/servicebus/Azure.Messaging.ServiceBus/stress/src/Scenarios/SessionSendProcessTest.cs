@@ -25,7 +25,7 @@ public class SessionSendProcessTest : TestScenario
     private string _identifier;
 
     /// <summary>Holds the set of messages that have been read by this instance. The key is the unique Id set by the sender.</summary>
-    private ConcurrentDictionary<string, byte> _readMessages { get; } = new ConcurrentDictionary<string, byte>();
+    private ConcurrentDictionary<string, byte> _readMessages = new ConcurrentDictionary<string, byte>();
 
     /// <summary>
     ///  Initializes a new <see cref="SessionSendProcessTest"/> instance.
@@ -61,7 +61,7 @@ public class SessionSendProcessTest : TestScenario
                 var processorConfiguration = new SessionProcessorConfiguration();
                 var processor = new SessionProcessor(_testParameters, processorConfiguration, _metrics);
                 _identifier = processor.Identifier;
-                return Task.Run(() => processor.RunAsync(messageHandler, errorHandler, cancellationToken));
+                return Task.Run(() => processor.RunAsync(MessageHandler, ErrorHandler, cancellationToken));
 
             default:
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
@@ -75,7 +75,7 @@ public class SessionSendProcessTest : TestScenario
     ///
     /// <param name="args">The <see cref="ProcessSessionMessageEventArgs" /> used to pass information to the message handler.</param>
     ///
-    private Task messageHandler(ProcessSessionMessageEventArgs args)
+    private Task MessageHandler(ProcessSessionMessageEventArgs args)
     {
         try
         {
@@ -109,7 +109,7 @@ public class SessionSendProcessTest : TestScenario
     ///
     /// <param name="args">The <see cref="ProcessErrorEventArgs" /> used to pass information to the error handler.</param>
     ///
-    private Task errorHandler(ProcessErrorEventArgs args)
+    private Task ErrorHandler(ProcessErrorEventArgs args)
     {
         _metrics.Client.TrackException(args.Exception);
         return Task.CompletedTask;

@@ -22,16 +22,16 @@ namespace Azure.Messaging.ServiceBus.Stress;
 internal class SessionProcessor
 {
     /// <summary>A unique identifier used to identify this processor instance.</summary>
-    public string Identifier { get; } = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=').ToUpperInvariant();
+    public string Identifier { get; } = Guid.NewGuid().ToString();
 
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="SessionProcessor" /> instance.</summary>
-    private Metrics _metrics { get; }
+    private Metrics _metrics;
 
     /// <summary>The <see cref="TestParameters" /> used to run this test.</summary>
-    private TestParameters _testParameters { get; }
+    private TestParameters _testParameters;
 
     /// <summary>The <see cref="SessionProcessorConfiguration" /> used to configure the instance of this role.</summary>
-    private SessionProcessorConfiguration _sessionProcessorConfiguration { get; }
+    private SessionProcessorConfiguration _sessionProcessorConfiguration;
 
     /// <summary>
     ///   Initializes a new <see cref="SessionProcessor" \> instance.

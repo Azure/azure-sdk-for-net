@@ -129,7 +129,13 @@ public class Program
         }
         finally
         {
+            // The test parameters need to be disposed in order to dispose the SHA 256 hash used to check
+            // for message corruption.
             testParameters.Dispose();
+
+            // We need to wait one minute after flushing the Application Insights client. The Application
+            // Insights flush is non-deterministic, so we don't want to let the application close until
+            // all telemetry has been sent.
             metrics.Client.Flush();
             await Task.Delay(60000).ConfigureAwait(false);
         }

@@ -100,6 +100,21 @@ public static class MessageTracking
                                         ConcurrentDictionary<string, byte> readMessages) => CheckMessage(message, sha256Hash, null, metrics, readMessages);
 
     /// <summary>
+    ///   Processes the <see cref="ServiceBusReceivedMessage"/> that was received from a session in order to determine
+    ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
+    /// </summary>
+    ///
+    /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> received from the receiver.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
+    /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
+    /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
+    ///
+    public static void ReceiveSessionMessage(ServiceBusReceivedMessage message,
+                                        SHA256 sha256Hash,
+                                        Metrics metrics,
+                                        ConcurrentDictionary<string, byte> readMessages) => CheckMessage(message, sha256Hash, message.SessionId, metrics, readMessages);
+
+    /// <summary>
     ///   Processes the <see cref="ServiceBusReceivedMessage"/> instance held in the <see cref="ProcessMessageEventArgs"/> in order to determine
     ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
     /// </summary>
@@ -125,9 +140,9 @@ public static class MessageTracking
     /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
     ///
     public static void ProcessSessionMessage(ProcessSessionMessageEventArgs args,
-                                               SHA256 sha256Hash,
-                                               Metrics metrics,
-                                               ConcurrentDictionary<string, byte> readMessages) => CheckMessage(args.Message, sha256Hash, args.SessionId, metrics, readMessages);
+                                             SHA256 sha256Hash,
+                                             Metrics metrics,
+                                             ConcurrentDictionary<string, byte> readMessages) => CheckMessage(args.Message, sha256Hash, args.SessionId, metrics, readMessages);
 
     /// <summary>
     ///   Validates a messages . This instance checks if the message has an id, if the message has already been seen before by this instance, that the

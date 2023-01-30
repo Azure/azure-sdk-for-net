@@ -22,16 +22,16 @@ namespace Azure.Messaging.ServiceBus.Stress;
 internal class Receiver
 {
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Receiver" /> instance.</summary>
-    private Metrics _metrics { get; }
+    private Metrics _metrics;
 
     /// <summary>The <see cref="TestParameters" /> used to run this test.</summary>
-    private TestParameters _testParameters { get; }
+    private TestParameters _testParameters;
 
     /// <summary>The <see cref="ReceiverConfiguration" /> used to configure the instance of this role.</summary>
-    private ReceiverConfiguration _receiverConfiguration { get; }
+    private ReceiverConfiguration _receiverConfiguration;
 
     /// <summary>Holds the set of messages that have been read by this instance. The key is the event's unique Id set by the sender.</summary>
-    private ConcurrentDictionary<string, byte> _readMessages { get; }
+    private ConcurrentDictionary<string, byte> _readMessages;
 
     /// <summary>
     ///   Initializes a new <see cref="Receiver" \> instance.
