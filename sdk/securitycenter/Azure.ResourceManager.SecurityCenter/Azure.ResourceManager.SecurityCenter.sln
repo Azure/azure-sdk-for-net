@@ -7,6 +7,8 @@ Project("{D2EB0E2D-EB15-486E-AFFA-5CDE503DD3F8}") = "Azure.ResourceManager.Secur
 EndProject
 Project("{D2EB0E2D-EB15-486E-AFFA-5CDE503DD3F8}") = "Azure.ResourceManager.SecurityCenter.Tests", "tests\Azure.ResourceManager.SecurityCenter.Tests.csproj", "{3FD0507B-778C-45A6-AD52-824DB9CD00E9}"
 EndProject
+Project("{D2EB0E2D-EB15-486E-AFFA-5CDE503DD3F8}") = "Azure.ResourceManager.SecurityCenter.Samples", "samples\Azure.ResourceManager.SecurityCenter.Samples.csproj", "{84DD8956-D6BE-4029-ACDE-F0AFDDD33B33}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
