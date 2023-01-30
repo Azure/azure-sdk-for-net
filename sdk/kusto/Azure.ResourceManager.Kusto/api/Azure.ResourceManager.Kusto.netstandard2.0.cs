@@ -1528,7 +1528,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16sV2 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16sV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL32asV3 { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL32SV3 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL32sV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL4s { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8asV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8s { get { throw null; } }

@@ -133,7 +133,7 @@ rename-mapping:
   AzureSkuName.Standard_E16s_v5+4TB_PS: StandardE16sV54TBPS
   AzureSkuName.Standard_L8s_v3: StandardL8sV3
   AzureSkuName.Standard_L16s_v3: StandardL16sV3
-  AzureSkuName.Standard_L32s_v3: StandardL32SV3
+  AzureSkuName.Standard_L32s_v3: StandardL32sV3
   AzureSkuName.Standard_L8as_v3: StandardL8asV3
   AzureSkuName.Standard_L16as_v3: StandardL16asV3
   AzureSkuName.Standard_L32as_v3: StandardL32asV3
