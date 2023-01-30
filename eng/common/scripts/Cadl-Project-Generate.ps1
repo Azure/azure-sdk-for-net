@@ -1,3 +1,5 @@
+# For details see https://github.com/Azure/azure-sdk-tools/doc/common/CadlSyncAndGenerateScripts.md
+
 [CmdletBinding()]
 param (
     [Parameter(Position=0)]
