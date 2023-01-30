@@ -568,7 +568,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if (bytes.Length == GuidSizeInBytes)
             {
-                return new Guid(bytes.Span.ToArray());
+                // Use TryRead to avoid allocating an array
+                if (!MemoryMarshal.TryRead<Guid>(bytes.Span, out var lockTokenGuid))
+                {
+                    // We expect the constructor to fail at this point, but we invoke it to leverage the Guid validation rather than
+                    // throwing ourselves.
+                    lockTokenGuid = new Guid(bytes.ToArray());
+                }
+                return lockTokenGuid;
             }
 
             return default;
