@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Get the current usage of a resource.
-        /// Request Path: /{scope}/providers/Microsoft.Quota/usages/{resourceName}
-        /// Operation Id: Usages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CurrentUsagesBaseResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Get the current usage of a resource.
-        /// Request Path: /{scope}/providers/Microsoft.Quota/usages/{resourceName}
-        /// Operation Id: Usages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CurrentUsagesBaseResource> Get(CancellationToken cancellationToken = default)

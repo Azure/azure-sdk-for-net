@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027agvwmqbx\u0027)/docs/search.post.search?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027ylixaavx\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "74",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f3fcc139aea8901a8d912c4478e55104",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "28a33e3c8ad0ce8ba545111293a1b027",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,18 +21,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "f3fcc139-aea8-901a-8d91-2c4478e55104",
+        "client-request-id": "28a33e3c-8ad0-ce8b-a545-111293a1b027",
         "Content-Length": "1102",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 06 Jan 2023 20:44:01 GMT",
-        "elapsed-time": "555",
+        "Date": "Mon, 09 Jan 2023 17:58:12 GMT",
+        "elapsed-time": "76",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "f3fcc139-aea8-901a-8d91-2c4478e55104",
+        "request-id": "28a33e3c-8ad0-ce8b-a545-111293a1b027",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "f3fcc139-aea8-901a-8d91-2c4478e55104"
+        "x-ms-client-request-id": "28a33e3c-8ad0-ce8b-a545-111293a1b027"
       },
       "ResponseBody": {
         "value": [
@@ -87,8 +87,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "522976750",
-    "SearchIndexName": "agvwmqbx",
+    "RandomSeed": "1719405057",
+    "SearchIndexName": "ylixaavx",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_QUERY_API_KEY": "Sanitized",
     "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"

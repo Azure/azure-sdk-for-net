@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal static OutboundEnvironmentEndpointListResult DeserializeOutboundEnvironmentEndpointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OutboundEnvironmentEndpoint>> value = default;
+            Optional<IReadOnlyList<LoadTestingOutboundEnvironmentEndpoint>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OutboundEnvironmentEndpoint> array = new List<OutboundEnvironmentEndpoint>();
+                    List<LoadTestingOutboundEnvironmentEndpoint> array = new List<LoadTestingOutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item));
+                        array.Add(LoadTestingOutboundEnvironmentEndpoint.DeserializeLoadTestingOutboundEnvironmentEndpoint(item));
                     }
                     value = array;
                     continue;

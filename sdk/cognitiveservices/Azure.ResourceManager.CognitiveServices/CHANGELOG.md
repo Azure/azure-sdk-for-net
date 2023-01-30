@@ -1,14 +1,14 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2023-01-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added `CognitiveServicesCommitmentPlanResource` and `CommitmentPlanAccountAssociationResource`.
 
 ### Other Changes
+
+- Upgraded API version to `2022-12-01`.
 
 ## 1.1.0 (2022-11-02)
 

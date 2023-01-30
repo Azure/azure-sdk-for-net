@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         /// <summary>
         /// Gets all available operations.
-        /// Request Path: /providers/Microsoft.MachineLearningCompute/operations
-        /// Operation Id: MachineLearningCompute_ListAvailableOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.MachineLearningCompute/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MachineLearningCompute_ListAvailableOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         /// <summary>
         /// Gets all available operations.
-        /// Request Path: /providers/Microsoft.MachineLearningCompute/operations
-        /// Operation Id: MachineLearningCompute_ListAvailableOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.MachineLearningCompute/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MachineLearningCompute_ListAvailableOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -65,8 +81,16 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         /// <summary>
         /// Gets the operationalization clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningCompute/operationalizationClusters
-        /// Operation Id: OperationalizationClusters_ListBySubscriptionId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningCompute/operationalizationClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationalizationClusters_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> Continuation token for pagination. </param>
@@ -79,8 +103,16 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         /// <summary>
         /// Gets the operationalization clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningCompute/operationalizationClusters
-        /// Operation Id: OperationalizationClusters_ListBySubscriptionId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningCompute/operationalizationClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationalizationClusters_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> Continuation token for pagination. </param>
@@ -110,8 +142,16 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         /// <summary>
         /// Gets the operationalization cluster resource view. Note that the credentials are not returned by this call. Call ListKeys to get them.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningCompute/operationalizationClusters/{clusterName}
-        /// Operation Id: OperationalizationClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningCompute/operationalizationClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationalizationClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -126,8 +166,16 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         /// <summary>
         /// Gets the operationalization cluster resource view. Note that the credentials are not returned by this call. Call ListKeys to get them.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningCompute/operationalizationClusters/{clusterName}
-        /// Operation Id: OperationalizationClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningCompute/operationalizationClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationalizationClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>

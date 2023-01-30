@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// State of endpoint provisioning.
-    /// Serialized Name: EndpointProvisioningState
-    /// </summary>
+    /// <summary> State of endpoint provisioning. </summary>
     public readonly partial struct MachineLearningEndpointProvisioningState : IEquatable<MachineLearningEndpointProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UpdatingValue = "Updating";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: EndpointProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static MachineLearningEndpointProvisioningState Creating { get; } = new MachineLearningEndpointProvisioningState(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: EndpointProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static MachineLearningEndpointProvisioningState Deleting { get; } = new MachineLearningEndpointProvisioningState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: EndpointProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static MachineLearningEndpointProvisioningState Succeeded { get; } = new MachineLearningEndpointProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: EndpointProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static MachineLearningEndpointProvisioningState Failed { get; } = new MachineLearningEndpointProvisioningState(FailedValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: EndpointProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static MachineLearningEndpointProvisioningState Updating { get; } = new MachineLearningEndpointProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: EndpointProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static MachineLearningEndpointProvisioningState Canceled { get; } = new MachineLearningEndpointProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="MachineLearningEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningEndpointProvisioningState left, MachineLearningEndpointProvisioningState right) => left.Equals(right);

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Properties of Databricks
-    /// Serialized Name: DatabricksProperties
-    /// </summary>
+    /// <summary> Properties of Databricks. </summary>
     public partial class MachineLearningDatabricksProperties
     {
         /// <summary> Initializes a new instance of MachineLearningDatabricksProperties. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDatabricksProperties. </summary>
-        /// <param name="databricksAccessToken">
-        /// Databricks access token
-        /// Serialized Name: DatabricksProperties.databricksAccessToken
-        /// </param>
-        /// <param name="workspaceUri">
-        /// Workspace Url
-        /// Serialized Name: DatabricksProperties.workspaceUrl
-        /// </param>
+        /// <param name="databricksAccessToken"> Databricks access token. </param>
+        /// <param name="workspaceUri"> Workspace Url. </param>
         internal MachineLearningDatabricksProperties(string databricksAccessToken, Uri workspaceUri)
         {
             DatabricksAccessToken = databricksAccessToken;
             WorkspaceUri = workspaceUri;
         }
 
-        /// <summary>
-        /// Databricks access token
-        /// Serialized Name: DatabricksProperties.databricksAccessToken
-        /// </summary>
+        /// <summary> Databricks access token. </summary>
         public string DatabricksAccessToken { get; set; }
-        /// <summary>
-        /// Workspace Url
-        /// Serialized Name: DatabricksProperties.workspaceUrl
-        /// </summary>
+        /// <summary> Workspace Url. </summary>
         public Uri WorkspaceUri { get; set; }
     }
 }
