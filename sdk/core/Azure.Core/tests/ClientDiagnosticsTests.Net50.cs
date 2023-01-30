@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -396,7 +397,7 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
-        public void ParentIdCanBeSetOnStartedScopeActivitySource()
+        public void ParentIdCannotBeSetOnStartedScopeActivitySource()
         {
             using var _ = SetAppConfigSwitch();
             string parentId = "00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00";
@@ -408,14 +409,9 @@ namespace Azure.Core.Tests
                 true,
                 false);
 
-            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             scope.Start();
-            scope.SetTraceparent(parentId);
-            scope.Dispose();
-
-            Assert.AreEqual(1, activityListener.Activities.Count);
-            var activity = activityListener.Activities.Dequeue();
-            Assert.AreEqual(parentId, activity.ParentId);
+            Assert.Throws<InvalidOperationException>(() => scope.SetTraceparent(parentId));
         }
     }
 #endif

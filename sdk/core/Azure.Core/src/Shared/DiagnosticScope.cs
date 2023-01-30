@@ -357,8 +357,11 @@ namespace Azure.Core.Pipeline
 
             public void SetTraceparent(string traceparent)
             {
+                if (_currentActivity != null)
+                {
+                    throw new InvalidOperationException("Traceparent can not be set after the activity is started");
+                }
                 _traceparent = traceparent;
-                _currentActivity?.SetParentId(traceparent);
             }
 
             public void Dispose()
