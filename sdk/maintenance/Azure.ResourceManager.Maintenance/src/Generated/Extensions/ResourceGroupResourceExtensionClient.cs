@@ -82,20 +82,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="applyUpdateName"> applyUpdate Id. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesByParentAsync(ResourceGroupResourceGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdatesByParent");
             scope.Start();
             try
             {
-                var response = await MaintenanceApplyUpdateApplyUpdatesRestClient.GetParentAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, cancellationToken).ConfigureAwait(false);
+                var response = await MaintenanceApplyUpdateApplyUpdatesRestClient.GetParentAsync(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ApplyUpdateName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -118,20 +113,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="applyUpdateName"> applyUpdate Id. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceApplyUpdateResource> GetApplyUpdatesByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceApplyUpdateResource> GetApplyUpdatesByParent(ResourceGroupResourceGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdatesByParent");
             scope.Start();
             try
             {
-                var response = MaintenanceApplyUpdateApplyUpdatesRestClient.GetParent(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, cancellationToken);
+                var response = MaintenanceApplyUpdateApplyUpdatesRestClient.GetParent(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ApplyUpdateName, cancellationToken);
                 return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -290,21 +280,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignmentByParent");
             scope.Start();
             try
             {
-                var response = await ConfigurationAssignmentsRestClient.CreateOrUpdateParentAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+                var response = await ConfigurationAssignmentsRestClient.CreateOrUpdateParentAsync(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, options.Data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -327,21 +311,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignmentByParent");
             scope.Start();
             try
             {
-                var response = ConfigurationAssignmentsRestClient.CreateOrUpdateParent(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken);
+                var response = ConfigurationAssignmentsRestClient.CreateOrUpdateParent(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, options.Data, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -364,20 +342,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignmentByParent");
             scope.Start();
             try
             {
-                var response = await ConfigurationAssignmentsRestClient.DeleteParentAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+                var response = await ConfigurationAssignmentsRestClient.DeleteParentAsync(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -400,20 +373,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignmentByParent");
             scope.Start();
             try
             {
-                var response = ConfigurationAssignmentsRestClient.DeleteParent(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
+                var response = ConfigurationAssignmentsRestClient.DeleteParent(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, cancellationToken);
                 return response;
             }
             catch (Exception e)

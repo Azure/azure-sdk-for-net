@@ -17,10 +17,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 {
     internal class TraceDemo : IDisposable
     {
-        private const string activitySourceName = "MyCompany.MyProduct.MyLibrary";
-        private static readonly ActivitySource activitySource = new(activitySourceName);
+        private const string ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
+        private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
 
-        private readonly TracerProvider tracerProvider;
+        private readonly TracerProvider _tracerProvider;
 
         public TraceDemo(string connectionString, TokenCredential credential = null)
         {
@@ -33,9 +33,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
 
-            this.tracerProvider = Sdk.CreateTracerProviderBuilder()
+            _tracerProvider = Sdk.CreateTracerProviderBuilder()
                             .SetResourceBuilder(resourceBuilder)
-                            .AddSource(activitySourceName)
+                            .AddSource(ActivitySourceName)
                             .AddProcessor(new ActivityFilteringProcessor())
                             .AddProcessor(new ActivityEnrichingProcessor())
                             .SetSampler(new ApplicationInsightsSampler(1.0F))
@@ -50,26 +50,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         public void GenerateTraces()
         {
             // Note: This activity will be dropped due to the ActivityFilteringProcessor filtering ActivityKind.Producer.
-            using (var testActivity1 = activitySource.StartActivity("TestInternalActivity", ActivityKind.Producer))
+            using (var testActivity1 = s_activitySource.StartActivity("TestInternalActivity", ActivityKind.Producer))
             {
                 testActivity1?.SetTag("CustomTag1", "Value1");
                 testActivity1?.SetTag("CustomTag2", "Value2");
             }
 
-            using (var activity = activitySource.StartActivity("SayHello", ActivityKind.Client))
+            using (var activity = s_activitySource.StartActivity("SayHello", ActivityKind.Client))
             {
                 activity?.SetTag("foo", 1);
                 activity?.SetTag("baz", new int[] { 1, 2, 3 });
                 activity?.SetStatus(ActivityStatusCode.Ok);
 
-                using (var nestedActivity = activitySource.StartActivity("SayHelloAgain", ActivityKind.Server))
+                using (var nestedActivity = s_activitySource.StartActivity("SayHelloAgain", ActivityKind.Server))
                 {
                     nestedActivity?.SetTag("bar", "Hello, World!");
                     nestedActivity?.SetStatus(ActivityStatusCode.Ok);
                 }
             }
 
-            using (var activity = activitySource.StartActivity("ExceptionExample"))
+            using (var activity = s_activitySource.StartActivity("ExceptionExample"))
             {
                 try
                 {
@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
         public void Dispose()
         {
-            this.tracerProvider.Dispose();
+            _tracerProvider.Dispose();
         }
     }
 }
