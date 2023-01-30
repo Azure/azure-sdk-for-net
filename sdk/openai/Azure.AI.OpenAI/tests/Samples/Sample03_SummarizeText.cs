@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
         public void SummarizeText()
         {
             #region Snippet:SummarizeText
-            string endpoint = "http://myaccount.openai.azure.com/";
+            string endpoint = "https://myaccount.openai.azure.com/";
             OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), "myDeploymentId");
 
             string textToSummarize = @"

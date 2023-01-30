@@ -38,7 +38,7 @@ Once you have the value of the endpoint string and subscription key, you can cre
 ```C# Snippet:CreateOpenAIClient
 // Replace with your Azure subscription key
 string key = "YOUR_AZURE_KEY";
-string endpoint = "http://myaccount.openai.azure.com/";
+string endpoint = "https://myaccount.openai.azure.com/";
 OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 ```
 
@@ -56,7 +56,7 @@ You will also need to [register a new AAD application][aad_register_app] and [gr
 Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
 ```C# Snippet:CreateOpenAIClientTokenCredential
-string endpoint = "http://myaccount.openai.azure.com/";
+string endpoint = "https://myaccount.openai.azure.com/";
 OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), "myDeploymentId");
 ```
 
@@ -108,7 +108,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredential, then generates text responses to input prompts.
 
 ```C# Snippet:GenerateChatbotResponse
-string endpoint = "http://myaccount.openai.azure.com/";
+string endpoint = "https://myaccount.openai.azure.com/";
 OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), "myDeploymentId");
 
 string prompt = "What is Azure OpenAI?";
@@ -126,7 +126,7 @@ The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an exampl
 ```C# Snippet:GenerateMultipleChatbotResponsesWithSubscriptionKey
 // Replace with your Azure subscription key
 string key = "YOUR_AZURE_KEY";
-string endpoint = "http://myaccount.openai.azure.com/";
+string endpoint = "https://myaccount.openai.azure.com/";
 OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 
 List<string> examplePrompts = new(){
@@ -154,7 +154,7 @@ foreach (string prompt in examplePrompts)
 The `SummarizeText` method generates a summarization of the given input prompt.
 
 ```C# Snippet:SummarizeText
-string endpoint = "http://myaccount.openai.azure.com/";
+string endpoint = "https://myaccount.openai.azure.com/";
 OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), "myDeploymentId");
 
 string textToSummarize = @"

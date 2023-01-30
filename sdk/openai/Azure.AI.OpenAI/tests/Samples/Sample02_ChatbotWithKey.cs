@@ -18,7 +18,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             #region Snippet:CreateOpenAIClient
             // Replace with your Azure subscription key
             string key = "YOUR_AZURE_KEY";
-            string endpoint = "http://myaccount.openai.azure.com/";
+            string endpoint = "https://myaccount.openai.azure.com/";
             OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
             #endregion
 
