@@ -10,11 +10,12 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Automanage.Models
+namespace Azure.ResourceManager.Automanage
 {
-    public partial class Report : IUtf8JsonSerializable
+    public partial class AutomanageConfigurationProfileAssignmentReportData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Automanage.Models
             writer.WriteEndObject();
         }
 
-        internal static Report DeserializeReport(JsonElement element)
+        internal static AutomanageConfigurationProfileAssignmentReportData DeserializeAutomanageConfigurationProfileAssignmentReportData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     continue;
                 }
             }
-            return new Report(id, name, type, systemData.Value, startTime.Value, endTime.Value, lastModifiedTime.Value, Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value);
+            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, startTime.Value, endTime.Value, lastModifiedTime.Value, Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value);
         }
     }
 }

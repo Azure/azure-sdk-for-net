@@ -11,22 +11,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    /// <summary> A class representing the ConfigurationProfileAssignment data model. </summary>
-    public partial class ConfigurationProfileAssignmentData : ResourceData
+    /// <summary> A class representing the AutomanageConfigurationProfileAssignment data model. </summary>
+    public partial class AutomanageConfigurationProfileAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentData. </summary>
-        public ConfigurationProfileAssignmentData()
+        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentData. </summary>
+        public AutomanageConfigurationProfileAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentData. </summary>
+        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the configuration profile assignment. </param>
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
-        internal ConfigurationProfileAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConfigurationProfileAssignmentProperties properties, string managedBy) : base(id, name, resourceType, systemData)
+        internal AutomanageConfigurationProfileAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConfigurationProfileAssignmentProperties properties, string managedBy) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ManagedBy = managedBy;
