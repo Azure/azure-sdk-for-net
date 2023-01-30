@@ -12,26 +12,18 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public readonly struct ManifestMediaType : IEquatable<ManifestMediaType>
     {
         /// <summary>
-        /// OCI Manifest.
+        /// The media type for an OCI Image Manifest.  This format is described at https://github.com/opencontainers/image-spec/blob/main/manifest.md.
         /// </summary>
         public static readonly ManifestMediaType OciManifest = new ManifestMediaType("application/vnd.oci.image.manifest.v1+json");
 
         /// <summary>
-        /// OCI Index.
+        /// The media type for a Docker Image Manifest, Version 2, Schema 2.  This format is described at https://docs.docker.com/registry/spec/manifest-v2-2/.
         /// </summary>
-        public static readonly ManifestMediaType OciIndex = new ManifestMediaType("application/vnd.oci.image.index.v1+json");
+        public static readonly ManifestMediaType DockerManifest = new ManifestMediaType("application/vnd.docker.distribution.manifest.v2+json");
 
-        //public static readonly ManifestMediaType DockerManifestV1 = new ManifestMediaType("application/vnd.docker.container.image.v1+json");
-
-        /// <summary>
-        /// Docker Manifest V2.
-        /// </summary>
-        public static readonly ManifestMediaType DockerManifestV2 = new ManifestMediaType("application/vnd.docker.distribution.manifest.v2+json");
-
-        /// <summary>
-        /// Docker Manifest List V2.
-        /// </summary>
-        public static readonly ManifestMediaType DockerManifestList = new ManifestMediaType("application/vnd.docker.distribution.manifest.list.v2+json");
+        // public static readonly ManifestMediaType OciIndex = new ManifestMediaType("application/vnd.oci.image.index.v1+json");
+        // public static readonly ManifestMediaType DockerManifestList = new ManifestMediaType("application/vnd.docker.distribution.manifest.list.v2+json");
+        // public static readonly ManifestMediaType DockerManifestV1 = new ManifestMediaType("application/vnd.docker.container.image.v1+json");
 
         private readonly string _value;
 

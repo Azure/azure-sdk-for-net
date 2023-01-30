@@ -277,9 +277,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType DockerManifestList;
-        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType DockerManifestV2;
-        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType OciIndex;
+        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType DockerManifest;
         public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType OciManifest;
         public bool Equals(Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
