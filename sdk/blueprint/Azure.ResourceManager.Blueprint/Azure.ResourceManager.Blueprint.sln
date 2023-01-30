@@ -7,6 +7,8 @@ Project("{9A492F23-AD80-4C0A-891E-A299F2C3B07D}") = "Azure.ResourceManager.Bluep
 EndProject
 Project("{9A492F23-AD80-4C0A-891E-A299F2C3B07D}") = "Azure.ResourceManager.Blueprint.Tests", "tests\Azure.ResourceManager.Blueprint.Tests.csproj", "{7C849B54-9D2A-4740-9799-1956EBADF8B5}"
 EndProject
+Project("{9A492F23-AD80-4C0A-891E-A299F2C3B07D}") = "Azure.ResourceManager.Blueprint.Samples", "samples\Azure.ResourceManager.Blueprint.Samples.csproj", "{D969EF1E-8B87-45F0-A816-CAC4FFA48B11}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
