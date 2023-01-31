@@ -14,7 +14,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 {
     public partial class DevCenterSamples: SamplesBase<DevCenterClientTestEnvironment>
     {
-        public async Task CreateDeleteEnvironmentAsync(string endpoint)
+        public async Task CreateDeleteEnvironmentAsync(Uri endpoint)
         {
             // Create and delete a user environment
             var credential = new DefaultAzureCredential();

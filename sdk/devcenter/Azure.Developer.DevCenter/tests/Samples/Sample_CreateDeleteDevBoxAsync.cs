@@ -13,7 +13,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 {
     public partial class DevCenterSamples: SamplesBase<DevCenterClientTestEnvironment>
     {
-        public async Task CreateDeleteDevBoxAsync(string endpoint)
+        public async Task CreateDeleteDevBoxAsync(Uri endpoint)
         {
             // Create and delete a user devbox
             #region Snippet:Azure_DevCenter_GetProjects_Scenario

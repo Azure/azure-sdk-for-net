@@ -6,7 +6,8 @@
 This sample shows how to call GetProjectAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 Response response = await client.GetProjectAsync("<projectName>");
 
@@ -34,7 +35,8 @@ Schema for <c>Project</c>:
 This sample shows how to call GetProject with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 Response response = client.GetProject("<projectName>");
 
@@ -62,7 +64,8 @@ Schema for <c>Project</c>:
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetProjectsAsync())
 {
@@ -73,7 +76,8 @@ await foreach (var data in client.GetProjectsAsync())
 This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetProjectsAsync("<filter>", 1234))
 {
@@ -102,7 +106,8 @@ Schema for <c>ProjectListResultValue</c>:
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetProjects())
 {
@@ -113,7 +118,8 @@ foreach (var data in client.GetProjects())
 This sample shows how to call GetProjects with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetProjects("<filter>", 1234))
 {
@@ -142,7 +148,8 @@ Schema for <c>ProjectListResultValue</c>:
 This sample shows how to call GetAllDevBoxesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetAllDevBoxesAsync())
 {
@@ -153,7 +160,8 @@ await foreach (var data in client.GetAllDevBoxesAsync())
 This sample shows how to call GetAllDevBoxesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetAllDevBoxesAsync("<filter>", 1234))
 {
@@ -236,7 +244,8 @@ Schema for <c>DevBoxListResultValue</c>:
 This sample shows how to call GetAllDevBoxes and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetAllDevBoxes())
 {
@@ -247,7 +256,8 @@ foreach (var data in client.GetAllDevBoxes())
 This sample shows how to call GetAllDevBoxes with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetAllDevBoxes("<filter>", 1234))
 {
@@ -330,7 +340,8 @@ Schema for <c>DevBoxListResultValue</c>:
 This sample shows how to call GetAllDevBoxesByUserAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetAllDevBoxesByUserAsync())
 {
@@ -341,7 +352,8 @@ await foreach (var data in client.GetAllDevBoxesByUserAsync())
 This sample shows how to call GetAllDevBoxesByUserAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetAllDevBoxesByUserAsync(<me>, "<filter>", 1234))
 {
@@ -424,7 +436,8 @@ Schema for <c>DevBoxListResultValue</c>:
 This sample shows how to call GetAllDevBoxesByUser and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetAllDevBoxesByUser())
 {
@@ -435,7 +448,8 @@ foreach (var data in client.GetAllDevBoxesByUser())
 This sample shows how to call GetAllDevBoxesByUser with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<https://my-service.azure.com>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetAllDevBoxesByUser(<me>, "<filter>", 1234))
 {

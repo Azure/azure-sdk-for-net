@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter
         private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _projectName;
         private readonly string _apiVersion;
 
@@ -41,7 +41,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public EnvironmentsClient(string endpoint, string projectName, TokenCredential credential) : this(endpoint, projectName, credential, new DevCenterClientOptions())
+        public EnvironmentsClient(Uri endpoint, string projectName, TokenCredential credential) : this(endpoint, projectName, credential, new DevCenterClientOptions())
         {
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public EnvironmentsClient(string endpoint, string projectName, TokenCredential credential, DevCenterClientOptions options)
+        public EnvironmentsClient(Uri endpoint, string projectName, TokenCredential credential, DevCenterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -691,7 +691,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/environments", false);
@@ -711,7 +711,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/users/", false);
@@ -733,7 +733,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/users/", false);
@@ -752,7 +752,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/users/", false);
@@ -773,7 +773,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/users/", false);
@@ -794,7 +794,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/users/", false);
@@ -813,7 +813,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/users/", false);
@@ -835,7 +835,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/users/", false);
@@ -857,7 +857,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/catalogItems", false);
@@ -877,7 +877,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/catalogItems/", false);
@@ -894,7 +894,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/catalogItems/", false);
@@ -916,7 +916,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/catalogItems/", false);
@@ -935,7 +935,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/environmentTypes", false);
@@ -955,7 +955,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -968,7 +968,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -981,7 +981,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -994,7 +994,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1007,7 +1007,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

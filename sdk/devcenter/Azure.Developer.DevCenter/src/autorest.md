@@ -14,4 +14,11 @@ input-file:
 namespace: Azure.Developer.DevCenter
 security: AADToken
 security-scopes: https://devcenter.azure.com/.default
+
+directive:
+  # Ensure we use Uri rather than string in .NET
+  - from: swagger-document
+    where: "$.parameters.EndpointParameter"
+    transform: >-
+      $["format"] = "url";
 ```

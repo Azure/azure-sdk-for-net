@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter
         private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -38,7 +38,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DevCenterClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
+        public DevCenterClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
         {
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DevCenterClient(string endpoint, TokenCredential credential, DevCenterClientOptions options)
+        public DevCenterClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -212,7 +212,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
@@ -234,7 +234,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -249,7 +249,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/devboxes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
@@ -271,7 +271,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes", false);
@@ -295,7 +295,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -308,7 +308,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -321,7 +321,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
