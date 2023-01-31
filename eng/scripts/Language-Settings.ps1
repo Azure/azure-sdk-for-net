@@ -543,10 +543,10 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
   Set-Content -Path $DocConfigFile -Value $outputLines
 }
 
-function Get-dotnet-EmitterAdditionalOptions() {
-  return ""
-}
-
 function Get-dotnet-EmitterName() {
   return "@azure-tools/cadl-csharp"
+}
+
+function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
+  return "--option @azure-tools/cadl-csharp.emitter-output-dir=$projectDirectory/src"
 }
