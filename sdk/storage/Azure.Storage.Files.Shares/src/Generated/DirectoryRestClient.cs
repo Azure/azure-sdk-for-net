@@ -20,8 +20,10 @@ namespace Azure.Storage.Files.Shares
     {
         private readonly HttpPipeline _pipeline;
         private readonly string _url;
+        private readonly bool? _allowTrailingDot;
         private readonly string _version;
         private readonly ShareFileRequestIntent? _fileRequestIntent;
+        private readonly bool? _allowSourceTrailingDot;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -30,16 +32,20 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
+        /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
+        /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2022-11-02", ShareFileRequestIntent? fileRequestIntent = null)
+        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2022-11-02", ShareFileRequestIntent? fileRequestIntent = null, bool? allowSourceTrailingDot = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
+            _allowTrailingDot = allowTrailingDot;
             _version = version ?? throw new ArgumentNullException(nameof(version));
             _fileRequestIntent = fileRequestIntent;
+            _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
         internal HttpMessage CreateCreateRequest(string fileAttributes, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileCreationTime, string fileLastWriteTime, string fileChangeTime)
@@ -55,6 +61,10 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
             if (metadata != null)
             {
                 request.Headers.Add("x-ms-meta-", metadata);
@@ -166,6 +176,10 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
             request.Headers.Add("x-ms-version", _version);
             if (_fileRequestIntent != null)
             {
@@ -224,6 +238,10 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
             request.Headers.Add("x-ms-version", _version);
             if (_fileRequestIntent != null)
             {
@@ -302,6 +320,10 @@ namespace Azure.Storage.Files.Shares
             if (fileChangeTime != null)
             {
                 request.Headers.Add("x-ms-file-change-time", fileChangeTime);
+            }
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
             }
             if (_fileRequestIntent != null)
             {
@@ -388,6 +410,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-meta-", metadata);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
             if (_fileRequestIntent != null)
             {
                 request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
@@ -470,6 +496,10 @@ namespace Azure.Storage.Files.Shares
             if (includeExtendedInfo != null)
             {
                 request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
+            }
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
             }
             if (_fileRequestIntent != null)
             {
@@ -571,6 +601,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-recursive", recursive.Value);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
             if (_fileRequestIntent != null)
             {
                 request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
@@ -664,6 +698,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-recursive", recursive.Value);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
             if (_fileRequestIntent != null)
             {
                 request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
@@ -786,6 +824,14 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
+            if (_allowSourceTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-source-allow-trailing-dot", _allowSourceTrailingDot.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -867,6 +913,10 @@ namespace Azure.Storage.Files.Shares
             if (includeExtendedInfo != null)
             {
                 request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
+            }
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
             }
             if (_fileRequestIntent != null)
             {
