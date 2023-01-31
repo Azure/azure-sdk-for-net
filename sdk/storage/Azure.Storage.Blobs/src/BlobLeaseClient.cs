@@ -374,9 +374,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="context">
         /// Optional <see cref="RequestContext"/> for this operation.
         /// </param>
-        /// <param name="operationName">
-        /// The name of the calling operation.
-        /// </param>
         /// <returns>
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
