@@ -45,8 +45,7 @@ try
             testRunId,
             metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
             metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-            testRunJson.RootElement.GetProperty("startDateTime").GetString() + "/" + testRunJson.RootElement.GetProperty("endDateTime"),
-            null
+            testRunJson.RootElement.GetProperty("startDateTime").GetString() + "/" + testRunJson.RootElement.GetProperty("endDateTime")
         );
 }
 catch (Exception ex)

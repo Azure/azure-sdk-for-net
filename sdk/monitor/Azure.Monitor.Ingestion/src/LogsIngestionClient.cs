@@ -31,9 +31,6 @@ namespace Azure.Monitor.Ingestion
         // If Compression wants to be turned off (hard to generate 1 Mb data gzipped) set Compression to gzip
         internal static string Compression;
 
-        // If no concurrency count is provided for a parallel upload, default to 5 workers.
-        private const int DefaultParallelWorkerCount = 5;
-
         internal readonly struct BatchedLogs
         {
             public BatchedLogs(List<object> logs, BinaryData logsData)
@@ -44,18 +41,6 @@ namespace Azure.Monitor.Ingestion
 
             public List<object> Logs { get; }
             public BinaryData LogsData { get; }
-        }
-
-        internal readonly struct ProcessEventHandler
-        {
-            public ProcessEventHandler(bool shouldAbort, List<Exception> exceptions)
-            {
-                ShouldAbort = shouldAbort;
-                Exceptions = exceptions;
-            }
-
-            public bool ShouldAbort { get; }
-            public List<Exception> Exceptions { get; }
         }
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context = null)
@@ -327,7 +312,7 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             // Calculate the number of threads to use.
-            int _maxWorkerCount = (options == null) ? DefaultParallelWorkerCount : UploadLogsOptions.AssertNotNegative(options.MaxConcurrency, "MaxConcurrency");
+            int _maxWorkerCount = (options == null) ? new UploadLogsOptions().MaxConcurrency : options.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             List<Exception> exceptions = null;
@@ -378,9 +363,10 @@ namespace Azure.Monitor.Ingestion
                             }
                             else
                             {
-                                ProcessEventHandler processEventHandler = ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).Result;
-                                shouldAbort = processEventHandler.ShouldAbort;
-                                (exceptions ??= new List<Exception>()).AddRange(processEventHandler.Exceptions);
+                                Exception exceptionEventHandler = ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).Result;
+                                shouldAbort = exceptionEventHandler != null;
+                                if (shouldAbort)
+                                    AddException(ref exceptions, exceptionEventHandler);
                             }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
@@ -407,9 +393,10 @@ namespace Azure.Monitor.Ingestion
                 }
                 else
                 {
-                    ProcessEventHandler processEventHandler = ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).Result;
-                    shouldAbort = processEventHandler.ShouldAbort;
-                    (exceptions ??= new List<Exception>()).AddRange(processEventHandler.Exceptions);
+                    Exception exceptionEventHandler = ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).Result;
+                    shouldAbort = exceptionEventHandler != null;
+                    if (shouldAbort)
+                        AddException(ref exceptions, exceptionEventHandler);
                 }
             }
             if (exceptions?.Count > 0)
@@ -444,28 +431,23 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        internal async Task<ProcessEventHandler> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)
+        internal async Task<Exception> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)
         {
-            bool shouldAbort = false;
-            List<Exception> exceptions = new List<Exception>();
             UploadFailedEventArgs eventArgs;
             if (completedTask.Exception != null)
             {
                 eventArgs = new UploadFailedEventArgs(logs, completedTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
-                var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
-                shouldAbort = exceptionOnUpload != null;
-                if (shouldAbort)
-                    AddException(ref exceptions, exceptionOnUpload);
+                return await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
             }
             else if (completedTask.Result.Status != 204)
             {
                 eventArgs = new UploadFailedEventArgs(logs, new RequestFailedException(completedTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
-                var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
-                shouldAbort = exceptionOnUpload != null;
-                if (shouldAbort)
-                    AddException(ref exceptions, exceptionOnUpload);
+                return await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
             }
-            return new ProcessEventHandler(shouldAbort, exceptions);
+            else
+            {
+                return null;
+            }
         }
 
         private async Task<Response> UploadBatchListSyncOrAsync(BatchedLogs batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)

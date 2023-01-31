@@ -171,7 +171,6 @@ namespace Azure.Monitor.Ingestion.Tests
             var policy = new ConcurrencyCounterPolicy(10);
             LogsIngestionClient client = CreateClient(policy);
 
-            LogsIngestionClient.SingleUploadThreshold = 100; // make batch size smaller for Uploads for test recording size
             var response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(50, Recording.Now.DateTime));
 
             // Check the response

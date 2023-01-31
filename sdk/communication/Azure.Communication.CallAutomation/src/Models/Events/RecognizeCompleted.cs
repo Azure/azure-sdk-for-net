@@ -64,6 +64,20 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary> Get the recognize result. </summary>
+        public RecognizeResult GetRecognizeResult()
+        {
+            if (RecognitionType == CallMediaRecognitionType.Choices)
+            {
+                return ChoiceResult;
+            }
+            else if (RecognitionType == CallMediaRecognitionType.Dtmf)
+            {
+                return CollectTonesResult;
+            }
+            return null;
+        }
+
         /// <summary>
         /// The recognition type.
         /// </summary>
