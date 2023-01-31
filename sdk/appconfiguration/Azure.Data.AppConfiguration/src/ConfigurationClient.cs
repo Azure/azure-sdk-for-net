@@ -459,7 +459,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Deletes a key-value. </summary>
         /// <param name="key"> The key of the key-value to delete. </param>
         /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource&apos;s etag matches the value provided. </param>
+        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource's etag matches the value provided. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
@@ -489,7 +489,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Deletes a key-value. </summary>
         /// <param name="key"> The key of the key-value to delete. </param>
         /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource&apos;s etag matches the value provided. </param>
+        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource's etag matches the value provided. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
@@ -738,10 +738,9 @@ namespace Azure.Data.AppConfiguration
         /// Retrieves one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/> entities from the configuration store.</param>
-        /// <param name="snapshot"> A filter used to get configuration setting for a snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
-        public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, string snapshot = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
@@ -751,8 +750,8 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, snapshot, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, snapshot, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
@@ -760,9 +759,8 @@ namespace Azure.Data.AppConfiguration
         /// Retrieves one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
-        /// <param name="snapshot"> A filter used to get configuration setting for a snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<ConfigurationSetting> GetConfigurationSettings(SettingSelector selector, string snapshot = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConfigurationSetting> GetConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var key = selector.KeyFilter;
@@ -772,16 +770,16 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, snapshot, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, snapshot, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a single configuration setting snapshot. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource&apos;s etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource&apos;s etag does not match the value provided. </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Snapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> select = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
         {
@@ -816,8 +814,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Gets a single configuration setting snapshot. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource&apos;s etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource&apos;s etag does not match the value provided. </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Snapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> select = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
         {
@@ -908,8 +906,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Updates the state of a configuration setting snapshot. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
         /// <param name="snapshotUpdateParameters"> The parameters used to update the snapshot. </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource&apos;s etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource&apos;s etag does not match the value provided. </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Snapshot>> UpdateSnapshotAsync(string name, SnapshotUpdateParameters snapshotUpdateParameters, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
         {
@@ -937,8 +935,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Updates the state of a configuration setting snapshot. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
         /// <param name="snapshotUpdateParameters"> The parameters used to update the snapshot. </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource&apos;s etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource&apos;s etag does not match the value provided. </param>
+        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
+        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Snapshot> UpdateSnapshot(string name, SnapshotUpdateParameters snapshotUpdateParameters, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
         {
