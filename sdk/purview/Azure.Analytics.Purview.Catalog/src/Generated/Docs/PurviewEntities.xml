@@ -5433,210 +5433,6 @@ Schema for <c>AtlasClassification</c>:
 
 </remarks>
     </member>
-    <member name="SetClassificationsAsync(RequestContent,RequestContext)">
-<example>
-This sample shows how to call SetClassificationsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-var data = new {};
-
-Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call SetClassificationsAsync with all request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-var data = new {
-    guidHeaderMap = new {
-        key = new {
-            classificationNames = new[] {
-                "<String>"
-            },
-            classifications = new[] {
-                new {
-                    entityGuid = "<entityGuid>",
-                    entityStatus = "ACTIVE",
-                    removePropagationsOnEntityDelete = true,
-                    validityPeriods = new[] {
-                        new {
-                            endTime = "<endTime>",
-                            startTime = "<startTime>",
-                            timeZone = "<timeZone>",
-                        }
-                    },
-                    source = "<source>",
-                    sourceDetails = new {
-                        key = new {},
-                    },
-                    attributes = new {
-                        key = new {},
-                    },
-                    typeName = "<typeName>",
-                    lastModifiedTS = "<lastModifiedTS>",
-                }
-            },
-            displayText = "<displayText>",
-            guid = "<guid>",
-            isIncomplete = true,
-            labels = new[] {
-                "<String>"
-            },
-            meaningNames = new[] {
-                "<String>"
-            },
-            meanings = new[] {
-                new {
-                    confidence = 1234,
-                    createdBy = "<createdBy>",
-                    description = "<description>",
-                    displayText = "<displayText>",
-                    expression = "<expression>",
-                    relationGuid = "<relationGuid>",
-                    source = "<source>",
-                    status = "DISCOVERED",
-                    steward = "<steward>",
-                    termGuid = "<termGuid>",
-                }
-            },
-            status = "ACTIVE",
-            attributes = new {
-                key = new {},
-            },
-            typeName = "<typeName>",
-            lastModifiedTS = "<lastModifiedTS>",
-        },
-    },
-};
-
-Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasEntityHeaders</c>:
-<code>{
-  guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The description of the guid header map,
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="SetClassifications(RequestContent,RequestContext)">
-<example>
-This sample shows how to call SetClassifications and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-var data = new {};
-
-Response response = client.SetClassifications(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call SetClassifications with all request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-var data = new {
-    guidHeaderMap = new {
-        key = new {
-            classificationNames = new[] {
-                "<String>"
-            },
-            classifications = new[] {
-                new {
-                    entityGuid = "<entityGuid>",
-                    entityStatus = "ACTIVE",
-                    removePropagationsOnEntityDelete = true,
-                    validityPeriods = new[] {
-                        new {
-                            endTime = "<endTime>",
-                            startTime = "<startTime>",
-                            timeZone = "<timeZone>",
-                        }
-                    },
-                    source = "<source>",
-                    sourceDetails = new {
-                        key = new {},
-                    },
-                    attributes = new {
-                        key = new {},
-                    },
-                    typeName = "<typeName>",
-                    lastModifiedTS = "<lastModifiedTS>",
-                }
-            },
-            displayText = "<displayText>",
-            guid = "<guid>",
-            isIncomplete = true,
-            labels = new[] {
-                "<String>"
-            },
-            meaningNames = new[] {
-                "<String>"
-            },
-            meanings = new[] {
-                new {
-                    confidence = 1234,
-                    createdBy = "<createdBy>",
-                    description = "<description>",
-                    displayText = "<displayText>",
-                    expression = "<expression>",
-                    relationGuid = "<relationGuid>",
-                    source = "<source>",
-                    status = "DISCOVERED",
-                    steward = "<steward>",
-                    termGuid = "<termGuid>",
-                }
-            },
-            status = "ACTIVE",
-            attributes = new {
-                key = new {},
-            },
-            typeName = "<typeName>",
-            lastModifiedTS = "<lastModifiedTS>",
-        },
-    },
-};
-
-Response response = client.SetClassifications(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>AtlasEntityHeaders</c>:
-<code>{
-  guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The description of the guid header map,
-}
-</code>
-
-</remarks>
-    </member>
     <member name="GetEntitiesByUniqueAttributesAsync(String,Boolean,Boolean,String,RequestContext)">
 <example>
 This sample shows how to call GetEntitiesByUniqueAttributesAsync with required parameters and parse the result.
@@ -6766,6 +6562,194 @@ Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestConte
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
+    </member>
+    <member name="SetClassificationsAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call SetClassificationsAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+var data = new {};
+
+]]></code>
+This sample shows how to call SetClassificationsAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+var data = new {
+    guidHeaderMap = new {
+        key = new {
+            classificationNames = new[] {
+                "<String>"
+            },
+            classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+            displayText = "<displayText>",
+            guid = "<guid>",
+            isIncomplete = true,
+            labels = new[] {
+                "<String>"
+            },
+            meaningNames = new[] {
+                "<String>"
+            },
+            meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+            status = "ACTIVE",
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        },
+    },
+};
+
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>AtlasEntityHeaders</c>:
+<code>{
+  guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The description of the guid header map,
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="SetClassifications(RequestContent,RequestContext)">
+<example>
+This sample shows how to call SetClassifications and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+var data = new {};
+
+]]></code>
+This sample shows how to call SetClassifications with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+var data = new {
+    guidHeaderMap = new {
+        key = new {
+            classificationNames = new[] {
+                "<String>"
+            },
+            classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+            displayText = "<displayText>",
+            guid = "<guid>",
+            isIncomplete = true,
+            labels = new[] {
+                "<String>"
+            },
+            meaningNames = new[] {
+                "<String>"
+            },
+            meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+            status = "ACTIVE",
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        },
+    },
+};
+
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>AtlasEntityHeaders</c>:
+<code>{
+  guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The description of the guid header map,
+}
+</code>
+
+</remarks>
     </member>
   </members>
 </doc>

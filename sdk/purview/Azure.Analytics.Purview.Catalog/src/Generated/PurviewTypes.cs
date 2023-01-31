@@ -1037,58 +1037,6 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> List all type definitions returned as a list of minimal information header. </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionHeadersAsync(Boolean,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List all type definitions returned as a list of minimal information header. </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionHeaders(Boolean,String,RequestContext)']/*" />
-        public virtual Response GetTypeDefinitionHeaders(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1191,6 +1139,38 @@ namespace Azure.Analytics.Purview.Catalog
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> List all type definitions returned as a list of minimal information header. </summary>
+        /// <param name="includeTermTemplate">
+        /// Whether include termtemplatedef when return all typedefs.
+        /// This is always true when search filter type=term_template
+        /// </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionHeadersAsync(Boolean,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewTypes.GetTypeDefinitionHeaders", "value", null, context);
+        }
+
+        /// <summary> List all type definitions returned as a list of minimal information header. </summary>
+        /// <param name="includeTermTemplate">
+        /// Whether include termtemplatedef when return all typedefs.
+        /// This is always true when search filter type=term_template
+        /// </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionHeaders(Boolean,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTypeDefinitionHeaders(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewTypes.GetTypeDefinitionHeaders", "value", null, context);
         }
 
         internal HttpMessage CreateGetBusinessMetadataDefByGuidRequest(string guid, RequestContext context)

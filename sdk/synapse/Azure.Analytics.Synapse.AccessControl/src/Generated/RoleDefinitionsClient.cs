@@ -60,52 +60,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             _apiVersion = options.Version;
         }
 
-        /// <summary> List role definitions. </summary>
-        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionsAsync(Boolean,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
-        {
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
-            scope0.Start();
-            try
-            {
-                using HttpMessage message = CreateGetRoleDefinitionsRequest(isBuiltIn, scope, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List role definitions. </summary>
-        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitions(Boolean,String,RequestContext)']/*" />
-        public virtual Response GetRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
-        {
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
-            scope0.Start();
-            try
-            {
-                using HttpMessage message = CreateGetRoleDefinitionsRequest(isBuiltIn, scope, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get role definition by role definition Id. </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -158,46 +112,52 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> List rbac scopes. </summary>
+        /// <summary> List role definitions. </summary>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetScopesAsync(RequestContext context = null)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionsAsync(Boolean,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetScopesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRequest(isBuiltIn, scope, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitionsClient.GetRoleDefinitions", "value", null, context);
+        }
+
+        /// <summary> List role definitions. </summary>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitions(Boolean,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRequest(isBuiltIn, scope, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitionsClient.GetRoleDefinitions", "value", null, context);
         }
 
         /// <summary> List rbac scopes. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopes(RequestContext)']/*" />
-        public virtual Response GetScopes(RequestContext context = null)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopesAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetScopesAsync(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetScopesRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScopesRequest(context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitionsClient.GetScopes", "value", null, context);
+        }
+
+        /// <summary> List rbac scopes. </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopes(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetScopes(RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScopesRequest(context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitionsClient.GetScopes", "value", null, context);
         }
 
         internal HttpMessage CreateGetRoleDefinitionsRequest(bool? isBuiltIn, string scope, RequestContext context)

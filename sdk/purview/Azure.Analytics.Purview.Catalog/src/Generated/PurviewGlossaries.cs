@@ -50,56 +50,6 @@ namespace Azure.Analytics.Purview.Catalog
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Get all glossaries registered with Atlas. </summary>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossariesAsync(Int32,Int32,String,Boolean,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get all glossaries registered with Atlas. </summary>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaries(Int32,Int32,String,Boolean,RequestContext)']/*" />
-        public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Create a glossary. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -141,56 +91,6 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateCreateGlossaryRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create glossary category in bulk. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategoriesAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateGlossaryCategoriesAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create glossary category in bulk. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategories(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateGlossaryCategories(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateGlossaryCategoriesRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -524,64 +424,6 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get all terms associated with the specific category. </summary>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTermsAsync(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get all terms associated with the specific category. </summary>
-        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTerms(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Create a glossary term. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -849,116 +691,6 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create glossary terms in bulk. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTermsAsync(RequestContent,Boolean,RequestContext)']/*" />
-        public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create glossary terms in bulk. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTerms(RequestContent,Boolean,RequestContext)']/*" />
-        public virtual Response CreateGlossaryTerms(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get all related objects assigned with the specified term. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get all related objects assigned with the specified term. </summary>
-        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1354,122 +1086,6 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get the categories belonging to a specific glossary. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesAsync(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get the categories belonging to a specific glossary. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategories(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get the category headers belonging to a specific glossary. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeadersAsync(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get the category headers belonging to a specific glossary. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeaders(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -1573,124 +1189,6 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, content, includeTermHierarchy, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get terms belonging to a specific glossary. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermsAsync(String,Boolean,Int32,Int32,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get terms belonging to a specific glossary. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerms(String,Boolean,Int32,Int32,String,RequestContext)']/*" />
-        public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get term headers belonging to a specific glossary. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeadersAsync(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get term headers belonging to a specific glossary. </summary>
-        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeaders(String,Int32,Int32,String,RequestContext)']/*" />
-        public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1810,33 +1308,326 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get terms by glossary name. </summary>
-        /// <param name="glossaryName"> The name of the glossary. </param>
+        /// <summary> Get all glossaries registered with Atlas. </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossariesAsync(Int32,Int32,String,Boolean,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaries", "value", null, context);
+        }
+
+        /// <summary> Get all glossaries registered with Atlas. </summary>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaries(Int32,Int32,String,Boolean,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetGlossaries(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossariesRequest(limit, offset, sort, ignoreTermsAndCategories, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaries", "value", null, context);
+        }
+
+        /// <summary> Create glossary category in bulk. </summary>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategoriesAsync(RequestContent,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> CreateGlossaryCategoriesAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateCreateGlossaryCategoriesRequest(content, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.CreateGlossaryCategories", "value", null, context);
+        }
+
+        /// <summary> Create glossary category in bulk. </summary>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategories(RequestContent,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> CreateGlossaryCategories(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateCreateGlossaryCategoriesRequest(content, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.CreateGlossaryCategories", "value", null, context);
+        }
+
+        /// <summary> Get all terms associated with the specific category. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTermsAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetCategoryTerms", "value", null, context);
+        }
+
+        /// <summary> Get all terms associated with the specific category. </summary>
+        /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTerms(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetCategoryTerms", "value", null, context);
+        }
+
+        /// <summary> Create glossary terms in bulk. </summary>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryNameAsync(String,Int32,Int32,Boolean,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTermsAsync(RequestContent,Boolean,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> CreateGlossaryTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.CreateGlossaryTerms", "value", null, context);
+        }
+
+        /// <summary> Create glossary terms in bulk. </summary>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTerms(RequestContent,Boolean,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> CreateGlossaryTerms(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateCreateGlossaryTermsRequest(content, includeTermHierarchy, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.CreateGlossaryTerms", "value", null, context);
+        }
+
+        /// <summary> Get all related objects assigned with the specified term. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetEntitiesAssignedWithTerm", "value", null, context);
+        }
+
+        /// <summary> Get all related objects assigned with the specified term. </summary>
+        /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetEntitiesAssignedWithTerm", "value", null, context);
+        }
+
+        /// <summary> Get the categories belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaryCategories", "value", null, context);
+        }
+
+        /// <summary> Get the categories belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategories(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaryCategories", "value", null, context);
+        }
+
+        /// <summary> Get the category headers belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeadersAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaryCategoriesHeaders", "value", null, context);
+        }
+
+        /// <summary> Get the category headers belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeaders(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaryCategoriesHeaders", "value", null, context);
+        }
+
+        /// <summary> Get terms belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermsAsync(String,Boolean,Int32,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaryTerms", "value", null, context);
+        }
+
+        /// <summary> Get terms belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerms(String,Boolean,Int32,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaryTerms", "value", null, context);
+        }
+
+        /// <summary> Get term headers belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeadersAsync(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaryTermHeaders", "value", null, context);
+        }
+
+        /// <summary> Get term headers belonging to a specific glossary. </summary>
+        /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeaders(String,Int32,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetGlossaryTermHeaders", "value", null, context);
         }
 
         /// <summary> Get terms by glossary name. </summary>
@@ -1848,24 +1639,33 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryName(String,Int32,Int32,Boolean,RequestContext)']/*" />
-        public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryNameAsync(String,Int32,Int32,Boolean,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetTermsByGlossaryName", "value", null, context);
+        }
+
+        /// <summary> Get terms by glossary name. </summary>
+        /// <param name="glossaryName"> The name of the glossary. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryName(String,Int32,Int32,Boolean,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewGlossaries.GetTermsByGlossaryName", "value", null, context);
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
