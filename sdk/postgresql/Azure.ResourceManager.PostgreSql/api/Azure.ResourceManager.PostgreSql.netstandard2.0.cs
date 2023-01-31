@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : Azure.ResourceManager.Models.ResourceData
     {
         public PostgreSqlFlexibleServerActiveDirectoryAdministratorData() { }
-        public string ObjectId { get { throw null; } set { } }
+        public System.Guid? ObjectId { get { throw null; } set { } }
         public string PrincipalName { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerPrincipalType? PrincipalType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public PostgreSqlFlexibleServerDataEncryption() { }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerKeyType? KeyType { get { throw null; } set { } }
         public System.Uri PrimaryKeyUri { get { throw null; } set { } }
-        public string PrimaryUserAssignedIdentityId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
     }
     public partial class PostgreSqlFlexibleServerDelegatedSubnetUsage
     {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId");
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             if (Optional.IsDefined(TenantId))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Optional<SystemData> systemData = default;
             Optional<PostgreSqlFlexibleServerPrincipalType> principalType = default;
             Optional<string> principalName = default;
-            Optional<string> objectId = default;
+            Optional<Guid> objectId = default;
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -107,7 +107,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         }
                         if (property0.NameEquals("objectId"))
                         {
-                            objectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            objectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("tenantId"))
@@ -124,7 +129,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(principalType), principalName.Value, objectId.Value, Optional.ToNullable(tenantId));
+            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(principalType), principalName.Value, Optional.ToNullable(objectId), Optional.ToNullable(tenantId));
         }
     }
 }

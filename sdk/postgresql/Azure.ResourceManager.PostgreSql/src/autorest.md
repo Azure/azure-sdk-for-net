@@ -259,4 +259,13 @@ rename-mapping:
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
+directive:
+  - from: Administrators.json
+    where: $.definitions
+    transform: >
+      $.AdministratorProperties.properties.objectId['format'] = 'uuid'
+  - from: FlexibleServers.json
+    where: $.definitions
+    transform: >
+      $.DataEncryption.properties.primaryUserAssignedIdentityId['format'] = 'arm-id'
 ```

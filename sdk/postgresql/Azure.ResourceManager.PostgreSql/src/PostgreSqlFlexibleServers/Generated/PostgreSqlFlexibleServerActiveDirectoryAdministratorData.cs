@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="principalName"> Active Directory administrator principal name. </param>
         /// <param name="objectId"> The objectId of the Active Directory administrator. </param>
         /// <param name="tenantId"> The tenantId of the Active Directory administrator. </param>
-        internal PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, string objectId, Guid? tenantId) : base(id, name, resourceType, systemData)
+        internal PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? objectId, Guid? tenantId) : base(id, name, resourceType, systemData)
         {
             PrincipalType = principalType;
             PrincipalName = principalName;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Active Directory administrator principal name. </summary>
         public string PrincipalName { get; set; }
         /// <summary> The objectId of the Active Directory administrator. </summary>
-        public string ObjectId { get; set; }
+        public Guid? ObjectId { get; set; }
         /// <summary> The tenantId of the Active Directory administrator. </summary>
         public Guid? TenantId { get; set; }
     }

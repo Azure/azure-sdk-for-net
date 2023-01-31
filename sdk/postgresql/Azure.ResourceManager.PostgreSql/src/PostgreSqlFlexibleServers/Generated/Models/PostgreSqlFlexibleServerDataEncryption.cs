@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="primaryKeyUri"> URI for the key for data encryption for primary server. </param>
         /// <param name="primaryUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption for primary server. </param>
         /// <param name="keyType"> Data encryption type to depict if it is System assigned vs Azure Key vault. </param>
-        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, string primaryUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType)
+        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> URI for the key for data encryption for primary server. </summary>
         public Uri PrimaryKeyUri { get; set; }
         /// <summary> Resource Id for the User assigned identity to be used for data encryption for primary server. </summary>
-        public string PrimaryUserAssignedIdentityId { get; set; }
+        public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> Data encryption type to depict if it is System assigned vs Azure Key vault. </summary>
         public PostgreSqlFlexibleServerKeyType? KeyType { get; set; }
     }
