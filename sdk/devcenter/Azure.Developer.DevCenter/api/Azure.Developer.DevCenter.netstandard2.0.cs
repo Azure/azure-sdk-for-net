@@ -3,8 +3,8 @@ namespace Azure.Developer.DevCenter
     public partial class DevBoxesClient
     {
         protected DevBoxesClient() { }
-        public DevBoxesClient(string endpoint, string projectName, Azure.Core.TokenCredential credential) { }
-        public DevBoxesClient(string endpoint, string projectName, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
+        public DevBoxesClient(System.Uri endpoint, string projectName, Azure.Core.TokenCredential credential) { }
+        public DevBoxesClient(System.Uri endpoint, string projectName, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> CreateDevBox(Azure.WaitUntil waitUntil, string devBoxName, Azure.Core.RequestContent content, string userId = "me", Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDevBoxAsync(Azure.WaitUntil waitUntil, string devBoxName, Azure.Core.RequestContent content, string userId = "me", Azure.RequestContext context = null) { throw null; }
@@ -40,8 +40,8 @@ namespace Azure.Developer.DevCenter
     public partial class DevCenterClient
     {
         protected DevCenterClient() { }
-        public DevCenterClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public DevCenterClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
+        public DevCenterClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public DevCenterClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Pageable<System.BinaryData> GetAllDevBoxes(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetAllDevBoxesAsync(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
@@ -63,8 +63,8 @@ namespace Azure.Developer.DevCenter
     public partial class EnvironmentsClient
     {
         protected EnvironmentsClient() { }
-        public EnvironmentsClient(string endpoint, string projectName, Azure.Core.TokenCredential credential) { }
-        public EnvironmentsClient(string endpoint, string projectName, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
+        public EnvironmentsClient(System.Uri endpoint, string projectName, Azure.Core.TokenCredential credential) { }
+        public EnvironmentsClient(System.Uri endpoint, string projectName, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> CreateOrUpdateEnvironment(Azure.WaitUntil waitUntil, string environmentName, Azure.Core.RequestContent content, string userId = "me", Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateOrUpdateEnvironmentAsync(Azure.WaitUntil waitUntil, string environmentName, Azure.Core.RequestContent content, string userId = "me", Azure.RequestContext context = null) { throw null; }
