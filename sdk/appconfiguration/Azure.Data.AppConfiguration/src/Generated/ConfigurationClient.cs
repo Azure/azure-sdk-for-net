@@ -83,17 +83,18 @@ namespace Azure.Data.AppConfiguration
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValuesAsync(String,String,String,String,IEnumerable,RequestContext)']/*" />
-        public virtual async Task<Response> CheckKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValuesAsync(String,String,String,String,IEnumerable,String,RequestContext)']/*" />
+        public virtual async Task<Response> CheckKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValues");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, context);
+                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, snapshot, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -109,17 +110,18 @@ namespace Azure.Data.AppConfiguration
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValues(String,String,String,String,IEnumerable,RequestContext)']/*" />
-        public virtual Response CheckKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValues(String,String,String,String,IEnumerable,String,RequestContext)']/*" />
+        public virtual Response CheckKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValues");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, context);
+                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, snapshot, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -240,6 +242,276 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 using HttpMessage message = CreateCheckKeyValueRequest(key, label, acceptDatetime, select, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshotsAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> CheckSnapshotsAsync(string after = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshots");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckSnapshotsRequest(after, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshots(String,RequestContext)']/*" />
+        public virtual Response CheckSnapshots(string after = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshots");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckSnapshotsRequest(after, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single key-value snapshot. </summary>
+        /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotAsync(String,IEnumerable,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single key-value snapshot. </summary>
+        /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshot(String,IEnumerable,MatchConditions,RequestContext)']/*" />
+        public virtual Response GetSnapshot(string name, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;application/vnd.microsoft.appconfig.snapshot+json&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshotAsync(String,RequestContent,ContentType,RequestContext)']/*" />
+        public virtual async Task<Response> CreateSnapshotAsync(string name, RequestContent content, ContentType contentType, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateSnapshotRequest(name, content, contentType, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;application/vnd.microsoft.appconfig.snapshot+json&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshot(String,RequestContent,ContentType,RequestContext)']/*" />
+        public virtual Response CreateSnapshot(string name, RequestContent content, ContentType contentType, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateSnapshotRequest(name, content, contentType, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a key-value snapshot. </summary>
+        /// <param name="name"> The name of the key-value snapshot to delete. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshotAsync(String,RequestContent,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateSnapshotAsync(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateSnapshotRequest(name, content, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a key-value snapshot. </summary>
+        /// <param name="name"> The name of the key-value snapshot to delete. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshot(String,RequestContent,MatchConditions,RequestContext)']/*" />
+        public virtual Response UpdateSnapshot(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateSnapshotRequest(name, content, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> The name of the key-value snapshot to check. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshotAsync(String,MatchConditions,RequestContext)']/*" />
+        public virtual async Task<Response> CheckSnapshotAsync(string name, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckSnapshotRequest(name, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> The name of the key-value snapshot to check. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshot(String,MatchConditions,RequestContext)']/*" />
+        public virtual Response CheckSnapshot(string name, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckSnapshotRequest(name, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -499,14 +771,15 @@ namespace Azure.Data.AppConfiguration
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingsAsync(String,String,String,String,IEnumerable,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingsAsync(String,String,String,String,IEnumerable,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
@@ -516,15 +789,48 @@ namespace Azure.Data.AppConfiguration
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettings(String,String,String,String,IEnumerable,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetConfigurationSettings(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettings(String,String,String,String,IEnumerable,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetConfigurationSettings(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-value snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. Allowed values: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotsAsync(String,String,IEnumerable,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string name = null, string after = null, IEnumerable<string> select = null, string status = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-value snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. Allowed values: &quot;provisioning&quot; | &quot;ready&quot; | &quot;archived&quot; | &quot;failed&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshots(String,String,IEnumerable,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSnapshots(string name = null, string after = null, IEnumerable<string> select = null, string status = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of labels. </summary>
@@ -619,7 +925,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             return message;
         }
 
@@ -652,7 +958,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -677,6 +983,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
             request.Uri = uri;
             if (_syncToken != null)
             {
@@ -686,11 +996,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
-        internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -714,6 +1024,10 @@ namespace Azure.Data.AppConfiguration
             if (select != null)
             {
                 uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
             }
             request.Uri = uri;
             if (_syncToken != null)
@@ -754,7 +1068,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -781,7 +1095,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -810,7 +1124,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch.Value);
@@ -852,6 +1166,156 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal HttpMessage CreateGetSnapshotsRequest(string name, string after, IEnumerable<string> select, string status, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots", false);
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            if (status != null)
+            {
+                uri.AppendQuery("Status", status, true);
+            }
+            request.Uri = uri;
+            if (_syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", _syncToken);
+            }
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
+            return message;
+        }
+
+        internal HttpMessage CreateCheckSnapshotsRequest(string after, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            request.Uri = uri;
+            if (_syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", _syncToken);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateGetSnapshotRequest(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (select != null)
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            request.Uri = uri;
+            if (_syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", _syncToken);
+            }
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateCreateSnapshotRequest(string name, RequestContent content, ContentType contentType, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (_syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", _syncToken);
+            }
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
+            request.Headers.Add("Content-Type", contentType.ToString());
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateSnapshotRequest(string name, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (_syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", _syncToken);
+            }
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCheckSnapshotRequest(string name, MatchConditions matchConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (_syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", _syncToken);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            return message;
+        }
+
         internal HttpMessage CreateGetLabelsRequest(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -882,7 +1346,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             return message;
         }
 
@@ -938,7 +1402,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -965,7 +1429,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1007,7 +1471,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
@@ -1065,11 +1529,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1086,7 +1550,24 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSnapshotsNextPageRequest(string nextLink, string name, string after, IEnumerable<string> select, string status, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            if (_syncToken != null)
+            {
+                request.Headers.Add("Sync-Token", _syncToken);
+            }
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             return message;
         }
 
@@ -1107,7 +1588,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             return message;
         }
 
@@ -1128,7 +1609,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json");
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
@@ -1136,5 +1617,7 @@ namespace Azure.Data.AppConfiguration
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier200204;
         private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
+        private static ResponseClassifier _responseClassifier201;
+        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
     }
 }
