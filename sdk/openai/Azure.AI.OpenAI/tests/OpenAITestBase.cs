@@ -135,13 +135,13 @@ namespace Azure.AI.OpenAI.Tests
             new OpenAIClient(
                 new Uri(_endpoint),
                 new AzureKeyCredential(_key),
-                InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_06_01_Preview))));
+                InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))));
 
         protected OpenAIClient GetClientWithCredential() => InstrumentClient(
             new OpenAIClient(
                 new Uri(_endpoint),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_06_01_Preview))));
+                InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))));
 
         protected OpenAIClient GetClientWithCompletionsDeploymentId() => InstrumentClient(
             new OpenAIClient(
@@ -149,6 +149,6 @@ namespace Azure.AI.OpenAI.Tests
                 TestEnvironment.Credential,
                 DeploymentId,
                 EmbeddingsDeploymentId,
-                InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_06_01_Preview))));
+                InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))));
     }
 }
