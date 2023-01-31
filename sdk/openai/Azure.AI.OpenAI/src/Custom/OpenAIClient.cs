@@ -24,11 +24,10 @@ namespace Azure.AI.OpenAI
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
+        /// <param name="deploymentId"> default deployment id to use for operations </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="completionsDeploymentId"> default deployment id to use for completions </param>
-        /// <param name="embeddingsDeploymentId"> default deployment id to use for embeddings </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, TokenCredential credential, string completionsDeploymentId, string embeddingsDeploymentId = null) : this(endpoint, credential, completionsDeploymentId, embeddingsDeploymentId, new OpenAIClientOptions())
+        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential) : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
         {
         }
 
@@ -37,12 +36,11 @@ namespace Azure.AI.OpenAI
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
+        /// <param name="deploymentId"> default deployment id to use for operations </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="completionsDeploymentId"> default deployment id to use for completions </param>
-        /// <param name="embeddingsDeploymentId"> default deployment id to use for embeddings </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, TokenCredential credential, string completionsDeploymentId, string embeddingsDeploymentId, OpenAIClientOptions options)
+        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential, OpenAIClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -53,8 +51,8 @@ namespace Azure.AI.OpenAI
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
-            _completionsDeploymentId = completionsDeploymentId;
-            _embeddingsDeploymentId = embeddingsDeploymentId;
+            _completionsDeploymentId ??= deploymentId;
+            _embeddingsDeploymentId ??= deploymentId;
         }
 
         /// <summary> Return the completion for a given prompt. </summary>

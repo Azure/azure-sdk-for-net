@@ -76,7 +76,7 @@ namespace Azure.AI.OpenAI.Tests
             CompletionsOptions completionsRequest = new CompletionsOptions();
             completionsRequest.Prompt.Add("Hello world");
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.AreEqual(401, exception.Status);
         }
     }
 }

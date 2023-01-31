@@ -146,9 +146,8 @@ namespace Azure.AI.OpenAI.Tests
         protected OpenAIClient GetClientWithCompletionsDeploymentId() => InstrumentClient(
             new OpenAIClient(
                 new Uri(_endpoint),
-                TestEnvironment.Credential,
                 DeploymentId,
-                EmbeddingsDeploymentId,
+                TestEnvironment.Credential,
                 InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))));
     }
 }
