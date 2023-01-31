@@ -27,12 +27,6 @@ public class TestParameters : IDisposable
     ///
     public string QueueName = string.Empty;
 
-    /// <summary>
-    ///   The name of the Service Bus sessionful Queue to use for a test run.
-    /// </summary>
-    ///
-    public string SessionQueueName = string.Empty;
-
     // Test Run Configurations
 
     /// <summary>

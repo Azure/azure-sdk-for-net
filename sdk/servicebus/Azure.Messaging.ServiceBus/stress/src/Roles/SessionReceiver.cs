@@ -67,13 +67,18 @@ internal class SessionReceiver
         {
             try
             {
-                var receiver = await client.AcceptNextSessionAsync(_testParameters.SessionQueueName);
-                await foreach (var message in receiver.ReceiveMessagesAsync(cancellationToken))
+                var receiver = await client.AcceptNextSessionAsync(_testParameters.QueueName);
+
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
-                    MessageTracking.ReceiveSessionMessage(message, _testParameters.Sha256Hash, _metrics, _readMessages);
-                    await receiver.CompleteMessageAsync(message).ConfigureAwait(false);
-                    _metrics.Client.GetMetric(Metrics.MessagesCompleted).TrackValue(1);
+                    var message = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                    if (message != null)
+                    {
+                        _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
+                        MessageTracking.ReceiveSessionMessage(message, _testParameters.Sha256Hash, _metrics, _readMessages);
+                        await receiver.CompleteMessageAsync(message).ConfigureAwait(false);
+                        _metrics.Client.GetMetric(Metrics.MessagesCompleted).TrackValue(1);
+                    }
                 }
             }
             catch (TaskCanceledException)

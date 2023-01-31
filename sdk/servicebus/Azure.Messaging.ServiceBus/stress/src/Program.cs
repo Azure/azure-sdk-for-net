@@ -69,11 +69,9 @@ public class Program
 
             var queueName = string.Empty;
             environment.TryGetValue(EnvironmentVariables.ServiceBusQueue, out queueName);
-            testParameters.QueueName = queueName;
 
             var sessionQueueName = string.Empty;
             environment.TryGetValue(EnvironmentVariables.ServiceBusSessionQueue, out sessionQueueName);
-            testParameters.SessionQueueName = sessionQueueName;
 
             metrics.Client.TrackEvent("Starting a test run.");
 
@@ -82,22 +80,27 @@ public class Program
             switch (testScenario)
             {
                 case TestScenarioName.SendReceiveTest:
+                    testParameters.QueueName = queueName;
                     testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
                     break;
 
                 case TestScenarioName.SendReceiveBatchesTest:
+                    testParameters.QueueName = queueName;
                     testScenarioInstance = new SendReceiveBatchesTest(testParameters, metrics, opts.Role);
                     break;
 
                 case TestScenarioName.SessionSendReceiveTest:
+                    testParameters.QueueName = sessionQueueName;
                     testScenarioInstance = new SessionSendReceiveTest(testParameters, metrics, opts.Role);
                     break;
 
                 case TestScenarioName.SendProcessTest:
+                    testParameters.QueueName = queueName;
                     testScenarioInstance = new SendProcessTest(testParameters, metrics, opts.Role);
                     break;
 
                 case TestScenarioName.SessionSendProcessTest:
+                    testParameters.QueueName = sessionQueueName;
                     testScenarioInstance = new SessionSendProcessTest(testParameters, metrics, opts.Role);
                     break;
             }
