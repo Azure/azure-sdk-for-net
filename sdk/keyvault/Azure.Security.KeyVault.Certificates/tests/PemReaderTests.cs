@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void LoadCertificatePemOverridesCer()
         {
-#if NET461
+#if !NET47_OR_GREATER && !NET
             Assert.Ignore("Loading X509Certificate2 with private EC key not supported on this platform");
 #endif
             using X509Certificate2 certificate = PemReader.LoadCertificate(s_ecdsaFullCertificate.AsSpan(), cer: Encoding.UTF8.GetBytes("This is not a certificate"), keyType: PemReader.KeyType.ECDsa);
@@ -89,7 +89,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void LoadRSACertificate()
         {
-#if NET461
+#if !NETCOREAPP3_0_OR_GREATER
             // Compatible with previous release. Goes through the LightweightPkcs8Decoder.DecodeECDsaPkcs8().
             Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(RSACertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa));
 #else
@@ -101,7 +101,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void LoadECDsaPrime256v1Certificate()
         {
-#if NET461
+#if !NET47_OR_GREATER && !NET
             Assert.Ignore("Loading X509Certificate2 with private EC key not supported on this platform");
 #endif
             using X509Certificate2 certificate = PemReader.LoadCertificate(s_ecdsaFullCertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa);

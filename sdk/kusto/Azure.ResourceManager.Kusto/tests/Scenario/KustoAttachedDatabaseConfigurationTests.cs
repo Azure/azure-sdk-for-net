@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -39,13 +38,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             var attachedDatabaseConfigurationName =
                 GenerateAssetName("sdkAttachedDatabaseConfiguration");
 
-            var attachedDatabaseConfigurationDataCreate = new KustoAttachedDatabaseConfigurationData
-            {
-                ClusterResourceId = Cluster.Id,
-                DatabaseName = TE.DatabaseName,
-                DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
-                Location = Location
-            };
+            var attachedDatabaseConfigurationDataCreate = new KustoAttachedDatabaseConfigurationData {ClusterResourceId = Cluster.Id, DatabaseName = TE.DatabaseName, DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace, Location = Location};
 
             var attachedDatabaseConfigurationDataUpdate = new KustoAttachedDatabaseConfigurationData
             {
@@ -53,14 +46,17 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 DatabaseName = TE.DatabaseName,
                 DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
                 Location = Location,
-                TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties(
-                    new List<string> { "include" },
-                    new List<string> { "exclude" },
-                    new List<string> { "externalInclude" },
-                    new List<string> { "externalExclude" },
-                    new List<string> { "materializedViewInclude" },
-                    new List<string> { "materializedViewExclude" }
-                )
+                TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties
+                {
+                    TablesToInclude = {"include"},
+                    TablesToExclude = {"exclude"},
+                    ExternalTablesToInclude = {"externalInclude"},
+                    ExternalTablesToExclude = {"externalExclude"},
+                    MaterializedViewsToInclude = {"materializedViewInclude"},
+                    MaterializedViewsToExclude = {"materializedViewExclude"},
+                    FunctionsToInclude = {"functionsToInclude"},
+                    FunctionsToExclude = {"functionsToExclude"}
+                }
             };
 
             Task<ArmOperation<KustoAttachedDatabaseConfigurationResource>>
@@ -104,13 +100,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             await attachedDatabaseConfigurationCollection.CreateOrUpdateAsync(WaitUntil.Completed,
                 attachedDatabaseConfigurationName,
-                new KustoAttachedDatabaseConfigurationData
-                {
-                    ClusterResourceId = Cluster.Id,
-                    DatabaseName = TE.DatabaseName,
-                    DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
-                    Location = Location
-                });
+                new KustoAttachedDatabaseConfigurationData {ClusterResourceId = Cluster.Id, DatabaseName = TE.DatabaseName, DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace, Location = Location});
 
             var followerDatabaseDefinition = await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync();
 
@@ -188,6 +178,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             CollectionAssert.AreEqual(expected.ExternalTablesToInclude, actual.ExternalTablesToInclude);
             CollectionAssert.AreEqual(expected.MaterializedViewsToExclude, actual.MaterializedViewsToExclude);
             CollectionAssert.AreEqual(expected.MaterializedViewsToInclude, actual.MaterializedViewsToInclude);
+            CollectionAssert.AreEqual(expected.FunctionsToInclude, actual.FunctionsToInclude);
+            CollectionAssert.AreEqual(expected.FunctionsToExclude, actual.FunctionsToExclude);
         }
 
         private void ValidateReadOnlyFollowingDatabase(

@@ -24,11 +24,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("query");
                 writer.WriteObjectValue(Query);
             }
-            if (Optional.IsDefined(ExportSettings))
-            {
-                writer.WritePropertyName("exportSettings");
-                writer.WriteObjectValue(ExportSettings);
-            }
+            writer.WritePropertyName("exportSettings");
+            writer.WriteObjectValue(ExportSettings);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -57,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SnowflakeSource DeserializeSnowflakeSource(JsonElement element)
         {
             Optional<object> query = default;
-            Optional<SnowflakeExportCopyCommand> exportSettings = default;
+            SnowflakeExportCopyCommand exportSettings = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -78,11 +75,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("exportSettings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     exportSettings = SnowflakeExportCopyCommand.DeserializeSnowflakeExportCopyCommand(property.Value);
                     continue;
                 }
@@ -124,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SnowflakeSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, exportSettings.Value);
+            return new SnowflakeSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, exportSettings);
         }
 
         internal partial class SnowflakeSourceConverter : JsonConverter<SnowflakeSource>

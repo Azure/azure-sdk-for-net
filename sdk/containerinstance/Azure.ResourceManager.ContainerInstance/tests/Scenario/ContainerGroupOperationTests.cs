@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, "Regular");
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
 
@@ -33,12 +34,42 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task Delete()
+        public async Task Delete_RegularPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, "Regular");
+            var containerGroups = rg.GetContainerGroups();
+            ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
+
+            ContainerGroupResource deletedContainerGroup = (await containerGroup.DeleteAsync(WaitUntil.Completed)).Value;
+            VerifyContainerGroupProperties(containerGroup.Data, deletedContainerGroup.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Delete_SpotPriority()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
+            string containerGroupName = Recording.GenerateAssetName("containergrp");
+            var containerGroupData = CreateContainerGroupData(containerGroupName, "Spot");
+            var containerGroups = rg.GetContainerGroups();
+            ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
+
+            ContainerGroupResource deletedContainerGroup = (await containerGroup.DeleteAsync(WaitUntil.Completed)).Value;
+            VerifyContainerGroupProperties(containerGroup.Data, deletedContainerGroup.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Delete_ConfidentialContainer()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", "eastus2euap");
+            string containerGroupName = Recording.GenerateAssetName("containergrp");
+            var containerGroupData = CreateContainerGroupData(containerGroupName, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
 
