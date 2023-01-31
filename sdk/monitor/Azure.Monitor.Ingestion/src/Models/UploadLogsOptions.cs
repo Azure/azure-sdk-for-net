@@ -30,7 +30,7 @@ namespace Azure.Monitor.Ingestion
         public int MaxConcurrency
         {
             get { return _maxConcurrency; }
-            set { AssertNotNegative(_maxConcurrency, "MaxConcurrency"); }
+            set { _maxConcurrency = AssertNotNegative(value, "MaxConcurrency"); }
         }
 
         private int _maxConcurrency = 5;
@@ -73,7 +73,7 @@ namespace Azure.Monitor.Ingestion
         {
             if (argumentValue <= 0)
             {
-                throw new ArgumentOutOfRangeException(argumentName, $"Argument {argumentName} must be a non-negative timespan value. The provided value was {argumentValue}.");
+                throw new ArgumentOutOfRangeException(argumentName, $"Argument {argumentName} must be a non-negative concurrency (integer) value. The provided value was {argumentValue}.");
             }
             else
                 return argumentValue;
