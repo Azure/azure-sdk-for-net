@@ -24,9 +24,9 @@ namespace Azure.AI.OpenAI.Tests.Samples
             string prompt = "What is Azure OpenAI?";
             Console.Write($"Input: {prompt}");
 
-            Response<Completions> completionResponse = client.GetCompletions(prompt);
-            string response = completionResponse.Value.Choices[0].Text;
-            Console.WriteLine($"Chatbot: {response}");
+            Response<Completions> completionsResponse = client.GetCompletions(prompt);
+            string completion = completionsResponse.Value.Choices[0].Text;
+            Console.WriteLine($"Chatbot: {completion}");
             #endregion
         }
     }

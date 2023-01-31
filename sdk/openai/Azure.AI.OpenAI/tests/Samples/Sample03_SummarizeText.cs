@@ -37,12 +37,12 @@ namespace Azure.AI.OpenAI.Tests.Samples
             ";
 
             Console.Write($"Input: {summarizationPrompt}");
-            CompletionsOptions request = new CompletionsOptions();
-            request.Prompt.Add(summarizationPrompt);
+            CompletionsOptions completionsOptions = new CompletionsOptions();
+            completionsOptions.Prompt.Add(summarizationPrompt);
 
-            Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
-            string response = completion.Value.Choices[0].Text;
-            Console.WriteLine($"Summarization: {response}");
+            Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);
+            string completion = completionsResponse.Value.Choices[0].Text;
+            Console.WriteLine($"Summarization: {completion}");
             #endregion
         }
     }

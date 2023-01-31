@@ -16,8 +16,8 @@ namespace Azure.AI.OpenAI.Tests.Samples
         {
             #region Snippet:GenerateMultipleChatbotResponsesWithSubscriptionKey
             #region Snippet:CreateOpenAIClient
-            // Replace with your Azure subscription key
-            string key = "YOUR_AZURE_KEY";
+            // Replace with your Azure OpenAI key
+            string key = "YOUR_AZURE_OPENAI_KEY";
             string endpoint = "https://myaccount.openai.azure.com/";
             OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
             #endregion
@@ -33,12 +33,12 @@ namespace Azure.AI.OpenAI.Tests.Samples
             foreach (string prompt in examplePrompts)
             {
                 Console.Write($"Input: {prompt}");
-                CompletionsOptions request = new CompletionsOptions();
-                request.Prompt.Add(prompt);
+                CompletionsOptions completionsOptions = new CompletionsOptions();
+                completionsOptions.Prompt.Add(prompt);
 
-                Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
-                string response = completion.Value.Choices[0].Text;
-                Console.WriteLine($"Chatbot: {response}");
+                Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);
+                string completion = completionsResponse.Value.Choices[0].Text;
+                Console.WriteLine($"Chatbot: {completion}");
             }
             #endregion
         }

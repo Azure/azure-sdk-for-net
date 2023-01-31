@@ -11,7 +11,7 @@ namespace Azure.AI.OpenAI.Tests
     public class OpenAIInferenceTests : OpenAITestBase
     {
         public OpenAIInferenceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Live)
         {
         }
 
@@ -75,8 +75,8 @@ namespace Azure.AI.OpenAI.Tests
             var client = GetClient();
             CompletionsOptions completionsRequest = new CompletionsOptions();
             completionsRequest.Prompt.Add("Hello world");
-            Assert.That(async () => await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest),
-                Throws.InstanceOf<RequestFailedException>());
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest); });
+            Assert.AreEqual(404, exception.Status);
         }
     }
 }
