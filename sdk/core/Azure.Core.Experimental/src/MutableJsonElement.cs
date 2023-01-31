@@ -262,6 +262,19 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
+        /// Get an enumerator to enumerate the values in the JSON array represented by this MutableJsonElement.
+        /// </summary>
+        /// <returns></returns>
+        public ArrayEnumerator EnumerateArray()
+        {
+            EnsureValid();
+
+            EnsureArray();
+
+            return new ArrayEnumerator(this);
+        }
+
+        /// <summary>
         /// Set the value of the property with the specified name to the passed-in value.  If the property is not already present, it will be created.
         /// </summary>
         /// <param name="name"></param>

@@ -49,11 +49,11 @@ namespace Azure.Core.Dynamic
 
                 MethodCallExpression convertCall;
 
-                //if (binder.Type == typeof(IEnumerable))
-                //{
-                //    convertCall = Expression.Call(this_, GetDynamicEnumerableMethod);
-                //    return new DynamicMetaObject(convertCall, restrictions);
-                //}
+                if (binder.Type == typeof(IEnumerable))
+                {
+                    convertCall = Expression.Call(this_, GetEnumerableMethod);
+                    return new DynamicMetaObject(convertCall, restrictions);
+                }
 
                 if (CastFromOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
                 {

@@ -105,5 +105,42 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(JsonValueKind.Null, jd.RootElement.GetProperty("Bar").ValueKind);
         }
+
+        [Test]
+        public void CanEnumerateArray()
+        {
+            string json = @"[0, 1, 2, 3]";
+
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
+
+            MutableJsonElement.ArrayEnumerator enumerator = jd.RootElement.EnumerateArray();
+
+            int expected = 0;
+            foreach (MutableJsonElement el in enumerator)
+            {
+                Assert.AreEqual(expected++, el.GetInt32());
+            }
+        }
+
+        [Test]
+        public void CanEnumerateArrayWithChanges()
+        {
+            string json = @"[0, 1, 2, 3]";
+
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
+
+            for (int i = 0; i < 4; i++)
+            {
+                jd.RootElement.GetIndexElement(i).Set(i + 1);
+            }
+
+            MutableJsonElement.ArrayEnumerator enumerator = jd.RootElement.EnumerateArray();
+
+            int expected = 1;
+            foreach (MutableJsonElement el in enumerator)
+            {
+                Assert.AreEqual(expected++, el.GetInt32());
+            }
+        }
     }
 }

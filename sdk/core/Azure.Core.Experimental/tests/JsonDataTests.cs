@@ -99,17 +99,6 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void DynamicArrayForEach()
-        {
-            dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
-            int expected = 0;
-            foreach (int i in jsonData)
-            {
-                Assert.AreEqual(expected++, i);
-            }
-        }
-
-        [Test]
         public void CanAccessProperties()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson(@"

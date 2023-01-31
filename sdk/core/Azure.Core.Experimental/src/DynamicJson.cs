@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Reflection;
 using System.Text.Json;
 
@@ -16,6 +17,7 @@ namespace Azure.Core.Dynamic
 
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo GetEnumerableMethod = typeof(DynamicJson).GetMethod(nameof(GetEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
@@ -42,6 +44,11 @@ namespace Azure.Core.Dynamic
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
+        }
+
+        private IEnumerable GetEnumerable()
+        {
+            return new ArrayEnumerator(_element.EnumerateArray());
         }
 
         private object? SetProperty(string name, object value)
