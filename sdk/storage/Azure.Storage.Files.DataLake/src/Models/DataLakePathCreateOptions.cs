@@ -57,7 +57,9 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <summary>
         /// Optional encryption context that can be set the file.
-        /// Encryption context is intended to store metadata that can be used to decrypt the blob.
+        /// Encryption context is file metadata that is not encrypted when stored on the file.
+        /// The primiary application of this field is to store non-encrypted data that can be used to derive the customer-provided key
+        /// for a file.
         /// Not applicable for directories.
         /// </summary>
         public string EncryptionContext { get; set; }

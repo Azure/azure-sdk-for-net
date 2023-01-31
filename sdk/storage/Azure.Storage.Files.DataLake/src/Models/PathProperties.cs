@@ -184,7 +184,10 @@ namespace Azure.Storage.Files.DataLake.Models
         public string EncryptionScope { get; internal set; }
 
         /// <summary>
-        /// Encryption context for this path.  Only applicable for files.
+        /// Encryption context of the file.  Encryption context is metadata that is not encrypted when stored on the file.
+        /// The primiary application of this field is to store non-encrypted data that can be used to derive the customer-provided key
+        /// for a file.
+        /// Not applicable for directories.
         /// </summary>
         public string EncryptionContext { get; internal set; }
 
