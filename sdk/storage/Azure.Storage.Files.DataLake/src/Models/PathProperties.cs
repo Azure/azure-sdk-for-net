@@ -185,7 +185,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <summary>
         /// Encryption context of the file.  Encryption context is metadata that is not encrypted when stored on the file.
-        /// The primiary application of this field is to store non-encrypted data that can be used to derive the customer-provided key
+        /// The primary application of this field is to store non-encrypted data that can be used to derive the customer-provided key
         /// for a file.
         /// Not applicable for directories.
         /// </summary>
