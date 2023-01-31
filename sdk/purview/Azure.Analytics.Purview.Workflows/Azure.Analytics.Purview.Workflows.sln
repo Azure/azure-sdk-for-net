@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{6C53D283-2F78-4724-9446-DD848A50BB4A}") = "Azure.Analytics.Purview.Workflows.Perf", "perf\Azure.Analytics.Purview.Workflows.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
-EndProject
-Project("{6C53D283-2F78-4724-9446-DD848A50BB4A}") = "Azure.Analytics.Purview.Workflows.Stress", "stress\Azure.Analytics.Purview.Workflows.Stress.csproj", "{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Analytics.Purview.Workflows", "src\Azure.Analytics.Purview.Workflows.csproj", "{C2F26C82-09CD-4423-9A82-EB155CD3C69A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Analytics.Purview.Workflows.Tests", "tests\Azure.Analytics.Purview.Workflows.Tests.csproj", "{A000A86D-AAE3-408E-82CB-9D9FE58C5338}"

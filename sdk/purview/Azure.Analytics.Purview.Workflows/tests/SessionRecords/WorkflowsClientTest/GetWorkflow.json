@@ -127,6 +127,6 @@
   ],
   "Variables": {
     "RandomSeed": "1535260612",
-    "Workflow_ENDPOINT": "https://workflow-sdk.purview.azure-test.com"
+    "WORKFLOW_ENDPOINT": "https://workflow-sdk.purview.azure-test.com"
   }
 }

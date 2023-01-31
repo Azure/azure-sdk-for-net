@@ -17,24 +17,52 @@ You must have an [Azure subscription][azure_subscription] and a [Purview resourc
 
 Since the Workflow service uses an Azure Active Directory (AAD) bearer token for authentication and identification, an email address should be encoded into the token to allow for notification when using Workflow. It is recommended that the [Azure Identity][azure_identity] library be used  with a the [UsernamePasswordCredential][username_password_credential]. Before using the [Azure Identity][azure_identity] library with Workflow, [an application][app_registration] should be registered and used for the clientId passed to the [UsernamePasswordCredential][username_password_credentail].
 
-```C# Snippet:Azure_Analytics_Purview_Workflows_CreatePurviewWorkflowClient
+```C# Snippet:Azure_Analytics_Purview_Workflows_CreateClient
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
+string clientId = Environment.GetEnvironmentVariable("ClientId");
+string tenantId = Environment.GetEnvironmentVariable("TenantId");
+string username = Environment.GetEnvironmentVariable("Username");
+string password = Environment.GetEnvironmentVariable("Password");
+
+TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
+var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
 ```
 
 ## Examples
+The following section provides several code snippets covering some of the most common scenarios, including:
+- [Create Workflow](#create-workflow)
+- [Submit User Requests](#submit-user-requests)
+- [Approve Workflow Task](#approve-workflow-task)
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/purview/Azure.Analytics.Purview.Workflows/samples).
 
-### <scenario>
+### Create workflow
 
-You can create a client and call the client's `<operation>` method.
+```C# Snippet:Azure_Analytics_Purview_Workflows_CreateWorkflow
+Guid workflowId = Guid.NewGuid();
 
-```C# Snippet:Azure_Analytics_Purview_Workflows_CrudWorkflow
-Uri endpoint = new("https://<purview-account-name>.purview.azure.com");
-var credential = new DefaultAzureCredential();
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
+string workflow = "{\"name\":\"Create glossary term workflow\",\"description\":\"\",\"triggers\":[{\"type\":\"when_term_creation_is_requested\",\"underGlossaryHierarchy\":\"/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48\"}],\"isEnabled\":true,\"actionDag\":{\"actions\":{\"Startandwaitforanapproval\":{\"type\":\"Approval\",\"inputs\":{\"parameters\":{\"approvalType\":\"PendingOnAll\",\"title\":\"ApprovalRequestforCreateGlossaryTerm\",\"assignedTo\":[\"eece94d9-0619-4669-bb8a-d6ecec5220bc\"]}},\"runAfter\":{}},\"Condition\":{\"type\":\"If\",\"expression\":{\"and\":[{\"equals\":[\"@outputs('Startandwaitforanapproval')['body/outcome']\",\"Approved\"]}]},\"actions\":{\"Createglossaryterm\":{\"type\":\"CreateTerm\",\"runAfter\":{}},\"Sendemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-APPROVED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{triggerBody()['request']['term']['name']}isapproved.\",\"emailRecipients\":[\"@{triggerBody()['request']['requestor']}\"]}},\"runAfter\":{\"Createglossaryterm\":[\"Succeeded\"]}}},\"else\":{\"actions\":{\"Sendrejectemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-REJECTED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{triggerBody()['request']['term']['name']}isrejected.\",\"emailRecipients\":[\"@{triggerBody()['request']['requestor']}\"]}},\"runAfter\":{}}}},\"runAfter\":{\"Startandwaitforanapproval\":[\"Succeeded\"]}}}}}";
 
-Guid workflowId = new Guid("ba25ed0e-3364-4e8e-8385-c60e12f3e342");
-Response result = client.GetWorkflow(workflowId);
+Response createResult = await client.CreateOrReplaceWorkflowAsync(workflowId, RequestContent.Create(workflow));
+```
+
+### Submit user requests
+
+```C# Snippet:Azure_Analytics_Purview_Workflows_SubmitUserRequests
+string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
+
+Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Create(request));
+```
+
+### Approve workflow task
+
+```C# Snippet:Azure_Analytics_Purview_Workflows_ApproveWorkflowTask
+// This taskId is an existing workflow task's id, user could get workflow tasks by calling GetWorkflowTasksAsync API.
+Guid taskId = new Guid("b129fe16-72d3-4994-9135-b997b9be46e0");
+
+string request = "{\"comment\":\"Thanks!\"}";
+
+Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestContent.Create(request));
 ```
 
 <!-- LINKS -->

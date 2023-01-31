@@ -16,7 +16,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
     public partial class WorkflowsSamples: SamplesBase<WorkflowsClientTestEnvironment>
     {
         [Test]
-        public async Task SubmitUserRequest()
+        public async Task ApproveWorkflowTask()
         {
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
             string clientId = Environment.GetEnvironmentVariable("ClientId");
@@ -27,15 +27,18 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
             var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
 
-            #region Snippet:Azure_Analytics_Purview_Workflows_SubmitUserRequests
+            #region Snippet:Azure_Analytics_Purview_Workflows_ApproveWorkflowTask
 
-            string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
+            // This taskId is an existing workflow task's id, user could get workflow tasks by calling GetWorkflowTasksAsync API.
+            Guid taskId = new Guid("b129fe16-72d3-4994-9135-b997b9be46e0");
 
-            Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Create(request));
+            string request = "{\"comment\":\"Thanks!\"}";
+
+            Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestContent.Create(request));
 
             #endregion
 
-            Assert.AreEqual(200, submitResult.Status);
+            Assert.AreEqual(200, approveResult.Status);
         }
     }
 }

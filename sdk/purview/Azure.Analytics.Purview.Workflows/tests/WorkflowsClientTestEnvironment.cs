@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
         public WorkflowsClientTestEnvironment()
         {
         }
-        public Uri Endpoint => new(GetRecordedVariable("Workflow_ENDPOINT"));
+        public Uri Endpoint => new(GetRecordedVariable("WORKFLOW_ENDPOINT"));
 
         public TokenCredential UsernamePasswordCredential
         {

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
     public partial class WorkflowsSamples: SamplesBase<WorkflowsClientTestEnvironment>
     {
         [Test]
-        public async Task SubmitUserRequest()
+        public async Task CancelWorkflowRun()
         {
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
             string clientId = Environment.GetEnvironmentVariable("ClientId");
@@ -27,15 +27,17 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
             var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
 
-            #region Snippet:Azure_Analytics_Purview_Workflows_SubmitUserRequests
+            #region Snippet:Azure_Analytics_Purview_Workflows_CancelWorkflowRun
+            // This workflowRunId is an existing workflow run's id, user could get workflow runs by calling GetWorkflowRunsAsync API.
+            Guid workflowRunId = new Guid("4f8d70c3-c09b-4e56-bfd1-8b86c79bd4d9");
 
-            string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
+            string request = "{\"comment\":\"Thanks!\"}";
 
-            Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Create(request));
+            Response cancelResult = await client.CancelWorkflowRunAsync(workflowRunId, RequestContent.Create(request));
 
             #endregion
 
-            Assert.AreEqual(200, submitResult.Status);
+            Assert.AreEqual(200, cancelResult.Status);
         }
     }
 }
