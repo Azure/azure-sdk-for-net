@@ -388,12 +388,10 @@ namespace Azure.Storage.Blobs.Specialized
             TimeSpan duration,
             RequestConditions conditions,
             bool async,
-            RequestContext context,
-            string operationName = default)
+            RequestContext context)
         {
             EnsureClient();
             context ??= new RequestContext();
-            operationName ??= $"{nameof(BlobLeaseClient)}.{nameof(Acquire)}";
             // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
             var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
             using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
@@ -405,7 +403,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(duration)}: {duration}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Acquire)}");
 
                 try
                 {
