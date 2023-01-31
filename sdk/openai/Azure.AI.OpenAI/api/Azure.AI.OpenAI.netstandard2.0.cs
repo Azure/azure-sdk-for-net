@@ -86,12 +86,21 @@ namespace Azure.AI.OpenAI.Models
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Models.EmbeddingItem> Data { get { throw null; } }
         public string Object { get { throw null; } }
     }
-    public partial class EmbeddingsOptions
+    public abstract partial class EmbeddingsOptions
     {
-        public EmbeddingsOptions(string input) { }
-        public string Input { get { throw null; } }
+        public EmbeddingsOptions() { }
         public string InputType { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
+    }
+    public partial class StringEmbeddingsOptions : Azure.AI.OpenAI.Models.EmbeddingsOptions
+    {
+        public StringEmbeddingsOptions(string input) { }
+        public string Input { get { throw null; } }
+    }
+    public partial class StringListEmbeddingsOptions : Azure.AI.OpenAI.Models.EmbeddingsOptions
+    {
+        public StringListEmbeddingsOptions(System.Collections.Generic.IEnumerable<string> input) { }
+        public System.Collections.Generic.IList<string> Input { get { throw null; } }
     }
 }

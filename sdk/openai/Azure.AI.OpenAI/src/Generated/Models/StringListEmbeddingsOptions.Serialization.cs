@@ -10,11 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    public partial class EmbeddingsOptions : IUtf8JsonSerializable
+    public partial class StringListEmbeddingsOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("input");
+            writer.WriteStartArray();
+            foreach (var item in Input)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user");
@@ -34,7 +41,7 @@ namespace Azure.AI.OpenAI.Models
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

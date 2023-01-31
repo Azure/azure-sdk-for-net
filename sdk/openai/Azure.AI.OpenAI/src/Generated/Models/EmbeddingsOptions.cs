@@ -5,22 +5,18 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI.Models
 {
-    /// <summary> The EmbeddingsOptions. </summary>
-    public partial class EmbeddingsOptions
+    /// <summary>
+    /// The EmbeddingsOptions.
+    /// Please note <see cref="EmbeddingsOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="StringEmbeddingsOptions"/> and <see cref="StringListEmbeddingsOptions"/>.
+    /// </summary>
+    public abstract partial class EmbeddingsOptions
     {
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
-        /// <param name="input"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public EmbeddingsOptions(string input)
+        public EmbeddingsOptions()
         {
-            Argument.AssertNotNull(input, nameof(input));
-
-            Input = input;
         }
 
         /// <summary> Gets or sets the user. </summary>
@@ -29,7 +25,5 @@ namespace Azure.AI.OpenAI.Models
         public string InputType { get; set; }
         /// <summary> Gets or sets the model. </summary>
         public string Model { get; set; }
-        /// <summary> Gets the input. </summary>
-        public string Input { get; }
     }
 }
