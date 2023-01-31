@@ -5204,41 +5204,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task AcquireLeaseAsync_Try_NoLogWarning()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            string firstLeaseId = Recording.Random.NewGuid().ToString();
-            string secondLeaseId = Recording.Random.NewGuid().ToString();
-            TimeSpan duration = TimeSpan.FromSeconds(15);
-
-            BlobBaseClient blob = await GetNewBlobClient(test.Container);
-            BlobLeaseClient firstBlobLeaseClient = InstrumentClient(blob.GetBlobLeaseClient(firstLeaseId));
-            BlobLeaseClient secondBlobLeaseClient = InstrumentClient(blob.GetBlobLeaseClient(secondLeaseId));
-
-            await firstBlobLeaseClient.AcquireAsync(duration);
-
-            var events = new List<(EventWrittenEventArgs EventData, string EventMessage)>();
-
-            // Act
-            Response<BlobLease> response;
-            using (AzureEventSourceListener listener = new AzureEventSourceListener(
-                (data, message) => events.Add((data, message)),
-                EventLevel.Informational))
-            {
-                response = await secondBlobLeaseClient.AcquireIfNotExistsAsync(duration);
-            }
-
-            // Assert
-            Assert.IsNull(response.Value);
-            Assert.AreEqual((int)HttpStatusCode.Conflict, response.GetRawResponse().Status);
-            Assert.IsTrue(response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out string errorCode));
-            Assert.AreEqual(BlobErrorCode.LeaseAlreadyPresent.ToString(), errorCode);
-            CollectionAssert.IsEmpty(events.Where(e => e.EventData.Level < EventLevel.Informational));
-        }
-
-        [RecordedTest]
         public async Task RenewLeaseAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
