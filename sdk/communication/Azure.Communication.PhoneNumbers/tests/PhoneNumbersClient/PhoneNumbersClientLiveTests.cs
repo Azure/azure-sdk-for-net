@@ -134,7 +134,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [AsyncOnly]
         public async Task CreateSearchAsync()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var client = CreateClient();
@@ -155,7 +156,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [SyncOnly]
         public void CreateSearch()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var client = CreateClient();
@@ -180,7 +182,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [AsyncOnly]
         public async Task UpdateCapabilitiesAsync()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest)
+            {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var number = GetTestPhoneNumber();
@@ -280,14 +283,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [SyncOnly]
         public void UpdateCapabilities()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest)
+            {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var number = GetTestPhoneNumber();
 
             var client = CreateClient();
             var phoneNumber = client.GetPurchasedPhoneNumber(number);
-            PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
+            PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
             PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
 
             var updateOperation = client.StartUpdateCapabilities(number, callingCapabilityType, smsCapabilityType);
@@ -331,7 +335,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var availableLocalities = client.GetAvailableLocalitiesAsync("US");
             await foreach (PhoneNumberLocality firstLocality in availableLocalities)
             {
-                var areaCodes = client.GetAvailableAreaCodesGeographicAsync("US", "person", firstLocality.LocalizedName);
+                var areaCodes = client.GetAvailableAreaCodesGeographicAsync("US", "person", firstLocality.LocalizedName, firstLocality.AdministrativeDivision.AbbreviatedName);
                 await foreach (PhoneNumberAreaCode areaCode in areaCodes)
                 {
                     Console.WriteLine("Area Code " + areaCode.AreaCode);
