@@ -230,6 +230,10 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareServiceClient"/>
         /// class.
+        ///
+        /// Note that service-level operations do not support token credential authentication.
+        /// This constructor exists to allow the construction of a <see cref="ShareServiceClient"/> that can be used to derive
+        /// a <see cref="ShareClient"/> that has token credential authentication.
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the file service.

@@ -213,6 +213,10 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClient"/>
         /// class.
+        ///
+        /// Note that token credential authentication is only compatible with the <see cref="GetPermission(string, CancellationToken)"/>,
+        /// <see cref="GetPermissionAsync(string, CancellationToken)"/>, <see cref="CreatePermission(string, CancellationToken)"/>, and
+        /// <see cref="CreatePermissionAsync(string, CancellationToken)"/> share-level operations.
         /// </summary>
         /// <param name="shareUri">
         /// A <see cref="Uri"/> referencing the share that includes the
