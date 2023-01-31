@@ -5,8 +5,11 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
+    /// <summary>
+    /// Status of Import Job
+    /// </summary>
     [CodeGenModel("Status")]
-    internal enum Status
+    public enum ImportJobStatus
     {
         /// <summary> notstarted. </summary>
         Notstarted,

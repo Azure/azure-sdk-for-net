@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.DigitalTwins.Core.Models;
 using static Azure.DigitalTwins.Core.StreamHelper;
 
 namespace Azure.DigitalTwins.Core
@@ -37,6 +38,7 @@ namespace Azure.DigitalTwins.Core
         private readonly DigitalTwinModelsRestClient _dtModelsRestClient;
         private readonly EventRoutesRestClient _eventRoutesRestClient;
         private readonly QueryRestClient _queryClient;
+        private readonly ImportJobsRestClient _importJobsRestClient;
 
         /// <summary>
         /// Creates a new instance of the <see cref="DigitalTwinsClient"/> class.
@@ -95,6 +97,7 @@ namespace Azure.DigitalTwins.Core
             _dtModelsRestClient = new DigitalTwinModelsRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
             _eventRoutesRestClient = new EventRoutesRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
             _queryClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
+            _importJobsRestClient = new ImportJobsRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
         }
 
         /// <summary>
@@ -2013,6 +2016,270 @@ namespace Azure.DigitalTwins.Core
             try
             {
                 return _dtModelsRestClient.Delete(modelId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all bulk import jobs.
+        /// Status codes:
+        /// * 200 OK
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Task<Response<BulkImportJobCollection>> ListImportJobsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(ListImportJobs)}");
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.ListAsync(null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all bulk import jobs.
+        /// Status codes:
+        /// * 200 OK
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BulkImportJobCollection> ListImportJobs(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(ListImportJobs)}");
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.List(null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a bulk import job.
+        /// Status codes:
+        /// * 201 Created
+        /// * 400 Bad Request
+        ///   * JobLimitReached - The maximum number of bulk import jobs allowed has been reached.
+        ///   * ValidationFailed - The bulk job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="importJob"> The bulk import job being added. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="importJob"/> is null. </exception>
+        public virtual Task<Response<BulkImportJob>> CreateImportJobsAsync(string jobId, BulkImportJob importJob, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateImportJobs)}");
+            scope.AddAttribute(nameof(jobId), jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.AddAsync(jobId, importJob, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a bulk import job.
+        /// Status codes:
+        /// * 201 Created
+        /// * 400 Bad Request
+        ///   * JobLimitReached - The maximum number of bulk import jobs allowed has been reached.
+        ///   * ValidationFailed - The bulk job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="importJob"> The bulk import job being added. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="importJob"/> is null. </exception>
+        public virtual Response<BulkImportJob> CreateImportJobs(string jobId, BulkImportJob importJob, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateImportJobs)}");
+            scope.AddAttribute(nameof(jobId), jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.Add(jobId, importJob, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a bulk job.
+        /// Status codes:
+        /// * 200 OK
+        /// * 404 Not Found
+        ///   * BulkJobNotFound - The bulk job was not found.
+        /// </summary>
+        /// <param name="jobId"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Task<Response<BulkImportJob>> GetImportJobsByIdAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobsById)}");
+            scope.AddAttribute(nameof(jobId), jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.GetByIdAsync(jobId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a bulk job.
+        /// Status codes:
+        /// * 200 OK
+        /// * 404 Not Found
+        ///   * BulkJobNotFound - The bulk job was not found.
+        /// </summary>
+        /// <param name="jobId"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Response<BulkImportJob> GetImportJobsById(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobsById)}");
+            scope.AddAttribute(nameof(jobId), jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.GetById(jobId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a bulk import job.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * ValidationFailed - The bulk job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Task<Response> DeleteImportJobsAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteImportJobs)}");
+            scope.AddAttribute(nameof(jobId), jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.DeleteAsync(jobId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a bulk import job.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * ValidationFailed - The bulk job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Response DeleteImportJobs(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteImportJobs)}");
+            scope.AddAttribute(nameof(jobId), jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.Delete(jobId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels a bulk import job.
+        /// Status codes:
+        /// * 200 Request Accepted
+        /// * 400 Bad Request
+        ///   * ValidationFailed - The bulk job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Task<Response<BulkImportJob>> CancelImportJobsAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CancelImportJobs)}");
+            scope.AddAttribute(nameof(jobId), jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.CancelAsync(jobId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels a bulk import job.
+        /// Status codes:
+        /// * 200 Request Accepted
+        /// * 400 Bad Request
+        ///   * ValidationFailed - The bulk job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Response<BulkImportJob> CancelImportJobs(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CancelImportJobs)}");
+            scope.AddAttribute(nameof(jobId), jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.Cancel(jobId, null, cancellationToken);
             }
             catch (Exception ex)
             {

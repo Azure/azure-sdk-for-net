@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class Error : IUtf8JsonSerializable
+    public partial class ErrorInformation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,7 +24,7 @@ namespace Azure.DigitalTwins.Core
             writer.WriteEndObject();
         }
 
-        internal static Error DeserializeError(JsonElement element)
+        internal static ErrorInformation DeserializeErrorInformation(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core
             }
             Optional<string> code = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<Error>> details = default;
+            Optional<IReadOnlyList<ErrorInformation>> details = default;
             Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,10 +52,10 @@ namespace Azure.DigitalTwins.Core
                     {
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<ErrorInformation> array = new List<ErrorInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeError(item));
+                        array.Add(DeserializeErrorInformation(item));
                     }
                     details = array;
                     continue;
@@ -70,7 +70,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new Error(code.Value, message.Value, Optional.ToList(details), innererror.Value);
+            return new ErrorInformation(code.Value, message.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }
