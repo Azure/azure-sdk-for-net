@@ -139,6 +139,76 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        /// <summary>
+        /// Get a specified secret from a given key vault, but does not throw an exception if the secret does not exist.
+        /// </summary>
+        /// <remarks>
+        /// The get operation is applicable to any secret stored in Azure Key Vault.
+        /// This operation requires the secrets/get permission.
+        /// </remarks>
+        /// <param name="name">The name of the secret.</param>
+        /// <param name="version">The version of the secret.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the <see cref="KeyVaultSecret"/> or <c>null</c> if not found.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<NullableResponse<KeyVaultSecret>> GetSecretIfExistsAsync(string name, string version = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecretIfExists)}");
+            scope.AddAttribute("secret", name);
+            scope.AddAttribute("version", version);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, ResponseClassifier200404, () => new KeyVaultSecret(), cancellationToken, SecretsPath, name, "/", version).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a specified secret from a given key vault, but does not throw an exception if the secret does not exist.
+        /// </summary>
+        /// <remarks>
+        /// The get operation is applicable to any secret stored in Azure Key Vault.
+        /// This operation requires the secrets/get permission.
+        /// </remarks>
+        /// <param name="name">The name of the secret.</param>
+        /// <param name="version">The version of the secret.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the <see cref="KeyVaultSecret"/> or <c>null</c> if not found.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual NullableResponse<KeyVaultSecret> GetSecretIfExists(string name, string version = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecretIfExists)}");
+            scope.AddAttribute("secret", name);
+            scope.AddAttribute("version", version);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Get, ResponseClassifier200404, () => new KeyVaultSecret(), cancellationToken, SecretsPath, name, "/", version);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+#pragma warning restore AZC0015 // Unexpected client method return type.
+
         /// <summary>
         /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync"/>.
         /// </summary>
@@ -828,5 +898,8 @@ namespace Azure.Security.KeyVault.Secrets
                 throw;
             }
         }
+
+        private static ResponseClassifier s_responseClassifier200404;
+        private static ResponseClassifier ResponseClassifier200404 => s_responseClassifier200404 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
     }
 }

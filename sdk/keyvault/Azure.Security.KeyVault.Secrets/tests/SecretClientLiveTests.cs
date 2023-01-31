@@ -10,6 +10,7 @@ using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework.Constraints;
+using Azure.Core.Tests;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
@@ -478,6 +479,28 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             RegisterForCleanup(secretName);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
+        }
+
+        [RecordedTest]
+        public async Task GetNonExistentSecretNoThrow()
+        {
+            ClientDiagnosticListener trace = new ClientDiagnosticListener(name => name.StartsWith("Azure."), IsAsync);
+            try
+            {
+                NullableResponse<KeyVaultSecret> response = await Client.GetSecretIfExistsAsync("ShouldNotExist");
+
+                Assert.AreEqual(404, response.GetRawResponse().Status);
+                Assert.IsFalse(response.HasValue);
+                Assert.Throws<InvalidOperationException>(() => { var _ = response.Value; });
+            }
+            finally
+            {
+                // Unregister listener before enumerating scopes.
+                trace.Dispose();
+
+                var scope = trace.AssertScope($"{nameof(SecretClient)}.{nameof(SecretClient.GetSecretIfExists)}");
+                Assert.IsFalse(scope.IsFailed);
+            }
         }
     }
 }

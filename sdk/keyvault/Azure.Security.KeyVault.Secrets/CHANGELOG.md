@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Added `SecretClient.GetSecretIfExists` and `GetSecretIfExistsAsync` to avoid throwing or logging when a secret was not found. ([#25125](https://github.com/Azure/azure-sdk-for-net/issues/25125))
+
 ### Other Changes
 
 ## 4.5.0 (2023-03-14)

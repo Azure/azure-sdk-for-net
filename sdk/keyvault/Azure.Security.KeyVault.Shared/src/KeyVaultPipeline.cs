@@ -55,9 +55,10 @@ namespace Azure.Security.KeyVault
             return firstPage.ToUri();
         }
 
-        public Request CreateRequest(RequestMethod method, Uri uri, bool appendApiVersion)
+        public HttpMessage CreateRequest(RequestMethod method, ResponseClassifier classifier, Uri uri, bool appendApiVersion)
         {
-            Request request = _pipeline.CreateRequest();
+            HttpMessage message = _pipeline.CreateMessage(null, classifier);
+            Request request = message.Request;
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
@@ -69,12 +70,13 @@ namespace Azure.Security.KeyVault
                 request.Uri.AppendQuery("api-version", ApiVersion);
             }
 
-            return request;
+            return message;
         }
 
-        public Request CreateRequest(RequestMethod method, params string[] path)
+        public HttpMessage CreateRequest(RequestMethod method, ResponseClassifier classifier, params string[] path)
         {
-            Request request = _pipeline.CreateRequest();
+            HttpMessage message = _pipeline.CreateMessage(null, classifier);
+            Request request = message.Request;
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
@@ -88,17 +90,28 @@ namespace Azure.Security.KeyVault
 
             request.Uri.AppendQuery("api-version", ApiVersion);
 
-            return request;
+            return message;
         }
 
-#pragma warning disable CA1822 // Member can be static
-        public Response<T> CreateResponse<T>(Response response, T result)
+        public static NullableResponse<T> CreateResponse<T>(HttpMessage message, Func<T> resultFactory)
+            where T : IJsonDeserializable
+        {
+            if (message.Response.Status == 200 || message.Response.Status == 201)
+            {
+                T result = resultFactory();
+                result.Deserialize(message.Response.ContentStream);
+                return Response.FromValue(result, message.Response);
+            }
+
+            return new NoValueResponse<T>(message.Response);
+        }
+
+        public static Response<T> CreateResponse<T>(Response response, T result)
             where T : IJsonDeserializable
         {
             result.Deserialize(response.ContentStream);
             return Response.FromValue(result, response);
         }
-#pragma warning restore CA1822 // Member can be static
 
         public DiagnosticScope CreateScope(string name)
         {
@@ -119,8 +132,9 @@ namespace Azure.Security.KeyVault
                     firstPageUri = new Uri(nextLink);
                 }
 
-                using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
-                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateRequest(RequestMethod.Get, null, firstPageUri, false);
+                await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
+                Response response = message.Response;
 
                 // read the response
                 KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
@@ -150,8 +164,9 @@ namespace Azure.Security.KeyVault
                     firstPageUri = new Uri(nextLink);
                 }
 
-                using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
-                Response response = SendRequest(request, cancellationToken);
+                using HttpMessage message = CreateRequest(RequestMethod.Get, null, firstPageUri, false);
+                SendRequest(message, cancellationToken);
+                Response response = message.Response;
 
                 // read the response
                 KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
@@ -171,115 +186,137 @@ namespace Azure.Security.KeyVault
             where TContent : IJsonSerializable
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, path);
-            request.Content = RequestContent.Create(content.Serialize());
+            using HttpMessage message = CreateRequest(method, null, path);
+            message.Request.Content = RequestContent.Create(content.Serialize());
 
-            Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
 
-            return CreateResponse(response, resultFactory());
+            return CreateResponse(message.Response, resultFactory());
         }
 
         public Response<TResult> SendRequest<TContent, TResult>(RequestMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TContent : IJsonSerializable
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, path);
-            request.Content = RequestContent.Create(content.Serialize());
+            using HttpMessage message = CreateRequest(method, null, path);
+            message.Request.Content = RequestContent.Create(content.Serialize());
 
-            Response response = SendRequest(request, cancellationToken);
+            SendRequest(message, cancellationToken);
 
-            return CreateResponse(response, resultFactory());
+            return CreateResponse(message.Response, resultFactory());
         }
 
         public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, path);
-            Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            using HttpMessage message = CreateRequest(method, null, path);
+            await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
 
-            return CreateResponse(response, resultFactory());
+            return CreateResponse(message.Response, resultFactory());
+        }
+
+        public async Task<NullableResponse<TResult>> SendRequestAsync<TResult>(RequestMethod method, ResponseClassifier classifier, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
+            where TResult : IJsonDeserializable
+        {
+            using HttpMessage message = CreateRequest(method, classifier, path);
+            await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
+
+            return CreateResponse(message, resultFactory);
         }
 
         public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, uri, true);
-            Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            using HttpMessage message = CreateRequest(method, null, uri, true);
+            await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
 
-            return CreateResponse(response, resultFactory());
+            return CreateResponse(message.Response, resultFactory());
         }
 
         public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, path);
-            Response response = SendRequest(request, cancellationToken);
+            using HttpMessage message = CreateRequest(method, null, path);
+            SendRequest(message, cancellationToken);
 
-            return CreateResponse(response, resultFactory());
+            return CreateResponse(message.Response, resultFactory());
+        }
+
+        public NullableResponse<TResult> SendRequest<TResult>(RequestMethod method, ResponseClassifier classifier, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
+            where TResult : IJsonDeserializable
+        {
+            using HttpMessage message = CreateRequest(method, classifier, path);
+            SendRequest(message, cancellationToken);
+
+            return CreateResponse(message, resultFactory);
         }
 
         public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, uri, true);
-            Response response = SendRequest(request, cancellationToken);
+            using HttpMessage message = CreateRequest(method, null, uri, true);
+            SendRequest(message, cancellationToken);
 
-            return CreateResponse(response, resultFactory());
+            return CreateResponse(message.Response, resultFactory());
         }
 
         public async Task<Response> SendRequestAsync(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
-            using Request request = CreateRequest(method, path);
-            return await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            using HttpMessage message = CreateRequest(method, null, path);
+            await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
+            return message.Response;
         }
 
         public Response SendRequest(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
-            using Request request = CreateRequest(method, path);
-            return SendRequest(request, cancellationToken);
+            using HttpMessage message = CreateRequest(method, null, path);
+            SendRequest(message, cancellationToken);
+            return message.Response;
         }
 
         public async Task<Response> GetResponseAsync(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
-            using Request request = CreateRequest(method, path);
-            return await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            using HttpMessage message = CreateRequest(method, null, path);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            return message.Response;
         }
 
         public Response GetResponse(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
-            using Request request = CreateRequest(method, path);
-            return _pipeline.SendRequest(request, cancellationToken);
+            using HttpMessage message = CreateRequest(method, null, path);
+            _pipeline.Send(message, cancellationToken);
+            return message.Response;
         }
 
-        private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
+        private async ValueTask SendRequestAsync(HttpMessage message, CancellationToken cancellationToken)
         {
-            Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            message.ResponseClassifier ??= ResponseClassifier200201202204;
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
-            switch (response.Status)
+            if (message.ResponseClassifier.IsErrorResponse(message))
             {
-                case 200:
-                case 201:
-                case 202:
-                case 204:
-                    return response;
-                default:
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                throw await Diagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
-        private Response SendRequest(Request request, CancellationToken cancellationToken)
-        {
-            Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            switch (response.Status)
+        private void SendRequest(HttpMessage message, CancellationToken cancellationToken)
+        {
+            message.ResponseClassifier ??= ResponseClassifier200201202204;
+            _pipeline.Send(message, cancellationToken);
+
+            if (message.ResponseClassifier.IsErrorResponse(message))
             {
-                case 200:
-                case 201:
-                case 202:
-                case 204:
-                    return response;
-                default:
-                    throw Diagnostics.CreateRequestFailedException(response);
+                throw Diagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        private static ResponseClassifier s_responseClassifier200201202204;
+        private static ResponseClassifier ResponseClassifier200201202204 => s_responseClassifier200201202204 ??= new StatusCodeClassifier(stackalloc ushort[]
+        {
+            200,
+            201,
+            202,
+            204,
+        });
     }
 }

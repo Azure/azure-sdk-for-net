@@ -1659,7 +1659,7 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     case 200:
                     case 403:
-                        return _pipeline.CreateResponse(response, new CertificateOperationProperties());
+                        return KeyVaultPipeline.CreateResponse(response, new CertificateOperationProperties());
 
                     case 404:
                         return Response.FromValue<CertificateOperationProperties>(null, response);
@@ -1690,7 +1690,7 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     case 200:
                     case 403:
-                        return _pipeline.CreateResponse(response, new CertificateOperationProperties());
+                        return KeyVaultPipeline.CreateResponse(response, new CertificateOperationProperties());
 
                     case 404:
                         return Response.FromValue<CertificateOperationProperties>(null, response);

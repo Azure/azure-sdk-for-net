@@ -21,5 +21,6 @@
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 </Project>
