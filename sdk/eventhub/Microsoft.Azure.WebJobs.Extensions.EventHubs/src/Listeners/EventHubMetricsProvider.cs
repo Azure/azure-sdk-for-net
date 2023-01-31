@@ -90,8 +90,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         private EventHubsTriggerMetrics CreateTriggerMetrics(List<PartitionProperties> partitionRuntimeInfo, EventProcessorCheckpoint[] checkpoints, bool alwaysLog = false)
         {
             long totalUnprocessedEventCount = 0;
-            bool logPartitionInfo = alwaysLog ? true : DateTime.UtcNow >= _nextPartitionLogTime;
-            bool logPartitionWarning = alwaysLog ? true : DateTime.UtcNow >= _nextPartitionWarningTime;
+
+            DateTime utcNow = DateTime.UtcNow;
+            bool logPartitionInfo = alwaysLog ? true : utcNow >= _nextPartitionLogTime;
+            bool logPartitionWarning = alwaysLog ? true : utcNow >= _nextPartitionWarningTime;
 
             // For each partition, get the last enqueued sequence number.
             // If the last enqueued sequence number does not equal the SequenceNumber from the lease info in storage,
