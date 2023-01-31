@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class BulkImportJobCollection
+    public partial class BulkImportJobCollection
     {
         internal static BulkImportJobCollection DeserializeBulkImportJobCollection(JsonElement element)
         {

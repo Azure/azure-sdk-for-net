@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Error definition. </summary>
-    internal partial class Error
+    public partial class ErrorInformation
     {
-        /// <summary> Initializes a new instance of Error. </summary>
-        public Error()
+        /// <summary> Initializes a new instance of ErrorInformation. </summary>
+        public ErrorInformation()
         {
-            Details = new ChangeTrackingList<Error>();
+            Details = new ChangeTrackingList<ErrorInformation>();
         }
 
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of ErrorInformation. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> Internal error details. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal Error(string code, string message, IReadOnlyList<Error> details, InnerError innererror)
+        internal ErrorInformation(string code, string message, IReadOnlyList<ErrorInformation> details, InnerError innererror)
         {
             Code = code;
             Message = message;
@@ -37,7 +37,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary> A human-readable representation of the error. </summary>
         public string Message { get; }
         /// <summary> Internal error details. </summary>
-        public IReadOnlyList<Error> Details { get; }
+        public IReadOnlyList<ErrorInformation> Details { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerError Innererror { get; set; }
     }

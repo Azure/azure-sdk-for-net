@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     [CodeGenModel("BulkImportJob")]
-    internal partial class BulkImportJob
+    public partial class BulkImportJob
     {
         // This class declaration changes the namespace, class name and property visibility; do not remove.
     }

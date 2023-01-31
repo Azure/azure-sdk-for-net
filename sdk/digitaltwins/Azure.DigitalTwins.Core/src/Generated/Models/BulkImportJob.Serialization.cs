@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class BulkImportJob : IUtf8JsonSerializable
+    public partial class BulkImportJob : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,12 +33,12 @@ namespace Azure.DigitalTwins.Core
             Optional<string> id = default;
             string inputBlobUri = default;
             string outputBlobUri = default;
-            Optional<Status> status = default;
+            Optional<ImportJobStatus> status = default;
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> lastActionDateTime = default;
             Optional<DateTimeOffset> finishedDateTime = default;
             Optional<DateTimeOffset> purgeDateTime = default;
-            Optional<Error> error = default;
+            Optional<ErrorInformation> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -63,7 +63,7 @@ namespace Azure.DigitalTwins.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToStatus();
+                    status = property.Value.GetString().ToImportJobStatus();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
@@ -113,7 +113,7 @@ namespace Azure.DigitalTwins.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = ErrorInformation.DeserializeErrorInformation(property.Value);
                     continue;
                 }
             }

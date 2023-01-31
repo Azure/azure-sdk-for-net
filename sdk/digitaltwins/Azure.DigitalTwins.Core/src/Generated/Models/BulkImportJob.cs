@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A job which contains a reference to the operations to perform, results, and execution metadata. </summary>
-    internal partial class BulkImportJob
+    public partial class BulkImportJob
     {
         /// <summary> Initializes a new instance of BulkImportJob. </summary>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
@@ -36,7 +36,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="error"> Details of the error(s) that occurred executing the bulk job. </param>
-        internal BulkImportJob(string id, string inputBlobUri, string outputBlobUri, Status? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, Error error)
+        internal BulkImportJob(string id, string inputBlobUri, string outputBlobUri, ImportJobStatus? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ErrorInformation error)
         {
             Id = id;
             InputBlobUri = inputBlobUri;
@@ -56,7 +56,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </summary>
         public string OutputBlobUri { get; set; }
         /// <summary> Status of the job. </summary>
-        public Status? Status { get; }
+        public ImportJobStatus? Status { get; }
         /// <summary> Start time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? CreatedDateTime { get; }
         /// <summary> Last time service performed any action from the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
@@ -66,6 +66,6 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? PurgeDateTime { get; }
         /// <summary> Details of the error(s) that occurred executing the bulk job. </summary>
-        public Error Error { get; set; }
+        public ErrorInformation Error { get; set; }
     }
 }

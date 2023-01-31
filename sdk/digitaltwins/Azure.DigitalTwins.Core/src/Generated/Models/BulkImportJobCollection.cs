@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A collection of bulk import job objects. </summary>
-    internal partial class BulkImportJobCollection
+    public partial class BulkImportJobCollection
     {
         /// <summary> Initializes a new instance of BulkImportJobCollection. </summary>
         /// <param name="value"> The list of bulk import job objects. </param>
