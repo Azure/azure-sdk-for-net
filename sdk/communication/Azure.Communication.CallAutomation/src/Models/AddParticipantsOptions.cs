@@ -59,5 +59,19 @@ namespace Azure.Communication.CallAutomation
         /// Repeatability Headers.
         /// </summary>
         public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
+
+        /// <summary>
+        /// Sip Headers, which is used to set custom context for pstn call
+        /// </summary>
+        #pragma warning disable CA2227 // Collection properties should be readonly
+        public IDictionary<string, string> SipHeaders { get; set;  }
+        #pragma warning restore CA2227 // Collection properties should be readonly
+
+        /// <summary>
+        /// Voip Headers, which is used to set custom context for voip call
+        /// </summary>
+        #pragma warning disable CA2227 // Collection properties should be readonly
+        public IDictionary<string, string> VoipHeaders { get; set; }
+        #pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

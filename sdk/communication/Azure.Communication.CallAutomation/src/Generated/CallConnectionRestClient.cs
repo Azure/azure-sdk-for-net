@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class CallConnectionRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
+        private readonly string _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
+        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-01-15-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -113,7 +113,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath(":terminate", false);
@@ -244,7 +244,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath(":transferToParticipant", false);
@@ -340,7 +340,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants", false);
@@ -410,7 +410,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants:add", false);
@@ -506,7 +506,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants:remove", false);
@@ -596,13 +596,205 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateMuteRequest(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateMuteAllRequest(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants:muteAll", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (repeatabilityRequestID != null)
+            {
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
+            }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(muteAllParticipantsRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Mute all participants from the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="muteAllParticipantsRequest"> The participant to be excluded from the mute all operation, if any. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteAllParticipantsRequest"/> is null. </exception>
+        public async Task<Response<MuteParticipantsResponse>> MuteAllAsync(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (muteAllParticipantsRequest == null)
+            {
+                throw new ArgumentNullException(nameof(muteAllParticipantsRequest));
+            }
+
+            using var message = CreateMuteAllRequest(callConnectionId, muteAllParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        MuteParticipantsResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = MuteParticipantsResponse.DeserializeMuteParticipantsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Mute all participants from the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="muteAllParticipantsRequest"> The participant to be excluded from the mute all operation, if any. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteAllParticipantsRequest"/> is null. </exception>
+        public Response<MuteParticipantsResponse> MuteAll(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (muteAllParticipantsRequest == null)
+            {
+                throw new ArgumentNullException(nameof(muteAllParticipantsRequest));
+            }
+
+            using var message = CreateMuteAllRequest(callConnectionId, muteAllParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        MuteParticipantsResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = MuteParticipantsResponse.DeserializeMuteParticipantsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUnmuteAllRequest(string callConnectionId, UnmuteAllParticipantsRequestInternal unmuteAllParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants:unmuteAll", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (repeatabilityRequestID != null)
+            {
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
+            }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(unmuteAllParticipantsRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Unmute all participants from the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="unmuteAllParticipantsRequest"> Operation context, if any. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteAllParticipantsRequest"/> is null. </exception>
+        public async Task<Response<UnmuteParticipantsResponse>> UnmuteAllAsync(string callConnectionId, UnmuteAllParticipantsRequestInternal unmuteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (unmuteAllParticipantsRequest == null)
+            {
+                throw new ArgumentNullException(nameof(unmuteAllParticipantsRequest));
+            }
+
+            using var message = CreateUnmuteAllRequest(callConnectionId, unmuteAllParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        UnmuteParticipantsResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = UnmuteParticipantsResponse.DeserializeUnmuteParticipantsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Unmute all participants from the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="unmuteAllParticipantsRequest"> Operation context, if any. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteAllParticipantsRequest"/> is null. </exception>
+        public Response<UnmuteParticipantsResponse> UnmuteAll(string callConnectionId, UnmuteAllParticipantsRequestInternal unmuteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (unmuteAllParticipantsRequest == null)
+            {
+                throw new ArgumentNullException(nameof(unmuteAllParticipantsRequest));
+            }
+
+            using var message = CreateUnmuteAllRequest(callConnectionId, unmuteAllParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        UnmuteParticipantsResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = UnmuteParticipantsResponse.DeserializeUnmuteParticipantsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateMuteRequest(string callConnectionId, MuteParticipantRequestInternal muteParticipantRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants:mute", false);
@@ -698,7 +890,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants:unmute", false);
@@ -794,7 +986,7 @@ namespace Azure.Communication.CallAutomation
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/participants/", false);
