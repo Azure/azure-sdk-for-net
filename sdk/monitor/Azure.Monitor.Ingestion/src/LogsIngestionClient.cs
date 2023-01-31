@@ -310,9 +310,8 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
+            options = (options == null) ? new UploadLogsOptions() : options;
 
-            // Calculate the number of threads to use.
-            int _maxWorkerCount = (options == null) ? new UploadLogsOptions().MaxConcurrency : options.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             List<Exception> exceptions = null;
@@ -344,7 +343,7 @@ namespace Azure.Monitor.Ingestion
                     runningTasks.Add((task, batch.Logs));
 
                     // If we run out of workers
-                    if (runningTasks.Count >= _maxWorkerCount)
+                    if (runningTasks.Count >= options.MaxConcurrency)
                     {
                         // Wait for at least one of them to finish
                         await Task.WhenAny(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
@@ -357,7 +356,7 @@ namespace Azure.Monitor.Ingestion
                                 continue;
                             }
                             // Check completed task for Exception/RequestFailedException and increase logsFailed count
-                            if (options == null || !options.HasHandler)
+                            if (!options.HasHandler)
                             {
                                 ProcessCompletedTask(runningTasks[i], ref exceptions, ref logsFailed);
                             }
@@ -387,7 +386,7 @@ namespace Azure.Monitor.Ingestion
             foreach (var task in runningTasks)
             {
                 // Check completed task for Exception/RequestFailedException and increase logsFailed count
-                if (options == null || !options.HasHandler)
+                if (!options.HasHandler)
                 {
                     ProcessCompletedTask(task, ref exceptions, ref logsFailed);
                 }
