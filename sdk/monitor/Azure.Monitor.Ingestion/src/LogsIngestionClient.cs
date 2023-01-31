@@ -31,9 +31,6 @@ namespace Azure.Monitor.Ingestion
         // If Compression wants to be turned off (hard to generate 1 Mb data gzipped) set Compression to gzip
         internal static string Compression;
 
-        // If no concurrency count is provided for a parallel upload, default to 5 workers.
-        private const int DefaultParallelWorkerCount = 5;
-
         internal readonly struct BatchedLogs
         {
             public BatchedLogs(List<object> logs, BinaryData logsData)
@@ -315,7 +312,7 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             // Calculate the number of threads to use.
-            int _maxWorkerCount = (options == null) ? DefaultParallelWorkerCount : UploadLogsOptions.AssertNotNegative(options.MaxConcurrency, "MaxConcurrency");
+            int _maxWorkerCount = (options == null) ? new UploadLogsOptions().MaxConcurrency : options.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             List<Exception> exceptions = null;
