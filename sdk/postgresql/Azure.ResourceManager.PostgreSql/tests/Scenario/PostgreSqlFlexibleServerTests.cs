@@ -15,7 +15,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.PrivateDns;
 using Azure.ResourceManager.Resources;
-using Microsoft.Graph;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.Tests
@@ -228,6 +227,160 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.AreEqual(targetSubnet.Id, targetPrivateServerDiff.Data.Network.DelegatedSubnetResourceId);
             Assert.AreEqual(targetPrivateDnsZone.Id, targetPrivateServerDiff.Data.Network.PrivateDnsZoneArmResourceId);
             Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, targetPrivateServerDiff.Data.Network.PublicNetworkAccess);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GeoRestore()
+        {
+            var sourcePublicServerName = Recording.GenerateAssetName("pgflexserver");
+            var targetPublicServerName = Recording.GenerateAssetName("pgflexserver");
+            var sourcePrivateServerName = Recording.GenerateAssetName("pgflexserver");
+            var targetPrivateServerName = Recording.GenerateAssetName("pgflexserver");
+            var sourceVnetName = Recording.GenerateAssetName("vnet");
+            var targetVnetName = Recording.GenerateAssetName("vnet");
+            var sourceSubnetName = Recording.GenerateAssetName("subnet");
+            var targetSubnetName = Recording.GenerateAssetName("subnet");
+            var targetLocation = AzureLocation.WestUS;
+
+            var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
+            var serverCollection = rg.GetPostgreSqlFlexibleServers();
+
+            // Create public server
+            var sourcePublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePublicServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = PostgreSqlFlexibleServerVersion.Ver14,
+                StorageSizeInGB = 128,
+                Backup = new PostgreSqlFlexibleServerBackupProperties()
+                {
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+            });
+            var sourcePublicServer = sourcePublicServerOperation.Value;
+
+            Assert.AreEqual(sourcePublicServerName, sourcePublicServer.Data.Name);
+            Assert.AreEqual(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled, sourcePublicServer.Data.Backup.GeoRedundantBackup);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled, sourcePublicServer.Data.Network.PublicNetworkAccess);
+
+            // Geo-restore public server to paired region
+            PostgreSqlFlexibleServerResource targetPublicServer = null;
+            for (var i = 0; i < 20; i++)
+            {
+                try
+                {
+                    var targetPublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, targetPublicServerName, new PostgreSqlFlexibleServerData(targetLocation)
+                    {
+                        SourceServerResourceId = sourcePublicServer.Id,
+                        PointInTimeUtc = DateTime.Now,
+                        CreateMode = PostgreSqlFlexibleServerCreateMode.GeoRestore,
+                    });
+                    targetPublicServer = targetPublicServerOperation.Value;
+                    break;
+                }
+                catch (RequestFailedException ex)
+                {
+                    if (ex.ErrorCode.Equals("GeoBackupsNotAvailable", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Recording.Mode != RecordedTestMode.Playback)
+                        {
+                            await Task.Delay(TimeSpan.FromMinutes(6));
+                        }
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            Assert.IsNotNull(targetPublicServer, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
+
+            Assert.AreEqual(targetPublicServerName, targetPublicServer.Data.Name);
+            Assert.AreEqual(targetLocation, targetPublicServer.Data.Location);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled, targetPublicServer.Data.Network.PublicNetworkAccess);
+
+            // Create source vnet and subnet
+            var (sourceVnet, sourceSubnet) = await CreateVirtualNetwork(sourceVnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
+
+            // Create source private DNS zone and virtual link
+            var sourcePrivateDnsZone = await CreatePrivateDnsZone(sourcePrivateServerName, sourceVnet, rg.Data.Name);
+
+            // Create private server
+            var sourcePrivateServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePrivateServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = PostgreSqlFlexibleServerVersion.Ver14,
+                StorageSizeInGB = 128,
+                Backup = new PostgreSqlFlexibleServerBackupProperties()
+                {
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
+                },
+                Network = new PostgreSqlFlexibleServerNetwork()
+                {
+                    DelegatedSubnetResourceId = sourceSubnet.Id,
+                    PrivateDnsZoneArmResourceId = sourcePrivateDnsZone.Id,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+            });
+            var sourcePrivateServer = sourcePrivateServerOperation.Value;
+
+            Assert.AreEqual(sourcePrivateServerName, sourcePrivateServer.Data.Name);
+            Assert.AreEqual(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled, sourcePrivateServer.Data.Backup.GeoRedundantBackup);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, sourcePrivateServer.Data.Network.PublicNetworkAccess);
+
+            // Create target vnet and subnet in paired region
+            var (targetVnet, targetSubnet) = await CreateVirtualNetwork(targetVnetName, targetSubnetName, rg.Data.Name, targetLocation);
+
+            // Create target private DNS zone and virtual link
+            var targetPrivateDnsZone = await CreatePrivateDnsZone(targetPrivateServerName, targetVnet, rg.Data.Name);
+
+            // Geo-restore private server to paired region
+            PostgreSqlFlexibleServerResource targetPrivateServer = null;
+            for (var i = 0; i < 20; i++)
+            {
+                try
+                {
+                    var targetPrivateServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, targetPrivateServerName, new PostgreSqlFlexibleServerData(targetLocation)
+                    {
+                        Network = new PostgreSqlFlexibleServerNetwork()
+                        {
+                            DelegatedSubnetResourceId = targetSubnet.Id,
+                            PrivateDnsZoneArmResourceId = targetPrivateDnsZone.Id,
+                        },
+                        SourceServerResourceId = sourcePrivateServer.Id,
+                        PointInTimeUtc = DateTime.Now,
+                        CreateMode = PostgreSqlFlexibleServerCreateMode.GeoRestore,
+                    });
+                    targetPrivateServer = targetPrivateServerOperation.Value;
+                    break;
+                }
+                catch (RequestFailedException ex)
+                {
+                    if (ex.ErrorCode.Equals("GeoBackupsNotAvailable", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Recording.Mode != RecordedTestMode.Playback)
+                        {
+                            await Task.Delay(TimeSpan.FromMinutes(6));
+                        }
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            Assert.IsNotNull(targetPrivateServer, $"GeoBackups not available for server {sourcePrivateServerName} after 2 hours.");
+
+            Assert.AreEqual(targetPrivateServerName, targetPrivateServer.Data.Name);
+            Assert.AreEqual(targetLocation, targetPrivateServer.Data.Location);
+            Assert.AreEqual(targetSubnet.Id, targetPrivateServer.Data.Network.DelegatedSubnetResourceId);
+            Assert.AreEqual(targetPrivateDnsZone.Id, targetPrivateServer.Data.Network.PrivateDnsZoneArmResourceId);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, targetPrivateServer.Data.Network.PublicNetworkAccess);
         }
 
         [TestCase(true)]
