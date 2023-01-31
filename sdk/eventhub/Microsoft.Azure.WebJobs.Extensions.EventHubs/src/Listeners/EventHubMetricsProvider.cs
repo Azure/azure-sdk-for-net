@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
 
                 var checkpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c?.PartitionId == partitionProperties.Id);
 
-                // Check for the unprocessed messages when there are messages on the event hub partition
+                // Check for the unprocessed messages when there are messages on the Event Hub partition
                 // In that case, LastEnqueuedSequenceNumber will be >= 0
 
                 if ((partitionProperties.LastEnqueuedSequenceNumber != -1 && partitionProperties.LastEnqueuedSequenceNumber != (checkpoint?.SequenceNumber ?? -1))
