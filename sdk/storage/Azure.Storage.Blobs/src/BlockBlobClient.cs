@@ -3163,6 +3163,21 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
+                SingleUploadContent = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken)
+                    => await client.UploadInternal(
+                        content.ToStream(),
+                        args?.HttpHeaders,
+                        args?.Metadata,
+                        args?.Tags,
+                        args?.Conditions,
+                        args?.AccessTier,
+                        args?.ImmutabilityPolicy,
+                        args?.LegalHold,
+                        progressHandler,
+                        validationOptions,
+                        operationName,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
                 UploadPartitionStreaming = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
@@ -3178,6 +3193,27 @@ namespace Azure.Storage.Blobs.Specialized
                     await client.StageBlockInternal(
                             Shared.StorageExtensions.GenerateBlockId(offset),
                             stream,
+                            validationOptions,
+                            conditions,
+                            progressHandler,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                },
+                UploadPartitionContent = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                    =>
+                {
+                    // Stage Block only accepts LeaseId.
+                    BlobRequestConditions conditions = null;
+                    if (args?.Conditions != null)
+                    {
+                        conditions = new BlobRequestConditions
+                        {
+                            LeaseId = args.Conditions.LeaseId
+                        };
+                    }
+                    await client.StageBlockInternal(
+                            Shared.StorageExtensions.GenerateBlockId(offset),
+                            content.ToStream(),
                             validationOptions,
                             conditions,
                             progressHandler,
