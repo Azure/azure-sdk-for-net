@@ -9,7 +9,7 @@ You can use this library on your client side to manage the WebSocket client conn
 Use this library to:
 
 - Send messages to groups
-- Send event to event handlers
+- Send events to the [server](https://learn.microsoft.com/azure/azure-web-pubsub/concept-service-internals#terms)
 - Join and leave groups
 - Listen messages from groups and servers
 
