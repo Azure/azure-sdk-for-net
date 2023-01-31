@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         private readonly string _functionId;
         private readonly IEventHubConsumerClient _client;
         private readonly ILogger _logger;
-        private readonly EventHubsMetricsProvider _metricsProvider;
+        private readonly EventHubMetricsProvider _metricsProvider;
         private readonly EventHubOptions _options;
 
         private DateTime _lastScaleUpTime;
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         public EventHubsTargetScaler(string functionId,
             IEventHubConsumerClient client,
             EventHubOptions options,
-            EventHubsMetricsProvider metricsProvider,
+            EventHubMetricsProvider metricsProvider,
             ILogger logger)
         {
             _functionId = functionId;

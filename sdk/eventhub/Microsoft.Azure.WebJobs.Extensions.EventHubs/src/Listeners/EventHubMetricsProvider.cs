@@ -26,9 +26,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         private DateTime _nextPartitionWarningTime;
 
         // Used for mocking.
-        public EventHubsMetricsProvider() { }
+        public EventHubMetricsProvider() { }
 
-        public EventHubsMetricsProvider(string functionId, IEventHubConsumerClient client, BlobCheckpointStoreInternal checkpointStore, ILogger logger)
+        public EventHubMetricsProvider(string functionId, IEventHubConsumerClient client, BlobCheckpointStoreInternal checkpointStore, ILogger logger)
         {
             _functionId = functionId;
             _logger = logger;

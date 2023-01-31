@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         private TestLoggerProvider _loggerProvider;
         private LoggerFactory _loggerFactory;
         private Mock<IEventHubConsumerClient> _consumerClientMock;
-        private Mock<EventHubsMetricsProvider> _metricsProviderMock;
+        private Mock<EventHubMetricsProvider> _metricsProviderMock;
         private EventHubOptions _options;
 
         [SetUp]
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             _options = new EventHubOptions();
             this._mockCheckpointStore = new Mock<BlobCheckpointStoreInternal>(MockBehavior.Strict);
 
-            _metricsProviderMock = new Mock<EventHubsMetricsProvider>();
+            _metricsProviderMock = new Mock<EventHubMetricsProvider>();
 
             _targetScaler = new EventHubsTargetScaler(
                                     _functionId,

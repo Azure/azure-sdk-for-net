@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         private readonly IEventHubConsumerClient _client;
         private readonly ILogger _logger;
         private readonly BlobCheckpointStoreInternal _checkpointStore;
-        private readonly EventHubsMetricsProvider _metricsProvider;
+        private readonly EventHubMetricsProvider _metricsProvider;
 
         public EventHubsScaleMonitor(
             string functionId,
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _logger = logger;
             _checkpointStore = checkpointStore;
             _client = client;
-            _metricsProvider = new EventHubsMetricsProvider(_functionId, _client, _checkpointStore, _logger);
+            _metricsProvider = new EventHubMetricsProvider(_functionId, _client, _checkpointStore, _logger);
 
             Descriptor = new ScaleMonitorDescriptor($"{_functionId}-EventHubTrigger-{_client.EventHubName}-{_client.ConsumerGroup}".ToLowerInvariant(), _functionId);
         }
