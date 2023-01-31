@@ -1312,7 +1312,7 @@ namespace Azure.Storage.Blobs
                 LeaseStatus = response.Headers.LeaseStatus,
                 LeaseState = response.Headers.LeaseState,
                 LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
-                PublicAccess = response.Headers.BlobPublicAccess,
+                PublicAccess = response.Headers.BlobPublicAccess ?? PublicAccessType.None,
                 HasImmutabilityPolicy = response.Headers.HasImmutabilityPolicy,
                 HasLegalHold = response.Headers.HasLegalHold,
                 DefaultEncryptionScope = response.Headers.DefaultEncryptionScope,
