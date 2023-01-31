@@ -231,7 +231,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFileAsync(String,String,RequestContent,String,RequestContext)']/*" />
-        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
+        internal virtual async Task<Response> UploadTestFileAsync(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -262,7 +262,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFile(String,String,RequestContent,String,RequestContext)']/*" />
-        public virtual Response UploadTestFile(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
+        internal virtual Response UploadTestFile(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -608,40 +608,6 @@ namespace Azure.Developer.LoadTesting
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
-        /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: lastModifiedDateTime asc. Supported fields - lastModifiedDateTime. </param>
-        /// <param name="search"> Prefix based, case sensitive search on searchable fields - displayName, createdBy. For example, to search for a test, with display name is Login Test, the search parameter can be Login. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestsAsync(String,String,DateTimeOffset,DateTimeOffset,Int32,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestsAsync(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, RequestContext context = null)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
-        }
-
-        /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
-        /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: lastModifiedDateTime asc. Supported fields - lastModifiedDateTime. </param>
-        /// <param name="search"> Prefix based, case sensitive search on searchable fields - displayName, createdBy. For example, to search for a test, with display name is Login Test, the search parameter can be Login. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTests(String,String,DateTimeOffset,DateTimeOffset,Int32,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTests(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, RequestContext context = null)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
         /// <summary> Get all test files. </summary>

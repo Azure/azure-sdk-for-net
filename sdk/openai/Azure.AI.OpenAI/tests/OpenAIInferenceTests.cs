@@ -34,12 +34,12 @@ namespace Azure.AI.OpenAI.Tests
         public async Task CompletionTest()
         {
             var client = GetClient();
-            CompletionsRequest completionsRequest = new CompletionsRequest();
+            CompletionsOptions completionsRequest = new CompletionsOptions();
             completionsRequest.Prompt.Add("Hello world");
             completionsRequest.Prompt.Add("running over the same old ground");
-            Assert.That(completionsRequest, Is.InstanceOf<CompletionsRequest>());
-            var response = await client.CompletionsAsync(DeploymentId, completionsRequest);
-            Assert.That(response, Is.InstanceOf<Response<Completion>>());
+            Assert.That(completionsRequest, Is.InstanceOf<CompletionsOptions>());
+            var response = await client.GetCompletionsAsync(DeploymentId, completionsRequest);
+            Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace Azure.AI.OpenAI.Tests
         public async Task EmbeddingTest()
         {
             var client = GetClient();
-            EmbeddingsRequest embeddingsRequest = new EmbeddingsRequest("Your text string goes here");
-            Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsRequest>());
-            var response = await client.EmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
+            EmbeddingsOptions embeddingsRequest = new EmbeddingsOptions("Your text string goes here");
+            Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
+            var response = await client.GetEmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
         }
     }

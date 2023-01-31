@@ -10,6 +10,7 @@ using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 
 using Xunit;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {

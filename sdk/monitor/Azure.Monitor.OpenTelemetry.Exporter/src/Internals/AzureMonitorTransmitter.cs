@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -19,7 +18,7 @@ using OpenTelemetry;
 using OpenTelemetry.Extensions.PersistentStorage;
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     /// <summary>
     /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
@@ -45,10 +44,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 var scope = AadHelper.GetScope(_connectionVars.AadAudience);
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
-                                             {
-                                                 new BearerTokenAuthenticationPolicy(credential, scope),
-                                                 new IngestionRedirectPolicy()
-                                             };
+                {
+                    new BearerTokenAuthenticationPolicy(credential, scope),
+                    new IngestionRedirectPolicy()
+                };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
                 AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");

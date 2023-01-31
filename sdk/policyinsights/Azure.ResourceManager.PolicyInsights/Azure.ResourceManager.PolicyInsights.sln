@@ -7,6 +7,8 @@ Project("{696481F0-6680-4391-B5E5-2BB0A6CDEC90}") = "Azure.ResourceManager.Polic
 EndProject
 Project("{696481F0-6680-4391-B5E5-2BB0A6CDEC90}") = "Azure.ResourceManager.PolicyInsights.Tests", "tests\Azure.ResourceManager.PolicyInsights.Tests.csproj", "{897AFB11-A7AB-43C1-90B4-B0A2826782EF}"
 EndProject
+Project("{696481F0-6680-4391-B5E5-2BB0A6CDEC90}") = "Azure.ResourceManager.PolicyInsights.Samples", "samples\Azure.ResourceManager.PolicyInsights.Samples.csproj", "{22DDE0E3-186D-4962-BDEF-BC1A8F54185D}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
