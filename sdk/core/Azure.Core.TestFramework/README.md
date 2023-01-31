@@ -235,6 +235,8 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 ```
 In addition to the auto-rerecording functionality, using the RecordedTestAttribute also will automatically retry tests that fail due due to exceeding the global test time limit.
 
+When running tests in `Live` or `Record` mode, the Test Framework will prompt you to create the live test resources required for the tests if you don't have environment variables or an env file containing the required variables needed for the tests. This means that you do not have to manually run the New-TestResources script when attempting to run live tests! The Test Framework will also attempt to automatically extend the expiration of the test resource resource group whenever live tests are run. If the resource group specified in your .env file or environment variable has already expired and thus been deleted, the framework will prompt you to create a new resource group just like it would if an env variable required by the test was missing.
+
 ### Recording
 
 When tests are run in recording mode, session records are saved to the project directory automatically in a folder named 'SessionRecords'.
