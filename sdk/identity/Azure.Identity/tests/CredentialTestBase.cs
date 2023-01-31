@@ -12,19 +12,23 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public abstract class CredentialTestBase : ClientTestBase
+    public abstract class CredentialTestBase<TCredOptions> : ClientTestBase where TCredOptions : TokenCredentialOptions
     {
         protected const string Scope = "https://vault.azure.net/.default";
         protected const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
         protected const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
         protected const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
+        protected const string ObjectId = "22730c7e-c3c8-431b-94cf-5676152d9338";
         protected const string expectedUsername = "mockuser@mockdomain.com";
         protected string expectedToken;
         protected string expectedUserAssertion;
@@ -49,6 +53,7 @@ namespace Azure.Identity.Tests
         }
 
         public abstract TokenCredential GetTokenCredential(TokenCredentialOptions options);
+        public abstract TokenCredential GetTokenCredential(CommonCredentialTestConfig config);
 
         [Test]
         public async Task IsAccountIdentifierLoggingEnabled([Values(true, false)] bool isOptionSet)
@@ -73,6 +78,64 @@ namespace Azure.Identity.Tests
             }
         }
 
+        [Test]
+        [NonParallelizable]
+        public async Task DisableInstanceMetadataDicovery([Values(true, false)] bool disable)
+        {
+            StaticCachesUtilities.ClearStaticMetadataProviderCache();
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+            if (!typeof(ISupportsDisableInstanceDiscovery).IsAssignableFrom(typeof(TCredOptions)))
+            {
+                Assert.Ignore($"{typeof(TCredOptions).Name} does not implement {nameof(ISupportsDisableInstanceDiscovery)}");
+            }
+            bool calledDisoveryEndpoint = false;
+            var mockTransport = new MockTransport(req =>
+            {
+                Console.WriteLine(req.Uri);
+                calledDisoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+                var response = new MockResponse(200);
+                var token = Guid.NewGuid().ToString();
+                var idToken = CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
+                if (req.Uri.Path.EndsWith("/devicecode"))
+                {
+                    response.SetContent($"{{\"device_code\": \"{Guid.NewGuid()}\",\"user_code\": \"{Guid.NewGuid()}\",\"verification_url\": \"https://microsoft.com/devicelogin\",\"expires_in\": 900,\"interval\": 5,\"message\": \"my message\"}}");
+                }
+                else if (req.Uri.Path.Contains("/userrealm/"))
+                {
+                    response.SetContent($"{{\"ver\": \"1.0\", \"account_type\": \"Managed\", \"domain_name\": \"azuresdkoutlook.onmicrosoft.com\", \"cloud_instance_name\": \"microsoftonline.com\", \"cloud_audience_urn\": \"urn:federation:MicrosoftOnline\"}}");
+                }
+                else
+                {
+                    if (typeof(TCredOptions) == typeof(DeviceCodeCredentialOptions) ||
+                        typeof(TCredOptions) == typeof(UsernamePasswordCredentialOptions) ||
+                        typeof(TCredOptions) == typeof(SharedTokenCacheCredentialOptions) ||
+                        typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
+                    {
+                        response.SetContent(
+                         $"{{\"token_type\": \"Bearer\",\"access_token\": \"{token}\",\"refresh_token\": \"{token}\",\"scope\": null,\"client_info\": null,\"id_token\": null,\"expires_in\": 10000,\"ext_expires_in\": 100000,\"refresh_in\": 1000, \"correlation_id\": \"{Guid.NewGuid()}\", \"client_info\": \"{CreateMsalClientInfo(ObjectId, TenantId)}\",\"id_token\": \"{idToken}\"}}");
+                    }
+                    else
+                    {
+                        response.SetContent(
+                         $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
+                    }
+                }
+
+                return response;
+            });
+            var config = new CommonCredentialTestConfig()
+            {
+                DisableMetadataDiscovery = disable,
+                Transport = mockTransport
+            };
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            var credential = GetTokenCredential(config);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+            Assert.AreNotEqual(disable, calledDisoveryEndpoint);
+        }
+
         public class AllowedTenantsTestParameters
         {
             public string TenantId { get; set; }
@@ -80,7 +143,7 @@ namespace Azure.Identity.Tests
             public TokenRequestContext TokenRequestContext { get; set; }
             public string ToDebugString()
             {
-                return $"TenantId:{TenantId??"null"}, AddlTenants:[{string.Join(",", AdditionallyAllowedTenants)}], RequestedTenantId:{TokenRequestContext.TenantId??"null"}";
+                return $"TenantId:{TenantId ?? "null"}, AddlTenants:[{string.Join(",", AdditionallyAllowedTenants)}], RequestedTenantId:{TokenRequestContext.TenantId ?? "null"}";
             }
         }
 
@@ -164,7 +227,7 @@ namespace Azure.Identity.Tests
                 TenantId,
                 new MockAccount("username"),
                 null,
-                new[] {Scope},
+                new[] { Scope },
                 Guid.NewGuid(),
                 null,
                 "Bearer");
@@ -210,7 +273,7 @@ namespace Azure.Identity.Tests
                 TenantId,
                 new MockAccount("username"),
                 null,
-                new[] {Scope},
+                new[] { Scope },
                 Guid.NewGuid(),
                 null,
                 "Bearer");
@@ -267,6 +330,67 @@ namespace Azure.Identity.Tests
             }
         }
 
+        protected byte[] GetMockCacheBytes(string objectId, string clientId, string tenantId, string token, string refreshToken)
+        {
+            var cacheString = @$"{{
+  ""AccessToken"": {{
+      ""{objectId}.{tenantId}-login.microsoftonline.com-accesstoken-{clientId}-organizations-{MockScopes.Default}"": {{
+          ""credential_type"": ""AccessToken"",
+          ""secret"": ""{token}"",
+          ""home_account_id"": ""{objectId}.{tenantId}"",
+          ""environment"": ""login.microsoftonline.com"",
+          ""client_id"": ""{clientId}"",
+          ""target"": ""{MockScopes.Default}"",
+          ""realm"": ""organizations"",
+          ""token_type"": ""Bearer"",
+          ""cached_at"": ""1671572411"",
+          ""expires_on"": ""1671576858"",
+          ""extended_expires_on"": ""1671576858""
+      }}
+  }},
+  ""Account"": {{
+      ""{objectId}.{tenantId}-login.microsoftonline.com-organizations"": {{
+          ""home_account_id"": ""{objectId}.{tenantId}"",
+          ""environment"": ""login.microsoftonline.com"",
+          ""realm"": ""organizations"",
+          ""local_account_id"": ""{objectId}"",
+          ""username"": ""{expectedUsername}"",
+          ""authority_type"": ""MSSTS""
+      }}
+  }},
+  ""IdToken"": {{
+      ""{objectId}.{tenantId}-login.microsoftonline.com-idtoken-{clientId}-organizations-"": {{
+          ""credential_type"": ""IdToken"",
+          ""secret"": ""{token}"",
+          ""home_account_id"": ""{objectId}.{tenantId}"",
+          ""environment"": ""login.microsoftonline.com"",
+          ""realm"": ""organizations"",
+          ""client_id"": ""{clientId}""
+      }},
+  }},
+  ""RefreshToken"": {{
+      ""{objectId}.{tenantId}-login.microsoftonline.com-refreshtoken-{clientId}--{MockScopes.Default}"": {{
+          ""credential_type"": ""RefreshToken"",
+          ""secret"": ""{refreshToken}"",
+          ""home_account_id"": ""{objectId}.{tenantId}"",
+          ""environment"": ""login.microsoftonline.com"",
+          ""client_id"": ""{clientId}"",
+          ""target"": ""{MockScopes.Default}"",
+          ""last_modification_time"": ""1674853645"",
+          ""family_id"": ""1""
+      }}
+  }},
+  ""AppMetadata"": {{
+      ""appmetadata-login.microsoftonline.com-{clientId}"": {{
+          ""client_id"": ""{clientId}"",
+          ""environment"": ""login.microsoftonline.com"",
+          ""family_id"": ""1""
+      }}
+  }}
+}}";
+            return Encoding.UTF8.GetBytes(cacheString);
+        }
+
         protected MockResponse CreateMockMsalTokenResponse(int responseCode, string token, string tenantId,
             string userName)
         {
@@ -277,9 +401,11 @@ namespace Azure.Identity.Tests
             return response;
         }
 
-        public static string CreateMsalClientInfo()
+        public static string CreateMsalClientInfo(string objectId = null, string tenantId = null)
         {
-            return MsalEncode("{\"uid\":\"myuid\",\"utid\":\"myutid\"}");
+            var uid = objectId ?? "myuid";
+            var tid = tenantId ?? "myutid";
+            return MsalEncode($"{{\"uid\":\"{uid}\",\"utid\":\"{tid}\"}}");
         }
 
         public static string CreateMsalIdToken(string uniqueId, string displayableId, string tenantId)
@@ -409,7 +535,7 @@ namespace Azure.Identity.Tests
                     }
                     break;
 
-                //default or case 0: no further operations are needed.
+                    //default or case 0: no further operations are needed.
             }
 
             return new string(output, 0, j);
@@ -496,5 +622,11 @@ namespace Azure.Identity.Tests
             }
             return new MockResponse(200);
         });
+
+        public class CommonCredentialTestConfig
+        {
+            public bool? DisableMetadataDiscovery { get; set; }
+            public HttpPipelineTransport Transport { get; set; }
+        }
     }
 }

@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27263")]
-    public class VisualStudioCodeCredentialTests : CredentialTestBase
+    public class VisualStudioCodeCredentialTests : CredentialTestBase<VisualStudioCodeCredentialOptions>
     {
         public VisualStudioCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -37,6 +37,8 @@ namespace Azure.Identity.Tests
                     CredentialTestHelpers.CreateFileSystemForVisualStudioCode(environment),
                     new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
         }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
 
         [SetUp]
         public void Setup()

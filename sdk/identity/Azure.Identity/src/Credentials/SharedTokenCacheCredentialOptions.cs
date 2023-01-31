@@ -6,7 +6,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="SharedTokenCacheCredential"/> authentication.
     /// </summary>
-    public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions, ISupportsDisableInstanceDiscovery
     {
         private string _tenantId;
 
@@ -64,5 +64,8 @@ namespace Azure.Identity
             // if no tokenCacheOptions were specified we should use the default shared token cache
             TokenCachePersistenceOptions = tokenCacheOptions ?? s_defaulTokenCachetPersistenceOptions;
         }
+
+        /// <inheritdoc/>
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

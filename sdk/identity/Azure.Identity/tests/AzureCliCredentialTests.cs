@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzureCliCredentialTests : CredentialTestBase
+    public class AzureCliCredentialTests : CredentialTestBase<AzureCliCredentialOptions>
     {
         public AzureCliCredentialTests(bool isAsync) : base(isAsync) { }
 
@@ -25,6 +25,8 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Output = processOutput };
             return InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azCliOptions));
         }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
 
         [Test]
         public async Task AuthenticateWithCliCredential(
@@ -60,7 +62,7 @@ namespace Azure.Identity.Tests
         {
             Console.WriteLine(parameters.ToDebugString());
 
-            var options = new AzureCliCredentialOptions { TenantId = parameters.TenantId};
+            var options = new AzureCliCredentialOptions { TenantId = parameters.TenantId };
 
             foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
             {

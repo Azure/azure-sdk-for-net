@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,12 +9,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class DeviceCodeCredentialTests : CredentialTestBase
+    public class DeviceCodeCredentialTests : CredentialTestBase<DeviceCodeCredentialOptions>
     {
         public DeviceCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -57,6 +57,16 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockPublicMsalClient));
 
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            expectedCode = Guid.NewGuid().ToString();
+            var options = new DeviceCodeCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(new DeviceCodeCredential((code, _) => {
+                return Task.CompletedTask;
+            }, TenantId, ClientId, options, pipeline, null));
+        }
+
         [SetUp]
         public void Setup()
         {
@@ -68,7 +78,7 @@ namespace Azure.Identity.Tests
         {
             var options = new DeviceCodeCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants) ;
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
             var cred = InstrumentClient(
                 new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockPublicMsalClient));
 
@@ -103,7 +113,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {
-            var credential = new DeviceCodeCredential(new DeviceCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled});
+            var credential = new DeviceCodeCredential(new DeviceCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
 
             Assert.NotNull(credential.Client);
             Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
@@ -193,7 +203,8 @@ namespace Azure.Identity.Tests
                 new DeviceCodeCredential(
                     new DeviceCodeCredentialOptions
                     {
-                        DisableAutomaticAuthentication = true, DeviceCodeCallback = (code, cancelToken) => VerifyDeviceCode(code, expectedCode)
+                        DisableAutomaticAuthentication = true,
+                        DeviceCodeCallback = (code, cancelToken) => VerifyDeviceCode(code, expectedCode)
                     }));
 
             var expTokenRequestContext = new TokenRequestContext(new[] { Scope }, Guid.NewGuid().ToString());

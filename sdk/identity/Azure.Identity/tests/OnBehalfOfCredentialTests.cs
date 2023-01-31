@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class OnBehalfOfCredentialTests : CredentialTestBase
+    public class OnBehalfOfCredentialTests : CredentialTestBase<OnBehalfOfCredentialOptions>
     {
         public OnBehalfOfCredentialTests(bool isAsync) : base(isAsync) { }
 
@@ -39,6 +39,21 @@ namespace Azure.Identity.Tests
                     oboOptions,
                     null,
                     mockConfidentialMsalClient));
+        }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var options = new OnBehalfOfCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(
+                new OnBehalfOfCredential(
+                    TenantId,
+                    ClientId,
+                    "secret",
+                    Guid.NewGuid().ToString(),
+                    options,
+                    pipeline,
+                    null));
         }
 
         [Test]

@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzureDeveloperCliCredentialTests : CredentialTestBase
+    public class AzureDeveloperCliCredentialTests : CredentialTestBase<AzureDeveloperCliCredentialOptions>
     {
         public AzureDeveloperCliCredentialTests(bool isAsync) : base(isAsync) { }
 
@@ -25,6 +25,8 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Output = processOutput };
             return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azdCliOptions));
         }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
 
         [Test]
         public async Task AuthenticateWithDeveloperCliCredential(

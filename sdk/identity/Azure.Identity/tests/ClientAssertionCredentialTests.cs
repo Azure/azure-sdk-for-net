@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity.Tests.Mock;
@@ -12,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientAssertionCredentialTests : CredentialTestBase
+    public class ClientAssertionCredentialTests : CredentialTestBase<ClientAssertionCredentialOptions>
     {
         public ClientAssertionCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -22,6 +19,14 @@ namespace Azure.Identity.Tests
             var clientAssertionOptions = new ClientAssertionCredentialOptions { Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }, MsalClient = mockConfidentialMsalClient, Pipeline = CredentialPipeline.GetInstance(null) };
 
             return InstrumentClient(new ClientAssertionCredential(expectedTenantId, ClientId, () => "assertion", clientAssertionOptions));
+        }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var options = new ClientAssertionCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value};
+            var pipeline = CredentialPipeline.GetInstance(options);
+            options.Pipeline = pipeline;
+            return InstrumentClient(new ClientAssertionCredential(TenantId, ClientId, () => "assertion", options));
         }
 
         public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)

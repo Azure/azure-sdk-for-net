@@ -13,10 +13,12 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests
 {
-    public class InteractiveBrowserCredentialTests : CredentialTestBase
+    public class InteractiveBrowserCredentialTests : CredentialTestBase<InteractiveBrowserCredentialOptions>
     {
         public InteractiveBrowserCredentialTests(bool isAsync) : base(isAsync)
         { }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new InteractiveBrowserCredential(TenantId, ClientId, options, null, mockPublicMsalClient));

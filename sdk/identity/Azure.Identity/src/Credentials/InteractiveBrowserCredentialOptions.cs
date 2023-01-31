@@ -10,7 +10,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="InteractiveBrowserCredential"/>.
     /// </summary>
-    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ITokenCacheOptions, ISupportsDisableInstanceDiscovery
     {
         private string _tenantId;
 
@@ -61,5 +61,8 @@ namespace Azure.Identity
         /// Avoids the account prompt and pre-populates the username of the account to login.
         /// </summary>
         public string LoginHint { get; set; }
+
+        /// <inheritdoc/>
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

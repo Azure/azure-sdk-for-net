@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
-    public class VisualStudioCredentialTests : CredentialTestBase
+    public class VisualStudioCredentialTests : CredentialTestBase<VisualStudioCredentialOptions>
     {
         public VisualStudioCredentialTests(bool isAsync) : base(isAsync) { }
 
@@ -30,6 +30,7 @@ namespace Azure.Identity.Tests
             };
             return InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
         }
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
 
         [Test]
         public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)

@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientCertificateCredentialTests : CredentialTestBase
+    public class ClientCertificateCredentialTests : CredentialTestBase<ClientCertificateCredentialOptions>
     {
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -29,6 +29,8 @@ namespace Azure.Identity.Tests
                 new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
             );
         }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
 
         [Test]
         public void VerifyCtorParametersValidation()

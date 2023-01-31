@@ -6,18 +6,24 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialTests : CredentialTestBase
+    public class ClientSecretCredentialTests : CredentialTestBase<ClientSecretCredentialOptions>
     {
         public ClientSecretCredentialTests(bool isAsync) : base(isAsync)
         { }
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var options = new ClientSecretCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value};
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(new ClientSecretCredential(TenantId, ClientId, "secret", options, pipeline, null));
+        }
 
         public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
         {

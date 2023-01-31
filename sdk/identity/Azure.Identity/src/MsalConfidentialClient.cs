@@ -80,6 +80,10 @@ namespace Azure.Identity
             else
             {
                 confClientBuilder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId);
+                if (DisableInstanceDiscovery)
+                {
+                    confClientBuilder.WithInstanceDiscovery(false);
+                }
             }
 
             if (_clientSecret != null)
