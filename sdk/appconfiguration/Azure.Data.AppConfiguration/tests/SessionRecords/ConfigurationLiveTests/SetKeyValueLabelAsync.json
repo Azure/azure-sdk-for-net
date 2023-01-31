@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t-dnnwaokochaappconfig-azconfig-net.azconfig.io/kv/key-604224095?label=my_label\u0026api-version=1.0",
+      "RequestUri": "https://shrejaappconfiguration-azconfig-net.azconfig.io/kv/key-123828052?label=my_label\u0026api-version=1.0",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson, application/json, application/problem\u002Bjson",
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson, application/problem\u002Bjson",
         "Authorization": "Sanitized",
         "Content-Length": "50",
         "Content-Type": "application/json",
-        "Date": "Fri, 19 Aug 2022 00:57:06 GMT",
-        "traceparent": "00-121ca30babdc9743a93ed8a53d9cf3dc-37f6d3a40ee9fe4d-00",
-        "User-Agent": "azsdk-net-Data.AppConfiguration/1.3.0-alpha.20220818.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "768db43f8c9ebbb704e4ee819881ca37",
+        "Date": "Tue, 31 Jan 2023 20:26:17 GMT",
+        "traceparent": "00-008e973b7b2b2af95a80547160d33c68-c8be4039718c9779-00",
+        "User-Agent": "azsdk-net-Data.AppConfiguration/1.3.0-alpha.20230131.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bf1ff8d1763c2cb3e6c6c67ac650c692",
         "x-ms-content-sha256": "aDaoGrnXeLk4BtC\u002BbcUBHjAOl1G533H6XGiHrRY9PKA=",
         "x-ms-return-client-request-id": "true"
       },
@@ -27,39 +27,39 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, x-ms-client-session-id, x-ms-effective-locale, WWW-Authenticate, traceparent, tracestate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Fri, 19 Aug 2022 00:57:07 GMT",
-        "ETag": "\u0022FhcbIPApbaq8OOpxf9mZgBFxuynR6qTpSiHsSihzNZU\u0022",
-        "Last-Modified": "Fri, 19 Aug 2022 00:57:07 GMT",
-        "Server": "openresty/1.17.8.2",
+        "Date": "Tue, 31 Jan 2023 20:26:37 GMT",
+        "ETag": "\u0022KQ3oevzTk6IgQv2et4D_iTbkrZByO-laNBk7a5dSqwc\u0022",
+        "Last-Modified": "Tue, 31 Jan 2023 20:26:37 GMT",
+        "Server": "openresty/1.21.4.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=MjoxNyM5MjA3NzM2;sn=9207736",
+        "Sync-Token": "zAJw6V16=Nzo1IzEyOTM1OTg=;sn=1293598",
         "Transfer-Encoding": "chunked",
-        "x-ms-client-request-id": "768db43f8c9ebbb704e4ee819881ca37",
-        "x-ms-correlation-request-id": "b41c7710-5200-41e8-865d-242a3992aaef",
-        "x-ms-request-id": "b41c7710-5200-41e8-865d-242a3992aaef"
+        "x-ms-client-request-id": "bf1ff8d1763c2cb3e6c6c67ac650c692",
+        "x-ms-correlation-request-id": "dbd5b862-f11b-401e-a271-86418c64b4ae",
+        "x-ms-request-id": "dbd5b862-f11b-401e-a271-86418c64b4ae"
       },
       "ResponseBody": {
-        "etag": "FhcbIPApbaq8OOpxf9mZgBFxuynR6qTpSiHsSihzNZU",
-        "key": "key-604224095",
+        "etag": "KQ3oevzTk6IgQv2et4D_iTbkrZByO-laNBk7a5dSqwc",
+        "key": "key-123828052",
         "label": "my_label",
         "content_type": null,
         "value": "my_value",
         "tags": {},
         "locked": false,
-        "last_modified": "2022-08-19T00:57:07\u002B00:00"
+        "last_modified": "2023-01-31T20:26:37\u002B00:00"
       }
     },
     {
-      "RequestUri": "https://t-dnnwaokochaappconfig-azconfig-net.azconfig.io/kv/key-604224095?label=my_label\u0026api-version=1.0",
+      "RequestUri": "https://shrejaappconfiguration-azconfig-net.azconfig.io/kv/key-123828052?label=my_label\u0026api-version=1.0",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson, application/json, application/problem\u002Bjson",
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson, application/problem\u002Bjson",
         "Authorization": "Sanitized",
-        "Date": "Fri, 19 Aug 2022 00:57:06 GMT",
-        "Sync-Token": "zAJw6V16=MjoxNyM5MjA3NzM2",
-        "traceparent": "00-292287a3ff46054098f6db76cdd80602-378b32af734c974d-00",
-        "User-Agent": "azsdk-net-Data.AppConfiguration/1.3.0-alpha.20220818.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "27f9e750182b5eb9bffd608919ae50e4",
+        "Date": "Tue, 31 Jan 2023 20:26:18 GMT",
+        "Sync-Token": "zAJw6V16=Nzo1IzEyOTM1OTg=",
+        "traceparent": "00-6616a13eed1953efadc075771f037209-bc26b5e1d20d26a0-00",
+        "User-Agent": "azsdk-net-Data.AppConfiguration/1.3.0-alpha.20230131.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c3abb6a861c6b14deb0bb185da679e9f",
         "x-ms-content-sha256": "47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=",
         "x-ms-return-client-request-id": "true"
       },
@@ -71,31 +71,31 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, x-ms-client-session-id, x-ms-effective-locale, WWW-Authenticate, traceparent, tracestate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Fri, 19 Aug 2022 00:57:07 GMT",
-        "ETag": "\u0022FhcbIPApbaq8OOpxf9mZgBFxuynR6qTpSiHsSihzNZU\u0022",
-        "Last-Modified": "Fri, 19 Aug 2022 00:57:07 GMT",
-        "Server": "openresty/1.17.8.2",
+        "Date": "Tue, 31 Jan 2023 20:26:38 GMT",
+        "ETag": "\u0022KQ3oevzTk6IgQv2et4D_iTbkrZByO-laNBk7a5dSqwc\u0022",
+        "Last-Modified": "Tue, 31 Jan 2023 20:26:37 GMT",
+        "Server": "openresty/1.21.4.1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=MjoxNyM5MjA3NzM3;sn=9207737",
+        "Sync-Token": "zAJw6V16=Nzo1IzEyOTM1OTk=;sn=1293599",
         "Transfer-Encoding": "chunked",
-        "x-ms-client-request-id": "27f9e750182b5eb9bffd608919ae50e4",
-        "x-ms-correlation-request-id": "b1e5caf2-eda2-4a98-bf0f-83da2658280f",
-        "x-ms-request-id": "b1e5caf2-eda2-4a98-bf0f-83da2658280f"
+        "x-ms-client-request-id": "c3abb6a861c6b14deb0bb185da679e9f",
+        "x-ms-correlation-request-id": "14875529-8406-44fd-a9b0-75cbcacceb02",
+        "x-ms-request-id": "14875529-8406-44fd-a9b0-75cbcacceb02"
       },
       "ResponseBody": {
-        "etag": "FhcbIPApbaq8OOpxf9mZgBFxuynR6qTpSiHsSihzNZU",
-        "key": "key-604224095",
+        "etag": "KQ3oevzTk6IgQv2et4D_iTbkrZByO-laNBk7a5dSqwc",
+        "key": "key-123828052",
         "label": "my_label",
         "content_type": null,
         "value": "my_value",
         "tags": {},
         "locked": false,
-        "last_modified": "2022-08-19T00:57:07\u002B00:00"
+        "last_modified": "2023-01-31T20:26:37\u002B00:00"
       }
     }
   ],
   "Variables": {
-    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https://t-dnnwaokochaappconfig-azconfig-net.azconfig.io;Id=FDfK-l2-s0:mngxQOl8i8oeTC1tVysQ;Secret=Kg==",
-    "RandomSeed": "430924422"
+    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https://shrejaappconfiguration-azconfig-net.azconfig.io;Id=RoMR-l1-s0:NgGvLRBi23WLJ6PQ6mcy;Secret=Kg==",
+    "RandomSeed": "2139474677"
   }
 }
