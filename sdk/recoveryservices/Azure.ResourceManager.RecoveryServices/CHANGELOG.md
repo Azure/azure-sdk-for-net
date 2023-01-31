@@ -4,6 +4,8 @@
 
 ### Features Added
 
+Immutability support added for Recovery Service vault
+
 ### Breaking Changes
 
 ### Bugs Fixed
