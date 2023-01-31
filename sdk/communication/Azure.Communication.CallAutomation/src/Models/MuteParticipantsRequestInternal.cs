@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("UnmuteAllParticipantsRequest")]
-    internal partial class UnmuteAllParticipantsRequestInternal
+    [CodeGenModel("MuteParticipantsRequest")]
+    internal partial class MuteParticipantsRequestInternal
     {
     }
 }

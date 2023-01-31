@@ -10,11 +10,18 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class UnmuteAllParticipantsRequestInternal : IUtf8JsonSerializable
+    internal partial class UnmuteParticipantsRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("targetParticipants");
+            writer.WriteStartArray();
+            foreach (var item in TargetParticipants)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext");
