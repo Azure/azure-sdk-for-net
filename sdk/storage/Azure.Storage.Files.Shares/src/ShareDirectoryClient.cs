@@ -472,8 +472,8 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
-                _clientConfiguration.ClientOptions.Version.ToVersionString(),
-                _clientConfiguration.FileRequestIntent);
+                version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                fileRequestIntent: _clientConfiguration.FileRequestIntent);
         }
         #endregion ctors
 
