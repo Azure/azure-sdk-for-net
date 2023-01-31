@@ -17,6 +17,9 @@ parameters:
 - name: Language
   type: string
   default: ''
+- name: LanguageVersion
+  type: string
+  default: ''
 - name: LanguageRepoName
   type: string
   default: $(Build.Repository.Name)
@@ -118,6 +121,7 @@ jobs:
   - script: >-
       dotnet run -- run
       --language ${{ parameters.Language }}
+      --language-version ${{ parameters.LanguageVersion }}
       --repo-root $(System.DefaultWorkingDirectory)
       --tests-file $(System.DefaultWorkingDirectory)/sdk/${{ parameters.ServiceDirectory }}/perf-tests.yml
       --package-versions "${{ parameters.PackageVersions }}"
