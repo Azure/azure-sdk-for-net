@@ -334,7 +334,7 @@ namespace Azure.Core.TestFramework
             // send the GET request
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-            // resource group not found - prompt to create new resources
+            // resource group not valid - prompt to create new resources
             if (response.Status is 403 or 404)
             {
                 BootStrapTestResources();
