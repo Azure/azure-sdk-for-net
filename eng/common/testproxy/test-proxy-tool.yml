@@ -42,13 +42,13 @@ steps:
     - pwsh: |
         Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
           -ArgumentList "--storage-location ${{ parameters.rootFolder }}" `
-          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.templateRoot }}/test-proxy.log
+          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log
       displayName: 'Run the testproxy - windows'
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
 
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
-        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy > ${{ parameters.templateRoot }}/test-proxy.log &
+        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy > ${{ parameters.rootFolder }}/test-proxy.log &
       displayName: "Run the testproxy - linux/mac"
       condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
       workingDirectory: "${{ parameters.rootFolder }}"

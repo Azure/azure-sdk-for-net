@@ -91,7 +91,6 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             Response response = await _loadTestRunClient.GetTestRunAsync(_testRunId);
 
-            Console.WriteLine(response.Content.ToString());
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
             Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
@@ -101,8 +100,6 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task GetTestRunFile()
         {
             Response response = await _loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
-
-            Console.WriteLine(response.Content.ToString());
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
             Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
@@ -111,16 +108,35 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task ListTestRuns()
         {
+            int pageSizeHint = 2;
             AsyncPageable<BinaryData> responsePageable = _loadTestRunClient.GetTestRunsAsync();
 
-            await foreach (var page in responsePageable.AsPages())
+            int count = 0;
+
+            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
             {
+                count++;
+
                 foreach (var testRun in page.Values)
                 {
-                    Console.WriteLine(testRun.ToString());
-
                     JsonDocument jsonDocument = JsonDocument.Parse(testRun.ToString());
-                    Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+                    Assert.NotNull(jsonDocument.RootElement.GetProperty("testId").ToString());
+                    Assert.NotNull(jsonDocument.RootElement.GetProperty("testRunId").ToString());
+                }
+            }
+
+            int i = 0;
+            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
+            {
+                i++;
+
+                if (i < count)
+                {
+                    Assert.AreEqual(pageSizeHint, page.Values.Count);
+                }
+                else
+                {
+                    Assert.LessOrEqual(page.Values.Count, pageSizeHint);
                 }
             }
         }
@@ -291,33 +307,37 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task GetMetrics()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
+            await _testRunOperation.WaitForCompletionAsync();
 
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Completed);
-
-            Response getTestRunResponse = await loadTestRunClient.GetTestRunAsync(_testRunId);
+            Response getTestRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
             Assert.NotNull(getTestRunResponse);
             JsonDocument testRunJson = JsonDocument.Parse(getTestRunResponse.Content.ToString());
 
-            Response getMetricNamespaces = await loadTestRunClient.GetMetricNamespacesAsync(_testRunId);
+            Response getMetricNamespaces = await _loadTestRunClient.GetMetricNamespacesAsync(_testRunId);
             Assert.NotNull(getMetricNamespaces);
             JsonDocument metricNamespacesJson = JsonDocument.Parse(getMetricNamespaces.Content.ToString());
 
-            Response getMetricDefinitions = await loadTestRunClient.GetMetricDefinitionsAsync(
+            Response getMetricDefinitions = await _loadTestRunClient.GetMetricDefinitionsAsync(
                 _testRunId, metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").ToString()
                 );
             Assert.NotNull(getMetricDefinitions);
             JsonDocument metricDefinitionsJson = JsonDocument.Parse(getMetricDefinitions.Content.ToString());
 
-            AsyncPageable<BinaryData> metrics = loadTestRunClient.GetMetricsAsync(
+            AsyncPageable<BinaryData> metricsReponsePageable = _loadTestRunClient.GetMetricsAsync(
                     _testRunId,
-                    metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
                     metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-                    testRunJson.RootElement.GetProperty("startDateTime").GetString()+"/"+testRunJson.RootElement.GetProperty("endDateTime"),
-                    null
+                    metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
+                    testRunJson.RootElement.GetProperty("startDateTime").GetString()+"/"+testRunJson.RootElement.GetProperty("endDateTime")
                 );
-            Assert.NotNull(metrics);
+
+            await foreach (var page in metricsReponsePageable.AsPages())
+            {
+                foreach (var item in page.Values)
+                {
+                    JsonDocument jsonItem = JsonDocument.Parse(item.ToString());
+                    Assert.NotNull(jsonItem.RootElement.GetProperty("data"));
+                }
+            }
         }
     }
 }
