@@ -22,6 +22,7 @@ namespace Azure.Storage.Files.Shares
         private readonly string _url;
         private readonly bool? _allowTrailingDot;
         private readonly string _version;
+        private readonly ShareFileRequestIntent? _fileRequestIntent;
         private readonly bool? _allowSourceTrailingDot;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -33,15 +34,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2022-11-02", bool? allowSourceTrailingDot = null)
+        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2022-11-02", ShareFileRequestIntent? fileRequestIntent = null, bool? allowSourceTrailingDot = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _allowTrailingDot = allowTrailingDot;
             _version = version ?? throw new ArgumentNullException(nameof(version));
+            _fileRequestIntent = fileRequestIntent;
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
@@ -87,6 +90,10 @@ namespace Azure.Storage.Files.Shares
             if (fileChangeTime != null)
             {
                 request.Headers.Add("x-ms-file-change-time", fileChangeTime);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -174,6 +181,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -232,6 +243,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -309,6 +324,10 @@ namespace Azure.Storage.Files.Shares
             if (_allowTrailingDot != null)
             {
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -395,6 +414,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
             }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -477,6 +500,10 @@ namespace Azure.Storage.Files.Shares
             if (_allowTrailingDot != null)
             {
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -578,6 +605,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
             }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -670,6 +701,10 @@ namespace Azure.Storage.Files.Shares
             if (_allowTrailingDot != null)
             {
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -882,6 +917,10 @@ namespace Azure.Storage.Files.Shares
             if (_allowTrailingDot != null)
             {
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
