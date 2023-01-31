@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
+            Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"))
@@ -43,10 +43,10 @@ namespace Azure.Communication.CallAutomation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AcsCallParticipantInternal> array = new List<AcsCallParticipantInternal>();
+                    List<CallParticipantInternal> array = new List<CallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(item));
+                        array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
                     }
                     participants = array;
                     continue;
