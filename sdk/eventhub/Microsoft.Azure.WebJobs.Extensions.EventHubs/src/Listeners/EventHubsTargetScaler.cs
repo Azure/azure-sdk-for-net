@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             {
                 if (_options.TargetUnprocessedEventThreshold > 0)
                 {
-                    concurrency = _options.TargetUnprocessedEventThreshold;
+                    concurrency = (int)_options.TargetUnprocessedEventThreshold;
                 }
                 else if (_options.MaxEventBatchSize > 0)
                 {
