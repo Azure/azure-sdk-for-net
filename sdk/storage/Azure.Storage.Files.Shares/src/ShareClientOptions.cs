@@ -136,8 +136,13 @@ namespace Azure.Storage.Files.Shares
         /// If false, the trailing dot will be trimmed.
         /// Supported by x-ms-version 2022-11-02 and above.
         /// Applicable to <see cref="ShareFileClient.Rename(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
-        /// <see cref="ShareFileClient.UploadRangeFromUriAsync(System.Uri, HttpRange, HttpRange, System.Threading.CancellationToken)"/>,
-        /// and <see cref="ShareFileClient.StartCopyAsync(System.Uri, Models.ShareFileCopyOptions, System.Threading.CancellationToken)"/>.
+        /// <see cref="ShareFileClient.RenameAsync(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.UploadRangeFromUri(System.Uri, HttpRange, HttpRange, Models.ShareFileUploadRangeFromUriOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.UploadRangeFromUriAsync(System.Uri, HttpRange, HttpRange, Models.ShareFileUploadRangeFromUriOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.StartCopy(System.Uri, Models.ShareFileCopyOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.StartCopyAsync(System.Uri, Models.ShareFileCopyOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareDirectoryClient.Rename(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
+        /// and <see cref="ShareDirectoryClient.RenameAsync(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
         public bool? SourceAllowTrailingDot { get; set; }
 
