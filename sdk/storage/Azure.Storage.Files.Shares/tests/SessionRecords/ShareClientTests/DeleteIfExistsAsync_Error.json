@@ -32,7 +32,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev2.file.core.windows.net/test-share-047e738a-4142-10a2-2cff-c7b75bede0b3?sv=2021-12-02\u0026st=2023-01-04T17%3A31%3A11Z\u0026se=2023-01-04T19%3A31%3A11Z\u0026sr=s\u0026sp=r\u0026sig=Sanitized\u0026restype=share",
+      "RequestUri": "https://amandadev2.file.core.windows.net/test-share-047e738a-4142-10a2-2cff-c7b75bede0b3?sv=2022-11-02\u0026st=2023-01-04T17%3A31%3A11Z\u0026se=2023-01-04T19%3A31%3A11Z\u0026sr=s\u0026sp=r\u0026sig=Sanitized\u0026restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
