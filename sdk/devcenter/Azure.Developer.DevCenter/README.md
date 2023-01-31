@@ -37,12 +37,8 @@ You will also need to register a new AAD application, or run locally or in an en
 If using an application, set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
 ```
-string tenantId = "<tenant-id>";
-string devCenterName = "<dev-center-name>";
-var client = new DevCenterClient(
-                tenantId,
-                devCenterName,
-                new DefaultAzureCredential());
+Uri endpoint = new Uri("<dev-center-uri>");
+var client = new DevCenterClient(endpoint, new DefaultAzureCredential());
 ```
 
 ## Key concepts
