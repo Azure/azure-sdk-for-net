@@ -4,7 +4,7 @@
 
 You can use this library on your client side to manage the WebSocket client connections, as shown in the below diagram:
 
-![overflow](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Client/samples/media/overview.png?raw=true)
+![overflow](https://user-images.githubusercontent.com/7847428/215704912-b8a45d17-1f6f-4d26-ba0a-811452de10e1.png)
 
 Use this library to:
 
