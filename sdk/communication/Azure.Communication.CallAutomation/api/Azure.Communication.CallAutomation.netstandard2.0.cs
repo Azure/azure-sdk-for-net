@@ -721,6 +721,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult { get { throw null; } }
         public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } set { } }
         public static Azure.Communication.CallAutomation.RecognizeCompleted Deserialize(string content) { throw null; }
+        public Azure.Communication.CallAutomation.RecognizeResult GetRecognizeResult() { throw null; }
     }
     public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
     {
