@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key. </summary>
+    /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'all' composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key. </summary>
     public readonly partial struct CompositionType : IEquatable<CompositionType>
     {
         private readonly string _value;
