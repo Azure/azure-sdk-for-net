@@ -388,6 +388,8 @@ namespace Azure.Storage.Blobs.Specialized
             RequestContext context)
         {
             EnsureClient();
+            // generated code needs nonnull values
+            conditions ??= new RequestConditions();
             context ??= new RequestContext();
             // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
             var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
