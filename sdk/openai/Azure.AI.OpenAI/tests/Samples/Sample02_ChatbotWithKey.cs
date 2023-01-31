@@ -36,8 +36,8 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 CompletionsOptions request = new CompletionsOptions();
                 request.Prompt.Add(prompt);
 
-                Completions completion = client.GetCompletions("myModelDeployment", request);
-                string response = completion.Choices[0].Text;
+                Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
+                string response = completion.Value.Choices[0].Text;
                 Console.WriteLine($"Chatbot: {response}");
             }
             #endregion

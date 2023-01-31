@@ -40,8 +40,8 @@ namespace Azure.AI.OpenAI.Tests.Samples
             CompletionsOptions request = new CompletionsOptions();
             request.Prompt.Add(summarizationPrompt);
 
-            Completions completion = client.GetCompletions("myModelDeployment", request);
-            string response = completion.Choices[0].Text;
+            Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
+            string response = completion.Value.Choices[0].Text;
             Console.WriteLine($"Summarization: {response}");
             #endregion
         }

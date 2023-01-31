@@ -114,8 +114,8 @@ OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCreden
 string prompt = "What is Azure OpenAI?";
 Console.Write($"Input: {prompt}");
 
-Completions completionResponse = client.GetCompletions(prompt);
-string response = completionResponse.Choices[0].Text;
+Response<Completions> completionResponse = client.GetCompletions(prompt);
+string response = completionResponse.Value.Choices[0].Text;
 Console.WriteLine($"Chatbot: {response}");
 ```
 
@@ -143,8 +143,8 @@ foreach (string prompt in examplePrompts)
     CompletionsOptions request = new CompletionsOptions();
     request.Prompt.Add(prompt);
 
-    Completions completion = client.GetCompletions("myModelDeployment", request);
-    string response = completion.Choices[0].Text;
+    Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
+    string response = completion.Value.Choices[0].Text;
     Console.WriteLine($"Chatbot: {response}");
 }
 ```

@@ -65,5 +65,18 @@ namespace Azure.AI.OpenAI.Tests
             var response = await client.GetEmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
         }
+
+        /// <summary>
+        /// Test Exception throw.
+        /// </summary>
+        [RecordedTest]
+        public void RequestFailedExceptionTest()
+        {
+            var client = GetClient();
+            CompletionsOptions completionsRequest = new CompletionsOptions();
+            completionsRequest.Prompt.Add("Hello world");
+            Assert.That(async () => await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest),
+                Throws.InstanceOf<RequestFailedException>());
+        }
     }
 }
