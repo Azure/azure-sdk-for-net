@@ -68,7 +68,6 @@ internal class SessionReceiver
             try
             {
                 var receiver = await client.AcceptNextSessionAsync(_testParameters.SessionQueueName);
-
                 await foreach (var message in receiver.ReceiveMessagesAsync(cancellationToken))
                 {
                     _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);

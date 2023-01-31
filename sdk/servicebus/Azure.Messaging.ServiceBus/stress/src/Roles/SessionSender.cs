@@ -57,8 +57,9 @@ internal class SessionSender : Sender
             foreach (ServiceBusMessage message in messages)
             {
                 MessageTracking.AugmentMessage(message, _testParameters.Sha256Hash);
+                message.SessionId = sessionId;
                 await sender.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
-                _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.SessionMessagesSent).TrackValue(1);
             }
         }
         catch (TaskCanceledException)

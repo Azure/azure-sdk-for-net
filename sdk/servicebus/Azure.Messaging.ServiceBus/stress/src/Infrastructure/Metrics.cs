@@ -63,6 +63,13 @@ public class Metrics
     public const string MessagesSent = "MessagesSent";
 
     /// <summary>
+    ///   This is the metric name used to collect metrics on the number of session messages successfully
+    ///   sent by the Service Bus Sender.
+    /// </summary>
+    ///
+    public const string SessionMessagesSent = "SessionMessagesSent";
+
+    /// <summary>
     ///   This is the metric name used to collect metrics on the total number of bytes that have been
     ///   Sent to the Service Bus Queue over the course of the test run.
     /// </summary>
