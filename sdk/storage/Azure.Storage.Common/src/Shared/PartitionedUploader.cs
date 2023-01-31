@@ -314,7 +314,45 @@ namespace Azure.Storage
                     Constants.DefaultBufferSize :
                     Constants.LargeBufferSize;
 
-            throw new NotImplementedException("Partitioned upload on BinaryData not yet implemented.");
+            // Otherwise stage individual blocks
+
+            /* We only support parallel upload in an async context to avoid issues in our overall sync story.
+             * We're branching on both async and max worker count, where 3 combinations lead to
+             * UploadInSequenceInternal and 1 combination leads to UploadInParallelAsync. We are guaranteed
+             * to be in an async context when we call UploadInParallelAsync, even though the analyzer can't
+             * detext this, and we properly pass in the async context in the else case when we haven't
+             * explicitly checked.
+             */
+#pragma warning disable AZC0109 // Misuse of 'async' parameter.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            if (async && _maxWorkerCount > 1)
+            {
+                return await UploadInParallelAsync(
+                    content,
+                    length,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    GetContentPartitionsBinaryDataInternal,
+                    StageBinaryDataPartitionInternal,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0109 // Misuse of 'async' parameter.
+            else
+            {
+                return await UploadInSequenceInternal(
+                    content,
+                    length,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    GetContentPartitionsBinaryDataInternal,
+                    StageBinaryDataPartitionInternal,
+                    async: async,
+                    cancellationToken).ConfigureAwait(false);
+            }
         }
 
         public async Task<Response<TCompleteUploadReturn>> UploadInternal(
@@ -686,7 +724,7 @@ namespace Azure.Storage
         /// <remarks>
         /// Async wrapper over a synchronous operation to satisfy delegate definitions.
         /// </remarks>
-        private static async IAsyncEnumerable<ContentPartition<BinaryData>> GetContentPartitionsBinaryDataAsync(
+        private static async IAsyncEnumerable<ContentPartition<BinaryData>> GetContentPartitionsBinaryDataInternal(
 #pragma warning disable CA1801 // Review unused parameters; unused paramters satisfy delegate GetContentPartitionsAsync<T>
             BinaryData content,
             long? contentLength,
