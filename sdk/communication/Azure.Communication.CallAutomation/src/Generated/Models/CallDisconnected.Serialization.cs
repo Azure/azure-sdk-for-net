@@ -17,6 +17,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"))
@@ -34,8 +35,13 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("operationContext"))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CallDisconnected(callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallDisconnected(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value);
         }
     }
 }

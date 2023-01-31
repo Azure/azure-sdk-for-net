@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The GetParticipantsResponse. </summary>
+    /// <summary> The response payload for getting participants of the call. </summary>
     internal partial class GetParticipantsResponseInternal
     {
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
         internal GetParticipantsResponseInternal()
         {
-            Values = new ChangeTrackingList<AcsCallParticipantInternal>();
+            Values = new ChangeTrackingList<CallParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
-        /// <param name="values"></param>
-        /// <param name="nextLink"></param>
-        internal GetParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> values, string nextLink)
+        /// <param name="values"> List of the current participants in the call. </param>
+        /// <param name="nextLink"> Continue of the list of participants. </param>
+        internal GetParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> values, string nextLink)
         {
             Values = values;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the values. </summary>
-        public IReadOnlyList<AcsCallParticipantInternal> Values { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> List of the current participants in the call. </summary>
+        public IReadOnlyList<CallParticipantInternal> Values { get; }
+        /// <summary> Continue of the list of participants. </summary>
         public string NextLink { get; }
     }
 }

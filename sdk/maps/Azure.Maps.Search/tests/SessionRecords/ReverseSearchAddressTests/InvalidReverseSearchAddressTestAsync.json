@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8a55acf0ced82b072ea3a679be558103-09b8efa587950b3e-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
-        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "b2fd6821ff16125dca64c08ba8125d8c",
+        "traceparent": "00-d0a89a34fff0774da8bf9dc7bfc121a7-715a02a4be2b624e-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20221013.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "daab4652f35c640e899cbc4f3c710a0a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,12 +17,12 @@
       "ResponseHeaders": {
         "Content-Length": "138",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 08 Sep 2022 18:56:27 GMT",
+        "Date": "Wed, 12 Oct 2022 16:05:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 8B962FCB6F6941FEAEA2026ECFFF35C7 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:27Z"
+        "X-MSEdge-Ref": "Ref A: 84B6594683A64D79BCF9FF7FBBB371FA Ref B: TPE30EDGE0617 Ref C: 2022-10-12T16:05:29Z"
       },
       "ResponseBody": {
         "error": {
@@ -33,9 +33,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1570687256"
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1386257094"
   }
 }

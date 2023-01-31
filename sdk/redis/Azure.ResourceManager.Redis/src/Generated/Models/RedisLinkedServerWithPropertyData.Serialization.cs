@@ -47,6 +47,8 @@ namespace Azure.ResourceManager.Redis
             Optional<ResourceIdentifier> linkedRedisCacheId = default;
             Optional<AzureLocation> linkedRedisCacheLocation = default;
             Optional<RedisLinkedServerRole> serverRole = default;
+            Optional<string> geoReplicatedPrimaryHostName = default;
+            Optional<string> primaryHostName = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Redis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -114,6 +116,16 @@ namespace Azure.ResourceManager.Redis
                             serverRole = property0.Value.GetString().ToRedisLinkedServerRole();
                             continue;
                         }
+                        if (property0.NameEquals("geoReplicatedPrimaryHostName"))
+                        {
+                            geoReplicatedPrimaryHostName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("primaryHostName"))
+                        {
+                            primaryHostName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             provisioningState = property0.Value.GetString();
@@ -123,7 +135,7 @@ namespace Azure.ResourceManager.Redis
                     continue;
                 }
             }
-            return new RedisLinkedServerWithPropertyData(id, name, type, systemData.Value, linkedRedisCacheId.Value, Optional.ToNullable(linkedRedisCacheLocation), Optional.ToNullable(serverRole), provisioningState.Value);
+            return new RedisLinkedServerWithPropertyData(id, name, type, systemData.Value, linkedRedisCacheId.Value, Optional.ToNullable(linkedRedisCacheLocation), Optional.ToNullable(serverRole), geoReplicatedPrimaryHostName.Value, primaryHostName.Value, provisioningState.Value);
         }
     }
 }

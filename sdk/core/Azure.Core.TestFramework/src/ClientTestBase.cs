@@ -86,6 +86,16 @@ namespace Azure.Core.TestFramework
             {
                 if (!s_clientValidation.TryGetValue(clientType, out var validationException))
                 {
+                    var coreMethods = new Dictionary<string, MethodInfo>();
+
+                    foreach (MethodInfo methodInfo in clientType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic))
+                    {
+                        if (methodInfo.Name.EndsWith("CoreAsync") && (methodInfo.IsVirtual || methodInfo.IsAbstract))
+                        {
+                            coreMethods.Add(methodInfo.Name.Substring(0, methodInfo.Name.Length - 9) + "Async", methodInfo);
+                        }
+                    }
+
                     foreach (MethodInfo methodInfo in clientType.GetMethods(BindingFlags.Instance | BindingFlags.Public))
                     {
                         if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
@@ -99,9 +109,14 @@ namespace Azure.Core.TestFramework
                             methodInfo.Name.StartsWith("Get") &&
                             !methodInfo.IsVirtual)
                         {
-                            validationException = new InvalidOperationException($"Client type contains public non-virtual Get*Client method {methodInfo.Name}");
+                            // if an async method is not virtual, we should find if we have a corresponding virtual or abstract Core method
+                            // if no, we throw the validation failed exception
+                            if (!coreMethods.ContainsKey(methodInfo.Name))
+                            {
+                                validationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
 
-                            break;
+                                break;
+                            }
                         }
                     }
 

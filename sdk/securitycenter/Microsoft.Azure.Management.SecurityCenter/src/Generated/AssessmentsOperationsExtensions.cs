@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Security
             /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
             /// (/providers/Microsoft.Management/managementGroups/mgName).
             /// </param>
-            public static IPage<SecurityAssessment> List(this IAssessmentsOperations operations, string scope)
+            public static IPage<SecurityAssessmentResponse> List(this IAssessmentsOperations operations, string scope)
             {
                 return operations.ListAsync(scope).GetAwaiter().GetResult();
             }
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SecurityAssessment>> ListAsync(this IAssessmentsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SecurityAssessmentResponse>> ListAsync(this IAssessmentsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional. Possible values include: 'links', 'metadata'
             /// </param>
-            public static SecurityAssessment Get(this IAssessmentsOperations operations, string resourceId, string assessmentName, string expand = default(string))
+            public static SecurityAssessmentResponse Get(this IAssessmentsOperations operations, string resourceId, string assessmentName, string expand = default(string))
             {
                 return operations.GetAsync(resourceId, assessmentName, expand).GetAwaiter().GetResult();
             }
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityAssessment> GetAsync(this IAssessmentsOperations operations, string resourceId, string assessmentName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityAssessmentResponse> GetAsync(this IAssessmentsOperations operations, string resourceId, string assessmentName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceId, assessmentName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='assessment'>
             /// Calculated assessment on a pre-defined assessment metadata
             /// </param>
-            public static SecurityAssessment CreateOrUpdate(this IAssessmentsOperations operations, string resourceId, string assessmentName, SecurityAssessment assessment)
+            public static SecurityAssessmentResponse CreateOrUpdate(this IAssessmentsOperations operations, string resourceId, string assessmentName, SecurityAssessment assessment)
             {
                 return operations.CreateOrUpdateAsync(resourceId, assessmentName, assessment).GetAwaiter().GetResult();
             }
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityAssessment> CreateOrUpdateAsync(this IAssessmentsOperations operations, string resourceId, string assessmentName, SecurityAssessment assessment, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityAssessmentResponse> CreateOrUpdateAsync(this IAssessmentsOperations operations, string resourceId, string assessmentName, SecurityAssessment assessment, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceId, assessmentName, assessment, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SecurityAssessment> ListNext(this IAssessmentsOperations operations, string nextPageLink)
+            public static IPage<SecurityAssessmentResponse> ListNext(this IAssessmentsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SecurityAssessment>> ListNextAsync(this IAssessmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SecurityAssessmentResponse>> ListNextAsync(this IAssessmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

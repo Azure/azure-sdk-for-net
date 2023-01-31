@@ -11,8 +11,10 @@ namespace Azure.AI.Language.Conversations.Tests
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
+        ConversationsClientOptions.ServiceVersion.V2022_10_01_Preview,
         ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview,
         ConversationsClientOptions.ServiceVersion.V2022_05_01)]
+    [IgnoreServiceError(429, "429")]
     public abstract class ConversationAnalysisTestBase<TClient> : RecordedTestBase<ConversationAnalysisTestEnvironment> where TClient : class
     {
         protected ConversationAnalysisTestBase(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)

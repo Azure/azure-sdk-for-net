@@ -1,15 +1,32 @@
 # Release History
 
-## 4.12.0-beta.1 (Unreleased)
+## 4.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
-- Stopped populating CloudEvents Distributed Tracing extension when distributed tracing is disabled.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.13.0 (2023-01-19)
+
+### Features Added
+
+- Added new API Management events.
+- Added new DataBox events.
+
+## 4.12.0 (2022-11-08)
+
+### Features Added
+
+- Added extension builder method that can be used to inject an `EventGridPublisherClient` instance using a `TokenCredential` for authentication.
+- Added new Dicom Healthcare events.
+
+### Breaking Changes
+
+- Fixed bug where the CloudEvents Distributed Tracing extensions were populated even when distributed tracing was disabled.
 
 ## 4.11.0 (2022-07-07)
 

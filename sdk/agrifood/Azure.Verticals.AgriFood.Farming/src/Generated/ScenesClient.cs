@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The Scenes service client.
+    // Data plane generated client.
     /// <summary> The Scenes service client. </summary>
     public partial class ScenesClient
     {
@@ -70,75 +68,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
-        /// Console.WriteLine(result.GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SatelliteDataIngestionJob</c>:
-        /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
-        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
-        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
-        ///   data: {
-        ///     imageNames: [string], # Optional. List of ImageNames.
-        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
-        ///   id: string, # Optional. Unique job id.
-        ///   status: string, # Optional. Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
-        ///   message: string, # Optional. Status message to capture more details of the job.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ScenesClient.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetailsAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -164,75 +94,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSatelliteDataIngestionJobDetails with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
-        /// Console.WriteLine(result.GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SatelliteDataIngestionJob</c>:
-        /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
-        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
-        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
-        ///   data: {
-        ///     imageNames: [string], # Optional. List of ImageNames.
-        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
-        ///   id: string, # Optional. Unique job id.
-        ///   status: string, # Optional. Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
-        ///   message: string, # Optional. Status message to capture more details of the job.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ScenesClient.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetails(String,RequestContext)']/*" />
         public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -257,23 +119,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DownloadAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// Response response = await client.DownloadAsync("<filePath>");
-        /// if (response.ContentStream != null)
-        /// {
-        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
-        ///     {
-        ///         response.ContentStream.CopyTo(outFileStream);
-        ///     }
-        /// }
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ScenesClient.xml" path="doc/members/member[@name='DownloadAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> DownloadAsync(string filePath, RequestContext context = null)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
@@ -298,23 +144,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Download with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// Response response = client.Download("<filePath>");
-        /// if (response.ContentStream != null)
-        /// {
-        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
-        ///     {
-        ///         response.ContentStream.CopyTo(outFileStream);
-        ///     }
-        /// }
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ScenesClient.xml" path="doc/members/member[@name='Download(String,RequestContext)']/*" />
         public virtual Response Download(string filePath, RequestContext context = null)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
@@ -354,100 +184,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetScenesAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetScenesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("provider").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFormat").ToString());
-        ///     Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
-        ///     Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
-        ///     Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SceneListResponseValue</c>:
-        /// <code>{
-        ///   sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   provider: string, # Optional. Data provider of the scene.
-        ///   source: string, # Optional. Data source of the scene.
-        ///   imageFiles: [
-        ///     {
-        ///       fileLink: string, # Optional. Link of the image file.
-        ///       name: string, # Required. Name of the image file.
-        ///       imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
-        ///       resolution: number, # Optional. Resolution of image file in meters.
-        ///     }
-        ///   ], # Optional. Collection of image files.
-        ///   imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
-        ///   cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
-        ///   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
-        ///   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
-        ///   boundaryId: string, # Optional. Boundary ID which belongs to the scene.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the scene.
-        ///   id: string, # Optional. Unique scene resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ScenesClient.xml" path="doc/members/member[@name='GetScenesAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetScenesAsync(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNull(provider, nameof(provider));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
 
-            return GetScenesImplementationAsync("ScenesClient.GetScenes", provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetScenesImplementationAsync(string diagnosticsScopeName, string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context)
-                        : CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ScenesClient.GetScenes", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of scene resources. </summary>
@@ -471,100 +217,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetScenes with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetScenes with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("provider").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
-        ///     Console.WriteLine(result.GetProperty("imageFormat").ToString());
-        ///     Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
-        ///     Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
-        ///     Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SceneListResponseValue</c>:
-        /// <code>{
-        ///   sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   provider: string, # Optional. Data provider of the scene.
-        ///   source: string, # Optional. Data source of the scene.
-        ///   imageFiles: [
-        ///     {
-        ///       fileLink: string, # Optional. Link of the image file.
-        ///       name: string, # Required. Name of the image file.
-        ///       imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
-        ///       resolution: number, # Optional. Resolution of image file in meters.
-        ///     }
-        ///   ], # Optional. Collection of image files.
-        ///   imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
-        ///   cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
-        ///   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
-        ///   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
-        ///   boundaryId: string, # Optional. Boundary ID which belongs to the scene.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the scene.
-        ///   id: string, # Optional. Unique scene resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ScenesClient.xml" path="doc/members/member[@name='GetScenes(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetScenes(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNull(provider, nameof(provider));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
 
-            return GetScenesImplementation("ScenesClient.GetScenes", provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetScenesImplementation(string diagnosticsScopeName, string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context)
-                        : CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ScenesClient.GetScenes", "value", "nextLink", context);
         }
 
         /// <summary> Create a satellite data ingestion job. </summary>
@@ -576,156 +238,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateSatelliteDataIngestionJobAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     farmerId = "<farmerId>",
-        ///     boundaryId = "<boundaryId>",
-        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
-        /// };
-        /// 
-        /// var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateSatelliteDataIngestionJobAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     farmerId = "<farmerId>",
-        ///     boundaryId = "<boundaryId>",
-        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     provider = "Microsoft",
-        ///     source = "Sentinel_2_L2A",
-        ///     data = new {
-        ///         imageNames = new[] {
-        ///             "<String>"
-        ///         },
-        ///         imageFormats = new[] {
-        ///             "<String>"
-        ///         },
-        ///         imageResolutions = new[] {
-        ///             123.45d
-        ///         },
-        ///     },
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
-        /// Console.WriteLine(result.GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SatelliteDataIngestionJob</c>:
-        /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
-        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
-        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
-        ///   data: {
-        ///     imageNames: [string], # Optional. List of ImageNames.
-        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
-        ///   id: string, # Optional. Unique job id.
-        ///   status: string, # Optional. Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
-        ///   message: string, # Optional. Status message to capture more details of the job.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SatelliteDataIngestionJob</c>:
-        /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
-        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
-        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
-        ///   data: {
-        ///     imageNames: [string], # Optional. List of ImageNames.
-        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
-        ///   id: string, # Optional. Unique job id.
-        ///   status: string, # Optional. Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
-        ///   message: string, # Optional. Status message to capture more details of the job.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ScenesClient.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJobAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateSatelliteDataIngestionJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -753,156 +266,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateSatelliteDataIngestionJob with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     farmerId = "<farmerId>",
-        ///     boundaryId = "<boundaryId>",
-        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
-        /// };
-        /// 
-        /// var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateSatelliteDataIngestionJob with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ScenesClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     farmerId = "<farmerId>",
-        ///     boundaryId = "<boundaryId>",
-        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     provider = "Microsoft",
-        ///     source = "Sentinel_2_L2A",
-        ///     data = new {
-        ///         imageNames = new[] {
-        ///             "<String>"
-        ///         },
-        ///         imageFormats = new[] {
-        ///             "<String>"
-        ///         },
-        ///         imageResolutions = new[] {
-        ///             123.45d
-        ///         },
-        ///     },
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
-        /// Console.WriteLine(result.GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SatelliteDataIngestionJob</c>:
-        /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
-        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
-        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
-        ///   data: {
-        ///     imageNames: [string], # Optional. List of ImageNames.
-        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
-        ///   id: string, # Optional. Unique job id.
-        ///   status: string, # Optional. Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
-        ///   message: string, # Optional. Status message to capture more details of the job.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SatelliteDataIngestionJob</c>:
-        /// <code>{
-        ///   farmerId: string, # Required. Farmer ID.
-        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
-        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
-        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
-        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
-        ///   data: {
-        ///     imageNames: [string], # Optional. List of ImageNames.
-        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
-        ///   id: string, # Optional. Unique job id.
-        ///   status: string, # Optional. Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
-        ///   message: string, # Optional. Status message to capture more details of the job.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ScenesClient.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJob(WaitUntil,String,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateSatelliteDataIngestionJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));

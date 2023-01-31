@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,10 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="matchConditions"/> is null. </exception>
         public WebApplicationFirewallCustomRule(int priority, WebApplicationFirewallRuleType ruleType, IEnumerable<MatchCondition> matchConditions, WebApplicationFirewallAction action)
         {
-            if (matchConditions == null)
-            {
-                throw new ArgumentNullException(nameof(matchConditions));
-            }
+            Argument.AssertNotNull(matchConditions, nameof(matchConditions));
 
             Priority = priority;
             RuleType = ruleType;

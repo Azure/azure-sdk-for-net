@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automation.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> automationAccountResourceId = default;
+            Optional<ResourceIdentifier> automationAccountResourceId = default;
             Optional<string> automationAccountId = default;
             Optional<string> location0 = default;
             Optional<DateTimeOffset> deletionTime = default;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -73,7 +73,12 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("automationAccountResourceId"))
                         {
-                            automationAccountResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            automationAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("automationAccountId"))

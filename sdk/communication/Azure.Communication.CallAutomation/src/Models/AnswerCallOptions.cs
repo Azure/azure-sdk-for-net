@@ -19,6 +19,7 @@ namespace Azure.Communication.CallAutomation
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -39,6 +40,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Repeatability Headers.
         /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; } = new RepeatabilityHeaders(Guid.NewGuid(), DateTimeOffset.UtcNow);
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
+
+        /// <summary>
+        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// </summary>
+        public Uri AzureCognitiveServicesEndpointUrl { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,6 +26,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("scaleSettings");
                 writer.WriteObjectValue(ScaleSettings);
             }
+            if (Optional.IsDefined(RaiPolicyName))
+            {
+                writer.WritePropertyName("raiPolicyName");
+                writer.WriteStringValue(RaiPolicyName);
+            }
             writer.WriteEndObject();
         }
 
@@ -33,6 +39,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CognitiveServicesAccountDeploymentProvisioningState> provisioningState = default;
             Optional<CognitiveServicesAccountDeploymentModel> model = default;
             Optional<CognitiveServicesAccountDeploymentScaleSettings> scaleSettings = default;
+            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
+            Optional<string> raiPolicyName = default;
+            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
@@ -65,8 +74,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("capabilities"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    capabilities = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("raiPolicyName"))
+                {
+                    raiPolicyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("callRateLimit"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    continue;
+                }
             }
-            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value);
+            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value);
         }
     }
 }

@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-2066c19d7bcb1140b7baf768dd15a4e4-41aaf86c537c384e-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220905.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2bb7ef1ba343ad9a46cdb1157ce8b7a9",
+        "traceparent": "00-05868c4ddd05c9dccb0f267bdd0cdbb4-ccb137155d480447-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230112.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "844972102b5fe0c2a7569619722f9f80",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Sep 2022 10:40:17 GMT",
+        "x-ms-date": "Thu, 12 Jan 2023 11:03:11 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -21,14 +21,14 @@
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
         "Content-Length": "31",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Sep 2022 10:40:17 GMT",
-        "MS-CV": "R4HpBVeOXU\u002BlnrQN4gfL5A.0",
+        "Date": "Thu, 12 Jan 2023 11:03:10 GMT",
+        "MS-CV": "We6trQyRu0C5YYeIciGNsw.2.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0EdIVYwAAAABO9jy0yW3PR6cTxEkdtL9/UFJHMDFFREdFMDkxNwBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Azure-Ref": "07ui/YwAAAAAaao0ko5bDQYkCIM9khx90SEVMMDFFREdFMjAxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "2bb7ef1ba343ad9a46cdb1157ce8b7a9",
-        "X-Processing-Time": "34ms"
+        "x-ms-client-request-id": "844972102b5fe0c2a7569619722f9f80",
+        "X-Processing-Time": "105ms"
       },
       "ResponseBody": {
         "identity": {
@@ -44,11 +44,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "traceparent": "00-c5a9262d7380a346b2dd7dbd8662cf2c-ea82cab93c4aee4e-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220905.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "46ba5c19030554fb96371b99c2f83d4d",
+        "traceparent": "00-8889a415d005585945a684194297b4fe-0b62119be054672a-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230112.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "42fb64abc66743ddd0b4fd5cf51232fe",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Sep 2022 10:40:17 GMT",
+        "x-ms-date": "Thu, 12 Jan 2023 11:03:11 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -61,20 +61,20 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
         "Content-Type": "application/json",
-        "Date": "Mon, 05 Sep 2022 10:40:17 GMT",
-        "MS-CV": "pS0puHSQoEqvNLcMzgBmsQ.0",
+        "Date": "Thu, 12 Jan 2023 11:03:11 GMT",
+        "MS-CV": "nDe\u002BM3PMa0a3Fuw1QhyINg.2.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0EdIVYwAAAADAPi22U8rETp\u002BjGzNYWmjdUFJHMDFFREdFMDkxNwBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Azure-Ref": "07\u002Bi/YwAAAAA7OyoUKz54S5wJ7q3xvC0qSEVMMDFFREdFMjAxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "46ba5c19030554fb96371b99c2f83d4d",
-        "X-Processing-Time": "32ms"
+        "x-ms-client-request-id": "42fb64abc66743ddd0b4fd5cf51232fe",
+        "X-Processing-Time": "33ms"
       },
       "ResponseBody": {
         "error": {
           "code": "ValidationError",
-          "message": "ExpiresInMinutes value 1441 is invalid.",
+          "message": "ExpiresInMinutes value 1441 is invalid. Value must be within the [60, 1440] interval.",
           "target": "ExpiresInMinutes"
         }
       }
@@ -82,6 +82,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "629595237"
+    "RandomSeed": "1378297689"
   }
 }

@@ -13,39 +13,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class RestorableTimeRange
     {
         /// <summary> Initializes a new instance of RestorableTimeRange. </summary>
-        /// <param name="startTime"> Start time for the available restore range. </param>
-        /// <param name="endTime"> End time for the available restore range. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
-        public RestorableTimeRange(string startTime, string endTime)
+        /// <param name="startOn"> Start time for the available restore range. </param>
+        /// <param name="endOn"> End time for the available restore range. </param>
+        public RestorableTimeRange(DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            if (startTime == null)
-            {
-                throw new ArgumentNullException(nameof(startTime));
-            }
-            if (endTime == null)
-            {
-                throw new ArgumentNullException(nameof(endTime));
-            }
-
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary> Initializes a new instance of RestorableTimeRange. </summary>
-        /// <param name="startTime"> Start time for the available restore range. </param>
-        /// <param name="endTime"> End time for the available restore range. </param>
+        /// <param name="startOn"> Start time for the available restore range. </param>
+        /// <param name="endOn"> End time for the available restore range. </param>
         /// <param name="objectType"></param>
-        internal RestorableTimeRange(string startTime, string endTime, string objectType)
+        internal RestorableTimeRange(DateTimeOffset startOn, DateTimeOffset endOn, string objectType)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             ObjectType = objectType;
         }
 
         /// <summary> Start time for the available restore range. </summary>
-        public string StartTime { get; set; }
+        public DateTimeOffset StartOn { get; set; }
         /// <summary> End time for the available restore range. </summary>
-        public string EndTime { get; set; }
+        public DateTimeOffset EndOn { get; set; }
         /// <summary> Gets or sets the object type. </summary>
         public string ObjectType { get; set; }
     }

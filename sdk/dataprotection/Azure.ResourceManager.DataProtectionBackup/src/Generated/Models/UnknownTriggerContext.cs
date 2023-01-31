@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownTriggerContext. </summary>
-    internal partial class UnknownTriggerContext : TriggerContext
+    internal partial class UnknownTriggerContext : DataProtectionBackupTriggerContext
     {
         /// <summary> Initializes a new instance of UnknownTriggerContext. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>

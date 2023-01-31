@@ -8,15 +8,15 @@ azure-arm: true
 csharp: true
 library-name: SecurityDevOps
 namespace: Azure.ResourceManager.SecurityDevOps
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/886cb1c95499e7577e14ba1b4317f63590d79992/specification/securitydevops/resource-manager/readme.md
-tag: package-2022-09-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+
 
 format-by-name-rules:
   'tenantId': 'uuid'

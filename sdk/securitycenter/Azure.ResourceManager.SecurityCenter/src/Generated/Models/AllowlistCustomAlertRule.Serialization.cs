@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             IList<string> allowlistValues = default;
-            Optional<ValueType> valueType = default;
+            Optional<SecurityValueType> valueType = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             bool isEnabled = default;
-            string ruleType = default;
+            string ruleType = "AllowlistCustomAlertRule";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowlistValues"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueType = new ValueType(property.Value.GetString());
+                    valueType = new SecurityValueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"))

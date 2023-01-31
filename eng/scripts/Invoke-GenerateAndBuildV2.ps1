@@ -41,6 +41,7 @@ $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
+$relatedCadlProjectFolder = $inputJson.relatedCadlProjectFolder
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -108,6 +109,48 @@ if ($inputFileToGen) {
     UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
+# generate sdk from cadl file
+if ($relatedCadlProjectFolder) {
+    foreach ($cadlRelativeFolder in $relatedCadlProjectFolder) {
+        $cadlFolder = Resolve-Path (Join-Path $swaggerDir $cadlRelativeFolder)
+        $newPackageOutput = "newPackageOutput.json"
+
+        $cadlProjectYaml = Get-Content -Path (Join-Path "$cadlFolder" "cadl-project.yaml") -Raw
+
+        Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+        $yml = ConvertFrom-YAML $cadlProjectYaml
+        $service = ""
+        $namespace = ""
+        if ($yml) {
+            if ($yml["parameters"] -And $yml["parameters"]["service-directory-name"]) {
+                $service = $yml["parameters"]["service-directory-name"]["default"];
+            }
+            if ($yml["options"] -And $yml["options"]["@azure-tools/cadl-csharp"] -And $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]) {
+                $namespace = $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]
+            }
+        }
+        if (!$service || !$namespace) {
+            throw "Not provide service name or namespace."
+        }
+        $projectFolder = (Join-Path $sdkPath "sdk" $service $namespace)
+        New-CADLPackageFolder `
+            -service $service `
+            -namespace $namespace `
+            -sdkPath $sdkPath `
+            -relatedCadlProjectFolder $cadlRelativeFolder `
+            -specRoot $swaggerDir `
+            -outputJsonFile $newpackageoutput
+        $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
+        $relativeSdkPath = $newPackageOutputJson.path
+        GeneratePackage `
+            -projectFolder $projectFolder `
+            -sdkRootPath $sdkPath `
+            -path $relativeSdkPath `
+            -downloadUrlPrefix $downloadUrlPrefix `
+            -serviceType "data-plane" `
+            -generatedSDKPackages $generatedSDKPackages
+    }
+}
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
 }

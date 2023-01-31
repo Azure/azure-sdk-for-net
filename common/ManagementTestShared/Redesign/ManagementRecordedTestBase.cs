@@ -80,13 +80,18 @@ namespace Azure.ResourceManager.TestFramework
 
         protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
+            if (enableDeleteAfter)
+            {
+                AddDeleteAfterTagPolicy deleteAfterTagPolicy = new AddDeleteAfterTagPolicy(Recording.UtcNow);
+                options.AddPolicy(deleteAfterTagPolicy, HttpPipelinePosition.PerCall);
+            }
             if (ApiVersion is not null)
                 options.SetApiVersion(_resourceType, ApiVersion);
 

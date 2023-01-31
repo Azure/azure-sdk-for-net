@@ -40,33 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                     case "FirewallPolicyNatRuleCollection": return FirewallPolicyNatRuleCollectionInfo.DeserializeFirewallPolicyNatRuleCollectionInfo(element);
                 }
             }
-            FirewallPolicyRuleCollectionType ruleCollectionType = default;
-            Optional<string> name = default;
-            Optional<int> priority = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("ruleCollectionType"))
-                {
-                    ruleCollectionType = new FirewallPolicyRuleCollectionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("priority"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    priority = property.Value.GetInt32();
-                    continue;
-                }
-            }
-            return new UnknownFirewallPolicyRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority));
+            return UnknownFirewallPolicyRuleCollection.DeserializeUnknownFirewallPolicyRuleCollection(element);
         }
     }
 }

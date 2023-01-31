@@ -13,9 +13,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class NetworkSecurityGroupTests : NetworkServiceClientTestBase
     {
-        public NetworkSecurityGroupTests(bool isAsync) : base(isAsync)
+        public NetworkSecurityGroupTests(bool isAsync, string apiVersion)
+        : base(isAsync, NetworkSecurityGroupResource.ResourceType, apiVersion)
         {
         }
 

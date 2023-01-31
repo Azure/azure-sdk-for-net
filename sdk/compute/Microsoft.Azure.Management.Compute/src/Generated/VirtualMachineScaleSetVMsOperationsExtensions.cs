@@ -38,14 +38,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='vmScaleSetVMReimageInput'>
+            /// Parameters for the Reimaging Virtual machine in ScaleSet.
             /// </param>
-            public static void Reimage(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?))
+            public static void Reimage(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters))
             {
-                operations.ReimageAsync(resourceGroupName, vmScaleSetName, instanceId, tempDisk).GetAwaiter().GetResult();
+                operations.ReimageAsync(resourceGroupName, vmScaleSetName, instanceId, vmScaleSetVMReimageInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,17 +62,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='vmScaleSetVMReimageInput'>
+            /// Parameters for the Reimaging Virtual machine in ScaleSet.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ReimageAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ReimageAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, tempDisk, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, vmScaleSetVMReimageInput, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -836,14 +832,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='vmScaleSetVMReimageInput'>
+            /// Parameters for the Reimaging Virtual machine in ScaleSet.
             /// </param>
-            public static void BeginReimage(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?))
+            public static void BeginReimage(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters))
             {
-                operations.BeginReimageAsync(resourceGroupName, vmScaleSetName, instanceId, tempDisk).GetAwaiter().GetResult();
+                operations.BeginReimageAsync(resourceGroupName, vmScaleSetName, instanceId, vmScaleSetVMReimageInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -862,17 +856,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='vmScaleSetVMReimageInput'>
+            /// Parameters for the Reimaging Virtual machine in ScaleSet.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginReimageAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginReimageAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, tempDisk, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, vmScaleSetVMReimageInput, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

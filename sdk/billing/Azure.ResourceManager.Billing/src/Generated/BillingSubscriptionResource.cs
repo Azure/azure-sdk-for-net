@@ -90,8 +90,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -114,8 +122,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingSubscriptionResource> Get(CancellationToken cancellationToken = default)
@@ -138,8 +154,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Cancels a billing subscription.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,8 +188,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Cancels a billing subscription.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,8 +222,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Updates the properties of a billing subscription.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Request parameters that are provided to the update billing subscription operation. </param>
@@ -220,8 +260,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Updates the properties of a billing subscription.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Request parameters that are provided to the update billing subscription operation. </param>
@@ -250,23 +298,31 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Moves a subscription&apos;s charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/move
-        /// Operation Id: BillingSubscriptions_Move
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/move</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Move</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the move subscription operation. </param>
+        /// <param name="content"> Request parameters that are provided to the move subscription operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingSubscriptionResource>> MoveAsync(WaitUntil waitUntil, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BillingSubscriptionResource>> MoveAsync(WaitUntil waitUntil, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Move");
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.MoveAsync(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await _billingSubscriptionRestClient.MoveAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -280,23 +336,31 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Moves a subscription&apos;s charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/move
-        /// Operation Id: BillingSubscriptions_Move
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/move</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Move</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the move subscription operation. </param>
+        /// <param name="content"> Request parameters that are provided to the move subscription operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
-        public virtual ArmOperation<BillingSubscriptionResource> Move(WaitUntil waitUntil, MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BillingSubscriptionResource> Move(WaitUntil waitUntil, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Move");
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Move(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest, cancellationToken);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest).Request, response, OperationFinalStateVia.Location);
+                var response = _billingSubscriptionRestClient.Move(Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -310,21 +374,29 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Validates if a subscription&apos;s charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/validateMoveEligibility
-        /// Operation Id: BillingSubscriptions_ValidateMoveEligibility
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/validateMoveEligibility</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_ValidateMoveEligibility</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the validate move eligibility operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate move eligibility operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
-        public virtual async Task<Response<ValidateMoveBillingSubscriptionEligibilityResult>> ValidateMoveEligibilityAsync(MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BillingSubscriptionValidateMoveEligibilityResult>> ValidateMoveEligibilityAsync(BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.ValidateMoveEligibility");
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.ValidateMoveEligibilityAsync(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _billingSubscriptionRestClient.ValidateMoveEligibilityAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -336,21 +408,29 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Validates if a subscription&apos;s charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/validateMoveEligibility
-        /// Operation Id: BillingSubscriptions_ValidateMoveEligibility
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/validateMoveEligibility</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_ValidateMoveEligibility</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="moveBillingSubscriptionRequest"> Request parameters that are provided to the validate move eligibility operation. </param>
+        /// <param name="content"> Request parameters that are provided to the validate move eligibility operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveBillingSubscriptionRequest"/> is null. </exception>
-        public virtual Response<ValidateMoveBillingSubscriptionEligibilityResult> ValidateMoveEligibility(MoveBillingSubscriptionRequest moveBillingSubscriptionRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BillingSubscriptionValidateMoveEligibilityResult> ValidateMoveEligibility(BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(moveBillingSubscriptionRequest, nameof(moveBillingSubscriptionRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.ValidateMoveEligibility");
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.ValidateMoveEligibility(Id.Parent.Name, Id.Name, moveBillingSubscriptionRequest, cancellationToken);
+                var response = _billingSubscriptionRestClient.ValidateMoveEligibility(Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -362,8 +442,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Merges the billing subscription provided in the request with a target billing subscription.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/merge
-        /// Operation Id: BillingSubscriptions_Merge
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/merge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Merge</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request parameters that are provided to merge the two billing subscriptions. </param>
@@ -392,8 +480,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Merges the billing subscription provided in the request with a target billing subscription.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/merge
-        /// Operation Id: BillingSubscriptions_Merge
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/merge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Merge</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request parameters that are provided to merge the two billing subscriptions. </param>
@@ -422,8 +518,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Splits a subscription into a new subscription with quantity less than current subscription quantity and not equal to 0.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/split
-        /// Operation Id: BillingSubscriptions_Split
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/split</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Split</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request parameters that are provided to split the billing subscription. </param>
@@ -452,8 +556,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Splits a subscription into a new subscription with quantity less than current subscription quantity and not equal to 0.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/split
-        /// Operation Id: BillingSubscriptions_Split
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/split</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Split</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request parameters that are provided to split the billing subscription. </param>

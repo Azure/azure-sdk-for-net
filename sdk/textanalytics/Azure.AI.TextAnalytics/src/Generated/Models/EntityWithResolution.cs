@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -23,14 +24,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
         public EntityWithResolution(string text, string category, int offset, int length, double confidenceScore) : base(text, category, offset, length, confidenceScore)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(category, nameof(category));
 
             Resolutions = new ChangeTrackingList<BaseResolution>();
         }
@@ -42,13 +37,21 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <param name="resolutions"> The collection of entity resolution objects. </param>
+        /// <param name="resolutions">
+        /// The collection of entity resolution objects.
+        /// Please note <see cref="BaseResolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>.
+        /// </param>
         internal EntityWithResolution(string text, string category, string subcategory, int offset, int length, double confidenceScore, IList<BaseResolution> resolutions) : base(text, category, subcategory, offset, length, confidenceScore)
         {
             Resolutions = resolutions;
         }
 
-        /// <summary> The collection of entity resolution objects. </summary>
+        /// <summary>
+        /// The collection of entity resolution objects.
+        /// Please note <see cref="BaseResolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>.
+        /// </summary>
         public IList<BaseResolution> Resolutions { get; }
     }
 }

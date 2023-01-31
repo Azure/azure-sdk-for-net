@@ -20,18 +20,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sparkJob"/> is null. </exception>
         public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (sparkJob == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJob));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(sparkJob, nameof(sparkJob));
 
             SparkJob = sparkJob;
             Arguments = new ChangeTrackingList<object>();
             Files = new ChangeTrackingList<object>();
+            PythonCodeReference = new ChangeTrackingList<object>();
+            FilesV2 = new ChangeTrackingList<object>();
+            SparkConfig = new ChangeTrackingDictionary<string, object>();
             Type = "SparkJob";
         }
 
@@ -47,25 +44,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sparkJob"> Synapse spark job reference. </param>
         /// <param name="arguments"> User specified arguments to SynapseSparkJobDefinitionActivity. </param>
         /// <param name="file"> The main file used for the job, which will override the &apos;file&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </param>
+        /// <param name="scanFolder"> Scanning subfolders from the root folder of the main definition file, these files will be added as reference files. The folders named &apos;jars&apos;, &apos;pyFiles&apos;, &apos;files&apos; or &apos;archives&apos; will be scanned, and the folders name are case sensitive. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="className"> The fully-qualified identifier or the main class that is in the main definition file, which will override the &apos;className&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </param>
-        /// <param name="files"> Additional files used for reference in the main definition file, which will override the &apos;files&apos; of the spark job definition you provide. </param>
+        /// <param name="files"> (Deprecated. Please use pythonCodeReference and filesV2) Additional files used for reference in the main definition file, which will override the &apos;files&apos; of the spark job definition you provide. </param>
+        /// <param name="pythonCodeReference"> Additional python code files used for reference in the main definition file, which will override the &apos;pyFiles&apos; of the spark job definition you provide. </param>
+        /// <param name="filesV2"> Additional files used for reference in the main definition file, which will override the &apos;jars&apos; and &apos;files&apos; of the spark job definition you provide. </param>
         /// <param name="targetBigDataPool"> The name of the big data pool which will be used to execute the spark batch job, which will override the &apos;targetBigDataPool&apos; of the spark job definition you provide. </param>
         /// <param name="executorSize"> Number of core and memory to be used for executors allocated in the specified Spark pool for the job, which will be used for overriding &apos;executorCores&apos; and &apos;executorMemory&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </param>
         /// <param name="conf"> Spark configuration properties, which will override the &apos;conf&apos; of the spark job definition you provide. </param>
         /// <param name="driverSize"> Number of core and memory to be used for driver allocated in the specified Spark pool for the job, which will be used for overriding &apos;driverCores&apos; and &apos;driverMemory&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </param>
-        /// <param name="numExecutors"> Number of executors to launch for this job, which will override the &apos;numExecutors&apos; of the spark job definition you provide. </param>
-        internal SynapseSparkJobDefinitionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<object> arguments, object file, object className, IList<object> files, BigDataPoolParametrizationReference targetBigDataPool, object executorSize, object conf, object driverSize, int? numExecutors) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="numExecutors"> Number of executors to launch for this job, which will override the &apos;numExecutors&apos; of the spark job definition you provide. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="configurationType"> The type of the spark config. </param>
+        /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
+        /// <param name="sparkConfig"> Spark configuration property. </param>
+        internal SynapseSparkJobDefinitionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<object> arguments, object file, object scanFolder, object className, IList<object> files, IList<object> pythonCodeReference, IList<object> filesV2, BigDataPoolParametrizationReference targetBigDataPool, object executorSize, object conf, object driverSize, object numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, object> sparkConfig) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
             Arguments = arguments;
             File = file;
+            ScanFolder = scanFolder;
             ClassName = className;
             Files = files;
+            PythonCodeReference = pythonCodeReference;
+            FilesV2 = filesV2;
             TargetBigDataPool = targetBigDataPool;
             ExecutorSize = executorSize;
             Conf = conf;
             DriverSize = driverSize;
             NumExecutors = numExecutors;
+            ConfigurationType = configurationType;
+            TargetSparkConfiguration = targetSparkConfiguration;
+            SparkConfig = sparkConfig;
             Type = type ?? "SparkJob";
         }
 
@@ -75,10 +84,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IList<object> Arguments { get; }
         /// <summary> The main file used for the job, which will override the &apos;file&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
         public object File { get; set; }
+        /// <summary> Scanning subfolders from the root folder of the main definition file, these files will be added as reference files. The folders named &apos;jars&apos;, &apos;pyFiles&apos;, &apos;files&apos; or &apos;archives&apos; will be scanned, and the folders name are case sensitive. Type: boolean (or Expression with resultType boolean). </summary>
+        public object ScanFolder { get; set; }
         /// <summary> The fully-qualified identifier or the main class that is in the main definition file, which will override the &apos;className&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
         public object ClassName { get; set; }
-        /// <summary> Additional files used for reference in the main definition file, which will override the &apos;files&apos; of the spark job definition you provide. </summary>
+        /// <summary> (Deprecated. Please use pythonCodeReference and filesV2) Additional files used for reference in the main definition file, which will override the &apos;files&apos; of the spark job definition you provide. </summary>
         public IList<object> Files { get; }
+        /// <summary> Additional python code files used for reference in the main definition file, which will override the &apos;pyFiles&apos; of the spark job definition you provide. </summary>
+        public IList<object> PythonCodeReference { get; }
+        /// <summary> Additional files used for reference in the main definition file, which will override the &apos;jars&apos; and &apos;files&apos; of the spark job definition you provide. </summary>
+        public IList<object> FilesV2 { get; }
         /// <summary> The name of the big data pool which will be used to execute the spark batch job, which will override the &apos;targetBigDataPool&apos; of the spark job definition you provide. </summary>
         public BigDataPoolParametrizationReference TargetBigDataPool { get; set; }
         /// <summary> Number of core and memory to be used for executors allocated in the specified Spark pool for the job, which will be used for overriding &apos;executorCores&apos; and &apos;executorMemory&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
@@ -87,7 +102,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Conf { get; set; }
         /// <summary> Number of core and memory to be used for driver allocated in the specified Spark pool for the job, which will be used for overriding &apos;driverCores&apos; and &apos;driverMemory&apos; of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
         public object DriverSize { get; set; }
-        /// <summary> Number of executors to launch for this job, which will override the &apos;numExecutors&apos; of the spark job definition you provide. </summary>
-        public int? NumExecutors { get; set; }
+        /// <summary> Number of executors to launch for this job, which will override the &apos;numExecutors&apos; of the spark job definition you provide. Type: integer (or Expression with resultType integer). </summary>
+        public object NumExecutors { get; set; }
+        /// <summary> The type of the spark config. </summary>
+        public ConfigurationType? ConfigurationType { get; set; }
+        /// <summary> The spark configuration of the spark job. </summary>
+        public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
+        /// <summary> Spark configuration property. </summary>
+        public IDictionary<string, object> SparkConfig { get; }
     }
 }

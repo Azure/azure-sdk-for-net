@@ -291,7 +291,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.RoutingLanguage Danish { get { throw null; } }
         public static Azure.Maps.Routing.RoutingLanguage DutchNetherlands { get { throw null; } }
         public static Azure.Maps.Routing.RoutingLanguage EnglishGreatBritain { get { throw null; } }
-        public static Azure.Maps.Routing.RoutingLanguage EnglishUSA { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage EnglishUsa { get { throw null; } }
         public static Azure.Maps.Routing.RoutingLanguage Finnish { get { throw null; } }
         public static Azure.Maps.Routing.RoutingLanguage FrenchFrance { get { throw null; } }
         public static Azure.Maps.Routing.RoutingLanguage German { get { throw null; } }

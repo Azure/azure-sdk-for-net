@@ -9,7 +9,7 @@ This extension provides functionality for accessing Azure Storage Blobs in Azure
 Install the Storage Blobs extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.WebJobs.Extensions.Storage.Blobs
+dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 ```
 
 ### Prerequisites

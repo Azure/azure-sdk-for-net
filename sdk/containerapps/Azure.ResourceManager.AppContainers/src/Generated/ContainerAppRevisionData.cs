@@ -29,24 +29,26 @@ namespace Azure.ResourceManager.AppContainers
         /// Timestamp describing when the revision was created
         /// by controller
         /// </param>
+        /// <param name="lastActiveOn"> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </param>
         /// <param name="fqdn"> Fully qualified domain name of the revision. </param>
         /// <param name="template">
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </param>
-        /// <param name="active"> Boolean describing if the Revision is Active. </param>
+        /// <param name="isActive"> Boolean describing if the Revision is Active. </param>
         /// <param name="replicas"> Number of pods currently running for this revision. </param>
         /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
         /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
         /// <param name="healthState"> Current health State of the revision. </param>
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
-        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, string fqdn, ContainerAppTemplate template, bool? active, int? replicas, int? trafficWeight, string provisioningError, RevisionHealthState? healthState, RevisionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
+            LastActiveOn = lastActiveOn;
             Fqdn = fqdn;
             Template = template;
-            Active = active;
+            IsActive = isActive;
             Replicas = replicas;
             TrafficWeight = trafficWeight;
             ProvisioningError = provisioningError;
@@ -59,6 +61,8 @@ namespace Azure.ResourceManager.AppContainers
         /// by controller
         /// </summary>
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </summary>
+        public DateTimeOffset? LastActiveOn { get; }
         /// <summary> Fully qualified domain name of the revision. </summary>
         public string Fqdn { get; }
         /// <summary>
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         public ContainerAppTemplate Template { get; }
         /// <summary> Boolean describing if the Revision is Active. </summary>
-        public bool? Active { get; }
+        public bool? IsActive { get; }
         /// <summary> Number of pods currently running for this revision. </summary>
         public int? Replicas { get; }
         /// <summary> Traffic weight assigned to this revision. </summary>
@@ -76,8 +80,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Optional Field - Platform Error Message. </summary>
         public string ProvisioningError { get; }
         /// <summary> Current health State of the revision. </summary>
-        public RevisionHealthState? HealthState { get; }
+        public ContainerAppRevisionHealthState? HealthState { get; }
         /// <summary> Current provisioning State of the revision. </summary>
-        public RevisionProvisioningState? ProvisioningState { get; }
+        public ContainerAppRevisionProvisioningState? ProvisioningState { get; }
     }
 }

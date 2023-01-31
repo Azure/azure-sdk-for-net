@@ -28,8 +28,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
-        /// Request Path: /{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges
-        /// Operation Id: ResourceChanges_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
@@ -49,8 +57,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
-        /// Request Path: /{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges
-        /// Operation Id: ResourceChanges_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
@@ -79,8 +95,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a subscription within the specified time range. Customer data will always be masked.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ChangeAnalysis/changes
-        /// Operation Id: Changes_ListChangesBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ChangeAnalysis/changes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Changes_ListChangesBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -95,8 +119,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a subscription within the specified time range. Customer data will always be masked.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ChangeAnalysis/changes
-        /// Operation Id: Changes_ListChangesBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ChangeAnalysis/changes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Changes_ListChangesBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -120,8 +152,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource group within the specified time range. Customer data will always be masked.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes
-        /// Operation Id: Changes_ListChangesByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Changes_ListChangesByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -136,8 +176,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource group within the specified time range. Customer data will always be masked.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes
-        /// Operation Id: Changes_ListChangesByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Changes_ListChangesByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>

@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System.Diagnostics;
 using System.Globalization;
-
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
-using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -32,12 +31,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                 : SchemaConstants.Duration_MaxValue;
-            Success = activity.Status != ActivityStatusCode.Error;
             ResponseCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode)
                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                 ?? "0";
-            Url = url.Truncate(SchemaConstants.RequestData_Url_MaxLength);
 
+            if (monitorTags.activityType ==  OperationType.Http && int.TryParse(ResponseCode, out int statusCode))
+            {
+                bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
+                Success = activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
+            }
+            else
+            {
+                Success = activity.Status != ActivityStatusCode.Error;
+            }
+
+            Url = url.Truncate(SchemaConstants.RequestData_Url_MaxLength);
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 

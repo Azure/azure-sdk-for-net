@@ -5,11 +5,15 @@ $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
+$GithubUri = "https://github.com/Azure/azure-sdk-for-net"
+$PackageRepositoryUri = "https://www.nuget.org/packages"
+
+. "$PSScriptRoot/docs/Docs-ToC.ps1"
 
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
-  # $addDevVersion is a global variable set by a parameter in 
+  # $addDevVersion is a global variable set by a parameter in
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $msbuildOutput = dotnet msbuild `
@@ -23,16 +27,30 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   {
     if (!$projectOutput) { continue }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
-
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
+    }
+
+    # Add a step to extract namespaces
+    $namespaces = @()
+    # The namespaces currently only use for docs.ms toc, which is necessary for internal release.
+    if (Test-Path "$dllFolder/Release/netstandard2.0/") {
+      $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
+      if ($defaultDll -and (Test-Path $defaultDll)) {
+        Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
+        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
+      }
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
+    if ($namespaces) {
+      $pkgProp = $pkgProp | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
+      Write-Verbose "Here are the namespaces: $($pkgProp.Namespaces)"
+    }
 
     $allPackageProps += $pkgProp
   }
@@ -112,7 +130,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 # Return list of nupkg artifacts
 function Get-dotnet-Package-Artifacts ($Location)
 {
-  $pkgs = Get-ChildItem "${Location}" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+  $pkgs = @(Get-ChildItem $Location -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")})
   if (!$pkgs)
   {
     Write-Host "$($Location) does not have any package"
@@ -253,7 +271,7 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
     return $existingVersion.versions
   }
   catch {
-    if ($_.Exception.Response.StatusCode -ne 404) 
+    if ($_.Exception.Response.StatusCode -ne 404)
     {
       LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
     }
@@ -265,10 +283,10 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
   $readmeName = $PackageInfo.Name.ToLower()
 
   # Readme names (which are used in the URL) should not include redundant terms
-  # when viewed in URL form. For example: 
+  # when viewed in URL form. For example:
   # https://docs.microsoft.com/en-us/dotnet/api/overview/azure/storage.blobs-readme
   # Note how the end of the URL doesn't look like:
-  # ".../azure/azure.storage.blobs-readme" 
+  # ".../azure/azure.storage.blobs-readme"
 
   # This logic eliminates a preceeding "azure." in the readme filename.
   # "azure.storage.blobs" -> "storage.blobs"
@@ -286,16 +304,16 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
 
 # Details on CSV schema:
 # https://review.docs.microsoft.com/en-us/help/onboard/admin/reference/dotnet/documenting-nuget?branch=master#set-up-the-ci-job
-# 
-# PowerShell's included Import-Csv cmdlet is not sufficient for parsing this 
-# format because it does not easily handle rows whose number of columns is 
+#
+# PowerShell's included Import-Csv cmdlet is not sufficient for parsing this
+# format because it does not easily handle rows whose number of columns is
 # greater than the number of columns in the first row. We must manually parse
 # this CSV file.
 function Get-DocsCiConfig($configPath) {
   Write-Host "Loading csv from $configPath"
   $output = @()
   foreach ($row in Get-Content $configPath) {
-      # CSV format: 
+      # CSV format:
       # {package_moniker_base_string},{package_ID},{version_1},{version_2},...,{version_N}
       #
       # The {package_ID} field can contain optional properties denoted by square
@@ -304,13 +322,17 @@ function Get-DocsCiConfig($configPath) {
       # Split the rows by the comma
       $fields = $row.Split(',')
 
+      if (!$fields -or $fields.Count -lt 2) {
+        LogError "Please check the csv entry: $configPath."
+        LogError "Do include the package name for each of the csv entry."
+      }
       # If the {package_ID} field contains optional properties inside square
-      # brackets, parse those properties into key value pairs. In the case of 
+      # brackets, parse those properties into key value pairs. In the case of
       # duplicate keys, the last one wins.
       $rawProperties = ''
       $packageProperties = [ordered]@{}
-      if ($fields[1] -match '\[(.*)\]') { 
-          $rawProperties = $Matches[1] 
+      if ($fields[1] -match '\[(.*)\]') {
+          $rawProperties = $Matches[1]
           foreach ($propertyExpression in $rawProperties.Split(';')) {
               $propertyParts = $propertyExpression.Split('=')
               $packageProperties[$propertyParts[0]] = $propertyParts[1]
@@ -322,20 +344,20 @@ function Get-DocsCiConfig($configPath) {
       # [key=value;key=value]Package.Name
       # Package.Name
       $packageName = ''
-      if ($fields[1] -match '(\[.*\])?(.*)') { 
-          $packageName = $Matches[2] 
-      } else { 
-          Write-Error "Could not find package id in row: $row" 
+      if ($fields[1] -match '(\[.*\])?(.*)') {
+          $packageName = $Matches[2]
+      } else {
+          Write-Error "Could not find package id in row: $row"
       }
 
-      # Remaining entries in the row are versions, add them to the package 
+      # Remaining entries in the row are versions, add them to the package
       # properties
       $outputVersions = @()
-      if ($fields[2]) {
+      if ($fields.Count -gt 2 -and $fields[2]) {
         $outputVersions = $fields[2..($fields.Count - 1)]
       }
 
-      # Example row: 
+      # Example row:
       # packagemoniker,[key1=value1;key2=value2]Package.Name,1.0.0,1.2.3-beta.1
       $output += [PSCustomObject]@{
           Id = $fields[0];                  # packagemoniker
@@ -348,17 +370,17 @@ function Get-DocsCiConfig($configPath) {
   return $output
 }
 
-function Get-DocsCiLine ($item) { 
+function Get-DocsCiLine ($item) {
   $line = ''
   if ($item.Properties.Count) {
     $propertyPairs = @()
-    foreach ($key in $item.Properties.Keys) { 
+    foreach ($key in $item.Properties.Keys) {
       $propertyPairs += "$key=$($item.Properties[$key])"
     }
     $packageProperties = $propertyPairs -join ';'
 
     $line = "$($item.Id),[$packageProperties]$($item.Name)"
-  } else { 
+  } else {
     $line = "$($item.Id),$($item.Name)"
   }
 
@@ -389,17 +411,23 @@ function EnsureCustomSource($package) {
   }
 
   Write-Host "Checking custom package source for $($package.Name)"
-  $existingVersions = Find-Package `
-    -Name $package.Name `
-    -Source CustomPackageSource `
-    -AllVersions `
-    -AllowPrereleaseVersions
-  
-  # Matches package version against output: 
+  try {
+    $existingVersions = Find-Package `
+      -Name $package.Name `
+      -Source CustomPackageSource `
+      -AllVersions `
+      -AllowPrereleaseVersions
+  }
+  catch {
+    Write-Error $_ -ErrorAction Continue
+    return $package
+  }
+
+  # Matches package version against output:
   # "Azure.Security.KeyVault.Secrets 4.3.0-alpha.20210915.3"
   $matchedVersion = $existingVersions.Where({$_.Version -eq $package.Versions})
 
-  if (!$matchedVersion) { 
+  if (!$matchedVersion) {
     return $package
   }
 
@@ -407,26 +435,16 @@ function EnsureCustomSource($package) {
   return $package
 }
 
-$PackageExclusions = @{
-  "Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents" = "The package asks auth when use `Find-Package` for public feeds. Issue: https://github.com/Azure/azure-docs-sdk-dotnet/issues/2244";
-}
-
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
-  Write-Host "Excluded packages:"
-  foreach ($excludedPackage in $PackageExclusions.Keys) {
-    Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
-  }
-
-  $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
-    $FilteredMetadata 
+    $DocsMetadata
 
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
     'latest' `
-    $FilteredMetadata
+    $DocsMetadata
 }
 
 function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
@@ -448,14 +466,14 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       continue
     }
 
-    if ($matchingPublishedPackageArray.Count -gt 1) { 
+    if ($matchingPublishedPackageArray.Count -gt 1) {
       LogWarning "Found more than one matching published package in metadata for $($package.Name); only updating first entry"
     }
     $matchingPublishedPackage = $matchingPublishedPackageArray[0]
 
-    if ($Mode -eq 'preview' -and !$matchingPublishedPackage.VersionPreview.Trim()) { 
+    if ($Mode -eq 'preview' -and !$matchingPublishedPackage.VersionPreview.Trim()) {
       # If we are in preview mode and the package does not have a superseding
-      # preview version, remove the package from the list. 
+      # preview version, remove the package from the list.
       Write-Host "Remove superseded preview package: $($package.Name)"
       continue
     }
@@ -466,7 +484,7 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     }
 
     if ($updatedVersion -ne $package.Versions[0]) {
-      Write-Host "Update tracked package: $($package.Name) to version $($updatedVersions)"
+      Write-Host "Update tracked package: $($package.Name) to version $updatedVersion"
       $package.Versions = @($updatedVersion)
       $package = EnsureCustomSource $package
     } else {
@@ -481,13 +499,13 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     $outputPackagesHash[$package.Name] = $true
   }
 
-  $remainingPackages = @() 
-  if ($Mode -eq 'preview') { 
-    $remainingPackages = $DocsMetadata.Where({ 
+  $remainingPackages = @()
+  if ($Mode -eq 'preview') {
+    $remainingPackages = $DocsMetadata.Where({
       $_.VersionPreview.Trim() -and !$outputPackagesHash.ContainsKey($_.Package)
     })
-  } else { 
-    $remainingPackages = $DocsMetadata.Where({ 
+  } else {
+    $remainingPackages = $DocsMetadata.Where({
       $_.VersionGA.Trim() -and !$outputPackagesHash.ContainsKey($_.Package)
     })
   }
@@ -512,15 +530,23 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       Name = $package.Package;
       Properties = $newPackageProperties;
       Versions = $versions
-    } 
-    $newPackage = EnsureCustomSource $newPackage 
+    }
+    $newPackage = EnsureCustomSource $newPackage
 
     $outputPackages += $newPackage
   }
 
-  $outputLines = @() 
-  foreach ($package in $outputPackages) { 
+  $outputLines = @()
+  foreach ($package in $outputPackages) {
     $outputLines += Get-DocsCiLine $package
   }
   Set-Content -Path $DocConfigFile -Value $outputLines
+}
+
+function Get-dotnet-EmitterName() {
+  return "@azure-tools/cadl-csharp"
+}
+
+function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
+  return "--option @azure-tools/cadl-csharp.emitter-output-dir=$projectDirectory/src"
 }

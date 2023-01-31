@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/> or <paramref name="extensionType"/> is null. </exception>
         public BatchVmExtension(string name, string publisher, string extensionType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
-            if (extensionType == null)
-            {
-                throw new ArgumentNullException(nameof(extensionType));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(publisher, nameof(publisher));
+            Argument.AssertNotNull(extensionType, nameof(extensionType));
 
             Name = name;
             Publisher = publisher;

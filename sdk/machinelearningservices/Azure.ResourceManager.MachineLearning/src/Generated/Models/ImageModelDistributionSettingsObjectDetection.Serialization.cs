@@ -423,18 +423,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("randomSeed");
                 }
             }
-            if (Optional.IsDefined(SplitRatio))
-            {
-                if (SplitRatio != null)
-                {
-                    writer.WritePropertyName("splitRatio");
-                    writer.WriteStringValue(SplitRatio);
-                }
-                else
-                {
-                    writer.WriteNull("splitRatio");
-                }
-            }
             if (Optional.IsDefined(StepLRGamma))
             {
                 if (StepLRGamma != null)
@@ -558,7 +546,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> numberOfWorkers = default;
             Optional<string> optimizer = default;
             Optional<string> randomSeed = default;
-            Optional<string> splitRatio = default;
             Optional<string> stepLRGamma = default;
             Optional<string> stepLRStepSize = default;
             Optional<string> trainingBatchSize = default;
@@ -908,16 +895,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     randomSeed = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("splitRatio"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        splitRatio = null;
-                        continue;
-                    }
-                    splitRatio = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("stepLRGamma"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -989,7 +966,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ImageModelDistributionSettingsObjectDetection(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, splitRatio.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, boxDetectionsPerImage.Value, boxScoreThreshold.Value, imageSize.Value, maxSize.Value, minSize.Value, modelSize.Value, multiScale.Value, nmsIouThreshold.Value, tileGridSize.Value, tileOverlapRatio.Value, tilePredictionsNmsThreshold.Value, validationIouThreshold.Value, validationMetricType.Value);
+            return new ImageModelDistributionSettingsObjectDetection(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, boxDetectionsPerImage.Value, boxScoreThreshold.Value, imageSize.Value, maxSize.Value, minSize.Value, modelSize.Value, multiScale.Value, nmsIouThreshold.Value, tileGridSize.Value, tileOverlapRatio.Value, tilePredictionsNmsThreshold.Value, validationIouThreshold.Value, validationMetricType.Value);
         }
     }
 }

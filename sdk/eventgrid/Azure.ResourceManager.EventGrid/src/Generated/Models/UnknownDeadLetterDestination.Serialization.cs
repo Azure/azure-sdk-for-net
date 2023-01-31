@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static UnknownDeadLetterDestination DeserializeUnknownDeadLetterDestination(JsonElement element)
         {
-            DeadLetterEndPointType endpointType = default;
+            DeadLetterEndPointType endpointType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"))

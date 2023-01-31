@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication.MediaComposition.Models;
+using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -22,10 +23,7 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public GridLayout(int rows, int columns, IEnumerable<IList<string>> inputIds)
         {
-            if (inputIds == null)
-            {
-                throw new ArgumentNullException(nameof(inputIds));
-            }
+            Argument.AssertNotNull(inputIds, nameof(inputIds));
 
             Rows = rows;
             Columns = columns;
@@ -37,10 +35,11 @@ namespace Azure.Communication.MediaComposition
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
-        internal GridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, int rows, int columns, IList<IList<string>> inputIds) : base(kind, resolution, placeholderImageUri)
+        internal GridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, int rows, int columns, IList<IList<string>> inputIds) : base(kind, resolution, placeholderImageUri, scalingMode)
         {
             Rows = rows;
             Columns = columns;

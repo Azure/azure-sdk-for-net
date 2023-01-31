@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    // Data plane generated client. The Configuration service client.
+    // Data plane generated client.
     /// <summary> The Configuration service client. </summary>
     public partial class ConfigurationClient
     {
@@ -38,24 +36,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckKeysAsync.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckKeysAsync();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckKeysAsync with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckKeysAsync("<name>", "<after>", "<acceptDatetime>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeysAsync(String,String,String,RequestContext)']/*" />
         public virtual async Task<Response> CheckKeysAsync(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeys");
@@ -79,24 +60,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckKeys.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckKeys();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckKeys with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckKeys("<name>", "<after>", "<acceptDatetime>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeys(String,String,String,RequestContext)']/*" />
         public virtual Response CheckKeys(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeys");
@@ -122,24 +86,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckKeyValuesAsync.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckKeyValuesAsync();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckKeyValuesAsync with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckKeyValuesAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValuesAsync(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual async Task<Response> CheckKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValues");
@@ -165,24 +112,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckKeyValues.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckKeyValues();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckKeyValues with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckKeyValues("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValues(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Response CheckKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValues");
@@ -210,84 +140,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call SetConfigurationSettingAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.SetConfigurationSettingAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call SetConfigurationSettingAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// var data = new {
-        ///     key = "<key>",
-        ///     label = "<label>",
-        ///     content_type = "<content_type>",
-        ///     value = "<value>",
-        ///     last_modified = "2022-05-10T18:57:31.2311892Z",
-        ///     tags = new {
-        ///         key = "<String>",
-        ///     },
-        ///     locked = true,
-        ///     etag = "<etag>",
-        /// };
-        /// 
-        /// Response response = await client.SetConfigurationSettingAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='SetConfigurationSettingAsync(String,RequestContent,ContentType,String,MatchConditions,RequestContext)']/*" />
         public virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -317,84 +170,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call SetConfigurationSetting with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.SetConfigurationSetting("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call SetConfigurationSetting with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// var data = new {
-        ///     key = "<key>",
-        ///     label = "<label>",
-        ///     content_type = "<content_type>",
-        ///     value = "<value>",
-        ///     last_modified = "2022-05-10T18:57:31.2311892Z",
-        ///     tags = new {
-        ///         key = "<String>",
-        ///     },
-        ///     locked = true,
-        ///     etag = "<etag>",
-        /// };
-        /// 
-        /// Response response = client.SetConfigurationSetting("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='SetConfigurationSetting(String,RequestContent,ContentType,String,MatchConditions,RequestContext)']/*" />
         public virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -424,24 +200,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckKeyValueAsync with required parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckKeyValueAsync("<key>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckKeyValueAsync with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckKeyValueAsync("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValueAsync(String,String,String,IEnumerable,MatchConditions,RequestContext)']/*" />
         public virtual async Task<Response> CheckKeyValueAsync(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -471,24 +230,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckKeyValue with required parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckKeyValue("<key>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckKeyValue with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckKeyValue("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValue(String,String,String,IEnumerable,MatchConditions,RequestContext)']/*" />
         public virtual Response CheckKeyValue(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -515,24 +257,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckLabelsAsync.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckLabelsAsync();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckLabelsAsync with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckLabelsAsync("<name>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckLabelsAsync(String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual async Task<Response> CheckLabelsAsync(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
@@ -557,24 +282,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckLabels.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckLabels();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckLabels with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckLabels("<name>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckLabels(String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Response CheckLabels(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
@@ -600,54 +308,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateReadOnlyLockAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CreateReadOnlyLockAsync("<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateReadOnlyLockAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CreateReadOnlyLockAsync("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateReadOnlyLockAsync(String,String,MatchConditions,RequestContext)']/*" />
         public virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -675,54 +336,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateReadOnlyLock with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CreateReadOnlyLock("<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateReadOnlyLock with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CreateReadOnlyLock("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateReadOnlyLock(String,String,MatchConditions,RequestContext)']/*" />
         public virtual Response CreateReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -750,54 +364,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteReadOnlyLockAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.DeleteReadOnlyLockAsync("<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call DeleteReadOnlyLockAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.DeleteReadOnlyLockAsync("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteReadOnlyLockAsync(String,String,MatchConditions,RequestContext)']/*" />
         public virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -825,54 +392,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteReadOnlyLock with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.DeleteReadOnlyLock("<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call DeleteReadOnlyLock with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.DeleteReadOnlyLock("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteReadOnlyLock(String,String,MatchConditions,RequestContext)']/*" />
         public virtual Response DeleteReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -900,24 +420,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckRevisionsAsync.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckRevisionsAsync();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckRevisionsAsync with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.CheckRevisionsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckRevisionsAsync(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual async Task<Response> CheckRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckRevisions");
@@ -943,24 +446,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call CheckRevisions.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckRevisions();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call CheckRevisions with all parameters.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.CheckRevisions("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"});
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckRevisions(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Response CheckRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckRevisions");
@@ -984,62 +470,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetKeysAsync and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// await foreach (var data in client.GetKeysAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetKeysAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// await foreach (var data in client.GetKeysAsync("<name>", "<after>", "<acceptDatetime>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyListResultItems</c>:
-        /// <code>{
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeysAsync(String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetKeysAsync(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
-            return GetKeysImplementationAsync("ConfigurationClient.GetKeys", name, after, acceptDatetime, context);
-        }
-
-        private AsyncPageable<BinaryData> GetKeysImplementationAsync(string diagnosticsScopeName, string name, string after, string acceptDatetime, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeysRequest(name, after, acceptDatetime, context)
-                        : CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of keys. </summary>
@@ -1049,62 +485,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetKeys and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// foreach (var data in client.GetKeys())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetKeys with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// foreach (var data in client.GetKeys("<name>", "<after>", "<acceptDatetime>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyListResultItems</c>:
-        /// <code>{
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeys(String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetKeys(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
-            return GetKeysImplementation("ConfigurationClient.GetKeys", name, after, acceptDatetime, context);
-        }
-
-        private Pageable<BinaryData> GetKeysImplementation(string diagnosticsScopeName, string name, string after, string acceptDatetime, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeysRequest(name, after, acceptDatetime, context)
-                        : CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of key-values. </summary>
@@ -1116,76 +502,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetConfigurationSettingsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// await foreach (var data in client.GetConfigurationSettingsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetConfigurationSettingsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// await foreach (var data in client.GetConfigurationSettingsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("key").ToString());
-        ///     Console.WriteLine(result.GetProperty("label").ToString());
-        ///     Console.WriteLine(result.GetProperty("content_type").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("last_modified").ToString());
-        ///     Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("locked").ToString());
-        ///     Console.WriteLine(result.GetProperty("etag").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValueListResultItems</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingsAsync(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetConfigurationSettingsImplementationAsync("ConfigurationClient.GetConfigurationSettings", key, label, after, acceptDatetime, select, context);
-        }
-
-        private AsyncPageable<BinaryData> GetConfigurationSettingsImplementationAsync(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of key-values. </summary>
@@ -1197,76 +519,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetConfigurationSettings and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// foreach (var data in client.GetConfigurationSettings())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetConfigurationSettings with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// foreach (var data in client.GetConfigurationSettings("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("key").ToString());
-        ///     Console.WriteLine(result.GetProperty("label").ToString());
-        ///     Console.WriteLine(result.GetProperty("content_type").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("last_modified").ToString());
-        ///     Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("locked").ToString());
-        ///     Console.WriteLine(result.GetProperty("etag").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValueListResultItems</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettings(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetConfigurationSettings(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetConfigurationSettingsImplementation("ConfigurationClient.GetConfigurationSettings", key, label, after, acceptDatetime, select, context);
-        }
-
-        private Pageable<BinaryData> GetConfigurationSettingsImplementation(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of labels. </summary>
@@ -1277,62 +535,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLabelsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// await foreach (var data in client.GetLabelsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetLabelsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// await foreach (var data in client.GetLabelsAsync("<name>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LabelListResultItems</c>:
-        /// <code>{
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabelsAsync(String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetLabelsAsync(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetLabelsImplementationAsync("ConfigurationClient.GetLabels", name, after, acceptDatetime, select, context);
-        }
-
-        private AsyncPageable<BinaryData> GetLabelsImplementationAsync(string diagnosticsScopeName, string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLabelsRequest(name, after, acceptDatetime, select, context)
-                        : CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of labels. </summary>
@@ -1343,62 +551,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLabels and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// foreach (var data in client.GetLabels())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetLabels with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// foreach (var data in client.GetLabels("<name>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LabelListResultItems</c>:
-        /// <code>{
-        ///   name: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabels(String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetLabels(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetLabelsImplementation("ConfigurationClient.GetLabels", name, after, acceptDatetime, select, context);
-        }
-
-        private Pageable<BinaryData> GetLabelsImplementation(string diagnosticsScopeName, string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLabelsRequest(name, after, acceptDatetime, select, context)
-                        : CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of key-value revisions. </summary>
@@ -1410,76 +568,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetRevisionsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// await foreach (var data in client.GetRevisionsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetRevisionsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// await foreach (var data in client.GetRevisionsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("key").ToString());
-        ///     Console.WriteLine(result.GetProperty("label").ToString());
-        ///     Console.WriteLine(result.GetProperty("content_type").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("last_modified").ToString());
-        ///     Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("locked").ToString());
-        ///     Console.WriteLine(result.GetProperty("etag").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValueListResultItems</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisionsAsync(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetRevisionsImplementationAsync("ConfigurationClient.GetRevisions", key, label, after, acceptDatetime, select, context);
-        }
-
-        private AsyncPageable<BinaryData> GetRevisionsImplementationAsync(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of key-value revisions. </summary>
@@ -1491,76 +585,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetRevisions and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// foreach (var data in client.GetRevisions())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetRevisions with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// foreach (var data in client.GetRevisions("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("key").ToString());
-        ///     Console.WriteLine(result.GetProperty("label").ToString());
-        ///     Console.WriteLine(result.GetProperty("content_type").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("last_modified").ToString());
-        ///     Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("locked").ToString());
-        ///     Console.WriteLine(result.GetProperty("etag").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValueListResultItems</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisions(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetRevisionsImplementation("ConfigurationClient.GetRevisions", key, label, after, acceptDatetime, select, context);
-        }
-
-        private Pageable<BinaryData> GetRevisionsImplementation(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         internal HttpMessage CreateGetKeysRequest(string name, string after, string acceptDatetime, RequestContext context)

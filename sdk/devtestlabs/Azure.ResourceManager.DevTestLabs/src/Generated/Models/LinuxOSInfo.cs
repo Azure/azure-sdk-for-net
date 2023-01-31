@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Initializes a new instance of LinuxOSInfo. </summary>
         /// <param name="linuxOSState"> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </param>
-        internal LinuxOSInfo(LinuxOSState? linuxOSState)
+        internal LinuxOSInfo(DevTestLabLinuxOSState? linuxOSState)
         {
             LinuxOSState = linuxOSState;
         }
 
         /// <summary> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </summary>
-        public LinuxOSState? LinuxOSState { get; set; }
+        public DevTestLabLinuxOSState? LinuxOSState { get; set; }
     }
 }

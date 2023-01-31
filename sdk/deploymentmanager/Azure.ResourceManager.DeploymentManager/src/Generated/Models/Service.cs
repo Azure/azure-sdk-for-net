@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
         internal Service(string targetLocation, string targetSubscriptionId) : base(targetLocation, targetSubscriptionId)
         {
-            if (targetLocation == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocation));
-            }
-            if (targetSubscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(targetSubscriptionId));
-            }
+            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
+            Argument.AssertNotNull(targetSubscriptionId, nameof(targetSubscriptionId));
 
             ServiceUnits = new ChangeTrackingList<ServiceUnit>();
         }
@@ -40,14 +34,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
         internal Service(string targetLocation, string targetSubscriptionId, string name, IReadOnlyList<ServiceUnit> serviceUnits) : base(targetLocation, targetSubscriptionId)
         {
-            if (targetLocation == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocation));
-            }
-            if (targetSubscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(targetSubscriptionId));
-            }
+            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
+            Argument.AssertNotNull(targetSubscriptionId, nameof(targetSubscriptionId));
 
             Name = name;
             ServiceUnits = serviceUnits;

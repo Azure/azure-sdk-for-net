@@ -1,6 +1,6 @@
 # Release History
 
-## 7.12.0-beta.1 (Unreleased)
+## 7.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.12.0 (2023-01-12)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Added `UpdatePrefetchCount` methods to `ServiceBusProcessor` and `ServiceBusSessionProcessor` to allow updating the prefetch count of a running processor. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Update AMQP library dependency to leverage new `DrainAsync` method.
+
+### Bugs Fixed
+
+- Fixed issue with `MaxConcurrentCallsPerSession` setting which resulted in the setting not always being respected.
+
+## 7.11.1 (2022-11-08)
+
+### Bugs Fixed
+
+- Telemetry will now use a parent activity instead of links when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
+- Attempt to drain the receiver when closing if there are outstanding credits.
 
 ## 7.11.0 (2022-10-11)
 

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -18,6 +20,11 @@ namespace Azure.ResourceManager.AppContainers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation");
+                writer.WriteObjectValue(ExtendedLocation);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
@@ -44,6 +51,16 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("managedEnvironmentId");
                 writer.WriteStringValue(ManagedEnvironmentId);
             }
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                writer.WritePropertyName("environmentId");
+                writer.WriteStringValue(EnvironmentId);
+            }
+            if (Optional.IsDefined(WorkloadProfileType))
+            {
+                writer.WritePropertyName("workloadProfileType");
+                writer.WriteStringValue(WorkloadProfileType);
+            }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration");
@@ -60,6 +77,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppData DeserializeContainerAppData(JsonElement element)
         {
+            Optional<ContainerAppExtendedLocation> extendedLocation = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -68,15 +86,29 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ContainerAppProvisioningState> provisioningState = default;
-            Optional<string> managedEnvironmentId = default;
+            Optional<ResourceIdentifier> managedEnvironmentId = default;
+            Optional<ResourceIdentifier> environmentId = default;
+            Optional<string> workloadProfileType = default;
             Optional<string> latestRevisionName = default;
+            Optional<string> latestReadyRevisionName = default;
             Optional<string> latestRevisionFqdn = default;
             Optional<string> customDomainVerificationId = default;
             Optional<ContainerAppConfiguration> configuration = default;
             Optional<ContainerAppTemplate> template = default;
-            Optional<IReadOnlyList<string>> outboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> outboundIPAddresses = default;
+            Optional<Uri> eventStreamEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("extendedLocation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("identity"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -85,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -130,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -154,12 +186,37 @@ namespace Azure.ResourceManager.AppContainers
                         }
                         if (property0.NameEquals("managedEnvironmentId"))
                         {
-                            managedEnvironmentId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            managedEnvironmentId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("environmentId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            environmentId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("workloadProfileType"))
+                        {
+                            workloadProfileType = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("latestRevisionName"))
                         {
                             latestRevisionName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("latestReadyRevisionName"))
+                        {
+                            latestReadyRevisionName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("latestRevisionFqdn"))
@@ -192,26 +249,36 @@ namespace Azure.ResourceManager.AppContainers
                             template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("outboundIPAddresses"))
+                        if (property0.NameEquals("outboundIpAddresses"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             outboundIPAddresses = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("eventStreamEndpoint"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                eventStreamEndpoint = null;
+                                continue;
+                            }
+                            eventStreamEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, latestRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses));
+            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileType.Value, latestRevisionName.Value, latestReadyRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
         }
     }
 }

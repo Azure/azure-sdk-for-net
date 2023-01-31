@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The AddParticipantsResponse. </summary>
+    /// <summary> The response payload for adding participants to the call. </summary>
     internal partial class AddParticipantsResponseInternal
     {
         /// <summary> Initializes a new instance of AddParticipantsResponseInternal. </summary>
         internal AddParticipantsResponseInternal()
         {
-            Participants = new ChangeTrackingList<AcsCallParticipantInternal>();
+            Participants = new ChangeTrackingList<CallParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of AddParticipantsResponseInternal. </summary>
-        /// <param name="participants"></param>
+        /// <param name="participants"> List of current participants in the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal AddParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> participants, string operationContext)
+        internal AddParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> participants, string operationContext)
         {
             Participants = participants;
             OperationContext = operationContext;
         }
 
-        /// <summary> Gets the participants. </summary>
-        public IReadOnlyList<AcsCallParticipantInternal> Participants { get; }
+        /// <summary> List of current participants in the call. </summary>
+        public IReadOnlyList<CallParticipantInternal> Participants { get; }
         /// <summary> The operation context provided by client. </summary>
         public string OperationContext { get; }
     }

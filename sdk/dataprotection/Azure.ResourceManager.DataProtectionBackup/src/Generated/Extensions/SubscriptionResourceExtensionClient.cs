@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,12 +19,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _backupVaultResourceBackupVaultsClientDiagnostics;
-        private BackupVaultsRestOperations _backupVaultResourceBackupVaultsRestClient;
+        private ClientDiagnostics _dataProtectionBackupVaultBackupVaultsClientDiagnostics;
+        private BackupVaultsRestOperations _dataProtectionBackupVaultBackupVaultsRestClient;
         private ClientDiagnostics _dataProtectionClientDiagnostics;
         private DataProtectionRestOperations _dataProtectionRestClient;
-        private ClientDiagnostics _resourceGuardResourceResourceGuardsClientDiagnostics;
-        private ResourceGuardsRestOperations _resourceGuardResourceResourceGuardsRestClient;
+        private ClientDiagnostics _resourceGuardClientDiagnostics;
+        private ResourceGuardsRestOperations _resourceGuardRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,12 +38,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
         }
 
-        private ClientDiagnostics BackupVaultResourceBackupVaultsClientDiagnostics => _backupVaultResourceBackupVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", BackupVaultResource.ResourceType.Namespace, Diagnostics);
-        private BackupVaultsRestOperations BackupVaultResourceBackupVaultsRestClient => _backupVaultResourceBackupVaultsRestClient ??= new BackupVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BackupVaultResource.ResourceType));
+        private ClientDiagnostics DataProtectionBackupVaultBackupVaultsClientDiagnostics => _dataProtectionBackupVaultBackupVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupVaultResource.ResourceType.Namespace, Diagnostics);
+        private BackupVaultsRestOperations DataProtectionBackupVaultBackupVaultsRestClient => _dataProtectionBackupVaultBackupVaultsRestClient ??= new BackupVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataProtectionBackupVaultResource.ResourceType));
         private ClientDiagnostics DataProtectionClientDiagnostics => _dataProtectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DataProtectionRestOperations DataProtectionRestClient => _dataProtectionRestClient ??= new DataProtectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ResourceGuardResourceResourceGuardsClientDiagnostics => _resourceGuardResourceResourceGuardsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardResource.ResourceType.Namespace, Diagnostics);
-        private ResourceGuardsRestOperations ResourceGuardResourceResourceGuardsRestClient => _resourceGuardResourceResourceGuardsRestClient ??= new ResourceGuardsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourceGuardResource.ResourceType));
+        private ClientDiagnostics ResourceGuardClientDiagnostics => _resourceGuardClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardResource.ResourceType.Namespace, Diagnostics);
+        private ResourceGuardsRestOperations ResourceGuardRestClient => _resourceGuardRestClient ??= new ResourceGuardsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourceGuardResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -54,103 +53,71 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns resource collection belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults
-        /// Operation Id: BackupVaults_GetInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupVaults_GetInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupVaultResource> GetBackupVaultResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaultsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BackupVaultResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupVaultResourceBackupVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupVaultResources");
-                scope.Start();
-                try
-                {
-                    var response = await BackupVaultResourceBackupVaultsRestClient.GetInSubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BackupVaultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupVaultResourceBackupVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupVaultResources");
-                scope.Start();
-                try
-                {
-                    var response = await BackupVaultResourceBackupVaultsRestClient.GetInSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns resource collection belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults
-        /// Operation Id: BackupVaults_GetInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupVaults_GetInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupVaultResource> GetBackupVaultResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaults(CancellationToken cancellationToken = default)
         {
-            Page<BackupVaultResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupVaultResourceBackupVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupVaultResources");
-                scope.Start();
-                try
-                {
-                    var response = BackupVaultResourceBackupVaultsRestClient.GetInSubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BackupVaultResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupVaultResourceBackupVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupVaultResources");
-                scope.Start();
-                try
-                {
-                    var response = BackupVaultResourceBackupVaultsRestClient.GetInSubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Validates if a feature is supported
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport
-        /// Operation Id: DataProtection_CheckFeatureSupport
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataProtection_CheckFeatureSupport</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The String to use. </param>
-        /// <param name="featureValidationRequestBase"> Feature support request object. </param>
+        /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FeatureValidationResponseBase>> CheckFeatureSupportDataProtectionAsync(AzureLocation location, FeatureValidationRequestBase featureValidationRequestBase, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            using var scope = DataProtectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckFeatureSupportDataProtection");
+            using var scope = DataProtectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataProtectionBackupFeatureSupport");
             scope.Start();
             try
             {
-                var response = await DataProtectionRestClient.CheckFeatureSupportAsync(Id.SubscriptionId, location, featureValidationRequestBase, cancellationToken).ConfigureAwait(false);
+                var response = await DataProtectionRestClient.CheckFeatureSupportAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -162,19 +129,27 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Validates if a feature is supported
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport
-        /// Operation Id: DataProtection_CheckFeatureSupport
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataProtection_CheckFeatureSupport</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The String to use. </param>
-        /// <param name="featureValidationRequestBase"> Feature support request object. </param>
+        /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FeatureValidationResponseBase> CheckFeatureSupportDataProtection(AzureLocation location, FeatureValidationRequestBase featureValidationRequestBase, CancellationToken cancellationToken = default)
+        public virtual Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            using var scope = DataProtectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckFeatureSupportDataProtection");
+            using var scope = DataProtectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataProtectionBackupFeatureSupport");
             scope.Start();
             try
             {
-                var response = DataProtectionRestClient.CheckFeatureSupport(Id.SubscriptionId, location, featureValidationRequestBase, cancellationToken);
+                var response = DataProtectionRestClient.CheckFeatureSupport(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -186,86 +161,46 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns ResourceGuards collection belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards
-        /// Operation Id: ResourceGuards_GetResourcesInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetResourcesInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardResource> GetResourceGuardResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceGuardResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceGuardResourceResourceGuardsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceGuardResources");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceGuardResourceResourceGuardsRestClient.GetResourcesInSubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceGuardResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceGuardResourceResourceGuardsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceGuardResources");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceGuardResourceResourceGuardsRestClient.GetResourcesInSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceGuards", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns ResourceGuards collection belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards
-        /// Operation Id: ResourceGuards_GetResourcesInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetResourcesInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardResource> GetResourceGuardResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGuardResource> GetResourceGuards(CancellationToken cancellationToken = default)
         {
-            Page<ResourceGuardResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceGuardResourceResourceGuardsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceGuardResources");
-                scope.Start();
-                try
-                {
-                    var response = ResourceGuardResourceResourceGuardsRestClient.GetResourcesInSubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceGuardResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceGuardResourceResourceGuardsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceGuardResources");
-                scope.Start();
-                try
-                {
-                    var response = ResourceGuardResourceResourceGuardsRestClient.GetResourcesInSubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceGuards", "value", "nextLink", cancellationToken);
         }
     }
 }

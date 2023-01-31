@@ -15,21 +15,26 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     public partial class SpatialAnalysisPersonLineCrossingLineEvents
     {
         /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingLineEvents. </summary>
-        /// <param name="line"> The named line. </param>
+        /// <param name="line">
+        /// The named line.
+        /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedLineString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="line"/> is null. </exception>
         public SpatialAnalysisPersonLineCrossingLineEvents(NamedLineBase line)
         {
-            if (line == null)
-            {
-                throw new ArgumentNullException(nameof(line));
-            }
+            Argument.AssertNotNull(line, nameof(line));
 
             Line = line;
             Events = new ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>();
         }
 
         /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingLineEvents. </summary>
-        /// <param name="line"> The named line. </param>
+        /// <param name="line">
+        /// The named line.
+        /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedLineString"/>.
+        /// </param>
         /// <param name="events"> The event configuration. </param>
         internal SpatialAnalysisPersonLineCrossingLineEvents(NamedLineBase line, IList<SpatialAnalysisPersonLineCrossingEvent> events)
         {
@@ -37,7 +42,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = events;
         }
 
-        /// <summary> The named line. </summary>
+        /// <summary>
+        /// The named line.
+        /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedLineString"/>.
+        /// </summary>
         public NamedLineBase Line { get; set; }
         /// <summary> The event configuration. </summary>
         public IList<SpatialAnalysisPersonLineCrossingEvent> Events { get; }

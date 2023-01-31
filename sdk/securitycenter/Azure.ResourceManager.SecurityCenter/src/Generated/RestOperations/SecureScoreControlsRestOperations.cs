@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListBySecureScoreRequest(string subscriptionId, string secureScoreName, ExpandControlsEnum? expand)
+        internal HttpMessage CreateListBySecureScoreRequest(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecureScoreControlList>> ListBySecureScoreAsync(string subscriptionId, string secureScoreName, ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SecureScoreControlList>> ListBySecureScoreAsync(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecureScoreControlList> ListBySecureScore(string subscriptionId, string secureScoreName, ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public Response<SecureScoreControlList> ListBySecureScore(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, ExpandControlsEnum? expand)
+        internal HttpMessage CreateListRequest(string subscriptionId, SecurityScoreODataExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecureScoreControlList>> ListAsync(string subscriptionId, ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SecureScoreControlList>> ListAsync(string subscriptionId, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecureScoreControlList> List(string subscriptionId, ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public Response<SecureScoreControlList> List(string subscriptionId, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListBySecureScoreNextPageRequest(string nextLink, string subscriptionId, string secureScoreName, ExpandControlsEnum? expand)
+        internal HttpMessage CreateListBySecureScoreNextPageRequest(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecureScoreControlList>> ListBySecureScoreNextPageAsync(string nextLink, string subscriptionId, string secureScoreName, ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SecureScoreControlList>> ListBySecureScoreNextPageAsync(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecureScoreControlList> ListBySecureScoreNextPage(string nextLink, string subscriptionId, string secureScoreName, ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public Response<SecureScoreControlList> ListBySecureScoreNextPage(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, ExpandControlsEnum? expand)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecureScoreControlList>> ListNextPageAsync(string nextLink, string subscriptionId, ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SecureScoreControlList>> ListNextPageAsync(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecureScoreControlList> ListNextPage(string nextLink, string subscriptionId, ExpandControlsEnum? expand = null, CancellationToken cancellationToken = default)
+        public Response<SecureScoreControlList> ListNextPage(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

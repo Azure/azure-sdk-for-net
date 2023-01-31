@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -36,16 +35,6 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("stringIndexType");
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PhraseControls))
-            {
-                writer.WritePropertyName("phraseControls");
-                writer.WriteStartArray();
-                foreach (var item in PhraseControls)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
 
@@ -55,7 +44,6 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<bool> loggingOptOut = default;
             Optional<int> sentenceCount = default;
             Optional<StringIndexType> stringIndexType = default;
-            Optional<IList<PhraseControl>> phraseControls = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"))
@@ -93,23 +81,8 @@ namespace Azure.AI.TextAnalytics.Models
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("phraseControls"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<PhraseControl> array = new List<PhraseControl>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PhraseControl.DeserializePhraseControl(item));
-                    }
-                    phraseControls = array;
-                    continue;
-                }
             }
-            return new AbstractiveSummarizationTaskParameters(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType), Optional.ToList(phraseControls), modelVersion.Value, Optional.ToNullable(loggingOptOut));
+            return new AbstractiveSummarizationTaskParameters(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType), modelVersion.Value, Optional.ToNullable(loggingOptOut));
         }
     }
 }

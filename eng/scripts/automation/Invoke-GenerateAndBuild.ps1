@@ -22,9 +22,10 @@ $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 
 $autorestConfig = $inputJson.autorestConfig
+$relatedCadlProjectFolder = $inputJson.relatedCadlProjectFolder
 
 $autorestConfigYaml = ""
-if ($autorestConfig -ne "") {
+if ($autorestConfig) {
     $autorestConfig | Set-Content "config.md"
     $autorestConfigYaml = Get-Content -Path .\config.md
     $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
@@ -41,27 +42,78 @@ if ($autorestConfig -ne "") {
     }
 }
 
-Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
+$generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
 
 # $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
 $sdkPath =  (Join-Path $PSScriptRoot .. .. ..)
 $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
 
-$readme = ""
-if ($commitid -ne "") {
-  if ($repoHttpsUrl -ne "") {
-    $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
+if ($readmeFile) {
+  Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
+
+  $readme = ""
+  if ($commitid -ne "") {
+    if ((-Not $readmeFile.Contains("specification")) -And $swaggerDir.Contains("specification"))
+    {
+      $readmeFile = "specification/$readmeFile"
+    }
+    if ($repoHttpsUrl -ne "") {
+      $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
+    } else {
+      $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
+    }
   } else {
-    $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
+    $readme = (Join-Path $swaggerDir $readmeFile)
   }
-} else {
-  $readme = (Join-Path $swaggerDir $readmeFile)
+  Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
-$generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
-Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+if ($relatedCadlProjectFolder) {
+  $cadlFolder = Resolve-Path (Join-Path $swaggerDir $relatedCadlProjectFolder)
+  $newPackageOutput = "newPackageOutput.json"
 
+  $cadlProjectYaml = Get-Content -Path (Join-Path "$cadlFolder" "cadl-project.yaml") -Raw
+
+  Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+  $yml = ConvertFrom-YAML $cadlProjectYaml
+  $service = ""
+  $namespace = ""
+  if ($yml) {
+      if ($yml["parameters"] -And $yml["parameters"]["service-directory-name"]) {
+          $service = $yml["parameters"]["service-directory-name"]["default"];
+      }
+      if ($yml["options"] -And $yml["options"]["@azure-tools/cadl-csharp"] -And $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]) {
+          $namespace = $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]
+      }
+  }
+  if (!$service || !$namespace) {
+      throw "Not provide service name or namespace."
+  }
+  $projectFolder = (Join-Path $sdkPath "sdk" $service $namespace)
+  $specRoot = $swaggerDir
+  if ((-Not $relatedCadlProjectFolder.Contains("specification")) -And $swaggerDir.Contains("specification"))
+  {
+    $relatedCadlProjectFolder = "specification/$relatedCadlProjectFolder"
+    $specRoot = Split-Path $specRoot
+  }
+  New-CADLPackageFolder `
+      -service $service `
+      -namespace $namespace `
+      -sdkPath $sdkPath `
+      -relatedCadlProjectFolder $relatedCadlProjectFolder `
+      -specRoot $specRoot `
+      -outputJsonFile $newpackageoutput
+  $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
+  $relativeSdkPath = $newPackageOutputJson.path
+  GeneratePackage `
+      -projectFolder $projectFolder `
+      -sdkRootPath $sdkPath `
+      -path $relativeSdkPath `
+      -downloadUrlPrefix $downloadUrlPrefix `
+      -serviceType "data-plane" `
+      -generatedSDKPackages $generatedSDKPackages
+}
 $outputJson = [PSCustomObject]@{
   packages = $generatedSDKPackages
 }

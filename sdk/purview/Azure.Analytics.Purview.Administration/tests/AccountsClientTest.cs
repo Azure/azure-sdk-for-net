@@ -23,7 +23,8 @@ namespace Azure.Analytics.Purview.Administration.Tests
         {
             PurviewAccountClient client = GetAccountClient();
             Response fetchResponse = await client.GetAccountPropertiesAsync(new());
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
+            JsonElement fetchBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("dotnetLLCPurviewAccount", fetchBodyJson.GetProperty("name").GetString());
         }
 
@@ -32,12 +33,12 @@ namespace Azure.Analytics.Purview.Administration.Tests
         {
             var options = new PurviewAccountClientOptions();
             PurviewAccountClient client = GetAccountClient();
-            var data = new JsonData(new Dictionary<string, string>
+            Response updateRespons = await client.UpdateAccountPropertiesAsync(RequestContent.Create(new Dictionary<string, string>
             {
                 ["friendlyName"] = "udpatedFriendlyName"
-            });
-            Response updateRespons = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
-            JsonElement upateBodyJson = JsonDocument.Parse(GetContentFromResponse(updateRespons)).RootElement;
+            }));
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(updateRespons));
+            JsonElement upateBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("dotnetLLCPurviewAccount", upateBodyJson.GetProperty("name").GetString());
             Assert.AreEqual("udpatedFriendlyName", upateBodyJson.GetProperty("properties").GetProperty("friendlyName").GetString());
         }
@@ -52,7 +53,8 @@ namespace Azure.Analytics.Purview.Administration.Tests
                 keyType = "PrimaryAtlasKafkaKey",
             };
             Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
-            JsonElement genKeyBodyJson = JsonDocument.Parse(GetContentFromResponse(genResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(genResponse));
+            JsonElement genKeyBodyJson = jsonDocument.RootElement;
             Assert.AreEqual(genResponse.Status, 200);
         }
 
@@ -61,15 +63,16 @@ namespace Azure.Analytics.Purview.Administration.Tests
         {
             var options = new PurviewAccountClientOptions();
             PurviewAccountClient client = GetAccountClient();
-            var data = new JsonData(new Dictionary<string, string>
+            Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(new Dictionary<string, string>
             {
                 ["keyType"] = "PrimaryAtlasKafkaKey"
-            });
-            Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
-            JsonElement genKeyBodyJson = JsonDocument.Parse(GetContentFromResponse(genResponse)).RootElement;
+            }));
+            using var jsonDocumentGen = JsonDocument.Parse(GetContentFromResponse(genResponse));
+            JsonElement genKeyBodyJson = jsonDocumentGen.RootElement;
             Assert.AreEqual(genResponse.Status, 200);
             Response listKeysResponse = await client.GetAccessKeysAsync(new());
-            JsonElement listKeyBodyJson = JsonDocument.Parse(GetContentFromResponse(listKeysResponse)).RootElement;
+            using var jsonDocumentListKeys = JsonDocument.Parse(GetContentFromResponse(listKeysResponse));
+            JsonElement listKeyBodyJson = jsonDocumentListKeys.RootElement;
             Assert.AreEqual(listKeysResponse.Status, 200);
         }
 

@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Model factory for read-only models. </summary>
-    [CodeGenModel("ServerCallingModelFactory")]
+    [CodeGenModel("AzureCommunicationServicesModelFactory")]
     public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
@@ -37,13 +37,12 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callSource">The source of the call.</param>
         /// <param name="targets">The targets of the call.</param>
         /// <param name="callConnectionState">The state of the call connection.</param>
-        /// <param name="subject">The subject.</param>
         /// <param name="callbackEndpoint">The callback URI.</param>
         /// <param name="mediaSubscriptionId">The subscriptionId for Media Streaming.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
-        public static CallConnectionProperties CallConnectionProperties(string callConnectionId = default, string serverCallId = default, CallSource callSource = default, IEnumerable<CommunicationIdentifier> targets = default, CallConnectionState callConnectionState = default, string subject = default, Uri callbackEndpoint = default, string mediaSubscriptionId = default)
+        public static CallConnectionProperties CallConnectionProperties(string callConnectionId = default, string serverCallId = default, CallSource callSource = default, IEnumerable<CommunicationIdentifier> targets = default, CallConnectionState callConnectionState = default, Uri callbackEndpoint = default, string mediaSubscriptionId = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, callSource, targets, callConnectionState, subject, callbackEndpoint, mediaSubscriptionId);
+            return new CallConnectionProperties(callConnectionId, serverCallId, callSource, targets, callConnectionState, callbackEndpoint, mediaSubscriptionId);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -117,13 +116,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
-        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CommunicationIdentifier> participants = default)
+        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default)
         {
             var internalObject = new ParticipantsUpdatedInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList()
+                participants == null
+                    ? new List<CallParticipantInternal>()
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
                 );
 
             return new ParticipantsUpdated(internalObject);

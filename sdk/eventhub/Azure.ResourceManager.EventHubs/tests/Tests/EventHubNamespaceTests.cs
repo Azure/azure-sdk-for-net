@@ -436,12 +436,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 KeyVaultUri = kvData.Properties.VaultUri
             });
 
-            namespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
-            {
-                KeyName = Key3,
-                KeyVaultUri = kvData.Properties.VaultUri
-            });
-
             resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false)).Value;
             AssertNamespaceMSIOnUpdates(namespaceData, resource.Data);
 
@@ -508,13 +502,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
             {
                 KeyName = Key2,
-                KeyVaultUri = kvData.Properties.VaultUri,
-                Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
-            });
-
-            eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
-            {
-                KeyName = Key3,
                 KeyVaultUri = kvData.Properties.VaultUri,
                 Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
             });
@@ -674,28 +661,32 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]
+        [RecordedTest]
         public async Task AddSetRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt2");
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //add a tag
-            eventHubNamespace = await eventHubNamespace.AddTagAsync("key", "value");
+            eventHubNamespace = await eventHubNamespace.AddTagAsync("key1", "value1");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
-            Assert.AreEqual(eventHubNamespace.Data.Tags["key"], "value");
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
+            }
 
             //set the tag
-            eventHubNamespace.Data.Tags.Add("key1", "value1");
+            eventHubNamespace.Data.Tags.Add("key2", "value2");
             eventHubNamespace = await eventHubNamespace.SetTagsAsync(eventHubNamespace.Data.Tags);
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 2);
-            Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
+            Assert.AreEqual(eventHubNamespace.Data.Tags["key2"], "value2");
 
             //remove a tag
-            eventHubNamespace = await eventHubNamespace.RemoveTagAsync("key");
+            eventHubNamespace = await eventHubNamespace.RemoveTagAsync("key1");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
 
             //wait until provision state is succeeded

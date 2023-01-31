@@ -63,6 +63,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 You can create a client and call the client's `<operation>` method.
 
 ```C# Snippet:Azure_Template_Scenario
+Console.WriteLine("Hello, world!");
 ```
 
 ## Troubleshooting

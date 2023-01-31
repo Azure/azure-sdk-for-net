@@ -3,13 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         [RecordedTest]
         public async Task ManageCustomModelsAsync()

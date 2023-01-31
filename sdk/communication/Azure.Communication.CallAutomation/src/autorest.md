@@ -6,20 +6,13 @@ From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to g
 > see https://aka.ms/autorest
 
 ```yaml
-input-file:
-    -  $(this-folder)/Swagger/2022-04-07.json
-
-clear-output-folder: true
-client-side-validation: false
-payload-flattening-threshold: 1
-
-openapi-type: data-plane
-tag: V2022_04_07_preview
-
+tag: package-2023-01-15-preview
 model-namespace: false
 
-title:
-  Call Automation
+require:
+    - https://raw.githubusercontent.com/williamzhao87/azure-rest-api-specs/1fcceb1785e063e75b88436d18b56a04c04dc58d/specification/communication/data-plane/CallAutomation/readme.md
+title: Azure Communication Services
 
 generation1-convenience-client: true
+
 ```

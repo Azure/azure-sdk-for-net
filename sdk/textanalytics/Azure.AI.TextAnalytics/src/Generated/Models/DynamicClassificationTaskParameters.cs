@@ -8,6 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -19,10 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="categories"/> is null. </exception>
         public DynamicClassificationTaskParameters(IEnumerable<string> categories)
         {
-            if (categories == null)
-            {
-                throw new ArgumentNullException(nameof(categories));
-            }
+            Argument.AssertNotNull(categories, nameof(categories));
 
             Categories = categories.ToList();
         }

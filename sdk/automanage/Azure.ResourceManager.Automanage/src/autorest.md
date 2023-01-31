@@ -6,7 +6,6 @@ csharp: true
 library-name: Automanage
 namespace: Azure.ResourceManager.Automanage
 require: https://github.com/Azure/azure-rest-api-specs/blob/4b5fe2fb0a5066c4ff2bd429dbd5e1afda6afab3/specification/automanage/resource-manager/readme.md
-tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -43,16 +42,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 directive:
-#remove these operations as they are currently not supported but will be in the future
-  - remove-operation: ConfigurationProfilesVersions_CreateOrUpdate
-  - remove-operation: ConfigurationProfilesVersions_Get
-  - remove-operation: ConfigurationProfilesVersions_Delete
-  - remove-operation: ConfigurationProfilesVersions_ListChildResources
+  # these operations will be supported in the future
   - remove-operation: BestPracticesVersions_Get
   - remove-operation: BestPracticesVersions_ListByTenant
-  - remove-operation: ServicePrincipals_ListBySubscription
-  - remove-operation: ServicePrincipals_Get
-
 #use scope parameter on the two paths that are defined multiple times
   - from: automanage.json
     where: $.paths

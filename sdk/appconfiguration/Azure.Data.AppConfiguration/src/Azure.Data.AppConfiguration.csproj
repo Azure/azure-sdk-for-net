@@ -9,7 +9,7 @@
     <PackageTags>Microsoft Azure Application Configuration;Data;AppConfig;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;AZC0007;AZC0006</NoWarn>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource> 
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>

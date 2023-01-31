@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListByHomeRegionRequest(string subscriptionId, string ascLocation, string filter)
+        internal HttpMessage CreateListByHomeRegionRequest(string subscriptionId, AzureLocation ascLocation, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,12 +138,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityTaskList>> ListByHomeRegionAsync(string subscriptionId, string ascLocation, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityTaskList>> ListByHomeRegionAsync(string subscriptionId, AzureLocation ascLocation, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListByHomeRegionRequest(subscriptionId, ascLocation, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -166,12 +165,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityTaskList> ListByHomeRegion(string subscriptionId, string ascLocation, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityTaskList> ListByHomeRegion(string subscriptionId, AzureLocation ascLocation, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListByHomeRegionRequest(subscriptionId, ascLocation, filter);
             _pipeline.Send(message, cancellationToken);
@@ -189,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetSubscriptionLevelTaskRequest(string subscriptionId, string ascLocation, string taskName)
+        internal HttpMessage CreateGetSubscriptionLevelTaskRequest(string subscriptionId, AzureLocation ascLocation, string taskName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -214,12 +212,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityTaskData>> GetSubscriptionLevelTaskAsync(string subscriptionId, string ascLocation, string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityTaskData>> GetSubscriptionLevelTaskAsync(string subscriptionId, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var message = CreateGetSubscriptionLevelTaskRequest(subscriptionId, ascLocation, taskName);
@@ -245,12 +242,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityTaskData> GetSubscriptionLevelTask(string subscriptionId, string ascLocation, string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityTaskData> GetSubscriptionLevelTask(string subscriptionId, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var message = CreateGetSubscriptionLevelTaskRequest(subscriptionId, ascLocation, taskName);
@@ -271,7 +267,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string ascLocation, string filter)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -302,13 +298,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityTaskList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string ascLocation, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityTaskList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, ascLocation, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -332,13 +327,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityTaskList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string ascLocation, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityTaskList> ListByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, ascLocation, filter);
             _pipeline.Send(message, cancellationToken);
@@ -356,7 +350,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetResourceGroupLevelTaskRequest(string subscriptionId, string resourceGroupName, string ascLocation, string taskName)
+        internal HttpMessage CreateGetResourceGroupLevelTaskRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -384,13 +378,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityTaskData>> GetResourceGroupLevelTaskAsync(string subscriptionId, string resourceGroupName, string ascLocation, string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityTaskData>> GetResourceGroupLevelTaskAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var message = CreateGetResourceGroupLevelTaskRequest(subscriptionId, resourceGroupName, ascLocation, taskName);
@@ -417,13 +410,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityTaskData> GetResourceGroupLevelTask(string subscriptionId, string resourceGroupName, string ascLocation, string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityTaskData> GetResourceGroupLevelTask(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var message = CreateGetResourceGroupLevelTaskRequest(subscriptionId, resourceGroupName, ascLocation, taskName);
@@ -514,7 +506,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListByHomeRegionNextPageRequest(string nextLink, string subscriptionId, string ascLocation, string filter)
+        internal HttpMessage CreateListByHomeRegionNextPageRequest(string nextLink, string subscriptionId, AzureLocation ascLocation, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -534,13 +526,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityTaskList>> ListByHomeRegionNextPageAsync(string nextLink, string subscriptionId, string ascLocation, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityTaskList>> ListByHomeRegionNextPageAsync(string nextLink, string subscriptionId, AzureLocation ascLocation, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListByHomeRegionNextPageRequest(nextLink, subscriptionId, ascLocation, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -564,13 +555,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityTaskList> ListByHomeRegionNextPage(string nextLink, string subscriptionId, string ascLocation, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityTaskList> ListByHomeRegionNextPage(string nextLink, string subscriptionId, AzureLocation ascLocation, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListByHomeRegionNextPageRequest(nextLink, subscriptionId, ascLocation, filter);
             _pipeline.Send(message, cancellationToken);
@@ -588,7 +578,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string ascLocation, string filter)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -609,14 +599,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityTaskList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string ascLocation, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityTaskList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, ascLocation, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -641,14 +630,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityTaskList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string ascLocation, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityTaskList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, ascLocation, filter);
             _pipeline.Send(message, cancellationToken);

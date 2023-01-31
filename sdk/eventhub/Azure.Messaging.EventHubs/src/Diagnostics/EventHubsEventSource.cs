@@ -104,16 +104,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
         /// <param name="operationId">An artificial identifier for the publishing operation.</param>
         /// <param name="retryCount">The number of retries that were used for service communication.</param>
+        /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         ///
-        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.  Service Retry Count: {3}.")]
+        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.  Service Retry Count: {3}; Duration: '{4:0.00}' seconds")]
         public virtual void EventPublishComplete(string eventHubName,
                                                  string partitionIdOrKey,
                                                  string operationId,
-                                                 int retryCount)
+                                                 int retryCount,
+                                                 double durationSeconds)
         {
             if (IsEnabled())
             {
-                EventPublishCompleteCore(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount);
+                EventPublishCompleteCore(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount, durationSeconds);
             }
         }
 
@@ -169,18 +171,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="operationId">An artificial identifier for the publishing operation.</param>
         /// <param name="retryCount">The number of retries that were used for service communication.</param>
         /// <param name="eventCount">The number of events that were received in the batch.</param>
+        /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Duration: '{6:0.00}' seconds")]
         public virtual void EventReceiveComplete(string eventHubName,
                                                  string consumerGroup,
                                                  string partitionId,
                                                  string operationId,
                                                  int retryCount,
-                                                 int eventCount)
+                                                 int eventCount,
+                                                 double durationSeconds)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, retryCount, eventCount);
+                WriteEvent(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, retryCount, eventCount, durationSeconds);
             }
         }
 
@@ -2597,7 +2601,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(125, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(125, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -2675,6 +2679,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
         /// <param name="operationId">An artificial identifier for the publishing operation.</param>
         /// <param name="retryCount">The number of retries that were used for service communication.</param>
+        /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2682,13 +2687,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                      string eventHubName,
                                                      string partitionIdOrKey,
                                                      string operationId,
-                                                     int retryCount)
+                                                     int retryCount,
+                                                     double durationSeconds)
         {
             fixed (char* eventHubNamePtr = eventHubName)
             fixed (char* partitionIdOrKeyPtr = partitionIdOrKey)
             fixed (char* operationIdPtr = operationId)
             {
-                var eventPayload = stackalloc EventData[4];
+                var eventPayload = stackalloc EventData[5];
 
                 eventPayload[0].Size = (eventHubName.Length + 1) * sizeof(char);
                 eventPayload[0].DataPointer = (IntPtr)eventHubNamePtr;
@@ -2702,7 +2708,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[3].Size = Unsafe.SizeOf<int>();
                 eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref retryCount);
 
-                WriteEventCore(eventId, 4, eventPayload);
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(eventId, 5, eventPayload);
             }
         }
 
@@ -3129,11 +3138,11 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
                 eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
 
-                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
-                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+                eventPayload[2].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)operationIdPtr;
 
-                eventPayload[4].Size = Unsafe.SizeOf<double>();
-                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+                eventPayload[3].Size = Unsafe.SizeOf<double>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
                 WriteEventCore(eventId, 4, eventPayload);
             }
@@ -3334,6 +3343,65 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg6);
 
                 WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with four string arguments and two value type arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        /// <param name="arg7">The seventh argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
+                                                                  string arg1,
+                                                                  string arg2,
+                                                                  string arg3,
+                                                                  string arg4,
+                                                                  TValue1 arg5,
+                                                                  TValue2 arg6,
+                                                                  TValue3 arg7)
+            where TValue1 : struct
+            where TValue2 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            {
+                var eventPayload = stackalloc EventData[7];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg5);
+
+                eventPayload[5].Size = Unsafe.SizeOf<TValue2>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg6);
+
+                eventPayload[6].Size = Unsafe.SizeOf<TValue3>();
+                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg7);
+
+                WriteEventCore(eventId, 7, eventPayload);
             }
         }
 

@@ -4,7 +4,7 @@
       "RequestUri": "https://e2e-lianweiwebpubsub.webpubsub.azure.com/api/hubs/ServiceClientCanBroadcastMessages/:send?api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "5",
         "Content-Type": "text/plain",
@@ -27,7 +27,7 @@
       "RequestUri": "https://e2e-lianweiwebpubsub.webpubsub.azure.com/api/hubs/ServiceClientCanBroadcastMessages/:send?api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@
       "RequestUri": "https://e2e-lianweiwebpubsub.webpubsub.azure.com/api/hubs/ServiceClientCanBroadcastMessages/:send?api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "5",
         "Content-Type": "application/octet-stream",
