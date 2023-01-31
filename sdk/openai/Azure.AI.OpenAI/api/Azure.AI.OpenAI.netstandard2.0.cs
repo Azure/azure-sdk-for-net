@@ -23,10 +23,10 @@ namespace Azure.AI.OpenAI
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2022_06_01_Preview) { }
+        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2022_12_01) { }
         public enum ServiceVersion
         {
-            V2022_06_01_Preview = 1,
+            V2022_12_01 = 1,
         }
     }
 }
@@ -48,6 +48,7 @@ namespace Azure.AI.OpenAI.Models
         public string Id { get { throw null; } }
         public string Model { get { throw null; } }
         public string Object { get { throw null; } }
+        public Azure.AI.OpenAI.Models.CompletionsUsage Usage { get { throw null; } }
     }
     public partial class CompletionsLogProbsModel
     {
@@ -77,6 +78,13 @@ namespace Azure.AI.OpenAI.Models
         public float? TopP { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
     }
+    public partial class CompletionsUsage
+    {
+        internal CompletionsUsage() { }
+        public int CompletionToken { get { throw null; } }
+        public int PromptTokens { get { throw null; } }
+        public int TotalTokens { get { throw null; } }
+    }
     public partial class EmbeddingItem
     {
         internal EmbeddingItem() { }
@@ -88,7 +96,9 @@ namespace Azure.AI.OpenAI.Models
     {
         internal Embeddings() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Models.EmbeddingItem> Data { get { throw null; } }
+        public string Model { get { throw null; } }
         public string Object { get { throw null; } }
+        public Azure.AI.OpenAI.Models.EmbeddingsUsage Usage { get { throw null; } }
     }
     public partial class EmbeddingsOptions
     {
@@ -97,5 +107,11 @@ namespace Azure.AI.OpenAI.Models
         public string InputType { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
+    }
+    public partial class EmbeddingsUsage
+    {
+        internal EmbeddingsUsage() { }
+        public int PromptTokens { get { throw null; } }
+        public int TotalTokens { get { throw null; } }
     }
 }
