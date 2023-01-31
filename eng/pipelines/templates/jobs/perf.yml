@@ -1,10 +1,10 @@
 parameters:
-- name: ServiceDirectory
-  type: string
-  default: ''
 - name: LanguageVersion
   type: string
   default: '7'
+- name: ServiceDirectory
+  type: string
+  default: ''
 - name: Services
   type: string
   default: ''
