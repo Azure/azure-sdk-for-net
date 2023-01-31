@@ -4,7 +4,7 @@
 
 You can use this library on your client side to manage the WebSocket client connections, as shown in the below diagram:
 
-![overflow](./samples/media/overview.png)
+![overflow](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Client/samples/media/overview.png?raw=true)
 
 Use this library to:
 
@@ -42,7 +42,7 @@ A Client uses a Client Access URL to connect and authenticate with the service. 
 
 As a quick start, you can go to the Portal and copy the **Client Access URL** from **Key** blade.
 
-![get_client_url](https://learn.microsoft.com/azure/azure-web-pubsub/media/howto-websocket-connect/generate-client-url.png)
+![get_client_url](https://camo.githubusercontent.com/77f1e3e39a5deef7ced866eea73684ecf844f9809dc25111006436a379f8238a/68747470733a2f2f6c6561726e2e6d6963726f736f66742e636f6d2f617a7572652f617a7572652d7765622d7075627375622f6d656469612f686f77746f2d776562736f636b65742d636f6e6e6563742f67656e65726174652d636c69656e742d75726c2e706e67)
 
 As shown in the diagram, the client will be granted permission of sending messages to the specific group and joining the specific group. Learn more about client permission, see [permissions](https://learn.microsoft.com/azure/azure-web-pubsub/reference-json-reliable-webpubsub-subprotocol#permissions)
 
