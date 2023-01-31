@@ -117,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             // Only log if not all partitions are failing or it's time to log
             if (partitionErrors.Count > 0 && (partitionErrors.Count != partitionRuntimeInfo.Count || logPartitionWarning))
             {
-                _logger.LogWarning($"Function '{_functionId}': Unable to deserialize partition or lease info with the " +
+                _logger.LogWarning($"Function '{_functionId}': Unable to deserialize partition or checkpoint info with the " +
                     $"following errors: {string.Join(" ", partitionErrors)}");
                 _nextPartitionWarningTime = DateTime.UtcNow.AddMinutes(PartitionLogIntervalInMinutes);
             }
