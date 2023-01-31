@@ -39,7 +39,7 @@ namespace Azure.Core.Dynamic
                 {
                     if (_index < 0)
                     {
-                        throw new InvalidOperationException("MoveNext() must be called before first access to `Current`.");
+                        return default;
                     }
 
                     return _element.GetIndexElement(_index);
