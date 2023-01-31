@@ -57,6 +57,8 @@ namespace Azure.Security.KeyVault
 
         public HttpMessage CreateRequest(RequestMethod method, ResponseClassifier classifier, Uri uri, bool appendApiVersion)
         {
+            // No need to allocate a RequestContext now, but if/when we do accept a RequestContext as a public parameter,
+            // consider passing that with a default classifier instead of a separate classifier parameter.
             HttpMessage message = _pipeline.CreateMessage(null, classifier);
             Request request = message.Request;
 
@@ -75,6 +77,7 @@ namespace Azure.Security.KeyVault
 
         public HttpMessage CreateRequest(RequestMethod method, ResponseClassifier classifier, params string[] path)
         {
+            // See comment in CreateRequest overload above for future design consideration.
             HttpMessage message = _pipeline.CreateMessage(null, classifier);
             Request request = message.Request;
 
@@ -96,7 +99,8 @@ namespace Azure.Security.KeyVault
         public static NullableResponse<T> CreateResponse<T>(HttpMessage message, Func<T> resultFactory)
             where T : IJsonDeserializable
         {
-            if (message.Response.Status == 200 || message.Response.Status == 201)
+            int status = message.Response.Status;
+            if (status == 200 || status == 201 || status == 202)
             {
                 T result = resultFactory();
                 result.Deserialize(message.Response.ContentStream);
