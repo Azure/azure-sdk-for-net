@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -13,7 +14,7 @@ namespace Azure.Core.Dynamic
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
     [JsonConverter(typeof(JsonConverter))]
-    public partial class DynamicJson
+    public partial class DynamicJson : DynamicData
     {
         // TODO: Decide whether or not to support equality
 
@@ -28,6 +29,13 @@ namespace Azure.Core.Dynamic
         internal DynamicJson(MutableJsonElement element)
         {
             _element = element;
+        }
+
+        internal override void WriteTo(Stream stream)
+        {
+            Utf8JsonWriter writer = new(stream);
+            _element.WriteTo(writer);
+            writer.Flush();
         }
 
         private object GetProperty(string name)
