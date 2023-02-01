@@ -4,6 +4,8 @@ The following shows examples of how to use the basic functionality of the `Schem
 
 Each Event Hubs Namespace can only accept one format of schemas.
 
+In the current service version, the Schema Registry service only accepts and validates draft 3 Json schemas. Functionality to support additional drafts of Json will be added.
+
 - [Registering and retrieving Avro, Json, and custom schemas (preview)](#registering-and-retrieving-avro-json-and-custom-schemas-preview)
     - [Register an Avro schema](#register-an-avro-schema)
     - [Retrieve an Avro schema](#retrieve-an-avro-schema)
