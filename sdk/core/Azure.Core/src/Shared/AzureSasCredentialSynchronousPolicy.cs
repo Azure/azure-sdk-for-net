@@ -4,6 +4,8 @@
 using System;
 using Azure.Core.Pipeline;
 
+#nullable enable
+
 namespace Azure.Core
 {
     internal class AzureSasCredentialSynchronousPolicy : HttpPipelineSynchronousPolicy
@@ -56,6 +58,6 @@ namespace Azure.Core
         /// <summary>
         /// A marker class used to represent AzureSasCredential signature history on the <see cref="HttpMessage"/> property bag.
         /// </summary>
-        internal class AzureSasSignatureHistory { }
+        private class AzureSasSignatureHistory { }
     }
 }
