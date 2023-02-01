@@ -63,7 +63,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(_completionsDeploymentId, nameof(_completionsDeploymentId));
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
-            CompletionsOptions completionsOptions = new CompletionsOptions();
+            CompletionsOptions completionsOptions = new CompletionsOptions("text-davinci-002");
             completionsOptions.Prompt.Add(prompt);
             return await GetCompletionsAsync(_completionsDeploymentId, completionsOptions, cancellationToken).ConfigureAwait(false);
         }
@@ -76,7 +76,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(_completionsDeploymentId, nameof(_completionsDeploymentId));
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
-            CompletionsOptions completionsOptions = new CompletionsOptions();
+            CompletionsOptions completionsOptions = new CompletionsOptions("text-davinci-002");
             completionsOptions.Prompt.Add(prompt);
             return GetCompletions(_completionsDeploymentId, completionsOptions, cancellationToken);
         }

@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Models
 {
     /// <summary> LogProbs model within completion choice. </summary>
-    public partial class CompletionsLogProbsModel
+    public partial class CompletionsLogProbs
     {
-        /// <summary> Initializes a new instance of CompletionsLogProbsModel. </summary>
-        internal CompletionsLogProbsModel()
+        /// <summary> Initializes a new instance of CompletionsLogProbs. </summary>
+        internal CompletionsLogProbs()
         {
             Tokens = new ChangeTrackingList<string>();
             TokenLogprobs = new ChangeTrackingList<float>();
@@ -23,12 +23,12 @@ namespace Azure.AI.OpenAI.Models
             TextOffset = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of CompletionsLogProbsModel. </summary>
+        /// <summary> Initializes a new instance of CompletionsLogProbs. </summary>
         /// <param name="tokens"> Tokens. </param>
         /// <param name="tokenLogprobs"> LogProbs of Tokens. </param>
         /// <param name="topLogprobs"> Top LogProbs. </param>
         /// <param name="textOffset"> Text offset. </param>
-        internal CompletionsLogProbsModel(IReadOnlyList<string> tokens, IReadOnlyList<float> tokenLogprobs, IReadOnlyList<IDictionary<string, float>> topLogprobs, IReadOnlyList<int> textOffset)
+        internal CompletionsLogProbs(IReadOnlyList<string> tokens, IReadOnlyList<float> tokenLogprobs, IReadOnlyList<IDictionary<string, float>> topLogprobs, IReadOnlyList<int> textOffset)
         {
             Tokens = tokens.ToList();
             TokenLogprobs = tokenLogprobs.ToList();

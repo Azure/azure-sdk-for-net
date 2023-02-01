@@ -16,7 +16,8 @@
       "RequestBody": {
         "prompt": [
           "Hello world"
-        ]
+        ],
+        "model": "text-davinci-002"
       },
       "StatusCode": 401,
       "ResponseHeaders": {

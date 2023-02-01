@@ -11,17 +11,17 @@ namespace Azure.AI.OpenAI.Models
     public partial class EmbeddingsUsage
     {
         /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
-        /// <param name="promptTokens"></param>
-        /// <param name="totalTokens"></param>
+        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
+        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
         internal EmbeddingsUsage(int promptTokens, int totalTokens)
         {
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
         }
 
-        /// <summary> Gets the prompt tokens. </summary>
+        /// <summary> Number of tokens sent in the original request. </summary>
         public int PromptTokens { get; }
-        /// <summary> Gets the total tokens. </summary>
+        /// <summary> Total number of tokens transacted in this request/response. </summary>
         public int TotalTokens { get; }
     }
 }

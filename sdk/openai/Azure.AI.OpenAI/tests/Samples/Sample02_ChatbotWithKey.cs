@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             foreach (string prompt in examplePrompts)
             {
                 Console.Write($"Input: {prompt}");
-                CompletionsOptions completionsOptions = new CompletionsOptions();
+                CompletionsOptions completionsOptions = new CompletionsOptions("text-davinci-002");
                 completionsOptions.Prompt.Add(prompt);
 
                 Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);

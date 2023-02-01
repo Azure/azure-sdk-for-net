@@ -15,9 +15,10 @@
       },
       "RequestBody": {
         "prompt": [
-          "Hello world",
-          "running over the same old ground"
-        ]
+            "Hello world",
+            "running over the same old ground"
+        ],
+        "model": "text-davinci-002"
       },
       "StatusCode": 200,
       "ResponseHeaders": {

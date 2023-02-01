@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             ";
 
             Console.Write($"Input: {summarizationPrompt}");
-            CompletionsOptions completionsOptions = new CompletionsOptions();
+            CompletionsOptions completionsOptions = new CompletionsOptions("text-davinci-002");
             completionsOptions.Prompt.Add(summarizationPrompt);
 
             Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);

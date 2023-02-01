@@ -34,7 +34,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task CompletionTest()
         {
             var client = GetClient();
-            CompletionsOptions completionsRequest = new CompletionsOptions();
+            CompletionsOptions completionsRequest = new CompletionsOptions("text-davinci-002");
             completionsRequest.Prompt.Add("Hello world");
             completionsRequest.Prompt.Add("running over the same old ground");
             Assert.That(completionsRequest, Is.InstanceOf<CompletionsOptions>());
@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI.Tests
         public void RequestFailedExceptionTest()
         {
             var client = GetClient();
-            CompletionsOptions completionsRequest = new CompletionsOptions();
+            CompletionsOptions completionsRequest = new CompletionsOptions("text-davinci-002");
             completionsRequest.Prompt.Add("Hello world");
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest); });
             Assert.AreEqual(401, exception.Status);
