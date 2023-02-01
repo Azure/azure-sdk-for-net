@@ -70,7 +70,7 @@ namespace Azure.Core.TestFramework
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                    ["Logging__LogLevel__Default"] = "Trace",
+                    ["Logging__LogLevel__Default"] = "Error",
                     ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
                     ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
                     ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
@@ -80,6 +80,17 @@ namespace Azure.Core.TestFramework
             _testProxyProcess = Process.Start(testProxyProcessInfo);
 
             ProcessTracker.Add(_testProxyProcess);
+            _ = Task.Run(
+                () =>
+                {
+                    while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardError.EndOfStream)
+                    {
+                        var error = _testProxyProcess.StandardError.ReadLine();
+                        // output to console in case another error in the test causes the exception to not be propagated
+                        TestContext.Progress.WriteLine(error);
+                        _errorBuffer.AppendLine(error);
+                    }
+                });
             if (debugMode)
             {
                 _proxyPortHttp = 5000;
@@ -88,7 +99,7 @@ namespace Azure.Core.TestFramework
             else
             {
                 int lines = 0;
-                while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 5000)
+                while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
                 {
                     string outputLine = _testProxyProcess.StandardOutput.ReadLine();
                     // useful for debugging
@@ -104,33 +115,11 @@ namespace Azure.Core.TestFramework
                         continue;
                     }
                 }
-                _ = Task.Run(
-                    () =>
-                    {
-                        while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardError.EndOfStream)
-                        {
-                            var error = _testProxyProcess.StandardError.ReadLine();
-                            // output to console in case another error in the test causes the exception to not be propagated
-                            TestContext.Progress.WriteLine(error);
-                            _errorBuffer.AppendLine(error);
-                        }
-                    });
-                _ = Task.Run(
-                    () =>
-                    {
-                        while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardOutput.EndOfStream)
-                        {
-                            var error = _testProxyProcess.StandardOutput.ReadLine();
-                            // output to console in case another error in the test causes the exception to not be propagated
-                            TestContext.Progress.WriteLine(error);
-                            _errorBuffer.AppendLine(error);
-                        }
-                    });
             }
 
             if (_proxyPortHttp == null || _proxyPortHttps == null)
             {
-                // CheckForErrors();
+                CheckForErrors();
                 // if no errors, fallback to this exception
                 throw new InvalidOperationException("Failed to start the test proxy. One or both of the ports was not populated." + Environment.NewLine +
                                                     $"http: {_proxyPortHttp}" + Environment.NewLine +
