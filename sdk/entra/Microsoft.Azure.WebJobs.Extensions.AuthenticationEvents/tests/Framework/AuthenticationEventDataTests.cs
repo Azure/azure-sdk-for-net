@@ -1,9 +1,8 @@
-﻿using System;
-using Xunit;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data;
-using System.Text.Json;
-using System.Text.Json.Nodes;
+using Newtonsoft.Json.Linq;
+using System;
+using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framework
 {
@@ -11,7 +10,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     /// Tests for AuthenticationEventData
     /// </summary>
     public class AuthenticationEventDataTests
-    {      
+    {
         public static string TenantId = "00000000-0000-0000-0000-000000000001";
         public static string AuthenticationEventListenerId = "00000000-0000-0000-0000-000000000002";
         public static string CustomAuthenticationExtensionId = "00000000-0000-0000-0000-000000000003";
@@ -24,12 +23,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             bool hasCustomAuthenticationExtensionIdKey = true,
             bool hasCustomAuthenticationExtensionIdValue = true)
         {
-            JsonObject obj = new ();
+            JObject obj = new();
 
-            JsonObject context = new ();
+            JObject context = new();
             context["protocol"] = "SAML";
 
-            JsonObject dataObj = new ();
+            JObject dataObj = new();
             obj["data"] = dataObj;
             dataObj["authenticationContext"] = context;
             dataObj["@odata.type"] = "microsoft.graph.onTokenIssuanceStartCalloutData";
@@ -47,13 +46,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : "";
             }
 
-            return obj.ToJsonString();
+            return obj.ToString();
         }
 
         [Fact]
         public void TestCreate()
         {
-            Assert.Throws<ArgumentNullException>(()=> AuthenticationEventData.CreateInstance(null, null));
+            Assert.Throws<ArgumentNullException>(() => AuthenticationEventData.CreateInstance(null, null));
 
             Type type = typeof(TokenIssuanceStartData);
             AuthenticationEventData data = AuthenticationEventData.CreateInstance(type, new AuthenticationEventJsonElement(BuildDataString()));
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             Assert.Equal(CustomAuthenticationExtensionId, data.CustomAuthenticationExtensionId.ToString());
 
             var ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
-                ()=> Helpers.ValidateGraph(
+                () => Helpers.ValidateGraph(
                     AuthenticationEventData.CreateInstance(
                         type: type,
                         json: new AuthenticationEventJsonElement(BuildDataString(hasTenantIdKey: false)))));
