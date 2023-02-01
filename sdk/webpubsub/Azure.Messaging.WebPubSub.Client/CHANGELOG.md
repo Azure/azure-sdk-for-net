@@ -5,7 +5,7 @@
 - Fix AutoRejoinGroups doesn't work issue
 
 ### Other Changes
-- Make WebPubSubClientCredential.GetClientAccessUriAsync() virtual for extendible
+- Make WebPubSubClientCredential.GetClientAccessUriAsync() virtual for extendable
 
 ## 1.0.0-beta.1 (2023-01-13)
 ### Features Added
