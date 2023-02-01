@@ -67,6 +67,17 @@ namespace Azure.Core.Dynamic
             WriteRootElementTo(writer);
         }
 
+        internal void WriteTo(Utf8JsonWriter writer)
+        {
+            if (!Changes.HasChanges)
+            {
+                _originalElement.WriteTo(writer);
+                return;
+            }
+
+            WriteRootElementTo(writer);
+        }
+
         private static void Write(Stream stream, ReadOnlySpan<byte> buffer)
         {
             byte[] sharedBuffer = ArrayPool<byte>.Shared.Rent(buffer.Length);
@@ -132,6 +143,20 @@ namespace Azure.Core.Dynamic
             Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
             _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
             _originalElement = JsonDocument.Parse(_original).RootElement;
+        }
+
+        private class JsonConverter : JsonConverter<MutableJsonDocument>
+        {
+            public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return new MutableJsonDocument(document);
+            }
+
+            public override void Write(Utf8JsonWriter writer, MutableJsonDocument value, JsonSerializerOptions options)
+            {
+                value.WriteTo(writer);
+            }
         }
     }
 }

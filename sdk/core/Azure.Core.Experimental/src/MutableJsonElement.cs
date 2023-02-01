@@ -426,6 +426,9 @@ namespace Azure.Core.Dynamic
                 case MutableJsonElement e:
                     Set(e);
                     break;
+                case MutableJsonDocument d:
+                    Set(d.RootElement);
+                    break;
                 default:
                     Changes.AddChange(_path, value, true);
                     break;
