@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk.openai.azure.com/openai/deployments/text-similarity-davinci-001/embeddings?api-version=2022-06-01-preview",
+      "RequestUri": "https://sdk.openai.azure.com/openai/deployments/text-similarity-davinci-001/embeddings?api-version=2022-12-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
