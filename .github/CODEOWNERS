@@ -1,7 +1,20 @@
 # Instructions for CODEOWNERS file format and automatic build failure notifications:
 # https://github.com/Azure/azure-sdk/blob/main/docs/policies/opensource.md#codeowners
 
-# ######## Eng Sys ########
+################
+# Orphaned paths
+################
+# As of 2/1/2023 these paths have no owners:
+
+# / 
+# /.config/
+# /.devcontainer/
+# /.vscode/
+
+################
+# Eng Sys
+################
+
 /eng/           @hallipr @weshaggard @benbp
 /eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
 /**/tests.yml   @hallipr @benbp
