@@ -5,7 +5,7 @@
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
     <PackageTags>Azure, WebPubSub</PackageTags>
     <Description>Azure Functions extension for the WebPubSub service</Description>
-    <Version>1.4.0-beta.1</Version>
+    <Version>1.4.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS8632;CA1056;CA2227</NoWarn>
