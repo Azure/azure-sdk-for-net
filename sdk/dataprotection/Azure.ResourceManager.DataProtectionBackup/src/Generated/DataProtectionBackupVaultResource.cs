@@ -257,6 +257,59 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return GetDataProtectionBackupJobs().Get(jobId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DeletedBackupInstanceResources in the DataProtectionBackupVault. </summary>
+        /// <returns> An object representing collection of DeletedBackupInstanceResources and their operations over a DeletedBackupInstanceResource. </returns>
+        public virtual DeletedBackupInstanceResourceCollection GetDeletedBackupInstanceResources()
+        {
+            return GetCachedClient(Client => new DeletedBackupInstanceResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a deleted backup instance with name in a backup vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedBackupInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupInstanceName"> The name of the deleted backup instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeletedBackupInstanceResource>> GetDeletedBackupInstanceResourceAsync(string backupInstanceName, CancellationToken cancellationToken = default)
+        {
+            return await GetDeletedBackupInstanceResources().GetAsync(backupInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a deleted backup instance with name in a backup vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedBackupInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupInstanceName"> The name of the deleted backup instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeletedBackupInstanceResource> GetDeletedBackupInstanceResource(string backupInstanceName, CancellationToken cancellationToken = default)
+        {
+            return GetDeletedBackupInstanceResources().Get(backupInstanceName, cancellationToken);
+        }
+
         /// <summary>
         /// Returns a resource belonging to a resource group.
         /// <list type="bullet">
@@ -343,7 +396,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             try
             {
                 var response = await _dataProtectionBackupVaultBackupVaultsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation(response);
+                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, _dataProtectionBackupVaultBackupVaultsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -377,7 +430,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             try
             {
                 var response = _dataProtectionBackupVaultBackupVaultsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation(response);
+                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, _dataProtectionBackupVaultBackupVaultsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -406,7 +459,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -444,7 +497,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionBackupVaultResource> Update(WaitUntil waitUntil, DataProtectionBackupPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionBackupVaultResource> Update(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -646,7 +699,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new DataProtectionBackupVaultPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -700,7 +753,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new DataProtectionBackupVaultPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -753,7 +806,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new DataProtectionBackupVaultPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -802,7 +855,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new DataProtectionBackupVaultPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -850,7 +903,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new DataProtectionBackupVaultPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -902,7 +955,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new DataProtectionBackupVaultPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

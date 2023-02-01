@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2023-02-03)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for Immutable vaults.
+- Added support for Cross Subscription Restore.
+- Added support for AKS workload.
+- Added support for Soft Delete.
 
 ### Other Changes
+
+- Changed API version from 2022-05-01 to 2023-01-01.
 
 ## 1.0.0 (2022-11-04)
 

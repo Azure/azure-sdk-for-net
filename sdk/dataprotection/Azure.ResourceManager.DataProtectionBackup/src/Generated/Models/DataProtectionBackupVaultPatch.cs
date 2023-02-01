@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Patch Request content for Microsoft.DataProtection resources. </summary>
-    public partial class DataProtectionBackupPatch
+    public partial class DataProtectionBackupVaultPatch
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupPatch. </summary>
-        public DataProtectionBackupPatch()
+        /// <summary> Initializes a new instance of DataProtectionBackupVaultPatch. </summary>
+        public DataProtectionBackupVaultPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -23,19 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Input Managed Identity Details. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource properties. </summary>
-        internal PatchBackupVaultInput Properties { get; set; }
-        /// <summary> Gets or sets the alert settings for all job failures. </summary>
-        public AzureMonitorAlertsState? AlertSettingsForAllJobFailures
-        {
-            get => Properties is null ? default : Properties.AlertSettingsForAllJobFailures;
-            set
-            {
-                if (Properties is null)
-                    Properties = new PatchBackupVaultInput();
-                Properties.AlertSettingsForAllJobFailures = value;
-            }
-        }
-
+        public PatchBackupVaultInput Properties { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
