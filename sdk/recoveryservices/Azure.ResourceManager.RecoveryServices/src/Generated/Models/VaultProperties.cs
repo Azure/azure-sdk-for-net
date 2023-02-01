@@ -29,10 +29,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="moveDetails"> The details of the latest move operation performed on the Azure Resource. </param>
         /// <param name="moveState"> The State of the Resource after the move operation. </param>
         /// <param name="backupStorageVersion"> Backup storage version. </param>
+        /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
         /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
-        internal VaultProperties(string provisioningState, UpgradeDetails upgradeDetails, IReadOnlyList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, MonitoringSettings monitoringSettings, VaultPropertiesRedundancySettings redundancySettings, SecuritySettings securitySettings)
+        internal VaultProperties(string provisioningState, UpgradeDetails upgradeDetails, IReadOnlyList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, PublicNetworkAccess? publicNetworkAccess, MonitoringSettings monitoringSettings, VaultPropertiesRedundancySettings redundancySettings, SecuritySettings securitySettings)
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             MoveDetails = moveDetails;
             MoveState = moveState;
             BackupStorageVersion = backupStorageVersion;
+            PublicNetworkAccess = publicNetworkAccess;
             MonitoringSettings = monitoringSettings;
             RedundancySettings = redundancySettings;
             SecuritySettings = securitySettings;
@@ -66,6 +68,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public ResourceMoveState? MoveState { get; }
         /// <summary> Backup storage version. </summary>
         public BackupStorageVersion? BackupStorageVersion { get; }
+        /// <summary> property to enable or disable resource provider inbound network traffic from public clients. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Monitoring Settings of the vault. </summary>
         public MonitoringSettings MonitoringSettings { get; set; }
         /// <summary> The redundancy Settings of a Vault. </summary>
