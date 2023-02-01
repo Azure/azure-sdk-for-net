@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests.Tests
     {
         private ResourceGroupResource _rg;
 
-        public ListCommunicationsGatewaysTests() : base(true, RecordedTestMode.Record)
+        public ListCommunicationsGatewaysTests() : base(true/*, RecordedTestMode.Record*/)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests.Tests
         [TestCase, Order(1)]
         public async Task TestListCommunicationsGatewaysAtSubscriptionLevel()
         {
-            var communicationsGateways = VoiceServicesExtensions.GetCommunicationsGatewaysAsync(Subscription);
+            var communicationsGateways = Subscription.GetCommunicationsGatewaysAsync();
             var comminicationsGatewaysResult = await communicationsGateways.ToEnumerableAsync();
 
             Assert.NotNull(comminicationsGatewaysResult);
