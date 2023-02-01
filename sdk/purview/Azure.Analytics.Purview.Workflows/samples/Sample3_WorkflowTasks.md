@@ -2,7 +2,7 @@
 
 This sample shows how to approve s workflow task.
 
-To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and got all the resources required by [Authenticate the client][authenticate_the_client].
+To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and have obtained all of the resources required by [Authenticate the client][authenticate_the_client].
 
 ## Create a WorkflowClient
 
@@ -23,7 +23,7 @@ var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredenti
 ## Approve workflow task
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_ApproveWorkflowTask
-// This taskId is an existing workflow task's id, user could get workflow tasks by calling GetWorkflowTasksAsync API.
+// This taskId represents an existing workflow task. The id can be obtained by calling GetWorkflowTasksAsync API.
 Guid taskId = new Guid("b129fe16-72d3-4994-9135-b997b9be46e0");
 
 string request = "{\"comment\":\"Thanks!\"}";

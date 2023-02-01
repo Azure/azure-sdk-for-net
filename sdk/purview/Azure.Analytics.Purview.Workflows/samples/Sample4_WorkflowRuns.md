@@ -2,7 +2,7 @@
 
 This sample shows how to cancel a workflow run.
 
-To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and got all the resources required by [Authenticate the client][authenticate_the_client].
+To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and have obtained all of the resources required by [Authenticate the client][authenticate_the_client].
 
 ## Create a WorkflowClient
 
@@ -23,7 +23,7 @@ var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredenti
 ## Cancel a workflow run
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_CancelWorkflowRun
-// This workflowRunId is an existing workflow run's id, user could get workflow runs by calling GetWorkflowRunsAsync API.
+// This workflowRunId represents an existing workflow run. The id can be obtained by calling GetWorkflowRunsAsync API.
 Guid workflowRunId = new Guid("4f8d70c3-c09b-4e56-bfd1-8b86c79bd4d9");
 
 string request = "{\"comment\":\"Thanks!\"}";

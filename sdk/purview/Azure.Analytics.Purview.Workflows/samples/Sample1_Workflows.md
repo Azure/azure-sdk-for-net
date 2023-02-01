@@ -1,8 +1,7 @@
 # Create and get a Workflow
 This sample shows how to create and get a workflow.
 
-To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and got all the resources required by [Authenticate the client][authenticate_the_client].
-
+To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and have obtained all of the resources required by [Authenticate the client][authenticate_the_client].
 
 ## Create a WorkflowClient
 
@@ -33,7 +32,7 @@ Response createResult = await client.CreateOrReplaceWorkflowAsync(workflowId, Re
 ## Get a Workflow
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_GetWorkflow
-// This workflowId is an existing workflow's id, user could create a new workflow by calling CreateOrReplaceWorkflowAsync API or list workflows by calling GetWorkflowsAsync API.
+// This workflowId represents an existing workflow. The id can be obtained by calling CreateOrReplaceWorkflowAsync API or list workflows by calling GetWorkflowsAsync API.
 Guid workflowId = new Guid("8af1ecae-16ee-4b2d-8972-00d611dd2f99");
 
 Response getResult = await client.GetWorkflowAsync(workflowId);

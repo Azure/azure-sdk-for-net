@@ -1,7 +1,7 @@
 # Submit user requests
 This sample shows how to submit a user request.
 
-To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and got all the resources required by [Authenticate the client][authenticate_the_client].
+To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and have obtained all of the resources required by [Authenticate the client][authenticate_the_client].
 
 ## Create a WorkflowClient
 

@@ -13,7 +13,8 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 {
-    public partial class WorkflowsSamples: SamplesBase<WorkflowsClientTestEnvironment>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
+    public class WorkflowsSamples: SamplesBase<WorkflowsClientTestEnvironment>
     {
         [Test]
         public async Task CreateWorkflowClient()
@@ -82,7 +83,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
 
             #region Snippet:Azure_Analytics_Purview_Workflows_GetWorkflow
-            // This workflowId is an existing workflow's id, user could create a new workflow by calling CreateOrReplaceWorkflowAsync API or list workflows by calling GetWorkflowsAsync API.
+            // This workflowId represents an existing workflow. The id can be obtained by calling CreateOrReplaceWorkflowAsync API or list workflows by calling GetWorkflowsAsync API.
             Guid workflowId = new Guid("8af1ecae-16ee-4b2d-8972-00d611dd2f99");
 
             Response getResult = await client.GetWorkflowAsync(workflowId);
@@ -99,7 +100,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             // Workaround azure/azure-sdk-for-net#21048, which prevents .Content from working when dealing with responses
             // from the playback system.
 
-            MemoryStream ms = new MemoryStream();
+            using MemoryStream ms = new MemoryStream();
             r.ContentStream.CopyTo(ms);
             return new BinaryData(ms.ToArray());
         }

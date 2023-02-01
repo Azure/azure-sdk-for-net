@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -712,24 +710,9 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowsAsync(RequestContext context = null)
         {
-            return GetWorkflowsImplementationAsync("PurviewWorkflowServiceClient.GetWorkflows", context);
-        }
-
-        private AsyncPageable<BinaryData> GetWorkflowsImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetWorkflowsRequest(context)
-                        : CreateGetWorkflowsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
         /// <summary> List all workflows. </summary>
@@ -739,24 +722,9 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflows(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflows(RequestContext context = null)
         {
-            return GetWorkflowsImplementation("PurviewWorkflowServiceClient.GetWorkflows", context);
-        }
-
-        private Pageable<BinaryData> GetWorkflowsImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetWorkflowsRequest(context)
-                        : CreateGetWorkflowsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
         /// <summary> List workflow runs. </summary>
@@ -772,24 +740,9 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> userRequestIds = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetWorkflowRunsImplementationAsync("PurviewWorkflowServiceClient.GetWorkflowRuns", timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
-        }
-
-        private AsyncPageable<BinaryData> GetWorkflowRunsImplementationAsync(string diagnosticsScopeName, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> userRequestIds, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context)
-                        : CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
         /// <summary> List workflow runs. </summary>
@@ -805,24 +758,9 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(String,String,IEnumerable,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> userRequestIds = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetWorkflowRunsImplementation("PurviewWorkflowServiceClient.GetWorkflowRuns", timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
-        }
-
-        private Pageable<BinaryData> GetWorkflowRunsImplementation(string diagnosticsScopeName, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> userRequestIds, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context)
-                        : CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
         /// <summary> Get all workflow tasks. </summary>
@@ -840,24 +778,9 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasksAsync(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowTasksAsync(string viewMode = null, IEnumerable<string> workflowIds = null, string timeWindow = null, int? maxpagesize = null, string orderby = null, IEnumerable<string> taskTypes = null, IEnumerable<string> taskStatuses = null, string workflowNameKeyword = null, RequestContext context = null)
         {
-            return GetWorkflowTasksImplementationAsync("PurviewWorkflowServiceClient.GetWorkflowTasks", viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
-        }
-
-        private AsyncPageable<BinaryData> GetWorkflowTasksImplementationAsync(string diagnosticsScopeName, string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, string workflowNameKeyword, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context)
-                        : CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
         /// <summary> Get all workflow tasks. </summary>
@@ -875,24 +798,9 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasks(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflowTasks(string viewMode = null, IEnumerable<string> workflowIds = null, string timeWindow = null, int? maxpagesize = null, string orderby = null, IEnumerable<string> taskTypes = null, IEnumerable<string> taskStatuses = null, string workflowNameKeyword = null, RequestContext context = null)
         {
-            return GetWorkflowTasksImplementation("PurviewWorkflowServiceClient.GetWorkflowTasks", viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
-        }
-
-        private Pageable<BinaryData> GetWorkflowTasksImplementation(string diagnosticsScopeName, string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, string workflowNameKeyword, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context)
-                        : CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetWorkflowsRequest(RequestContext context)

@@ -13,7 +13,8 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 {
-    public partial class WorkflowsSamples: SamplesBase<WorkflowsClientTestEnvironment>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
+    public class WorkflowsTasksSamples: SamplesBase<WorkflowsClientTestEnvironment>
     {
         [Test]
         public async Task ApproveWorkflowTask()
@@ -29,7 +30,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 
             #region Snippet:Azure_Analytics_Purview_Workflows_ApproveWorkflowTask
 
-            // This taskId is an existing workflow task's id, user could get workflow tasks by calling GetWorkflowTasksAsync API.
+            // This taskId represents an existing workflow task. The id can be obtained by calling GetWorkflowTasksAsync API.
             Guid taskId = new Guid("b129fe16-72d3-4994-9135-b997b9be46e0");
 
             string request = "{\"comment\":\"Thanks!\"}";

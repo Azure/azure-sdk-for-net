@@ -3,9 +3,9 @@
 Workflows are automated, repeatable business processes that users can create within Microsoft Purview to validate and orchestrate CUD (create, update, delete) operations on their data entities. Enabling these processes allow organizations to track changes, enforce policy compliance, and ensure quality data across their data landscape.
 
 Use the client library for Purview Workflow to:
-- Managing workflows
-- Submitting user requests and monitoring workflow runs
-- Viewing and responding to workflow tasks
+- Manage workflows
+- Submit user requests and monitor workflow runs
+- View and respond to workflow tasks
 
 **For more details about how to use workflow, please refer to the [service documentation][product_documentation]**
 
@@ -57,7 +57,7 @@ Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Crea
 ### Approve workflow task
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_ApproveWorkflowTask
-// This taskId is an existing workflow task's id, user could get workflow tasks by calling GetWorkflowTasksAsync API.
+// This taskId represents an existing workflow task. The id can be obtained by calling GetWorkflowTasksAsync API.
 Guid taskId = new Guid("b129fe16-72d3-4994-9135-b997b9be46e0");
 
 string request = "{\"comment\":\"Thanks!\"}";
@@ -69,6 +69,6 @@ Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestCo
 [product_documentation]: https://learn.microsoft.com/azure/purview/concept-workflow
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [purview_resource]: https://docs.microsoft.com/azure/purview/create-catalog-portal
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [app_registration]: https://learn.microsoft.com/azure/active-directory/develop/quickstart-register-app
 [username_password_credentail]: https://learn.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet

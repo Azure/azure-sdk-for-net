@@ -14,7 +14,6 @@ namespace Azure.Analytics.Purview.Workflow.Tests
     {
         public WorkflowsClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync)
         {
-            //this.AddPurviewSanitizers();
         }
 
         public PurviewWorkflowServiceClient GetWorkflowClient()
