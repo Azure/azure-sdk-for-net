@@ -1,4 +1,4 @@
-# Web PubSub client library for .NET
+# Azure Web PubSub client library for .NET
 
 [Web PubSub](https://aka.ms/awps/doc) is an Azure-managed service that helps developers easily build web applications with real-time features and publish-subscribe patterns. Any scenario that requires real-time publish-subscribe messaging between server and clients or among clients can use Web PubSub. Traditional real-time features that often require polling from the server or submitting HTTP requests can also use Web PubSub.
 
