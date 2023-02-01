@@ -1,6 +1,6 @@
 # Azure Web PubSub client library for .NET
 
-[Azure Web PubSub Service](https://aka.ms/awps/doc) is an Azure-managed service that helps developers easily build web applications with real-time features and publish-subscribe patterns. Any scenario that requires real-time publish-subscribe messaging between server and clients or among clients can use Azure Web PubSub service. Traditional real-time features that often require polling from the server or submitting HTTP requests can also use Azure Web PubSub service.
+[Web PubSub](https://aka.ms/awps/doc) is an Azure-managed service that helps developers easily build web applications with real-time features and publish-subscribe patterns. Any scenario that requires real-time publish-subscribe messaging between server and clients or among clients can use Web PubSub. Traditional real-time features that often require polling from the server or submitting HTTP requests can also use Web PubSub.
 
 You can use this library on your client side to manage the WebSocket client connections, as shown in the below diagram:
 
@@ -32,7 +32,7 @@ dotnet add package Azure.Messaging.WebPubSub.Client --prerelease
 ### Prerequisites
 
 - An [Azure subscription][azure_sub].
-- An existing Azure Web PubSub service instance. [Create Azure Web PubSub service instance](https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance)
+- An existing Web PubSub instance. [Create Web PubSub instance](https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance)
 
 ### Authenticate the client
 
@@ -83,7 +83,7 @@ Find more details in [Azure.Messaging.WebPubSub](https://github.com/Azure/azure-
 
 ### Connection
 
-A connection, also known as a client connection, represents an individual WebSocket connection connected to the Web PubSub service. When successfully connected, the Web PubSub service assigns the connection a unique connection ID. Each `WebPubSubClient` creates its own exclusive connection.
+A connection, also known as a client connection, represents an individual WebSocket connection connected to the Web PubSub. When successfully connected, the Web PubSub assigns the connection a unique connection ID. Each `WebPubSubClient` creates its own exclusive connection.
 
 ### Recovery
 
@@ -95,7 +95,7 @@ Reconnection happens when the client connection drops and fails to recover. Reco
 
 ### Hub
 
-A hub is a logical concept representing a collection of client connections. Usually, you use one hub for one purpose: for example, a chat hub, or a notification hub. When a client connection is created, it connects to a hub, and during its lifetime, it is bound to that hub. Different applications can share one Azure Web PubSub service by using different hub names.
+A hub is a logical concept representing a collection of client connections. Usually, you use one hub for one purpose: for example, a chat hub, or a notification hub. When a client connection is created, it connects to a hub, and during its lifetime, it is bound to that hub. Different applications can share one Web PubSub by using different hub names.
 
 ### Group
 
