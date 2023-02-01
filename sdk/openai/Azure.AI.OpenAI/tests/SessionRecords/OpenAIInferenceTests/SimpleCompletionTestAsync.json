@@ -5,7 +5,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "api-key": "***********",
+        "Authorization": "Sanitized",
         "Content-Length": "61",
         "Content-Type": "application/json",
         "traceparent": "00-ed2fea002ebd226a165489171f17be07-753ea998bb635611-00",
@@ -15,8 +15,7 @@
       },
       "RequestBody": {
         "prompt": [
-          "Hello world",
-          "running over the same old ground"
+          "Hello World!"
         ]
       },
       "StatusCode": 200,
@@ -46,12 +45,6 @@
             "text": "\n\u002B// aaaaaaaaaaaa\n",
             "index": 0,
             "finish_reason": "stop",
-            "logprobs": null
-          },
-          {
-            "text": " again\n\n repeating the same mistake\n\na worn-out phrase\n\n",
-            "index": 1,
-            "finish_reason": "length",
             "logprobs": null
           }
         ],

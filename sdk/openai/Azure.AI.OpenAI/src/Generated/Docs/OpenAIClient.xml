@@ -20,6 +20,8 @@ Console.WriteLine(result.GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 This sample shows how to call GetEmbeddingsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -41,6 +43,9 @@ Console.WriteLine(result.GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -69,6 +74,11 @@ Schema for <c>Embeddings</c>:
       index: number, # Required.
     }
   ], # Required.
+  model: string, # Optional.
+  usage: {
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 
@@ -93,6 +103,8 @@ Console.WriteLine(result.GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 This sample shows how to call GetEmbeddings with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -114,6 +126,9 @@ Console.WriteLine(result.GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -142,6 +157,11 @@ Schema for <c>Embeddings</c>:
       index: number, # Required.
     }
   ], # Required.
+  model: string, # Optional.
+  usage: {
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 
@@ -161,6 +181,9 @@ Response response = await client.GetCompletionsAsync("<deploymentId>", RequestCo
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 This sample shows how to call GetCompletionsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -207,6 +230,9 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetPr
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -256,6 +282,11 @@ Schema for <c>Completions</c>:
       finish_reason: string, # Optional.
     }
   ], # Optional.
+  usage: {
+    completion_token: number, # Required.
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 
@@ -275,6 +306,9 @@ Response response = client.GetCompletions("<deploymentId>", RequestContent.Creat
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 This sample shows how to call GetCompletions with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -321,6 +355,9 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetPr
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -370,6 +407,11 @@ Schema for <c>Completions</c>:
       finish_reason: string, # Optional.
     }
   ], # Optional.
+  usage: {
+    completion_token: number, # Required.
+    prompt_tokens: number, # Required.
+    total_tokens: number, # Required.
+  }, # Required.
 }
 </code>
 
