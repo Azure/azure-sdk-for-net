@@ -103,8 +103,11 @@ namespace Azure.AI.OpenAI.Models
                     writer.WriteNull("logprobs");
                 }
             }
-            writer.WritePropertyName("model");
-            writer.WriteStringValue(Model);
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model");
+                writer.WriteStringValue(Model);
+            }
             if (Optional.IsDefined(Echo))
             {
                 if (Echo != null)
@@ -193,7 +196,7 @@ namespace Azure.AI.OpenAI.Models
             Optional<string> user = default;
             Optional<int?> n = default;
             Optional<int?> logprobs = default;
-            string model = default;
+            Optional<string> model = default;
             Optional<bool?> echo = default;
             Optional<IList<string>> stop = default;
             Optional<string> completionConfig = default;

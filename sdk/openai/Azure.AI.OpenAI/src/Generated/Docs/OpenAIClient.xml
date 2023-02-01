@@ -179,15 +179,13 @@ Schema for <c>Embeddings</c>:
     </member>
     <member name="GetCompletionsAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call GetCompletionsAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call GetCompletionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new OpenAIClient(endpoint, credential);
 
-var data = new {
-    model = "<model>",
-};
+var data = new {};
 
 Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data));
 
@@ -294,7 +292,7 @@ allowed.
 chosen tokens. So for example, if `logprobs` is 10, the API will return a list
 of the 10 most likely tokens. If `logprobs` is 0, only the chosen tokens will
 have logprobs returned. Minimum of 0 and maximum of 100 allowed.
-  model: string, # Required. The name of the model to use
+  model: string, # Optional. The name of the model to use
   echo: boolean, # Optional. Echo back the prompt in addition to the completion
   stop: [string], # Optional. A sequence which indicates the end of the current document.
   completion_config: string, # Optional. Completion configuration
@@ -343,15 +341,13 @@ Schema for <c>Completions</c>:
     </member>
     <member name="GetCompletions(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call GetCompletions with required parameters and request content, and how to parse the result.
+This sample shows how to call GetCompletions with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new OpenAIClient(endpoint, credential);
 
-var data = new {
-    model = "<model>",
-};
+var data = new {};
 
 Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data));
 
@@ -458,7 +454,7 @@ allowed.
 chosen tokens. So for example, if `logprobs` is 10, the API will return a list
 of the 10 most likely tokens. If `logprobs` is 0, only the chosen tokens will
 have logprobs returned. Minimum of 0 and maximum of 100 allowed.
-  model: string, # Required. The name of the model to use
+  model: string, # Optional. The name of the model to use
   echo: boolean, # Optional. Echo back the prompt in addition to the completion
   stop: [string], # Optional. A sequence which indicates the end of the current document.
   completion_config: string, # Optional. Completion configuration

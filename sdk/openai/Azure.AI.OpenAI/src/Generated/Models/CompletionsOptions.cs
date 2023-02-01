@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -16,15 +15,10 @@ namespace Azure.AI.OpenAI.Models
     public partial class CompletionsOptions
     {
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
-        /// <param name="model"> The name of the model to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-        public CompletionsOptions(string model)
+        public CompletionsOptions()
         {
-            Argument.AssertNotNull(model, nameof(model));
-
             Prompt = new ChangeTrackingList<string>();
             LogitBias = new ChangeTrackingDictionary<string, int>();
-            Model = model;
             Stop = new ChangeTrackingList<string>();
         }
 
