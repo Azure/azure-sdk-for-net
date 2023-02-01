@@ -11,14 +11,9 @@
 # /.devcontainer/
 # /.vscode/
 
-################
-# Eng Sys
-################
-
+# Last chance Eng Sys catch-all
 /**/tests.yml   @hallipr @benbp
 /**/ci.yml      @hallipr @benbp
-/eng/           @hallipr @weshaggard @benbp
-/eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
 
 ################
 # Automation
@@ -766,6 +761,11 @@
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
+# ######## Eng Sys ########
+
+/eng/           @hallipr @weshaggard @benbp
+/eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
+
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @jsquire @maririos @pallavit
 /sdk/eventhub/tests.data.yml  @serkantkaraca @sjkwak
@@ -778,3 +778,4 @@
 
 # Client generation tooling
 /eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe
+
