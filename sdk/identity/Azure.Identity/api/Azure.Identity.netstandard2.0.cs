@@ -40,6 +40,7 @@ namespace Azure.Identity
     {
         public AuthorizationCodeCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
     }
     public static partial class AzureAuthorityHosts
@@ -109,6 +110,7 @@ namespace Azure.Identity
     {
         public ClientAssertionCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
     }
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
@@ -128,6 +130,7 @@ namespace Azure.Identity
     {
         public ClientCertificateCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
@@ -144,6 +147,7 @@ namespace Azure.Identity
     {
         public ClientSecretCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
@@ -210,6 +214,7 @@ namespace Azure.Identity
         public string ClientId { get { throw null; } set { } }
         public System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> DeviceCodeCallback { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
@@ -260,6 +265,7 @@ namespace Azure.Identity
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string LoginHint { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
@@ -287,6 +293,7 @@ namespace Azure.Identity
     {
         public OnBehalfOfCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
@@ -305,6 +312,7 @@ namespace Azure.Identity
         public SharedTokenCacheCredentialOptions(Azure.Identity.TokenCachePersistenceOptions tokenCacheOptions) { }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool EnableGuestTenantAuthentication { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } }
@@ -369,6 +377,7 @@ namespace Azure.Identity
     {
         public UsernamePasswordCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     public partial class VisualStudioCodeCredential : Azure.Core.TokenCredential
