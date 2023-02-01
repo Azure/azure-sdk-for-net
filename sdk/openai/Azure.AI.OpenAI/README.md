@@ -25,7 +25,7 @@ You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) 
 
 ### Authenticate the client
 
-In order to interact with the App Configuration service, you'll need to create an instance of the [OpenAIClient][openai_client_class] class. To make this possible, you'll need the endpoint URI for your Azure OpenAI resource and an API key to access that resource.
+In order to interact with the Azure OpenAI service, you'll need to create an instance of the [OpenAIClient][openai_client_class] class. To make this possible, you'll need the endpoint URI for your Azure OpenAI resource and an API key to access that resource.
 
 #### Get credentials
 
