@@ -204,12 +204,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 logger.LogWarning(new Exception("Test Exception"), "Test Exception");
             }
 
-            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), "roleName", "roleInstance", "Ikey");
+            var logResource = new AzureMonitorResource()
+            {
+                RoleName = "roleName",
+                RoleInstance = "roleInstance"
+            };
+            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey");
 
             Assert.Equal(type, telemetryItem[0].Data.BaseType);
             Assert.Equal("Ikey", telemetryItem[0].InstrumentationKey);
-            Assert.Equal("roleName", telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal("roleInstance", telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal(logResource.RoleName, telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal(logResource.RoleInstance, telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
     }
 }

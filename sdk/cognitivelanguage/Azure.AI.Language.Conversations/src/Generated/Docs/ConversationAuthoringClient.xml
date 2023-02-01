@@ -3277,7 +3277,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3352,7 +3352,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3427,7 +3427,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -3439,7 +3439,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>, "<trainedModelLabel>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -3516,7 +3516,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -3528,7 +3528,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>, "<trainedModelLabel>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -3615,7 +3615,7 @@ var data = new {
 
 var operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3707,7 +3707,7 @@ var data = new {
 
 var operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<exportedProjectFormat>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3815,7 +3815,7 @@ var data = new {
 
 var operation = client.ImportProject(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3907,7 +3907,7 @@ var data = new {
 
 var operation = client.ImportProject(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<exportedProjectFormat>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -4010,7 +4010,7 @@ var data = new {
 
 var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -4040,7 +4040,7 @@ var data = new {
 
 var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -4160,7 +4160,7 @@ var data = new {
 
 var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -4190,7 +4190,7 @@ var data = new {
 
 var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -4310,7 +4310,7 @@ var data = new {
 
 var operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -4399,7 +4399,7 @@ var data = new {
 
 var operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -4487,7 +4487,7 @@ var data = new {
 
 var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -4511,7 +4511,7 @@ var data = new {
 
 var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -4573,7 +4573,7 @@ var data = new {
 
 var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -4597,7 +4597,7 @@ var data = new {
 
 var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -4655,7 +4655,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -4730,7 +4730,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -4807,8 +4807,7 @@ var data = new {};
 
 var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters and request content.
 <code><![CDATA[
@@ -4824,8 +4823,7 @@ var data = new {
 
 var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -4857,8 +4855,7 @@ var data = new {};
 
 var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResources with all parameters and request content.
 <code><![CDATA[
@@ -4874,8 +4871,7 @@ var data = new {
 
 var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -4905,8 +4901,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -4920,8 +4915,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -4945,8 +4939,7 @@ var data = new {
 
 var operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -4990,8 +4983,7 @@ var data = new {
 
 var operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -5031,8 +5023,7 @@ var data = new {
 
 var operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -5066,8 +5057,7 @@ var data = new {
 
 var operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -5095,7 +5085,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -5195,7 +5185,7 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());

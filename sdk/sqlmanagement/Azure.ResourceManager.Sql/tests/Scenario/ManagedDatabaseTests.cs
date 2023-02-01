@@ -14,27 +14,18 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     public class ManagedDatabaseTests : SqlManagementClientBase
     {
         private ResourceGroupResource _resourceGroup;
-        private ResourceIdentifier _resourceGroupIdentifier;
 
         public ManagedDatabaseTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroupResource rg = rgLro.Value;
-            _resourceGroupIdentifier = rg.Id;
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+            var lro = await client.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            _resourceGroup = lro.Value;
         }
 
         [Test]

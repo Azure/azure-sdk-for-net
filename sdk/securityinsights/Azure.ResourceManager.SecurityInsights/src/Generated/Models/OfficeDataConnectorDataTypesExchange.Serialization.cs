@@ -15,23 +15,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("state");
-            writer.WriteStringValue(State.ToString());
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state");
+                writer.WriteStringValue(State.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static OfficeDataConnectorDataTypesExchange DeserializeOfficeDataConnectorDataTypesExchange(JsonElement element)
         {
-            DataTypeState state = default;
+            Optional<SecurityInsightsDataTypeConnectionState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"))
                 {
-                    state = new DataTypeState(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = new SecurityInsightsDataTypeConnectionState(property.Value.GetString());
                     continue;
                 }
             }
-            return new OfficeDataConnectorDataTypesExchange(state);
+            return new OfficeDataConnectorDataTypesExchange(Optional.ToNullable(state));
         }
     }
 }

@@ -35,62 +35,86 @@ namespace Azure.ResourceManager.ManagedServices
             );
         }
 
-        /// <summary> Gets a collection of RegistrationDefinitionResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of ManagedServicesRegistrationResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RegistrationDefinitionResources and their operations over a RegistrationDefinitionResource. </returns>
-        public static RegistrationDefinitionCollection GetRegistrationDefinitions(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ManagedServicesRegistrationResources and their operations over a ManagedServicesRegistrationResource. </returns>
+        public static ManagedServicesRegistrationCollection GetManagedServicesRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetRegistrationDefinitions();
+            return GetExtensionClient(client, scope).GetManagedServicesRegistrations();
         }
 
         /// <summary>
         /// Gets the registration definition details.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="registrationDefinitionId"> The GUID of the registration definition. </param>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registrationDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="registrationDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RegistrationDefinitionResource>> GetRegistrationDefinitionAsync(this ArmClient client, ResourceIdentifier scope, string registrationDefinitionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedServicesRegistrationResource>> GetManagedServicesRegistrationAsync(this ArmClient client, ResourceIdentifier scope, string registrationId, CancellationToken cancellationToken = default)
         {
-            return await client.GetRegistrationDefinitions(scope).GetAsync(registrationDefinitionId, cancellationToken).ConfigureAwait(false);
+            return await client.GetManagedServicesRegistrations(scope).GetAsync(registrationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the registration definition details.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="registrationDefinitionId"> The GUID of the registration definition. </param>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registrationDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="registrationDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RegistrationDefinitionResource> GetRegistrationDefinition(this ArmClient client, ResourceIdentifier scope, string registrationDefinitionId, CancellationToken cancellationToken = default)
+        public static Response<ManagedServicesRegistrationResource> GetManagedServicesRegistration(this ArmClient client, ResourceIdentifier scope, string registrationId, CancellationToken cancellationToken = default)
         {
-            return client.GetRegistrationDefinitions(scope).Get(registrationDefinitionId, cancellationToken);
+            return client.GetManagedServicesRegistrations(scope).Get(registrationId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RegistrationAssignmentResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of ManagedServicesRegistrationAssignmentResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RegistrationAssignmentResources and their operations over a RegistrationAssignmentResource. </returns>
-        public static RegistrationAssignmentCollection GetRegistrationAssignments(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ManagedServicesRegistrationAssignmentResources and their operations over a ManagedServicesRegistrationAssignmentResource. </returns>
+        public static ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetRegistrationAssignments();
+            return GetExtensionClient(client, scope).GetManagedServicesRegistrationAssignments();
         }
 
         /// <summary>
         /// Gets the details of the specified registration assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -100,15 +124,23 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registrationAssignmentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RegistrationAssignmentResource>> GetRegistrationAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedServicesRegistrationAssignmentResource>> GetManagedServicesRegistrationAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            return await client.GetRegistrationAssignments(scope).GetAsync(registrationAssignmentId, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
+            return await client.GetManagedServicesRegistrationAssignments(scope).GetAsync(registrationAssignmentId, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the details of the specified registration assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -118,24 +150,32 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registrationAssignmentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RegistrationAssignmentResource> GetRegistrationAssignment(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
+        public static Response<ManagedServicesRegistrationAssignmentResource> GetManagedServicesRegistrationAssignment(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            return client.GetRegistrationAssignments(scope).Get(registrationAssignmentId, expandRegistrationDefinition, cancellationToken);
+            return client.GetManagedServicesRegistrationAssignments(scope).Get(registrationAssignmentId, expandRegistrationDefinition, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MarketplaceRegistrationDefinitionResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of ManagedServicesMarketplaceRegistrationResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of MarketplaceRegistrationDefinitionResources and their operations over a MarketplaceRegistrationDefinitionResource. </returns>
-        public static MarketplaceRegistrationDefinitionCollection GetMarketplaceRegistrationDefinitions(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ManagedServicesMarketplaceRegistrationResources and their operations over a ManagedServicesMarketplaceRegistrationResource. </returns>
+        public static ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetMarketplaceRegistrationDefinitions();
+            return GetExtensionClient(client, scope).GetManagedServicesMarketplaceRegistrations();
         }
 
         /// <summary>
         /// Get the marketplace registration definition for the marketplace identifier.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
-        /// Operation Id: MarketplaceRegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -144,15 +184,23 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="marketplaceIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MarketplaceRegistrationDefinitionResource>> GetMarketplaceRegistrationDefinitionAsync(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedServicesMarketplaceRegistrationResource>> GetManagedServicesMarketplaceRegistrationAsync(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            return await client.GetMarketplaceRegistrationDefinitions(scope).GetAsync(marketplaceIdentifier, cancellationToken).ConfigureAwait(false);
+            return await client.GetManagedServicesMarketplaceRegistrations(scope).GetAsync(marketplaceIdentifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the marketplace registration definition for the marketplace identifier.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
-        /// Operation Id: MarketplaceRegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -161,63 +209,63 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="marketplaceIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MarketplaceRegistrationDefinitionResource> GetMarketplaceRegistrationDefinition(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
+        public static Response<ManagedServicesMarketplaceRegistrationResource> GetManagedServicesMarketplaceRegistration(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            return client.GetMarketplaceRegistrationDefinitions(scope).Get(marketplaceIdentifier, cancellationToken);
+            return client.GetManagedServicesMarketplaceRegistrations(scope).Get(marketplaceIdentifier, cancellationToken);
         }
 
-        #region RegistrationDefinitionResource
+        #region ManagedServicesRegistrationResource
         /// <summary>
-        /// Gets an object representing a <see cref="RegistrationDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RegistrationDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="RegistrationDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegistrationDefinitionResource" /> object. </returns>
-        public static RegistrationDefinitionResource GetRegistrationDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource" /> object. </returns>
+        public static ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RegistrationDefinitionResource.ValidateResourceId(id);
-                return new RegistrationDefinitionResource(client, id);
+                ManagedServicesRegistrationResource.ValidateResourceId(id);
+                return new ManagedServicesRegistrationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RegistrationAssignmentResource
+        #region ManagedServicesRegistrationAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="RegistrationAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegistrationAssignmentResource" /> object. </returns>
-        public static RegistrationAssignmentResource GetRegistrationAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource" /> object. </returns>
+        public static ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RegistrationAssignmentResource.ValidateResourceId(id);
-                return new RegistrationAssignmentResource(client, id);
+                ManagedServicesRegistrationAssignmentResource.ValidateResourceId(id);
+                return new ManagedServicesRegistrationAssignmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MarketplaceRegistrationDefinitionResource
+        #region ManagedServicesMarketplaceRegistrationResource
         /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceRegistrationDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceRegistrationDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceRegistrationDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceRegistrationDefinitionResource" /> object. </returns>
-        public static MarketplaceRegistrationDefinitionResource GetMarketplaceRegistrationDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource" /> object. </returns>
+        public static ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MarketplaceRegistrationDefinitionResource.ValidateResourceId(id);
-                return new MarketplaceRegistrationDefinitionResource(client, id);
+                ManagedServicesMarketplaceRegistrationResource.ValidateResourceId(id);
+                return new ManagedServicesMarketplaceRegistrationResource(client, id);
             }
             );
         }

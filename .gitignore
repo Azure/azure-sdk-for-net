@@ -173,3 +173,6 @@ BenchmarkDotNet.Artifacts
 
 artifacts
 .assets
+
+# Temporary cadl folders for cadl generation
+TempCadlFiles/

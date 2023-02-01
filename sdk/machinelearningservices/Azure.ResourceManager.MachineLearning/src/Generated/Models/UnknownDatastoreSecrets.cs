@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownDatastoreSecrets. </summary>
-    internal partial class UnknownDatastoreSecrets : DatastoreSecrets
+    internal partial class UnknownDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         /// <summary> Initializes a new instance of UnknownDatastoreSecrets. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>

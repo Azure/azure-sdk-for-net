@@ -27,7 +27,7 @@ public class ConfigurationLiveTests: ClientTestBase
     private ConfigurationClient GetClient() =>
         InstrumentClient(
             new ConfigurationClient(
-                ..., 
+                ...,
                 InstrumentClientOptions(
                     new ConfigurationClientClientOptions())));
     }
@@ -137,7 +137,7 @@ public class AppConfigurationTestEnvironment : TestEnvironment
         try
         {
             await service.GetConfigurationSettingAsync("Setting");
-        } 
+        }
         catch (RequestFailedException e) when (e.Status == 403)
         {
             return false;
@@ -191,7 +191,7 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
     private ConfigurationClient GetClient() =>
         InstrumentClient(
             new ConfigurationClient(
-                ..., 
+                ...,
                 InstrumentClientOptions(
                     new ConfigurationClientClientOptions())));
     }
@@ -234,6 +234,8 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 }
 ```
 In addition to the auto-rerecording functionality, using the RecordedTestAttribute also will automatically retry tests that fail due due to exceeding the global test time limit.
+
+When running tests in `Live` or `Record` mode, the Test Framework will prompt you to create the live test resources required for the tests if you don't have environment variables or an env file containing the required variables needed for the tests. This means that you do not have to manually run the New-TestResources script when attempting to run live tests! The Test Framework will also attempt to automatically extend the expiration of the test resource resource group whenever live tests are run. If the resource group specified in your .env file or environment variable has already expired and thus been deleted, the framework will prompt you to create a new resource group just like it would if an env variable required by the test was missing.
 
 ### Recording
 
@@ -375,8 +377,8 @@ How it looks it the test explorer:
 
 ## Support for an additional test parameter
 
-The `ClientTestFixture` attribute also supports specifying an additional array of parameter values to send to the test class. 
-Similar to the service versions, this results in the creation of a permutation of each test for each parameter value specified. 
+The `ClientTestFixture` attribute also supports specifying an additional array of parameter values to send to the test class.
+Similar to the service versions, this results in the creation of a permutation of each test for each parameter value specified.
 Example usage is shown below:
 
 ```c#
@@ -388,7 +390,7 @@ public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
 {
     protected readonly TableEndpointType _endpointType;
 
-    public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) 
+    public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode)
         : base(isAsync, recordedTestMode)
     {
         _endpointType = endpointType;
@@ -405,7 +407,7 @@ public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     protected readonly TableEndpointType _endpointType;
     TableClientOptions.ServiceVersion _serviceVersion
 
-    public TableServiceLiveTestsBase(bool isAsync, TableClientOptions.ServiceVersion serviceVersion, TableEndpointType endpointType, RecordedTestMode recordedTestMode) 
+    public TableServiceLiveTestsBase(bool isAsync, TableClientOptions.ServiceVersion serviceVersion, TableEndpointType endpointType, RecordedTestMode recordedTestMode)
         : base(isAsync, recordedTestMode)
     {
         _serviceVersion = serviceVersion;
@@ -413,7 +415,7 @@ public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     }
 ```
 
-**Note:** Additional parameter options work with test recordings and will create differentiated SessionRecords test class directory names for each additional parameter option. 
+**Note:** Additional parameter options work with test recordings and will create differentiated SessionRecords test class directory names for each additional parameter option.
 For example:
 
 `/SessionRecords/TableClientLiveTests(CosmosTable)/CreatedCustomEntitiesCanBeQueriedWithFiltersAsync.json`
@@ -423,7 +425,9 @@ For example:
 
 Testing of management libraries uses the Test Framework and should generally be very similar to tests that you write for data plane libraries. There is an intermediate test class that you will likely want to derive from that lives within the management code base - [ManagementRecordedTestBase](https://github.com/Azure/azure-sdk-for-net/blob/babee31b3151e4512ac5a77a55c426c136335fbb/common/ManagementTestShared/ManagementRecordedTestBase.cs). To see examples of Track 2 Management tests using the Test Framework, take a look at the [Storage tests](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.ResourceManager.Storage/tests/Tests).
 
-## Recording tests on CI
+For details about testing management libraries, see [Test .NET management plane SDK](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/TestGuide.md).
+
+## Recording data plane tests on CI
 
 Test framework provides an ability to re-record tests remotely using an Azure DevOps test pipeline. To re-record tests you need to have an open GitHub pull request.
 
@@ -445,7 +449,7 @@ To download and unpack all artifacts use the `Download-DevOpsRecordings.ps1` scr
 
 The `Download-DevOpsRecordings.ps1` would wait for active runs to finish before retrieving artifacts unless `-NoWait` switch is used.
 
-**NOTE:** these scripts require being signed in with Azure CLI (https://docs.microsoft.com/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the internal DevOps project (https://dev.azure.com/azure-sdk/internal/) 
+**NOTE:** these scripts require being signed in with Azure CLI (https://docs.microsoft.com/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the internal DevOps project (https://dev.azure.com/azure-sdk/internal/)
 
 ### Note on private/non-virtual fields in your clients (such as _clientDiagnostics) and InternalsVisibleTo
 
@@ -522,10 +526,10 @@ var isSet = AppContext.TryGetSwitch("Azure.Core.Pipeline.DisableHttpWebRequestTr
 ```
 
 ### AsyncAssert
-This type contains static helper methods that cover some of the gaps in NUnit when it comes to async assertions. For instance, attempting to assert that a specific exception is thrown using Assert.That, Assert.Throws, or Assert.ThrowsAsync all result in sync over async code, which can lead to test flakiness. 
+This type contains static helper methods that cover some of the gaps in NUnit when it comes to async assertions. For instance, attempting to assert that a specific exception is thrown using Assert.That, Assert.Throws, or Assert.ThrowsAsync all result in sync over async code, which can lead to test flakiness.
 
 #### Example usage
-```c# 
+```c#
 ServiceBusException exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
     async () => await args.CompleteMessageAsync(message, args.CancellationToken));
 Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);

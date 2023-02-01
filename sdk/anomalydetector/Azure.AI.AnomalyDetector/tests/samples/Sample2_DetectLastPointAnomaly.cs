@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.AI.AnomalyDetector.Models;
+using Azure.AI.AnomalyDetector;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -26,10 +26,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
-            string apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 
             //read data
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
@@ -41,7 +40,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
             //create request
-            DetectRequest request = new DetectRequest(list)
+            UnivariateDetectionOptions request = new UnivariateDetectionOptions(list)
             {
                 Granularity = TimeGranularity.Daily
             };
@@ -53,7 +52,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             try
             {
-                LastDetectResponse result = client.DetectUnivariateLastPoint(request);
+                UnivariateLastDetectionResult result = client.DetectUnivariateLastPoint(request);
 
                 if (result.IsAnomaly)
                 {

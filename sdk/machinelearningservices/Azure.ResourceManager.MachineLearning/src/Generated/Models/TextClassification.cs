@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of TextClassification. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
-        public TextClassification(MLTableJobInput trainingData) : base(trainingData)
+        public TextClassification(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal TextClassification(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MLTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal TextClassification(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PrimaryMetric = primaryMetric;
             FeaturizationSettings = featurizationSettings;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Execution constraints for AutoMLJob. </summary>
         public NlpVerticalLimitSettings LimitSettings { get; set; }
         /// <summary> Validation data inputs. </summary>
-        public MLTableJobInput ValidationData { get; set; }
+        public MachineLearningTableJobInput ValidationData { get; set; }
     }
 }

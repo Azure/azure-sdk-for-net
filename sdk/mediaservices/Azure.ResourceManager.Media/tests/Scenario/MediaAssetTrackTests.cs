@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaAssetTrackCollection mediaAssetCollection => _mediaAsset.GetMediaAssetTracks();
 
-        public MediaAssetTrackTests(bool isAsync) : base(isAsync)
+        public MediaAssetTrackTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
-            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaservice"), storage.Id);
-            var mediaAsset = await mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("asset"), new MediaAssetData());
-            _mediaAsset = mediaAsset.Value;
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatests");
+            var mediaAssetName = Recording.GenerateAssetName("asset");
+            var mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
+            _mediaAsset = await CreateMediaAsset(mediaService, mediaAssetName);
         }
 
         [Test]

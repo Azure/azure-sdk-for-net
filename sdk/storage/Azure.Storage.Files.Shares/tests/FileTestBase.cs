@@ -116,7 +116,10 @@ namespace Azure.Storage.Files.Shares.Tests
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
-        public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewFileServiceSasCredentialsShare(
+            string shareName,
+            StorageSharedKeyCredential sharedKeyCredentials = default,
+            ShareSasPermissions permissions = ShareSasPermissions.All)
         {
             var builder = new ShareSasBuilder
             {
@@ -126,7 +129,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
-            builder.SetPermissions(ShareSasPermissions.All);
+            builder.SetPermissions(permissions);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 

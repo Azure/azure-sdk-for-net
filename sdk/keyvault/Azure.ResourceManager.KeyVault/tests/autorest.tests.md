@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateTest` to generate code.
 
-# Azure.ResourceManager.Compute.Tests
+# Azure.ResourceManager.KeyVault.Tests
 
 > see https://aka.ms/autorest
 ``` yaml

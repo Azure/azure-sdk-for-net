@@ -29,9 +29,147 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Get all available workload profiles for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all available workload profiles for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all billingMeters for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all billingMeters for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetBillingMeters(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all connectedEnvironments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all connectedEnvironments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
+        }
+
+        /// <summary>
         /// Get the Container Apps in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps
-        /// Operation Id: ContainerApps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +181,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the Container Apps in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps
-        /// Operation Id: ContainerApps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,110 +202,44 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all Managed Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
-        /// Operation Id: ManagedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedEnvironmentResource> GetManagedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetManagedEnvironmentsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get all Managed Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
-        /// Operation Id: ManagedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedEnvironmentResource> GetManagedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetManagedEnvironments(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all connectedEnvironments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments
-        /// Operation Id: ConnectedEnvironments_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConnectedEnvironmentResource> GetConnectedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetConnectedEnvironmentsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all connectedEnvironments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments
-        /// Operation Id: ConnectedEnvironments_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConnectedEnvironmentResource> GetConnectedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetConnectedEnvironments(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all available workload profiles for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes
-        /// Operation Id: AvailableWorkloadProfiles_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all available workload profiles for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes
-        /// Operation Id: AvailableWorkloadProfiles_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableWorkloadProfile> GetAvailableWorkloadProfiles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all billingMeters for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters
-        /// Operation Id: BillingMeters_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all billingMeters for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters
-        /// Operation Id: BillingMeters_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetBillingMeters(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -169,6 +249,62 @@ namespace Azure.ResourceManager.AppContainers
                 return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentResources and their operations over a ContainerAppConnectedEnvironmentResource. </returns>
+        public static ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetContainerAppConnectedEnvironments();
+        }
+
+        /// <summary>
+        /// Get the properties of an connectedEnvironment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ContainerAppConnectedEnvironmentResource>> GetContainerAppConnectedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetContainerAppConnectedEnvironments().GetAsync(connectedEnvironmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of an connectedEnvironment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironment(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetContainerAppConnectedEnvironments().Get(connectedEnvironmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppResources in the ResourceGroupResource. </summary>
@@ -181,8 +317,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the properties of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
-        /// Operation Id: ContainerApps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
@@ -197,8 +341,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the properties of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
-        /// Operation Id: ContainerApps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
@@ -211,18 +363,26 @@ namespace Azure.ResourceManager.AppContainers
             return resourceGroupResource.GetContainerApps().Get(containerAppName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedEnvironmentResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ContainerAppManagedEnvironmentResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ManagedEnvironmentResources and their operations over a ManagedEnvironmentResource. </returns>
-        public static ManagedEnvironmentCollection GetManagedEnvironments(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ContainerAppManagedEnvironmentResources and their operations over a ContainerAppManagedEnvironmentResource. </returns>
+        public static ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetManagedEnvironments();
+            return GetExtensionClient(resourceGroupResource).GetContainerAppManagedEnvironments();
         }
 
         /// <summary>
         /// Get the properties of a Managed Environment used to host container apps.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
-        /// Operation Id: ManagedEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
@@ -230,15 +390,23 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ManagedEnvironmentResource>> GetManagedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerAppManagedEnvironmentResource>> GetContainerAppManagedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetManagedEnvironments().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetContainerAppManagedEnvironments().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the properties of a Managed Environment used to host container apps.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
-        /// Operation Id: ManagedEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
@@ -246,65 +414,139 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ManagedEnvironmentResource> GetManagedEnvironment(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
+        public static Response<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironment(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetManagedEnvironments().Get(environmentName, cancellationToken);
+            return resourceGroupResource.GetContainerAppManagedEnvironments().Get(environmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConnectedEnvironmentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ConnectedEnvironmentResources and their operations over a ConnectedEnvironmentResource. </returns>
-        public static ConnectedEnvironmentCollection GetConnectedEnvironments(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetConnectedEnvironments();
-        }
-
+        #region ContainerAppAuthConfigResource
         /// <summary>
-        /// Get the properties of an connectedEnvironment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}
-        /// Operation Id: ConnectedEnvironments_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ConnectedEnvironmentResource>> GetConnectedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetConnectedEnvironments().GetAsync(connectedEnvironmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the properties of an connectedEnvironment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}
-        /// Operation Id: ConnectedEnvironments_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ConnectedEnvironmentResource> GetConnectedEnvironment(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetConnectedEnvironments().Get(connectedEnvironmentName, cancellationToken);
-        }
-
-        #region AuthConfigResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AuthConfigResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthConfigResource.CreateResourceIdentifier" /> to create an <see cref="AuthConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppAuthConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppAuthConfigResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppAuthConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthConfigResource" /> object. </returns>
-        public static AuthConfigResource GetAuthConfigResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppAuthConfigResource" /> object. </returns>
+        public static ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AuthConfigResource.ValidateResourceId(id);
-                return new AuthConfigResource(client, id);
+                ContainerAppAuthConfigResource.ValidateResourceId(id);
+                return new ContainerAppAuthConfigResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerAppConnectedEnvironmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppConnectedEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentResource" /> object. </returns>
+        public static ContainerAppConnectedEnvironmentResource GetContainerAppConnectedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerAppConnectedEnvironmentResource.ValidateResourceId(id);
+                return new ContainerAppConnectedEnvironmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerAppConnectedEnvironmentCertificateResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppConnectedEnvironmentCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> object. </returns>
+        public static ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerAppConnectedEnvironmentCertificateResource.ValidateResourceId(id);
+                return new ContainerAppConnectedEnvironmentCertificateResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerAppManagedEnvironmentCertificateResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedEnvironmentCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentCertificateResource" /> object. </returns>
+        public static ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerAppManagedEnvironmentCertificateResource.ValidateResourceId(id);
+                return new ContainerAppManagedEnvironmentCertificateResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerAppConnectedEnvironmentDaprComponentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppConnectedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> object. </returns>
+        public static ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerAppConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
+                return new ContainerAppConnectedEnvironmentDaprComponentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerAppManagedEnvironmentDaprComponentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> object. </returns>
+        public static ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
+                return new ContainerAppManagedEnvironmentDaprComponentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ContainerAppConnectedEnvironmentStorageResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentStorageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppConnectedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentStorageResource" /> object. </returns>
+        public static ContainerAppConnectedEnvironmentStorageResource GetContainerAppConnectedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerAppConnectedEnvironmentStorageResource.ValidateResourceId(id);
+                return new ContainerAppConnectedEnvironmentStorageResource(client, id);
             }
             );
         }
@@ -405,44 +647,6 @@ namespace Azure.ResourceManager.AppContainers
         }
         #endregion
 
-        #region ManagedEnvironmentDaprComponentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedEnvironmentDaprComponentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedEnvironmentDaprComponentResource" /> object. </returns>
-        public static ManagedEnvironmentDaprComponentResource GetManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
-                return new ManagedEnvironmentDaprComponentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ConnectedEnvironmentDaprComponentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectedEnvironmentDaprComponentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectedEnvironmentDaprComponentResource" /> object. </returns>
-        public static ConnectedEnvironmentDaprComponentResource GetConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
-                return new ConnectedEnvironmentDaprComponentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region ContainerAppDetectorResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerAppDetectorResource" /> along with the instance operations that can be performed on it but with no data.
@@ -462,172 +666,96 @@ namespace Azure.ResourceManager.AppContainers
         }
         #endregion
 
-        #region ManagedEnvironmentDetectorResource
+        #region ContainerAppManagedEnvironmentDetectorResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedEnvironmentDetectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ManagedEnvironmentDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedEnvironmentDetectorResource" /> object. </returns>
-        public static ManagedEnvironmentDetectorResource GetManagedEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResource" /> object. </returns>
+        public static ContainerAppManagedEnvironmentDetectorResource GetContainerAppManagedEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedEnvironmentDetectorResource.ValidateResourceId(id);
-                return new ManagedEnvironmentDetectorResource(client, id);
+                ContainerAppManagedEnvironmentDetectorResource.ValidateResourceId(id);
+                return new ContainerAppManagedEnvironmentDetectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedEnvironmentDetectorPropertyResource
+        #region ContainerAppManagedEnvironmentDetectorResourcePropertyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedEnvironmentDetectorPropertyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedEnvironmentDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedEnvironmentDetectorPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedEnvironmentDetectorPropertyResource" /> object. </returns>
-        public static ManagedEnvironmentDetectorPropertyResource GetManagedEnvironmentDetectorPropertyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" /> object. </returns>
+        public static ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedEnvironmentDetectorPropertyResource.ValidateResourceId(id);
-                return new ManagedEnvironmentDetectorPropertyResource(client, id);
+                ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ValidateResourceId(id);
+                return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedEnvironmentResource
+        #region ContainerAppManagedEnvironmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedEnvironmentResource" /> object. </returns>
-        public static ManagedEnvironmentResource GetManagedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentResource" /> object. </returns>
+        public static ContainerAppManagedEnvironmentResource GetContainerAppManagedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedEnvironmentResource.ValidateResourceId(id);
-                return new ManagedEnvironmentResource(client, id);
+                ContainerAppManagedEnvironmentResource.ValidateResourceId(id);
+                return new ContainerAppManagedEnvironmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedEnvironmentCertificateResource
+        #region ContainerAppManagedEnvironmentStorageResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedEnvironmentCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedEnvironmentCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ManagedEnvironmentCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentStorageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedEnvironmentCertificateResource" /> object. </returns>
-        public static ManagedEnvironmentCertificateResource GetManagedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentStorageResource" /> object. </returns>
+        public static ContainerAppManagedEnvironmentStorageResource GetContainerAppManagedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedEnvironmentCertificateResource.ValidateResourceId(id);
-                return new ManagedEnvironmentCertificateResource(client, id);
+                ContainerAppManagedEnvironmentStorageResource.ValidateResourceId(id);
+                return new ContainerAppManagedEnvironmentStorageResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConnectedEnvironmentCertificateResource
+        #region ContainerAppSourceControlResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectedEnvironmentCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedEnvironmentCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedEnvironmentCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectedEnvironmentCertificateResource" /> object. </returns>
-        public static ConnectedEnvironmentCertificateResource GetConnectedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppSourceControlResource" /> object. </returns>
+        public static ContainerAppSourceControlResource GetContainerAppSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConnectedEnvironmentCertificateResource.ValidateResourceId(id);
-                return new ConnectedEnvironmentCertificateResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagedEnvironmentStorageResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedEnvironmentStorageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ManagedEnvironmentStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedEnvironmentStorageResource" /> object. </returns>
-        public static ManagedEnvironmentStorageResource GetManagedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedEnvironmentStorageResource.ValidateResourceId(id);
-                return new ManagedEnvironmentStorageResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SourceControlResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SourceControlResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
-        public static SourceControlResource GetSourceControlResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SourceControlResource.ValidateResourceId(id);
-                return new SourceControlResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ConnectedEnvironmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectedEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectedEnvironmentResource" /> object. </returns>
-        public static ConnectedEnvironmentResource GetConnectedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConnectedEnvironmentResource.ValidateResourceId(id);
-                return new ConnectedEnvironmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ConnectedEnvironmentStorageResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectedEnvironmentStorageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedEnvironmentStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectedEnvironmentStorageResource" /> object. </returns>
-        public static ConnectedEnvironmentStorageResource GetConnectedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConnectedEnvironmentStorageResource.ValidateResourceId(id);
-                return new ConnectedEnvironmentStorageResource(client, id);
+                ContainerAppSourceControlResource.ValidateResourceId(id);
+                return new ContainerAppSourceControlResource(client, id);
             }
             );
         }

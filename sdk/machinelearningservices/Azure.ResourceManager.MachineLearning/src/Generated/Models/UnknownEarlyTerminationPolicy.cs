@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownEarlyTerminationPolicy. </summary>
-    internal partial class UnknownEarlyTerminationPolicy : EarlyTerminationPolicy
+    internal partial class UnknownEarlyTerminationPolicy : MachineLearningEarlyTerminationPolicy
     {
         /// <summary> Initializes a new instance of UnknownEarlyTerminationPolicy. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>

@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get the properties of an extension topic.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/extensionTopics/default
-        /// Operation Id: ExtensionTopics_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/extensionTopics/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtensionTopics_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ExtensionTopicResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get the properties of an extension topic.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/extensionTopics/default
-        /// Operation Id: ExtensionTopics_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/extensionTopics/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtensionTopics_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExtensionTopicResource> Get(CancellationToken cancellationToken = default)

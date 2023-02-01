@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.Synapse
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PrivateLinkHubResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateLinkHubResources and their operations over a PrivateLinkHubResource. </returns>
-        public virtual PrivateLinkHubCollection GetPrivateLinkHubs()
+        /// <summary> Gets a collection of SynapsePrivateLinkHubResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
+        public virtual SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs()
         {
-            return GetCachedClient(Client => new PrivateLinkHubCollection(Client, Id));
+            return GetCachedClient(Client => new SynapsePrivateLinkHubCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of SynapseWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
+        public virtual SynapseWorkspaceCollection GetSynapseWorkspaces()
         {
-            return GetCachedClient(Client => new WorkspaceCollection(Client, Id));
+            return GetCachedClient(Client => new SynapseWorkspaceCollection(Client, Id));
         }
     }
 }

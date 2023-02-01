@@ -20,7 +20,7 @@ steps:
       path: '${{ parameters.ArtifactPath }}'
 
   - task: PublishPipelineArtifact@1
-    condition: failed()
+    condition: and(failed(), ${{ parameters.CustomCondition }})
     displayName: 'Publish failed ${{ parameters.ArtifactName }} Artifacts'
     inputs:
       artifactName: '${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)'

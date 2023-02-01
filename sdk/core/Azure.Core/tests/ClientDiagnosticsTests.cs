@@ -110,7 +110,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ParentIdCanBeSetOnStartedScope()
+        public void ParentIdCannotBeSetOnStartedScope()
         {
             string parentId = "parentId";
             using var testListener = new TestDiagnosticListener("Azure.Clients");
@@ -123,9 +123,7 @@ namespace Azure.Core.Tests
 
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             scope.Start();
-            scope.SetTraceparent(parentId);
-
-            Assert.AreEqual(parentId, Activity.Current.ParentId);
+            Assert.Throws<InvalidOperationException>(() => scope.SetTraceparent(parentId));
         }
 
         [Test]

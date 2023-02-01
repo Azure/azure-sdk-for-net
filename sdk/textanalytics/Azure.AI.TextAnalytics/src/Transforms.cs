@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -486,6 +485,41 @@ namespace Azure.AI.TextAnalytics
             }
 
             throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.CustomSingleLabelClassificationLROResults)} or {nameof(AnalyzeTextLROResultsKind.CustomMultiLabelClassificationLROResults)} but instead got {task.Kind}.");
+        }
+
+        #endregion
+
+        #region Dynamic Classify
+
+        internal static ClassificationCategoryCollection ConvertToClassificationCategoryCollection(DynamicClassificationResultDocumentsItem document)
+        {
+            return new ClassificationCategoryCollection(ConvertToClassificationCategoryList(document.Classifications.ToList()), ConvertToWarnings(document.Warnings));
+        }
+
+        internal static DynamicClassifyDocumentResultCollection ConvertToDynamicClassifyDocumentResultCollection(DynamicClassificationResult result, IDictionary<string, int> idToIndexMap)
+        {
+            var documentResults = new List<ClassifyDocumentResult>(result.Documents.Count);
+
+            // Read errors.
+            foreach (InputError error in result.Errors)
+            {
+                documentResults.Add(new ClassifyDocumentResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            // Read results.
+            foreach (DynamicClassificationResultDocumentsItem document in result.Documents)
+            {
+                documentResults.Add(
+                    new ClassifyDocumentResult(
+                        document.Id,
+                        document.Statistics ?? default,
+                        ConvertToClassificationCategoryCollection(document),
+                        detectedLanguage: default,
+                        ConvertToWarnings(document.Warnings)));
+            }
+
+            documentResults = SortHeterogeneousCollection(documentResults, idToIndexMap);
+            return new DynamicClassifyDocumentResultCollection(documentResults, result.Statistics, result.ModelVersion);
         }
 
         #endregion

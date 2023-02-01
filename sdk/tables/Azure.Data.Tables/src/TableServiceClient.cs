@@ -115,9 +115,9 @@ namespace Azure.Data.Tables
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, default, default, options)
         {
-            if (endpoint.Scheme != Uri.UriSchemeHttps)
+            if (endpoint.Scheme != Uri.UriSchemeHttps && !Uri.IsLoopback)
             {
-                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+                throw new ArgumentException("Cannot use a SAS token without HTTPS.", nameof(endpoint));
             }
             if (string.IsNullOrEmpty(endpoint.Query))
             {
@@ -141,9 +141,9 @@ namespace Azure.Data.Tables
         public TableServiceClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
             : this(endpoint, default, credential, options)
         {
-            if (endpoint.Scheme != Uri.UriSchemeHttps)
+            if (endpoint.Scheme != Uri.UriSchemeHttps && !Uri.IsLoopback)
             {
-                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+                throw new ArgumentException($"Cannot use {nameof(AzureSasCredential)} without HTTPS.", nameof(endpoint));
             }
 
             Argument.AssertNotNull(credential, nameof(credential));
@@ -238,7 +238,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
@@ -284,7 +284,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
@@ -323,7 +323,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
@@ -761,7 +761,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Deletes a table on the service.
         /// </summary>
-        /// <param name="tableName">The name of the table to create.</param>
+        /// <param name="tableName">The name of the table to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response DeleteTable(string tableName, CancellationToken cancellationToken = default)
@@ -784,7 +784,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Deletes a table on the service.
         /// </summary>
-        /// <param name="tableName">The name of the table to create.</param>
+        /// <param name="tableName">The name of the table to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default)

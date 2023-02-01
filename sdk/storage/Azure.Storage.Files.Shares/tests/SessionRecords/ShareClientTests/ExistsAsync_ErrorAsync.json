@@ -1,44 +1,73 @@
-﻿{
+{
   "Entries": [
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-dc374ff2-e0f5-a158-ca11-70adb556f4ac?restype=share",
-      "RequestMethod": "GET",
+      "RequestUri": "https://amandadev2.file.core.windows.net/test-share-20529055-de2c-d7aa-0d50-a6470c00f644?restype=share",
+      "RequestMethod": "PUT",
       "RequestHeaders": {
-        "traceparent": "00-1cf2c3a8ddb29e46999eacf63da29d34-fa1b96dcc371ab45-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.2.0-dev.20200305.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "162477fc-7fe2-d699-4857-efa4b2edc17e",
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-53e8f4fc1a07cd932388307385af2d30-8c1ae4c15609b534-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.13.0-alpha.20230103.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "31f9568f-62d2-4971-d3e5-1f2eba7c8da9",
+        "x-ms-date": "Wed, 04 Jan 2023 21:42:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-06-08",
-        "Accept": "application/xml"
+        "x-ms-version": "2021-12-02"
       },
       "RequestBody": null,
-      "StatusCode": 404,
+      "StatusCode": 201,
       "ResponseHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Length": "223",
-        "Content-Type": "application/xml",
-        "Date": "Thu, 05 Mar 2020 21:48:48 GMT",
+        "Content-Length": "0",
+        "Date": "Wed, 04 Jan 2023 21:42:39 GMT",
+        "ETag": "\u00220x8DAEE9C9AA5A2B5\u0022",
+        "Last-Modified": "Wed, 04 Jan 2023 21:42:40 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "162477fc-7fe2-d699-4857-efa4b2edc17e",
-        "x-ms-error-code": "ResourceNotFound",
-        "x-ms-request-id": "c9ef6e60-f01a-0012-1537-f3e9eb000000",
-        "x-ms-version": "2021-06-08"
+        "x-ms-client-request-id": "31f9568f-62d2-4971-d3e5-1f2eba7c8da9",
+        "x-ms-request-id": "1db83d68-601a-0016-1c85-208336000000",
+        "x-ms-version": "2021-12-02"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://amandadev2.file.core.windows.net/test-share-20529055-de2c-d7aa-0d50-a6470c00f644?sv=2022-11-02\u0026st=2023-01-04T20%3A42%3A37Z\u0026se=2023-01-04T22%3A42%3A37Z\u0026sr=s\u0026sp=r\u0026sig=Sanitized\u0026restype=share",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "traceparent": "00-2f1b8af57fe378e4916c7a2d762cb42d-073ef088968ffcdc-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.13.0-alpha.20230103.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b6b781c0-c506-3372-d23f-f86b7e22418c",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-12-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 403,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Length": "246",
+        "Content-Type": "application/xml",
+        "Date": "Wed, 04 Jan 2023 21:42:39 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "b6b781c0-c506-3372-d23f-f86b7e22418c",
+        "x-ms-error-code": "AuthorizationFailure",
+        "x-ms-request-id": "1db83d6a-601a-0016-1d85-208336000000",
+        "x-ms-version": "2021-12-02"
       },
       "ResponseBody": [
-        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ResourceNotFound</Code><Message>The specified resource does not exist.\n",
-        "RequestId:c9ef6e60-f01a-0012-1537-f3e9eb000000\n",
-        "Time:2020-03-05T21:48:49.2431829Z</Message></Error>"
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationFailure\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation.\n",
+        "RequestId:1db83d6a-601a-0016-1d85-208336000000\n",
+        "Time:2023-01-04T21:42:40.4101221Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "RandomSeed": "1401199712",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttps://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized\nseanscope1\n\n"
+    "DateTimeOffsetNow": "2023-01-04T13:42:37.6276197-08:00",
+    "RandomSeed": "171540971",
+    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttps://amandadev2.blob.core.windows.net\nhttps://amandadev2.file.core.windows.net\nhttps://amandadev2.queue.core.windows.net\nhttps://amandadev2.table.core.windows.net\n\n\n\n\nhttps://amandadev2-secondary.core.windows.net\nhttps://amandadev2-secondary.file.core.windows.net\nhttps://amandadev2-secondary.queue.core.windows.net\nhttps://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://amandadev2.blob.core.windows.net/;QueueEndpoint=https://amandadev2.queue.core.windows.net/;FileEndpoint=https://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=https://amandadev2-secondary.core.windows.net/;QueueSecondaryEndpoint=https://amandadev2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Sanitized\nencryptionScope1\n\n"
   }
 }

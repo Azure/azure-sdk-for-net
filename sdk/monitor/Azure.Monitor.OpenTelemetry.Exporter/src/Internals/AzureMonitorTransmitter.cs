@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -8,7 +10,6 @@ using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -17,7 +18,7 @@ using OpenTelemetry;
 using OpenTelemetry.Extensions.PersistentStorage;
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     /// <summary>
     /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
@@ -26,9 +27,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider _fileBlobProvider;
-        private readonly string _instrumentationKey;
+        private readonly ConnectionVars _connectionVars;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential credential = null)
         {
             if (options == null)
             {
@@ -36,8 +37,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             options.Retry.MaxRetries = 0;
-            ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
-            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
+            _connectionVars = ConnectionStringParser.GetValues(options.ConnectionString);
+
+            HttpPipeline pipeline;
+            if (credential != null)
+            {
+                var scope = AadHelper.GetScope(_connectionVars.AadAudience);
+                var httpPipelinePolicy = new HttpPipelinePolicy[]
+                {
+                    new BearerTokenAuthenticationPolicy(credential, scope),
+                    new IngestionRedirectPolicy()
+                };
+
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
+            }
+            else
+            {
+                var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
+            }
+
+            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: _connectionVars.IngestionEndpoint);
 
             if (!options.DisableOfflineStorage)
             {
@@ -61,13 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        public string InstrumentationKey
-        {
-            get
-            {
-                return _instrumentationKey;
-            }
-        }
+        public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
         public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
@@ -200,6 +215,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                         result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
                         break;
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:
@@ -264,6 +281,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                         blob.TryLease(retryInterval);
                         break;
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:

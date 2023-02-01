@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int?> imageSize = default;
             Optional<int?> maxSize = default;
             Optional<int?> minSize = default;
-            Optional<ModelSize> modelSize = default;
+            Optional<MachineLearningModelSize> modelSize = default;
             Optional<bool?> multiScale = default;
             Optional<float?> nmsIouThreshold = default;
             Optional<string> tileGridSize = default;
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<float?> beta1 = default;
             Optional<float?> beta2 = default;
             Optional<int?> checkpointFrequency = default;
-            Optional<MLFlowModelJobInput> checkpointModel = default;
+            Optional<MachineLearningFlowModelJobInput> checkpointModel = default;
             Optional<string> checkpointRunId = default;
             Optional<bool?> distributed = default;
             Optional<bool?> earlyStopping = default;
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modelSize = new ModelSize(property.Value.GetString());
+                    modelSize = new MachineLearningModelSize(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("multiScale"))
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         checkpointModel = null;
                         continue;
                     }
-                    checkpointModel = MLFlowModelJobInput.DeserializeMLFlowModelJobInput(property.Value);
+                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value);
                     continue;
                 }
                 if (property.NameEquals("checkpointRunId"))

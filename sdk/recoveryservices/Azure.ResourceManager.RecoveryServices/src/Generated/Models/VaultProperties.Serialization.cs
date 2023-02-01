@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("moveDetails");
                 writer.WriteObjectValue(MoveDetails);
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings");
@@ -60,6 +65,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<VaultPropertiesMoveDetails> moveDetails = default;
             Optional<ResourceMoveState> moveState = default;
             Optional<BackupStorageVersion> backupStorageVersion = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<MonitoringSettings> monitoringSettings = default;
             Optional<VaultPropertiesRedundancySettings> redundancySettings = default;
             Optional<SecuritySettings> securitySettings = default;
@@ -155,6 +161,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     backupStorageVersion = new BackupStorageVersion(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("publicNetworkAccess"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    publicNetworkAccess = new PublicNetworkAccess(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("monitoringSettings"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -186,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new VaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), monitoringSettings.Value, redundancySettings.Value, securitySettings.Value);
+            return new VaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, redundancySettings.Value, securitySettings.Value);
         }
     }
 }

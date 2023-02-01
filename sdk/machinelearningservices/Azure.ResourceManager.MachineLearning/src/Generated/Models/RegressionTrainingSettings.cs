@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Regression Training related configuration. </summary>
-    public partial class RegressionTrainingSettings : TrainingSettings
+    public partial class RegressionTrainingSettings : MachineLearningTrainingSettings
     {
         /// <summary> Initializes a new instance of RegressionTrainingSettings. </summary>
         public RegressionTrainingSettings()
         {
-            AllowedTrainingAlgorithms = new ChangeTrackingList<RegressionModel>();
-            BlockedTrainingAlgorithms = new ChangeTrackingList<RegressionModel>();
+            AllowedTrainingAlgorithms = new ChangeTrackingList<AutoMLVerticalRegressionModel>();
+            BlockedTrainingAlgorithms = new ChangeTrackingList<AutoMLVerticalRegressionModel>();
         }
 
         /// <summary> Initializes a new instance of RegressionTrainingSettings. </summary>
-        /// <param name="enableDnnTraining"> Enable recommendation of DNN models. </param>
-        /// <param name="enableModelExplainability"> Flag to turn on explainability on best model. </param>
-        /// <param name="enableOnnxCompatibleModels"> Flag for enabling onnx compatible models. </param>
-        /// <param name="enableStackEnsemble"> Enable stack ensemble run. </param>
-        /// <param name="enableVoteEnsemble"> Enable voting ensemble run. </param>
+        /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
+        /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
+        /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>
+        /// <param name="isStackEnsembleEnabled"> Enable stack ensemble run. </param>
+        /// <param name="isVoteEnsembleEnabled"> Enable voting ensemble run. </param>
         /// <param name="ensembleModelDownloadTimeout">
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
         /// <param name="allowedTrainingAlgorithms"> Allowed models for regression task. </param>
         /// <param name="blockedTrainingAlgorithms"> Blocked models for regression task. </param>
-        internal RegressionTrainingSettings(bool? enableDnnTraining, bool? enableModelExplainability, bool? enableOnnxCompatibleModels, bool? enableStackEnsemble, bool? enableVoteEnsemble, TimeSpan? ensembleModelDownloadTimeout, StackEnsembleSettings stackEnsembleSettings, IList<RegressionModel> allowedTrainingAlgorithms, IList<RegressionModel> blockedTrainingAlgorithms) : base(enableDnnTraining, enableModelExplainability, enableOnnxCompatibleModels, enableStackEnsemble, enableVoteEnsemble, ensembleModelDownloadTimeout, stackEnsembleSettings)
+        internal RegressionTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IList<AutoMLVerticalRegressionModel> allowedTrainingAlgorithms, IList<AutoMLVerticalRegressionModel> blockedTrainingAlgorithms) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings)
         {
             AllowedTrainingAlgorithms = allowedTrainingAlgorithms;
             BlockedTrainingAlgorithms = blockedTrainingAlgorithms;
         }
 
         /// <summary> Allowed models for regression task. </summary>
-        public IList<RegressionModel> AllowedTrainingAlgorithms { get; set; }
+        public IList<AutoMLVerticalRegressionModel> AllowedTrainingAlgorithms { get; set; }
         /// <summary> Blocked models for regression task. </summary>
-        public IList<RegressionModel> BlockedTrainingAlgorithms { get; set; }
+        public IList<AutoMLVerticalRegressionModel> BlockedTrainingAlgorithms { get; set; }
     }
 }
