@@ -134,6 +134,21 @@ namespace Azure.Core.Dynamic
         public static implicit operator string (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
+        [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public partial struct ArrayEnumerator : System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicJson>, System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicJson>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+            public Azure.Core.Dynamic.DynamicJson Current { get { throw null; } }
+            object System.Collections.IEnumerator.Current { get { throw null; } }
+            public void Dispose() { }
+            public Azure.Core.Dynamic.DynamicJson.ArrayEnumerator GetEnumerator() { throw null; }
+            public bool MoveNext() { throw null; }
+            public void Reset() { }
+            System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicJson> System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicJson>.GetEnumerator() { throw null; }
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        }
     }
     [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonConverter))]
     public partial class MutableJsonDocument
@@ -150,6 +165,7 @@ namespace Azure.Core.Dynamic
         private object _dummy;
         private int _dummyPrimitive;
         public System.Text.Json.JsonValueKind ValueKind { get { throw null; } }
+        public Azure.Core.Dynamic.MutableJsonElement.ArrayEnumerator EnumerateArray() { throw null; }
         public bool GetBoolean() { throw null; }
         public double GetDouble() { throw null; }
         public int GetInt32() { throw null; }
@@ -169,5 +185,20 @@ namespace Azure.Core.Dynamic
         public Azure.Core.Dynamic.MutableJsonElement SetProperty(string name, object value) { throw null; }
         public override string ToString() { throw null; }
         public bool TryGetProperty(string name, out Azure.Core.Dynamic.MutableJsonElement value) { throw null; }
+        [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public partial struct ArrayEnumerator : System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.MutableJsonElement>, System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.MutableJsonElement>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+            public Azure.Core.Dynamic.MutableJsonElement Current { get { throw null; } }
+            object System.Collections.IEnumerator.Current { get { throw null; } }
+            public void Dispose() { }
+            public Azure.Core.Dynamic.MutableJsonElement.ArrayEnumerator GetEnumerator() { throw null; }
+            public bool MoveNext() { throw null; }
+            public void Reset() { }
+            System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.MutableJsonElement> System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.MutableJsonElement>.GetEnumerator() { throw null; }
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        }
     }
 }

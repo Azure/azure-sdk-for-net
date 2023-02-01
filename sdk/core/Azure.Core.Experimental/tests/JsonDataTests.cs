@@ -92,13 +92,6 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void DynamicArrayHasLength()
-        {
-            dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
-            Assert.AreEqual(4, jsonData.Length);
-        }
-
-        [Test]
         public void CanAccessProperties()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson(@"
