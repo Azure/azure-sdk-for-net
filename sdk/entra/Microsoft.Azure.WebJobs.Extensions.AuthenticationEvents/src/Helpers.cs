@@ -41,11 +41,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     }
                 }
 
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
+                throw new InvalidOperationException(
+                    string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new InvalidOperationException(AuthenticationEventResource.Ex_Event_Missing);
+                throw new InvalidOperationException(AuthenticationEventResource.Ex_Event_Missing, ex);
             }
         }
 
@@ -119,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             return actionType != null && _actionMapping.ContainsKey(actionType.ToLower(CultureInfo.CurrentCulture))
                  ? (AuthenticationEventAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
-                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.F, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
+                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Invalid_Action, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
         }
 
         internal static void ValidateGraph(object obj)

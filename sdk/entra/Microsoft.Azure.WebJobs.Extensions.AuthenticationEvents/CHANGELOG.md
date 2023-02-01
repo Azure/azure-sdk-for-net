@@ -20,7 +20,7 @@
 - Updated responses to return 500 Internal error
 - Added additional validation for Token Claims
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2022-09-14)
 
 ### Other Changes
 

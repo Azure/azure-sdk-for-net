@@ -124,13 +124,16 @@
     <value>ListenerFactoryContext is null</value>
   </data>
   <data name="Ex_Event_Missing" xml:space="preserve">
-    <value>Cannot determine the event from payload, please check check the incoming payload is a valid json string and contains the event type.</value>
+    <value>Cannot determine the event from payload, please check that the incoming payload is a valid JSON string and contains the event type.</value>
   </data>
   <data name="Ex_File_Exists" xml:space="preserve">
     <value>File '{0}' could not be written. Already exists.</value>
   </data>
   <data name="Ex_Gen_Failure" xml:space="preserve">
     <value>Failed</value>
+  </data>
+  <data name="Ex_Invalid_Action" xml:space="preserve">
+    <value>The action '{0}' is invalid, please use one of the following actions: '{1}'</value>
   </data>
   <data name="Ex_Invalid_Event" xml:space="preserve">
     <value>Invalid event type.</value>
@@ -197,9 +200,6 @@
   </data>
   <data name="Ex_Trigger_Required_Attrs" xml:space="preserve">
     <value>Please supply both the TenantId and AudienceAppId in variables in your binding configuration. (Or app settings {0} and {1})</value>
-  </data>
-  <data name="F" xml:space="preserve">
-    <value>The action '{0}' is invalid, please use one of the following actions: '{1}'</value>
   </data>
   <data name="Log_EventHandler_Url" xml:space="preserve">
     <value>Listener registered at: {0}</value>

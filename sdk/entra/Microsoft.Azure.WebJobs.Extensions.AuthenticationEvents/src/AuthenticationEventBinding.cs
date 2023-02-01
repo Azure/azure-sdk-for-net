@@ -122,8 +122,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             eventResponseHandler.Request = _parameterInfo.ParameterType == typeof(string) ? new EmptyRequest(request) : AuthenticationEventMetadata.CreateEventRequest(request, _parameterInfo.ParameterType, null);
             eventResponseHandler.Request.StatusMessage = ex.Message;
-            eventResponseHandler.Request.RequestStatus = ex is UnauthorizedAccessException ? RequestStatusType.TokenInvalid :
-                  ex is ValidationException ? RequestStatusType.ValidationError : RequestStatusType.Failed;
+
+            eventResponseHandler.Request.RequestStatus = ex switch
+            {
+                UnauthorizedAccessException => RequestStatusType.TokenInvalid,
+                ValidationException => RequestStatusType.ValidationError,
+                _ => RequestStatusType.Failed,
+            };
+
             if (eventResponseHandler.Response != null)
             {
                 if (ex is UnauthorizedAccessException)
