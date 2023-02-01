@@ -38,7 +38,7 @@ namespace Azure.AI.OpenAI.Tests
             completionsRequest.Prompt.Add("Hello world");
             completionsRequest.Prompt.Add("running over the same old ground");
             Assert.That(completionsRequest, Is.InstanceOf<CompletionsOptions>());
-            var response = await client.GetCompletionsAsync(DeploymentId, completionsRequest);
+            var response = await client.GetCompletionsAsync(CompletionsDeploymentId, completionsRequest);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
