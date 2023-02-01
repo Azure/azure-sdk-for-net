@@ -63,9 +63,10 @@ namespace Azure.Storage.Files.Shares.Tests
             this ShareClientBuilder clientBuilder,
             ShareServiceClient service = default,
             string shareName = default,
-            IDictionary<string, string> metadata = default)
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default)
         {
-            service ??= clientBuilder.GetServiceClient_SharedKey();
+            service ??= clientBuilder.GetServiceClient_SharedKey(options);
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             shareName ??= clientBuilder.GetNewShareName();
             ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
@@ -76,9 +77,10 @@ namespace Azure.Storage.Files.Shares.Tests
             this ShareClientBuilder clientBuilder,
             ShareServiceClient service = default,
             string shareName = default,
-            string directoryName = default)
+            string directoryName = default,
+            ShareClientOptions options = default)
         {
-            DisposingShare test = await clientBuilder.GetTestShareAsync(service, shareName);
+            DisposingShare test = await clientBuilder.GetTestShareAsync(service, shareName, options: options);
             directoryName ??= clientBuilder.GetNewDirectoryName();
 
             ShareDirectoryClient directory = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(test.Share.GetDirectoryClient(directoryName));
@@ -90,9 +92,10 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareServiceClient service = default,
             string shareName = default,
             string directoryName = default,
-            string fileName = default)
+            string fileName = default,
+            ShareClientOptions options = default)
         {
-            DisposingDirectory test = await clientBuilder.GetTestDirectoryAsync(service, shareName, directoryName);
+            DisposingDirectory test = await clientBuilder.GetTestDirectoryAsync(service, shareName, directoryName, options);
             fileName ??= clientBuilder.GetNewFileName();
             ShareFileClient file = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(test.Directory.GetFileClient(fileName));
             return await DisposingFile.CreateAsync(test, file);
