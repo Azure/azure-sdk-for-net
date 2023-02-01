@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyFairPlayConfiguration : ContentKeyPolicyConfiguration
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyFairPlayConfiguration. </summary>
-        /// <param name="applicationSecretKey"> The key that must be used as FairPlay Application Secret key. </param>
+        /// <param name="applicationSecretKey"> The key that must be used as FairPlay Application Secret key. This needs to be base64 encoded. </param>
         /// <param name="fairPlayPfxPassword"> The password encrypting FairPlay certificate in PKCS 12 (pfx) format. </param>
         /// <param name="fairPlayPfx"> The Base64 representation of FairPlay certificate in PKCS 12 (pfx) format (including private key). </param>
         /// <param name="rentalAndLeaseKeyType"> The rental and lease key type. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of ContentKeyPolicyFairPlayConfiguration. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        /// <param name="applicationSecretKey"> The key that must be used as FairPlay Application Secret key. </param>
+        /// <param name="applicationSecretKey"> The key that must be used as FairPlay Application Secret key. This needs to be base64 encoded. </param>
         /// <param name="fairPlayPfxPassword"> The password encrypting FairPlay certificate in PKCS 12 (pfx) format. </param>
         /// <param name="fairPlayPfx"> The Base64 representation of FairPlay certificate in PKCS 12 (pfx) format (including private key). </param>
         /// <param name="rentalAndLeaseKeyType"> The rental and lease key type. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration";
         }
 
-        /// <summary> The key that must be used as FairPlay Application Secret key. </summary>
+        /// <summary> The key that must be used as FairPlay Application Secret key. This needs to be base64 encoded. </summary>
         public byte[] ApplicationSecretKey { get; set; }
         /// <summary> The password encrypting FairPlay certificate in PKCS 12 (pfx) format. </summary>
         public string FairPlayPfxPassword { get; set; }

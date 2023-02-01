@@ -7,6 +7,8 @@ Project("{E27BCECA-CDE9-4080-BEB2-27656FC3E93F}") = "Azure.ResourceManager.Opera
 EndProject
 Project("{E27BCECA-CDE9-4080-BEB2-27656FC3E93F}") = "Azure.ResourceManager.OperationalInsights.Tests", "tests\Azure.ResourceManager.OperationalInsights.Tests.csproj", "{0AD9B005-1722-4858-827C-A35CCD589E8C}"
 EndProject
+Project("{E27BCECA-CDE9-4080-BEB2-27656FC3E93F}") = "Azure.ResourceManager.OperationalInsights.Samples", "samples\Azure.ResourceManager.OperationalInsights.Samples.csproj", "{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

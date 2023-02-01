@@ -18,6 +18,8 @@ namespace Azure.Identity.Tests.Mock
         private Mock<AzureCliCredential> mockAzureCliCredential = new();
         public Action<Mock<ManagedIdentityCredential>> OnCreateManagedIdentityCredential { get; set; }
         private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
+        public Action<Mock<AzureDeveloperCliCredential>> OnCreateAzureDeveloperCliCredential { get; set; }
+        private Mock<AzureDeveloperCliCredential> mockAzureDeveloperCliCredential = new();
         public Action<Mock<SharedTokenCacheCredential>> OnCreateSharedTokenCacheCredential { get; set; }
         private Mock<SharedTokenCacheCredential> mockSharedTokenCacheCredential = new();
         public Action<Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
@@ -45,6 +47,12 @@ namespace Azure.Identity.Tests.Mock
         {
             OnCreateSharedTokenCacheCredential?.Invoke(mockSharedTokenCacheCredential);
             return mockSharedTokenCacheCredential.Object;
+        }
+
+        public override TokenCredential CreateAzureDeveloperCliCredential()
+        {
+            OnCreateAzureDeveloperCliCredential?.Invoke(mockAzureDeveloperCliCredential);
+            return mockAzureDeveloperCliCredential.Object;
         }
 
         public override TokenCredential CreateAzureCliCredential()

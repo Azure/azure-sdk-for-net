@@ -78,16 +78,6 @@ namespace Azure.ResourceManager.Sql
     {
         public DatabaseSchemaData() { }
     }
-    public partial class DatabaseSqlVulnerabilityAssessmentBaselineSetData : Azure.ResourceManager.Models.ResourceData
-    {
-        public DatabaseSqlVulnerabilityAssessmentBaselineSetData() { }
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<System.Collections.Generic.IList<string>>> Results { get { throw null; } }
-    }
-    public partial class DatabaseSqlVulnerabilityAssessmentRuleBaselineData : Azure.ResourceManager.Models.ResourceData
-    {
-        public DatabaseSqlVulnerabilityAssessmentRuleBaselineData() { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> Results { get { throw null; } }
-    }
     public partial class DatabaseTableData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseTableData() { }
@@ -951,49 +941,6 @@ namespace Azure.ResourceManager.Sql
         public string StorageContainerSasToken { get { throw null; } set { } }
         public System.Uri StorageContainerUri { get { throw null; } set { } }
     }
-    public partial class ManagedDatabaseMoveOperationResultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource>, System.Collections.IEnumerable
-    {
-        protected ManagedDatabaseMoveOperationResultCollection() { }
-        public virtual Azure.Response<bool> Exists(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource> Get(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource> GetAll(bool? onlyLatestPerDatabase = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource> GetAllAsync(bool? onlyLatestPerDatabase = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource>> GetAsync(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ManagedDatabaseMoveOperationResultData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ManagedDatabaseMoveOperationResultData() { }
-        public int? ErrorCode { get { throw null; } }
-        public string ErrorDescription { get { throw null; } }
-        public int? ErrorSeverity { get { throw null; } }
-        public bool? IsCancellable { get { throw null; } }
-        public bool? IsUserError { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string OperationFriendlyName { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.MoveOperationMode? OperationMode { get { throw null; } }
-        public string SourceDatabaseName { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SourceManagedInstanceId { get { throw null; } }
-        public string SourceManagedInstanceName { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.ManagementOperationState? State { get { throw null; } }
-        public string TargetDatabaseName { get { throw null; } }
-        public Azure.Core.ResourceIdentifier TargetManagedInstanceId { get { throw null; } }
-        public string TargetManagedInstanceName { get { throw null; } }
-    }
-    public partial class ManagedDatabaseMoveOperationResultResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedDatabaseMoveOperationResultResource() { }
-        public virtual Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, Azure.Core.AzureLocation locationName, System.Guid operationId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ManagedDatabaseResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1076,16 +1023,16 @@ namespace Azure.ResourceManager.Sql
         public string BlockReason { get { throw null; } }
         public int? CompletedPercent { get { throw null; } }
         public string CurrentBackupType { get { throw null; } }
-        public int? CurrentRestoredSizeMB { get { throw null; } }
-        public int? CurrentRestorePlanSizeMB { get { throw null; } }
+        public int? CurrentRestoredSizeInMB { get { throw null; } }
+        public int? CurrentRestorePlanSizeInMB { get { throw null; } }
         public string CurrentRestoringFileName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailsBackupSetProperties> DiffBackupSets { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailsBackupSetProperties> FullBackupSets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailBackupSetProperties> DiffBackupSets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailBackupSetProperties> FullBackupSets { get { throw null; } }
         public string LastRestoredFileName { get { throw null; } }
         public System.DateTimeOffset? LastRestoredFileOn { get { throw null; } }
         public string LastUploadedFileName { get { throw null; } }
         public System.DateTimeOffset? LastUploadedFileOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailsBackupSetProperties> LogBackupSets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailBackupSetProperties> LogBackupSets { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public long? NumberOfFilesDetected { get { throw null; } }
@@ -1098,9 +1045,9 @@ namespace Azure.ResourceManager.Sql
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public double? PercentCompleted { get { throw null; } }
+        public string RestoreType { get { throw null; } }
         public string Status { get { throw null; } }
-        public string TypePropertiesType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailsUnrestorableFileProperties> UnrestorableFileList { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailUnrestorableFileProperties> UnrestorableFileList { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IReadOnlyList<string> UnrestorableFiles { get { throw null; } }
@@ -1814,7 +1761,9 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.SqlAgentConfigurationResource GetSqlAgentConfiguration() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetSqlServerTrustGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetSqlServerTrustGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueries(Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueries(int? numberOfQueries = default(int?), string databases = null, string startTime = null, string endTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? interval = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), Azure.ResourceManager.Sql.Models.AggregationFunctionType? aggregationFunction = default(Azure.ResourceManager.Sql.Models.AggregationFunctionType?), Azure.ResourceManager.Sql.Models.SqlMetricType? observationMetric = default(Azure.ResourceManager.Sql.Models.SqlMetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueriesAsync(Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueriesAsync(int? numberOfQueries = default(int?), string databases = null, string startTime = null, string endTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? interval = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), Azure.ResourceManager.Sql.Models.AggregationFunctionType? aggregationFunction = default(Azure.ResourceManager.Sql.Models.AggregationFunctionType?), Azure.ResourceManager.Sql.Models.SqlMetricType? observationMetric = default(Azure.ResourceManager.Sql.Models.SqlMetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2376,274 +2325,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentBaselineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseSqlVulnerabilityAssessmentBaselineCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BaselineName baselineName, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BaselineName baselineName, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> Get(Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>> GetAsync(Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentBaselineResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSqlVulnerabilityAssessmentBaselineResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseSqlVulnerabilityAssessmentBaselineSetData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.BaselineName baselineName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> GetServerDatabaseSqlVulnerabilityAssessmentBaselineRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> GetServerDatabaseSqlVulnerabilityAssessmentBaselineRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleCollection GetServerDatabaseSqlVulnerabilityAssessmentBaselineRules() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> Get(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseSqlVulnerabilityAssessmentRuleBaselineData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.BaselineName baselineName, string ruleId) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseSqlVulnerabilityAssessmentCollection() { }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSqlVulnerabilityAssessmentResource() { }
-        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource> GetServerDatabaseSqlVulnerabilityAssessmentScanScanResult(string scanId, string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource>> GetServerDatabaseSqlVulnerabilityAssessmentScanScanResultAsync(string scanId, string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultCollection GetServerDatabaseSqlVulnerabilityAssessmentScanScanResults(string scanId) { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseSqlVulnerabilityAssessmentScanCollection() { }
-        public virtual Azure.Response<bool> Exists(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource> Get(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentScanResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSqlVulnerabilityAssessmentScanResource() { }
-        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentScanRecordData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentScanScanResultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseSqlVulnerabilityAssessmentScanScanResultCollection() { }
-        public virtual Azure.Response<bool> Exists(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource> Get(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource>> GetAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource() { }
-        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentScanResultData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, string scanResultId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentBaselineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>, System.Collections.IEnumerable
-    {
-        protected ServerSqlVulnerabilityAssessmentBaselineCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BaselineName baselineName, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BaselineName baselineName, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> Get(Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>> GetAsync(Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentBaselineResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerSqlVulnerabilityAssessmentBaselineResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseSqlVulnerabilityAssessmentBaselineSetData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.BaselineName baselineName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> GetServerSqlVulnerabilityAssessmentBaselineRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>> GetServerSqlVulnerabilityAssessmentBaselineRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleCollection GetServerSqlVulnerabilityAssessmentBaselineRules() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentBaselineRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>, System.Collections.IEnumerable
-    {
-        protected ServerSqlVulnerabilityAssessmentBaselineRuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> Get(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentBaselineRuleResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerSqlVulnerabilityAssessmentBaselineRuleResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseSqlVulnerabilityAssessmentRuleBaselineData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.BaselineName baselineName, string ruleId) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseSqlVulnerabilityAssessmentRuleBaselineInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>, System.Collections.IEnumerable
-    {
-        protected ServerSqlVulnerabilityAssessmentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerSqlVulnerabilityAssessmentResource() { }
-        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource> GetServerSqlVulnerabilityAssessmentScanScanResult(string scanId, string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource>> GetServerSqlVulnerabilityAssessmentScanScanResultAsync(string scanId, string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultCollection GetServerSqlVulnerabilityAssessmentScanScanResults(string scanId) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource>, System.Collections.IEnumerable
-    {
-        protected ServerSqlVulnerabilityAssessmentScanCollection() { }
-        public virtual Azure.Response<bool> Exists(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource> Get(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentScanResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerSqlVulnerabilityAssessmentScanResource() { }
-        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentScanRecordData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentScanScanResultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource>, System.Collections.IEnumerable
-    {
-        protected ServerSqlVulnerabilityAssessmentScanScanResultCollection() { }
-        public virtual Azure.Response<bool> Exists(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource> Get(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource>> GetAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerSqlVulnerabilityAssessmentScanScanResultResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerSqlVulnerabilityAssessmentScanScanResultResource() { }
-        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentScanResultData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, string scanResultId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ServerTrustCertificateData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerTrustCertificateData() { }
@@ -2877,6 +2558,7 @@ namespace Azure.ResourceManager.Sql
         public long? MaxSizeBytes { get { throw null; } set { } }
         public double? MinCapacity { get { throw null; } set { } }
         public System.DateTimeOffset? PausedOn { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.DatabaseReadScale? ReadScale { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoveryServicesRecoveryPointId { get { throw null; } set { } }
@@ -2910,8 +2592,6 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDatabaseRestorePointResource>> CreateRestorePointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.CreateDatabaseRestorePointDefinition createDatabaseRestorePointDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ExecuteDatabaseSqlVulnerabilityAssessmentExecuteScan(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteDatabaseSqlVulnerabilityAssessmentExecuteScanAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.Models.ImportExportOperationResult> Export(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseExportDefinition databaseExportDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.Models.ImportExportOperationResult>> ExportAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DatabaseExportDefinition databaseExportDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ReplicaType? replicaType = default(Azure.ResourceManager.Sql.Models.ReplicaType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2961,15 +2641,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetricsAsync(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource> GetServerDatabaseSqlVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource>> GetServerDatabaseSqlVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> GetServerDatabaseSqlVulnerabilityAssessmentBaseline(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>> GetServerDatabaseSqlVulnerabilityAssessmentBaselineAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineCollection GetServerDatabaseSqlVulnerabilityAssessmentBaselines(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentCollection GetServerDatabaseSqlVulnerabilityAssessments() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource> GetServerDatabaseSqlVulnerabilityAssessmentScan(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource>> GetServerDatabaseSqlVulnerabilityAssessmentScanAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanCollection GetServerDatabaseSqlVulnerabilityAssessmentScans(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> GetSqlDatabaseAdvisor(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>> GetSqlDatabaseAdvisorAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlDatabaseAdvisorCollection GetSqlDatabaseAdvisors() { throw null; }
@@ -2983,6 +2654,9 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyCollection GetSqlDatabaseSecurityAlertPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> GetSqlDatabaseSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SqlSecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>> GetSqlDatabaseSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SqlSecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource> GetSqlDatabaseSqlVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource>> GetSqlDatabaseSqlVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentCollection GetSqlDatabaseSqlVulnerabilityAssessments() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> GetSqlDatabaseVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>> GetSqlDatabaseVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentCollection GetSqlDatabaseVulnerabilityAssessments() { throw null; }
@@ -2992,8 +2666,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDatabaseRestorePointResource> GetSqlServerDatabaseRestorePoint(string restorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDatabaseRestorePointResource>> GetSqlServerDatabaseRestorePointAsync(string restorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlServerDatabaseRestorePointCollection GetSqlServerDatabaseRestorePoints() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SynapseLinkWorkspace> GetSynapseLinkWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlSynapseLinkWorkspace> GetSynapseLinkWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlSynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SyncGroupResource> GetSyncGroup(string syncGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SyncGroupResource>> GetSyncGroupAsync(string syncGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SyncGroupCollection GetSyncGroups() { throw null; }
@@ -3109,6 +2783,145 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentBaselineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseSqlVulnerabilityAssessmentBaselineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> Get(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>> GetAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentBaselineResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseSqlVulnerabilityAssessmentBaselineResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentBaselineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleCollection GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRules() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> Get(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentBaselineRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, string ruleId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseSqlVulnerabilityAssessmentCollection() { }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseSqlVulnerabilityAssessmentResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ExecuteScan(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteScanAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource> GetSqlDatabaseSqlVulnerabilityAssessmentBaseline(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>> GetSqlDatabaseSqlVulnerabilityAssessmentBaselineAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineCollection GetSqlDatabaseSqlVulnerabilityAssessmentBaselines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource> GetSqlDatabaseSqlVulnerabilityAssessmentScan(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource>> GetSqlDatabaseSqlVulnerabilityAssessmentScanAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanCollection GetSqlDatabaseSqlVulnerabilityAssessmentScans() { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseSqlVulnerabilityAssessmentScanCollection() { }
+        public virtual Azure.Response<bool> Exists(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource> Get(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentScanResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseSqlVulnerabilityAssessmentScanResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentScanData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource> GetSqlDatabaseSqlVulnerabilityAssessmentScanResult(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource>> GetSqlDatabaseSqlVulnerabilityAssessmentScanResultAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultCollection GetSqlDatabaseSqlVulnerabilityAssessmentScanResults() { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentScanResultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseSqlVulnerabilityAssessmentScanResultCollection() { }
+        public virtual Azure.Response<bool> Exists(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource> Get(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource>> GetAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentScanResultResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseSqlVulnerabilityAssessmentScanResultResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentScanResultData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, string scanResultId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlDatabaseTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseTableResource>, System.Collections.IEnumerable
     {
@@ -3313,10 +3126,6 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource GetManagedBackupShortTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseAdvancedThreatProtectionResource GetManagedDatabaseAdvancedThreatProtectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseColumnResource GetManagedDatabaseColumnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource> GetManagedDatabaseMoveOperationResult(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName, System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource>> GetManagedDatabaseMoveOperationResultAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName, System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultResource GetManagedDatabaseMoveOperationResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedDatabaseMoveOperationResultCollection GetManagedDatabaseMoveOperationResults(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseResource GetManagedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailResource GetManagedDatabaseRestoreDetailResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseSchemaResource GetManagedDatabaseSchemaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3363,16 +3172,6 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionResource GetServerAdvancedThreatProtectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineResource GetServerDatabaseSqlVulnerabilityAssessmentBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource GetServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentResource GetServerDatabaseSqlVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanResource GetServerDatabaseSqlVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource GetServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource GetServerSqlVulnerabilityAssessmentBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineRuleResource GetServerSqlVulnerabilityAssessmentBaselineRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource GetServerSqlVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource GetServerSqlVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanScanResultResource GetServerSqlVulnerabilityAssessmentScanScanResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ServiceObjectiveResource GetServiceObjectiveResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlAgentConfigurationResource GetSqlAgentConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource GetSqlDatabaseAdvisorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3383,6 +3182,11 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.SqlDatabaseSchemaResource GetSqlDatabaseSchemaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource GetSqlDatabaseSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource GetSqlDatabaseSensitivityLabelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentResource GetSqlDatabaseSqlVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentScanResultResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseTableResource GetSqlDatabaseTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource GetSqlDatabaseVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3419,6 +3223,11 @@ namespace Azure.ResourceManager.Sql
         public static Azure.Pageable<Azure.ResourceManager.Sql.SqlServerResource> GetSqlServers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerResource> GetSqlServersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource GetSqlServerSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource GetSqlServerSqlVulnerabilityAssessmentBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource GetSqlServerSqlVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource GetSqlServerSqlVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource GetSqlServerSqlVulnerabilityAssessmentScanResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetSqlServerTrustGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName, string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>> GetSqlServerTrustGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName, string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerTrustGroupResource GetSqlServerTrustGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -4004,7 +3813,9 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetJobExecutionsByAgent(Azure.ResourceManager.Sql.Models.SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetJobExecutionsByAgent(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(Azure.ResourceManager.Sql.Models.SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobResource> GetSqlServerJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobResource>> GetSqlServerJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4087,10 +3898,14 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<bool> Exists(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> Get(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetAll(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetAllAsync(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>> GetAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetJobTargetExecutions(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetJobTargetExecutions(System.Guid jobExecutionId, System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(System.Guid jobExecutionId, System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>.GetEnumerator() { throw null; }
@@ -4136,7 +3951,9 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<bool> Exists(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> Get(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> GetAll(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> GetAllAsync(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>> GetAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -4162,7 +3979,9 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<bool> Exists(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> Get(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetAll(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepTargetCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetAllAsync(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepTargetCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>> GetAsync(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -4384,8 +4203,6 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateTdeCertificateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.TdeCertificate tdeCertificate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ExecuteSqlVulnerabilityAssessmentExecuteScan(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteSqlVulnerabilityAssessmentExecuteScanAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ElasticPoolResource> GetElasticPool(string elasticPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4421,15 +4238,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionCollection GetServerAdvancedThreatProtections() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.ServerOperationData> GetServerOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ServerOperationData> GetServerOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource> GetServerSqlVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentResource>> GetServerSqlVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource> GetServerSqlVulnerabilityAssessmentBaseline(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineResource>> GetServerSqlVulnerabilityAssessmentBaselineAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.BaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentBaselineCollection GetServerSqlVulnerabilityAssessmentBaselines(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentCollection GetServerSqlVulnerabilityAssessments() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource> GetServerSqlVulnerabilityAssessmentScan(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanResource>> GetServerSqlVulnerabilityAssessmentScanAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerSqlVulnerabilityAssessmentScanCollection GetServerSqlVulnerabilityAssessmentScans(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlServerUsage> GetServerUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlServerUsage> GetServerUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource> GetServiceObjective(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4481,6 +4289,9 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyCollection GetSqlServerSecurityAlertPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> GetSqlServerSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SqlSecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>> GetSqlServerSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SqlSecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> GetSqlServerSqlVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>> GetSqlServerSqlVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentCollection GetSqlServerSqlVulnerabilityAssessments() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerVirtualNetworkRuleResource> GetSqlServerVirtualNetworkRule(string virtualNetworkRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerVirtualNetworkRuleResource>> GetSqlServerVirtualNetworkRuleAsync(string virtualNetworkRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlServerVirtualNetworkRuleCollection GetSqlServerVirtualNetworkRules() { throw null; }
@@ -4537,6 +4348,151 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentBaselineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerSqlVulnerabilityAssessmentBaselineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> Get(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>> GetAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentBaselineResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerSqlVulnerabilityAssessmentBaselineResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentBaselineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> GetSqlServerSqlVulnerabilityAssessmentBaselineRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlServerSqlVulnerabilityAssessmentBaselineRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleCollection GetSqlServerSqlVulnerabilityAssessmentBaselineRules() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentBaselineRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerSqlVulnerabilityAssessmentBaselineRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> Get(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentBaselineRuleResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerSqlVulnerabilityAssessmentBaselineRuleResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentBaselineRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, string ruleId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerSqlVulnerabilityAssessmentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerSqlVulnerabilityAssessmentResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ExecuteScan(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteScanAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource> GetSqlServerSqlVulnerabilityAssessmentBaseline(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineResource>> GetSqlServerSqlVulnerabilityAssessmentBaselineAsync(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentBaselineCollection GetSqlServerSqlVulnerabilityAssessmentBaselines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource> GetSqlServerSqlVulnerabilityAssessmentScan(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource>> GetSqlServerSqlVulnerabilityAssessmentScanAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanCollection GetSqlServerSqlVulnerabilityAssessmentScans() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerSqlVulnerabilityAssessmentScanCollection() { }
+        public virtual Azure.Response<bool> Exists(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource> Get(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentScanResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerSqlVulnerabilityAssessmentScanResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentScanData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource> GetSqlServerSqlVulnerabilityAssessmentScanResult(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource>> GetSqlServerSqlVulnerabilityAssessmentScanResultAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultCollection GetSqlServerSqlVulnerabilityAssessmentScanResults() { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentScanResultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerSqlVulnerabilityAssessmentScanResultCollection() { }
+        public virtual Azure.Response<bool> Exists(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource> Get(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource>> GetAsync(string scanResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerSqlVulnerabilityAssessmentScanResultResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerSqlVulnerabilityAssessmentScanResultResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlVulnerabilityAssessmentScanResultData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, string scanResultId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSqlVulnerabilityAssessmentScanResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlServerTrustGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>, System.Collections.IEnumerable
     {
@@ -4675,14 +4631,24 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlTimeZoneResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlTimeZoneResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SqlVulnerabilityAssessmentBaselineData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlVulnerabilityAssessmentBaselineData() { }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<System.Collections.Generic.IList<string>>> Results { get { throw null; } }
+    }
+    public partial class SqlVulnerabilityAssessmentBaselineRuleData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlVulnerabilityAssessmentBaselineRuleData() { }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> Results { get { throw null; } }
+    }
     public partial class SqlVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData
     {
         public SqlVulnerabilityAssessmentData() { }
         public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentState? State { get { throw null; } set { } }
     }
-    public partial class SqlVulnerabilityAssessmentScanRecordData : Azure.ResourceManager.Models.ResourceData
+    public partial class SqlVulnerabilityAssessmentScanData : Azure.ResourceManager.Models.ResourceData
     {
-        public SqlVulnerabilityAssessmentScanRecordData() { }
+        public SqlVulnerabilityAssessmentScanData() { }
         public string Database { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentScanError> Errors { get { throw null; } }
@@ -4703,14 +4669,14 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlVulnerabilityAssessmentScanResultData : Azure.ResourceManager.Models.ResourceData
     {
         public SqlVulnerabilityAssessmentScanResultData() { }
-        public Azure.ResourceManager.Sql.Models.BaselineAdjustedResult BaselineAdjustedResult { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineAdjustedResult BaselineAdjustedResult { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public bool? IsTrimmed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> QueryResults { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.Remediation Remediation { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRemediation Remediation { get { throw null; } }
         public string RuleId { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.VaRule RuleMetadata { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.RuleStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleMetadata RuleMetadata { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus? Status { get { throw null; } }
     }
     public partial class SubscriptionLongTermRetentionBackupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource>, System.Collections.IEnumerable
     {
@@ -5240,43 +5206,6 @@ namespace Azure.ResourceManager.Sql.Models
         public int? StepSize { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit? Unit { get { throw null; } }
     }
-    public partial class Baseline
-    {
-        internal Baseline() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> ExpectedResults { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-    }
-    public partial class BaselineAdjustedResult
-    {
-        internal BaselineAdjustedResult() { }
-        public Azure.ResourceManager.Sql.Models.Baseline Baseline { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> ResultsNotInBaseline { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> ResultsOnlyInBaseline { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.RuleStatus? Status { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BaselineName : System.IEquatable<Azure.ResourceManager.Sql.Models.BaselineName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BaselineName(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.BaselineName Default { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.BaselineName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.BaselineName left, Azure.ResourceManager.Sql.Models.BaselineName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.BaselineName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.BaselineName left, Azure.ResourceManager.Sql.Models.BaselineName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class BenchmarkReference
-    {
-        internal BenchmarkReference() { }
-        public string Benchmark { get { throw null; } }
-        public string Reference { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlobAuditingPolicyName : System.IEquatable<Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName>
     {
@@ -5475,18 +5404,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.DatabaseReadScale (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.DatabaseReadScale left, Azure.ResourceManager.Sql.Models.DatabaseReadScale right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DatabaseSqlVulnerabilityAssessmentRuleBaselineInput : Azure.ResourceManager.Models.ResourceData
-    {
-        public DatabaseSqlVulnerabilityAssessmentRuleBaselineInput() { }
-        public bool? LatestScan { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> Results { get { throw null; } }
-    }
-    public partial class DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput : Azure.ResourceManager.Models.ResourceData
-    {
-        public DatabaseSqlVulnerabilityAssessmentRuleBaselineListInput() { }
-        public bool? LatestScan { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<System.Collections.Generic.IList<string>>> Results { get { throw null; } }
     }
     public partial class DatabaseUsage : Azure.ResourceManager.Models.ResourceData
     {
@@ -6316,8 +6233,26 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class ManagedDatabaseMoveDefinition
     {
-        public ManagedDatabaseMoveDefinition(string destinationManagedDatabaseId) { }
-        public string DestinationManagedDatabaseId { get { throw null; } }
+        public ManagedDatabaseMoveDefinition(Azure.Core.ResourceIdentifier destinationManagedDatabaseId) { }
+        public Azure.Core.ResourceIdentifier DestinationManagedDatabaseId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedDatabaseMoveOperationMode : System.IEquatable<Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedDatabaseMoveOperationMode(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode Copy { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode Move { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode left, Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode left, Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ManagedDatabasePatch
     {
@@ -6342,26 +6277,26 @@ namespace Azure.ResourceManager.Sql.Models
         public System.Uri StorageContainerUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class ManagedDatabaseRestoreDetailsBackupSetProperties
+    public partial class ManagedDatabaseRestoreDetailBackupSetProperties
     {
-        internal ManagedDatabaseRestoreDetailsBackupSetProperties() { }
-        public int? BackupSizeMB { get { throw null; } }
+        internal ManagedDatabaseRestoreDetailBackupSetProperties() { }
+        public int? BackupSizeInMB { get { throw null; } }
         public string FirstStripeName { get { throw null; } }
         public int? NumberOfStripes { get { throw null; } }
-        public System.DateTimeOffset? RestoreFinishedTimestampUtc { get { throw null; } }
-        public System.DateTimeOffset? RestoreStartedTimestampUtc { get { throw null; } }
+        public System.DateTimeOffset? RestoreFinishedOn { get { throw null; } }
+        public System.DateTimeOffset? RestoreStartedOn { get { throw null; } }
         public string Status { get { throw null; } }
     }
-    public partial class ManagedDatabaseRestoreDetailsUnrestorableFileProperties
+    public partial class ManagedDatabaseRestoreDetailUnrestorableFileProperties
     {
-        internal ManagedDatabaseRestoreDetailsUnrestorableFileProperties() { }
+        internal ManagedDatabaseRestoreDetailUnrestorableFileProperties() { }
         public string Name { get { throw null; } }
     }
     public partial class ManagedDatabaseStartMoveDefinition
     {
-        public ManagedDatabaseStartMoveDefinition(string destinationManagedDatabaseId) { }
-        public string DestinationManagedDatabaseId { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.MoveOperationMode? OperationMode { get { throw null; } set { } }
+        public ManagedDatabaseStartMoveDefinition(Azure.Core.ResourceIdentifier destinationManagedDatabaseId) { }
+        public Azure.Core.ResourceIdentifier DestinationManagedDatabaseId { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.ManagedDatabaseMoveOperationMode? OperationMode { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedDatabaseStatus : System.IEquatable<Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus>
@@ -6406,11 +6341,14 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ManagedInstanceDtcSecuritySettings
     {
         public ManagedInstanceDtcSecuritySettings() { }
+        public bool? IsXATransactionsEnabled { get { throw null; } set { } }
         public bool? SnaLu6Point2TransactionsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceDtcTransactionManagerCommunicationSettings TransactionManagerCommunicationSettings { get { throw null; } set { } }
-        public int? XaTransactionsDefaultTimeout { get { throw null; } set { } }
+        public int? XATransactionsDefaultTimeoutInSeconds { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use IsXATransactionsEnabled instead.", false)]
         public bool? XaTransactionsEnabled { get { throw null; } set { } }
-        public int? XaTransactionsMaximumTimeout { get { throw null; } set { } }
+        public int? XATransactionsMaximumTimeoutInSeconds { get { throw null; } set { } }
     }
     public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings
     {
@@ -6627,6 +6565,17 @@ namespace Azure.ResourceManager.Sql.Models
         public ManagedInstanceQuery() { }
         public string QueryText { get { throw null; } set { } }
     }
+    public partial class ManagedInstanceResourceGetTopQueriesOptions
+    {
+        public ManagedInstanceResourceGetTopQueriesOptions() { }
+        public Azure.ResourceManager.Sql.Models.AggregationFunctionType? AggregationFunction { get { throw null; } set { } }
+        public string Databases { get { throw null; } set { } }
+        public string EndTime { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.QueryTimeGrainType? Interval { get { throw null; } set { } }
+        public int? NumberOfQueries { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlMetricType? ObservationMetric { get { throw null; } set { } }
+        public string StartTime { get { throw null; } set { } }
+    }
     public partial class ManagedInstanceUpdateDnsServersOperationData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceUpdateDnsServersOperationData() { }
@@ -6764,24 +6713,6 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
         public double? Value { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MoveOperationMode : System.IEquatable<Azure.ResourceManager.Sql.Models.MoveOperationMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MoveOperationMode(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.MoveOperationMode Copy { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.MoveOperationMode Move { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.MoveOperationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.MoveOperationMode left, Azure.ResourceManager.Sql.Models.MoveOperationMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.MoveOperationMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.MoveOperationMode left, Azure.ResourceManager.Sql.Models.MoveOperationMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class NetworkIsolationSettings
     {
         public NetworkIsolationSettings() { }
@@ -6852,13 +6783,6 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ProxyResourceWithWritableName : Azure.ResourceManager.Sql.Models.ResourceWithWritableName
     {
         public ProxyResourceWithWritableName() { }
-    }
-    public partial class QueryCheck
-    {
-        internal QueryCheck() { }
-        public System.Collections.Generic.IReadOnlyList<string> ColumnNames { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> ExpectedResult { get { throw null; } }
-        public string Query { get { throw null; } }
     }
     public partial class QueryMetricInterval
     {
@@ -7070,14 +6994,6 @@ namespace Azure.ResourceManager.Sql.Models
         public RecommendedSensitivityLabelUpdateList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdate> Operations { get { throw null; } }
     }
-    public partial class Remediation
-    {
-        internal Remediation() { }
-        public bool? Automated { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string PortalLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Scripts { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReplicationLinkState : System.IEquatable<Azure.ResourceManager.Sql.Models.ReplicationLinkState>
     {
@@ -7163,66 +7079,6 @@ namespace Azure.ResourceManager.Sql.Models
     {
         Continuous = 0,
         Discrete = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RuleSeverity : System.IEquatable<Azure.ResourceManager.Sql.Models.RuleSeverity>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RuleSeverity(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.RuleSeverity High { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleSeverity Informational { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleSeverity Low { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleSeverity Medium { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleSeverity Obsolete { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.RuleSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.RuleSeverity left, Azure.ResourceManager.Sql.Models.RuleSeverity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.RuleSeverity (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.RuleSeverity left, Azure.ResourceManager.Sql.Models.RuleSeverity right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RuleStatus : System.IEquatable<Azure.ResourceManager.Sql.Models.RuleStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RuleStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.RuleStatus Finding { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleStatus InternalError { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleStatus NonFinding { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.RuleStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.RuleStatus left, Azure.ResourceManager.Sql.Models.RuleStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.RuleStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.RuleStatus left, Azure.ResourceManager.Sql.Models.RuleStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RuleType : System.IEquatable<Azure.ResourceManager.Sql.Models.RuleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RuleType(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.RuleType BaselineExpected { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleType Binary { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleType NegativeList { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.RuleType PositiveList { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.RuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.RuleType left, Azure.ResourceManager.Sql.Models.RuleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.RuleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.RuleType left, Azure.ResourceManager.Sql.Models.RuleType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SampleSchemaName : System.IEquatable<Azure.ResourceManager.Sql.Models.SampleSchemaName>
@@ -7547,6 +7403,24 @@ namespace Azure.ResourceManager.Sql.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlAlwaysEncryptedEnclaveType : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlAlwaysEncryptedEnclaveType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType Default { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType Vbs { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType left, Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType left, Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlBackupStorageRedundancy : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy>
     {
         private readonly object _dummy;
@@ -7707,6 +7581,7 @@ namespace Azure.ResourceManager.Sql.Models
         public long? MaxSizeBytes { get { throw null; } set { } }
         public double? MinCapacity { get { throw null; } set { } }
         public System.DateTimeOffset? PausedOn { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.DatabaseReadScale? ReadScale { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoveryServicesRecoveryPointId { get { throw null; } set { } }
@@ -8085,6 +7960,62 @@ namespace Azure.ResourceManager.Sql.Models
         public SqlServerJobAgentPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class SqlServerJobAgentResourceGetJobExecutionsByAgentOptions
+    {
+        public SqlServerJobAgentResourceGetJobExecutionsByAgentOptions() { }
+        public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
+        public bool? IsActive { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
+    public partial class SqlServerJobExecutionCollectionGetAllOptions
+    {
+        public SqlServerJobExecutionCollectionGetAllOptions() { }
+        public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
+        public bool? IsActive { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
+    public partial class SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions
+    {
+        public SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions(System.Guid jobExecutionId) { }
+        public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
+        public bool? IsActive { get { throw null; } set { } }
+        public System.Guid JobExecutionId { get { throw null; } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
+    public partial class SqlServerJobExecutionStepCollectionGetAllOptions
+    {
+        public SqlServerJobExecutionStepCollectionGetAllOptions() { }
+        public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
+        public bool? IsActive { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
+    public partial class SqlServerJobExecutionStepTargetCollectionGetAllOptions
+    {
+        public SqlServerJobExecutionStepTargetCollectionGetAllOptions() { }
+        public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
+        public bool? IsActive { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class SqlServerJobSchedule
     {
         public SqlServerJobSchedule() { }
@@ -8239,21 +8170,152 @@ namespace Azure.ResourceManager.Sql.Models
         public string Size { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
     }
+    public partial class SqlSynapseLinkWorkspace : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlSynapseLinkWorkspace() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.SqlSynapseLinkWorkspaceInfo> Workspaces { get { throw null; } }
+    }
+    public partial class SqlSynapseLinkWorkspaceInfo
+    {
+        public SqlSynapseLinkWorkspaceInfo() { }
+        public string LinkConnectionName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceId { get { throw null; } set { } }
+    }
+    public partial class SqlVulnerabilityAssessmentBaselineAdjustedResult
+    {
+        internal SqlVulnerabilityAssessmentBaselineAdjustedResult() { }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineDetails Baseline { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> ResultsNotInBaseline { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> ResultsOnlyInBaseline { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus? Status { get { throw null; } }
+    }
+    public partial class SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent() { }
+        public bool? IsLatestScan { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<System.Collections.Generic.IList<string>>> Results { get { throw null; } }
+    }
+    public partial class SqlVulnerabilityAssessmentBaselineDetails
+    {
+        internal SqlVulnerabilityAssessmentBaselineDetails() { }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> ExpectedResults { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SqlVulnerabilityAssessmentName : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName>
+    public readonly partial struct SqlVulnerabilityAssessmentBaselineName : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SqlVulnerabilityAssessmentName(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName Default { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName other) { throw null; }
+        public SqlVulnerabilityAssessmentBaselineName(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName Default { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentName right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent() { }
+        public bool? IsLatestScan { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> Results { get { throw null; } }
+    }
+    public partial class SqlVulnerabilityAssessmentBenchmarkReference
+    {
+        internal SqlVulnerabilityAssessmentBenchmarkReference() { }
+        public string Benchmark { get { throw null; } }
+        public string Reference { get { throw null; } }
+    }
+    public partial class SqlVulnerabilityAssessmentQueryCheck
+    {
+        internal SqlVulnerabilityAssessmentQueryCheck() { }
+        public System.Collections.Generic.IReadOnlyList<string> ColumnNames { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> ExpectedResult { get { throw null; } }
+        public string Query { get { throw null; } }
+    }
+    public partial class SqlVulnerabilityAssessmentRemediation
+    {
+        internal SqlVulnerabilityAssessmentRemediation() { }
+        public string Description { get { throw null; } }
+        public bool? IsAutomated { get { throw null; } }
+        public string PortalLink { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Scripts { get { throw null; } }
+    }
+    public partial class SqlVulnerabilityAssessmentRuleMetadata
+    {
+        internal SqlVulnerabilityAssessmentRuleMetadata() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBenchmarkReference> BenchmarkReferences { get { throw null; } }
+        public string Category { get { throw null; } }
+        public string Description { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentQueryCheck QueryCheck { get { throw null; } }
+        public string Rationale { get { throw null; } }
+        public string RuleId { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType? RuleType { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity? Severity { get { throw null; } }
+        public string Title { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlVulnerabilityAssessmentRuleSeverity : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlVulnerabilityAssessmentRuleSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity High { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity Informational { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity Low { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity Medium { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity Obsolete { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlVulnerabilityAssessmentRuleStatus : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlVulnerabilityAssessmentRuleStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus Finding { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus InternalError { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus NonFinding { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlVulnerabilityAssessmentRuleType : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlVulnerabilityAssessmentRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType BaselineExpected { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType Binary { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType NegativeList { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType PositiveList { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType left, Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SqlVulnerabilityAssessmentScanError
@@ -8310,17 +8372,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.StorageKeyType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.StorageKeyType left, Azure.ResourceManager.Sql.Models.StorageKeyType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SynapseLinkWorkspace : Azure.ResourceManager.Models.ResourceData
-    {
-        public SynapseLinkWorkspace() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.SynapseLinkWorkspaceInfoProperties> Workspaces { get { throw null; } }
-    }
-    public partial class SynapseLinkWorkspaceInfoProperties
-    {
-        public SynapseLinkWorkspaceInfoProperties() { }
-        public string LinkConnectionName { get { throw null; } set { } }
-        public string WorkspaceId { get { throw null; } set { } }
     }
     public partial class SyncAgentKeyProperties
     {
@@ -8640,19 +8691,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus left, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class VaRule
-    {
-        internal VaRule() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.BenchmarkReference> BenchmarkReferences { get { throw null; } }
-        public string Category { get { throw null; } }
-        public string Description { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.QueryCheck QueryCheck { get { throw null; } }
-        public string Rationale { get { throw null; } }
-        public string RuleId { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.RuleType? RuleType { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.RuleSeverity? Severity { get { throw null; } }
-        public string Title { get { throw null; } }
     }
     public partial class VirtualClusterPatch
     {

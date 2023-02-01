@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -132,7 +134,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [AsyncOnly]
         public async Task CreateSearchAsync()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var client = CreateClient();
@@ -153,7 +156,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [SyncOnly]
         public void CreateSearch()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var client = CreateClient();
@@ -178,7 +182,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [AsyncOnly]
         public async Task UpdateCapabilitiesAsync()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest)
+            {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var number = GetTestPhoneNumber();
@@ -278,14 +283,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [SyncOnly]
         public void UpdateCapabilities()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest)
+            {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var number = GetTestPhoneNumber();
 
             var client = CreateClient();
             var phoneNumber = client.GetPurchasedPhoneNumber(number);
-            PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
+            PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
             PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
 
             var updateOperation = client.StartUpdateCapabilities(number, callingCapabilityType, smsCapabilityType);
@@ -300,6 +306,119 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
             Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+        }
+
+        [Test]
+        public async Task GetTollFreeAreaCodes()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            string[] expectedAreaCodes = { "888", "877", "866", "855", "844", "800", "833", "88" };
+            var client = CreateClient();
+
+            var areaCodes = client.GetAvailableAreaCodesTollFreeAsync("US");
+            await foreach (PhoneNumberAreaCode areaCode in areaCodes)
+            {
+                Assert.Contains(areaCode.AreaCode, expectedAreaCodes);
+            }
+            Assert.IsNotNull(areaCodes);
+        }
+
+        [Test]
+        public async Task GetGeographicAreaCodes()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+            var availableLocalities = client.GetAvailableLocalitiesAsync("US");
+            await foreach (PhoneNumberLocality firstLocality in availableLocalities)
+            {
+                var areaCodes = client.GetAvailableAreaCodesGeographicAsync("US", "person", firstLocality.LocalizedName, firstLocality.AdministrativeDivision.AbbreviatedName);
+                await foreach (PhoneNumberAreaCode areaCode in areaCodes)
+                {
+                    Console.WriteLine("Area Code " + areaCode.AreaCode);
+                }
+                Assert.IsNotNull(areaCodes);
+                break;
+            }
+        }
+
+        [Test]
+        public async Task GetCountries()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            List<string> countriesResponse = new List<string>();
+            string[] expectedCountries = { "US", "CA" };
+            var client = CreateClient();
+
+            var countries = client.GetAvailableCountriesAsync();
+            await foreach (PhoneNumberCountry country in countries)
+            {
+                countriesResponse.Add(country.CountryCode);
+            }
+
+            foreach (string country in expectedCountries)
+            {
+                Assert.Contains(country, countriesResponse);
+            }
+            Assert.IsNotNull(countries);
+        }
+
+        [Test]
+        public async Task GetLocalities()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+
+            var localities = client.GetAvailableLocalitiesAsync("US");
+            await foreach (PhoneNumberLocality locality in localities)
+            {
+                Console.WriteLine("Locality " + locality.LocalizedName);
+            }
+            Assert.IsNotNull(localities);
+        }
+
+        [Test]
+        public async Task GetLocalitiesWithAdministrativeDivision()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+            var availableLocalities = client.GetAvailableLocalitiesAsync("US");
+            await foreach (PhoneNumberLocality firstLocality in availableLocalities)
+            {
+                var localities = client.GetAvailableLocalitiesAsync("US", firstLocality.AdministrativeDivision.AbbreviatedName);
+                await foreach (PhoneNumberLocality locality in localities)
+                {
+                    Console.WriteLine("Locality " + locality.LocalizedName);
+                    Assert.AreEqual(locality.AdministrativeDivision.AbbreviatedName, firstLocality.AdministrativeDivision.AbbreviatedName);
+                }
+                Assert.IsNotNull(localities);
+                break;
+            }
+        }
+
+        [Test]
+        public async Task GetOfferings()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+
+            var offerings = client.GetAvailableOfferingsAsync("US");
+            await foreach (PhoneNumberOffering offering in offerings)
+            {
+                Console.WriteLine("Offering " + offering.ToString());
+            }
+            Assert.IsNotNull(offerings);
         }
     }
 }

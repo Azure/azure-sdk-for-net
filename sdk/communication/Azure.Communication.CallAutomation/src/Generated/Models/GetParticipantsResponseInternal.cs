@@ -16,20 +16,20 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
         internal GetParticipantsResponseInternal()
         {
-            Values = new ChangeTrackingList<AcsCallParticipantInternal>();
+            Values = new ChangeTrackingList<CallParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
         /// <param name="values"> List of the current participants in the call. </param>
         /// <param name="nextLink"> Continue of the list of participants. </param>
-        internal GetParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> values, string nextLink)
+        internal GetParticipantsResponseInternal(IReadOnlyList<CallParticipantInternal> values, string nextLink)
         {
             Values = values;
             NextLink = nextLink;
         }
 
         /// <summary> List of the current participants in the call. </summary>
-        public IReadOnlyList<AcsCallParticipantInternal> Values { get; }
+        public IReadOnlyList<CallParticipantInternal> Values { get; }
         /// <summary> Continue of the list of participants. </summary>
         public string NextLink { get; }
     }

@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -75,24 +72,9 @@ namespace Azure.Analytics.Purview.Share
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
-            return GetReceivedAssetsImplementationAsync("ReceivedAssetsClient.GetReceivedAssets", receivedShareName, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetReceivedAssetsImplementationAsync(string diagnosticsScopeName, string receivedShareName, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetReceivedAssetsRequest(receivedShareName, skipToken, context)
-                        : CreateGetReceivedAssetsNextPageRequest(nextLink, receivedShareName, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetReceivedAssetsRequest(receivedShareName, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetReceivedAssetsNextPageRequest(nextLink, receivedShareName, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedAssetsClient.GetReceivedAssets", "value", "nextLink", context);
         }
 
         /// <summary> List source asset of a received share. </summary>
@@ -108,24 +90,9 @@ namespace Azure.Analytics.Purview.Share
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
-            return GetReceivedAssetsImplementation("ReceivedAssetsClient.GetReceivedAssets", receivedShareName, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetReceivedAssetsImplementation(string diagnosticsScopeName, string receivedShareName, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetReceivedAssetsRequest(receivedShareName, skipToken, context)
-                        : CreateGetReceivedAssetsNextPageRequest(nextLink, receivedShareName, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetReceivedAssetsRequest(receivedShareName, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetReceivedAssetsNextPageRequest(nextLink, receivedShareName, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedAssetsClient.GetReceivedAssets", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetReceivedAssetsRequest(string receivedShareName, string skipToken, RequestContext context)

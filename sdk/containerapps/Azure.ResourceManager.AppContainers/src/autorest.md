@@ -226,5 +226,6 @@ directive:
   - from: ContainerApps.json
     where: $.definitions.ContainerApp
     transform: >
-      $.properties.properties.properties.outboundIpAddresses.items.format = 'uri';
+      $.properties.properties.properties.outboundIpAddresses['x-ms-client-name'] = 'outboundIpAddressList';
+      $.properties.properties.properties.outboundIpAddresses.items['x-ms-format'] = 'ip-address';
 ```
