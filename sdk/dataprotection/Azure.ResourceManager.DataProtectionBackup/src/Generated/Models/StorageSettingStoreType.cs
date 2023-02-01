@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         private const string ArchiveStoreValue = "ArchiveStore";
-        private const string SnapshotStoreValue = "SnapshotStore";
+        private const string OperationalStoreValue = "OperationalStore";
         private const string VaultStoreValue = "VaultStore";
 
         /// <summary> ArchiveStore. </summary>
         public static StorageSettingStoreType ArchiveStore { get; } = new StorageSettingStoreType(ArchiveStoreValue);
-        /// <summary> SnapshotStore. </summary>
-        public static StorageSettingStoreType SnapshotStore { get; } = new StorageSettingStoreType(SnapshotStoreValue);
+        /// <summary> OperationalStore. </summary>
+        public static StorageSettingStoreType OperationalStore { get; } = new StorageSettingStoreType(OperationalStoreValue);
         /// <summary> VaultStore. </summary>
         public static StorageSettingStoreType VaultStore { get; } = new StorageSettingStoreType(VaultStoreValue);
         /// <summary> Determines if two <see cref="StorageSettingStoreType"/> values are the same. </summary>

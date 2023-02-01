@@ -16,40 +16,47 @@ namespace Azure.AI.OpenAI.Models
     public partial class Completions
     {
         /// <summary> Initializes a new instance of Completions. </summary>
-        /// <param name="object"> Object for completion response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="object"/> is null. </exception>
-        internal Completions(string @object)
+        /// <param name="object"></param>
+        /// <param name="usage"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="object"/> or <paramref name="usage"/> is null. </exception>
+        internal Completions(string @object, CompletionsUsage usage)
         {
             Argument.AssertNotNull(@object, nameof(@object));
+            Argument.AssertNotNull(usage, nameof(usage));
 
             Object = @object;
             Choices = new ChangeTrackingList<Choice>();
+            Usage = usage;
         }
 
         /// <summary> Initializes a new instance of Completions. </summary>
-        /// <param name="id"> Id for completion response. </param>
-        /// <param name="object"> Object for completion response. </param>
-        /// <param name="created"> Created time for completion response. </param>
-        /// <param name="model"> Model used for completion response. </param>
-        /// <param name="choices"> Array of choices returned containing text completions to prompts sent. </param>
-        internal Completions(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices)
+        /// <param name="id"></param>
+        /// <param name="object"></param>
+        /// <param name="created"></param>
+        /// <param name="model"></param>
+        /// <param name="choices"></param>
+        /// <param name="usage"></param>
+        internal Completions(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices, CompletionsUsage usage)
         {
             Id = id;
             Object = @object;
             Created = created;
             Model = model;
             Choices = choices.ToList();
+            Usage = usage;
         }
 
-        /// <summary> Id for completion response. </summary>
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
-        /// <summary> Object for completion response. </summary>
+        /// <summary> Gets the object. </summary>
         public string Object { get; }
-        /// <summary> Created time for completion response. </summary>
+        /// <summary> Gets the created. </summary>
         public int? Created { get; }
-        /// <summary> Model used for completion response. </summary>
+        /// <summary> Gets the model. </summary>
         public string Model { get; }
-        /// <summary> Array of choices returned containing text completions to prompts sent. </summary>
+        /// <summary> Gets the choices. </summary>
         public IReadOnlyList<Choice> Choices { get; }
+        /// <summary> Gets the usage. </summary>
+        public CompletionsUsage Usage { get; }
     }
 }

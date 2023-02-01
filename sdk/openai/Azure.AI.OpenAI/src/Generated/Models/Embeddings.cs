@@ -12,34 +12,45 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    /// <summary> The Embeddings. </summary>
+    /// <summary> Expected response schema to embeddings request. </summary>
     public partial class Embeddings
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="object"></param>
         /// <param name="data"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="object"/> or <paramref name="data"/> is null. </exception>
-        internal Embeddings(string @object, IEnumerable<EmbeddingItem> data)
+        /// <param name="usage"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="object"/>, <paramref name="data"/> or <paramref name="usage"/> is null. </exception>
+        internal Embeddings(string @object, IEnumerable<EmbeddingItem> data, EmbeddingsUsage usage)
         {
             Argument.AssertNotNull(@object, nameof(@object));
             Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(usage, nameof(usage));
 
             Object = @object;
             Data = data.ToList();
+            Usage = usage;
         }
 
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="object"></param>
         /// <param name="data"></param>
-        internal Embeddings(string @object, IReadOnlyList<EmbeddingItem> data)
+        /// <param name="model"></param>
+        /// <param name="usage"></param>
+        internal Embeddings(string @object, IReadOnlyList<EmbeddingItem> data, string model, EmbeddingsUsage usage)
         {
             Object = @object;
             Data = data.ToList();
+            Model = model;
+            Usage = usage;
         }
 
         /// <summary> Gets the object. </summary>
         public string Object { get; }
         /// <summary> Gets the data. </summary>
         public IReadOnlyList<EmbeddingItem> Data { get; }
+        /// <summary> Gets the model. </summary>
+        public string Model { get; }
+        /// <summary> Gets the usage. </summary>
+        public EmbeddingsUsage Usage { get; }
     }
 }

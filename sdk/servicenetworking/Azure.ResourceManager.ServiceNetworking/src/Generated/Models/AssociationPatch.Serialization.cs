@@ -8,23 +8,13 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.DataProtectionBackup.Models
+namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    public partial class DataProtectionBackupPatch : IUtf8JsonSerializable
+    public partial class AssociationPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -35,6 +25,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
         }

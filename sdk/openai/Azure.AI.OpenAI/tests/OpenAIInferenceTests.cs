@@ -11,7 +11,7 @@ namespace Azure.AI.OpenAI.Tests
     public class OpenAIInferenceTests : OpenAITestBase
     {
         public OpenAIInferenceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Live)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI.Tests
         {
             var client = GetClient();
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
-            var tokenClient = GetClientWithToken();
+            var tokenClient = GetClientWithCredential();
             Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
         }
 
@@ -43,6 +43,17 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         /// <summary>
+        /// Test Simplified Completion API.
+        /// </summary>
+        [RecordedTest]
+        public async Task SimpleCompletionTest()
+        {
+            var client = GetClientWithCompletionsDeploymentId();
+            var response = await client.GetCompletionsAsync("Hello World!");
+            Assert.That(response, Is.InstanceOf<Response<Completions>>());
+        }
+
+        /// <summary>
         /// Test Embeddings.
         /// </summary>
         [RecordedTest]
@@ -53,6 +64,19 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
             var response = await client.GetEmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
+        }
+
+        /// <summary>
+        /// Test Exception throw.
+        /// </summary>
+        [RecordedTest]
+        public void RequestFailedExceptionTest()
+        {
+            var client = GetClient();
+            CompletionsOptions completionsRequest = new CompletionsOptions();
+            completionsRequest.Prompt.Add("Hello world");
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest); });
+            Assert.AreEqual(401, exception.Status);
         }
     }
 }
