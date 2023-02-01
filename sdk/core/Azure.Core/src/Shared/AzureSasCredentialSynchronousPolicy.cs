@@ -58,6 +58,6 @@ namespace Azure.Core
         /// <summary>
         /// A marker class used to represent AzureSasCredential signature history on the <see cref="HttpMessage"/> property bag.
         /// </summary>
-        private class AzureSasSignatureHistory { }
+         class AzureSasSignatureHistory { }
     }
 }
