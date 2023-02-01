@@ -28,11 +28,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            var options = new AzureMonitorExporterOptions();
-            configure?.Invoke(options);
+            if (builder is IDeferredMeterProviderBuilder deferredMeterProviderBuilder)
+            {
+                return deferredMeterProviderBuilder.Configure((sp, builder) =>
+                {
+                    AddAzureMonitorMetricExporter(builder, sp.GetOptions<AzureMonitorExporterOptions>(), configure, credential);
+                });
+            }
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options, credential))
-            { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
+            return AddAzureMonitorMetricExporter(builder, new AzureMonitorExporterOptions(), configure, credential);
+        }
+
+        private static MeterProviderBuilder AddAzureMonitorMetricExporter(
+            MeterProviderBuilder builder,
+            AzureMonitorExporterOptions exporterOptions,
+            Action<AzureMonitorExporterOptions> configure,
+            TokenCredential credential)
+        {
+            configure?.Invoke(exporterOptions);
+            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions, credential))
+                                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
         }
     }
 }

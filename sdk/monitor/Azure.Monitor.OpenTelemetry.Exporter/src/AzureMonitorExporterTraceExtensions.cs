@@ -29,14 +29,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            var options = new AzureMonitorExporterOptions();
-            configure?.Invoke(options);
+            if (builder is IDeferredTracerProviderBuilder deferredTracerProviderBuilder)
+            {
+                return deferredTracerProviderBuilder.Configure((sp, builder) =>
+                {
+                    AddAzureMonitorTraceExporter(builder, sp.GetOptions<AzureMonitorExporterOptions>(), configure, credential);
+                });
+            }
+
+            return AddAzureMonitorTraceExporter(builder, new AzureMonitorExporterOptions(), configure, credential);
+        }
+
+        private static TracerProviderBuilder AddAzureMonitorTraceExporter(
+            TracerProviderBuilder builder,
+            AzureMonitorExporterOptions exporterOptions,
+            Action<AzureMonitorExporterOptions> configure,
+            TokenCredential credential)
+        {
+            configure?.Invoke(exporterOptions);
 
             // TODO: provide a way to turn off statsbeat
             // Statsbeat.InitializeAttachStatsbeat(options.ConnectionString);
 
-            // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
-            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options, credential)));
+            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential)));
         }
     }
 }
