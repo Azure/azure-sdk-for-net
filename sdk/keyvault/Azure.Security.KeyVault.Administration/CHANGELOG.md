@@ -1,14 +1,10 @@
 # Release History
 
-## 4.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 4.3.0 (2023-02-07)
 
 ### Other Changes
+
+- The default service version is now "7.4".
 
 ## 4.3.0-beta.1 (2022-11-09)
 

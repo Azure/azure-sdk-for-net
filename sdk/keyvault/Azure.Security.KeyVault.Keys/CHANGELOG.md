@@ -1,8 +1,6 @@
 # Release History
 
-## 4.5.0-beta.2 (Unreleased)
-
-### Features Added
+## 4.5.0 (2023-02-07)
 
 ### Breaking Changes
 
@@ -12,9 +10,9 @@
 - Removed `KeyCurveName.Ed25519`.
 - Removed `SignatureAlgorithm.EdDsa`.
 
-### Bugs Fixed
-
 ### Other Changes
+
+- The default service version is now "7.4".
 
 ## 4.5.0-beta.1 (2022-11-09)
 
