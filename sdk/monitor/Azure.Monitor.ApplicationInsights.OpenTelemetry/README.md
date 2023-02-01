@@ -6,6 +6,10 @@
 
 ### Install the package
 
+### Authenticate the client
+
+## Key concepts
+
 ## Examples
 
 ## Troubleshooting
