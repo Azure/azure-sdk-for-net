@@ -484,7 +484,7 @@
 #/<NotInRepo>/            @kpiteira
 
 # ServiceLabel: %Monitor %Service Attention
-/sdk/monitor/                                           @SameergMS @dadunl
+/sdk/monitor/ @SameergMS @dadunl
 
 # PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query/           @nisha-bhatia @ShivangiReja
