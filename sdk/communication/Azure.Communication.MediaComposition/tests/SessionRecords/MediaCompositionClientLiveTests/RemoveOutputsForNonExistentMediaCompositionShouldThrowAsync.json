@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mediacomposition-clientsdk-int.int.communication.azure.net/mediaCompositions/nonexistentMediaCompositionId?api-version=2022-07-16-preview",
+      "RequestUri": "https://test-media.dev.communication.azure.net/mediaCompositions/nonexistentMediaCompositionId?api-version=2022-07-16-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "70",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-40b951ce5a2d8f4c925cc34f4fbb576c-53f419123da75f48-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20221209.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "da85f568fd447060f01009dab09505ee",
+        "traceparent": "00-efe8c0a05cc91cf0eba31532e946ba3a-f41fe0bdc24cfd19-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230201.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4d7cfc212ff91899533986378c0391e2",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Dec 2022 22:15:58 GMT",
+        "x-ms-date": "Wed, 01 Feb 2023 21:19:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -25,22 +25,22 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Dec 2022 22:15:59 GMT",
-        "MS-CV": "/iFQhFGmfEybj0YoVOmOuQ.0",
+        "Date": "Wed, 01 Feb 2023 21:19:41 GMT",
+        "MS-CV": "vtJSHbnwuEaO1c4itwPmDA.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0n7OTYwAAAACUVHyz0LSNTZL5Sc0N8MptWVZSMzBFREdFMDMxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0btfaYwAAAAC0pZL\u002Bo4gOSYv9ijWNs3sBWVZSMzExMDAwMTE1MDIzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-40b951ce5a2d8f4c925cc34f4fbb576c-876c557f3846dc48-00"
+        "traceId": "00-efe8c0a05cc91cf0eba31532e946ba3a-93d923e174eb906b-00"
       }
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://mediacomposition-clientsdk-int.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "922949067"
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://test-media.dev.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "1461575419"
   }
 }

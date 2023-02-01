@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mediacomposition-clientsdk-int.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview",
+      "RequestUri": "https://test-media.dev.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "765",
         "Content-Type": "application/json",
-        "traceparent": "00-d41f0f7c7de4364f861f673b5dfe496c-186b7f448709f847-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20221209.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5175d108974522af02c5c4e95603b3a7",
+        "traceparent": "00-6645d5ef3462d9b2076b1a7b95de29cc-24d8bdfae0a81a8c-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230201.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2a0a989dc16e9e25cc5638f46e1b7a68",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Dec 2022 22:15:51 GMT",
+        "x-ms-date": "Wed, 01 Feb 2023 21:19:27 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -65,17 +65,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Dec 2022 22:15:52 GMT",
-        "MS-CV": "7KeaEVgLZk29Juy3CJH4qw.0",
+        "Date": "Wed, 01 Feb 2023 21:19:28 GMT",
+        "MS-CV": "96sHHfU31k\u002BcrIgOrWS\u002BPA.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0mLOTYwAAAAAcCr2SR1KySZXYTt/xFZWvWVZSMzBFREdFMDMxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0YNfaYwAAAAAvFQxtPtuOTbtxwRgSdQq3WVZSMzExMDAwMTE1MDIzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Call input and output must be of the same kind and referencing the same call. Call input kind is GroupCall and output kind is TeamsMeeting.\u0022"
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://mediacomposition-clientsdk-int.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1698270763"
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://test-media.dev.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "891344306"
   }
 }

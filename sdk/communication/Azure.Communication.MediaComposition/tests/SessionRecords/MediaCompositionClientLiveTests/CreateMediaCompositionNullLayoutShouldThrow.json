@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mediacomposition-clientsdk-int.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview",
+      "RequestUri": "https://test-media.dev.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "648",
         "Content-Type": "application/json",
-        "traceparent": "00-a6509d6b1d99f64eaf0a3565c5945d85-0d6c90c6cd779146-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20221209.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "942fb636481bb91cdeec83a51fc207f7",
+        "traceparent": "00-efcc84ff3f5852b7512ad099a0c808f7-07fe0ea630a9b325-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230201.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0dc66a629e80e821c881ec4f30626a7b",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Dec 2022 22:15:51 GMT",
+        "x-ms-date": "Wed, 01 Feb 2023 21:19:27 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -56,17 +56,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Dec 2022 22:15:52 GMT",
-        "MS-CV": "KCQ/TkZiqUGqzAscuWYLyA.0",
+        "Date": "Wed, 01 Feb 2023 21:19:27 GMT",
+        "MS-CV": "qqG1vJKAS0K7fhvNgzOTbQ.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0mLOTYwAAAACR6EknvzdmSr/zrBjHyM5DWVZSMzBFREdFMDMxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0X9faYwAAAACPUhZO\u002BmKvRoCBJg0nFuNiWVZSMzExMDAwMTE1MDIzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Layout is required to be defined for media composition\u0022"
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://mediacomposition-clientsdk-int.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1204521533"
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://test-media.dev.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "1280606788"
   }
 }
