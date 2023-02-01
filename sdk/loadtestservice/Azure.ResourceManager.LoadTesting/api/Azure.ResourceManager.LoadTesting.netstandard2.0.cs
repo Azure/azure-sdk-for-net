@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.LoadTesting
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.LoadTesting.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -87,41 +87,41 @@ namespace Azure.ResourceManager.LoadTesting
         public LoadTestingResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string DataPlaneUri { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyEncryptionProperties Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? ProvisioningState { get { throw null; } }
     }
 }
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class CustomerManagedKeyEncryptionProperties
+    public partial class LoadTestingCmkEncryptionProperties
     {
-        public CustomerManagedKeyEncryptionProperties() { }
-        public Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentity Identity { get { throw null; } set { } }
+        public LoadTestingCmkEncryptionProperties() { }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity Identity { get { throw null; } set { } }
         public System.Uri KeyUri { get { throw null; } set { } }
     }
-    public partial class CustomerManagedKeyIdentity
+    public partial class LoadTestingCmkIdentity
     {
-        public CustomerManagedKeyIdentity() { }
-        public Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType? IdentityType { get { throw null; } set { } }
+        public LoadTestingCmkIdentity() { }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType? IdentityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CustomerManagedKeyIdentityType : System.IEquatable<Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType>
+    public readonly partial struct LoadTestingCmkIdentityType : System.IEquatable<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CustomerManagedKeyIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType other) { throw null; }
+        public LoadTestingCmkIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType left, Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType left, Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyIdentityType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType left, Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType left, Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LoadTestingEndpointDependency
@@ -135,6 +135,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal LoadTestingEndpointDetail() { }
         public int? Port { get { throw null; } }
+    }
+    public partial class LoadTestingOutboundEnvironmentEndpoint
+    {
+        internal LoadTestingOutboundEnvironmentEndpoint() { }
+        public string Category { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency> Endpoints { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadTestingProvisioningState : System.IEquatable<Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState>
@@ -180,14 +186,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         public LoadTestingResourcePatch() { }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyEncryptionProperties Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-    }
-    public partial class OutboundEnvironmentEndpoint
-    {
-        internal OutboundEnvironmentEndpoint() { }
-        public string Category { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency> Endpoints { get { throw null; } }
     }
 }

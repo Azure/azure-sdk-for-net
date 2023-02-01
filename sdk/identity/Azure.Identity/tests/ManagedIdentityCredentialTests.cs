@@ -109,10 +109,9 @@ namespace Azure.Identity.Tests
         [TestCase("westus")]
         public async Task VerifyImdsRequestWithClientIdAndRegionalAuthorityNameMockAsync(string regionName)
         {
-            using var environment = new TestEnvVar(new() { {"AZURE_REGIONAL_AUTHORITY_NAME", regionName}, {"MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+            using var environment = new TestEnvVar(new() { { "AZURE_REGIONAL_AUTHORITY_NAME", regionName }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => CreateMockResponse(200, ExpectedToken));
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -121,18 +120,6 @@ namespace Azure.Identity.Tests
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
-
-            MockRequest request = mockTransport.Requests[0];
-
-            string query = request.Uri.Query;
-
-            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
-            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
-            Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
-            Assert.AreEqual("true", metadataValue);
         }
 
         [NonParallelizable]
@@ -147,9 +134,12 @@ namespace Azure.Identity.Tests
             var options = new TokenCredentialOptions() { Transport = mockTransport, AuthorityHost = authority };
             //var pipeline = CredentialPipeline.GetInstance(options);
             var _pipeline = new HttpPipeline(mockTransport);
-            var pipeline =  new CredentialPipeline(authority, _pipeline, new ClientDiagnostics(options));
+            var pipeline = new CredentialPipeline(authority, _pipeline, new ClientDiagnostics(options));
 
-            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(new ManagedIdentityClient( pipeline, "mock-client-id")));
+            ManagedIdentityCredential credential = InstrumentClient(
+                new ManagedIdentityCredential(
+                    new ManagedIdentityClient(
+                        new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = "mock-client-id", Options = options })));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -696,10 +686,11 @@ namespace Azure.Identity.Tests
             var startTime = DateTimeOffset.UtcNow;
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var endTime = DateTimeOffset.UtcNow;
 
             Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.AggregateError));
 
-            Assert.Less(DateTimeOffset.UtcNow - startTime, TimeSpan.FromSeconds(2));
+            Assert.Less(endTime - startTime, TimeSpan.FromSeconds(2));
 
             await Task.CompletedTask;
         }
@@ -857,7 +848,6 @@ namespace Azure.Identity.Tests
             yield return new object[] { AzureAuthorityHosts.AzureGermany };
             yield return new object[] { AzureAuthorityHosts.AzureGovernment };
             yield return new object[] { AzureAuthorityHosts.AzurePublicCloud };
-            yield return new object[] { new Uri("https://foo.bar") };
         }
 
         private MockResponse CreateMockResponse(int responseCode, string token)

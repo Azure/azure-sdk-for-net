@@ -14,14 +14,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, string roleName, string roleInstance, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new();
             foreach (var metric in batch)
             {
                 foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                 {
-                    telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, roleName, roleInstance, instrumentationKey)
+                    telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
                     {
                         Data = new MonitorBase
                         {

@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.ContainerInstance
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones");
@@ -32,6 +27,11 @@ namespace Azure.ResourceManager.ContainerInstance
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -127,14 +127,34 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                writer.WritePropertyName("extensions");
+                writer.WriteStartArray();
+                foreach (var item in Extensions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ConfidentialComputeProperties))
+            {
+                writer.WritePropertyName("confidentialComputeProperties");
+                writer.WriteObjectValue(ConfidentialComputeProperties);
+            }
+            if (Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority");
+                writer.WriteStringValue(Priority.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ContainerGroupData DeserializeContainerGroupData(JsonElement element)
         {
-            Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -155,18 +175,11 @@ namespace Azure.ResourceManager.ContainerInstance
             Optional<ContainerGroupSku> sku = default;
             Optional<ContainerGroupEncryptionProperties> encryptionProperties = default;
             Optional<IList<InitContainerDefinitionContent>> initContainers = default;
+            Optional<IList<DeploymentExtensionSpec>> extensions = default;
+            Optional<ConfidentialComputeProperties> confidentialComputeProperties = default;
+            Optional<ContainerGroupPriority> priority = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
                 if (property.NameEquals("zones"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -180,6 +193,16 @@ namespace Azure.ResourceManager.ContainerInstance
                         array.Add(item.GetString());
                     }
                     zones = array;
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -386,11 +409,46 @@ namespace Azure.ResourceManager.ContainerInstance
                             initContainers = array;
                             continue;
                         }
+                        if (property0.NameEquals("extensions"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<DeploymentExtensionSpec> array = new List<DeploymentExtensionSpec>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DeploymentExtensionSpec.DeserializeDeploymentExtensionSpec(item));
+                            }
+                            extensions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("confidentialComputeProperties"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("priority"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            priority = new ContainerGroupPriority(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers), Optional.ToList(zones));
+            return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers), Optional.ToList(extensions), confidentialComputeProperties.Value, Optional.ToNullable(priority));
         }
     }
 }

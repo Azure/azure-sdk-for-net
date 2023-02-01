@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             this.factory = factory;
         }
 
-        [Theory(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/33403")]
+        [Theory]
         [InlineData(HttpStatusCode.OK)]
         [InlineData(HttpStatusCode.BadRequest)]
         public async Task VerifyRequest(HttpStatusCode httpStatusCode)

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-01-27)
+
+### Features Added
+
+- Added support for Fade In/Out On Filters class for StandardEncoderPreset
 
 ## 1.0.0 (2022-09-26)
 
@@ -24,7 +30,7 @@ This release is the first stable release of the Media Management client library.
 - Renamed `ContentKeyPolicyPlayReadySecurityLevel` to `PlayReadySecurityLevel`.
 - Renamed `LiveEvent` to `MediaLiveEvent`.
 - Renamed `LiveOutput` to `MediaLiveOutput`.
-- Removed operations releated methods that have been supported by core lib.
+- Removed operations related methods that have been supported by core lib.
 - Other renames.
 
 ## 1.0.0-beta.3 (2022-09-14)
@@ -39,7 +45,7 @@ This release is the first stable release of the Media Management client library.
 - Renamed `ContentKeyPolicyPreference` to `ContentKeyPolicyOption`.
 - Renamed `GetContainerSasContent` to `GetStorageContainersContent`.
 - Renamed `MediaPreset` to `MediaTransformPreset`.
-- Removed all get LRO operation status / result methods that is nativly supported by the LRO object ArmOperation.
+- Removed all get LRO operation status / result methods that is natively supported by the LRO object ArmOperation.
 
 ## 1.0.0-beta.2 (2022-08-29)
 
@@ -49,7 +55,7 @@ Polishing since last public beta release:
 - Prepended `Media` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

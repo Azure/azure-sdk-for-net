@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Media.Models
         private const string H264SingleBitrate1080PValue = "H264SingleBitrate1080p";
         private const string AdaptiveStreamingValue = "AdaptiveStreaming";
         private const string AacGoodQualityAudioValue = "AACGoodQualityAudio";
+        private const string DDGoodQualityAudioValue = "DDGoodQualityAudio";
         private const string ContentAwareEncodingExperimentalValue = "ContentAwareEncodingExperimental";
         private const string ContentAwareEncodingValue = "ContentAwareEncoding";
         private const string CopyAllBitrateNonInterleavedValue = "CopyAllBitrateNonInterleaved";
@@ -47,8 +48,10 @@ namespace Azure.ResourceManager.Media.Models
         public static EncoderNamedPreset H264SingleBitrate1080P { get; } = new EncoderNamedPreset(H264SingleBitrate1080PValue);
         /// <summary> Produces a set of GOP aligned MP4 files with H.264 video and stereo AAC audio. Auto-generates a bitrate ladder based on the input resolution, bitrate and frame rate. The auto-generated preset will never exceed the input resolution. For example, if the input is 720p, output will remain 720p at best. </summary>
         public static EncoderNamedPreset AdaptiveStreaming { get; } = new EncoderNamedPreset(AdaptiveStreamingValue);
-        /// <summary> Produces a single MP4 file containing only stereo audio encoded at 192 kbps. </summary>
+        /// <summary> Produces a single MP4 file containing only AAC stereo audio encoded at 192 kbps. </summary>
         public static EncoderNamedPreset AacGoodQualityAudio { get; } = new EncoderNamedPreset(AacGoodQualityAudioValue);
+        /// <summary> Produces a single MP4 file containing only DD(Digital Dolby) stereo audio encoded at 192 kbps. </summary>
+        public static EncoderNamedPreset DDGoodQualityAudio { get; } = new EncoderNamedPreset(DDGoodQualityAudioValue);
         /// <summary> Exposes an experimental preset for content-aware encoding. Given any input content, the service attempts to automatically determine the optimal number of layers, appropriate bitrate and resolution settings for delivery by adaptive streaming. The underlying algorithms will continue to evolve over time. The output will contain MP4 files with video and audio interleaved. </summary>
         public static EncoderNamedPreset ContentAwareEncodingExperimental { get; } = new EncoderNamedPreset(ContentAwareEncodingExperimentalValue);
         /// <summary> Produces a set of GOP-aligned MP4s by using content-aware encoding. Given any input content, the service performs an initial lightweight analysis of the input content, and uses the results to determine the optimal number of layers, appropriate bitrate and resolution settings for delivery by adaptive streaming. This preset is particularly effective for low and medium complexity videos, where the output files will be at lower bitrates but at a quality that still delivers a good experience to viewers. The output will contain MP4 files with video and audio interleaved. </summary>

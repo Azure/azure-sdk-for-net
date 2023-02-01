@@ -161,6 +161,7 @@ trigger:
     - sdk/websites/Azure.ResourceManager.AppService
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/impact/Azure.ResourceManager.Impact
 
 pr:
   branches:
@@ -324,6 +325,7 @@ pr:
     - sdk/websites/Azure.ResourceManager.AppService
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/impact/Azure.ResourceManager.Impact
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -4,11 +4,21 @@
 
 ### Features Added
 
+* Added support for parsing AADAudience from ConnectionString ([#33593](https://github.com/Azure/azure-sdk-for-net/pull/33593))
+* Activity Events (SpanEvents), except those representing Exception, will be exported to TraceTelemetry table([#32980](https://github.com/Azure/azure-sdk-for-net/pull/32980))
+Exceptions reported via ActivityEvents will continue to be exported to ExceptionTelemetry table
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
+* 4xx errors on Request telemetry will now be reported as failures ([#33617](https://github.com/Azure/azure-sdk-for-net/pull/33617))
+
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#33471](https://github.com/Azure/azure-sdk-for-net/pull/33471))
+  - OpenTelemetry 1.4.0-rc.2
 
 ## 1.0.0-beta.6 (2023-01-10)
 

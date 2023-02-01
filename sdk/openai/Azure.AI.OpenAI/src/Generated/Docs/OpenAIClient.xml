@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetEmbeddingsAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetEmbeddingsAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var data = new {
+    input = new {},
+};
+
+Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+]]></code>
+This sample shows how to call GetEmbeddingsAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var data = new {
+    user = "<user>",
+    input_type = "<input_type>",
+    model = "<model>",
+    input = new {},
+};
+
+Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>EmbeddingsOptions</c>:
+<code>{
+  user: string, # Optional.
+  input_type: string, # Optional.
+  model: string, # Optional.
+  input: Union, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Embeddings</c>:
+<code>{
+  object: Literal, # Required.
+  data: [
+    {
+      object: Literal, # Required.
+      embedding: [number], # Required.
+      index: number, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetEmbeddings(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetEmbeddings with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var data = new {
+    input = new {},
+};
+
+Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+]]></code>
+This sample shows how to call GetEmbeddings with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var data = new {
+    user = "<user>",
+    input_type = "<input_type>",
+    model = "<model>",
+    input = new {},
+};
+
+Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>EmbeddingsOptions</c>:
+<code>{
+  user: string, # Optional.
+  input_type: string, # Optional.
+  model: string, # Optional.
+  input: Union, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Embeddings</c>:
+<code>{
+  object: Literal, # Required.
+  data: [
+    {
+      object: Literal, # Required.
+      embedding: [number], # Required.
+      index: number, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetCompletionsAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetCompletionsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var data = new {};
+
+Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+]]></code>
+This sample shows how to call GetCompletionsAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var data = new {
+    prompt = new[] {
+        "<String>"
+    },
+    max_tokens = 1234,
+    temperature = 123.45f,
+    top_p = 123.45f,
+    logit_bias = new {
+        key = 1234,
+    },
+    user = "<user>",
+    n = 1234,
+    logprobs = 1234,
+    model = "<model>",
+    echo = true,
+    stop = new[] {
+        "<String>"
+    },
+    completion_config = "<completion_config>",
+    cache_level = 1234,
+    presence_penalty = 123.45f,
+    frequency_penalty = 123.45f,
+    best_of = 1234,
+};
+
+Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("tokens")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("token_logprobs")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>CompletionsOptions</c>:
+<code>{
+  prompt: [string], # Optional.
+  max_tokens: number, # Optional.
+  temperature: number, # Optional.
+  top_p: number, # Optional.
+  logit_bias: Dictionary&lt;string, number&gt;, # Optional.
+  user: string, # Optional.
+  n: number, # Optional.
+  logprobs: number, # Optional.
+  model: string, # Optional.
+  echo: boolean, # Optional.
+  stop: [string], # Optional.
+  completion_config: string, # Optional.
+  cache_level: number, # Optional.
+  presence_penalty: number, # Optional.
+  frequency_penalty: number, # Optional.
+  best_of: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Completions</c>:
+<code>{
+  id: string, # Optional.
+  object: Literal, # Required.
+  created: number, # Optional.
+  model: string, # Optional.
+  choices: [
+    {
+      text: string, # Optional.
+      index: number, # Optional.
+      logprobs: {
+        tokens: [string], # Optional.
+        token_logprobs: [number], # Optional.
+        top_logprobs: [Dictionary&lt;string, number&gt;], # Optional.
+        text_offset: [number], # Optional.
+      }, # Optional.
+      finish_reason: string, # Optional.
+    }
+  ], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetCompletions(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetCompletions with required parameters and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var data = new {};
+
+Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+]]></code>
+This sample shows how to call GetCompletions with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new OpenAIClient(endpoint, credential);
+
+var data = new {
+    prompt = new[] {
+        "<String>"
+    },
+    max_tokens = 1234,
+    temperature = 123.45f,
+    top_p = 123.45f,
+    logit_bias = new {
+        key = 1234,
+    },
+    user = "<user>",
+    n = 1234,
+    logprobs = 1234,
+    model = "<model>",
+    echo = true,
+    stop = new[] {
+        "<String>"
+    },
+    completion_config = "<completion_config>",
+    cache_level = 1234,
+    presence_penalty = 123.45f,
+    frequency_penalty = 123.45f,
+    best_of = 1234,
+};
+
+Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("tokens")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("token_logprobs")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>CompletionsOptions</c>:
+<code>{
+  prompt: [string], # Optional.
+  max_tokens: number, # Optional.
+  temperature: number, # Optional.
+  top_p: number, # Optional.
+  logit_bias: Dictionary&lt;string, number&gt;, # Optional.
+  user: string, # Optional.
+  n: number, # Optional.
+  logprobs: number, # Optional.
+  model: string, # Optional.
+  echo: boolean, # Optional.
+  stop: [string], # Optional.
+  completion_config: string, # Optional.
+  cache_level: number, # Optional.
+  presence_penalty: number, # Optional.
+  frequency_penalty: number, # Optional.
+  best_of: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Completions</c>:
+<code>{
+  id: string, # Optional.
+  object: Literal, # Required.
+  created: number, # Optional.
+  model: string, # Optional.
+  choices: [
+    {
+      text: string, # Optional.
+      index: number, # Optional.
+      logprobs: {
+        tokens: [string], # Optional.
+        token_logprobs: [number], # Optional.
+        top_logprobs: [Dictionary&lt;string, number&gt;], # Optional.
+        text_offset: [number], # Optional.
+      }, # Optional.
+      finish_reason: string, # Optional.
+    }
+  ], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
