@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The SubscriptionGetServiceAlertSummaryOptions. </summary>
-    public partial class SubscriptionGetServiceAlertSummaryOptions
+    /// <summary> The SubscriptionResourceGetServiceAlertSummaryOptions. </summary>
+    public partial class SubscriptionResourceGetServiceAlertSummaryOptions
     {
-        /// <summary> Initializes a new instance of SubscriptionGetServiceAlertSummaryOptions. </summary>
+        /// <summary> Initializes a new instance of SubscriptionResourceGetServiceAlertSummaryOptions. </summary>
         /// <param name="groupby"> This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate. </param>
-        public SubscriptionGetServiceAlertSummaryOptions(AlertsSummaryGroupByField groupby)
+        public SubscriptionResourceGetServiceAlertSummaryOptions(AlertsSummaryGroupByField groupby)
         {
             Groupby = groupby;
         }

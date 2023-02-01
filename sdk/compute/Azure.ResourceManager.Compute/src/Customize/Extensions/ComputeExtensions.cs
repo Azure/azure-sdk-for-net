@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionGetVirtualMachineImagesOptions options = new SubscriptionGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
+            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
             options.Expand = expand;
             options.Top = top;
             options.Orderby = orderby;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionGetVirtualMachineImagesOptions options = new SubscriptionGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
+            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
             options.Expand = expand;
             options.Top = top;
             options.Orderby = orderby;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            SubscriptionGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
+            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
 
             return await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            SubscriptionGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
+            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
 
             return subscriptionResource.GetVirtualMachineImagesEdgeZone(options, cancellationToken);
         }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
+            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
             options.Expand = expand;
             options.Top = top;
             options.Orderby = orderby;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
+            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
             options.Expand = expand;
             options.Top = top;
             options.Orderby = orderby;

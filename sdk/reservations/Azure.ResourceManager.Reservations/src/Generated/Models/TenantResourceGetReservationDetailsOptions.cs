@@ -5,13 +5,13 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.BillingBenefits.Models
+namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The TenantGetBillingBenefitsSavingsPlansOptions. </summary>
-    public partial class TenantGetBillingBenefitsSavingsPlansOptions
+    /// <summary> The TenantResourceGetReservationDetailsOptions. </summary>
+    public partial class TenantResourceGetReservationDetailsOptions
     {
-        /// <summary> Initializes a new instance of TenantGetBillingBenefitsSavingsPlansOptions. </summary>
-        public TenantGetBillingBenefitsSavingsPlansOptions()
+        /// <summary> Initializes a new instance of TenantResourceGetReservationDetailsOptions. </summary>
+        public TenantResourceGetReservationDetailsOptions()
         {
         }
 
@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public string Filter { get; set; } = null;
 
         /// <summary> May be used to sort order by reservation properties. </summary>
-        public string OrderBy { get; set; } = null;
+        public string Orderby { get; set; } = null;
 
-        /// <summary> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </summary>
+        /// <summary> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </summary>
         public string RefreshSummary { get; set; } = null;
 
-        /// <summary> The number of savings plans to skip from the list before returning results. </summary>
-        public float? SkipToken { get; set; } = null;
+        /// <summary> The number of reservations to skip from the list before returning results. </summary>
+        public float? Skiptoken { get; set; } = null;
 
         /// <summary> The selected provisioning state. </summary>
         public string SelectedState { get; set; } = null;
 
-        /// <summary> To number of savings plans to return. </summary>
+        /// <summary> To number of reservations to return. </summary>
         public float? Take { get; set; } = null;
     }
 }

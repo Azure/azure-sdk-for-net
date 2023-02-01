@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(SubscriptionGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceAlertSummary");
             scope.Start();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceAlertSummary> GetServiceAlertSummary(SubscriptionGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertSummary> GetServiceAlertSummary(SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceAlertSummary");
             scope.Start();

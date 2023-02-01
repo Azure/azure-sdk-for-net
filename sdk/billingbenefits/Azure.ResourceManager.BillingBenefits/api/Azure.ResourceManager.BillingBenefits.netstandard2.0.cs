@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.BillingBenefits
         public static Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderResource GetBillingBenefitsSavingsPlanOrderResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource GetBillingBenefitsSavingsPlanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.TenantGetBillingBenefitsSavingsPlansOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.TenantGetBillingBenefitsSavingsPlansOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.TenantResourceGetBillingBenefitsSavingsPlansOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.TenantResourceGetBillingBenefitsSavingsPlansOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult> ValidatePurchase(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult> ValidatePurchaseAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -513,9 +513,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public string Reason { get { throw null; } }
         public string ReasonCode { get { throw null; } }
     }
-    public partial class TenantGetBillingBenefitsSavingsPlansOptions
+    public partial class TenantResourceGetBillingBenefitsSavingsPlansOptions
     {
-        public TenantGetBillingBenefitsSavingsPlansOptions() { }
+        public TenantResourceGetBillingBenefitsSavingsPlansOptions() { }
         public string Filter { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
         public string RefreshSummary { get { throw null; } set { } }

@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImages", "", null, cancellationToken);
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImages", "", null, cancellationToken);
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(SubscriptionGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(SubscriptionGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(SubscriptionGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(SubscriptionGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
