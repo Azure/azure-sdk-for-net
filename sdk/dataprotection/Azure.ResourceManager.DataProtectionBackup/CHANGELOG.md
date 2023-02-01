@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (2023-01-04)
+## 1.1.0 (2023-02-03)
 
 ### Features Added
 
@@ -8,10 +8,6 @@
 - Added support for Cross Subscription Restore.
 - Added support for AKS workload.
 - Added support for Soft Delete.
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
