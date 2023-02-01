@@ -33,7 +33,9 @@ namespace Azure.Core
             if (!query.Contains(signature))
             {
                 // Get the signature history so we know which string to replace in the query if it was previously set.
-                if (message.TryGetProperty(typeof(AzureSasSignatureHistory), out object? previousSignature) && previousSignature != null & query.Contains((string)previousSignature!))
+                if (message.TryGetProperty(typeof(AzureSasSignatureHistory), out object? previousSignature) &&
+                    previousSignature != null &&
+                    query.Contains((string)previousSignature!))
                 {
                     query = query.Replace((string)previousSignature!, signature);
                 }
@@ -50,5 +52,10 @@ namespace Azure.Core
                 base.OnSendingRequest(message);
             }
         }
+
+        /// <summary>
+        /// A marker class used to represent AzureSasCredential signature history on the <see cref="HttpMessage"/> property bag.
+        /// </summary>
+        internal class AzureSasSignatureHistory { }
     }
 }
