@@ -5,15 +5,15 @@ The following shows examples of how to use the basic functionality of the `Schem
 Each Event Hubs Namespace can only accept one format of schemas.
 
 - [Registering and retrieving Avro, Json, and custom schemas (preview)](#registering-and-retrieving-avro-json-and-custom-schemas-preview)
-    - [Register a schema Avro](#register-a-schema-avro)
-    - [Retrieve a schema Avro](#retrieve-a-schema-avro)
-    - [Register a schema Json](#register-a-schema-json)
-    - [Retrieve a schema Json](#retrieve-a-schema-json)
-    - [Register a schema custom](#register-a-schema-custom)
-    - [Retrieve a schema custom](#retrieve-a-schema-custom)
+    - [Register an Avro schema](#register-an-avro-schema)
+    - [Retrieve an Avro schema](#retrieve-an-avro-schema)
+    - [Register a Json schema](#register-a-json-schema)
+    - [Retrieve a Json schema](#retrieve-a-json-schema)
+    - [Register a custom schema](#register-a-custom-schema)
+    - [Retrieve a custom schema](#retrieve-a-custom-schema)
   - [Contributing](#contributing)
 
-### Register a schema Avro
+### Register an Avro schema
 
 Register an Avro schema to be stored in the Azure Schema Registry.
 
@@ -35,7 +35,7 @@ string definition = @"
 Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
 ```
 
-### Retrieve a schema Avro
+### Retrieve an Avro schema
 
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
@@ -44,7 +44,7 @@ SchemaRegistrySchema schema = client.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
-### Register a schema Json
+### Register a Json schema
 
 Register a Json schema to be stored in the Azure Schema Registry.
 
@@ -75,7 +75,7 @@ required: [""name"", ""favoriteNumber""],
 Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
 ```
 
-### Retrieve a schema Json
+### Retrieve a Json schema
 
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
@@ -84,7 +84,7 @@ SchemaRegistrySchema schema = client.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
-### Register a schema custom
+### Register a custom schema
 
 Register a custom schema to be stored in the Azure Schema Registry.
 
@@ -102,7 +102,7 @@ string definition = @"
 Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
 ```
 
-### Retrieve a schema custom
+### Retrieve a custom schema
 
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
