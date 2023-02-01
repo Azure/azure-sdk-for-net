@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    public partial class CompletionsLogProbsModel
+    public partial class CompletionsLogProbs
     {
-        internal static CompletionsLogProbsModel DeserializeCompletionsLogProbsModel(JsonElement element)
+        internal static CompletionsLogProbs DeserializeCompletionsLogProbs(JsonElement element)
         {
             Optional<IReadOnlyList<string>> tokens = default;
             Optional<IReadOnlyList<float>> tokenLogprobs = default;
@@ -88,15 +88,15 @@ namespace Azure.AI.OpenAI.Models
                     continue;
                 }
             }
-            return new CompletionsLogProbsModel(Optional.ToList(tokens), Optional.ToList(tokenLogprobs), Optional.ToList(topLogprobs), Optional.ToList(textOffset));
+            return new CompletionsLogProbs(Optional.ToList(tokens), Optional.ToList(tokenLogprobs), Optional.ToList(topLogprobs), Optional.ToList(textOffset));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CompletionsLogProbsModel FromResponse(Response response)
+        internal static CompletionsLogProbs FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCompletionsLogProbsModel(document.RootElement);
+            return DeserializeCompletionsLogProbs(document.RootElement);
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Azure.AI.OpenAI.Models
     public partial class Embeddings
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
-        /// <param name="object"></param>
-        /// <param name="data"></param>
-        /// <param name="usage"></param>
+        /// <param name="object"> Type of the data field. </param>
+        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
+        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="object"/>, <paramref name="data"/> or <paramref name="usage"/> is null. </exception>
         internal Embeddings(string @object, IEnumerable<EmbeddingItem> data, EmbeddingsUsage usage)
         {
@@ -32,10 +32,10 @@ namespace Azure.AI.OpenAI.Models
         }
 
         /// <summary> Initializes a new instance of Embeddings. </summary>
-        /// <param name="object"></param>
-        /// <param name="data"></param>
-        /// <param name="model"></param>
-        /// <param name="usage"></param>
+        /// <param name="object"> Type of the data field. </param>
+        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
+        /// <param name="model"> ID of the model to use. </param>
+        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
         internal Embeddings(string @object, IReadOnlyList<EmbeddingItem> data, string model, EmbeddingsUsage usage)
         {
             Object = @object;
@@ -44,13 +44,13 @@ namespace Azure.AI.OpenAI.Models
             Usage = usage;
         }
 
-        /// <summary> Gets the object. </summary>
+        /// <summary> Type of the data field. </summary>
         public string Object { get; }
-        /// <summary> Gets the data. </summary>
+        /// <summary> Embedding values for the prompts submitted in the request. </summary>
         public IReadOnlyList<EmbeddingItem> Data { get; }
-        /// <summary> Gets the model. </summary>
+        /// <summary> ID of the model to use. </summary>
         public string Model { get; }
-        /// <summary> Gets the usage. </summary>
+        /// <summary> Usage counts for tokens input using the embeddings API. </summary>
         public EmbeddingsUsage Usage { get; }
     }
 }

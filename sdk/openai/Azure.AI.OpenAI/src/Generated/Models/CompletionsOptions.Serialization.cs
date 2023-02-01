@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
@@ -182,6 +184,198 @@ namespace Azure.AI.OpenAI.Models
                 }
             }
             writer.WriteEndObject();
+        }
+
+        internal static CompletionsOptions DeserializeCompletionsOptions(JsonElement element)
+        {
+            Optional<IList<string>> prompt = default;
+            Optional<int?> maxTokens = default;
+            Optional<float?> temperature = default;
+            Optional<float?> topP = default;
+            Optional<IDictionary<string, int>> logitBias = default;
+            Optional<string> user = default;
+            Optional<int?> n = default;
+            Optional<int?> logprobs = default;
+            Optional<string> model = default;
+            Optional<bool?> echo = default;
+            Optional<IList<string>> stop = default;
+            Optional<string> completionConfig = default;
+            Optional<int?> cacheLevel = default;
+            Optional<float?> presencePenalty = default;
+            Optional<float?> frequencyPenalty = default;
+            Optional<int?> bestOf = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("prompt"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    prompt = array;
+                    continue;
+                }
+                if (property.NameEquals("max_tokens"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxTokens = null;
+                        continue;
+                    }
+                    maxTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("temperature"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        temperature = null;
+                        continue;
+                    }
+                    temperature = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("top_p"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topP = null;
+                        continue;
+                    }
+                    topP = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("logit_bias"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    logitBias = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("user"))
+                {
+                    user = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("n"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        n = null;
+                        continue;
+                    }
+                    n = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("logprobs"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("model"))
+                {
+                    model = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("echo"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        echo = null;
+                        continue;
+                    }
+                    echo = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stop"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    stop = array;
+                    continue;
+                }
+                if (property.NameEquals("completion_config"))
+                {
+                    completionConfig = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("cache_level"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        cacheLevel = null;
+                        continue;
+                    }
+                    cacheLevel = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("presence_penalty"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        presencePenalty = null;
+                        continue;
+                    }
+                    presencePenalty = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("frequency_penalty"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        frequencyPenalty = null;
+                        continue;
+                    }
+                    frequencyPenalty = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("best_of"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        bestOf = null;
+                        continue;
+                    }
+                    bestOf = property.Value.GetInt32();
+                    continue;
+                }
+            }
+            return new CompletionsOptions(Optional.ToList(prompt), Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToNullable(logprobs), model, Optional.ToNullable(echo), Optional.ToList(stop), completionConfig, Optional.ToNullable(cacheLevel), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CompletionsOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCompletionsOptions(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
