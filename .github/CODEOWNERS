@@ -485,7 +485,6 @@
 
 # ServiceLabel: %Monitor %Service Attention
 /sdk/monitor/                                           @SameergMS @dadunl
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/*.yml @SameergMS @dadunl
 
 # PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query/           @nisha-bhatia @ShivangiReja
@@ -504,6 +503,7 @@
 # PRLabel: %Monitor - Exporter
 # ServiceLabel: %Monitor - Exporter %Service Attention
 /sdk/monitor/Azure.Monitor.OpenTelemetry.*/     @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/*.yml @SameergMS @dadunl
 
 # ServiceLabel: %Monitor - Metrics %Service Attention
 #/<NotInRepo>/            @AzMonEssential
