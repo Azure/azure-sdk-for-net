@@ -21,7 +21,6 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
-            var context = new TokenRequestContext(new[] { Scope });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
@@ -30,7 +29,17 @@ namespace Azure.Identity.Tests
             );
         }
 
-        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var options = new ClientCertificateCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value};
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            return InstrumentClient(
+                new ClientCertificateCredential(TenantId, ClientId, mockCert, options, pipeline, null)
+            );
+        }
 
         [Test]
         public void VerifyCtorParametersValidation()
