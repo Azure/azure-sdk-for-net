@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
-        internal ProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, DataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, CreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName)
+        /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
+        internal ProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, DataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, CreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod)
         {
             ProtectedItemType = protectedItemType;
             BackupManagementType = backupManagementType;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
             IsArchiveEnabled = isArchiveEnabled;
             PolicyName = policyName;
+            SoftDeleteRetentionPeriod = softDeleteRetentionPeriod;
         }
 
         /// <summary> backup item type. </summary>
@@ -97,5 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? IsArchiveEnabled { get; set; }
         /// <summary> Name of the policy used for protection. </summary>
         public string PolicyName { get; set; }
+        /// <summary> Soft delete retention period in days. </summary>
+        public int? SoftDeleteRetentionPeriod { get; set; }
     }
 }
