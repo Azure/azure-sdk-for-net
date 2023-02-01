@@ -538,38 +538,117 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void HandlesReferenceSemantics()
+        public void ChangeToDocumentAppearsInElementReference()
         {
+            // This tests reference semantics.
+
             string json = @"[ { ""Foo"" : 4 } ]";
 
-            var jd = MutableJsonDocument.Parse(json);
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            // a's path points to "0"
-            var a = jd.RootElement.GetIndexElement(0);
+            // a is a reference to the 0th element; a's path is "0"
+            MutableJsonElement a = mdoc.RootElement.GetIndexElement(0);
 
             // resets json to equivalent of "[ 5 ]"
-            jd.RootElement.GetIndexElement(0).Set(5);
+            mdoc.RootElement.GetIndexElement(0).Set(5);
 
-            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(0).GetInt32());
 
-            // a's path points to "0" so a.GetInt32() should return 5.
+            // a's path is "0" so a.GetInt32() should return 5.
             Assert.AreEqual(5, a.GetInt32());
 
             // The following should throw because json[0] is now 5 and not an object.
             Assert.Throws<InvalidOperationException>(() => a.GetProperty("Foo").Set(6));
 
-            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(0).GetInt32());
 
-            // Setting json[0] back to a makes it 5 again.
-            jd.RootElement.GetIndexElement(0).Set(a);
+            // Setting json[0] back to 'a' makes it 5 again.
+            mdoc.RootElement.GetIndexElement(0).Set(a);
 
-            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(0).GetInt32());
 
-            // 3. Type round-trips correctly.
-            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
+            // Type round-trips correctly.
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
 
             Assert.AreEqual(5, doc.RootElement[0].GetInt32());
             Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+        }
+
+        [Test]
+        public void ChangeToChildDocumentAppearsInParentDocument()
+        {
+            // This tests reference semantics.
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse("{}");
+            MutableJsonDocument child = MutableJsonDocument.Parse("{}");
+
+            mdoc.RootElement.SetProperty("A", child);
+
+            child.RootElement.SetProperty("B", 2);
+
+            MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
+
+            Assert.AreEqual(
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(
+                    @"{ ""A"" : { ""B"" : 2 } }"),
+                jsonString);
+        }
+
+        [Test]
+        public void ChangeToAddedElementReferenceAppearsInDocument()
+        {
+            // This tests reference semantics.
+
+            string json = @"[ { ""Foo"" : {} } ]";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // a is a reference to the 0th element; a's path is "0"
+            MutableJsonElement a = mdoc.RootElement.GetIndexElement(0);
+
+            a.GetProperty("Foo").SetProperty("Bar", 5);
+
+            Assert.AreEqual(5, a.GetProperty("Foo").GetProperty("Bar").GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("Bar").GetInt32());
+
+            MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
+
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(
+                @"[ {
+                    ""Foo"" : {
+                        ""Bar"" : 5
+                    }
+                } ]"), jsonString);
+        }
+
+        [Test]
+        public void ChangeToElementReferenceAppearsInDocument()
+        {
+            // This tests reference semantics.
+
+            string json = @"[ { ""Foo"" : 4 } ]";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // a is a reference to the 0th element; a's path is "0"
+            MutableJsonElement a = mdoc.RootElement.GetIndexElement(0);
+
+            a.GetProperty("Foo").Set(new
+            {
+                Bar = 5
+            });
+
+            Assert.AreEqual(5, a.GetProperty("Foo").GetProperty("Bar").GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("Bar").GetInt32());
+
+            MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
+
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(
+                @"[ {
+                    ""Foo"" : {
+                        ""Bar"" : 5
+                    }
+                } ]"), jsonString);
         }
 
         [Test]

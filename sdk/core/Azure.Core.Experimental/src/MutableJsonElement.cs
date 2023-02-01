@@ -296,6 +296,10 @@ namespace Azure.Core.Dynamic
 
             int index = Changes.AddChange(_path, newElement, true);
 
+            // Make sure the object is stored to ensure reference semantics
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, true);
+
             // Element has changed, return the new valid one.
             return new MutableJsonElement(_root, newElement, _path, index);
         }
@@ -456,6 +460,12 @@ namespace Azure.Core.Dynamic
             }
 
             Changes.AddChange(_path, element, true);
+        }
+
+        internal void WriteTo(Utf8JsonWriter writer)
+        {
+            Utf8JsonReader reader = GetReaderForElement(_element);
+            _root.WriteElement(_path, _highWaterMark, ref reader, writer);
         }
 
         /// <inheritdoc/>

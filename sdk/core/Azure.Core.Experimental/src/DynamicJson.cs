@@ -5,12 +5,14 @@ using System;
 using System.Collections;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
+    [JsonConverter(typeof(JsonConverter))]
     public partial class DynamicJson
     {
         // TODO: Decide whether or not to support equality
@@ -90,6 +92,20 @@ namespace Azure.Core.Dynamic
         public override string ToString()
         {
             return _element.ToString();
+        }
+
+        private class JsonConverter : JsonConverter<DynamicJson>
+        {
+            public override DynamicJson Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return new DynamicJson(new MutableJsonDocument(document).RootElement);
+            }
+
+            public override void Write(Utf8JsonWriter writer, DynamicJson value, JsonSerializerOptions options)
+            {
+                value._element.WriteTo(writer);
+            }
         }
     }
 }
