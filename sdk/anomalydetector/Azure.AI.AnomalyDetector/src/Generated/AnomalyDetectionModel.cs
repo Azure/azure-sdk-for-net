@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
@@ -14,15 +13,10 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyDetectionModel
     {
         /// <summary> Initializes a new instance of AnomalyDetectionModel. </summary>
-        /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        internal AnomalyDetectionModel(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
+        internal AnomalyDetectionModel(DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-
-            ModelId = modelId;
             CreatedTime = createdTime;
             LastUpdatedTime = lastUpdatedTime;
         }
