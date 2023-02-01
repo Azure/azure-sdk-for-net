@@ -7,7 +7,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a Virtual Machine Update. </summary>
     public partial class VirtualMachinePatch
     {
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
