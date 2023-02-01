@@ -16,8 +16,14 @@ namespace Azure.AI.AnomalyDetector
     public partial class UnivariateChangePointDetectionOptions
     {
         /// <summary> Initializes a new instance of UnivariateChangePointDetectionOptions. </summary>
-        /// <param name="series"></param>
-        /// <param name="granularity"></param>
+        /// <param name="series">
+        /// Time series data points. Points should be sorted by timestamp in ascending
+        /// order to match the change point detection result.
+        /// </param>
+        /// <param name="granularity">
+        /// Can only be one of yearly, monthly, weekly, daily, hourly, minutely or
+        /// secondly. Granularity is used for verify whether input series is valid.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public UnivariateChangePointDetectionOptions(IEnumerable<TimeSeriesPoint> series, TimeGranularity granularity)
         {
@@ -27,17 +33,37 @@ namespace Azure.AI.AnomalyDetector
             Granularity = granularity;
         }
 
-        /// <summary> Gets the series. </summary>
+        /// <summary>
+        /// Time series data points. Points should be sorted by timestamp in ascending
+        /// order to match the change point detection result.
+        /// </summary>
         public IList<TimeSeriesPoint> Series { get; }
-        /// <summary> Gets the granularity. </summary>
+        /// <summary>
+        /// Can only be one of yearly, monthly, weekly, daily, hourly, minutely or
+        /// secondly. Granularity is used for verify whether input series is valid.
+        /// </summary>
         public TimeGranularity Granularity { get; }
-        /// <summary> Gets or sets the custom interval. </summary>
+        /// <summary>
+        /// Custom Interval is used to set non-standard time interval, for example, if the
+        /// series is 5 minutes, request can be set as {"granularity":"minutely",
+        /// "customInterval":5}.
+        /// </summary>
         public int? CustomInterval { get; set; }
-        /// <summary> Gets or sets the period. </summary>
+        /// <summary>
+        /// Optional argument, periodic value of a time series. If the value is null or
+        /// does not present, the API will determine the period automatically.
+        /// </summary>
         public int? Period { get; set; }
-        /// <summary> Gets or sets the stable trend window. </summary>
+        /// <summary>
+        /// Optional argument, advanced model parameter, a default stableTrendWindow will
+        /// be used in detection.
+        /// </summary>
         public int? StableTrendWindow { get; set; }
-        /// <summary> Gets or sets the threshold. </summary>
+        /// <summary>
+        /// Optional argument, advanced model parameter, between 0.0-1.0, the lower the
+        /// value is, the larger the trend error will be which means less change point will
+        /// be accepted.
+        /// </summary>
         public float? Threshold { get; set; }
     }
 }

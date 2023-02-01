@@ -16,8 +16,11 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateBatchDetectionResultSummary
     {
         /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
-        /// <param name="status"></param>
-        /// <param name="setupInfo"></param>
+        /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
+        /// <param name="setupInfo">
+        /// Detection request for batch inference. This is an asynchronous inference which
+        /// will need another API to get detection results.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="setupInfo"/> is null. </exception>
         internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, MultivariateBatchDetectionOptions setupInfo)
         {
@@ -30,10 +33,13 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
-        /// <param name="status"></param>
-        /// <param name="errors"></param>
-        /// <param name="variableStates"></param>
-        /// <param name="setupInfo"></param>
+        /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
+        /// <param name="errors"> Error message when detection is failed. </param>
+        /// <param name="variableStates"> Variable Status. </param>
+        /// <param name="setupInfo">
+        /// Detection request for batch inference. This is an asynchronous inference which
+        /// will need another API to get detection results.
+        /// </param>
         internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo)
         {
             Status = status;
@@ -42,13 +48,16 @@ namespace Azure.AI.AnomalyDetector
             SetupInfo = setupInfo;
         }
 
-        /// <summary> Gets the status. </summary>
+        /// <summary> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </summary>
         public MultivariateBatchDetectionStatus Status { get; }
-        /// <summary> Gets the errors. </summary>
+        /// <summary> Error message when detection is failed. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
-        /// <summary> Gets the variable states. </summary>
+        /// <summary> Variable Status. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
-        /// <summary> Gets the setup info. </summary>
+        /// <summary>
+        /// Detection request for batch inference. This is an asynchronous inference which
+        /// will need another API to get detection results.
+        /// </summary>
         public MultivariateBatchDetectionOptions SetupInfo { get; }
     }
 }

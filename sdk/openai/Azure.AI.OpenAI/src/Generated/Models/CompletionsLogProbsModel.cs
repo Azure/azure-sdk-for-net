@@ -24,10 +24,10 @@ namespace Azure.AI.OpenAI.Models
         }
 
         /// <summary> Initializes a new instance of CompletionsLogProbsModel. </summary>
-        /// <param name="tokens"></param>
-        /// <param name="tokenLogprobs"></param>
-        /// <param name="topLogprobs"></param>
-        /// <param name="textOffset"></param>
+        /// <param name="tokens"> Tokens. </param>
+        /// <param name="tokenLogprobs"> LogProbs of Tokens. </param>
+        /// <param name="topLogprobs"> Top LogProbs. </param>
+        /// <param name="textOffset"> Text offset. </param>
         internal CompletionsLogProbsModel(IReadOnlyList<string> tokens, IReadOnlyList<float> tokenLogprobs, IReadOnlyList<IDictionary<string, float>> topLogprobs, IReadOnlyList<int> textOffset)
         {
             Tokens = tokens.ToList();
@@ -36,13 +36,13 @@ namespace Azure.AI.OpenAI.Models
             TextOffset = textOffset.ToList();
         }
 
-        /// <summary> Gets the tokens. </summary>
+        /// <summary> Tokens. </summary>
         public IReadOnlyList<string> Tokens { get; }
-        /// <summary> Gets the token logprobs. </summary>
+        /// <summary> LogProbs of Tokens. </summary>
         public IReadOnlyList<float> TokenLogprobs { get; }
-        /// <summary> Gets the top logprobs. </summary>
+        /// <summary> Top LogProbs. </summary>
         public IReadOnlyList<IDictionary<string, float>> TopLogprobs { get; }
-        /// <summary> Gets the text offset. </summary>
+        /// <summary> Text offset. </summary>
         public IReadOnlyList<int> TextOffset { get; }
     }
 }

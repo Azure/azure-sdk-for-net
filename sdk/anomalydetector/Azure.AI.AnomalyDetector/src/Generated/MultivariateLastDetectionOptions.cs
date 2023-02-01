@@ -16,8 +16,15 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateLastDetectionOptions
     {
         /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
-        /// <param name="variables"></param>
-        /// <param name="topContributorCount"></param>
+        /// <param name="variables">
+        /// This contains the inference data, including the name, timestamps(ISO 8601) and
+        /// values of variables.
+        /// </param>
+        /// <param name="topContributorCount">
+        /// An optional field, which is used to specify the number of top contributed
+        /// variables for one anomalous timestamp in the response. The default number is
+        /// 10.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
         public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables, int topContributorCount)
         {
@@ -27,9 +34,16 @@ namespace Azure.AI.AnomalyDetector
             TopContributorCount = topContributorCount;
         }
 
-        /// <summary> Gets the variables. </summary>
+        /// <summary>
+        /// This contains the inference data, including the name, timestamps(ISO 8601) and
+        /// values of variables.
+        /// </summary>
         public IList<VariableValues> Variables { get; }
-        /// <summary> Gets the top contributor count. </summary>
+        /// <summary>
+        /// An optional field, which is used to specify the number of top contributed
+        /// variables for one anomalous timestamp in the response. The default number is
+        /// 10.
+        /// </summary>
         public int TopContributorCount { get; }
     }
 }

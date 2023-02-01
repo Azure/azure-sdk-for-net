@@ -15,9 +15,15 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyValue
     {
         /// <summary> Initializes a new instance of AnomalyValue. </summary>
-        /// <param name="isAnomaly"></param>
-        /// <param name="severity"></param>
-        /// <param name="score"></param>
+        /// <param name="isAnomaly"> True if an anomaly is detected at the current timestamp. </param>
+        /// <param name="severity">
+        /// Indicates the significance of the anomaly. The higher the severity, the more
+        /// significant the anomaly is.
+        /// </param>
+        /// <param name="score">
+        /// Raw anomaly score of severity, will help indicate the degree of abnormality as
+        /// well.
+        /// </param>
         internal AnomalyValue(bool isAnomaly, float severity, float score)
         {
             IsAnomaly = isAnomaly;
@@ -27,10 +33,16 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of AnomalyValue. </summary>
-        /// <param name="isAnomaly"></param>
-        /// <param name="severity"></param>
-        /// <param name="score"></param>
-        /// <param name="interpretation"></param>
+        /// <param name="isAnomaly"> True if an anomaly is detected at the current timestamp. </param>
+        /// <param name="severity">
+        /// Indicates the significance of the anomaly. The higher the severity, the more
+        /// significant the anomaly is.
+        /// </param>
+        /// <param name="score">
+        /// Raw anomaly score of severity, will help indicate the degree of abnormality as
+        /// well.
+        /// </param>
+        /// <param name="interpretation"> Interpretation of this anomalous timestamp. </param>
         internal AnomalyValue(bool isAnomaly, float severity, float score, IReadOnlyList<AnomalyInterpretation> interpretation)
         {
             IsAnomaly = isAnomaly;
@@ -39,13 +51,19 @@ namespace Azure.AI.AnomalyDetector
             Interpretation = interpretation.ToList();
         }
 
-        /// <summary> Gets the is anomaly. </summary>
+        /// <summary> True if an anomaly is detected at the current timestamp. </summary>
         public bool IsAnomaly { get; }
-        /// <summary> Gets the severity. </summary>
+        /// <summary>
+        /// Indicates the significance of the anomaly. The higher the severity, the more
+        /// significant the anomaly is.
+        /// </summary>
         public float Severity { get; }
-        /// <summary> Gets the score. </summary>
+        /// <summary>
+        /// Raw anomaly score of severity, will help indicate the degree of abnormality as
+        /// well.
+        /// </summary>
         public float Score { get; }
-        /// <summary> Gets the interpretation. </summary>
+        /// <summary> Interpretation of this anomalous timestamp. </summary>
         public IReadOnlyList<AnomalyInterpretation> Interpretation { get; }
     }
 }

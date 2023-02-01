@@ -14,8 +14,8 @@ namespace Azure.AI.AnomalyDetector
     public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The message explaining the error reported by the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         public ErrorResponse(string code, string message)
         {
@@ -26,9 +26,9 @@ namespace Azure.AI.AnomalyDetector
             Message = message;
         }
 
-        /// <summary> Gets or sets the code. </summary>
+        /// <summary> The error code. </summary>
         public string Code { get; set; }
-        /// <summary> Gets or sets the message. </summary>
+        /// <summary> The message explaining the error reported by the service. </summary>
         public string Message { get; set; }
     }
 }

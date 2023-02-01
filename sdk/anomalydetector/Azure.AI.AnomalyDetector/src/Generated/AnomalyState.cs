@@ -16,7 +16,7 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyState
     {
         /// <summary> Initializes a new instance of AnomalyState. </summary>
-        /// <param name="timestamp"></param>
+        /// <param name="timestamp"> The timestamp for this anomaly. </param>
         internal AnomalyState(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
@@ -24,9 +24,9 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of AnomalyState. </summary>
-        /// <param name="timestamp"></param>
-        /// <param name="value"></param>
-        /// <param name="errors"></param>
+        /// <param name="timestamp"> The timestamp for this anomaly. </param>
+        /// <param name="value"> The detailed value of this anomalous timestamp. </param>
+        /// <param name="errors"> Error message for the current timestamp. </param>
         internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IReadOnlyList<ErrorResponse> errors)
         {
             Timestamp = timestamp;
@@ -34,11 +34,11 @@ namespace Azure.AI.AnomalyDetector
             Errors = errors.ToList();
         }
 
-        /// <summary> Gets the timestamp. </summary>
+        /// <summary> The timestamp for this anomaly. </summary>
         public DateTimeOffset Timestamp { get; }
-        /// <summary> Gets the value. </summary>
+        /// <summary> The detailed value of this anomalous timestamp. </summary>
         public AnomalyValue Value { get; }
-        /// <summary> Gets the errors. </summary>
+        /// <summary> Error message for the current timestamp. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
     }
 }

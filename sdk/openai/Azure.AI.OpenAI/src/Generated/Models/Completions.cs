@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI.Models
     public partial class Completions
     {
         /// <summary> Initializes a new instance of Completions. </summary>
-        /// <param name="object"></param>
+        /// <param name="object"> Object for completion response. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="object"/> is null. </exception>
         internal Completions(string @object)
         {
@@ -27,11 +27,11 @@ namespace Azure.AI.OpenAI.Models
         }
 
         /// <summary> Initializes a new instance of Completions. </summary>
-        /// <param name="id"></param>
-        /// <param name="object"></param>
-        /// <param name="created"></param>
-        /// <param name="model"></param>
-        /// <param name="choices"></param>
+        /// <param name="id"> Id for completion response. </param>
+        /// <param name="object"> Object for completion response. </param>
+        /// <param name="created"> Created time for completion response. </param>
+        /// <param name="model"> Model used for completion response. </param>
+        /// <param name="choices"> Array of choices returned containing text completions to prompts sent. </param>
         internal Completions(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices)
         {
             Id = id;
@@ -41,15 +41,15 @@ namespace Azure.AI.OpenAI.Models
             Choices = choices.ToList();
         }
 
-        /// <summary> Gets the id. </summary>
+        /// <summary> Id for completion response. </summary>
         public string Id { get; }
-        /// <summary> Gets the object. </summary>
+        /// <summary> Object for completion response. </summary>
         public string Object { get; }
-        /// <summary> Gets the created. </summary>
+        /// <summary> Created time for completion response. </summary>
         public int? Created { get; }
-        /// <summary> Gets the model. </summary>
+        /// <summary> Model used for completion response. </summary>
         public string Model { get; }
-        /// <summary> Gets the choices. </summary>
+        /// <summary> Array of choices returned containing text completions to prompts sent. </summary>
         public IReadOnlyList<Choice> Choices { get; }
     }
 }
