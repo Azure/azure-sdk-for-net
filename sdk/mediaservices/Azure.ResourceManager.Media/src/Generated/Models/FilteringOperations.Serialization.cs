@@ -31,6 +31,16 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("crop");
                 writer.WriteObjectValue(Crop);
             }
+            if (Optional.IsDefined(FadeIn))
+            {
+                writer.WritePropertyName("fadeIn");
+                writer.WriteObjectValue(FadeIn);
+            }
+            if (Optional.IsDefined(FadeOut))
+            {
+                writer.WritePropertyName("fadeOut");
+                writer.WriteObjectValue(FadeOut);
+            }
             if (Optional.IsCollectionDefined(Overlays))
             {
                 writer.WritePropertyName("overlays");
@@ -49,6 +59,8 @@ namespace Azure.ResourceManager.Media.Models
             Optional<DeinterlaceSettings> deinterlace = default;
             Optional<RotationSetting> rotation = default;
             Optional<RectangularWindow> crop = default;
+            Optional<FadeOptions> fadeIn = default;
+            Optional<FadeOptions> fadeOut = default;
             Optional<IList<MediaOverlayBase>> overlays = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,6 +94,26 @@ namespace Azure.ResourceManager.Media.Models
                     crop = RectangularWindow.DeserializeRectangularWindow(property.Value);
                     continue;
                 }
+                if (property.NameEquals("fadeIn"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("fadeOut"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("overlays"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -98,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, Optional.ToList(overlays));
+            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, Optional.ToList(overlays));
         }
     }
 }

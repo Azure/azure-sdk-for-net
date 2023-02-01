@@ -1,0 +1,27 @@
+scenarios:
+- scenarioName: SendRec
+  imageBuildDir: ../../../..
+  Scenario: sendrec
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/servicebus-net-stress/dockerfile:mredding
+- scenarioName: SendRecBatch
+  imageBuildDir: ../../../..
+  Scenario: sendrecbatch
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/servicebus-net-stress/dockerfile:mredding
+- scenarioName: SessionSendRec
+  imageBuildDir: ../../../..
+  Scenario: sesssendrec
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/servicebus-net-stress/dockerfile:mredding
+- scenarioName: SessionSendProc
+  imageBuildDir: ../../../..
+  Scenario: sesssendproc
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/servicebus-net-stress/dockerfile:mredding
+- scenarioName: SendProc
+  imageBuildDir: ../../../..
+  Scenario: sendproc
+  image: Dockerfile
+  imageTag: stresspgs7b6dif73rup6.azurecr.io/mredding/servicebus-net-stress/dockerfile:mredding
+
