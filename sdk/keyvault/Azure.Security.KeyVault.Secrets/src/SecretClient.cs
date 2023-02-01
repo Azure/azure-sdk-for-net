@@ -139,7 +139,6 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-#pragma warning disable AZC0015 // Unexpected client method return type.
         /// <summary>
         /// Get a specified secret from a given key vault, but does not throw an exception if the secret does not exist.
         /// </summary>
@@ -207,7 +206,6 @@ namespace Azure.Security.KeyVault.Secrets
                 throw;
             }
         }
-#pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
         /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync"/>.
