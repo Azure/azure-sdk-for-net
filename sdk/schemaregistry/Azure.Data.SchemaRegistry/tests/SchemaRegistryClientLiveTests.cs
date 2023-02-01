@@ -29,16 +29,16 @@ namespace Azure.Data.SchemaRegistry.Tests
             switch (format)
             {
                 case Json:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointJson;
+                    endpoint = (_serviceVersion == SchemaRegistryClientOptions.ServiceVersion.V2022_10) ? TestEnvironment.SchemaRegistryEndpointJson : TestEnvironment.SchemaRegistryEndpointJson2021;
                     break;
                 case Avro:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                    endpoint = (_serviceVersion == SchemaRegistryClientOptions.ServiceVersion.V2022_10) ? TestEnvironment.SchemaRegistryEndpointAvro : TestEnvironment.SchemaRegistryEndpointAvro2021;
                     break;
                 case Custom:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
+                    endpoint = (_serviceVersion == SchemaRegistryClientOptions.ServiceVersion.V2022_10) ? TestEnvironment.SchemaRegistryEndpointCustom : TestEnvironment.SchemaRegistryEndpointCustom2021;
                     break;
                 default:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                    endpoint = (_serviceVersion == SchemaRegistryClientOptions.ServiceVersion.V2022_10) ? TestEnvironment.SchemaRegistryEndpointAvro : TestEnvironment.SchemaRegistryEndpointAvro2021;
                     break;
             }
 

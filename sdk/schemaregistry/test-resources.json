@@ -46,12 +46,19 @@
   "variables": {
     "apiVersion": "2022-10-01-preview",
     "schemaRegistryGroup": "azsdk_net_test_group",
+    "schemaRegistryGroup2021": "azsdk_net_test_group_2021",
     "baseNameAvro": "[concat(parameters('baseName'), '-avro')]",
     "baseNameJson": "[concat(parameters('baseName'), '-json')]",
     "baseNameCustom": "[concat(parameters('baseName'), '-custom')]",
+    "baseNameAvro2021": "[concat(parameters('baseName'), '-avro2021')]",
+    "baseNameJson2021": "[concat(parameters('baseName'), '-json2021')]",
+    "baseNameCustom2021": "[concat(parameters('baseName'), '-custom2021')]",
     "schemaRegistryEndpointAvro": "[concat(parameters('baseName'), '-avro', '.servicebus.windows.net')]",
     "schemaRegistryEndpointJson": "[concat(parameters('baseName'), '-json', '.servicebus.windows.net')]",
     "schemaRegistryEndpointCustom": "[concat(parameters('baseName'), '-custom', '.servicebus.windows.net')]",
+    "schemaRegistryEndpointAvro2021": "[concat(parameters('baseName'), '-avro2021', '.servicebus.windows.net')]",
+    "schemaRegistryEndpointJson2021": "[concat(parameters('baseName'), '-json2021', '.servicebus.windows.net')]",
+    "schemaRegistryEndpointCustom2021": "[concat(parameters('baseName'), '-custom2021', '.servicebus.windows.net')]",
     "eventHubName": "azsdk_net_test_hub",
     "eventHubsDataOwnerRoleId": "f526a384-b230-433a-b45c-95f59c4a2dec"
   },
@@ -109,6 +116,57 @@
       }
     },
     {
+      "type": "Microsoft.EventHub/namespaces",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('baseNameAvro2021')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": 5
+      },
+      "properties": {
+        "zoneRedundant": false,
+        "isAutoInflateEnabled": false,
+        "maximumThroughputUnits": 0,
+        "kafkaEnabled": true
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('baseNameJson2021')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": 5
+      },
+      "properties": {
+        "zoneRedundant": false,
+        "isAutoInflateEnabled": false,
+        "maximumThroughputUnits": 0,
+        "kafkaEnabled": true
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('baseNameCustom2021')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": 5
+      },
+      "properties": {
+        "zoneRedundant": false,
+        "isAutoInflateEnabled": false,
+        "maximumThroughputUnits": 0,
+        "kafkaEnabled": true
+      }
+    },
+    {
       "type": "Microsoft.EventHub/namespaces/schemagroups",
       "apiVersion": "[variables('apiVersion')]",
       "name": "[format('{0}/{1}', variables('baseNameAvro'), variables('schemaRegistryGroup'))]",
@@ -139,10 +197,40 @@
       }
     },
     {
+      "type": "Microsoft.EventHub/namespaces/schemagroups",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[format('{0}/{1}', variables('baseNameAvro2021'), variables('schemaRegistryGroup2021'))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameAvro'))]" ],
+      "properties": {
+        "schemaType": "avro"
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/schemagroups",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[format('{0}/{1}', variables('baseNameJson2021'), variables('schemaRegistryGroup2021'))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameJson2021'))]" ],
+      "properties": {
+        "schemaType": "json"
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/schemagroups",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[format('{0}/{1}', variables('baseNameCustom2021'), variables('schemaRegistryGroup2021'))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameCustom2021'))]" ],
+      "properties": {
+        "schemaType": "custom"
+      }
+    },
+    {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('eventHubsDataOwnerRoleId'))]",
-      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameAvro'))]" ],
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameAvro2021'))]" ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
@@ -155,6 +243,10 @@
       "type": "string",
       "value": "[variables('schemaRegistryGroup')]"
     },
+    "SCHEMAREGISTRY_GROUP_2021": {
+      "type": "string",
+      "value": "[variables('schemaRegistryGroup2021')]"
+    },
     "SCHEMAREGISTRY_ENDPOINT_AVRO": {
       "type": "string",
       "value": "[variables('schemaRegistryEndpointAvro')]"
@@ -166,6 +258,18 @@
     "SCHEMAREGISTRY_ENDPOINT_CUSTOM": {
       "type": "string",
       "value": "[variables('schemaRegistryEndpointCustom')]"
+    },
+    "SCHEMAREGISTRY_ENDPOINT_AVRO_2021": {
+      "type": "string",
+      "value": "[variables('schemaRegistryEndpointAvro2021')]"
+    },
+    "SCHEMAREGISTRY_ENDPOINT_JSON_2021": {
+      "type": "string",
+      "value": "[variables('schemaRegistryEndpointJson2021')]"
+    },
+    "SCHEMAREGISTRY_ENDPOINT_CUSTOM_2021": {
+      "type": "string",
+      "value": "[variables('schemaRegistryEndpointCustom2021')]"
     },
     "SCHEMAREGISTRY_EVENTHUB_NAME": {
       "type": "string",
