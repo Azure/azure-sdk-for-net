@@ -42,6 +42,20 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
+        [RecordedTest]
+        public async Task CompletionTestWithTokenCredential()
+        {
+            OpenAIClient client = GetClientWithCredential();
+            CompletionsOptions requestOptions = new CompletionsOptions();
+            requestOptions.Prompt.Add("Hello, world!");
+            requestOptions.Prompt.Add("I can have multiple prompts");
+            Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
+            Response<Completions> response = await client.GetCompletionsAsync(CompletionsDeploymentId, requestOptions);
+            Assert.That(response, Is.InstanceOf<Response<Completions>>());
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(2));
+        }
+
         /// <summary>
         /// Test Simplified Completion API.
         /// </summary>
@@ -76,7 +90,7 @@ namespace Azure.AI.OpenAI.Tests
             CompletionsOptions completionsRequest = new CompletionsOptions();
             completionsRequest.Prompt.Add("Hello world");
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest); });
-            Assert.AreEqual(401, exception.Status);
+            Assert.AreEqual(404, exception.Status);
         }
     }
 }

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk6955.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-06-01-preview",
+      "RequestUri": "https://sdk6955.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "61",
         "Content-Type": "application/json",
-        "traceparent": "00-f9cd12e2377379ec86135b04361c8097-8dcd4e2fc0d9015f-00",
+        "traceparent": "00-e540a882c3753d6f05eda41371089cef-56697acbcbe2c644-00",
         "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230201.1 (.NET 7.0.2; Microsoft Windows 10.0.25281)",
-        "x-ms-client-request-id": "bf8e22506f11050462cdc2010be9b228",
+        "x-ms-client-request-id": "b95fd63d0797a15391a3abecadb95329",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,43 +22,43 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "0ddaf963-0066-4d7a-ab4a-1f6f82f93f8c",
+        "apim-request-id": "d4e00e18-6994-4e2b-bad5-7c2b4d6ac773",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "443",
+        "Content-Length": "411",
         "Content-Type": "application/json",
-        "Date": "Wed, 01 Feb 2023 20:27:30 GMT",
+        "Date": "Wed, 01 Feb 2023 20:50:38 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "579.1792",
+        "openai-processing-ms": "400.0167",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "bf8e22506f11050462cdc2010be9b228",
+        "x-ms-client-request-id": "b95fd63d0797a15391a3abecadb95329",
         "x-ms-region": "East US",
-        "X-Request-ID": "396ac429-727f-433a-80cd-ddc38c55781f"
+        "X-Request-ID": "ca4e743c-74cb-457a-af59-e11b428d0519"
       },
       "ResponseBody": {
-        "id": "cmpl-6fDzWPIY73LU0UKHlEULPcTMTrH60",
+        "id": "cmpl-6fELuXl5b4XapFwcQjpS0BI9Tbrth",
         "object": "text_completion",
-        "created": 1675283250,
+        "created": 1675284638,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\u0022\n\n\tThis purpose is to test the commit and commit push in the",
+            "text": "!\n\nthis is a test",
             "index": 0,
-            "finish_reason": "length",
+            "finish_reason": "stop",
             "logprobs": null
           },
           {
-            "text": "\n\nThat we covered long ago\n\nWe just can\u2019t seem",
+            "text": " this time did not make it any easier. To his own surprise, he found",
             "index": 1,
             "finish_reason": "length",
             "logprobs": null
           }
         ],
         "usage": {
-          "completion_tokens": 32,
+          "completion_tokens": 23,
           "prompt_tokens": 8,
-          "total_tokens": 40
+          "total_tokens": 31
         }
       }
     }
@@ -68,7 +68,7 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
     "OPENAI_ENDPOINT": "https://sdk6955.openai.azure.com/",
-    "RandomSeed": "1020659251",
+    "RandomSeed": "431206662",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

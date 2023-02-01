@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI.Tests
 
         public string CompletionsDeploymentId { get => _completionsDeploymentId; }
         public string EmbeddingsDeploymentId { get => _embeddingsDeploymentId; }
-        public OpenAIClientOptions TestClientOptions { get; set; } = new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_06_01_Preview);
+        public OpenAIClientOptions TestClientOptions { get; set; } = new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01);
 
         private Uri _endpoint;
         private AzureKeyCredential _apiKey;
@@ -47,8 +47,11 @@ namespace Azure.AI.OpenAI.Tests
         protected OpenAIClient GetClient() => InstrumentClient(
             new OpenAIClient(_endpoint, _apiKey, InstrumentClientOptions(TestClientOptions)));
 
-        protected OpenAIClient GetClientWithToken() => InstrumentClient(
+        protected OpenAIClient GetClientWithCredential() => InstrumentClient(
             new OpenAIClient(_endpoint, TestEnvironment.Credential, InstrumentClientOptions(TestClientOptions)));
+
+        protected OpenAIClient GetClientWithCompletionsDeploymentId() => InstrumentClient(
+            new OpenAIClient(_endpoint, CompletionsDeploymentId, TestEnvironment.Credential, InstrumentClientOptions(TestClientOptions)));
 
         [SetUp]
         public void CreateDeployment()

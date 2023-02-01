@@ -16,8 +16,8 @@ namespace Azure.AI.OpenAI
     /// <summary> Azure OpenAI APIs for completions and search. </summary>
     public partial class OpenAIClient
     {
-        private readonly string _completionsDeploymentId;
-        private readonly string _embeddingsDeploymentId;
+        private readonly string _defaultCompletionsDeploymentId;
+        private readonly string _defaultEmbeddingsDeploymentId;
 
         /// <summary> Initializes a new instance of OpenAIClient. </summary>
         /// <param name="endpoint">
@@ -27,7 +27,8 @@ namespace Azure.AI.OpenAI
         /// <param name="deploymentId"> default deployment id to use for operations </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential) : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
+        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential)
+            : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
         {
         }
 
@@ -41,18 +42,10 @@ namespace Azure.AI.OpenAI
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential, OpenAIClientOptions options)
+            : this(endpoint, credential, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new OpenAIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-            _completionsDeploymentId ??= deploymentId;
-            _embeddingsDeploymentId ??= deploymentId;
+            _defaultCompletionsDeploymentId ??= deploymentId;
+            _defaultEmbeddingsDeploymentId ??= deploymentId;
         }
 
         /// <summary> Return the completion for a given prompt. </summary>
@@ -60,12 +53,12 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Completions>> GetCompletionsAsync(string prompt, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(_completionsDeploymentId, nameof(_completionsDeploymentId));
+            Argument.AssertNotNullOrEmpty(_defaultCompletionsDeploymentId, nameof(_defaultCompletionsDeploymentId));
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
             CompletionsOptions completionsOptions = new CompletionsOptions();
             completionsOptions.Prompt.Add(prompt);
-            return await GetCompletionsAsync(_completionsDeploymentId, completionsOptions, cancellationToken).ConfigureAwait(false);
+            return await GetCompletionsAsync(_defaultCompletionsDeploymentId, completionsOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
@@ -73,12 +66,12 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(_completionsDeploymentId, nameof(_completionsDeploymentId));
+            Argument.AssertNotNullOrEmpty(_defaultCompletionsDeploymentId, nameof(_defaultCompletionsDeploymentId));
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
             CompletionsOptions completionsOptions = new CompletionsOptions();
             completionsOptions.Prompt.Add(prompt);
-            return GetCompletions(_completionsDeploymentId, completionsOptions, cancellationToken);
+            return GetCompletions(_defaultCompletionsDeploymentId, completionsOptions, cancellationToken);
         }
     }
 }
