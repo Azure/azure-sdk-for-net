@@ -32,7 +32,6 @@ namespace Azure.AI.OpenAI.Tests
 
         public string CompletionsDeploymentId { get => _completionsDeploymentId; }
         public string EmbeddingsDeploymentId { get => _embeddingsDeploymentId; }
-        public OpenAIClientOptions TestClientOptions { get; set; } = new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01);
 
         private Uri _endpoint;
         private AzureKeyCredential _apiKey;
@@ -45,13 +44,13 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         protected OpenAIClient GetClient() => InstrumentClient(
-            new OpenAIClient(_endpoint, _apiKey, InstrumentClientOptions(TestClientOptions)));
+            new OpenAIClient(_endpoint, _apiKey, GetInstrumentedClientOptions()));
 
         protected OpenAIClient GetClientWithCredential() => InstrumentClient(
-            new OpenAIClient(_endpoint, TestEnvironment.Credential, InstrumentClientOptions(TestClientOptions)));
+            new OpenAIClient(_endpoint, TestEnvironment.Credential, GetInstrumentedClientOptions()));
 
         protected OpenAIClient GetClientWithCompletionsDeploymentId() => InstrumentClient(
-            new OpenAIClient(_endpoint, CompletionsDeploymentId, TestEnvironment.Credential, InstrumentClientOptions(TestClientOptions)));
+            new OpenAIClient(_endpoint, CompletionsDeploymentId, TestEnvironment.Credential, GetInstrumentedClientOptions()));
 
         [SetUp]
         public void CreateDeployment()
@@ -63,57 +62,59 @@ namespace Azure.AI.OpenAI.Tests
                 _embeddingsDeploymentId = Recording.GetVariable(Constants.EmbeddingsDeploymentIdVariable, null);
                 _apiKey = new AzureKeyCredential("unused placeholder value for recordings");
             }
-            else if (Mode == RecordedTestMode.Live || Mode == RecordedTestMode.Record)
+            else
             {
-                TestEnvironment.ThrowIfCannotDeploy();
-
                 lock (_deploymentIdLock)
                 {
-                    ArmClient armClient = new ArmClient(TestEnvironment.Credential);
-
-                    ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
-                    SubscriptionResource subscription = armClient.GetSubscriptionResource(subscriptionResourceId);
-
-                    ResourceGroupResource resourceGroup = GetEnsureTestResourceGroup(subscription);
-
-                    CognitiveServicesAccountResource openAIResource = new Func<CognitiveServicesAccountResource>(() =>
+                    if (Mode == RecordedTestMode.Live || Mode == RecordedTestMode.Record)
                     {
-                        string randomizedSubdomain = Recording.GenerateAssetName(Constants.SubDomainPrefix);
-                        try
+                        TestEnvironment.ThrowIfCannotDeploy();
+                        ArmClient armClient = new ArmClient(TestEnvironment.Credential);
+
+                        ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+                        SubscriptionResource subscription = armClient.GetSubscriptionResource(subscriptionResourceId);
+
+                        ResourceGroupResource resourceGroup = GetEnsureTestResourceGroup(subscription);
+
+                        CognitiveServicesAccountResource openAIResource = new Func<CognitiveServicesAccountResource>(() =>
                         {
-                            return GetEnsureTestOpenAIResource(resourceGroup, randomizedSubdomain);
-                        }
-                        catch (RequestFailedException ex) when (ex.Status == 409)
-                        {
-                            // A single retry attempt to automatically purge a previously deleted stale resource
-                            CognitiveServicesDeletedAccountResource deletedOpenAIResource = subscription.GetCognitiveServicesDeletedAccount(
-                                Constants.Location,
-                                Constants.ResourceGroupName,
-                                Constants.CognitiveServicesAccountName);
-                            deletedOpenAIResource.Delete(WaitUntil.Completed);
-                            return GetEnsureTestOpenAIResource(resourceGroup, randomizedSubdomain);
-                        }
-                    }).Invoke();
+                            string randomizedSubdomain = Recording.GenerateAssetName(Constants.SubDomainPrefix);
+                            try
+                            {
+                                return GetEnsureTestOpenAIResource(resourceGroup, randomizedSubdomain);
+                            }
+                            catch (RequestFailedException ex) when (ex.Status == 409)
+                            {
+                                // A single retry attempt to automatically purge a previously deleted stale resource
+                                CognitiveServicesDeletedAccountResource deletedOpenAIResource = subscription.GetCognitiveServicesDeletedAccount(
+                                    Constants.Location,
+                                    Constants.ResourceGroupName,
+                                    Constants.CognitiveServicesAccountName);
+                                deletedOpenAIResource.Delete(WaitUntil.Completed);
+                                return GetEnsureTestOpenAIResource(resourceGroup, randomizedSubdomain);
+                            }
+                        }).Invoke();
 
-                    CognitiveServicesAccountDeploymentResource completionsModelResource = GetEnsureDeployedModelResource(
-                        openAIResource,
-                        Constants.CompletionsModelName,
-                        CognitiveServicesAccountDeploymentScaleType.Standard);
-                    CognitiveServicesAccountDeploymentResource embeddingsModelResource = GetEnsureDeployedModelResource(
-                        openAIResource,
-                        Constants.EmbeddingsModelName,
-                        CognitiveServicesAccountDeploymentScaleType.Manual);
+                        CognitiveServicesAccountDeploymentResource completionsModelResource = GetEnsureDeployedModelResource(
+                            openAIResource,
+                            Constants.CompletionsModelName,
+                            CognitiveServicesAccountDeploymentScaleType.Standard);
+                        CognitiveServicesAccountDeploymentResource embeddingsModelResource = GetEnsureDeployedModelResource(
+                            openAIResource,
+                            Constants.EmbeddingsModelName,
+                            CognitiveServicesAccountDeploymentScaleType.Manual);
 
-                    _endpoint = new Uri(openAIResource.Data.Properties.Endpoint);
-                    _completionsDeploymentId = completionsModelResource.Id.Name;
-                    _embeddingsDeploymentId = embeddingsModelResource.Id.Name;
+                        _endpoint = new Uri(openAIResource.Data.Properties.Endpoint);
+                        _completionsDeploymentId = completionsModelResource.Id.Name;
+                        _embeddingsDeploymentId = embeddingsModelResource.Id.Name;
 
-                    Recording.SetVariable(Constants.EndpointVariable, _endpoint.ToString());
-                    Recording.SetVariable(Constants.CompletionsDeploymentIdVariable, _completionsDeploymentId);
-                    Recording.SetVariable(Constants.EmbeddingsDeploymentIdVariable, _embeddingsDeploymentId);
+                        Recording.SetVariable(Constants.EndpointVariable, _endpoint.ToString());
+                        Recording.SetVariable(Constants.CompletionsDeploymentIdVariable, _completionsDeploymentId);
+                        Recording.SetVariable(Constants.EmbeddingsDeploymentIdVariable, _embeddingsDeploymentId);
 
-                    ServiceAccountApiKeys keys = openAIResource.GetKeys();
-                    _apiKey = new AzureKeyCredential(keys.Key1);
+                        ServiceAccountApiKeys keys = openAIResource.GetKeys();
+                        _apiKey = new AzureKeyCredential(keys.Key1);
+                    }
                 }
             }
         }
@@ -184,10 +185,7 @@ namespace Azure.AI.OpenAI.Tests
             }
         }
 
-        private bool TryGetRecordingVariable(string variableName, out string value)
-        {
-            value = Recording.GetVariable(variableName, null);
-            return !string.IsNullOrEmpty(value);
-        }
+        private OpenAIClientOptions GetInstrumentedClientOptions()
+            => InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01));
     }
 }

@@ -42,6 +42,9 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
+        /// <summary>
+        /// Test Completions using a TokenCredential.
+        /// </summary>
         [RecordedTest]
         public async Task CompletionTestWithTokenCredential()
         {
