@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
         private const int Mb = 1024 * 1024;
         private const int Kb = 1024;
 
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
