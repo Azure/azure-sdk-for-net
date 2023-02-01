@@ -8,7 +8,6 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the VirtualMachine data model. </summary>
     public partial class VirtualMachineData
     {
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
