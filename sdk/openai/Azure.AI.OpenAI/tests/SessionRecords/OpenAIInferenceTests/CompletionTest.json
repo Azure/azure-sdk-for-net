@@ -15,8 +15,8 @@
       },
       "RequestBody": {
         "prompt": [
-          "Hello world",
-          "running over the same old ground"
+            "Hello world",
+            "running over the same old ground"
         ]
       },
       "StatusCode": 200,
