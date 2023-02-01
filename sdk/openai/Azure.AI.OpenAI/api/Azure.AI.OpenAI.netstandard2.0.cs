@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI.Models
         internal Choice() { }
         public string FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
-        public Azure.AI.OpenAI.Models.CompletionsLogProbsModel Logprobs { get { throw null; } }
+        public Azure.AI.OpenAI.Models.CompletionsLogProbs Logprobs { get { throw null; } }
         public string Text { get { throw null; } }
     }
     public partial class Completions
@@ -50,9 +50,9 @@ namespace Azure.AI.OpenAI.Models
         public string Object { get { throw null; } }
         public Azure.AI.OpenAI.Models.CompletionsUsage Usage { get { throw null; } }
     }
-    public partial class CompletionsLogProbsModel
+    public partial class CompletionsLogProbs
     {
-        internal CompletionsLogProbsModel() { }
+        internal CompletionsLogProbs() { }
         public System.Collections.Generic.IReadOnlyList<int> TextOffset { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<float> TokenLogprobs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
@@ -103,7 +103,7 @@ namespace Azure.AI.OpenAI.Models
     public partial class EmbeddingsOptions
     {
         public EmbeddingsOptions(string input) { }
-        public string Input { get { throw null; } }
+        public string Input { get { throw null; } set { } }
         public string InputType { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }
         public string User { get { throw null; } set { } }

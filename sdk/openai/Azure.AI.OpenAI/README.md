@@ -133,7 +133,7 @@ List<string> examplePrompts = new(){
 foreach (string prompt in examplePrompts)
 {
     Console.Write($"Input: {prompt}");
-    CompletionsOptions completionsOptions = new CompletionsOptions("text-davinci-002");
+    CompletionsOptions completionsOptions = new CompletionsOptions();
     completionsOptions.Prompt.Add(prompt);
 
     Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);
@@ -168,7 +168,7 @@ string summarizationPrompt = @$"
 ";
 
 Console.Write($"Input: {summarizationPrompt}");
-CompletionsOptions completionsOptions = new CompletionsOptions("text-davinci-002");
+CompletionsOptions completionsOptions = new CompletionsOptions();
 completionsOptions.Prompt.Add(summarizationPrompt);
 
 Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);
