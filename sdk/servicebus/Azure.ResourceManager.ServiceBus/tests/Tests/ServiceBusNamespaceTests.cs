@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Uri keyVaultUri;
             if (Mode == RecordedTestMode.Playback)
             {
-                keyVaultUri = new Uri("https://ps-testing-keyvault.vault.azure.net/");
+                keyVaultUri = new Uri("https://KeyVault-rg01.vault.azure.net/");
                 firstIdentityId = new ResourceIdentifier($"/subscriptions/{_resourceGroup.Id.SubscriptionId}/resourcegroups/{_resourceGroup.Id.Name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName_1}");
                 secondIdentityId = new ResourceIdentifier($"/subscriptions/{_resourceGroup.Id.SubscriptionId}/resourcegroups/{_resourceGroup.Id.Name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName_2}");
             }

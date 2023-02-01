@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alternateName"> Alternate name for namespace. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="premiumMessagingPartitions"> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </param>
-        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, TlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, PublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, ServiceBusMinimumTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, ServiceBusPublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Properties of BYOK Identity description. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </summary>
-        public TlsVersion? MinimumTlsVersion { get; set; }
+        public ServiceBusMinimumTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Provisioning state of the namespace. </summary>
         public string ProvisioningState { get; }
         /// <summary> Status of the namespace. </summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Alternate name for namespace. </summary>
         public string AlternateName { get; set; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public ServiceBusPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </summary>
         public int? PremiumMessagingPartitions { get; set; }
     }

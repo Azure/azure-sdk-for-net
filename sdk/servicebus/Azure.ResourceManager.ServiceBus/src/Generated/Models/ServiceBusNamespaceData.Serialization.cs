@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceBus
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<TlsVersion> minimumTlsVersion = default;
+            Optional<ServiceBusMinimumTlsVersion> minimumTlsVersion = default;
             Optional<string> provisioningState = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> createdAt = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<ServiceBusPublicNetworkAccess> publicNetworkAccess = default;
             Optional<int> premiumMessagingPartitions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            minimumTlsVersion = new TlsVersion(property0.Value.GetString());
+                            minimumTlsVersion = new ServiceBusMinimumTlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new ServiceBusPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("premiumMessagingPartitions"))

@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
         public string MetricId { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.TlsVersion? MinimumTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public int? PremiumMessagingPartitions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
@@ -623,25 +623,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName left, Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess SecuredByPerimeter { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess left, Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess left, Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ServiceBusAccessKeys
     {
         internal ServiceBusAccessKeys() { }
@@ -979,24 +960,5 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public int? CompatibilityLevel { get { throw null; } set { } }
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SqlExpression { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TlsVersion : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.TlsVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TlsVersion(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.TlsVersion One0 { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.TlsVersion One1 { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.TlsVersion One2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.TlsVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.TlsVersion left, Azure.ResourceManager.ServiceBus.Models.TlsVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.TlsVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.TlsVersion left, Azure.ResourceManager.ServiceBus.Models.TlsVersion right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }
