@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var vnetOperation = await vnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, new VirtualNetworkData()
             {
                 AddressPrefixes = { "10.0.0.0/16" },
-                Location = rg.Data.Location,
+                Location = location,
                 Subnets = {
                     new SubnetData()
                     {

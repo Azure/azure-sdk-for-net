@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
@@ -15,6 +14,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.PrivateDns;
 using Azure.ResourceManager.Resources;
+using Microsoft.Graph;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.Tests
@@ -639,6 +639,205 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.AreEqual(automaticBackup.Data.Name, backups[0].Data.Name);
             Assert.AreEqual(automaticBackup.Data.BackupType, backups[0].Data.BackupType);
             Assert.AreEqual(automaticBackup.Data.CompletedOn, backups[0].Data.CompletedOn);
+        }
+
+        [TestCase]
+        [LiveOnly(alwaysRunLocally: false)]
+        public async Task CMK()
+        {
+            var keyVaultName = Recording.GenerateAssetName("vault");
+            var keyName = Recording.GenerateAssetName("key");
+            var identityName = Recording.GenerateAssetName("identity");
+            var keyNameUpdate = Recording.GenerateAssetName("key");
+            var identityNameUpdate = Recording.GenerateAssetName("identity");
+            var serverName = Recording.GenerateAssetName("pgflexserver");
+            var replicaName = Recording.GenerateAssetName("pgflexserver");
+            var restoreName = Recording.GenerateAssetName("pgflexserver");
+
+            var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
+            var serverCollection = rg.GetPostgreSqlFlexibleServers();
+
+            // Create key and identity
+            var (key, identity) = await CreateKeyAndIdentity(keyVaultName, keyName, identityName, rg.Data.Name);
+            var (keyUpdate, identityUpdate) = await CreateKeyAndIdentity(keyVaultName, keyNameUpdate, identityNameUpdate, rg.Data.Name);
+
+            // Create server with data encryption
+            var serverOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = PostgreSqlFlexibleServerVersion.Ver14,
+                StorageSizeInGB = 128,
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() } },
+                },
+                DataEncryption = new PostgreSqlFlexibleServerDataEncryption()
+                {
+                    PrimaryKeyUri = key.Id,
+                    PrimaryUserAssignedIdentityId = identity.Id,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+            });
+            var server = serverOperation.Value;
+
+            Assert.AreEqual(key.Id, server.Data.DataEncryption.PrimaryKeyUri);
+            Assert.AreEqual(identity.Id, server.Data.DataEncryption.PrimaryUserAssignedIdentityId);
+            Assert.IsTrue(server.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id));
+
+            // Create replica with same key and identity
+            var replicaOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                SourceServerResourceId = server.Id,
+                AvailabilityZone = "2",
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() } },
+                },
+                DataEncryption = new PostgreSqlFlexibleServerDataEncryption()
+                {
+                    PrimaryKeyUri = key.Id,
+                    PrimaryUserAssignedIdentityId = identity.Id,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Replica,
+            });
+            var replica = replicaOperation.Value;
+
+            Assert.AreEqual(key.Id, replica.Data.DataEncryption.PrimaryKeyUri);
+            Assert.AreEqual(identity.Id, replica.Data.DataEncryption.PrimaryUserAssignedIdentityId);
+            Assert.IsTrue(replica.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id));
+
+            // Update different key and identity in primary server
+            var updateOperation = await server.UpdateAsync(WaitUntil.Completed, new PostgreSqlFlexibleServerPatch()
+            {
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities = { { identityUpdate.Id, new UserAssignedIdentity() } },
+                },
+                DataEncryption = new PostgreSqlFlexibleServerDataEncryption()
+                {
+                    PrimaryKeyUri = keyUpdate.Id,
+                    PrimaryUserAssignedIdentityId = identityUpdate.Id,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
+                },
+            });
+            server = updateOperation.Value;
+
+            Assert.AreEqual(keyUpdate.Id, server.Data.DataEncryption.PrimaryKeyUri);
+            Assert.AreEqual(identityUpdate.Id, server.Data.DataEncryption.PrimaryUserAssignedIdentityId);
+            Assert.IsTrue(server.Data.Identity.UserAssignedIdentities.ContainsKey(identityUpdate.Id));
+
+            // Restore backup with data encryption
+            if (Recording.Mode != RecordedTestMode.Playback)
+            {
+                var earliestRestore = server.Data.Backup.EarliestRestoreOn.Value;
+                var millisecondsToWait = (int)(earliestRestore - DateTime.Now).TotalMilliseconds;
+                await Task.Delay(Math.Max(0, millisecondsToWait));
+            }
+
+            var restoreOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoreName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                SourceServerResourceId = server.Id,
+                PointInTimeUtc = DateTime.Now,
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() } },
+                },
+                DataEncryption = new PostgreSqlFlexibleServerDataEncryption()
+                {
+                    PrimaryKeyUri = key.Id,
+                    PrimaryUserAssignedIdentityId = identity.Id,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.PointInTimeRestore,
+            });
+            var restore = restoreOperation.Value;
+
+            Assert.AreEqual(key.Id, restore.Data.DataEncryption.PrimaryKeyUri);
+            Assert.AreEqual(identity.Id, restore.Data.DataEncryption.PrimaryUserAssignedIdentityId);
+            Assert.IsTrue(restore.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id));
+        }
+
+        [TestCase]
+        [LiveOnly(alwaysRunLocally: false)]
+        public async Task AAD()
+        {
+            var serverName = Recording.GenerateAssetName("pgflexserver");
+            var replicaName = new string[2] { Recording.GenerateAssetName("pgflexserver"), Recording.GenerateAssetName("pgflexserver") };
+
+            var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
+            var serverCollection = rg.GetPostgreSqlFlexibleServers();
+
+            // Get current client info
+            var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
+            var tenant = tenants.FirstOrDefault();
+            var tenantId = tenant.Data.TenantId.Value;
+
+            var graphClient = new GraphServiceClient(TestEnvironment.Credential);
+            var servicePrincipals = await graphClient.ServicePrincipals
+                .Request()
+                .Filter($"servicePrincipalNames/any(c:c eq '{TestEnvironment.ClientId}')")
+                .Top(1)
+                .GetAsync();
+            var servicePrincipal = servicePrincipals.FirstOrDefault();
+
+            // Create main server
+            var serverOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = PostgreSqlFlexibleServerVersion.Ver14,
+                StorageSizeInGB = 128,
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+                AuthConfig = new PostgreSqlFlexibleServerAuthConfig()
+                {
+                    ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
+                    PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
+                }
+            });
+            var server = serverOperation.Value;
+
+            Assert.AreEqual(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled, server.Data.AuthConfig.ActiveDirectoryAuth);
+            Assert.AreEqual(PostgreSqlFlexibleServerPasswordAuthEnum.Enabled, server.Data.AuthConfig.PasswordAuth);
+
+            // Create first replica server
+            var replicaOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName[0], new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                SourceServerResourceId = server.Id,
+                AvailabilityZone = "2",
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Replica,
+            });
+            var firstReplica = replicaOperation.Value;
+
+            // Add AAD admin to main server
+            await server.GetPostgreSqlFlexibleServerActiveDirectoryAdministrators().CreateOrUpdateAsync(WaitUntil.Completed, servicePrincipal.Id, new PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent()
+            {
+                PrincipalName = servicePrincipal.DisplayName,
+                TenantId = tenantId,
+                PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal,
+            });
+
+            // Create second replica server
+            replicaOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName[1], new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                SourceServerResourceId = server.Id,
+                AvailabilityZone = "2",
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Replica,
+            });
+            var secondReplica = replicaOperation.Value;
+
+            // Main server and both replicas should have AAD
+            foreach (var s in new PostgreSqlFlexibleServerResource[] { server, firstReplica, secondReplica })
+            {
+                var admin = (await s.GetPostgreSqlFlexibleServerActiveDirectoryAdministratorAsync(servicePrincipal.Id)).Value;
+                Assert.AreEqual(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal, admin.Data.PrincipalType);
+                Assert.AreEqual(servicePrincipal.DisplayName, admin.Data.PrincipalName);
+                Assert.AreEqual(servicePrincipal.Id, admin.Data.ObjectId.ToString());
+            }
         }
     }
 }
