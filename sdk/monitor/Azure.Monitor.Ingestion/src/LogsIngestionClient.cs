@@ -25,7 +25,7 @@ namespace Azure.Monitor.Ingestion
         // The size we use to determine whether to upload as a single PUT BLOB
         // request or stage as multiple blocks.
         // 1 Mb in byte format
-        internal static int SingleUploadThreshold = 1000000;
+        internal static int SingleUploadThreshold = 1024 * 1024;
 
         // For test purposes only
         // If Compression wants to be turned off (hard to generate 1 Mb data gzipped) set Compression to gzip
