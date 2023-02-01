@@ -267,14 +267,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="RequestContext"/> for the operation.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// A <see cref="Response"/> as returned by the Storage service.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual Response<BlobLease> Acquire(
+        public virtual Response Acquire(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             TimeSpan duration,
             RequestConditions conditions,
@@ -284,7 +284,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 async: false,
                 requestContext)
-                .EnsureCompleted();
+                .EnsureCompleted().GetRawResponse();
 
         /// <summary>
         /// The <see cref="AcquireAsync(TimeSpan, RequestConditions, RequestContext)"/>
@@ -317,24 +317,24 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="RequestContext"/> for the operation.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// A <see cref="Response"/> as returned by the Storage service.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<BlobLease>> AcquireAsync(
+        public virtual async Task<Response> AcquireAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             TimeSpan duration,
             RequestConditions conditions,
             RequestContext requestContext) =>
-            await AcquireInternal(
+            (await AcquireInternal(
                 duration,
                 conditions,
                 async: true,
                 requestContext)
-                .ConfigureAwait(false);
+                .ConfigureAwait(false)).GetRawResponse();
 
         /// <summary>
         /// The <see cref="AcquireInternal"/> operation acquires a lease on
