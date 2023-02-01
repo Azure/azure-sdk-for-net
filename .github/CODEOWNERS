@@ -10,6 +10,11 @@
 # /.config/
 # /.devcontainer/
 # /.vscode/
+# /common/Perf/
+# /common/Stress/
+# /doc/
+# /samples/
+# /tools/
 
 # Last chance Eng Sys catch-all
 /**/tests.yml   @hallipr @benbp
