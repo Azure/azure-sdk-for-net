@@ -16,7 +16,7 @@ namespace Azure.Communication.Email.Models
         /// <param name="email"> Email address of the receipient</param>
         /// <param name="displayName">The display name of the recepient</param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public EmailAddress(string email, string displayName = null)
+        public EmailAddress(string email, string displayName)
             :this(email)
         {
             DisplayName = displayName;
