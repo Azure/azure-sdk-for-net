@@ -1,32 +1,32 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://workflow-sdk.purview.azure-test.com/workflow/workflowruns/4f8d70c3-c09b-4e56-bfd1-8b86c79bd4d9/cancel?api-version=2022-05-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "21",
-        "Content-Type": "application/json",
-        "traceparent": "00-12bcab6b1965aa4b88dae1a0eddda61e-a751bc019b971349-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230122.1 (.NET Core 3.1.32; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "71f5efc88b831f241d4808f8510602ee",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "comment": "Thanks!"
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Sun, 22 Jan 2023 06:19:03 GMT",
-        "Server": "MicrosoftPurview",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "71f5efc88b831f241d4808f8510602ee",
-        "x-ms-correlation-request-id": "a077b337-c341-4c4b-be06-9aefa314bdd4",
-        "x-ms-request-id": "1f05ead9-56ef-41d5-a8ed-3f577df0fae8"
-      },
-      "ResponseBody": null
+        "RequestUri": "https://workflow-sdk.purview.azure-test.com/workflow/workflowruns/d77281b4-2af3-4bc5-8d2f-14a2b63fa33d/cancel?api-version=2022-05-01-preview",
+        "RequestMethod": "POST",
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Content-Length": "21",
+            "Content-Type": "application/json",
+            "traceparent": "00-12bcab6b1965aa4b88dae1a0eddda61e-a751bc019b971349-00",
+            "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230122.1 (.NET Core 3.1.32; Microsoft Windows 10.0.22621)",
+            "x-ms-client-request-id": "71f5efc88b831f241d4808f8510602ee",
+            "x-ms-return-client-request-id": "true"
+        },
+        "RequestBody": {
+            "comment": "Thanks!"
+        },
+        "StatusCode": 200,
+        "ResponseHeaders": {
+            "Content-Length": "0",
+            "Date": "Sun, 22 Jan 2023 06:19:03 GMT",
+            "Server": "MicrosoftPurview",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "x-ms-client-request-id": "71f5efc88b831f241d4808f8510602ee",
+            "x-ms-correlation-request-id": "a077b337-c341-4c4b-be06-9aefa314bdd4",
+            "x-ms-request-id": "1f05ead9-56ef-41d5-a8ed-3f577df0fae8"
+        },
+        "ResponseBody": null
     }
   ],
   "Variables": {

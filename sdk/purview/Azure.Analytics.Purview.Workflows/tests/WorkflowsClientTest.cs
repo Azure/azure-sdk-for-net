@@ -85,7 +85,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
         {
             var client = GetWorkflowClient();
 
-            Guid workflowRunId = new Guid("4f8d70c3-c09b-4e56-bfd1-8b86c79bd4d9");
+            Guid workflowRunId = new Guid("d77281b4-2af3-4bc5-8d2f-14a2b63fa33d");
 
             string request = "{\"comment\":\"Thanks!\"}";
 
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
         {
             var client = GetWorkflowClient();
 
-            Guid taskId = new Guid("b129fe16-72d3-4994-9135-b997b9be46e0");
+            Guid taskId = new Guid("507d9e8a-e5c4-41db-ace5-358961e0bfeb");
 
             string request = "{\"comment\":\"Thanks!\"}";
 
