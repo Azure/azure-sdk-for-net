@@ -17,13 +17,16 @@ namespace Azure.AI.OpenAI.Models
     {
         /// <summary> Initializes a new instance of Completions. </summary>
         /// <param name="object"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="object"/> is null. </exception>
-        internal Completions(string @object)
+        /// <param name="usage"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="object"/> or <paramref name="usage"/> is null. </exception>
+        internal Completions(string @object, CompletionsUsage usage)
         {
             Argument.AssertNotNull(@object, nameof(@object));
+            Argument.AssertNotNull(usage, nameof(usage));
 
             Object = @object;
             Choices = new ChangeTrackingList<Choice>();
+            Usage = usage;
         }
 
         /// <summary> Initializes a new instance of Completions. </summary>
@@ -32,13 +35,15 @@ namespace Azure.AI.OpenAI.Models
         /// <param name="created"></param>
         /// <param name="model"></param>
         /// <param name="choices"></param>
-        internal Completions(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices)
+        /// <param name="usage"></param>
+        internal Completions(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices, CompletionsUsage usage)
         {
             Id = id;
             Object = @object;
             Created = created;
             Model = model;
             Choices = choices.ToList();
+            Usage = usage;
         }
 
         /// <summary> Gets the id. </summary>
@@ -51,5 +56,7 @@ namespace Azure.AI.OpenAI.Models
         public string Model { get; }
         /// <summary> Gets the choices. </summary>
         public IReadOnlyList<Choice> Choices { get; }
+        /// <summary> Gets the usage. </summary>
+        public CompletionsUsage Usage { get; }
     }
 }

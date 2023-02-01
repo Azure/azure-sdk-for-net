@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    /// <summary> The EmbeddingsOptions. </summary>
+    /// <summary> Schema to create a prompt completion from a deployment. </summary>
     public partial class EmbeddingsOptions
     {
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>

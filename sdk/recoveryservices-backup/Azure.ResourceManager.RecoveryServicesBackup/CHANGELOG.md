@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+Changed API version to 2023-01-01.
+
+
 ## 1.0.0-beta.1 (2022-09-25)
 
 ### Breaking Changes
