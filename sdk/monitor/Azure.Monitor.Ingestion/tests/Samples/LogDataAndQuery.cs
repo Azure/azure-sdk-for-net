@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
@@ -72,6 +74,41 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
 
             // Upload our logs
             Response response = client.Upload(ruleId, streamName, RequestContent.Create(data));
+            #endregion
+        }
+
+        public void LogDataIEnumerable()
+        {
+            #region Snippet:UploadCustomLogsIEnumerable
+            var endpoint = new Uri("<data_collection_endpoint_uri>");
+            var ruleId = "<data_collection_rule_id>";
+            var streamName = "<stream_name>";
+
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
+#else
+            TokenCredential credential = new DefaultAzureCredential();
+            endpoint = new Uri(TestEnvironment.DCREndpoint);
+            credential = TestEnvironment.Credential;
+#endif
+            LogsIngestionClient client = new(endpoint, credential);
+
+            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+
+            var entries = new List<Object>();
+            for (int i = 0; i < 100; i++)
+            {
+                entries.Add(new Object[] {
+                    new {
+                        Time = currentTime,
+                        Computer = "Computer" + i.ToString(),
+                        AdditionalContext = i
+                    }
+                });
+            }
+
+            // Upload our logs
+            Response response = client.Upload(ruleId, streamName, entries);
             #endregion
         }
 
