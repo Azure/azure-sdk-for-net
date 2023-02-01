@@ -1,8 +1,10 @@
-# Registering and retrieving Avro, Json, and custom schemas
+# Registering and retrieving Avro, Json, and custom schemas (preview)
 
-The following shows examples of what is available through the `SchemaRegistryClient`. There are both sync and async methods available for these client operations.
+The following shows examples of how to use the basic functionality of the `SchemaRegistryClient` with each of the available schema format types. All of the client methods can be used with each format by passing in the proper 'SchemaFormat' value when needed.
 
-- [Registering and retrieving Avro, Json, and custom schemas](#registering-and-retrieving-avro-json-and-custom-schemas)
+Each Event Hubs Namespace can only accept one format of schemas.
+
+- [Registering and retrieving Avro, Json, and custom schemas (preview)](#registering-and-retrieving-avro-json-and-custom-schemas-preview)
     - [Register a schema Avro](#register-a-schema-avro)
     - [Retrieve a schema Avro](#retrieve-a-schema-avro)
     - [Register a schema Json](#register-a-schema-json)
@@ -13,7 +15,7 @@ The following shows examples of what is available through the `SchemaRegistryCli
 
 ### Register a schema Avro
 
-Register a schema to be stored in the Azure Schema Registry.
+Register an Avro schema to be stored in the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRegisterSchemaAvro
 string name = "employeeSample";
@@ -35,7 +37,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, n
 
 ### Retrieve a schema Avro
 
-Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version.
+Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaAvro
 SchemaRegistrySchema schema = client.GetSchema(schemaId);
@@ -44,7 +46,7 @@ string definition = schema.Definition;
 
 ### Register a schema Json
 
-Register a schema to be stored in the Azure Schema Registry.
+Register a Json schema to be stored in the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRegisterSchemaJson
 string name = "employeeSample";
@@ -75,7 +77,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, n
 
 ### Retrieve a schema Json
 
-Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version.
+Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaJson
 SchemaRegistrySchema schema = client.GetSchema(schemaId);
@@ -84,7 +86,7 @@ string definition = schema.Definition;
 
 ### Register a schema custom
 
-Register a schema to be stored in the Azure Schema Registry.
+Register a custom schema to be stored in the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRegisterSchemaCustom
 string name = "employeeSample";
@@ -102,7 +104,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, n
 
 ### Retrieve a schema custom
 
-Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version.
+Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaCustom
 SchemaRegistrySchema schema = client.GetSchema(schemaId);
