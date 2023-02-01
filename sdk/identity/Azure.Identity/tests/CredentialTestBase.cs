@@ -29,7 +29,8 @@ namespace Azure.Identity.Tests
         protected const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
         protected const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
         protected const string ObjectId = "22730c7e-c3c8-431b-94cf-5676152d9338";
-        protected const string expectedUsername = "mockuser@mockdomain.com";
+        protected const string ExpectedUsername = "mockuser@mockdomain.com";
+        protected const string UserrealmResponse = "{\"ver\": \"1.0\", \"account_type\": \"Managed\", \"domain_name\": \"constoso.com\", \"cloud_instance_name\": \"microsoftonline.com\", \"cloud_audience_urn\": \"urn:federation:MicrosoftOnline\"}";
         protected string expectedToken;
         protected string expectedUserAssertion;
         protected string expectedTenantId;
@@ -82,58 +83,62 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public async Task DisableInstanceMetadataDicovery([Values(true, false)] bool disable)
         {
-            StaticCachesUtilities.ClearStaticMetadataProviderCache();
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+            // Skip test if the credential does not support disabling instance discovery
             if (!typeof(ISupportsDisableInstanceDiscovery).IsAssignableFrom(typeof(TCredOptions)))
             {
                 Assert.Ignore($"{typeof(TCredOptions).Name} does not implement {nameof(ISupportsDisableInstanceDiscovery)}");
             }
-            bool calledDisoveryEndpoint = false;
+
+            // Clear instance discovery cache
+            StaticCachesUtilities.ClearStaticMetadataProviderCache();
+
+            // Configure the transport
+            var token = Guid.NewGuid().ToString();
+            var idToken = CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
+            bool calledDiscoveryEndpoint = false;
             var mockTransport = new MockTransport(req =>
             {
-                Console.WriteLine(req.Uri);
-                calledDisoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-                var response = new MockResponse(200);
-                var token = Guid.NewGuid().ToString();
-                var idToken = CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
+                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+
+                MockResponse response = new(200);
                 if (req.Uri.Path.EndsWith("/devicecode"))
                 {
-                    response.SetContent($"{{\"device_code\": \"{Guid.NewGuid()}\",\"user_code\": \"{Guid.NewGuid()}\",\"verification_url\": \"https://microsoft.com/devicelogin\",\"expires_in\": 900,\"interval\": 5,\"message\": \"my message\"}}");
+                    response = CreateMockMsalDeviceCodeResponse();
                 }
                 else if (req.Uri.Path.Contains("/userrealm/"))
                 {
-                    response.SetContent($"{{\"ver\": \"1.0\", \"account_type\": \"Managed\", \"domain_name\": \"azuresdkoutlook.onmicrosoft.com\", \"cloud_instance_name\": \"microsoftonline.com\", \"cloud_audience_urn\": \"urn:federation:MicrosoftOnline\"}}");
+                    response.SetContent(UserrealmResponse);
                 }
                 else
                 {
                     if (typeof(TCredOptions) == typeof(DeviceCodeCredentialOptions) ||
                         typeof(TCredOptions) == typeof(UsernamePasswordCredentialOptions) ||
                         typeof(TCredOptions) == typeof(SharedTokenCacheCredentialOptions) ||
+                        typeof(TCredOptions) == typeof(InteractiveBrowserCredentialOptions) ||
                         typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
                     {
-                        response.SetContent(
-                         $"{{\"token_type\": \"Bearer\",\"access_token\": \"{token}\",\"refresh_token\": \"{token}\",\"scope\": null,\"client_info\": null,\"id_token\": null,\"expires_in\": 10000,\"ext_expires_in\": 100000,\"refresh_in\": 1000, \"correlation_id\": \"{Guid.NewGuid()}\", \"client_info\": \"{CreateMsalClientInfo(ObjectId, TenantId)}\",\"id_token\": \"{idToken}\"}}");
+                        response = CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
                     }
                     else
                     {
-                        response.SetContent(
-                         $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
+                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
                     }
                 }
 
                 return response;
             });
+
             var config = new CommonCredentialTestConfig()
             {
                 DisableMetadataDiscovery = disable,
                 Transport = mockTransport
             };
-            var options = new TokenCredentialOptions() { Transport = mockTransport };
-            var pipeline = CredentialPipeline.GetInstance(options);
-
             var credential = GetTokenCredential(config);
+
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
-            Assert.AreNotEqual(disable, calledDisoveryEndpoint);
+
+            Assert.AreNotEqual(disable, calledDiscoveryEndpoint);
+            Assert.AreEqual(token, actualToken.Token);
         }
 
         public class AllowedTenantsTestParameters
@@ -330,7 +335,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        protected byte[] GetMockCacheBytes(string objectId, string clientId, string tenantId, string token, string refreshToken)
+        protected byte[] GetMockCacheBytes(string objectId, string userName, string clientId, string tenantId, string token, string refreshToken)
         {
             var cacheString = @$"{{
   ""AccessToken"": {{
@@ -354,7 +359,7 @@ namespace Azure.Identity.Tests
           ""environment"": ""login.microsoftonline.com"",
           ""realm"": ""organizations"",
           ""local_account_id"": ""{objectId}"",
-          ""username"": ""{expectedUsername}"",
+          ""username"": ""{userName}"",
           ""authority_type"": ""MSSTS""
       }}
   }},
@@ -391,13 +396,20 @@ namespace Azure.Identity.Tests
             return Encoding.UTF8.GetBytes(cacheString);
         }
 
-        protected MockResponse CreateMockMsalTokenResponse(int responseCode, string token, string tenantId,
-            string userName)
+        protected MockResponse CreateMockMsalTokenResponse(int responseCode, string token, string tenantId, string userName, string objectId = null)
         {
             var response = new MockResponse(responseCode);
             var idToken = CreateMsalIdToken(Guid.NewGuid().ToString(), userName, tenantId);
             response.SetContent(
-                $"{{\"token_type\": \"Bearer\",\"access_token\": \"{token}\",\"refresh_token\": \"{token}\",\"scope\": null,\"client_info\": null,\"id_token\": null,\"expires_in\": 10000,\"ext_expires_in\": 100000,\"refresh_in\": 1000, \"correlation_id\": \"{Guid.NewGuid().ToString()}\", \"client_info\": \"{CreateMsalClientInfo()}\",\"id_token\": \"{idToken}\"}}");
+                $"{{\"token_type\": \"Bearer\",\"access_token\": \"{token}\",\"refresh_token\": \"{token}\",\"scope\": null,\"client_info\": null,\"id_token\": null,\"expires_in\": 10000,\"ext_expires_in\": 100000,\"refresh_in\": 1000, \"correlation_id\": \"{Guid.NewGuid().ToString()}\", \"client_info\": \"{CreateMsalClientInfo(objectId, tenantId)}\",\"id_token\": \"{idToken}\"}}");
+            return response;
+        }
+
+        protected MockResponse CreateMockMsalDeviceCodeResponse(string deviceCode = null, string userCode = null)
+        {
+            var response = new MockResponse(200);
+            response.SetContent(
+                    $"{{\"device_code\": \"{deviceCode ?? Guid.NewGuid().ToString()}\",\"user_code\": \"{userCode ?? Guid.NewGuid().ToString()}\",\"verification_url\": \"https://microsoft.com/devicelogin\",\"expires_in\": 900,\"interval\": 5,\"message\": \"my message\"}}");
             return response;
         }
 
