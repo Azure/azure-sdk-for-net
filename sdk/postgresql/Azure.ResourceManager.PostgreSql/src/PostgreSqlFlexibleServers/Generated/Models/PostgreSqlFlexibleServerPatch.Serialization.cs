@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
-            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 writer.WritePropertyName("administratorLoginPassword");
                 writer.WriteStringValue(AdministratorLoginPassword);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version");
+                writer.WriteStringValue(Version.Value.ToString());
             }
             if (Optional.IsDefined(Storage))
             {
@@ -63,10 +68,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("maintenanceWindow");
                 writer.WriteObjectValue(MaintenanceWindow);
             }
+            if (Optional.IsDefined(AuthConfig))
+            {
+                writer.WritePropertyName("authConfig");
+                writer.WriteObjectValue(AuthConfig);
+            }
+            if (Optional.IsDefined(DataEncryption))
+            {
+                writer.WritePropertyName("dataEncryption");
+                writer.WriteObjectValue(DataEncryption);
+            }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode");
                 writer.WriteStringValue(CreateMode.Value.ToString());
+            }
+            if (Optional.IsDefined(ReplicationRole))
+            {
+                writer.WritePropertyName("replicationRole");
+                writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

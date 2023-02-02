@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<RecoveryServicesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<IReadOnlyList<VaultSubResourceType>> groupIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
@@ -50,8 +52,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     privateLinkServiceConnectionState = RecoveryServicesPrivateLinkServiceConnectionState.DeserializeRecoveryServicesPrivateLinkServiceConnectionState(property.Value);
                     continue;
                 }
+                if (property.NameEquals("groupIds"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<VaultSubResourceType> array = new List<VaultSubResourceType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new VaultSubResourceType(item.GetString()));
+                    }
+                    groupIds = array;
+                    continue;
+                }
             }
-            return new RecoveryServicesPrivateEndpointConnection(Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value);
+            return new RecoveryServicesPrivateEndpointConnection(Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(groupIds));
         }
     }
 }
