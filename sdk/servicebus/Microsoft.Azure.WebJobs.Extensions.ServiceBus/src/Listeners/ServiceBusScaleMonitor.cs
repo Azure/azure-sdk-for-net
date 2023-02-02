@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _functionId = functionId;
             _serviceBusEntityType = serviceBusEntityType;
             _entityPath = entityPath;
-            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(CultureInfo.InvariantCulture), _functionId);
+            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(CultureInfo.InvariantCulture));
             _isListeningOnDeadLetterQueue = entityPath.EndsWith(DeadLetterQueuePath, StringComparison.OrdinalIgnoreCase);
             _receiver = receiver;
             _administrationClient = new Lazy<ServiceBusAdministrationClient>(() => clientFactory.CreateAdministrationClient(connection));
