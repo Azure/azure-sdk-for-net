@@ -229,7 +229,7 @@ namespace Azure.Monitor.Ingestion
                     if (response.Status != 204)
                     {
                         // if there is no Handler on options, throw exception otherwise raise Handler
-                        if (options == null || !options.HasHandler)
+                        if (!options.HasHandler)
                         {
                             throw new RequestFailedException(response);
                         }
@@ -248,7 +248,7 @@ namespace Azure.Monitor.Ingestion
                 }
                 catch (Exception ex)
                 {
-                    if (options == null || !options.HasHandler)
+                    if (!options.HasHandler)
                     {
                         logsFailed += batch.Logs.Count;
                         // If we have an error, add Exception from response into exceptions list without throwing
