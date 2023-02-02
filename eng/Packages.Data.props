@@ -271,7 +271,7 @@
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
-    <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
+    <PackageDownload Include="test-proxy" Version="[$(TestProxyVersion)]" />
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
@@ -282,7 +282,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20221111.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20230126.2</TestProxyVersion>
   </PropertyGroup>
 
 </Project>
