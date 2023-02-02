@@ -251,9 +251,8 @@
 # PRLabel: %Communication - SMS
 /sdk/communication/Azure.Communication.Sms/                        @RoyHerrod @arifibrahim4
 
-# TODO: OWNERS MISSING HERE!
 # PRLabel: %Communication - Resource Manager
-/sdk/communication/Azure.ResourceManager.Communication/
+/sdk/communication/Azure.ResourceManager.Communication/            @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
 
 # ServiceLabel: %Compute %Service Attention
 #/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @jaylabell @sandeepraichura @hilaryw29 @MsGabsta
@@ -696,9 +695,8 @@
 # ServiceLabel: %Storsimple %Service Attention
 /sdk/storsimple/Microsoft.Azure.Management.StorSimple/             @anoobbacker @ganzee @manuaery @patelkunal
 
-# TODO: OWNERS MISSING HERE!
 # ServiceLabel: %Storsimple %Service Attention
-/sdk/storsimple8000series/Microsoft.Azure.Management.StorSimple8000Series/
+/sdk/storsimple8000series/Microsoft.Azure.Management.StorSimple8000Series/ @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
 
 # ServiceLabel: %Stream Analytics %Service Attention
 /sdk/streamanalytics/Microsoft.Azure.Management.StreamAnalytics/   @atpham256
