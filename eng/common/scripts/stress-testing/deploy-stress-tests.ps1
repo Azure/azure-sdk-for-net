@@ -10,11 +10,7 @@ param(
     [switch]$PushImages,
     [string]$ClusterGroup,
     [string]$DeployId,
-
-    [Parameter(ParameterSetName = 'DoLogin', Mandatory = $true)]
     [switch]$Login,
-
-    [Parameter(ParameterSetName = 'DoLogin')]
     [string]$Subscription,
 
     # Default to true in Azure Pipelines environments
