@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of DeletedBackupInstanceResourceList. </summary>
         internal DeletedBackupInstanceResourceList()
         {
-            Value = new ChangeTrackingList<DeletedBackupInstanceResourceData>();
+            Value = new ChangeTrackingList<DataProtectionDeletedBackupInstanceData>();
         }
 
         /// <summary> Initializes a new instance of DeletedBackupInstanceResourceList. </summary>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
         /// <param name="value"> List of resources. </param>
-        internal DeletedBackupInstanceResourceList(string nextLink, IReadOnlyList<DeletedBackupInstanceResourceData> value) : base(nextLink)
+        internal DeletedBackupInstanceResourceList(string nextLink, IReadOnlyList<DataProtectionDeletedBackupInstanceData> value) : base(nextLink)
         {
             Value = value;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<DeletedBackupInstanceResourceData> Value { get; }
+        public IReadOnlyList<DataProtectionDeletedBackupInstanceData> Value { get; }
     }
 }

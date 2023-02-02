@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BlobBackupDatasourceParameters : IUtf8JsonSerializable
+    public partial class BlobBackupDataSourceSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static BlobBackupDatasourceParameters DeserializeBlobBackupDatasourceParameters(JsonElement element)
+        internal static BlobBackupDataSourceSettings DeserializeBlobBackupDataSourceSettings(JsonElement element)
         {
             IList<string> containersList = default;
             string objectType = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BlobBackupDatasourceParameters(objectType, containersList);
+            return new BlobBackupDataSourceSettings(objectType, containersList);
         }
     }
 }

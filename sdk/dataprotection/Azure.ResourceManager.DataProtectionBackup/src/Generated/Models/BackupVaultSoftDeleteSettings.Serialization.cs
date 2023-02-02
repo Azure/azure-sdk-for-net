@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SoftDeleteSettings : IUtf8JsonSerializable
+    public partial class BackupVaultSoftDeleteSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static SoftDeleteSettings DeserializeSoftDeleteSettings(JsonElement element)
+        internal static BackupVaultSoftDeleteSettings DeserializeBackupVaultSoftDeleteSettings(JsonElement element)
         {
-            Optional<SoftDeleteState> state = default;
+            Optional<BackupVaultSoftDeleteState> state = default;
             Optional<double> retentionDurationInDays = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new SoftDeleteState(property.Value.GetString());
+                    state = new BackupVaultSoftDeleteState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("retentionDurationInDays"))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new SoftDeleteSettings(Optional.ToNullable(state), Optional.ToNullable(retentionDurationInDays));
+            return new BackupVaultSoftDeleteSettings(Optional.ToNullable(state), Optional.ToNullable(retentionDurationInDays));
         }
     }
 }

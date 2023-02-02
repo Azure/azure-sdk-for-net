@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class PolicyParameters : IUtf8JsonSerializable
+    public partial class BackupInstancePolicySettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackupDatasourceParametersList))
+            if (Optional.IsCollectionDefined(BackupDataSourceParametersList))
             {
                 writer.WritePropertyName("backupDatasourceParametersList");
                 writer.WriteStartArray();
-                foreach (var item in BackupDatasourceParametersList)
+                foreach (var item in BackupDataSourceParametersList)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static PolicyParameters DeserializePolicyParameters(JsonElement element)
+        internal static BackupInstancePolicySettings DeserializeBackupInstancePolicySettings(JsonElement element)
         {
             Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
-            Optional<IList<BackupDatasourceParameters>> backupDatasourceParametersList = default;
+            Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataStoreParametersList"))
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BackupDatasourceParameters> array = new List<BackupDatasourceParameters>();
+                    List<BackupDataSourceSettings> array = new List<BackupDataSourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDatasourceParameters.DeserializeBackupDatasourceParameters(item));
+                        array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item));
                     }
                     backupDatasourceParametersList = array;
                     continue;
                 }
             }
-            return new PolicyParameters(Optional.ToList(dataStoreParametersList), Optional.ToList(backupDatasourceParametersList));
+            return new BackupInstancePolicySettings(Optional.ToList(dataStoreParametersList), Optional.ToList(backupDatasourceParametersList));
         }
     }
 }

@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Backup Vault Contract for Patch Backup Vault API. </summary>
-    public partial class PatchBackupVaultInput
+    public partial class DataProtectionBackupVaultPatchProperties
     {
-        /// <summary> Initializes a new instance of PatchBackupVaultInput. </summary>
-        public PatchBackupVaultInput()
+        /// <summary> Initializes a new instance of DataProtectionBackupVaultPatchProperties. </summary>
+        public DataProtectionBackupVaultPatchProperties()
         {
         }
 
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Security Settings. </summary>
-        public SecuritySettings SecuritySettings { get; set; }
+        public BackupVaultSecuritySettings SecuritySettings { get; set; }
         /// <summary> Feature Settings. </summary>
         internal FeatureSettings FeatureSettings { get; set; }
         /// <summary> CrossSubscriptionRestore state. </summary>
-        public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        public DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState
         {
             get => FeatureSettings is null ? default : FeatureSettings.CrossSubscriptionRestoreState;
             set

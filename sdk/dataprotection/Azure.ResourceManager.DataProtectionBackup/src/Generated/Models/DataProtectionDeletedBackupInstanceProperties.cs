@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Deleted Backup Instance. </summary>
-    public partial class DeletedBackupInstance : DataProtectionBackupInstanceProperties
+    public partial class DataProtectionDeletedBackupInstanceProperties : DataProtectionBackupInstanceProperties
     {
-        /// <summary> Initializes a new instance of DeletedBackupInstance. </summary>
+        /// <summary> Initializes a new instance of DataProtectionDeletedBackupInstanceProperties. </summary>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
         /// <param name="objectType"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceInfo"/>, <paramref name="policyInfo"/> or <paramref name="objectType"/> is null. </exception>
-        public DeletedBackupInstance(DataSourceInfo dataSourceInfo, BackupInstancePolicyInfo policyInfo, string objectType) : base(dataSourceInfo, policyInfo, objectType)
+        public DataProtectionDeletedBackupInstanceProperties(DataSourceInfo dataSourceInfo, BackupInstancePolicyInfo policyInfo, string objectType) : base(dataSourceInfo, policyInfo, objectType)
         {
             Argument.AssertNotNull(dataSourceInfo, nameof(dataSourceInfo));
             Argument.AssertNotNull(policyInfo, nameof(policyInfo));
             Argument.AssertNotNull(objectType, nameof(objectType));
         }
 
-        /// <summary> Initializes a new instance of DeletedBackupInstance. </summary>
+        /// <summary> Initializes a new instance of DataProtectionDeletedBackupInstanceProperties. </summary>
         /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
         /// <param name="objectType"></param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
-        internal DeletedBackupInstance(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType, DeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, objectType)
+        internal DataProtectionDeletedBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType, BackupInstanceDeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, objectType)
         {
             DeletionInfo = deletionInfo;
         }
 
         /// <summary> Deletion info of Backup Instance. </summary>
-        public DeletionInfo DeletionInfo { get; }
+        public BackupInstanceDeletionInfo DeletionInfo { get; }
     }
 }

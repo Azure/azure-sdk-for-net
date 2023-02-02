@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeletedBackupInstanceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataProtectionDeletedBackupInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 case 200:
                     {
-                        DeletedBackupInstanceResourceData value = default;
+                        DataProtectionDeletedBackupInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeletedBackupInstanceResourceData.DeserializeDeletedBackupInstanceResourceData(document.RootElement);
+                        value = DataProtectionDeletedBackupInstanceData.DeserializeDataProtectionDeletedBackupInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeletedBackupInstanceResourceData)null, message.Response);
+                    return Response.FromValue((DataProtectionDeletedBackupInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeletedBackupInstanceResourceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
+        public Response<DataProtectionDeletedBackupInstanceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,13 +192,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 case 200:
                     {
-                        DeletedBackupInstanceResourceData value = default;
+                        DataProtectionDeletedBackupInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeletedBackupInstanceResourceData.DeserializeDeletedBackupInstanceResourceData(document.RootElement);
+                        value = DataProtectionDeletedBackupInstanceData.DeserializeDataProtectionDeletedBackupInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeletedBackupInstanceResourceData)null, message.Response);
+                    return Response.FromValue((DataProtectionDeletedBackupInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

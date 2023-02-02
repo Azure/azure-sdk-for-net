@@ -11,26 +11,26 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary> A class representing the DeletedBackupInstanceResource data model. </summary>
-    public partial class DeletedBackupInstanceResourceData : ResourceData
+    /// <summary> A class representing the DataProtectionDeletedBackupInstance data model. </summary>
+    public partial class DataProtectionDeletedBackupInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedBackupInstanceResourceData. </summary>
-        public DeletedBackupInstanceResourceData()
+        /// <summary> Initializes a new instance of DataProtectionDeletedBackupInstanceData. </summary>
+        public DataProtectionDeletedBackupInstanceData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedBackupInstanceResourceData. </summary>
+        /// <summary> Initializes a new instance of DataProtectionDeletedBackupInstanceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> DeletedBackupInstanceResource properties. </param>
-        internal DeletedBackupInstanceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeletedBackupInstance properties) : base(id, name, resourceType, systemData)
+        internal DataProtectionDeletedBackupInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataProtectionDeletedBackupInstanceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> DeletedBackupInstanceResource properties. </summary>
-        public DeletedBackupInstance Properties { get; set; }
+        public DataProtectionDeletedBackupInstanceProperties Properties { get; set; }
     }
 }

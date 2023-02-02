@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SecuritySettings : IUtf8JsonSerializable
+    public partial class BackupVaultSecuritySettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static SecuritySettings DeserializeSecuritySettings(JsonElement element)
+        internal static BackupVaultSecuritySettings DeserializeBackupVaultSecuritySettings(JsonElement element)
         {
-            Optional<SoftDeleteSettings> softDeleteSettings = default;
+            Optional<BackupVaultSoftDeleteSettings> softDeleteSettings = default;
             Optional<ImmutabilitySettings> immutabilitySettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    softDeleteSettings = SoftDeleteSettings.DeserializeSoftDeleteSettings(property.Value);
+                    softDeleteSettings = BackupVaultSoftDeleteSettings.DeserializeBackupVaultSoftDeleteSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("immutabilitySettings"))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new SecuritySettings(softDeleteSettings.Value, immutabilitySettings.Value);
+            return new BackupVaultSecuritySettings(softDeleteSettings.Value, immutabilitySettings.Value);
         }
     }
 }

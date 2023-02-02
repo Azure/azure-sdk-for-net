@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupDatasourceParameters : IUtf8JsonSerializable
+    public partial class BackupDataSourceSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static BackupDatasourceParameters DeserializeBackupDatasourceParameters(JsonElement element)
+        internal static BackupDataSourceSettings DeserializeBackupDataSourceSettings(JsonElement element)
         {
             if (element.TryGetProperty("objectType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "BlobBackupDatasourceParameters": return BlobBackupDatasourceParameters.DeserializeBlobBackupDatasourceParameters(element);
-                    case "KubernetesClusterBackupDatasourceParameters": return KubernetesClusterBackupDatasourceParameters.DeserializeKubernetesClusterBackupDatasourceParameters(element);
+                    case "BlobBackupDatasourceParameters": return BlobBackupDataSourceSettings.DeserializeBlobBackupDataSourceSettings(element);
+                    case "KubernetesClusterBackupDatasourceParameters": return KubernetesClusterBackupDataSourceSettings.DeserializeKubernetesClusterBackupDataSourceSettings(element);
                 }
             }
             return UnknownBackupDatasourceParameters.DeserializeUnknownBackupDatasourceParameters(element);

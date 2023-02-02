@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return GetDataProtectionBackupJobs().Get(jobId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeletedBackupInstanceResources in the DataProtectionBackupVault. </summary>
-        /// <returns> An object representing collection of DeletedBackupInstanceResources and their operations over a DeletedBackupInstanceResource. </returns>
-        public virtual DeletedBackupInstanceResourceCollection GetDeletedBackupInstanceResources()
+        /// <summary> Gets a collection of DataProtectionDeletedBackupInstanceResources in the DataProtectionBackupVault. </summary>
+        /// <returns> An object representing collection of DataProtectionDeletedBackupInstanceResources and their operations over a DataProtectionDeletedBackupInstanceResource. </returns>
+        public virtual DataProtectionDeletedBackupInstanceCollection GetDataProtectionDeletedBackupInstances()
         {
-            return GetCachedClient(Client => new DeletedBackupInstanceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new DataProtectionDeletedBackupInstanceCollection(Client, Id));
         }
 
         /// <summary>
@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeletedBackupInstanceResource>> GetDeletedBackupInstanceResourceAsync(string backupInstanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionDeletedBackupInstanceResource>> GetDataProtectionDeletedBackupInstanceAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            return await GetDeletedBackupInstanceResources().GetAsync(backupInstanceName, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionDeletedBackupInstances().GetAsync(backupInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeletedBackupInstanceResource> GetDeletedBackupInstanceResource(string backupInstanceName, CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionDeletedBackupInstanceResource> GetDataProtectionDeletedBackupInstance(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            return GetDeletedBackupInstanceResources().Get(backupInstanceName, cancellationToken);
+            return GetDataProtectionDeletedBackupInstances().Get(backupInstanceName, cancellationToken);
         }
 
         /// <summary>
