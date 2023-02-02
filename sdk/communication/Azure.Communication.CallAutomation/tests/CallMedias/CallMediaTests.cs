@@ -7,7 +7,6 @@ using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
-using Azure.Communication.CallAutomation.Models;
 
 namespace Azure.Communication.CallAutomation.Tests.CallMedias
 {

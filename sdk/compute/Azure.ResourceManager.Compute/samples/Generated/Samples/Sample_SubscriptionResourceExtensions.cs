@@ -214,14 +214,8 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaa");
-            string publisherName = "aaaaaa";
-            string offer = "aaaaaaaaaaaaaaaa";
-            string skus = "aaaaaaaaaaaaaaaaaaaaaaa";
-            string expand = "aaaaaaaaaaaaaaaaaaaaaaaa";
-            int? top = 18;
-            string orderby = "aa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(location, publisherName, offer, skus, expand: expand, top: top, orderby: orderby))
+            SubscriptionGetVirtualMachineImagesOptions options = new SubscriptionGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), publisherName: "aaaaaa", offer: "aaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 18, Orderby = "aa" };
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -249,11 +243,8 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaaaa");
-            string publisherName = "aaaaaaaaaaa";
-            string offer = "aaaaaaaaaa";
-            string skus = "aaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(location, publisherName, offer, skus))
+            SubscriptionGetVirtualMachineImagesOptions options = new SubscriptionGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaa"), publisherName: "aaaaaaaaaaa", offer: "aaaaaaaaaa", skus: "aaaaaa") { };
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -521,13 +512,8 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaa");
-            string edgeZone = "aaaaaaaa";
-            string publisherName = "aaaaaaaaaaaaaaaaaaaaaaa";
-            string offer = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string skus = "aaaaaaaaaa";
-            string version = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(location, edgeZone, publisherName, offer, skus, version);
+            SubscriptionGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaa", version: "aaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
+            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -552,13 +538,8 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaa");
-            string edgeZone = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string publisherName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string offer = "aaaaaaaaaaa";
-            string skus = "aaaaaaaaaaaaaaaaaa";
-            string version = "aa";
-            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(location, edgeZone, publisherName, offer, skus, version);
+            SubscriptionGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaa", version: "aa") { };
+            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -583,15 +564,8 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaa");
-            string edgeZone = "aaaaaaaaaaaaaaaaaaaaaaaaa";
-            string publisherName = "aaaa";
-            string offer = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string skus = "aaaaaaaaaaaaaaaaaaaaaaa";
-            string expand = "aaaaaaaaaaaaaaaaaaaaaaaa";
-            int? top = 12;
-            string orderby = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName, offer, skus, expand: expand, top: top, orderby: orderby))
+            SubscriptionGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 12, Orderby = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -619,12 +593,8 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            string edgeZone = "aaaaa";
-            string publisherName = "aaaaaaaaaaaaaaaaaaa";
-            string offer = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string skus = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName, offer, skus))
+            SubscriptionGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaa", publisherName: "aaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

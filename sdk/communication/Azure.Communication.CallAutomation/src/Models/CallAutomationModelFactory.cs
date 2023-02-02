@@ -123,8 +123,8 @@ namespace Azure.Communication.CallAutomation
                 serverCallId,
                 correlationId,
                 participants == null
-                    ? new List<AcsCallParticipantInternal>()
-                    : participants.Select(p => new AcsCallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
+                    ? new List<CallParticipantInternal>()
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
                 );
 
             return new ParticipantsUpdated(internalObject);

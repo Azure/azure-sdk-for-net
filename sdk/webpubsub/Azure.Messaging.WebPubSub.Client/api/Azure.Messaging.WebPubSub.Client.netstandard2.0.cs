@@ -105,9 +105,10 @@ namespace Azure.Messaging.WebPubSub.Clients
     }
     public partial class WebPubSubClientCredential
     {
+        protected WebPubSubClientCredential() { }
         public WebPubSubClientCredential(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<System.Uri>> clientAccessUriProvider) { }
         public WebPubSubClientCredential(System.Uri clientAccessUri) { }
-        public System.Threading.Tasks.ValueTask<System.Uri> GetClientAccessUriAsync(System.Threading.CancellationToken token = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<System.Uri> GetClientAccessUriAsync(System.Threading.CancellationToken token = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WebPubSubClientOptions
     {

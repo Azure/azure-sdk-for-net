@@ -11,4 +11,13 @@ namespace: Azure.Developer.LoadTesting
 security: AADToken
 security-scopes: https://cnt-prod.loadtesting.azure.com/.default
 skip-csproj-packagereference: true
+directive:
+    - from: swagger-document
+      where: $["paths"]["/tests/{testId}/files/{fileName}"].put
+      transform: >
+        $["x-accessibility"] = "internal";
+    - from: swagger-document
+      where: $["paths"]["/test-runs/{testRunId}"].patch
+      transform: >
+        $["x-accessibility"] = "internal";
 ```

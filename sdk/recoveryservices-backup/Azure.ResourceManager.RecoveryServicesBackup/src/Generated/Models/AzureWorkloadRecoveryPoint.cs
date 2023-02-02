@@ -32,12 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="restorePointType"> Type of restore point. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
-        internal AzureWorkloadRecoveryPoint(string objectType, DateTimeOffset? recoveryPointTimeInUTC, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo) : base(objectType)
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        internal AzureWorkloadRecoveryPoint(string objectType, DateTimeOffset? recoveryPointTimeInUTC, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
         {
             RecoveryPointTimeInUTC = recoveryPointTimeInUTC;
             RestorePointType = restorePointType;
             RecoveryPointTierDetails = recoveryPointTierDetails;
             RecoveryPointMoveReadinessInfo = recoveryPointMoveReadinessInfo;
+            RecoveryPointProperties = recoveryPointProperties;
             ObjectType = objectType ?? "AzureWorkloadRecoveryPoint";
         }
 
@@ -49,5 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<RecoveryPointTierInformationV2> RecoveryPointTierDetails { get; }
         /// <summary> Eligibility of RP to be moved to another tier. </summary>
         public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; }
+        /// <summary> Properties of Recovery Point. </summary>
+        public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }
