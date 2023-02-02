@@ -40,6 +40,10 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(completionsRequest, Is.InstanceOf<CompletionsOptions>());
             var response = await client.GetCompletionsAsync(DeploymentId, completionsRequest);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(2));
+            Assert.That(response.Value.Choices[0].FinishReason, Is.EqualTo("stop"));
         }
 
         /// <summary>
