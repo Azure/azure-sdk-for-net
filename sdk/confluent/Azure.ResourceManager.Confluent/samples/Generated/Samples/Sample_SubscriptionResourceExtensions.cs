@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
 
