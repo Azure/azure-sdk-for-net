@@ -18,12 +18,12 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="Specialized.DownloadManifestResult" />. </summary>
         /// <param name="digest"> The manifest's digest, calculated by the registry. </param>
-        /// <param name="manifest">The OCI manifest that was downloaded.</param>
+        /// <param name="mediaType">The media type of the downloaded manifest.</param>
         /// <param name="content">Manifest content that was downloaded.</param>
         /// <returns> A new <see cref="Specialized.DownloadManifestResult"/> instance for mocking. </returns>
-        public static DownloadManifestResult DownloadManifestResult(string digest = null, OciManifest manifest = null, BinaryData content = null)
+        public static DownloadManifestResult DownloadManifestResult(string digest = null, string mediaType = null, BinaryData content = null)
         {
-            return new DownloadManifestResult(digest, manifest, content);
+            return new DownloadManifestResult(digest, mediaType, content);
         }
 
         /// <summary> Initializes a new instance of <see cref="Specialized.UploadBlobResult" />. </summary>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2023-02-07)
 
 ### Acknowledgments
 
@@ -11,10 +11,6 @@ Thank you to our developer community members who helped to make the Event Hubs c
 ### Features Added
 
 - Added an overload when configuring data protection which allows token credentials to be created by a factory on-demand.  _(A community contribution, courtesy of [thomhurst](https://github.com/thomhurst))_
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
