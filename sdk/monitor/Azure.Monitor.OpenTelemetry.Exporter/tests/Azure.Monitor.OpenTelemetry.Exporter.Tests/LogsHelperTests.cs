@@ -20,6 +20,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     public class LogsHelperTests
     {
         [Fact]
+        public void MessageIsSetToExceptionMessage()
+        {
+            var logRecords = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.IncludeFormattedMessage = true;
+                    options.AddInMemoryExporter(logRecords);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+            string log = "Hello from {name} {price}.";
+            try
+            {
+                throw new Exception("Test Exception");
+            }
+            catch (Exception ex)
+            {
+                logger.LogInformation(ex, log, "tomato", 2.99);
+            }
+
+            var properties = new ChangeTrackingDictionary<string, string>();
+            var message = LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
+
+            Assert.Equal("Test Exception", message);
+            Assert.True(properties.TryGetValue("OriginalFormat", out string value));
+            Assert.Equal(log, value);
+            Assert.True(properties.TryGetValue("name", out string name));
+            Assert.Equal("tomato", name);
+            Assert.True(properties.TryGetValue("price", out string price));
+            Assert.Equal("2.99", price);
+            Assert.Equal(3, properties.Count);
+        }
+
+        [Fact]
         public void MessageIsSetToFormattedMessageWhenIncludeFormattedMessageIsSet()
         {
             var logRecords = new List<LogRecord>();

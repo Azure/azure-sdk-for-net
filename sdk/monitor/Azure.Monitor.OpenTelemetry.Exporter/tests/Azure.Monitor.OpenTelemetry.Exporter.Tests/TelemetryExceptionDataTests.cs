@@ -226,7 +226,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(3, exceptionData.Exceptions.Count);
-            Assert.Equal("AggregateException", exceptionData.Exceptions[0].Message);
+            Assert.Equal("AggregateException (Inner1) (Inner2)", exceptionData.Exceptions[0].Message);
             Assert.Equal("Inner1", exceptionData.Exceptions[1].Message);
             Assert.Equal("Inner2", exceptionData.Exceptions[2].Message);
         }
@@ -297,10 +297,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(maxNumberOfExceptionsAllowed + 1, exceptionData.Exceptions.Count);
 
-            for (int counter = 0; counter < maxNumberOfExceptionsAllowed; counter++)
+            // The first exception is the AggregateException
+            Assert.Equal("System.AggregateException", exceptionData.Exceptions[0].TypeName);
+            Assert.Equal("0 (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)", exceptionData.Exceptions[0].Message);
+
+            // Assert Additional exceptions
+            for (int counter = 1; counter < maxNumberOfExceptionsAllowed; counter++)
             {
                 var details = exceptionData.Exceptions[counter];
 
+                Assert.Equal("System.Exception", exceptionData.Exceptions[counter].TypeName);
                 Assert.Equal(counter.ToString(CultureInfo.InvariantCulture), details.Message);
             }
 
@@ -336,18 +342,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var logger = loggerFactory.CreateLogger<TelemetryExceptionDataTests>();
 
-            var ex = new Exception("Message");
-            logger.Log(logLevel, ex, "Message");
+            var ex = new Exception("Exception Message");
+            logger.Log(logLevel, ex, "Log Message");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(2, exceptionData.Version);
             Assert.Equal(LogsHelper.GetSeverityLevel(logLevel), exceptionData.SeverityLevel);
-            Assert.Empty(exceptionData.Properties);
+            Assert.Equal("Log Message", exceptionData.Properties["OriginalFormat"]);
             Assert.Empty(exceptionData.Measurements);
             Assert.Equal(typeof(Exception).FullName + " at UnknownMethod", exceptionData.ProblemId);
             Assert.Equal(1, exceptionData.Exceptions.Count);
-            Assert.Equal("Message", exceptionData.Exceptions[0].Message);
+            Assert.Equal("Exception Message", exceptionData.Exceptions[0].Message);
             Assert.Null(exceptionData.Exceptions[0].Stack);
             Assert.Equal(ex.GetHashCode(), exceptionData.Exceptions[0].Id);
             Assert.Empty(exceptionData.Exceptions[0].ParsedStack);

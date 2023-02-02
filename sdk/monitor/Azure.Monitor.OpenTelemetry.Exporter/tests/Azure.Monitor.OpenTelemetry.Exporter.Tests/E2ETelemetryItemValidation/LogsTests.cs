@@ -81,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: null);
         }
 
-        [Theory(Skip = "Bug: ILogger message is overwriting the Exception.Message.")]
+        [Theory]
         [InlineData(LogLevel.Information, "Information")]
         [InlineData(LogLevel.Warning, "Warning")]
         [InlineData(LogLevel.Error, "Error")]
