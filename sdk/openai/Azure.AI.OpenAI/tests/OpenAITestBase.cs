@@ -57,16 +57,27 @@ namespace Azure.AI.OpenAI.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
+                // For playback, setup details are populated directly from the test recordings
                 _endpoint = new Uri(Recording.GetVariable(Constants.EndpointVariable, null));
                 _completionsDeploymentId = Recording.GetVariable(Constants.CompletionsDeploymentIdVariable, null);
                 _embeddingsDeploymentId = Recording.GetVariable(Constants.EmbeddingsDeploymentIdVariable, null);
                 _apiKey = new AzureKeyCredential("unused placeholder value for recordings");
             }
+            else if (_apiKey is not null)
+            {
+                // Non-recording modes don't need to initialize again if we've already initialized the deployment
+            }
             else
             {
+                // Non-recording modes that haven't yet initialized need to go initialize the deployment
                 lock (_deploymentIdLock)
                 {
-                    if (Mode == RecordedTestMode.Live || Mode == RecordedTestMode.Record)
+                    if (_apiKey is not null)
+                    {
+                        // The lock may have taken a while to acquire if deployment was already underway in parallel; check here one more time
+                        // and carry on if we're already good to go.
+                    }
+                    else
                     {
                         TestEnvironment.ThrowIfCannotDeploy();
                         ArmClient armClient = new ArmClient(TestEnvironment.Credential);
@@ -108,14 +119,17 @@ namespace Azure.AI.OpenAI.Tests
                         _completionsDeploymentId = completionsModelResource.Id.Name;
                         _embeddingsDeploymentId = embeddingsModelResource.Id.Name;
 
-                        Recording.SetVariable(Constants.EndpointVariable, _endpoint.ToString());
-                        Recording.SetVariable(Constants.CompletionsDeploymentIdVariable, _completionsDeploymentId);
-                        Recording.SetVariable(Constants.EmbeddingsDeploymentIdVariable, _embeddingsDeploymentId);
-
                         ServiceAccountApiKeys keys = openAIResource.GetKeys();
                         _apiKey = new AzureKeyCredential(keys.Key1);
                     }
                 }
+            }
+
+            if (Mode == RecordedTestMode.Record)
+            {
+                Recording.SetVariable(Constants.EndpointVariable, _endpoint.ToString());
+                Recording.SetVariable(Constants.CompletionsDeploymentIdVariable, _completionsDeploymentId);
+                Recording.SetVariable(Constants.EmbeddingsDeploymentIdVariable, _embeddingsDeploymentId);
             }
         }
 
