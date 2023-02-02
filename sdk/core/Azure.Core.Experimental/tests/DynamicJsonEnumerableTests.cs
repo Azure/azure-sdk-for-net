@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Azure.Core.Dynamic;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
@@ -25,15 +23,32 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        [Ignore("BinaryOperation fails to bind in net461.")]
+        public void CanConvertToIntEnumerableWithChanges_AddAssign()
+        {
+            dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
+
+            for (int i = 0; i < 4; i++)
+            {
+                jsonData[i] += 1;
+            }
+
+            IEnumerable<int> enumerable = (IEnumerable<int>)jsonData;
+            int expected = 1;
+            foreach (int i in enumerable)
+            {
+                Assert.AreEqual(expected++, i);
+            }
+        }
+
+        [Test]
         public void CanConvertToIntEnumerableWithChanges()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
 
             for (int i = 0; i < 4; i++)
             {
-                // TODO: Support `++` operator?
-                //jsonData[i]++; <-- not supported
-                jsonData[i] += 1;
+                jsonData[i] = i + 1;
             }
 
             IEnumerable<int> enumerable = (IEnumerable<int>)jsonData;

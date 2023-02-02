@@ -16,8 +16,6 @@ namespace Azure.Core.Dynamic
     [JsonConverter(typeof(JsonConverter))]
     public partial class DynamicJson : DynamicData
     {
-        // TODO: Decide whether or not to support equality
-
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo GetEnumerableMethod = typeof(DynamicJson).GetMethod(nameof(GetEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -86,8 +84,6 @@ namespace Azure.Core.Dynamic
 
         private T ConvertTo<T>()
         {
-            // TODO: Respect user-provided serialization options
-
 #if NET6_0_OR_GREATER
             return JsonSerializer.Deserialize<T>(_element.GetJsonElement(), MutableJsonDocument.DefaultJsonSerializerOptions)!;
 #else

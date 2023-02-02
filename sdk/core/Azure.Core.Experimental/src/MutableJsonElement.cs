@@ -29,8 +29,6 @@ namespace Azure.Core.Dynamic
             _highWaterMark = highWaterMark;
         }
 
-        // TODO: Implement indexer
-
         /// <summary>
         /// Gets the type of the current JSON value.
         /// </summary>
@@ -323,8 +321,6 @@ namespace Azure.Core.Dynamic
             EnsureValid();
 
             EnsureObject();
-
-            // TODO: Removal per JSON Merge Patch https://www.rfc-editor.org/rfc/rfc7386?
 
             if (!_element.TryGetProperty(name, out _))
             {

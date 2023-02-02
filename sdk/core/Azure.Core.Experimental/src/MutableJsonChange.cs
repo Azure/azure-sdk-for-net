@@ -40,7 +40,6 @@ namespace Azure.Core.Dynamic
                 return (JsonElement)Value;
             }
 
-            // TODO: respect serializer options
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
             return JsonDocument.Parse(bytes).RootElement;
         }

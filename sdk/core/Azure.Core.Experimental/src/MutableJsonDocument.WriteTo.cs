@@ -11,7 +11,6 @@ namespace Azure.Core.Dynamic
     {
         internal void WriteRootElementTo(Utf8JsonWriter writer)
         {
-            // TODO: Optimize path manipulations with Span<byte>
             string path = string.Empty;
 
             Utf8JsonReader reader;
