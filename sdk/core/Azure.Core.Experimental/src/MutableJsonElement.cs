@@ -287,6 +287,15 @@ namespace Azure.Core.Dynamic
                 return this;
             }
 
+#if !NET6_0_OR_GREATER
+            // Earlier versions of JsonSerializer.Serialize include "RootElement"
+            // as a property when called on JsonDocument.
+            if (value is JsonDocument doc)
+            {
+                value = doc.RootElement;
+            }
+#endif
+
             // If it's not already there, we'll add a change to this element's JsonElement instead.
             Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes())!;
             dict[name] = value;
@@ -296,7 +305,7 @@ namespace Azure.Core.Dynamic
 
             int index = Changes.AddChange(_path, newElement, true);
 
-            // Make sure the object is stored to ensure reference semantics
+            // Make sure the object reference is stored to ensure reference semantics
             string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
             Changes.AddChange(path, value, true);
 
@@ -431,6 +440,9 @@ namespace Azure.Core.Dynamic
                     Set(e);
                     break;
                 case MutableJsonDocument d:
+                    Set(d.RootElement);
+                    break;
+                case JsonDocument d:
                     Set(d.RootElement);
                     break;
                 default:
