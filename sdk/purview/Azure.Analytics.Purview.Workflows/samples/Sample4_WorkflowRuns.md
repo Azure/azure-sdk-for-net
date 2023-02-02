@@ -30,5 +30,6 @@ string request = "{\"comment\":\"Thanks!\"}";
 
 Response cancelResult = await client.CancelWorkflowRunAsync(workflowRunId, RequestContent.Create(request));
 ```
+
 [prerequisites]: https://github.com/Azure/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.Workflows/README.md#Prerequisites
 [authenticate_the_client]: https://github.com/Azure/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.Workflows/README.md#authenticate-the-client

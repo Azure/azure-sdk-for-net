@@ -1,4 +1,5 @@
 # Submit user requests
+
 This sample shows how to submit a user request.
 
 To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and have obtained all of the resources required by [Authenticate the client][authenticate_the_client].
@@ -26,5 +27,6 @@ string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"gloss
 
 Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Create(request));
 ```
+
 [prerequisites]: https://github.com/Azure/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.Workflows/README.md#Prerequisites
 [authenticate_the_client]: https://github.com/Azure/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.Workflows/README.md#authenticate-the-client

@@ -29,6 +29,7 @@ var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredenti
 ```
 
 ## Examples
+
 The following section provides several code snippets covering some of the most common scenarios, including:
 - [Create Workflow](#create-workflow)
 - [Submit User Requests](#submit-user-requests)
