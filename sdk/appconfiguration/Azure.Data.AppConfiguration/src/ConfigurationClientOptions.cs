@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("ServiceVersion")]
+[assembly: CodeGenSuppressType("ConfigurationClientOptions")]
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>

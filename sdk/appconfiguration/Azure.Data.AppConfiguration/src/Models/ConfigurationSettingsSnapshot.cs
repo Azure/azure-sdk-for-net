@@ -9,14 +9,12 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> The Snapshot. </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
-    public partial class Snapshot
-#pragma warning restore AZC0012 // Avoid single word type names
+    public partial class ConfigurationSettingsSnapshot
     {
         /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public Snapshot(IEnumerable<ConfigurationSettingFilter> filters)
+        public ConfigurationSettingsSnapshot(IEnumerable<ConfigurationSettingFilter> filters)
         {
             Argument.AssertNotNull(filters, nameof(filters));
 
@@ -37,7 +35,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="etag"> A value representing the current state of the snapshot. </param>
-        internal Snapshot(string name, SnapshotStatus? status, int? statusCode, IList<ConfigurationSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, string etag)
+        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, int? statusCode, IList<ConfigurationSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, string etag)
         {
             Name = name;
             Status = status;

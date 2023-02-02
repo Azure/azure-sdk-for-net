@@ -8,9 +8,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-#pragma warning disable AZC0012 // Avoid single word type names
-    public partial class Snapshot : IUtf8JsonSerializable
-#pragma warning restore AZC0012 // Avoid single word type names
+    public partial class ConfigurationSettingsSnapshot : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,7 +44,7 @@ namespace Azure.Data.AppConfiguration
             writer.WriteEndObject();
         }
 
-        internal static Snapshot DeserializeSnapshot(JsonElement element)
+        internal static ConfigurationSettingsSnapshot DeserializeSnapshot(JsonElement element)
         {
             Optional<string> name = default;
             Optional<SnapshotStatus> status = default;
@@ -178,18 +176,18 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new Snapshot(name.Value, Optional.ToNullable(status), Optional.ToNullable(statusCode), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), etag.Value);
+            return new ConfigurationSettingsSnapshot(name.Value, Optional.ToNullable(status), Optional.ToNullable(statusCode), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), etag.Value);
         }
 
         // Mapping raw response to model
-        internal static Snapshot FromResponse(Response response)
+        internal static ConfigurationSettingsSnapshot FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeSnapshot(document.RootElement);
         }
 
         // Mapping model to raw request
-        internal static RequestContent ToRequestContent(Snapshot snapshot)
+        internal static RequestContent ToRequestContent(ConfigurationSettingsSnapshot snapshot)
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(snapshot);
