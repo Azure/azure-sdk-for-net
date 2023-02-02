@@ -1,0 +1,128 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job11071255470?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-63a7a94ccae626da80114847ea9d1534-988e73d4d636fa76-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "446194e879eb8291ee6f4e9224fce95a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Thu, 02 Feb 2023 00:00:01 GMT",
+        "Retry-After": "14"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job11071255470?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-63a7a94ccae626da80114847ea9d1534-988e73d4d636fa76-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "446194e879eb8291ee6f4e9224fce95a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "186",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Feb 2023 00:00:14 GMT",
+        "mise-correlation-id": "5620f764-50e3-4592-97e9-7b207b30cbdd",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-63a7a94ccae626da80114847ea9d1534-2bc31e938b5095f0-01"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "JobNotFound",
+          "message": "There is no job available that matches the provided id job11071255470. Check that the Job ID provided is valid by doing a Jobs_List API call."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job11071255470?api-version=2023-02-27-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "64",
+        "Content-Type": "application/json",
+        "traceparent": "00-96591a73246dcd635be6deb89f411c38-117e4a113c8c3896-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ea22e7c3c60b76e0e6c5d02bccb5d191",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "inputBlobUri": "invalidUri",
+        "outputBlobUri": "invalidOutputUri"
+      },
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Thu, 02 Feb 2023 00:00:16 GMT",
+        "Retry-After": "7"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job11071255470?api-version=2023-02-27-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "64",
+        "Content-Type": "application/json",
+        "traceparent": "00-96591a73246dcd635be6deb89f411c38-117e4a113c8c3896-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ea22e7c3c60b76e0e6c5d02bccb5d191",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "inputBlobUri": "invalidUri",
+        "outputBlobUri": "invalidOutputUri"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "290",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Feb 2023 00:00:22 GMT",
+        "mise-correlation-id": "bc3e2c51-709d-4067-9b59-c5ea12f1628c",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-96591a73246dcd635be6deb89f411c38-9a9ad22bf8b59454-01",
+        "x-ms-error-code": "InvalidArgument"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidArgument",
+          "message": "Azure Storage Blob URI \u0027invalidUri\u0027 failed validation. Invalid URI: The format of the URI could not be determined. Please check: https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
+    "RandomSeed": "791508276"
+  }
+}

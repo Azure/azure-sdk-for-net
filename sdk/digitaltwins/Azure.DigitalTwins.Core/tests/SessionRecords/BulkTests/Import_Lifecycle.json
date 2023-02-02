@@ -1,0 +1,656 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c4f41496c9efa9457f42c8131e275b50-0fe657190d233ef8-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0a6d2f91f7e61da43737a9e8cba6fd44",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Wed, 01 Feb 2023 23:16:55 GMT",
+        "Retry-After": "6"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c4f41496c9efa9457f42c8131e275b50-0fe657190d233ef8-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0a6d2f91f7e61da43737a9e8cba6fd44",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "185",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 23:17:01 GMT",
+        "mise-correlation-id": "98378d38-a888-4502-ac0c-fa0342953b71",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-c4f41496c9efa9457f42c8131e275b50-c30d7eb3c87fa536-01"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "JobNotFound",
+          "message": "There is no job available that matches the provided id job1831625941. Check that the Job ID provided is valid by doing a Jobs_List API call."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "204",
+        "Content-Type": "application/json",
+        "traceparent": "00-80f04c3d82a5121ed8f1cdd473d11e44-67cf6d572b79b059-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1b076ce17f49e7865d65006d4b364b3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job1831625941.ndjson"
+      },
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Wed, 01 Feb 2023 23:17:01 GMT",
+        "Retry-After": "10"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "204",
+        "Content-Type": "application/json",
+        "traceparent": "00-80f04c3d82a5121ed8f1cdd473d11e44-67cf6d572b79b059-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1b076ce17f49e7865d65006d4b364b3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job1831625941.ndjson"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "419",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 23:17:11 GMT",
+        "mise-correlation-id": "40a0211b-79ef-4925-8994-2a1f2c11341c",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-80f04c3d82a5121ed8f1cdd473d11e44-ac972ea003801dc2-01"
+      },
+      "ResponseBody": {
+        "id": "job1831625941",
+        "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job1831625941.ndjson",
+        "createdDateTime": "2023-02-01T23:17:12.4453004Z",
+        "lastActionDateTime": "2023-02-01T23:17:12.4453004Z",
+        "finishedDateTime": null,
+        "purgeDateTime": "2023-03-03T23:17:12.4453004Z",
+        "status": "notstarted"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-038b104864b6f376cf253cf99151400d-db736987e914c6e4-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1736909640ea508e71ca98df09d3e65d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Wed, 01 Feb 2023 23:17:11 GMT",
+        "Retry-After": "14"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-038b104864b6f376cf253cf99151400d-db736987e914c6e4-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1736909640ea508e71ca98df09d3e65d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "15773",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 23:17:26 GMT",
+        "mise-correlation-id": "6a8b7974-dc2e-4cec-b2e9-c376139279a5",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-038b104864b6f376cf253cf99151400d-4f39b4b11791ce04-01"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "job11399113703",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T17:56:05.4425735Z",
+            "lastActionDateTime": "2023-01-31T17:56:39.3129646Z",
+            "finishedDateTime": "2023-01-31T17:56:39.3129646Z",
+            "purgeDateTime": "2023-03-02T17:56:05.4425736Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job156602493",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T17:57:40.0732224Z",
+            "lastActionDateTime": "2023-01-31T17:58:05.3277828Z",
+            "finishedDateTime": "2023-01-31T17:58:05.3277828Z",
+            "purgeDateTime": "2023-03-02T17:57:40.0732224Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11103224340",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:00:06.0095608Z",
+            "lastActionDateTime": "2023-01-31T18:00:37.0116355Z",
+            "finishedDateTime": "2023-01-31T18:00:37.0116355Z",
+            "purgeDateTime": "2023-03-02T18:00:06.009561Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job1987194895",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:00:49.2023202Z",
+            "lastActionDateTime": "2023-01-31T18:01:23.1634932Z",
+            "finishedDateTime": "2023-01-31T18:01:23.1634932Z",
+            "purgeDateTime": "2023-03-02T18:00:49.2023202Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11498493884",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:14:45.7482048Z",
+            "lastActionDateTime": "2023-01-31T18:15:16.7703214Z",
+            "finishedDateTime": "2023-01-31T18:15:16.7703214Z",
+            "purgeDateTime": "2023-03-02T18:14:45.7482049Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job198963428",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:15:33.2081464Z",
+            "lastActionDateTime": "2023-01-31T18:16:03.4684026Z",
+            "finishedDateTime": "2023-01-31T18:16:03.4684026Z",
+            "purgeDateTime": "2023-03-02T18:15:33.2081467Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job1977675121",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:18:31.0157464Z",
+            "lastActionDateTime": "2023-01-31T18:19:00.2221446Z",
+            "finishedDateTime": "2023-01-31T18:19:00.2221446Z",
+            "purgeDateTime": "2023-03-02T18:18:31.0157465Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11455291138",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:21:32.7511936Z",
+            "lastActionDateTime": "2023-01-31T18:22:05.6135418Z",
+            "finishedDateTime": "2023-01-31T18:22:05.6135418Z",
+            "purgeDateTime": "2023-03-02T18:21:32.7511936Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11068348414",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:24:42.2743933Z",
+            "lastActionDateTime": "2023-01-31T18:25:11.4698826Z",
+            "finishedDateTime": "2023-01-31T18:25:11.4698826Z",
+            "purgeDateTime": "2023-03-02T18:24:42.2743934Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job113731625",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:26:00.4238369Z",
+            "lastActionDateTime": "2023-01-31T18:26:25.6107656Z",
+            "finishedDateTime": "2023-01-31T18:26:25.6107656Z",
+            "purgeDateTime": "2023-03-02T18:26:00.4238369Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11422184957",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-01-31T18:39:43.0841453Z",
+            "lastActionDateTime": "2023-01-31T18:40:15.6305871Z",
+            "finishedDateTime": "2023-01-31T18:40:15.6305871Z",
+            "purgeDateTime": "2023-03-02T18:39:43.0841454Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job1352714098",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-02-01T01:23:05.6790923Z",
+            "lastActionDateTime": "2023-02-01T01:23:41.5631163Z",
+            "finishedDateTime": "2023-02-01T01:23:41.5631163Z",
+            "purgeDateTime": "2023-03-03T01:23:05.6790923Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job1139372784",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-02-01T01:28:03.5120395Z",
+            "lastActionDateTime": "2023-02-01T01:28:34.0962823Z",
+            "finishedDateTime": "2023-02-01T01:28:34.0962823Z",
+            "purgeDateTime": "2023-03-03T01:28:03.5120396Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job1264373947",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-02-01T01:31:51.5515103Z",
+            "lastActionDateTime": "2023-02-01T01:32:25.3470055Z",
+            "finishedDateTime": "2023-02-01T01:32:25.3470055Z",
+            "purgeDateTime": "2023-03-03T01:31:51.5515105Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11680638571",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-02-01T01:33:00.5391113Z",
+            "lastActionDateTime": "2023-02-01T01:33:36.8871116Z",
+            "finishedDateTime": "2023-02-01T01:33:36.8871116Z",
+            "purgeDateTime": "2023-03-03T01:33:00.5391113Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11798609187",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-02-01T01:34:54.8226424Z",
+            "lastActionDateTime": "2023-02-01T01:35:23.6479521Z",
+            "finishedDateTime": "2023-02-01T01:35:23.6479521Z",
+            "purgeDateTime": "2023-03-03T01:34:54.8226426Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11998210926",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output.ndjson",
+            "createdDateTime": "2023-02-01T01:39:48.1627317Z",
+            "lastActionDateTime": "2023-02-01T01:40:17.9015548Z",
+            "finishedDateTime": "2023-02-01T01:40:17.9015548Z",
+            "purgeDateTime": "2023-03-03T01:39:48.1628337Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11687123284",
+            "inputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest.blob.core.windows.net/bulksdktest/output-job11687123284.ndjson",
+            "createdDateTime": "2023-02-01T17:59:21.6429707Z",
+            "lastActionDateTime": "2023-02-01T17:59:49.3141298Z",
+            "finishedDateTime": "2023-02-01T17:59:49.3141298Z",
+            "purgeDateTime": "2023-03-03T17:59:21.6429708Z",
+            "status": "failed",
+            "error": {
+              "code": "UnableToWriteToOutputBlob",
+              "message": "Encountered errors while importing models. Service was unable to write error feed to output blob. Please see that output blob exists and Azure Digital Twin instance\u0027s managed identity has Storage Blob Data Contributor access to that container."
+            }
+          },
+          {
+            "id": "job11824811833",
+            "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job11824811833.ndjson",
+            "createdDateTime": "2023-02-01T22:28:35.1663175Z",
+            "lastActionDateTime": "2023-02-01T22:28:42.8046162Z",
+            "finishedDateTime": "2023-02-01T22:28:42.8046162Z",
+            "purgeDateTime": "2023-03-03T22:28:35.1663176Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job11166095444",
+            "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job11166095444.ndjson",
+            "createdDateTime": "2023-02-01T22:40:14.0753769Z",
+            "lastActionDateTime": "2023-02-01T22:40:23.3943658Z",
+            "finishedDateTime": "2023-02-01T22:40:23.3943658Z",
+            "purgeDateTime": "2023-03-03T22:40:14.075377Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job11960978850",
+            "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job11960978850.ndjson",
+            "createdDateTime": "2023-02-01T22:41:20.8556848Z",
+            "lastActionDateTime": "2023-02-01T22:41:27.9169479Z",
+            "finishedDateTime": "2023-02-01T22:41:27.9169479Z",
+            "purgeDateTime": "2023-03-03T22:41:20.8556849Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job1481363998",
+            "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job1481363998.ndjson",
+            "createdDateTime": "2023-02-01T22:41:59.8627556Z",
+            "lastActionDateTime": "2023-02-01T22:42:08.5543491Z",
+            "finishedDateTime": "2023-02-01T22:42:08.5543491Z",
+            "purgeDateTime": "2023-03-03T22:41:59.8627557Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job1714029251",
+            "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job1714029251.ndjson",
+            "createdDateTime": "2023-02-01T23:04:12.6781538Z",
+            "lastActionDateTime": "2023-02-01T23:04:20.2499583Z",
+            "finishedDateTime": "2023-02-01T23:04:20.2499583Z",
+            "purgeDateTime": "2023-03-03T23:04:12.6781538Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job1831625941",
+            "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job1831625941.ndjson",
+            "createdDateTime": "2023-02-01T23:17:12.4453004Z",
+            "lastActionDateTime": "2023-02-01T23:17:21.5185058Z",
+            "finishedDateTime": "2023-02-01T23:17:21.5185058Z",
+            "purgeDateTime": "2023-03-03T23:17:12.4453004Z",
+            "status": "succeeded"
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9245c1fcf72cac594275cc1fe62c0b2d-b8cb008879ddbb19-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "543c24c2f1c1118ba886ac81f737d100",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Wed, 01 Feb 2023 23:17:26 GMT",
+        "Retry-After": "14"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9245c1fcf72cac594275cc1fe62c0b2d-b8cb008879ddbb19-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "543c24c2f1c1118ba886ac81f737d100",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "444",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 23:17:40 GMT",
+        "mise-correlation-id": "94834577-ec67-4b92-8d5f-10829f16f312",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-9245c1fcf72cac594275cc1fe62c0b2d-022c982bba1a6019-01"
+      },
+      "ResponseBody": {
+        "id": "job1831625941",
+        "inputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/bulkInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://bulksdktest2.blob.core.windows.net/bulksdktest2/output-job1831625941.ndjson",
+        "createdDateTime": "2023-02-01T23:17:12.4453004Z",
+        "lastActionDateTime": "2023-02-01T23:17:21.5185058Z",
+        "finishedDateTime": "2023-02-01T23:17:21.5185058Z",
+        "purgeDateTime": "2023-03-03T23:17:12.4453004Z",
+        "status": "succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-164e8e48bdb14681be580dcce67a9a2a-99ae331557aabe02-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3b526eece570a05adeb6a97fe7a7dd89",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Wed, 01 Feb 2023 23:17:41 GMT",
+        "Retry-After": "7"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-164e8e48bdb14681be580dcce67a9a2a-99ae331557aabe02-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3b526eece570a05adeb6a97fe7a7dd89",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 01 Feb 2023 23:17:48 GMT",
+        "mise-correlation-id": "2c848d3a-6a21-4b1d-b464-f30e8dc91743",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-164e8e48bdb14681be580dcce67a9a2a-a28f36ecffe53a9e-01"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-86d5103975f558c5c93b9966a1a0a8ac-4d4ce3831b4a8042-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "27aaa37ef7faa57804246e64930c583a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Wed, 01 Feb 2023 23:17:48 GMT",
+        "Retry-After": "10"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job1831625941?api-version=2023-02-27-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-86d5103975f558c5c93b9966a1a0a8ac-4d4ce3831b4a8042-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "27aaa37ef7faa57804246e64930c583a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "185",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 23:17:58 GMT",
+        "mise-correlation-id": "891308fd-0870-4eff-9783-c301e1f18443",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-86d5103975f558c5c93b9966a1a0a8ac-525c819caca81c40-01"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "JobNotFound",
+          "message": "There is no job available that matches the provided id job1831625941. Check that the Job ID provided is valid by doing a Jobs_List API call."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
+    "RandomSeed": "839278750"
+  }
+}
