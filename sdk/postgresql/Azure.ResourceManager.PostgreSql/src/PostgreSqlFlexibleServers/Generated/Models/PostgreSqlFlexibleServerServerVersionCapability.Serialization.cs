@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         internal static PostgreSqlFlexibleServerServerVersionCapability DeserializePostgreSqlFlexibleServerServerVersionCapability(JsonElement element)
         {
             Optional<string> name = default;
+            Optional<IReadOnlyList<string>> supportedVersionsToUpgrade = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability>> supportedVcores = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
@@ -23,6 +24,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("supportedVersionsToUpgrade"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    supportedVersionsToUpgrade = array;
                     continue;
                 }
                 if (property.NameEquals("supportedVcores"))
@@ -46,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerServerVersionCapability(name.Value, Optional.ToList(supportedVcores), status.Value);
+            return new PostgreSqlFlexibleServerServerVersionCapability(name.Value, Optional.ToList(supportedVersionsToUpgrade), Optional.ToList(supportedVcores), status.Value);
         }
     }
 }
