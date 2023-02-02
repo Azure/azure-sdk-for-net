@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -26,11 +27,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string type = "Unknown";
             Optional<string> thumbprint = default;
             Optional<string> issuer = default;
-            Optional<string> issuedDate = default;
-            Optional<string> expirationDate = default;
-            Optional<string> activateDate = default;
+            Optional<DateTimeOffset> issuedDate = default;
+            Optional<DateTimeOffset> expirationDate = default;
+            Optional<DateTimeOffset> activateDate = default;
             Optional<string> subjectName = default;
             Optional<IReadOnlyList<string>> dnsNames = default;
+            Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -50,17 +52,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("issuedDate"))
                 {
-                    issuedDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    issuedDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("expirationDate"))
                 {
-                    expirationDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("activateDate"))
                 {
-                    activateDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    activateDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("subjectName"))
@@ -83,8 +100,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     dnsNames = array;
                     continue;
                 }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new AppPlatformCertificateProvisioningState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new UnknownCertificateProperties(type, thumbprint.Value, issuer.Value, issuedDate.Value, expirationDate.Value, activateDate.Value, subjectName.Value, Optional.ToList(dnsNames));
+            return new UnknownCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, Optional.ToList(dnsNames), Optional.ToNullable(provisioningState));
         }
     }
 }

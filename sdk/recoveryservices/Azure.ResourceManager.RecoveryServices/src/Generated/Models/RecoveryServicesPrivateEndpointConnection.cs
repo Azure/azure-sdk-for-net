@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -16,17 +17,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>
         internal RecoveryServicesPrivateEndpointConnection()
         {
+            GroupIds = new ChangeTrackingList<VaultSubResourceType>();
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The Private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
-        internal RecoveryServicesPrivateEndpointConnection(ProvisioningState? provisioningState, SubResource privateEndpoint, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
+        internal RecoveryServicesPrivateEndpointConnection(ProvisioningState? provisioningState, SubResource privateEndpoint, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IReadOnlyList<VaultSubResourceType> groupIds)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            GroupIds = groupIds;
         }
 
         /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>
@@ -41,5 +45,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Gets or sets private link service connection state. </summary>
         public RecoveryServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        /// <summary> Group Ids for the Private Endpoint. </summary>
+        public IReadOnlyList<VaultSubResourceType> GroupIds { get; }
     }
 }

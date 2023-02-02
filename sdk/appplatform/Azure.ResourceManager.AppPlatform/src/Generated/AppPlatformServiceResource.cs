@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,10 +20,10 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A Class representing an AppPlatformServiceResource along with the instance operations that can be performed on it.
+    /// A Class representing an AppPlatformService along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformServiceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppPlatformServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppPlatformService method.
     /// </summary>
     public partial class AppPlatformServiceResource : ArmResource
     {
@@ -35,13 +34,13 @@ namespace Azure.ResourceManager.AppPlatform
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _appPlatformServiceResourceServicesClientDiagnostics;
-        private readonly ServicesRestOperations _appPlatformServiceResourceServicesRestClient;
-        private readonly ClientDiagnostics _configServerResourceConfigServersClientDiagnostics;
-        private readonly ConfigServersRestOperations _configServerResourceConfigServersRestClient;
-        private readonly ClientDiagnostics _appDeploymentResourceDeploymentsClientDiagnostics;
-        private readonly DeploymentsRestOperations _appDeploymentResourceDeploymentsRestClient;
-        private readonly AppPlatformServiceResourceData _data;
+        private readonly ClientDiagnostics _appPlatformServiceServicesClientDiagnostics;
+        private readonly ServicesRestOperations _appPlatformServiceServicesRestClient;
+        private readonly ClientDiagnostics _appPlatformConfigServerConfigServersClientDiagnostics;
+        private readonly ConfigServersRestOperations _appPlatformConfigServerConfigServersRestClient;
+        private readonly ClientDiagnostics _appPlatformDeploymentDeploymentsClientDiagnostics;
+        private readonly DeploymentsRestOperations _appPlatformDeploymentDeploymentsRestClient;
+        private readonly AppPlatformServiceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceResource"/> class for mocking. </summary>
         protected AppPlatformServiceResource()
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary> Initializes a new instance of the <see cref = "AppPlatformServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppPlatformServiceResource(ArmClient client, AppPlatformServiceResourceData data) : this(client, data.Id)
+        internal AppPlatformServiceResource(ArmClient client, AppPlatformServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -62,15 +61,15 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppPlatformServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appPlatformServiceResourceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string appPlatformServiceResourceServicesApiVersion);
-            _appPlatformServiceResourceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appPlatformServiceResourceServicesApiVersion);
-            _configServerResourceConfigServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ConfigServerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ConfigServerResource.ResourceType, out string configServerResourceConfigServersApiVersion);
-            _configServerResourceConfigServersRestClient = new ConfigServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configServerResourceConfigServersApiVersion);
-            _appDeploymentResourceDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppDeploymentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AppDeploymentResource.ResourceType, out string appDeploymentResourceDeploymentsApiVersion);
-            _appDeploymentResourceDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appDeploymentResourceDeploymentsApiVersion);
+            _appPlatformServiceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string appPlatformServiceServicesApiVersion);
+            _appPlatformServiceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appPlatformServiceServicesApiVersion);
+            _appPlatformConfigServerConfigServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppPlatformConfigServerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppPlatformConfigServerResource.ResourceType, out string appPlatformConfigServerConfigServersApiVersion);
+            _appPlatformConfigServerConfigServersRestClient = new ConfigServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appPlatformConfigServerConfigServersApiVersion);
+            _appPlatformDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppPlatformDeploymentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppPlatformDeploymentResource.ResourceType, out string appPlatformDeploymentDeploymentsApiVersion);
+            _appPlatformDeploymentDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appPlatformDeploymentDeploymentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AppPlatformServiceResourceData Data
+        public virtual AppPlatformServiceData Data
         {
             get
             {
@@ -100,142 +99,198 @@ namespace Azure.ResourceManager.AppPlatform
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a ConfigServerResource along with the instance operations that can be performed on it in the AppPlatformServiceResource. </summary>
-        /// <returns> Returns a <see cref="ConfigServerResource" /> object. </returns>
-        public virtual ConfigServerResource GetConfigServerResource()
+        /// <summary> Gets an object representing a AppPlatformConfigServerResource along with the instance operations that can be performed on it in the AppPlatformService. </summary>
+        /// <returns> Returns a <see cref="AppPlatformConfigServerResource" /> object. </returns>
+        public virtual AppPlatformConfigServerResource GetAppPlatformConfigServer()
         {
-            return new ConfigServerResource(Client, new ResourceIdentifier(Id.ToString() + "/configServers/default"));
+            return new AppPlatformConfigServerResource(Client, new ResourceIdentifier(Id.ToString() + "/configServers/default"));
         }
 
-        /// <summary> Gets a collection of ConfigurationServiceResources in the AppPlatformServiceResource. </summary>
-        /// <returns> An object representing collection of ConfigurationServiceResources and their operations over a ConfigurationServiceResource. </returns>
-        public virtual ConfigurationServiceResourceCollection GetConfigurationServiceResources()
+        /// <summary> Gets a collection of AppPlatformConfigurationServiceResources in the AppPlatformService. </summary>
+        /// <returns> An object representing collection of AppPlatformConfigurationServiceResources and their operations over a AppPlatformConfigurationServiceResource. </returns>
+        public virtual AppPlatformConfigurationServiceCollection GetAppPlatformConfigurationServices()
         {
-            return GetCachedClient(Client => new ConfigurationServiceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformConfigurationServiceCollection(Client, Id));
         }
 
         /// <summary>
         /// Get the Application Configuration Service and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configurationServices/{configurationServiceName}
-        /// Operation Id: ConfigurationServices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configurationServices/{configurationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationServices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationServiceName"> The name of Application Configuration Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationServiceResource>> GetConfigurationServiceResourceAsync(string configurationServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformConfigurationServiceResource>> GetAppPlatformConfigurationServiceAsync(string configurationServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetConfigurationServiceResources().GetAsync(configurationServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformConfigurationServices().GetAsync(configurationServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the Application Configuration Service and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configurationServices/{configurationServiceName}
-        /// Operation Id: ConfigurationServices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configurationServices/{configurationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationServices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationServiceName"> The name of Application Configuration Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConfigurationServiceResource> GetConfigurationServiceResource(string configurationServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformConfigurationServiceResource> GetAppPlatformConfigurationService(string configurationServiceName, CancellationToken cancellationToken = default)
         {
-            return GetConfigurationServiceResources().Get(configurationServiceName, cancellationToken);
+            return GetAppPlatformConfigurationServices().Get(configurationServiceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceRegistryResources in the AppPlatformServiceResource. </summary>
-        /// <returns> An object representing collection of ServiceRegistryResources and their operations over a ServiceRegistryResource. </returns>
-        public virtual ServiceRegistryResourceCollection GetServiceRegistryResources()
+        /// <summary> Gets a collection of AppPlatformServiceRegistryResources in the AppPlatformService. </summary>
+        /// <returns> An object representing collection of AppPlatformServiceRegistryResources and their operations over a AppPlatformServiceRegistryResource. </returns>
+        public virtual AppPlatformServiceRegistryCollection GetAppPlatformServiceRegistries()
         {
-            return GetCachedClient(Client => new ServiceRegistryResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformServiceRegistryCollection(Client, Id));
         }
 
         /// <summary>
         /// Get the Service Registry and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}
-        /// Operation Id: ServiceRegistries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceRegistryResource>> GetServiceRegistryResourceAsync(string serviceRegistryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformServiceRegistryResource>> GetAppPlatformServiceRegistryAsync(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            return await GetServiceRegistryResources().GetAsync(serviceRegistryName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformServiceRegistries().GetAsync(serviceRegistryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the Service Registry and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}
-        /// Operation Id: ServiceRegistries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceRegistryResource> GetServiceRegistryResource(string serviceRegistryName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformServiceRegistryResource> GetAppPlatformServiceRegistry(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            return GetServiceRegistryResources().Get(serviceRegistryName, cancellationToken);
+            return GetAppPlatformServiceRegistries().Get(serviceRegistryName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AppBuildServiceResources in the AppPlatformServiceResource. </summary>
-        /// <returns> An object representing collection of AppBuildServiceResources and their operations over a AppBuildServiceResource. </returns>
-        public virtual AppBuildServiceCollection GetAppBuildServices()
+        /// <summary> Gets a collection of AppPlatformBuildServiceResources in the AppPlatformService. </summary>
+        /// <returns> An object representing collection of AppPlatformBuildServiceResources and their operations over a AppPlatformBuildServiceResource. </returns>
+        public virtual AppPlatformBuildServiceCollection GetAppPlatformBuildServices()
         {
-            return GetCachedClient(Client => new AppBuildServiceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformBuildServiceCollection(Client, Id));
         }
 
         /// <summary>
         /// Get a build service resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}
-        /// Operation Id: BuildService_GetBuildService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildServiceName"> The name of the build service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AppBuildServiceResource>> GetAppBuildServiceAsync(string buildServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformBuildServiceResource>> GetAppPlatformBuildServiceAsync(string buildServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetAppBuildServices().GetAsync(buildServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformBuildServices().GetAsync(buildServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a build service resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}
-        /// Operation Id: BuildService_GetBuildService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildServiceName"> The name of the build service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AppBuildServiceResource> GetAppBuildService(string buildServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformBuildServiceResource> GetAppPlatformBuildService(string buildServiceName, CancellationToken cancellationToken = default)
         {
-            return GetAppBuildServices().Get(buildServiceName, cancellationToken);
+            return GetAppPlatformBuildServices().Get(buildServiceName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a MonitoringSettingResource along with the instance operations that can be performed on it in the AppPlatformServiceResource. </summary>
-        /// <returns> Returns a <see cref="MonitoringSettingResource" /> object. </returns>
-        public virtual MonitoringSettingResource GetMonitoringSettingResource()
+        /// <summary> Gets an object representing a AppPlatformMonitoringSettingResource along with the instance operations that can be performed on it in the AppPlatformService. </summary>
+        /// <returns> Returns a <see cref="AppPlatformMonitoringSettingResource" /> object. </returns>
+        public virtual AppPlatformMonitoringSettingResource GetAppPlatformMonitoringSetting()
         {
-            return new MonitoringSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/monitoringSettings/default"));
+            return new AppPlatformMonitoringSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/monitoringSettings/default"));
         }
 
-        /// <summary> Gets a collection of AppPlatformAppResources in the AppPlatformServiceResource. </summary>
+        /// <summary> Gets a collection of AppPlatformAppResources in the AppPlatformService. </summary>
         /// <returns> An object representing collection of AppPlatformAppResources and their operations over a AppPlatformAppResource. </returns>
-        public virtual AppPlatformAppResourceCollection GetAppPlatformAppResources()
+        public virtual AppPlatformAppCollection GetAppPlatformApps()
         {
-            return GetCachedClient(Client => new AppPlatformAppResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformAppCollection(Client, Id));
         }
 
         /// <summary>
         /// Get an App and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
-        /// Operation Id: Apps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
@@ -243,15 +298,23 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AppPlatformAppResource>> GetAppPlatformAppResourceAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformAppResource>> GetAppPlatformAppAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            return await GetAppPlatformAppResources().GetAsync(appName, syncStatus, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformApps().GetAsync(appName, syncStatus, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get an App and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
-        /// Operation Id: Apps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
@@ -259,172 +322,244 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AppPlatformAppResource> GetAppPlatformAppResource(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformAppResource> GetAppPlatformApp(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            return GetAppPlatformAppResources().Get(appName, syncStatus, cancellationToken);
+            return GetAppPlatformApps().Get(appName, syncStatus, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StorageResources in the AppPlatformServiceResource. </summary>
-        /// <returns> An object representing collection of StorageResources and their operations over a StorageResource. </returns>
-        public virtual StorageResourceCollection GetStorageResources()
+        /// <summary> Gets a collection of AppPlatformStorageResources in the AppPlatformService. </summary>
+        /// <returns> An object representing collection of AppPlatformStorageResources and their operations over a AppPlatformStorageResource. </returns>
+        public virtual AppPlatformStorageCollection GetAppPlatformStorages()
         {
-            return GetCachedClient(Client => new StorageResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformStorageCollection(Client, Id));
         }
 
         /// <summary>
         /// Get the storage resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/storages/{storageName}
-        /// Operation Id: Storages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/storages/{storageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Storages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="storageName"> The name of the storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StorageResource>> GetStorageResourceAsync(string storageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformStorageResource>> GetAppPlatformStorageAsync(string storageName, CancellationToken cancellationToken = default)
         {
-            return await GetStorageResources().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformStorages().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the storage resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/storages/{storageName}
-        /// Operation Id: Storages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/storages/{storageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Storages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="storageName"> The name of the storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StorageResource> GetStorageResource(string storageName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformStorageResource> GetAppPlatformStorage(string storageName, CancellationToken cancellationToken = default)
         {
-            return GetStorageResources().Get(storageName, cancellationToken);
+            return GetAppPlatformStorages().Get(storageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CertificateResources in the AppPlatformServiceResource. </summary>
-        /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
-        public virtual CertificateResourceCollection GetCertificateResources()
+        /// <summary> Gets a collection of AppPlatformCertificateResources in the AppPlatformService. </summary>
+        /// <returns> An object representing collection of AppPlatformCertificateResources and their operations over a AppPlatformCertificateResource. </returns>
+        public virtual AppPlatformCertificateCollection GetAppPlatformCertificates()
         {
-            return GetCachedClient(Client => new CertificateResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformCertificateCollection(Client, Id));
         }
 
         /// <summary>
         /// Get the certificate resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}
-        /// Operation Id: Certificates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateResource>> GetCertificateResourceAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformCertificateResource>> GetAppPlatformCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            return await GetCertificateResources().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the certificate resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}
-        /// Operation Id: Certificates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateResource> GetCertificateResource(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformCertificateResource> GetAppPlatformCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            return GetCertificateResources().Get(certificateName, cancellationToken);
+            return GetAppPlatformCertificates().Get(certificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GatewayResources in the AppPlatformServiceResource. </summary>
-        /// <returns> An object representing collection of GatewayResources and their operations over a GatewayResource. </returns>
-        public virtual GatewayResourceCollection GetGatewayResources()
+        /// <summary> Gets a collection of AppPlatformGatewayResources in the AppPlatformService. </summary>
+        /// <returns> An object representing collection of AppPlatformGatewayResources and their operations over a AppPlatformGatewayResource. </returns>
+        public virtual AppPlatformGatewayCollection GetAppPlatformGateways()
         {
-            return GetCachedClient(Client => new GatewayResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformGatewayCollection(Client, Id));
         }
 
         /// <summary>
         /// Get the Spring Cloud Gateway and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}
-        /// Operation Id: Gateways_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Gateways_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="gatewayName"> The name of Spring Cloud Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GatewayResource>> GetGatewayResourceAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformGatewayResource>> GetAppPlatformGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await GetGatewayResources().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the Spring Cloud Gateway and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}
-        /// Operation Id: Gateways_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Gateways_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="gatewayName"> The name of Spring Cloud Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GatewayResource> GetGatewayResource(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformGatewayResource> GetAppPlatformGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return GetGatewayResources().Get(gatewayName, cancellationToken);
+            return GetAppPlatformGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiPortalResources in the AppPlatformServiceResource. </summary>
-        /// <returns> An object representing collection of ApiPortalResources and their operations over a ApiPortalResource. </returns>
-        public virtual ApiPortalResourceCollection GetApiPortalResources()
+        /// <summary> Gets a collection of AppPlatformApiPortalResources in the AppPlatformService. </summary>
+        /// <returns> An object representing collection of AppPlatformApiPortalResources and their operations over a AppPlatformApiPortalResource. </returns>
+        public virtual AppPlatformApiPortalCollection GetAppPlatformApiPortals()
         {
-            return GetCachedClient(Client => new ApiPortalResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformApiPortalCollection(Client, Id));
         }
 
         /// <summary>
         /// Get the API portal and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apiPortals/{apiPortalName}
-        /// Operation Id: ApiPortals_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apiPortals/{apiPortalName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiPortals_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="apiPortalName"> The name of API portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiPortalResource>> GetApiPortalResourceAsync(string apiPortalName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformApiPortalResource>> GetAppPlatformApiPortalAsync(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            return await GetApiPortalResources().GetAsync(apiPortalName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformApiPortals().GetAsync(apiPortalName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the API portal and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apiPortals/{apiPortalName}
-        /// Operation Id: ApiPortals_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apiPortals/{apiPortalName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiPortals_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="apiPortalName"> The name of API portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiPortalResource> GetApiPortalResource(string apiPortalName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformApiPortalResource> GetAppPlatformApiPortal(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            return GetApiPortalResources().Get(apiPortalName, cancellationToken);
+            return GetAppPlatformApiPortals().Get(apiPortalName, cancellationToken);
         }
 
         /// <summary>
         /// Get a Service and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppPlatformServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Get");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppPlatformServiceResource(Client, response.Value), response.GetRawResponse());
@@ -438,17 +573,25 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a Service and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppPlatformServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Get");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Get");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appPlatformServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppPlatformServiceResource(Client, response.Value), response.GetRawResponse());
@@ -462,19 +605,27 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Operation to delete a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Delete");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceResourceServicesClientDiagnostics, Pipeline, _appPlatformServiceResourceServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appPlatformServiceServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -488,19 +639,27 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Operation to delete a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Delete");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceResourceServicesClientDiagnostics, Pipeline, _appPlatformServiceResourceServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appPlatformServiceServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -514,23 +673,31 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Operation to update an exiting Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppPlatformServiceResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppPlatformServiceResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Update");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Update");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformServiceResource>(new AppPlatformServiceResourceOperationSource(Client), _appPlatformServiceResourceServicesClientDiagnostics, Pipeline, _appPlatformServiceResourceServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appPlatformServiceServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformServiceResource>(new AppPlatformServiceOperationSource(Client), _appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -544,23 +711,31 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Operation to update an exiting Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AppPlatformServiceResource> Update(WaitUntil waitUntil, AppPlatformServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppPlatformServiceResource> Update(WaitUntil waitUntil, AppPlatformServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Update");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Update");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformServiceResource>(new AppPlatformServiceResourceOperationSource(Client), _appPlatformServiceResourceServicesClientDiagnostics, Pipeline, _appPlatformServiceResourceServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appPlatformServiceServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformServiceResource>(new AppPlatformServiceOperationSource(Client), _appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -574,17 +749,25 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// List test keys for a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/listTestKeys
-        /// Operation Id: Services_ListTestKeys
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/listTestKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListTestKeys</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TestKeys>> GetTestKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformServiceTestKeys>> GetTestKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.GetTestKeys");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.GetTestKeys");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.ListTestKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformServiceServicesRestClient.ListTestKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -596,17 +779,25 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// List test keys for a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/listTestKeys
-        /// Operation Id: Services_ListTestKeys
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/listTestKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListTestKeys</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TestKeys> GetTestKeys(CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformServiceTestKeys> GetTestKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.GetTestKeys");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.GetTestKeys");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.ListTestKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appPlatformServiceServicesRestClient.ListTestKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -618,21 +809,29 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Regenerate a test key for a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/regenerateTestKey
-        /// Operation Id: Services_RegenerateTestKey
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/regenerateTestKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_RegenerateTestKey</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="regenerateTestKeyRequest"> Parameters for the operation. </param>
+        /// <param name="content"> Parameters for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateTestKeyRequest"/> is null. </exception>
-        public virtual async Task<Response<TestKeys>> RegenerateTestKeyAsync(RegenerateTestKeyRequestPayload regenerateTestKeyRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AppPlatformServiceTestKeys>> RegenerateTestKeyAsync(RegenerateAppPlatformServiceTestKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenerateTestKeyRequest, nameof(regenerateTestKeyRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RegenerateTestKey");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RegenerateTestKey");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.RegenerateTestKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateTestKeyRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformServiceServicesRestClient.RegenerateTestKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -644,21 +843,29 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Regenerate a test key for a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/regenerateTestKey
-        /// Operation Id: Services_RegenerateTestKey
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/regenerateTestKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_RegenerateTestKey</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="regenerateTestKeyRequest"> Parameters for the operation. </param>
+        /// <param name="content"> Parameters for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateTestKeyRequest"/> is null. </exception>
-        public virtual Response<TestKeys> RegenerateTestKey(RegenerateTestKeyRequestPayload regenerateTestKeyRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AppPlatformServiceTestKeys> RegenerateTestKey(RegenerateAppPlatformServiceTestKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenerateTestKeyRequest, nameof(regenerateTestKeyRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RegenerateTestKey");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RegenerateTestKey");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.RegenerateTestKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateTestKeyRequest, cancellationToken);
+                var response = _appPlatformServiceServicesRestClient.RegenerateTestKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -670,17 +877,25 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Disable test endpoint functionality for a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/disableTestEndpoint
-        /// Operation Id: Services_DisableTestEndpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/disableTestEndpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_DisableTestEndpoint</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DisableTestEndpointAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.DisableTestEndpoint");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.DisableTestEndpoint");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.DisableTestEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformServiceServicesRestClient.DisableTestEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -692,17 +907,25 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Disable test endpoint functionality for a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/disableTestEndpoint
-        /// Operation Id: Services_DisableTestEndpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/disableTestEndpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_DisableTestEndpoint</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DisableTestEndpoint(CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.DisableTestEndpoint");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.DisableTestEndpoint");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.DisableTestEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appPlatformServiceServicesRestClient.DisableTestEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -714,17 +937,25 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Enable test endpoint functionality for a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/enableTestEndpoint
-        /// Operation Id: Services_EnableTestEndpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/enableTestEndpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_EnableTestEndpoint</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TestKeys>> EnableTestEndpointAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformServiceTestKeys>> EnableTestEndpointAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.EnableTestEndpoint");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.EnableTestEndpoint");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.EnableTestEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformServiceServicesRestClient.EnableTestEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -736,17 +967,25 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Enable test endpoint functionality for a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/enableTestEndpoint
-        /// Operation Id: Services_EnableTestEndpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/enableTestEndpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_EnableTestEndpoint</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TestKeys> EnableTestEndpoint(CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformServiceTestKeys> EnableTestEndpoint(CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.EnableTestEndpoint");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.EnableTestEndpoint");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.EnableTestEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appPlatformServiceServicesRestClient.EnableTestEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -758,19 +997,27 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Stop a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/stop
-        /// Operation Id: Services_Stop
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Stop</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Stop");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Stop");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceResourceServicesClientDiagnostics, Pipeline, _appPlatformServiceResourceServicesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appPlatformServiceServicesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -784,19 +1031,27 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Stop a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/stop
-        /// Operation Id: Services_Stop
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Stop</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Stop");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Stop");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceResourceServicesClientDiagnostics, Pipeline, _appPlatformServiceResourceServicesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appPlatformServiceServicesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -810,19 +1065,27 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Start a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/start
-        /// Operation Id: Services_Start
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/start</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Start</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Start");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Start");
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceResourceServicesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceResourceServicesClientDiagnostics, Pipeline, _appPlatformServiceResourceServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appPlatformServiceServicesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -836,19 +1099,27 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Start a Service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/start
-        /// Operation Id: Services_Start
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/start</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Start</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Start");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Start");
             scope.Start();
             try
             {
-                var response = _appPlatformServiceResourceServicesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceResourceServicesClientDiagnostics, Pipeline, _appPlatformServiceResourceServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appPlatformServiceServicesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -862,23 +1133,31 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Check if the config server settings are valid.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/validate
-        /// Operation Id: ConfigServers_Validate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigServers_Validate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configServerSettings"> Config server settings to be validated. </param>
+        /// <param name="settings"> Config server settings to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configServerSettings"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfigServerSettingsValidateResult>> ValidateConfigServerAsync(WaitUntil waitUntil, ConfigServerSettings configServerSettings, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConfigServerSettingsValidateResult>> ValidateConfigServerAsync(WaitUntil waitUntil, ConfigServerSettings settings, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(configServerSettings, nameof(configServerSettings));
+            Argument.AssertNotNull(settings, nameof(settings));
 
-            using var scope = _configServerResourceConfigServersClientDiagnostics.CreateScope("AppPlatformServiceResource.ValidateConfigServer");
+            using var scope = _appPlatformConfigServerConfigServersClientDiagnostics.CreateScope("AppPlatformServiceResource.ValidateConfigServer");
             scope.Start();
             try
             {
-                var response = await _configServerResourceConfigServersRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configServerSettings, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ConfigServerSettingsValidateResult>(new ConfigServerSettingsValidateResultOperationSource(), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configServerSettings).Request, response, OperationFinalStateVia.Location);
+                var response = await _appPlatformConfigServerConfigServersRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<ConfigServerSettingsValidateResult>(new ConfigServerSettingsValidateResultOperationSource(), _appPlatformConfigServerConfigServersClientDiagnostics, Pipeline, _appPlatformConfigServerConfigServersRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -892,23 +1171,31 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Check if the config server settings are valid.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/validate
-        /// Operation Id: ConfigServers_Validate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigServers_Validate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configServerSettings"> Config server settings to be validated. </param>
+        /// <param name="settings"> Config server settings to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configServerSettings"/> is null. </exception>
-        public virtual ArmOperation<ConfigServerSettingsValidateResult> ValidateConfigServer(WaitUntil waitUntil, ConfigServerSettings configServerSettings, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
+        public virtual ArmOperation<ConfigServerSettingsValidateResult> ValidateConfigServer(WaitUntil waitUntil, ConfigServerSettings settings, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(configServerSettings, nameof(configServerSettings));
+            Argument.AssertNotNull(settings, nameof(settings));
 
-            using var scope = _configServerResourceConfigServersClientDiagnostics.CreateScope("AppPlatformServiceResource.ValidateConfigServer");
+            using var scope = _appPlatformConfigServerConfigServersClientDiagnostics.CreateScope("AppPlatformServiceResource.ValidateConfigServer");
             scope.Start();
             try
             {
-                var response = _configServerResourceConfigServersRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configServerSettings, cancellationToken);
-                var operation = new AppPlatformArmOperation<ConfigServerSettingsValidateResult>(new ConfigServerSettingsValidateResultOperationSource(), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configServerSettings).Request, response, OperationFinalStateVia.Location);
+                var response = _appPlatformConfigServerConfigServersRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings, cancellationToken);
+                var operation = new AppPlatformArmOperation<ConfigServerSettingsValidateResult>(new ConfigServerSettingsValidateResultOperationSource(), _appPlatformConfigServerConfigServersClientDiagnostics, Pipeline, _appPlatformConfigServerConfigServersRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -922,94 +1209,62 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// List deployments for a certain service
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/deployments
-        /// Operation Id: Deployments_ListForCluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/deployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_ListForCluster</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppDeploymentResource> GetForClusterDeploymentsAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppPlatformDeploymentResource> GetDeploymentsAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppDeploymentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppPlatformServiceResource.GetForClusterDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _appDeploymentResourceDeploymentsRestClient.ListForClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppDeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppPlatformServiceResource.GetForClusterDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _appDeploymentResourceDeploymentsRestClient.ListForClusterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformServiceResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List deployments for a certain service
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/deployments
-        /// Operation Id: Deployments_ListForCluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/deployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_ListForCluster</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppDeploymentResource> GetForClusterDeployments(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppPlatformDeploymentResource> GetDeployments(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
-            Page<AppDeploymentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppPlatformServiceResource.GetForClusterDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _appDeploymentResourceDeploymentsRestClient.ListForCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppDeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppPlatformServiceResource.GetForClusterDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _appDeploymentResourceDeploymentsRestClient.ListForClusterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformServiceResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1020,7 +1275,7 @@ namespace Azure.ResourceManager.AppPlatform
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.AddTag");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.AddTag");
             scope.Start();
             try
             {
@@ -1029,13 +1284,13 @@ namespace Azure.ResourceManager.AppPlatform
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _appPlatformServiceResourceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _appPlatformServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new AppPlatformServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AppPlatformServiceResourceData(current.Location);
+                    var patch = new AppPlatformServiceData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1054,8 +1309,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1066,7 +1329,7 @@ namespace Azure.ResourceManager.AppPlatform
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.AddTag");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.AddTag");
             scope.Start();
             try
             {
@@ -1075,13 +1338,13 @@ namespace Azure.ResourceManager.AppPlatform
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _appPlatformServiceResourceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _appPlatformServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new AppPlatformServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AppPlatformServiceResourceData(current.Location);
+                    var patch = new AppPlatformServiceData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1100,8 +1363,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1110,7 +1381,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.SetTags");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.SetTags");
             scope.Start();
             try
             {
@@ -1120,13 +1391,13 @@ namespace Azure.ResourceManager.AppPlatform
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _appPlatformServiceResourceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _appPlatformServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new AppPlatformServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AppPlatformServiceResourceData(current.Location);
+                    var patch = new AppPlatformServiceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1141,8 +1412,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1151,7 +1430,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.SetTags");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.SetTags");
             scope.Start();
             try
             {
@@ -1161,13 +1440,13 @@ namespace Azure.ResourceManager.AppPlatform
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _appPlatformServiceResourceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _appPlatformServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new AppPlatformServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AppPlatformServiceResourceData(current.Location);
+                    var patch = new AppPlatformServiceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1182,8 +1461,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1192,7 +1479,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RemoveTag");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1201,13 +1488,13 @@ namespace Azure.ResourceManager.AppPlatform
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _appPlatformServiceResourceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _appPlatformServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new AppPlatformServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AppPlatformServiceResourceData(current.Location);
+                    var patch = new AppPlatformServiceData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1226,8 +1513,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1236,7 +1531,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _appPlatformServiceResourceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RemoveTag");
+            using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1245,13 +1540,13 @@ namespace Azure.ResourceManager.AppPlatform
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _appPlatformServiceResourceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _appPlatformServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new AppPlatformServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AppPlatformServiceResourceData(current.Location);
+                    var patch = new AppPlatformServiceData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

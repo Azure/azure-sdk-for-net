@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -42,8 +41,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -72,8 +79,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -102,8 +117,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets all resource providers for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers
-        /// Operation Id: Providers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -111,43 +134,23 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceProviderResource> GetAllAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceProviderProvidersRestClient.ListAsync(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceProviderProvidersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, top, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceProviderResource(Client, ResourceProviderData.DeserializeResourceProviderData(e)), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all resource providers for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers
-        /// Operation Id: Providers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -155,43 +158,23 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceProviderResource> GetAll(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceProviderProvidersRestClient.List(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceProviderProvidersRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, top, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceProviderResource(Client, ResourceProviderData.DeserializeResourceProviderData(e)), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -218,8 +201,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>

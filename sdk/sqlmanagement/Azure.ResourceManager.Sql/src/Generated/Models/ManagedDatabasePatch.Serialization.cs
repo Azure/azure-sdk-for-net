@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("restorableDroppedDatabaseId");
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
+            if (Optional.IsDefined(StorageContainerIdentity))
+            {
+                writer.WritePropertyName("storageContainerIdentity");
+                writer.WriteStringValue(StorageContainerIdentity);
+            }
             if (Optional.IsDefined(StorageContainerSasToken))
             {
                 writer.WritePropertyName("storageContainerSasToken");

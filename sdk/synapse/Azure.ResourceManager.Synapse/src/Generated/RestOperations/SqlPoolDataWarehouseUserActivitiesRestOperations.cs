@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, DataWarehouseUserActivityName dataWarehouseUserActivityName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataWarehouseUserActivityData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseDataWarehouseUserActivityData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        DataWarehouseUserActivityData value = default;
+                        SynapseDataWarehouseUserActivityData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(document.RootElement);
+                        value = SynapseDataWarehouseUserActivityData.DeserializeSynapseDataWarehouseUserActivityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataWarehouseUserActivityData)null, message.Response);
+                    return Response.FromValue((SynapseDataWarehouseUserActivityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataWarehouseUserActivityData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public Response<SynapseDataWarehouseUserActivityData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        DataWarehouseUserActivityData value = default;
+                        SynapseDataWarehouseUserActivityData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(document.RootElement);
+                        value = SynapseDataWarehouseUserActivityData.DeserializeSynapseDataWarehouseUserActivityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataWarehouseUserActivityData)null, message.Response);
+                    return Response.FromValue((SynapseDataWarehouseUserActivityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

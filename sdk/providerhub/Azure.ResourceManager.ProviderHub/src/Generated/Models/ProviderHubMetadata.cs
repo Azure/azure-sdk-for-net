@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
         /// <summary> Gets or sets the provider authentication. </summary>
         internal ProviderHubMetadataProviderAuthentication ProviderAuthentication { get; set; }
-        /// <summary> Gets the allowed audiences. </summary>
+        /// <summary> Gets or sets the provider authentication allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;

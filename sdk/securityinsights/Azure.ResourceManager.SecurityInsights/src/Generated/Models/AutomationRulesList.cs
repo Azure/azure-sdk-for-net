@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of AutomationRulesList. </summary>
         internal AutomationRulesList()
         {
-            Value = new ChangeTrackingList<AutomationRuleData>();
+            Value = new ChangeTrackingList<SecurityInsightsAutomationRuleData>();
         }
 
         /// <summary> Initializes a new instance of AutomationRulesList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal AutomationRulesList(IReadOnlyList<AutomationRuleData> value, string nextLink)
+        internal AutomationRulesList(IReadOnlyList<SecurityInsightsAutomationRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<AutomationRuleData> Value { get; }
+        public IReadOnlyList<SecurityInsightsAutomationRuleData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

@@ -147,11 +147,6 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
-            {
-                // TODO: copy over the other conditions from the uploadOptions
-                IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-            };
             if (position == 0)
             {
                 await _blobClient.CreateAsync(
@@ -175,6 +170,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options">Options for the storage resource. See <see cref="StorageResourceCopyFromUriOptions"/>.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -184,6 +182,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task CopyFromUriAsync(
             StorageResource sourceResource,
             bool overwrite,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -196,8 +195,11 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
-                // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
-                // TODO: subject to change as we scale to suppport resource types outside of blobs.
+                // Create Append blob beforehand
+                await _blobClient.CreateAsync(
+                    options: _options.ToCreateOptions(overwrite),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
                 await _blobClient.SyncCopyFromUriAsync(
                     sourceResource.Uri,
                     _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),

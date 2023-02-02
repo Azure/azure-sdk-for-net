@@ -43,7 +43,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-9173?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-9173?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -982,104 +982,6 @@
               "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-9173/providers/Microsoft.Network/virtualNetworks/sdk-test-vm-VirtualNetwork"
             }
           ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-9173/providers/Microsoft.Compute/virtualMachines/sdk-test-vm?api-version=2022-03-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-6d891ced4790db4799bb197ed84a4d7b-d28fad85bae43c41-00",
-        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5d451cfa3e73a1f265e858e302370ff8",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "2144",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 16 Nov 2022 00:10:33 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5d451cfa3e73a1f265e858e302370ff8",
-        "x-ms-correlation-request-id": "17a3ca2d-cf81-4cb5-8baf-b83b15dd75f3",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;3989,Microsoft.Compute/LowCostGet30Min;31932",
-        "x-ms-ratelimit-remaining-subscription-reads": "11914",
-        "x-ms-request-id": "406113c0-8a67-4cd8-8a9c-a1918523b02d",
-        "x-ms-routing-request-id": "CENTRALUS:20221116T001034Z:17a3ca2d-cf81-4cb5-8baf-b83b15dd75f3"
-      },
-      "ResponseBody": {
-        "name": "sdk-test-vm",
-        "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-9173/providers/Microsoft.Compute/virtualMachines/sdk-test-vm",
-        "type": "Microsoft.Compute/virtualMachines",
-        "location": "eastus",
-        "tags": {
-          "azsecpack": "nonprod",
-          "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true"
-        },
-        "properties": {
-          "vmId": "839887db-bc5f-4954-bf3e-892567af78b2",
-          "hardwareProfile": {
-            "vmSize": "Standard_B1s"
-          },
-          "storageProfile": {
-            "imageReference": {
-              "publisher": "MicrosoftWindowsDesktop",
-              "offer": "Windows-10",
-              "sku": "win10-21h2-pro",
-              "version": "latest",
-              "exactVersion": "19044.2251.221105"
-            },
-            "osDisk": {
-              "osType": "Windows",
-              "name": "sdk-test-vmOSDisk",
-              "createOption": "FromImage",
-              "caching": "ReadWrite",
-              "managedDisk": {
-                "storageAccountType": "Premium_LRS",
-                "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-9173/providers/Microsoft.Compute/disks/sdk-test-vmOSDisk"
-              },
-              "deleteOption": "Detach",
-              "diskSizeGB": 127
-            },
-            "dataDisks": []
-          },
-          "osProfile": {
-            "computerName": "sdk-test-vm",
-            "adminUsername": "adminUser",
-            "windowsConfiguration": {
-              "provisionVMAgent": true,
-              "enableAutomaticUpdates": true,
-              "patchSettings": {
-                "patchMode": "AutomaticByOS",
-                "assessmentMode": "ImageDefault",
-                "enableHotpatching": false
-              },
-              "enableVMAgentPlatformUpdates": false
-            },
-            "secrets": [],
-            "allowExtensionOperations": true,
-            "requireGuestProvisionSignal": true
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-9173/providers/Microsoft.Network/networkInterfaces/sdk-test-vm-NetworkInterface"
-              }
-            ]
-          },
-          "provisioningState": "Succeeded",
-          "timeCreated": "2022-11-16T00:05:51.3559168\u002B00:00"
         }
       }
     },

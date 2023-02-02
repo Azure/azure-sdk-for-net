@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
-    // Data plane generated client. The AssetMappings service client.
+    // Data plane generated client.
     /// <summary> The AssetMappings service client. </summary>
     public partial class AssetMappingsClient
     {
@@ -134,24 +131,9 @@ namespace Azure.Analytics.Purview.Share
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
-            return GetAssetMappingsImplementationAsync("AssetMappingsClient.GetAssetMappings", receivedShareName, skipToken, filter, orderby, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAssetMappingsImplementationAsync(string diagnosticsScopeName, string receivedShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context)
-                        : CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetMappingsClient.GetAssetMappings", "value", "nextLink", context);
         }
 
         /// <summary> List AssetMappings in a received share. </summary>
@@ -169,24 +151,9 @@ namespace Azure.Analytics.Purview.Share
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
-            return GetAssetMappingsImplementation("AssetMappingsClient.GetAssetMappings", receivedShareName, skipToken, filter, orderby, context);
-        }
-
-        private Pageable<BinaryData> GetAssetMappingsImplementation(string diagnosticsScopeName, string receivedShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context)
-                        : CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetMappingsRequest(receivedShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetMappingsNextPageRequest(nextLink, receivedShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetMappingsClient.GetAssetMappings", "value", "nextLink", context);
         }
 
         /// <summary> Maps a source asset in the sent share to a destination asset in the received share. </summary>

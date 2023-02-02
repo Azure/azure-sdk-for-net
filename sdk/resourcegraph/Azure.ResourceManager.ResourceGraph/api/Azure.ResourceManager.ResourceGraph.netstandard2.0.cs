@@ -2,10 +2,10 @@ namespace Azure.ResourceManager.ResourceGraph
 {
     public static partial class ResourceGraphExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.ResourceGraph.Models.QueryResponse> Resources(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.QueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceGraph.Models.QueryResponse>> ResourcesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.QueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<System.BinaryData> ResourcesHistory(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.ResourcesHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> ResourcesHistoryAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.ResourcesHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<System.BinaryData> GetResourceHistory(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.ResourcesHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetResourceHistoryAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.ResourcesHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ResourceGraph.Models.ResourceQueryResult> GetResources(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.ResourceQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceGraph.Models.ResourceQueryResult>> GetResourcesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.ResourceQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ResourceGraph.Models
@@ -19,16 +19,9 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     }
     public partial class DateTimeInterval
     {
-        public DateTimeInterval(System.DateTimeOffset start, System.DateTimeOffset end) { }
-        public System.DateTimeOffset End { get { throw null; } }
-        public System.DateTimeOffset Start { get { throw null; } }
-    }
-    public partial class ErrorDetails
-    {
-        internal ErrorDetails() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
+        public DateTimeInterval(System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
+        public System.DateTimeOffset EndOn { get { throw null; } }
+        public System.DateTimeOffset StartOn { get { throw null; } }
     }
     public abstract partial class Facet
     {
@@ -38,7 +31,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     public partial class FacetError : Azure.ResourceManager.ResourceGraph.Models.Facet
     {
         internal FacetError() : base (default(string)) { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceGraph.Models.ErrorDetails> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceGraph.Models.FacetErrorDetails> Errors { get { throw null; } }
+    }
+    public partial class FacetErrorDetails
+    {
+        internal FacetErrorDetails() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     public partial class FacetRequest
     {
@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         Asc = 0,
         Desc = 1,
     }
-    public partial class QueryContent
+    public partial class ResourceQueryContent
     {
-        public QueryContent(string query) { }
+        public ResourceQueryContent(string query) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceGraph.Models.FacetRequest> Facets { get { throw null; } }
         public System.Collections.Generic.IList<string> ManagementGroups { get { throw null; } }
-        public Azure.ResourceManager.ResourceGraph.Models.QueryRequestOptions Options { get { throw null; } set { } }
+        public Azure.ResourceManager.ResourceGraph.Models.ResourceQueryRequestOptions Options { get { throw null; } set { } }
         public string Query { get { throw null; } }
         public System.Collections.Generic.IList<string> Subscriptions { get { throw null; } }
     }
-    public partial class QueryRequestOptions
+    public partial class ResourceQueryRequestOptions
     {
-        public QueryRequestOptions() { }
+        public ResourceQueryRequestOptions() { }
         public bool? AllowPartialScopes { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceGraph.Models.AuthorizationScopeFilter? AuthorizationScopeFilter { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceGraph.Models.ResultFormat? ResultFormat { get { throw null; } set { } }
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         public string SkipToken { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
     }
-    public partial class QueryResponse
+    public partial class ResourceQueryResult
     {
-        internal QueryResponse() { }
+        internal ResourceQueryResult() { }
         public long Count { get { throw null; } }
         public System.BinaryData Data { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceGraph.Models.Facet> Facets { get { throw null; } }

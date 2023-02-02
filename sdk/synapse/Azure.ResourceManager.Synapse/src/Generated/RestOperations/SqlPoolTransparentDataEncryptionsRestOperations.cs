@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, TransparentDataEncryptionName transparentDataEncryptionName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseTransparentDataEncryptionName transparentDataEncryptionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransparentDataEncryptionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseTransparentDataEncryptionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        TransparentDataEncryptionData value = default;
+                        SynapseTransparentDataEncryptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransparentDataEncryptionData.DeserializeTransparentDataEncryptionData(document.RootElement);
+                        value = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TransparentDataEncryptionData)null, message.Response);
+                    return Response.FromValue((SynapseTransparentDataEncryptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransparentDataEncryptionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public Response<SynapseTransparentDataEncryptionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -117,19 +117,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        TransparentDataEncryptionData value = default;
+                        SynapseTransparentDataEncryptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransparentDataEncryptionData.DeserializeTransparentDataEncryptionData(document.RootElement);
+                        value = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TransparentDataEncryptionData)null, message.Response);
+                    return Response.FromValue((SynapseTransparentDataEncryptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, TransparentDataEncryptionName transparentDataEncryptionName, TransparentDataEncryptionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseTransparentDataEncryptionName transparentDataEncryptionName, SynapseTransparentDataEncryptionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransparentDataEncryptionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, TransparentDataEncryptionName transparentDataEncryptionName, TransparentDataEncryptionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseTransparentDataEncryptionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseTransparentDataEncryptionName transparentDataEncryptionName, SynapseTransparentDataEncryptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                 case 201:
                     {
-                        TransparentDataEncryptionData value = default;
+                        SynapseTransparentDataEncryptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransparentDataEncryptionData.DeserializeTransparentDataEncryptionData(document.RootElement);
+                        value = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransparentDataEncryptionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, TransparentDataEncryptionName transparentDataEncryptionName, TransparentDataEncryptionData data, CancellationToken cancellationToken = default)
+        public Response<SynapseTransparentDataEncryptionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseTransparentDataEncryptionName transparentDataEncryptionName, SynapseTransparentDataEncryptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                 case 201:
                     {
-                        TransparentDataEncryptionData value = default;
+                        SynapseTransparentDataEncryptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransparentDataEncryptionData.DeserializeTransparentDataEncryptionData(document.RootElement);
+                        value = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransparentDataEncryptionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseTransparentDataEncryptionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -271,9 +271,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        TransparentDataEncryptionListResult value = default;
+                        SynapseTransparentDataEncryptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransparentDataEncryptionListResult.DeserializeTransparentDataEncryptionListResult(document.RootElement);
+                        value = SynapseTransparentDataEncryptionListResult.DeserializeSynapseTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransparentDataEncryptionListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseTransparentDataEncryptionListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        TransparentDataEncryptionListResult value = default;
+                        SynapseTransparentDataEncryptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransparentDataEncryptionListResult.DeserializeTransparentDataEncryptionListResult(document.RootElement);
+                        value = SynapseTransparentDataEncryptionListResult.DeserializeSynapseTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransparentDataEncryptionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseTransparentDataEncryptionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -349,9 +349,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        TransparentDataEncryptionListResult value = default;
+                        SynapseTransparentDataEncryptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransparentDataEncryptionListResult.DeserializeTransparentDataEncryptionListResult(document.RootElement);
+                        value = SynapseTransparentDataEncryptionListResult.DeserializeSynapseTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransparentDataEncryptionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseTransparentDataEncryptionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -382,9 +382,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        TransparentDataEncryptionListResult value = default;
+                        SynapseTransparentDataEncryptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransparentDataEncryptionListResult.DeserializeTransparentDataEncryptionListResult(document.RootElement);
+                        value = SynapseTransparentDataEncryptionListResult.DeserializeSynapseTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

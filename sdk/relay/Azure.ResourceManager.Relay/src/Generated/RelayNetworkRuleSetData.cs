@@ -27,15 +27,19 @@ namespace Azure.ResourceManager.Relay
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="ipRules"> List of IpRules. </param>
-        internal RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, IList<RelayNetworkRuleSetIPRule> ipRules) : base(id, name, resourceType, systemData)
+        internal RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IList<RelayNetworkRuleSetIPRule> ipRules) : base(id, name, resourceType, systemData)
         {
             DefaultAction = defaultAction;
+            PublicNetworkAccess = publicNetworkAccess;
             IPRules = ipRules;
         }
 
         /// <summary> Default Action for Network Rule Set. </summary>
         public RelayNetworkRuleSetDefaultAction? DefaultAction { get; set; }
+        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+        public RelayPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> List of IpRules. </summary>
         public IList<RelayNetworkRuleSetIPRule> IPRules { get; }
     }

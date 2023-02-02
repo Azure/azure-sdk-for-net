@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static ServerlessUpstreamSettings DeserializeServerlessUpstreamSettings(JsonElement element)
         {
-            Optional<IList<UpstreamTemplate>> templates = default;
+            Optional<IList<SignalRUpstreamTemplate>> templates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templates"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.SignalR.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UpstreamTemplate> array = new List<UpstreamTemplate>();
+                    List<SignalRUpstreamTemplate> array = new List<SignalRUpstreamTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpstreamTemplate.DeserializeUpstreamTemplate(item));
+                        array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item));
                     }
                     templates = array;
                     continue;

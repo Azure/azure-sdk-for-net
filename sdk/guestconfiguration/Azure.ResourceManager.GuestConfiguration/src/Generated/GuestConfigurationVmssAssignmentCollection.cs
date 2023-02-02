@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -61,8 +60,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// Get information about a guest configuration assignment for VMSS
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,8 +97,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// Get information about a guest configuration assignment for VMSS
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,62 +134,58 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// List all guest configuration assignments for VMSS.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GuestConfigurationVmssAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GuestConfigurationVmssAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GuestConfigurationVmssAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationVmssAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GuestConfigurationVmssAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics, Pipeline, "GuestConfigurationVmssAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List all guest configuration assignments for VMSS.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GuestConfigurationVmssAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GuestConfigurationVmssAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GuestConfigurationVmssAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationVmssAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GuestConfigurationVmssAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics, Pipeline, "GuestConfigurationVmssAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,8 +211,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

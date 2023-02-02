@@ -143,6 +143,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Paypal": return PaypalLinkedService.DeserializePaypalLinkedService(element);
                     case "Phoenix": return PhoenixLinkedService.DeserializePhoenixLinkedService(element);
                     case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element);
+                    case "PowerBIWorkspace": return PowerBIWorkspaceLinkedService.DeserializePowerBIWorkspaceLinkedService(element);
                     case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element);
                     case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element);
                     case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element);

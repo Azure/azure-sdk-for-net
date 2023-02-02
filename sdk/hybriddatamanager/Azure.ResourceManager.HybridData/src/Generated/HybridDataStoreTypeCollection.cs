@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Gets the data store/repository type given its name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}
-        /// Operation Id: DataStoreTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataStoreTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataStoreTypeName"> The data store/repository type name for which details are needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Gets the data store/repository type given its name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}
-        /// Operation Id: DataStoreTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataStoreTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataStoreTypeName"> The data store/repository type name for which details are needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Gets all the data store/repository types that the resource supports.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes
-        /// Operation Id: DataStoreTypes_ListByDataManager
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataStoreTypes_ListByDataManager</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridDataStoreTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridDataStoreTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridDataStoreTypeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataStoreTypeDataStoreTypesRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataStoreTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridDataStoreTypeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataStoreTypeDataStoreTypesRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataStoreTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreTypeResource(Client, HybridDataStoreTypeData.DeserializeHybridDataStoreTypeData(e)), _hybridDataStoreTypeDataStoreTypesClientDiagnostics, Pipeline, "HybridDataStoreTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the data store/repository types that the resource supports.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes
-        /// Operation Id: DataStoreTypes_ListByDataManager
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataStoreTypes_ListByDataManager</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridDataStoreTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridDataStoreTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HybridDataStoreTypeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataStoreTypeDataStoreTypesRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataStoreTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridDataStoreTypeResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataStoreTypeDataStoreTypesRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataStoreTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreTypeResource(Client, HybridDataStoreTypeData.DeserializeHybridDataStoreTypeData(e)), _hybridDataStoreTypeDataStoreTypesClientDiagnostics, Pipeline, "HybridDataStoreTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}
-        /// Operation Id: DataStoreTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataStoreTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataStoreTypeName"> The data store/repository type name for which details are needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}
-        /// Operation Id: DataStoreTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataStoreTypes/{dataStoreTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataStoreTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataStoreTypeName"> The data store/repository type name for which details are needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

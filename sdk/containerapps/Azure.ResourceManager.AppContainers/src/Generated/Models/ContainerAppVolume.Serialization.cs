@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppVolume DeserializeContainerAppVolume(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<StorageType> storageType = default;
+            Optional<ContainerAppStorageType> storageType = default;
             Optional<string> storageName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageType = new StorageType(property.Value.GetString());
+                    storageType = new ContainerAppStorageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageName"))

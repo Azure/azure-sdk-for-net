@@ -10,29 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Represents a resource ID. For example, for a subnet, it is the resource URL for the subnet.
-    /// Serialized Name: ResourceId
-    /// </summary>
+    /// <summary> Represents a resource ID. For example, for a subnet, it is the resource URL for the subnet. </summary>
     internal partial class ResourceId
     {
         /// <summary> Initializes a new instance of ResourceId. </summary>
-        /// <param name="id">
-        /// The ID of the resource
-        /// Serialized Name: ResourceId.id
-        /// </param>
+        /// <param name="id"> The ID of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ResourceId(string id)
+        public ResourceId(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary>
-        /// The ID of the resource
-        /// Serialized Name: ResourceId.id
-        /// </summary>
-        public string Id { get; set; }
+        /// <summary> The ID of the resource. </summary>
+        public ResourceIdentifier Id { get; set; }
     }
 }

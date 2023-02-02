@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal static LoadTestResourcePageList DeserializeLoadTestResourcePageList(JsonElement element)
         {
-            Optional<IReadOnlyList<LoadTestingData>> value = default;
+            Optional<IReadOnlyList<LoadTestingResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LoadTestingData> array = new List<LoadTestingData>();
+                    List<LoadTestingResourceData> array = new List<LoadTestingResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingData.DeserializeLoadTestingData(item));
+                        array.Add(LoadTestingResourceData.DeserializeLoadTestingResourceData(item));
                     }
                     value = array;
                     continue;

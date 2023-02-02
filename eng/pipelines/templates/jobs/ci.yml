@@ -43,8 +43,8 @@ parameters:
 jobs:
   - job: Build
     pool:
-      name: azsdk-pool-mms-win-2019-general
-      vmImage: MMS2019
+      name: azsdk-pool-mms-win-2022-general
+      vmImage: MMS2022
 
     variables:
       Codeql.Enabled: true
@@ -172,9 +172,8 @@ jobs:
 
       - task: NodeTool@0
         inputs:
-          # https://github.com/nodejs/node/issues/40468
-          versionSpec: '16.6.2'
-        displayName: 'Install NodeJS'
+          versionSpec: 18.x
+        displayName: 'Use Node 18.x'
 
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
@@ -183,7 +182,7 @@ jobs:
         inputs:
           command: custom
           custom: 'tool'
-          arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20211119.1" "Azure.Sdk.Tools.SnippetGenerator"'
+          arguments: 'restore'
           workingDirectory: '$(Agent.BuildDirectory)'
 
       - task: PowerShell@2
@@ -219,8 +218,8 @@ jobs:
   - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
     - job: Compliance
       pool:
-        name: azsdk-pool-mms-win-2019-general
-        vmImage: MMS2019
+        name: azsdk-pool-mms-win-2022-general
+        vmImage: MMS2022
       steps:
         - task: UsePythonVersion@0
           displayName: "Use Python 3.6"
@@ -273,7 +272,11 @@ jobs:
           JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
           MatrixConfigs: ${{ parameters.MatrixConfigs }}
           MatrixFilters: ${{ parameters.MatrixFilters }}
-          MatrixReplace: ${{ parameters.MatrixReplace }}
+          MatrixReplace:
+            # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
+            - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
+            - ${{ each matrixReplace in parameters.MatrixReplace }}:
+              - ${{ matrixReplace }}
           CloudConfig:
             Cloud: public
           SparseCheckoutPaths:

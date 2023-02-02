@@ -1,0 +1,78 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/8af59112-bf94-48a3-830f-67e1b2c82a34/providers/Microsoft.Compute/locations/eastus2/publishers/MicrosoftWindowsDesktop/artifacttypes/vmimage/offers/Windows-10/skus/20h2-pro-g2/versions/19042.1645.220403?api-version=2022-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGFmNTkxMTItYmY5NC00OGEzLTgzMGYtNjdlMWIyYzgyYTM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NEZXNrdG9wL2FydGlmYWN0dHlwZXMvdm1pbWFnZS9vZmZlcnMvV2luZG93cy0xMC9za3VzLzIwaDItcHJvLWcyL3ZlcnNpb25zLzE5MDQyLjE2NDUuMjIwNDAzP2FwaS12ZXJzaW9uPTIwMjItMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "21a11c22-87a6-4cb0-89c3-d324260d5d63"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.51102",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/59.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetVMImageFromLocation3Min;12999,Microsoft.Compute/GetVMImageFromLocation30Min;73998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "e24428d7-dd1b-4e47-8485-d3ce0e25f070_133112991876818120"
+        ],
+        "x-ms-request-id": [
+          "6308f65b-e011-41ae-acd0-cf9882dbee61"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "42323cda-220b-45dc-b4f9-2d91550f7fa6"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20221209T082524Z:42323cda-220b-45dc-b4f9-2d91550f7fa6"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 09 Dec 2022 08:25:24 GMT"
+        ],
+        "Content-Length": [
+          "1236"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hyperVGeneration\": \"V2\",\r\n    \"architecture\": \"x64\",\r\n    \"replicaType\": \"Managed\",\r\n    \"replicaCount\": 10,\r\n    \"disallowed\": {\r\n      \"vmDiskType\": \"Unmanaged\"\r\n    },\r\n    \"automaticOSUpgradeProperties\": {\r\n      \"automaticOSUpgradeSupported\": false\r\n    },\r\n    \"imageDeprecationStatus\": {\r\n      \"imageState\": \"ScheduledForDeprecation\",\r\n      \"scheduledDeprecationTime\": \"2023-02-20T05:30:00+05:30\"\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"name\": \"SecurityType\",\r\n        \"value\": \"TrustedLaunchSupported\"\r\n      },\r\n      {\r\n        \"name\": \"IsAcceleratedNetworkSupported\",\r\n        \"value\": \"True\"\r\n      },\r\n      {\r\n        \"name\": \"DiskControllerTypes\",\r\n        \"value\": \"SCSI\"\r\n      },\r\n      {\r\n        \"name\": \"IsHibernateSupported\",\r\n        \"value\": \"False\"\r\n      }\r\n    ],\r\n    \"osDiskImage\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"sizeInGb\": 127\r\n    },\r\n    \"dataDiskImages\": []\r\n  },\r\n  \"location\": \"eastus2\",\r\n  \"name\": \"19042.1645.220403\",\r\n  \"id\": \"/Subscriptions/8af59112-bf94-48a3-830f-67e1b2c82a34/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsDesktop/ArtifactTypes/VMImage/Offers/Windows-10/Skus/20h2-pro-g2/Versions/19042.1645.220403\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "8af59112-bf94-48a3-830f-67e1b2c82a34"
+  }
+}

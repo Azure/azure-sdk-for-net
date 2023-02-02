@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string AzureValue = "azure";
         private const string KubenetValue = "kubenet";
+        private const string NoneValue = "none";
 
         /// <summary> Use the Azure CNI network plugin. See [Azure CNI (advanced) networking](https://docs.microsoft.com/azure/aks/concepts-network#azure-cni-advanced-networking) for more information. </summary>
         public static ContainerServiceNetworkPlugin Azure { get; } = new ContainerServiceNetworkPlugin(AzureValue);
         /// <summary> Use the Kubenet network plugin. See [Kubenet (basic) networking](https://docs.microsoft.com/azure/aks/concepts-network#kubenet-basic-networking) for more information. </summary>
         public static ContainerServiceNetworkPlugin Kubenet { get; } = new ContainerServiceNetworkPlugin(KubenetValue);
+        /// <summary> No CNI plugin is pre-installed. See [BYO CNI](https://docs.microsoft.com/en-us/azure/aks/use-byo-cni) for more information. </summary>
+        public static ContainerServiceNetworkPlugin None { get; } = new ContainerServiceNetworkPlugin(NoneValue);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPlugin"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkPlugin left, ContainerServiceNetworkPlugin right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPlugin"/> values are not the same. </summary>

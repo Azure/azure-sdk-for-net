@@ -20,6 +20,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("sourceCallerId");
                 writer.WriteObjectValue(SourceCallerId);
             }
+            if (Optional.IsDefined(SourceDisplayName))
+            {
+                writer.WritePropertyName("sourceDisplayName");
+                writer.WriteStringValue(SourceDisplayName);
+            }
+            if (Optional.IsDefined(SourceIdentifier))
+            {
+                writer.WritePropertyName("sourceIdentifier");
+                writer.WriteObjectValue(SourceIdentifier);
+            }
             writer.WritePropertyName("participantsToAdd");
             writer.WriteStartArray();
             foreach (var item in ParticipantsToAdd)

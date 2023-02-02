@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Get policy metadata resource.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-        /// Operation Id: PolicyMetadata_GetResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PolicyMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Get policy metadata resource.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-        /// Operation Id: PolicyMetadata_GetResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyMetadataResource> Get(CancellationToken cancellationToken = default)

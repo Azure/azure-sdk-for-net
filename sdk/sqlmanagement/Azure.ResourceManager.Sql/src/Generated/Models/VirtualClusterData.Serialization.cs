@@ -32,15 +32,10 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Family))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("family");
-                writer.WriteStringValue(Family);
-            }
-            if (Optional.IsDefined(MaintenanceConfigurationId))
-            {
-                writer.WritePropertyName("maintenanceConfigurationId");
-                writer.WriteStringValue(MaintenanceConfigurationId);
+                writer.WritePropertyName("version");
+                writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -55,9 +50,8 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> family = default;
+            Optional<string> version = default;
             Optional<IReadOnlyList<string>> childResources = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -124,9 +118,9 @@ namespace Azure.ResourceManager.Sql
                             subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("family"))
+                        if (property0.NameEquals("version"))
                         {
-                            family = property0.Value.GetString();
+                            version = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("childResources"))
@@ -144,21 +138,11 @@ namespace Azure.ResourceManager.Sql
                             childResources = array;
                             continue;
                         }
-                        if (property0.NameEquals("maintenanceConfigurationId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new VirtualClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnetId.Value, family.Value, Optional.ToList(childResources), maintenanceConfigurationId.Value);
+            return new VirtualClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnetId.Value, version.Value, Optional.ToList(childResources));
         }
     }
 }

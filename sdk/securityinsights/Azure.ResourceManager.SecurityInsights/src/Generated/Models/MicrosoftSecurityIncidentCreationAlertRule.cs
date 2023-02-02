@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             DisplayNamesFilter = new ChangeTrackingList<string>();
             DisplayNamesExcludeFilter = new ChangeTrackingList<string>();
-            SeveritiesFilter = new ChangeTrackingList<AlertSeverity>();
+            SeveritiesFilter = new ChangeTrackingList<SecurityInsightsAlertSeverity>();
             Kind = AlertRuleKind.MicrosoftSecurityIncidentCreation;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
+        /// <param name="kind"> The alert rule kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="displayNamesFilter"> the alerts&apos; displayNames on which the cases will be generated. </param>
         /// <param name="displayNamesExcludeFilter"> the alerts&apos; displayNames on which the cases will not be generated. </param>
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="description"> The description of the alert rule. </param>
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
-        /// <param name="enabled"> Determines whether this alert rule is enabled or disabled. </param>
-        /// <param name="lastModifiedUtc"> The last time that this alert has been modified. </param>
-        internal MicrosoftSecurityIncidentCreationAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<AlertSeverity> severitiesFilter, string alertRuleTemplateName, string description, string displayName, bool? enabled, DateTimeOffset? lastModifiedUtc) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
+        internal MicrosoftSecurityIncidentCreationAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag)
         {
             DisplayNamesFilter = displayNamesFilter;
             DisplayNamesExcludeFilter = displayNamesExcludeFilter;
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AlertRuleTemplateName = alertRuleTemplateName;
             Description = description;
             DisplayName = displayName;
-            Enabled = enabled;
-            LastModifiedUtc = lastModifiedUtc;
+            IsEnabled = isEnabled;
+            LastModifiedOn = lastModifiedOn;
             Kind = kind;
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The alerts&apos; productName on which the cases will be generated. </summary>
         public MicrosoftSecurityProductName? ProductFilter { get; set; }
         /// <summary> the alerts&apos; severities on which the cases will be generated. </summary>
-        public IList<AlertSeverity> SeveritiesFilter { get; }
+        public IList<SecurityInsightsAlertSeverity> SeveritiesFilter { get; }
         /// <summary> The Name of the alert rule template used to create this rule. </summary>
         public string AlertRuleTemplateName { get; set; }
         /// <summary> The description of the alert rule. </summary>
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The display name for alerts created by this alert rule. </summary>
         public string DisplayName { get; set; }
         /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The last time that this alert has been modified. </summary>
-        public DateTimeOffset? LastModifiedUtc { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
     }
 }

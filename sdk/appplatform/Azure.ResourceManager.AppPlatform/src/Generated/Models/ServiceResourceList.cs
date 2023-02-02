@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ServiceResourceList. </summary>
         internal ServiceResourceList()
         {
-            Value = new ChangeTrackingList<AppPlatformServiceResourceData>();
+            Value = new ChangeTrackingList<AppPlatformServiceData>();
         }
 
         /// <summary> Initializes a new instance of ServiceResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal ServiceResourceList(IReadOnlyList<AppPlatformServiceResourceData> value, string nextLink)
+        internal ServiceResourceList(IReadOnlyList<AppPlatformServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of Service resources. </summary>
-        public IReadOnlyList<AppPlatformServiceResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformServiceData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

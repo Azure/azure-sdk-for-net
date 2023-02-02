@@ -3,10 +3,7 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1489,7 +1486,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange requestedRange = range;
             if (UsingClientSideEncryption)
             {
-                if ((await GetPropertiesInternal(conditions, async, cancellationToken).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
+                if ((await GetPropertiesInternal(conditions, async, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
                 {
                     range = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
                 }
@@ -3178,7 +3175,10 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
 
                     // This also makes sure that we fail fast if file doesn't exist.
-                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(
+                        conditions: conditions,
+                        async,
+                        new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
 
                     ETag etag = blobProperties.Value.ETag;
                     var readConditions = conditions;
@@ -3237,7 +3237,10 @@ namespace Azure.Storage.Blobs.Specialized
                                 response.GetRawResponse());
                         },
                         async (bool async, CancellationToken cancellationToken)
-                            => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                            => await GetPropertiesInternal(
+                                conditions: default,
+                                async,
+                                new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false),
                         validationOptions,
                         allowModifications,
                         blobContentLength,
@@ -4669,27 +4672,29 @@ namespace Azure.Storage.Blobs.Specialized
 
                 string operationName = $"{nameof(BlobBaseClient)}.{nameof(Exists)}";
 
+                // 404 isn't an error for checking if the resource exists, it's false
+                RequestContext context = new RequestContext() { CancellationToken = cancellationToken };
+                context.AddClassifier(new BlobBaseClientExistsClassifier());
+
                 try
                 {
                     Response<BlobProperties> response = await GetPropertiesInternal(
                         conditions: default,
                         async: async,
-                        cancellationToken: cancellationToken,
+                        context: context,
                         operationName)
                         .ConfigureAwait(false);
 
+                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(response.GetRawResponse()))
+                    {
+                        return Response.FromValue(false, default);
+                    }
+                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(response.GetRawResponse()))
+                    {
+                        return Response.FromValue(true, default);
+                    }
+
                     return Response.FromValue(true, response.GetRawResponse());
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
-                    || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-                {
-                    return Response.FromValue(false, default);
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
-                {
-                    return Response.FromValue(true, default);
                 }
                 catch (Exception ex)
                 {
@@ -4859,7 +4864,7 @@ namespace Azure.Storage.Blobs.Specialized
             GetPropertiesInternal(
                 conditions,
                 async: false,
-                cancellationToken)
+                new RequestContext() { CancellationToken = cancellationToken })
                 .EnsureCompleted();
 
         /// <summary>
@@ -4894,7 +4899,7 @@ namespace Azure.Storage.Blobs.Specialized
             await GetPropertiesInternal(
                 conditions,
                 async: true,
-                cancellationToken)
+                new RequestContext() { CancellationToken = cancellationToken})
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -4914,9 +4919,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// <param name="context">
+        /// Optional <see cref="RequestContext"/> for the operation.
         /// </param>
         /// <param name="operationName">
         /// The name of the calling operation.
@@ -4932,9 +4936,10 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
-            CancellationToken cancellationToken,
+            RequestContext context,
             string operationName = default)
         {
+            context ??= new RequestContext();
             operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -4956,37 +4961,34 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobGetPropertiesHeaders> response;
+                    Response rawResponse;
 
                     if (async)
                     {
-                        response = await BlobRestClient.GetPropertiesAsync(
+                        rawResponse = await BlobRestClient.GetPropertiesAsync(
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            cancellationToken: cancellationToken)
+                            context: context)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = BlobRestClient.GetProperties(
+                        rawResponse = BlobRestClient.GetProperties(
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            cancellationToken: cancellationToken);
+                            context: context);
                     }
+
+                    ResponseWithHeaders<BlobGetPropertiesHeaders> response = ResponseWithHeaders.FromValue(
+                        new BlobGetPropertiesHeaders(rawResponse), rawResponse);
 
                     return Response.FromValue(
                         response.ToBlobProperties(),

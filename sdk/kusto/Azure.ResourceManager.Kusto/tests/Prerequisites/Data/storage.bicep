@@ -27,7 +27,7 @@ output STORAGE_ACCOUNT_SAS_TOKEN string = storageAccount.listAccountSAS('2022-05
     signedResourceTypes: 'o'
     signedPermission: 'r'
     signedServices: 'b'
-    signedExpiry: dateTimeAdd(now, 'P1D')
+    signedExpiry: dateTimeAdd(now, 'P5D')
 }).accountSasToken
 
 var deploymentScriptName = 'sdkDeploymentScript${id}'

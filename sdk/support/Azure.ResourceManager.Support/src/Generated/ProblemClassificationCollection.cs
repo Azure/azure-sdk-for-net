@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get problem classification details for a specific Azure service.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}
-        /// Operation Id: ProblemClassifications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get problem classification details for a specific Azure service.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}
-        /// Operation Id: ProblemClassifications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,62 +128,58 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Lists all the problem classifications (categories) available for a specific Azure service. Always use the service and problem classifications obtained programmatically. This practice ensures that you always have the most recent set of service and problem classification Ids.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications
-        /// Operation Id: ProblemClassifications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProblemClassificationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProblemClassificationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProblemClassificationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _problemClassificationRestClient.ListAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProblemClassificationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the problem classifications (categories) available for a specific Azure service. Always use the service and problem classifications obtained programmatically. This practice ensures that you always have the most recent set of service and problem classification Ids.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications
-        /// Operation Id: ProblemClassifications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProblemClassificationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProblemClassificationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProblemClassificationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _problemClassificationRestClient.List(Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProblemClassificationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}
-        /// Operation Id: ProblemClassifications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +205,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}
-        /// Operation Id: ProblemClassifications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

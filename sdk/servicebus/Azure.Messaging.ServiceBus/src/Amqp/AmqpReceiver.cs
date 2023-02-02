@@ -101,6 +101,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override string SessionId { get; protected set; }
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
 
+        public override int PrefetchCount
+        {
+            get => _prefetchCount;
+            set
+            {
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
+                _prefetchCount = value;
+                if (_receiveLink.TryGetOpenedObject(out var link))
+                {
+                    link.SetTotalLinkCredit((uint)value, true, true);
+                }
+            }
+        }
+
+        private volatile int _prefetchCount;
+
         private Exception LinkException { get; set; }
 
         /// <summary>
@@ -172,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _isSessionReceiver = isSessionReceiver;
             _isProcessor = isProcessor;
             _receiveMode = receiveMode;
+            _prefetchCount = (int)prefetchCount;
             Identifier = identifier;
             RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             SessionId = sessionId;
@@ -1341,13 +1358,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
-                // This should be updated when the AMQP library adds deterministic support for draining via an async method to remove the
-                // somewhat arbitrary delay and to also work for prefetch.
 
-                if (!_isSessionReceiver && !link.Settings.AutoSendFlow && link.LinkCredit > 0)
+                if (!_isSessionReceiver && link.LinkCredit > 0)
                 {
-                    link.IssueCredit(link.LinkCredit, true, AmqpConstants.NullBinary);
-                    await Task.Delay(200, cancellationToken).ConfigureAwait(false);
+                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
                 }
 
                 await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);

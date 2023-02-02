@@ -192,5 +192,33 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(204, response.Status);
             Assert.IsFalse(response.IsError);
         }
+
+        [Test]
+        public async Task ValidInputAlreadyGzipped()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            BinaryData data = BinaryData.FromObjectAsJson(
+                // Use an anonymous type to create the payload
+                new[] {
+                    new
+                    {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer1",
+                        AdditionalContext = 2,
+                    },
+                    new
+                    {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer2",
+                        AdditionalContext = 3
+                    },
+                });
+            GZipUtf8JsonRequestContent gzContent = new(data);
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, gzContent, "gzip").ConfigureAwait(false); //takes StreamName not tablename
+            // Check the response
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
+        }
     }
 }

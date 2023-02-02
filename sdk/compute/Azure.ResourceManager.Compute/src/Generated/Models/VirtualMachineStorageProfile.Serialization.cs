@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DiskControllerType))
+            {
+                writer.WritePropertyName("diskControllerType");
+                writer.WriteStringValue(DiskControllerType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ImageReference> imageReference = default;
             Optional<VirtualMachineOSDisk> osDisk = default;
             Optional<IList<VirtualMachineDataDisk>> dataDisks = default;
+            Optional<DiskControllerType> diskControllerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageReference"))
@@ -81,8 +87,18 @@ namespace Azure.ResourceManager.Compute.Models
                     dataDisks = array;
                     continue;
                 }
+                if (property.NameEquals("diskControllerType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    diskControllerType = new DiskControllerType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks));
+            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(diskControllerType));
         }
     }
 }

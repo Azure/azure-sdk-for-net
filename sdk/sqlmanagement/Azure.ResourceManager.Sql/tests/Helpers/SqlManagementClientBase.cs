@@ -149,5 +149,24 @@ namespace Azure.ResourceManager.Sql.Tests
             var privateEndpoint = await resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data);
             return privateEndpoint.Value;
         }
+
+        /// <summary>
+        /// create a defaut sql server.
+        /// </summary>
+        /// <param name="serverName"></param>
+        /// <param name="location"></param>
+        /// <param name="resourceGroup"></param>
+        /// <returns></returns>
+        protected async Task<SqlServerResource> CreateDefaultSqlServer(string serverName, AzureLocation location, ResourceGroupResource resourceGroup)
+        {
+            // create SqlServer
+            SqlServerData data = new SqlServerData(location)
+            {
+                AdministratorLogin = $"admin-{serverName}",
+                AdministratorLoginPassword = CreateGeneralPassword(),
+            };
+            var sqlServerResponse = await resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
+            return sqlServerResponse.Value;
+        }
     }
 }

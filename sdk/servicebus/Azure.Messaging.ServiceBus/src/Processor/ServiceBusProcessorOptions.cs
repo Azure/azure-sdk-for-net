@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount;
+        private volatile int _prefetchCount;
 
         /// <summary>
         /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages
@@ -124,7 +124,7 @@ namespace Azure.Messaging.ServiceBus
                 _maxConcurrentCalls = value;
             }
         }
-        private int _maxConcurrentCalls = 1;
+        private volatile int _maxConcurrentCalls = 1;
 
         /// <summary>
         /// Gets or sets the subqueue to connect the processor to.

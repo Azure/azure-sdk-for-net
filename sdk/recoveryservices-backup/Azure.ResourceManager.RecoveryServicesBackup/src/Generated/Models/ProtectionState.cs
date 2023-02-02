@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ProtectionErrorValue = "ProtectionError";
         private const string ProtectionStoppedValue = "ProtectionStopped";
         private const string ProtectionPausedValue = "ProtectionPaused";
+        private const string BackupsSuspendedValue = "BackupsSuspended";
 
         /// <summary> Invalid. </summary>
         public static ProtectionState Invalid { get; } = new ProtectionState(InvalidValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static ProtectionState ProtectionStopped { get; } = new ProtectionState(ProtectionStoppedValue);
         /// <summary> ProtectionPaused. </summary>
         public static ProtectionState ProtectionPaused { get; } = new ProtectionState(ProtectionPausedValue);
+        /// <summary> BackupsSuspended. </summary>
+        public static ProtectionState BackupsSuspended { get; } = new ProtectionState(BackupsSuspendedValue);
         /// <summary> Determines if two <see cref="ProtectionState"/> values are the same. </summary>
         public static bool operator ==(ProtectionState left, ProtectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProtectionState"/> values are not the same. </summary>

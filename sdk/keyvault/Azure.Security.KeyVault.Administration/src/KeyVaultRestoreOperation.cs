@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
         internal readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal> _operationInternal;
 
         /// <summary>
-        /// Creates an instance of a RestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
+        /// Creates an instance of a KeyVaultRestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
         ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
         /// to re-populate the details of this operation.
         /// </summary>
@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of a RestoreOperation.
+        /// Initializes a new instance of a KeyVaultRestoreOperation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync"/>.</param>
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of a RestoreOperation for mocking purposes.
+        /// Initializes a new instance of a KeyVaultRestoreOperation for mocking purposes.
         /// </summary>
         /// <param name="value">The <see cref="RestoreDetailsInternal" /> that will be used to populate various properties.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>

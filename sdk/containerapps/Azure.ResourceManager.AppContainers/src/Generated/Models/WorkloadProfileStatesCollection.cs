@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of WorkloadProfileStatesCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkloadProfileStatesCollection(IEnumerable<WorkloadProfileStates> value)
+        internal WorkloadProfileStatesCollection(IEnumerable<ContainerAppWorkloadProfileState> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of WorkloadProfileStatesCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal WorkloadProfileStatesCollection(IReadOnlyList<WorkloadProfileStates> value, string nextLink)
+        internal WorkloadProfileStatesCollection(IReadOnlyList<ContainerAppWorkloadProfileState> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<WorkloadProfileStates> Value { get; }
+        public IReadOnlyList<ContainerAppWorkloadProfileState> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

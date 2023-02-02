@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(Properties);
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag");
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag");
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         internal static DataProtectionBackupVaultData DeserializeDataProtectionBackupVaultData(JsonElement element)
         {
             DataProtectionBackupVaultProperties properties = default;
-            Optional<ETag> eTag = default;
             Optional<ManagedServiceIdentity> identity = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -65,16 +65,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     properties = DataProtectionBackupVaultProperties.DeserializeDataProtectionBackupVaultProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("eTag"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    eTag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("identity"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -83,6 +73,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("eTag"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     continue;
                 }
             }
-            return new DataProtectionBackupVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, Optional.ToNullable(eTag), identity);
+            return new DataProtectionBackupVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, identity, Optional.ToNullable(eTag));
         }
     }
 }

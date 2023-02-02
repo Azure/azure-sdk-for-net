@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ManagedEnvironmentsCollection DeserializeManagedEnvironmentsCollection(JsonElement element)
         {
-            IReadOnlyList<ManagedEnvironmentData> value = default;
+            IReadOnlyList<ContainerAppManagedEnvironmentData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ManagedEnvironmentData> array = new List<ManagedEnvironmentData>();
+                    List<ContainerAppManagedEnvironmentData> array = new List<ContainerAppManagedEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedEnvironmentData.DeserializeManagedEnvironmentData(item));
+                        array.Add(ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(item));
                     }
                     value = array;
                     continue;

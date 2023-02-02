@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Adds a new customer communication to an Azure support ticket.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}
-        /// Operation Id: Communications_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Communications_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="communicationName"> Communication name. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Adds a new customer communication to an Azure support ticket.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}
-        /// Operation Id: Communications_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Communications_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="communicationName"> Communication name. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Returns communication details for a support ticket.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}
-        /// Operation Id: Communications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Communications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Returns communication details for a support ticket.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}
-        /// Operation Id: Communications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Communications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +210,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications
-        /// Operation Id: Communications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Communications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals (&apos;eq&apos;) operator and createdDate supports Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;) operators. You may combine the CommunicationType and CreatedDate filters by Logical And (&apos;and&apos;) operator. </param>
@@ -188,43 +227,23 @@ namespace Azure.ResourceManager.Support
         /// <returns> An async collection of <see cref="SupportTicketCommunicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketCommunicationResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SupportTicketCommunicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketCommunicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _supportTicketCommunicationCommunicationsRestClient.ListAsync(Id.SubscriptionId, Id.Name, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketCommunicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SupportTicketCommunicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketCommunicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _supportTicketCommunicationCommunicationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketCommunicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketCommunicationCommunicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketCommunicationCommunicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, top, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications
-        /// Operation Id: Communications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Communications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals (&apos;eq&apos;) operator and createdDate supports Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;) operators. You may combine the CommunicationType and CreatedDate filters by Logical And (&apos;and&apos;) operator. </param>
@@ -232,43 +251,23 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="SupportTicketCommunicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketCommunicationResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SupportTicketCommunicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketCommunicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _supportTicketCommunicationCommunicationsRestClient.List(Id.SubscriptionId, Id.Name, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketCommunicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SupportTicketCommunicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketCommunicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _supportTicketCommunicationCommunicationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Name, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketCommunicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketCommunicationCommunicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketCommunicationCommunicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, top, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}
-        /// Operation Id: Communications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Communications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,8 +293,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}
-        /// Operation Id: Communications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Communications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

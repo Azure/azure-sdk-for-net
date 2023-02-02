@@ -486,12 +486,19 @@ namespace Azure.Storage.Files.Shares.Tests
             var shareName = GetNewShareName();
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            ShareClient unauthorizesShareClient = InstrumentClient(new ShareClient(share.Uri, GetOptions()));
+            await share.CreateIfNotExistsAsync();
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = GetNewFileServiceSasCredentialsShare(share.Name, permissions: ShareSasPermissions.Read)
+            };
+
+            ShareClient unauthorizedShareClient = InstrumentClient(new ShareClient(uriBuilder.ToUri(), GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                unauthorizesShareClient.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                unauthorizedShareClient.ExistsAsync(),
+                e => Assert.AreEqual("AuthorizationFailure", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -532,12 +539,19 @@ namespace Azure.Storage.Files.Shares.Tests
             var shareName = GetNewShareName();
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            ShareClient unauthorizesShareClient = InstrumentClient(new ShareClient(share.Uri, GetOptions()));
+            await share.CreateIfNotExistsAsync();
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = GetNewFileServiceSasCredentialsShare(share.Name, permissions: ShareSasPermissions.Read)
+            };
+
+            ShareClient unauthorizedShareClient = InstrumentClient(new ShareClient(uriBuilder.ToUri(), GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                unauthorizesShareClient.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                unauthorizedShareClient.DeleteIfExistsAsync(),
+                e => Assert.AreEqual("AuthorizationFailure", e.ErrorCode));
         }
 
         [RecordedTest]

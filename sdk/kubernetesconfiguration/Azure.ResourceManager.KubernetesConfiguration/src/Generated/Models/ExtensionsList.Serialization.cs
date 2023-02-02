@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static ExtensionsList DeserializeExtensionsList(JsonElement element)
         {
-            Optional<IReadOnlyList<ExtensionData>> value = default;
+            Optional<IReadOnlyList<KubernetesClusterExtensionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtensionData> array = new List<ExtensionData>();
+                    List<KubernetesClusterExtensionData> array = new List<KubernetesClusterExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionData.DeserializeExtensionData(item));
+                        array.Add(KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(item));
                     }
                     value = array;
                     continue;

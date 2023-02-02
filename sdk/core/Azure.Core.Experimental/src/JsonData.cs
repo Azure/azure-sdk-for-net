@@ -23,7 +23,7 @@ namespace Azure.Core.Dynamic
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
     [JsonConverter(typeof(JsonConverter))]
-    public partial class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
+    public partial class JsonData : DynamicData, IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
         private Dictionary<string, JsonData>? _objectRepresentation;
@@ -33,9 +33,9 @@ namespace Azure.Core.Dynamic
         private static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
 
         /// <summary>
-        /// Parses a UTF8 encoded string representing a single JSON value into a <see cref="JsonData"/>.
+        /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="JsonData"/>.
         /// </summary>
-        /// <param name="utf8Json">A UTF8 encoded string representing a JSON value.</param>
+        /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
         internal static JsonData Parse(BinaryData utf8Json)
         {
@@ -345,7 +345,7 @@ namespace Azure.Core.Dynamic
 
         private bool GetBoolean() => (bool)EnsureValue()!;
 
-        private void WriteTo(Utf8JsonWriter writer)
+        internal override void WriteTo(Utf8JsonWriter writer)
         {
             switch (_kind)
             {

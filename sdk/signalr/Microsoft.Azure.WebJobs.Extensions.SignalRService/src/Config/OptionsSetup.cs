@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -62,17 +61,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 }
                 //make connection more stable
                 options.ConnectionCount = 3;
-                options.ProductInfo = GetProductInfo();
             };
         }
 
         public Action<ServiceManagerOptions> Configure => _configureServiceManagerOptions;
-
-        private string GetProductInfo()
-        {
-            var workerRuntime = _configuration[Constants.FunctionsWorkerRuntime];
-            var sdkProductInfo = ProductInfo.GetProductInfo();
-            return $"{sdkProductInfo} [{Constants.FunctionsWorkerProductInfoKey}={workerRuntime}]";
-        }
     }
 }

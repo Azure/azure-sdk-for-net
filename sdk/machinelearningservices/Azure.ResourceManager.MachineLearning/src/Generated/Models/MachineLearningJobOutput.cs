@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Job output definition container information on where to find job output/logs.
-    /// Serialized Name: JobOutput
     /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
     /// </summary>
@@ -21,29 +20,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobOutput. </summary>
-        /// <param name="description">
-        /// Description for the output.
-        /// Serialized Name: JobOutput.description
-        /// </param>
-        /// <param name="jobOutputType">
-        /// [Required] Specifies the type of job.
-        /// Serialized Name: JobOutput.jobOutputType
-        /// </param>
+        /// <param name="description"> Description for the output. </param>
+        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         internal MachineLearningJobOutput(string description, JobOutputType jobOutputType)
         {
             Description = description;
             JobOutputType = jobOutputType;
         }
 
-        /// <summary>
-        /// Description for the output.
-        /// Serialized Name: JobOutput.description
-        /// </summary>
+        /// <summary> Description for the output. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// [Required] Specifies the type of job.
-        /// Serialized Name: JobOutput.jobOutputType
-        /// </summary>
+        /// <summary> [Required] Specifies the type of job. </summary>
         internal JobOutputType JobOutputType { get; set; }
     }
 }

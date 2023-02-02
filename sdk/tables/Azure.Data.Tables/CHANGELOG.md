@@ -12,6 +12,7 @@
 ### Other Changes
 - `TableClient.CreateIfNotExists` / `TableClient.CreateIfNotExistsAsync` documentation corrected (methods do not return `null` if the table already exists)
 - `TableClient` and `TableServiceClient` constructors that take SAS credentials no longer throw if the URI scheme is not https if it is a loopback host
+- Removed the `new()` constraint from methods on `TableClient`
 
 ## 12.7.1 (2022-12-06)
 

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             var hubContext = await _serviceManagerStore
                 .GetOrAddByConnectionStringKey(input.ConnectionStringSetting)
-                .GetAsync(input.HubName).ConfigureAwait(false) as IInternalServiceHubContext;
+                .GetAsync(input.HubName).ConfigureAwait(false) as ServiceHubContext;
             return hubContext.GetServiceEndpoints().ToArray();
         }
     }

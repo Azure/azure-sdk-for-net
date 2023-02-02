@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,92 +53,60 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConfigData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<ConfigData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConfigData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
@@ -162,8 +129,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
@@ -186,8 +161,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations
-        /// Operation Id: Recommendations_Generate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Generate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> GenerateRecommendationAsync(CancellationToken cancellationToken = default)
@@ -208,8 +191,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations
-        /// Operation Id: Recommendations_Generate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Generate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response GenerateRecommendation(CancellationToken cancellationToken = default)
@@ -230,8 +221,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}
-        /// Operation Id: Recommendations_GetGenerateStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetGenerateStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -253,8 +252,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}
-        /// Operation Id: Recommendations_GetGenerateStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetGenerateStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -276,8 +283,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions
-        /// Operation Id: Suppressions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Suppressions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
@@ -285,43 +300,23 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SuppressionContractResource> GetSuppressionContractsAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SuppressionContractResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SuppressionContractSuppressionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSuppressionContracts");
-                scope.Start();
-                try
-                {
-                    var response = await SuppressionContractSuppressionsRestClient.ListAsync(Id.SubscriptionId, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SuppressionContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SuppressionContractResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SuppressionContractSuppressionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSuppressionContracts");
-                scope.Start();
-                try
-                {
-                    var response = await SuppressionContractSuppressionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SuppressionContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SuppressionContractSuppressionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SuppressionContractResource(Client, SuppressionContractData.DeserializeSuppressionContractData(e)), SuppressionContractSuppressionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSuppressionContracts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions
-        /// Operation Id: Suppressions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Suppressions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
@@ -329,37 +324,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SuppressionContractResource> GetSuppressionContracts(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<SuppressionContractResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SuppressionContractSuppressionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSuppressionContracts");
-                scope.Start();
-                try
-                {
-                    var response = SuppressionContractSuppressionsRestClient.List(Id.SubscriptionId, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SuppressionContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SuppressionContractResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SuppressionContractSuppressionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSuppressionContracts");
-                scope.Start();
-                try
-                {
-                    var response = SuppressionContractSuppressionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SuppressionContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SuppressionContractSuppressionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SuppressionContractResource(Client, SuppressionContractData.DeserializeSuppressionContractData(e)), SuppressionContractSuppressionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSuppressionContracts", "value", "nextLink", cancellationToken);
         }
     }
 }

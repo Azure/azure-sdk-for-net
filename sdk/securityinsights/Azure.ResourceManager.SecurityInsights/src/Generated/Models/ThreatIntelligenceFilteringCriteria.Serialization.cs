@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(MinValidUntil))
             {
                 writer.WritePropertyName("minValidUntil");
-                writer.WriteStringValue(MinValidUntil);
+                writer.WriteStringValue(MinValidUntil.Value, "O");
             }
             if (Optional.IsDefined(MaxValidUntil))
             {
                 writer.WritePropertyName("maxValidUntil");
-                writer.WriteStringValue(MaxValidUntil);
+                writer.WriteStringValue(MaxValidUntil.Value, "O");
             }
-            if (Optional.IsDefined(IncludeDisabled))
+            if (Optional.IsDefined(IsIncludeDisabled))
             {
                 writer.WritePropertyName("includeDisabled");
-                writer.WriteBooleanValue(IncludeDisabled.Value);
+                writer.WriteBooleanValue(IsIncludeDisabled.Value);
             }
             if (Optional.IsCollectionDefined(SortBy))
             {

@@ -13,7 +13,24 @@
 #########
 
 # Catch all
-/sdk/                                           @pallavit @jsquire
+/sdk/                          @pallavit @jsquire
+
+# Rules for directories that fell under catch-all as of 1/19/2023
+/sdk/agrifood/                 @pallavit @jsquire
+# Note there are some sub-rules for this directory, defined below
+/sdk/applicationinsights/      @pallavit @jsquire
+# Note there are some sub-rules for this directory, defined below
+/sdk/cognitiveservices/        @pallavit @jsquire
+/sdk/entra/                    @pallavit @jsquire
+/sdk/graphrbac/                @pallavit @jsquire
+/sdk/machinelearningservices/  @pallavit @jsquire
+/sdk/maps/                     @pallavit @jsquire
+# Note there are some sub-rules for this directory, defined below
+/sdk/operationalinsights/      @pallavit @jsquire
+/sdk/purview/                  @pallavit @jsquire
+# Note there are some sub-rules for this directory, defined below
+/sdk/quantum/                  @pallavit @jsquire
+/sdk/remoterendering/          @pallavit @jsquire
 
 # ######## Core Libraries ########
 
@@ -21,13 +38,13 @@
 /sdk/core/                                      @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                  @schaabs @christothes @ShivangiReja
+/sdk/identity/                                  @schaabs @christothes
 
 # Extensions
 /sdk/extensions/                                @jsquire
 
 # PRLabel: %EngSys
-/sdk/template/                                  @hallipr @weshaggard @benbp @heaths @annelo-msft @chunyu3 @lirenhe
+/sdk/template/                                  @hallipr @weshaggard @benbp @heaths @chunyu3 @lirenhe
 
 # Smoke tests
 /common/SmokeTests/                             @schaabs @heaths @tg-msft @jsquire @pallavit
@@ -41,7 +58,7 @@
 #/<NotInRepo>/            @Azure/aks-pm
 
 # ServiceLabel: %Alerts Management %Service Attention
-/sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement            @liadtal @yairgil
+/sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/            @liadtal @yairgil
 
 # ServiceLabel: %ARM %Service Attention
 #/<NotInRepo>/            @armleads-azure
@@ -223,6 +240,8 @@
 /sdk/communication/Azure.ResourceManager.Communication/
 
 # ServiceLabel: %Compute %Service Attention
+#/<NotInRepo>/           @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @jaylabell @sandeepraichura @hilaryw29 @MsGabsta
+
 # PRLabel: %Compute
 /sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @amjads1 @avirishuv @vaibhav-agar @Drewm3
 
@@ -309,7 +328,7 @@
 #/<NotInRepo>/                                  @sebrenna @mharlan @chrissmiller
 
 # PRLabel: %DevCenter
-/sdk/devcenter/                                 @sebrenna @mharlan @chrissmiller @shivangireja 
+/sdk/devcenter/                                 @sebrenna @mharlan @chrissmiller @shivangireja
 
 # ServiceLabel: %Devtestlab %Service Attention
 /sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs/            @Tanmayeekamath
@@ -398,13 +417,13 @@
 /sdk/kusto/Microsoft.Azure.Management.Kusto/            @ilayrn @orhasban
 
 # ServiceLabel: %Lab Services %Service Attention
-sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamath
+/sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamath
 
 # ServiceLabel: %Load Test Service %Service Attention
-sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain
+/sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain
 
 # PRLabel: %Load Test Service
-sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain @christothes
+/sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain @christothes
 
 
 # ServiceLabel: %Logic App %Service Attention
@@ -444,11 +463,11 @@ sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain @christothes
 #/<NotInRepo>/            @kpiteira
 
 # ServiceLabel: %Monitor %Service Attention
-sdk/monitor/           @SameergMS @dadunl
+/sdk/monitor/           @SameergMS @dadunl
 
 # PRLabel: %Monitor - Query
-sdk/monitor/Azure.Monitor.Query            @nisha-bhatia @ShivangiReja
-sdk/monitor/ci.yml                         @nisha-bhatia @ShivangiReja
+/sdk/monitor/Azure.Monitor.Query/           @nisha-bhatia @ShivangiReja
+/sdk/monitor/ci.yml                         @nisha-bhatia @ShivangiReja
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
@@ -489,7 +508,7 @@ sdk/monitor/ci.yml                         @nisha-bhatia @ShivangiReja
 /sdk/mixedreality/                                 @crtreasu @rgarcia @JoshLove-msft
 
 # ServiceLabel: %Network %Service Attention
-sdk/network/           @aznetsuppgithub
+/sdk/network/           @aznetsuppgithub
 
 # ServiceLabel: %Network - Application Gateway %Service Attention
 #/<NotInRepo>/            @appgwsuppgithub
@@ -498,7 +517,7 @@ sdk/network/           @aznetsuppgithub
 #/<NotInRepo>/            @bastionsuppgithub
 
 # ServiceLabel: %Network - CDN %Service Attention
-sdk/cdn/Microsoft.Azure.Management.Cdn/         @cdnfdsuppgithub
+/sdk/cdn/Microsoft.Azure.Management.Cdn/         @cdnfdsuppgithub
 
 # ServiceLabel: %Network - DDOS Protection %Service Attention
 #/<NotInRepo>/            @ddossuppgithub
@@ -525,13 +544,13 @@ sdk/cdn/Microsoft.Azure.Management.Cdn/         @cdnfdsuppgithub
 #/<NotInRepo>/            @netwatchsuppgithub
 
 # ServiceLabel: %Network - DNS %Service Attention
-sdk/dns/            @dnssuppgithub
+/sdk/dns/            @dnssuppgithub
 
 # ServiceLabel: %Network - Network Virtual Appliance %Service Attention
 #/<NotInRepo>/            @nvasuppgithub
 
 # ServiceLabel: %Network - Traffic Manager %Service Attention
-sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsuppgithub
+/sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsuppgithub
 
 # ServiceLabel: %Network - Virtual WAN %Service Attention
 #/<NotInRepo>/            @vwansuppgithub
@@ -597,7 +616,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @chlahav
 
 # PRLabel: %Search
-/sdk/search/                                    @ShivangiReja @kinelski @tg-msft
+/sdk/search/                                    @ShivangiReja @kinelski @tg-msft @heaths
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                        @arv100kri @bleroy @tjacobhi
@@ -622,7 +641,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/sdk/schemaregistry/            @hmlam
 
 # ServiceLabel: %SignalR %Service Attention
-/sdk/signalr/            @sffamily @chenkennt @Y-Sindo     
+/sdk/signalr/            @sffamily @chenkennt @Y-Sindo
 
 # ServiceLabel: %SQL %Service Attention
 #/<NotInRepo>/            @azureSQLGitHub
@@ -713,21 +732,19 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ######## Management Plane ########
 
 /**/*Management*/                               @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
-/**/Azure.ResourceManager*/                     @m-nash @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
+/**/Azure.ResourceManager*/                     @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
-# ######## Eng Sys ######## 
+# ######## Eng Sys ########
 /eng/           @hallipr @weshaggard @benbp
 /eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
-/**/tests.yml   @hallipr @benbp
-/**/ci.yml      @hallipr @benbp
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @jsquire @maririos @pallavit
 /sdk/eventhub/tests.data.yml  @serkantkaraca @sjkwak
-/sdk/servicebus/tests.data.yml @shankarsama @DorothySun216 
+/sdk/servicebus/tests.data.yml @shankarsama @DorothySun216
 
 # ######## DPG ########
 
@@ -735,4 +752,4 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /doc/Data\ Plane\ Code\ Generation           @chunyu3 @pshao25 @fengzhou-msft @lirenhe @annelo-msft
 
 # Client generation tooling
-/eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe @annelo-msft
+/eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe

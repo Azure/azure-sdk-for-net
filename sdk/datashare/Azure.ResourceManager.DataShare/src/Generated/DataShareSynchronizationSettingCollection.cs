@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Create a synchronizationSetting
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}
-        /// Operation Id: SynchronizationSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Create a synchronizationSetting
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}
-        /// Operation Id: SynchronizationSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get a synchronizationSetting in a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}
-        /// Operation Id: SynchronizationSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get a synchronizationSetting in a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}
-        /// Operation Id: SynchronizationSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,94 +210,62 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// List synchronizationSettings in a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings
-        /// Operation Id: SynchronizationSettings_ListByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_ListByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataShareSynchronizationSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareSynchronizationSettingResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataShareSynchronizationSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataShareSynchronizationSettingSynchronizationSettingsRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareSynchronizationSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataShareSynchronizationSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataShareSynchronizationSettingSynchronizationSettingsRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareSynchronizationSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareSynchronizationSettingResource(Client, DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e)), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List synchronizationSettings in a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings
-        /// Operation Id: SynchronizationSettings_ListByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_ListByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataShareSynchronizationSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareSynchronizationSettingResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<DataShareSynchronizationSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareSynchronizationSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataShareSynchronizationSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareSynchronizationSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareSynchronizationSettingResource(Client, DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e)), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}
-        /// Operation Id: SynchronizationSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,8 +291,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}
-        /// Operation Id: SynchronizationSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

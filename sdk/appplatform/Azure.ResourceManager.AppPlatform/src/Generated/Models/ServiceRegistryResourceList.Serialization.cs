@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static ServiceRegistryResourceList DeserializeServiceRegistryResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceRegistryResourceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformServiceRegistryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceRegistryResourceData> array = new List<ServiceRegistryResourceData>();
+                    List<AppPlatformServiceRegistryData> array = new List<AppPlatformServiceRegistryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceRegistryResourceData.DeserializeServiceRegistryResourceData(item));
+                        array.Add(AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(item));
                     }
                     value = array;
                     continue;

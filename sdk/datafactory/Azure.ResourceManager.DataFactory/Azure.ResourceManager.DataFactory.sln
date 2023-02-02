@@ -7,6 +7,8 @@ Project("{AC600153-5570-4E1E-ABA0-D16260536392}") = "Azure.ResourceManager.DataF
 EndProject
 Project("{AC600153-5570-4E1E-ABA0-D16260536392}") = "Azure.ResourceManager.DataFactory.Tests", "tests\Azure.ResourceManager.DataFactory.Tests.csproj", "{161CECB3-A9B5-4C75-9183-227623CF98DA}"
 EndProject
+Project("{AC600153-5570-4E1E-ABA0-D16260536392}") = "Azure.ResourceManager.DataFactory.Samples", "samples\Azure.ResourceManager.DataFactory.Samples.csproj", "{DBD0CF39-D56D-4944-BF4B-ECF529872FBC}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

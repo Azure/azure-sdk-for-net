@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Strictly used in update requests.
-    /// Serialized Name: PartialBatchDeploymentPartialMinimalTrackedResourceWithProperties
-    /// </summary>
+    /// <summary> Strictly used in update requests. </summary>
     public partial class MachineLearningBatchDeploymentPatch
     {
         /// <summary> Initializes a new instance of MachineLearningBatchDeploymentPatch. </summary>
@@ -22,15 +19,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Additional attributes of the entity.
-        /// Serialized Name: PartialBatchDeploymentPartialMinimalTrackedResourceWithProperties.properties
-        /// </summary>
+        /// <summary> Additional attributes of the entity. </summary>
         internal PartialBatchDeployment Properties { get; set; }
-        /// <summary>
-        /// Description of the endpoint deployment.
-        /// Serialized Name: PartialBatchDeployment.description
-        /// </summary>
+        /// <summary> Description of the endpoint deployment. </summary>
         public string PartialBatchDeploymentDescription
         {
             get => Properties is null ? default : Properties.Description;
@@ -42,10 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: PartialBatchDeploymentPartialMinimalTrackedResourceWithProperties.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

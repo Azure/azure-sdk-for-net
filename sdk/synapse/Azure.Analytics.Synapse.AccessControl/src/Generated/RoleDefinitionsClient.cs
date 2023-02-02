@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    // Data plane generated client. The RoleDefinitions service client.
+    // Data plane generated client.
     /// <summary> The RoleDefinitions service client. </summary>
     public partial class RoleDefinitionsClient
     {

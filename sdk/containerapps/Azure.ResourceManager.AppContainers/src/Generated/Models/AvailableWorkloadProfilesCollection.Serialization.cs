@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static AvailableWorkloadProfilesCollection DeserializeAvailableWorkloadProfilesCollection(JsonElement element)
         {
-            IReadOnlyList<AvailableWorkloadProfile> value = default;
+            IReadOnlyList<ContainerAppAvailableWorkloadProfile> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<AvailableWorkloadProfile> array = new List<AvailableWorkloadProfile>();
+                    List<ContainerAppAvailableWorkloadProfile> array = new List<ContainerAppAvailableWorkloadProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableWorkloadProfile.DeserializeAvailableWorkloadProfile(item));
+                        array.Add(ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile(item));
                     }
                     value = array;
                     continue;

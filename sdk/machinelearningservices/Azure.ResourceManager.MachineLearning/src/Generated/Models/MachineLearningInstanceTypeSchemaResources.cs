@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Resource requests/limits for this instance type
-    /// Serialized Name: InstanceTypeSchemaResources
-    /// </summary>
+    /// <summary> Resource requests/limits for this instance type. </summary>
     public partial class MachineLearningInstanceTypeSchemaResources
     {
         /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchemaResources. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchemaResources. </summary>
-        /// <param name="requests">
-        /// Resource requests for this instance type
-        /// Serialized Name: InstanceTypeSchemaResources.requests
-        /// </param>
-        /// <param name="limits">
-        /// Resource limits for this instance type
-        /// Serialized Name: InstanceTypeSchemaResources.limits
-        /// </param>
+        /// <param name="requests"> Resource requests for this instance type. </param>
+        /// <param name="limits"> Resource limits for this instance type. </param>
         internal MachineLearningInstanceTypeSchemaResources(IDictionary<string, string> requests, IDictionary<string, string> limits)
         {
             Requests = requests;
             Limits = limits;
         }
 
-        /// <summary>
-        /// Resource requests for this instance type
-        /// Serialized Name: InstanceTypeSchemaResources.requests
-        /// </summary>
+        /// <summary> Resource requests for this instance type. </summary>
         public IDictionary<string, string> Requests { get; }
-        /// <summary>
-        /// Resource limits for this instance type
-        /// Serialized Name: InstanceTypeSchemaResources.limits
-        /// </summary>
+        /// <summary> Resource limits for this instance type. </summary>
         public IDictionary<string, string> Limits { get; }
     }
 }

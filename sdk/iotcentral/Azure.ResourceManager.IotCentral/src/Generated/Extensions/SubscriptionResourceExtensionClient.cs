@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -46,92 +45,60 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Get all IoT Central Applications in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/iotApps
-        /// Operation Id: Apps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/iotApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralAppResource> GetIotCentralAppsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotCentralAppResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
-                scope.Start();
-                try
-                {
-                    var response = await IotCentralAppAppsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IotCentralAppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
-                scope.Start();
-                try
-                {
-                    var response = await IotCentralAppAppsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotCentralApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all IoT Central Applications in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/iotApps
-        /// Operation Id: Apps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/iotApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralAppResource> GetIotCentralApps(CancellationToken cancellationToken = default)
         {
-            Page<IotCentralAppResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
-                scope.Start();
-                try
-                {
-                    var response = IotCentralAppAppsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IotCentralAppResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
-                scope.Start();
-                try
-                {
-                    var response = IotCentralAppAppsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotCentralApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Check if an IoT Central application name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability
-        /// Operation Id: Apps_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -153,8 +120,16 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Check if an IoT Central application name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability
-        /// Operation Id: Apps_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,8 +151,16 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Check if an IoT Central application subdomain is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability
-        /// Operation Id: Apps_CheckSubdomainAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_CheckSubdomainAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,8 +182,16 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Check if an IoT Central application subdomain is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability
-        /// Operation Id: Apps_CheckSubdomainAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_CheckSubdomainAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,86 +213,46 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary>
         /// Get all available application templates.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/appTemplates
-        /// Operation Id: Apps_ListTemplates
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/appTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ListTemplates</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralAppTemplate> GetTemplatesAppsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotCentralAppTemplate>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
-                scope.Start();
-                try
-                {
-                    var response = await IotCentralAppAppsRestClient.ListTemplatesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IotCentralAppTemplate>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
-                scope.Start();
-                try
-                {
-                    var response = await IotCentralAppAppsRestClient.ListTemplatesNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all available application templates.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/appTemplates
-        /// Operation Id: Apps_ListTemplates
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/appTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ListTemplates</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralAppTemplate> GetTemplatesApps(CancellationToken cancellationToken = default)
         {
-            Page<IotCentralAppTemplate> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
-                scope.Start();
-                try
-                {
-                    var response = IotCentralAppAppsRestClient.ListTemplates(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IotCentralAppTemplate> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
-                scope.Start();
-                try
-                {
-                    var response = IotCentralAppAppsRestClient.ListTemplatesNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
     }
 }

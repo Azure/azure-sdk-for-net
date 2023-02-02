@@ -78,14 +78,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("suppressFailures");
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettingsFromKeyVault);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettingsFromKeyVault.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(KeyVaultProtectedSettings);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -108,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> provisioningState = default;
             Optional<VirtualMachineExtensionInstanceView> instanceView = default;
             Optional<bool> suppressFailures = default;
-            Optional<BinaryData> protectedSettingsFromKeyVault = default;
+            Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -237,7 +233,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = BinaryData.FromString(property0.Value.GetRawText());
+                            protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value);
                             continue;
                         }
                     }

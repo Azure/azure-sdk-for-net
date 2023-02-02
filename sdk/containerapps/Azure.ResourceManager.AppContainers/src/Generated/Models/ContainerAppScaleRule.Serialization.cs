@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppScaleRule DeserializeContainerAppScaleRule(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<QueueScaleRule> azureQueue = default;
-            Optional<CustomScaleRule> custom = default;
-            Optional<HttpScaleRule> http = default;
-            Optional<TcpScaleRule> tcp = default;
+            Optional<ContainerAppQueueScaleRule> azureQueue = default;
+            Optional<ContainerAppCustomScaleRule> custom = default;
+            Optional<ContainerAppHttpScaleRule> http = default;
+            Optional<ContainerAppTcpScaleRule> tcp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureQueue = QueueScaleRule.DeserializeQueueScaleRule(property.Value);
+                    azureQueue = ContainerAppQueueScaleRule.DeserializeContainerAppQueueScaleRule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("custom"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    custom = CustomScaleRule.DeserializeCustomScaleRule(property.Value);
+                    custom = ContainerAppCustomScaleRule.DeserializeContainerAppCustomScaleRule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("http"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    http = HttpScaleRule.DeserializeHttpScaleRule(property.Value);
+                    http = ContainerAppHttpScaleRule.DeserializeContainerAppHttpScaleRule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tcp"))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tcp = TcpScaleRule.DeserializeTcpScaleRule(property.Value);
+                    tcp = ContainerAppTcpScaleRule.DeserializeContainerAppTcpScaleRule(property.Value);
                     continue;
                 }
             }

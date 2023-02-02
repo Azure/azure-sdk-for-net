@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Analysis;
 using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Analysis
+namespace Azure.ResourceManager.Analysis.Samples
 {
     public partial class Sample_AnalysisServerResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/getServer.json
             // this example is just showing the usage of "Servers_GetDetails" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AnalysisServerResource created on azure
             // for more information of creating AnalysisServerResource, please refer to the document of AnalysisServerResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/deleteServer.json
             // this example is just showing the usage of "Servers_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AnalysisServerResource created on azure
             // for more information of creating AnalysisServerResource, please refer to the document of AnalysisServerResource
@@ -80,8 +85,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/updateServer.json
             // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AnalysisServerResource created on azure
             // for more information of creating AnalysisServerResource, please refer to the document of AnalysisServerResource
@@ -103,6 +110,10 @@ namespace Azure.ResourceManager.Analysis
 {
 ["testKey"] = "testValue",
 },
+                AsAdministratorIdentities =
+{
+"azsdktest@microsoft.com","azsdktest2@microsoft.com"
+},
             };
             ArmOperation<AnalysisServerResource> lro = await analysisServer.UpdateAsync(WaitUntil.Completed, patch);
             AnalysisServerResource result = lro.Value;
@@ -122,8 +133,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/suspendServer.json
             // this example is just showing the usage of "Servers_Suspend" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AnalysisServerResource created on azure
             // for more information of creating AnalysisServerResource, please refer to the document of AnalysisServerResource
@@ -147,8 +160,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/resumeServer.json
             // this example is just showing the usage of "Servers_Resume" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AnalysisServerResource created on azure
             // for more information of creating AnalysisServerResource, please refer to the document of AnalysisServerResource
@@ -172,8 +187,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/listServers.json
             // this example is just showing the usage of "Servers_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -202,8 +219,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/listSkusForNew.json
             // this example is just showing the usage of "Servers_ListSkusForNew" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -228,8 +247,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/listSkusForExisting.json
             // this example is just showing the usage of "Servers_ListSkusForExisting" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AnalysisServerResource created on azure
             // for more information of creating AnalysisServerResource, please refer to the document of AnalysisServerResource
@@ -256,8 +277,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/listGatewayStatus.json
             // this example is just showing the usage of "Servers_ListGatewayStatus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AnalysisServerResource created on azure
             // for more information of creating AnalysisServerResource, please refer to the document of AnalysisServerResource
@@ -281,8 +304,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/dissociateGateway.json
             // this example is just showing the usage of "Servers_DissociateGateway" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AnalysisServerResource created on azure
             // for more information of creating AnalysisServerResource, please refer to the document of AnalysisServerResource
@@ -306,8 +331,10 @@ namespace Azure.ResourceManager.Analysis
             // Generated from example definition: specification/analysisservices/resource-manager/Microsoft.AnalysisServices/stable/2017-08-01/examples/checkNameAvailability.json
             // this example is just showing the usage of "Servers_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource

@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
@@ -58,8 +74,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the current usage information as well as limits for AML resources for given subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -72,8 +96,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the current usage information as well as limits for AML resources for given subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -86,8 +118,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Returns supported VM Sizes in a location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes
-        /// Operation Id: VirtualMachineSizes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSizes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
@@ -100,8 +140,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Returns supported VM Sizes in a location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes
-        /// Operation Id: VirtualMachineSizes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSizes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
@@ -114,8 +162,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Update quota for each VM family in workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas
-        /// Operation Id: Quotas_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for update quota is queried. </param>
@@ -132,8 +188,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Update quota for each VM family in workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas
-        /// Operation Id: Quotas_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for update quota is queried. </param>
@@ -150,8 +214,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the currently assigned Workspace Quotas based on VMFamily.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas
-        /// Operation Id: Quotas_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -164,8 +236,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the currently assigned Workspace Quotas based on VMFamily.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas
-        /// Operation Id: Quotas_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -195,8 +275,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the properties of the specified machine learning workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
@@ -211,8 +299,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the properties of the specified machine learning workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>

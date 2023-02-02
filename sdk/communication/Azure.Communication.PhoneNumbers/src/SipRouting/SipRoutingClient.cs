@@ -371,6 +371,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     }
                 }
 
+                if (newTrunks.Count == 0)
+                {
+                    return currentConfig.GetRawResponse();
+                }
+
                 var response = _restClient.PatchSipConfiguration(new SipConfiguration(newTrunks), cancellationToken);
                 return response.GetRawResponse();
             }
@@ -405,6 +410,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     {
                         newTrunks.Add(fqdn, null);
                     }
+                }
+
+                if (newTrunks.Count == 0)
+                {
+                    return currentConfig.GetRawResponse();
                 }
 
                 var response = await _restClient.PatchSipConfigurationAsync(new SipConfiguration(newTrunks), cancellationToken).ConfigureAwait(false);

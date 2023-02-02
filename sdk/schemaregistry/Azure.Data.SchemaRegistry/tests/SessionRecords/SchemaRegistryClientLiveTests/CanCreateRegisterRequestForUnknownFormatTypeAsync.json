@@ -1,52 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jolovschemaregistry.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-32184?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-19788?api-version=2022-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "154",
-        "Content-Type": "application/json; serialization=JSON",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.2.0-alpha.20220321.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "d1b7e96131b7fda405a98bfd4b8ddc91",
+        "Content-Length": "5",
+        "Content-Type": "text/plain; charset=utf-8",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8566709fbfce4f551eeb0a9438c71717",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "type": "record",
-        "namespace": "TestSchema",
-        "name": "Employee",
-        "fields": [
-          {
-            "name": "Name",
-            "type": "string"
-          },
-          {
-            "name": "Age",
-            "type": "int"
-          }
-        ]
-      },
-      "StatusCode": 415,
+      "RequestBody": "Hello",
+      "StatusCode": 403,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 22 Mar 2022 01:54:13 GMT",
+        "Date": "Thu, 12 Jan 2023 19:02:21 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
-        "x-ms-error-code": "InvalidSchemaType"
+        "x-ms-error-code": "NotAvaliable"
       },
       "ResponseBody": {
         "error": {
-          "code": "InvalidSchemaType",
-          "message": "Invalid schema type for PUT request. \u0027json\u0027 is not supported. TrackingId:f4a82cfa-0c95-49df-a11e-89333dcb92e8_G28, SystemTracker:jolovschemaregistry.servicebus.windows.net:$schemaGroups/azsdk_net_test_group/schemas/test-32184, Timestamp:2022-03-22T01:54:13"
+          "code": "NotAvaliable",
+          "message": "SubCode=40301, Schema of type Custom cannot be created within group \u0027azsdk_net_test_group\u0027 that support Avro schema type. TrackingId:ae11a4e6-3549-441c-a7ba-a803fd0c57d4_G2, SystemTracker:NoSystemTracker, Timestamp:2023-01-12T19:02:22"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1669990289",
-    "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1424268794",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
 }

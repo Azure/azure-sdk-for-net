@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
 using OpenTelemetry;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class SdkVersionUtils
     {

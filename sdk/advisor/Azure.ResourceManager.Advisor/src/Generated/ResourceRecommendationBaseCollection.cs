@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Obtains details of a cached recommendation.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}
-        /// Operation Id: Recommendations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="recommendationId"> The recommendation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,8 +81,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Obtains details of a cached recommendation.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}
-        /// Operation Id: Recommendations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="recommendationId"> The recommendation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +118,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Obtains cached recommendations for a subscription. The recommendations are generated or computed by invoking generateRecommendations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations
-        /// Operation Id: Recommendations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
@@ -113,43 +136,23 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceRecommendationBaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceRecommendationBaseRecommendationsRestClient.ListAsync(Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceRecommendationBaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceRecommendationBaseRecommendationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Obtains cached recommendations for a subscription. The recommendations are generated or computed by invoking generateRecommendations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations
-        /// Operation Id: Recommendations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
@@ -158,43 +161,23 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceRecommendationBaseResource> GetAll(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceRecommendationBaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceRecommendationBaseRecommendationsRestClient.List(Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceRecommendationBaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceRecommendationBaseRecommendationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}
-        /// Operation Id: Recommendations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="recommendationId"> The recommendation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,8 +203,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}
-        /// Operation Id: Recommendations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="recommendationId"> The recommendation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -7,6 +7,8 @@ Project("{FE15514E-D88F-4989-BA4B-7E8650FAE0E3}") = "Azure.ResourceManager.Grafa
 EndProject
 Project("{FE15514E-D88F-4989-BA4B-7E8650FAE0E3}") = "Azure.ResourceManager.Grafana.Tests", "tests\Azure.ResourceManager.Grafana.Tests.csproj", "{B930A63B-F1E7-4424-B295-F615A49C754C}"
 EndProject
+Project("{FE15514E-D88F-4989-BA4B-7E8650FAE0E3}") = "Azure.ResourceManager.Grafana.Samples", "samples\Azure.ResourceManager.Grafana.Samples.csproj", "{e77ba930-4a0d-49b4-9b81-2e35fc19bcbb}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

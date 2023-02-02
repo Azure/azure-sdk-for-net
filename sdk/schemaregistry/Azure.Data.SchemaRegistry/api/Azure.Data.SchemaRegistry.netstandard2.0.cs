@@ -7,6 +7,8 @@ namespace Azure.Data.SchemaRegistry
         private readonly int _dummyPrimitive;
         public SchemaFormat(string value) { throw null; }
         public static Azure.Data.SchemaRegistry.SchemaFormat Avro { get { throw null; } }
+        public static Azure.Data.SchemaRegistry.SchemaFormat Custom { get { throw null; } }
+        public static Azure.Data.SchemaRegistry.SchemaFormat Json { get { throw null; } }
         public bool Equals(Azure.Data.SchemaRegistry.SchemaFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -43,10 +45,11 @@ namespace Azure.Data.SchemaRegistry
     }
     public partial class SchemaRegistryClientOptions : Azure.Core.ClientOptions
     {
-        public SchemaRegistryClientOptions(Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion version = Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion.V2021_10) { }
+        public SchemaRegistryClientOptions(Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion version = Azure.Data.SchemaRegistry.SchemaRegistryClientOptions.ServiceVersion.V2022_10) { }
         public enum ServiceVersion
         {
             V2021_10 = 1,
+            V2022_10 = 2,
         }
     }
     public static partial class SchemaRegistryModelFactory

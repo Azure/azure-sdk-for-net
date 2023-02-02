@@ -96,3 +96,34 @@ foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
     }
 }
 ```
+
+In more advanced scenarios, it may be necessary to store the continuation token returned from the service so your code controls exactly when the next pages is fetched.
+Below is a simple example that illustrates how the token can be fetched and applied to paginated results.
+
+```C# Snippet:TablesSample4QueryPagination
+string continuationToken = null;
+bool moreResultsAvailable = true;
+while (moreResultsAvailable)
+{
+    Page<TableEntity> page = tableClient
+        .Query<TableEntity>()
+        .AsPages(continuationToken, pageSizeHint: 10)
+        .FirstOrDefault(); // Note: Since the pageSizeHint only limits the number of results in a single page, we explicitly only enumerate the first page.
+
+    if (page == null)
+        break;
+
+    // Get the continuation token from the page.
+    // Note: This value can be stored so that the next page query can be executed later.
+    continuationToken = page.ContinuationToken;
+
+    IReadOnlyList<TableEntity> pageResults = page.Values;
+    moreResultsAvailable = pageResults.Any() && continuationToken != null;
+
+    // Print out the results for this page.
+    foreach (TableEntity result in pageResults)
+    {
+        Console.WriteLine($"{result.PartitionKey}-{result.RowKey}");
+    }
+}
+```

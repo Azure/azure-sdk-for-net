@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
@@ -12,11 +13,15 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the state of the transfer
     /// </summary>
-    internal class DataTransferState
+    internal class DataTransferState : IAsyncDisposable
     {
+        // To detect redundant calls
+        private bool _disposedValue;
+
         private string _id;
         private StorageTransferStatus _status;
         private long _currentTransferredBytes;
+        private SemaphoreSlim _statusSemaphore;
 
         public StorageTransferStatus Status => _status;
 
@@ -25,6 +30,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public DataTransferState()
         {
+            _disposedValue = false;
+            _statusSemaphore = new SemaphoreSlim(1, 1);
             _id = Guid.NewGuid().ToString();
             _status = StorageTransferStatus.Queued;
             _currentTransferredBytes = 0;
@@ -48,6 +55,20 @@ namespace Azure.Storage.DataMovement
             _id = id;
             _status = StorageTransferStatus.Queued;
             _currentTransferredBytes = bytesTransferred;
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (!_disposedValue)
+            {
+                _disposedValue = true;
+                if (_statusSemaphore.CurrentCount == 0)
+                {
+                    await _statusSemaphore.WaitAsync().ConfigureAwait(false);
+                    _statusSemaphore.Release();
+                }
+                _statusSemaphore.Dispose();
+            }
         }
 
         /// <summary>
@@ -90,11 +111,16 @@ namespace Azure.Storage.DataMovement
         /// Sets the completion status
         /// </summary>
         /// <param name="status"></param>
-        public void SetTransferStatus(StorageTransferStatus status)
+        public async Task SetTransferStatus(StorageTransferStatus status)
         {
-            if (_status != status)
+            if (!_disposedValue)
             {
-                _status = status;
+                await _statusSemaphore.WaitAsync().ConfigureAwait(false);
+                if (_status != status)
+                {
+                    _status = status;
+                }
+                _statusSemaphore.Release();
             }
         }
 

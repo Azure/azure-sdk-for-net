@@ -111,6 +111,7 @@
   </PropertyGroup>
 
   <!-- TargetFramework default properties -->
+  <!-- Update pipelines/templates/steps/install-dotnet.yml as needed, without re-installing SDKs already found on all supported agents -->
   <PropertyGroup>
     <!-- Client libraries are moving forward to NS 2.0 and Net 4.6.1 as the min supported versions -->
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
@@ -123,7 +124,7 @@
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
     <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
-    <RequiredTargetFrameworks>net6.0;netcoreapp3.1</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
     <!-- Also test net461 on Windows. -->
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net461</RequiredTargetFrameworks>
   </PropertyGroup>

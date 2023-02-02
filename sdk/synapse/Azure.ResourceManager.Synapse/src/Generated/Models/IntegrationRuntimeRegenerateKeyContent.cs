@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> The name of the authentication key to regenerate. </summary>
-        public IntegrationRuntimeAuthKeyName? KeyName { get; set; }
+        public SynapseIntegrationRuntimeAuthKeyName? KeyName { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningScheduleProvisioningStatus.
-    /// Serialized Name: ScheduleProvisioningStatus
-    /// </summary>
+    /// <summary> The MachineLearningScheduleProvisioningStatus. </summary>
     public readonly partial struct MachineLearningScheduleProvisioningStatus : IEquatable<MachineLearningScheduleProvisioningStatus>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ScheduleProvisioningStatus.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static MachineLearningScheduleProvisioningStatus Creating { get; } = new MachineLearningScheduleProvisioningStatus(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ScheduleProvisioningStatus.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static MachineLearningScheduleProvisioningStatus Updating { get; } = new MachineLearningScheduleProvisioningStatus(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ScheduleProvisioningStatus.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static MachineLearningScheduleProvisioningStatus Deleting { get; } = new MachineLearningScheduleProvisioningStatus(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ScheduleProvisioningStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static MachineLearningScheduleProvisioningStatus Succeeded { get; } = new MachineLearningScheduleProvisioningStatus(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ScheduleProvisioningStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static MachineLearningScheduleProvisioningStatus Failed { get; } = new MachineLearningScheduleProvisioningStatus(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ScheduleProvisioningStatus.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static MachineLearningScheduleProvisioningStatus Canceled { get; } = new MachineLearningScheduleProvisioningStatus(CanceledValue);
         /// <summary> Determines if two <see cref="MachineLearningScheduleProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningScheduleProvisioningStatus left, MachineLearningScheduleProvisioningStatus right) => left.Equals(right);

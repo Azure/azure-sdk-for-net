@@ -26,7 +26,7 @@ var data = new[] {
     new {}
 };
 
-Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
+Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -59,7 +59,7 @@ var data = new[] {
     new {}
 };
 
-Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
+Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>

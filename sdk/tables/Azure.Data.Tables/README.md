@@ -1,7 +1,7 @@
 # Azure Tables client library for .NET
 
-Azure Table storage is a service that stores large amounts of structured NoSQL data in the cloud, providing 
-a key/attribute store with a schema-less design. 
+Azure Table storage is a service that stores large amounts of structured NoSQL data in the cloud, providing
+a key/attribute store with a schema-less design.
 
 Azure Cosmos DB provides a Table API for applications that are written for Azure Table storage that need premium capabilities like:
 
@@ -32,7 +32,7 @@ If you need to create either of these, you can use the [Azure CLI][azure_cli].
 
 #### Creating a storage account
 
-Create a storage account `mystorageaccount` in resource group `MyResourceGroup` 
+Create a storage account `mystorageaccount` in resource group `MyResourceGroup`
 in the subscription `MySubscription` in the West US region.
 ```
 az storage account create -n mystorageaccount -g MyResourceGroup -l westus --subscription MySubscription
@@ -40,7 +40,7 @@ az storage account create -n mystorageaccount -g MyResourceGroup -l westus --sub
 
 #### Creating a Cosmos DB
 
-Create a Cosmos DB account `MyCosmosDBDatabaseAccount` in resource group `MyResourceGroup` 
+Create a Cosmos DB account `MyCosmosDBDatabaseAccount` in resource group `MyResourceGroup`
 in the subscription `MySubscription` and a table named `MyTableName` in the account.
 
 ```
@@ -196,6 +196,23 @@ Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ```
 
 If you prefer LINQ style query expressions, we can query the table using that syntax as well.
+To demonstrate this syntax, you'll need a strongly typed model such as the one below:
+
+```C# Snippet:TablesSample2DefineStronglyTypedEntity
+// Define a strongly typed entity by implementing the ITableEntity interface.
+public class OfficeSupplyEntity : ITableEntity
+{
+    public string Product { get; set; }
+    public double Price { get; set; }
+    public int Quantity { get; set; }
+    public string PartitionKey { get; set; }
+    public string RowKey { get; set; }
+    public DateTimeOffset? Timestamp { get; set; }
+    public ETag ETag { get; set; }
+}
+```
+
+Given this model class definition, here is how you'd write a query:
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
 double priceCutOff = 6.00;
@@ -213,7 +230,7 @@ tableClient.DeleteEntity(partitionKey, rowKey);
 
 ## Troubleshooting
 
-When you interact with the Azure table library using the .NET SDK, errors returned by the service correspond to the same HTTP 
+When using the Azure tables library, errors returned by the service are reported using the same HTTP
 status codes returned for [REST API][tables_rest] requests.
 
 For example, if you try to create a table that already exists, a `409` error is returned, indicating "Conflict".
@@ -269,7 +286,7 @@ the right to, and actually do, grant us the rights to use your contribution. For
 details, visit [cla.microsoft.com][cla].
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc].
-For more information see the [Code of Conduct FAQ][coc_faq] or contact 
+For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->

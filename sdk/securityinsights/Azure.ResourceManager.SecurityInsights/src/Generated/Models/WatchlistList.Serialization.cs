@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal static WatchlistList DeserializeWatchlistList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<WatchlistData> value = default;
+            IReadOnlyList<SecurityInsightsWatchlistData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<WatchlistData> array = new List<WatchlistData>();
+                    List<SecurityInsightsWatchlistData> array = new List<SecurityInsightsWatchlistData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WatchlistData.DeserializeWatchlistData(item));
+                        array.Add(SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(item));
                     }
                     value = array;
                     continue;

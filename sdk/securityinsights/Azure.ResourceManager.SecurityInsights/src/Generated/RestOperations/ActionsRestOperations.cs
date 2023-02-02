@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleId"/> or <paramref name="actionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleId"/> or <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ActionResponseData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsAlertRuleActionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -169,13 +169,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        ActionResponseData value = default;
+                        SecurityInsightsAlertRuleActionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ActionResponseData.DeserializeActionResponseData(document.RootElement);
+                        value = SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ActionResponseData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsAlertRuleActionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleId"/> or <paramref name="actionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleId"/> or <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ActionResponseData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsAlertRuleActionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,19 +204,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        ActionResponseData value = default;
+                        SecurityInsightsAlertRuleActionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ActionResponseData.DeserializeActionResponseData(document.RootElement);
+                        value = SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ActionResponseData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsAlertRuleActionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, ActionResponseCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, SecurityInsightsAlertRuleActionCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleId"/>, <paramref name="actionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleId"/> or <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ActionResponseData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, ActionResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsAlertRuleActionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, SecurityInsightsAlertRuleActionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        ActionResponseData value = default;
+                        SecurityInsightsAlertRuleActionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ActionResponseData.DeserializeActionResponseData(document.RootElement);
+                        value = SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleId"/>, <paramref name="actionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleId"/> or <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ActionResponseData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, ActionResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsAlertRuleActionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId, string actionId, SecurityInsightsAlertRuleActionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -306,9 +306,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        ActionResponseData value = default;
+                        SecurityInsightsAlertRuleActionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ActionResponseData.DeserializeActionResponseData(document.RootElement);
+                        value = SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,56 +44,44 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Lists all of the available runtime versions supported by Microsoft.AppPlatform provider.
-        /// Request Path: /providers/Microsoft.AppPlatform/runtimeVersions
-        /// Operation Id: RuntimeVersions_ListRuntimeVersions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppPlatform/runtimeVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RuntimeVersions_ListRuntimeVersions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SupportedRuntimeVersion> GetRuntimeVersionsRuntimeVersionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SupportedRuntimeVersion>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RuntimeVersionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetRuntimeVersionsRuntimeVersions");
-                scope.Start();
-                try
-                {
-                    var response = await RuntimeVersionsRestClient.ListRuntimeVersionsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetRuntimeVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the available runtime versions supported by Microsoft.AppPlatform provider.
-        /// Request Path: /providers/Microsoft.AppPlatform/runtimeVersions
-        /// Operation Id: RuntimeVersions_ListRuntimeVersions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppPlatform/runtimeVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RuntimeVersions_ListRuntimeVersions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SupportedRuntimeVersion> GetRuntimeVersionsRuntimeVersions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(CancellationToken cancellationToken = default)
         {
-            Page<SupportedRuntimeVersion> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RuntimeVersionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetRuntimeVersionsRuntimeVersions");
-                scope.Start();
-                try
-                {
-                    var response = RuntimeVersionsRestClient.ListRuntimeVersions(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetRuntimeVersions", "value", null, cancellationToken);
         }
     }
 }

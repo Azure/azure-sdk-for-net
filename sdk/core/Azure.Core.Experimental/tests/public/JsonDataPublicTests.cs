@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Azure.Core.Dynamic;
+using System.Text.Json;
 using NUnit.Framework;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Azure.Core.Tests.Public
 {
@@ -343,7 +346,24 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        public void OperatorEqualsForInt()
+        public void OperatorEqualsForBool()
+        {
+            dynamic trueJson = new BinaryData("{ \"value\": true }").ToDynamic().value;
+            dynamic falseJson = new BinaryData("{ \"value\": false }").ToDynamic().value;
+
+            Assert.IsTrue(trueJson == true);
+            Assert.IsTrue(true == trueJson);
+            Assert.IsFalse(trueJson != true);
+            Assert.IsFalse(true != trueJson);
+
+            Assert.IsFalse(falseJson == true);
+            Assert.IsFalse(true == falseJson);
+            Assert.IsTrue(falseJson != true);
+            Assert.IsTrue(true != falseJson);
+        }
+
+        [Test]
+        public void OperatorEqualsForInt32()
         {
             dynamic fiveJson = new BinaryData("{ \"value\": 5 }").ToDynamic().value;
             dynamic sixJson = new BinaryData("{ \"value\": 6 }").ToDynamic().value;
@@ -357,6 +377,63 @@ namespace Azure.Core.Tests.Public
             Assert.IsFalse(5 == sixJson);
             Assert.IsTrue(sixJson != 5);
             Assert.IsTrue(5 != sixJson);
+        }
+
+        [Test]
+        public void OperatorEqualsForLong()
+        {
+            long max = long.MaxValue;
+            long min = long.MinValue;
+
+            dynamic maxJson = new BinaryData($"{{ \"value\": { max } }}").ToDynamic().value;
+            dynamic minJson = new BinaryData($"{{ \"value\": { min } }}").ToDynamic().value;
+
+            Assert.IsTrue(maxJson == max);
+            Assert.IsTrue(max == maxJson);
+            Assert.IsFalse(maxJson != max);
+            Assert.IsFalse(max != maxJson);
+
+            Assert.IsFalse(minJson == max);
+            Assert.IsFalse(max == minJson);
+            Assert.IsTrue(minJson != max);
+            Assert.IsTrue(max != minJson);
+        }
+
+        [Test]
+        public void OperatorEqualsForFloat()
+        {
+            float half = 0.5f;
+
+            dynamic halfJson = new BinaryData("{ \"value\": 0.5 }").ToDynamic().value;
+            dynamic fourthJson = new BinaryData("{ \"value\": 0.25 }").ToDynamic().value;
+
+            Assert.IsTrue(halfJson == half);
+            Assert.IsTrue(half == halfJson);
+            Assert.IsFalse(halfJson != half);
+            Assert.IsFalse(half != halfJson);
+
+            Assert.IsFalse(fourthJson == half);
+            Assert.IsFalse(half == fourthJson);
+            Assert.IsTrue(fourthJson != half);
+            Assert.IsTrue(half != fourthJson);
+        }
+        [Test]
+        public void OperatorEqualsForDouble()
+        {
+            double half = 0.5;
+
+            dynamic halfJson = new BinaryData("{ \"value\": 0.5 }").ToDynamic().value;
+            dynamic fourthJson = new BinaryData("{ \"value\": 0.25 }").ToDynamic().value;
+
+            Assert.IsTrue(halfJson == half);
+            Assert.IsTrue(half == halfJson);
+            Assert.IsFalse(halfJson != half);
+            Assert.IsFalse(half != halfJson);
+
+            Assert.IsFalse(fourthJson == half);
+            Assert.IsFalse(half == fourthJson);
+            Assert.IsTrue(fourthJson != half);
+            Assert.IsTrue(half != fourthJson);
         }
 
         [Test]
@@ -388,6 +465,51 @@ namespace Azure.Core.Tests.Public
 
             Assert.That(value, Is.EqualTo("foo"));
             Assert.That("foo", Is.EqualTo(value));
+        }
+
+        [Test]
+        public async Task CanWriteToStream()
+        {
+            // Arrange
+            dynamic json = new BinaryData("{ \"Message\": \"Hi!\", \"Number\": 5 }").ToDynamic();
+
+            // Act
+            using var stream = new MemoryStream();
+            using (var writer = new Utf8JsonWriter(stream))
+            {
+                DynamicData.WriteTo(writer, json);
+            }
+
+            // Assert
+
+            // Deserialize to model type to validate value was correctly written to stream.
+            stream.Position = 0;
+
+            var model = (SampleModel)await JsonSerializer.DeserializeAsync(stream, typeof(SampleModel));
+
+            Assert.AreEqual("Hi!", model.Message);
+            Assert.AreEqual(5, model.Number);
+        }
+
+        [Test]
+        public async Task CanWriteToStream_JsonSerializer()
+        {
+            // Arrange
+            dynamic json = new BinaryData("{ \"Message\": \"Hi!\", \"Number\": 5 }").ToDynamic();
+
+            // Act
+            using var stream = new MemoryStream();
+            await JsonSerializer.SerializeAsync(stream, json);
+
+            // Assert
+
+            // Deserialize to model type to validate value was correctly written to stream.
+            stream.Position = 0;
+
+            var model = (SampleModel)await JsonSerializer.DeserializeAsync(stream, typeof(SampleModel));
+
+            Assert.AreEqual("Hi!", model.Message);
+            Assert.AreEqual(5, model.Number);
         }
     }
 }

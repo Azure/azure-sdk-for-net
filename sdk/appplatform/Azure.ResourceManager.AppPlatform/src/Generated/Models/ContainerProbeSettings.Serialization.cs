@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableProbe))
+            if (Optional.IsDefined(IsProbeDisabled))
             {
                 writer.WritePropertyName("disableProbe");
-                writer.WriteBooleanValue(DisableProbe.Value);
+                writer.WriteBooleanValue(IsProbeDisabled.Value);
             }
             writer.WriteEndObject();
         }

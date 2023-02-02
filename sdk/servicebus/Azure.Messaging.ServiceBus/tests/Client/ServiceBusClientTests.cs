@@ -481,34 +481,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Throws.InstanceOf<ArgumentException>());
         }
 
-        [Test]
-        public void CanMockMetricsProperty()
-        {
-            var mockClient = new Mock<ServiceBusClient>();
-            mockClient.Setup(
-                client => client.GetTransportMetrics()).Returns(new Mock<ServiceBusTransportMetrics>().Object);
-            var metrics = mockClient.Object.GetTransportMetrics();
-            Assert.IsNotNull(metrics);
-        }
-
-        [Test]
-        public void MetricsPropertyThrowsWhenNotEnabled()
-        {
-            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
-            var client = new ServiceBusClient(fakeConnection);
-            Assert.That(
-                () => client.GetTransportMetrics(),
-                Throws.InstanceOf<InvalidOperationException>());
-        }
-
-        [Test]
-        public void MetricsPropertyDoesNotThrowWhenEnabled()
-        {
-            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
-            var client = new ServiceBusClient(fakeConnection, new ServiceBusClientOptions {EnableTransportMetrics = true});
-            Assert.IsNotNull(client.GetTransportMetrics());
-        }
-
         /// <summary>
         ///   Allows for the options used by the client to be exposed for testing purposes.
         /// </summary>

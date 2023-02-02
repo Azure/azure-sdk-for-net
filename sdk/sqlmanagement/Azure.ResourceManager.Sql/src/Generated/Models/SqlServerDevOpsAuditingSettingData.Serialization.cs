@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isAzureMonitorTargetEnabled");
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
             }
+            if (Optional.IsDefined(IsManagedIdentityInUse))
+            {
+                writer.WritePropertyName("isManagedIdentityInUse");
+                writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
+            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> isAzureMonitorTargetEnabled = default;
+            Optional<bool> isManagedIdentityInUse = default;
             Optional<BlobAuditingPolicyState> state = default;
             Optional<string> storageEndpoint = default;
             Optional<string> storageAccountAccessKey = default;
@@ -106,6 +112,16 @@ namespace Azure.ResourceManager.Sql
                             isAzureMonitorTargetEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("isManagedIdentityInUse"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            isManagedIdentityInUse = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("state"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -140,7 +156,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerDevOpsAuditingSettingData(id, name, type, systemData.Value, Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
+            return new SqlServerDevOpsAuditingSettingData(id, name, type, systemData.Value, Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
         }
     }
 }

@@ -1,12 +1,26 @@
-# Azure Key Vault Management client library for .NET
+# Microsoft Azure Key Vault management client library for .NET
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+Microsoft Azure Key Vault is one of several key management solutions in Azure, and helps solve the following problems:
+
+- **Secrets Management** - Azure Key Vault can be used to Securely store and tightly control access to tokens, passwords, certificates, API keys, and other secrets
+- **Key Management** - Azure Key Vault can be used as a Key Management solution. Azure Key Vault makes it easy to create and control the encryption keys used to encrypt your data.
+- **Certificate Management** - Azure Key Vault lets you easily provision, manage, and deploy public and private Transport Layer Security/Secure Sockets Layer (TLS/SSL) certificates for use with Azure and your internal connected resources.
+
+This library supports managing Microsoft Azure Key Vault resources.
+
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
 
 ## Getting started
 
 ### Install the package
 
-Install the Azure Key Vault management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Key Vault management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.KeyVault
@@ -14,23 +28,23 @@ dotnet add package Azure.ResourceManager.KeyVault
 
 ### Prerequisites
 
-* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/)
+* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
-To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
+To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
 ## Key concepts
 
-Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts)
+Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)..
 
 ## Documentation
 
-Documentation is available to help you learn how to use this package
+Documentation is available to help you learn how to use this package:
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
-- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet)
-- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 
@@ -39,16 +53,12 @@ Code samples for using the management library for .NET can be found in the follo
 
 ## Troubleshooting
 
--   File an issue via [Github
-    Issues](https://github.com/Azure/azure-sdk-for-net/issues)
--   Check [previous
-    questions](https://stackoverflow.com/questions/tagged/azure+.net)
-    or ask new ones on Stack Overflow using azure and .net tags.
-
+-   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+-   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 
-For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
+For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 
@@ -62,13 +72,13 @@ your contribution. For details, visit <https://cla.microsoft.com>.
 
 When you submit a pull request, a CLA-bot will automatically determine
 whether you need to provide a CLA and decorate the PR appropriately
-(e.g., label, comment). Simply follow the instructions provided by the
-bot. You will only need to do this once across all repositories using
-our CLA.
+(for example, label, comment). Follow the instructions provided by the
+bot. You'll only need to do this action once across all repositories
+using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
-more information see the [Code of Conduct FAQ][coc_faq] or contact
-<opencode@microsoft.com> with any additional questions or comments.
+more information, see the [Code of Conduct FAQ][coc_faq] or contact
+<opencode@microsoft.com> with any other questions or comments.
 
 <!-- LINKS -->
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md

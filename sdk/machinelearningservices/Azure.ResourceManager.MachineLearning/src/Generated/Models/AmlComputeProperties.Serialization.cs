@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningUserAccountCredentials> userAccountCredentials = default;
             Optional<ResourceId> subnet = default;
             Optional<MachineLearningRemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
-            Optional<AmlAllocationState> allocationState = default;
+            Optional<MachineLearningAllocationState> allocationState = default;
             Optional<DateTimeOffset> allocationStateTransitionTime = default;
             Optional<IReadOnlyList<MachineLearningError>> errors = default;
             Optional<int?> currentNodeCount = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allocationState = new AmlAllocationState(property.Value.GetString());
+                    allocationState = new MachineLearningAllocationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allocationStateTransitionTime"))

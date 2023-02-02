@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             IntegrationRuntimeType type = "Unknown";
             Optional<string> dataFactoryName = default;
-            Optional<IntegrationRuntimeState> state = default;
+            Optional<SynapseIntegrationRuntimeState> state = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new IntegrationRuntimeState(property.Value.GetString());
+                    state = new SynapseIntegrationRuntimeState(property.Value.GetString());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

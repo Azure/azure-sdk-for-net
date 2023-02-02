@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,12 +17,10 @@ namespace Azure.ResourceManager.Maintenance
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _applyUpdateClientDiagnostics;
-        private ApplyUpdatesRestOperations _applyUpdateRestClient;
+        private ClientDiagnostics _maintenanceApplyUpdateApplyUpdatesClientDiagnostics;
+        private ApplyUpdatesRestOperations _maintenanceApplyUpdateApplyUpdatesRestClient;
         private ClientDiagnostics _maintenanceConfigurationClientDiagnostics;
         private MaintenanceConfigurationsRestOperations _maintenanceConfigurationRestClient;
-        private ClientDiagnostics _configurationAssignmentsWithinSubscriptionClientDiagnostics;
-        private ConfigurationAssignmentsWithinSubscriptionRestOperations _configurationAssignmentsWithinSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -38,12 +34,10 @@ namespace Azure.ResourceManager.Maintenance
         {
         }
 
-        private ClientDiagnostics ApplyUpdateClientDiagnostics => _applyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ApplyUpdateResource.ResourceType.Namespace, Diagnostics);
-        private ApplyUpdatesRestOperations ApplyUpdateRestClient => _applyUpdateRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplyUpdateResource.ResourceType));
+        private ClientDiagnostics MaintenanceApplyUpdateApplyUpdatesClientDiagnostics => _maintenanceApplyUpdateApplyUpdatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
+        private ApplyUpdatesRestOperations MaintenanceApplyUpdateApplyUpdatesRestClient => _maintenanceApplyUpdateApplyUpdatesRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceApplyUpdateResource.ResourceType));
         private ClientDiagnostics MaintenanceConfigurationClientDiagnostics => _maintenanceConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
         private MaintenanceConfigurationsRestOperations MaintenanceConfigurationRestClient => _maintenanceConfigurationRestClient ??= new MaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceConfigurationResource.ResourceType));
-        private ClientDiagnostics ConfigurationAssignmentsWithinSubscriptionClientDiagnostics => _configurationAssignmentsWithinSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ConfigurationAssignmentsWithinSubscriptionRestOperations ConfigurationAssignmentsWithinSubscriptionRestClient => _configurationAssignmentsWithinSubscriptionRestClient ??= new ConfigurationAssignmentsWithinSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -51,173 +45,95 @@ namespace Azure.ResourceManager.Maintenance
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PublicMaintenanceConfigurationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of PublicMaintenanceConfigurationResources and their operations over a PublicMaintenanceConfigurationResource. </returns>
-        public virtual PublicMaintenanceConfigurationCollection GetPublicMaintenanceConfigurations()
+        /// <summary> Gets a collection of MaintenancePublicConfigurationResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of MaintenancePublicConfigurationResources and their operations over a MaintenancePublicConfigurationResource. </returns>
+        public virtual MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations()
         {
-            return GetCachedClient(Client => new PublicMaintenanceConfigurationCollection(Client, Id));
+            return GetCachedClient(Client => new MaintenancePublicConfigurationCollection(Client, Id));
         }
 
         /// <summary>
         /// Get Configuration records within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates
-        /// Operation Id: ApplyUpdates_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplyUpdateResource> GetApplyUpdatesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplyUpdateResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplyUpdateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplyUpdates");
-                scope.Start();
-                try
-                {
-                    var response = await ApplyUpdateRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplyUpdateResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), MaintenanceApplyUpdateApplyUpdatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get Configuration records within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates
-        /// Operation Id: ApplyUpdates_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplyUpdateResource> GetApplyUpdates(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
-            Page<ApplyUpdateResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplyUpdateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplyUpdates");
-                scope.Start();
-                try
-                {
-                    var response = ApplyUpdateRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplyUpdateResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), MaintenanceApplyUpdateApplyUpdatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get Configuration records within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations
-        /// Operation Id: MaintenanceConfigurations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MaintenanceConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MaintenanceConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMaintenanceConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await MaintenanceConfigurationRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MaintenanceConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), MaintenanceConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMaintenanceConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get Configuration records within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations
-        /// Operation Id: MaintenanceConfigurations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<MaintenanceConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MaintenanceConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMaintenanceConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = MaintenanceConfigurationRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MaintenanceConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Get configuration assignment within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments
-        /// Operation Id: ConfigurationAssignmentsWithinSubscription_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationAssignmentResource> GetConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ConfigurationAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationAssignmentsWithinSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationAssignmentsWithinSubscriptionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Get configuration assignment within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments
-        /// Operation Id: ConfigurationAssignmentsWithinSubscription_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationAssignmentResource> GetConfigurationAssignments(CancellationToken cancellationToken = default)
-        {
-            Page<ConfigurationAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationAssignmentsWithinSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignments");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationAssignmentsWithinSubscriptionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), MaintenanceConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMaintenanceConfigurations", "value", null, cancellationToken);
         }
     }
 }

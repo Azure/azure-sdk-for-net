@@ -1,12 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -25,7 +29,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static readonly Meter s_myMeter = new("AttachStatsBeatMeter", "1.0");
 
-        private static string s_statsBeat_ConnectionString;
+        private static bool s_isEnabled = true;
+
+        internal static string s_statsBeat_ConnectionString;
 
         private static string s_resourceProviderId;
 
@@ -40,6 +46,60 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private static string s_customer_Ikey;
 
         internal static MeterProvider s_attachStatsBeatMeterProvider;
+
+        internal static Regex s_endpoint_pattern = new("^https?://(?:www\\.)?([^/.-]+)");
+
+        internal static readonly HashSet<string> EU_Endpoints = new()
+        {
+            "francecentral",
+            "francesouth",
+            "northeurope",
+            "norwayeast",
+            "norwaywest",
+            "swedencentral",
+            "switzerlandnorth",
+            "switzerlandwest",
+            "uksouth",
+            "ukwest",
+            "westeurope",
+        };
+
+        internal static readonly HashSet<string> Non_EU_Endpoints = new()
+        {
+            "australiacentral",
+            "australiacentral2",
+            "australiaeast",
+            "australiasoutheast",
+            "brazilsouth",
+            "brazilsoutheast",
+            "canadacentral",
+            "canadaeast",
+            "centralindia",
+            "centralus",
+            "chinaeast2",
+            "chinaeast3",
+            "chinanorth3",
+            "eastasia",
+            "eastus",
+            "eastus2",
+            "japaneast",
+            "japanwest",
+            "jioindiacentral",
+            "jioindiawest",
+            "koreacentral",
+            "koreasouth",
+            "northcentralus",
+            "qatarcentral",
+            "southafricanorth",
+            "southcentralus",
+            "southeastasia",
+            "southindia",
+            "uaecentral",
+            "uaenorth",
+            "westus",
+            "westus2",
+            "westus3",
+        };
 
         private static string GetOS()
         {
@@ -61,11 +121,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static void InitializeAttachStatsbeat(string connectionString)
         {
-            if (s_attachStatsBeatMeterProvider == null)
+            // check whether it is disabled or already initialized.
+            if (s_isEnabled && s_attachStatsBeatMeterProvider == null)
             {
                 if (s_statsBeat_ConnectionString == null)
                 {
-                    SetStatsBeatConnectionStringAndCustomerIkey(connectionString);
+                    var parsedConectionString = ConnectionStringParser.GetValues(connectionString);
+                    SetCustomerIkey(parsedConectionString.InstrumentationKey);
+                    SetStatsbeatConnectionString(parsedConectionString.IngestionEndpoint);
+                }
+
+                if (!s_isEnabled)
+                {
+                    // TODO: log
+                    return;
                 }
 
                 s_myMeter.CreateObservableGauge("AttachStatsBeat", () => GetAttachStatsBeat());
@@ -83,6 +152,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsBeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
+            }
+        }
+
+        internal static void SetCustomerIkey(string instrumentationKey)
+        {
+            s_customer_Ikey = instrumentationKey;
+        }
+
+        internal static void SetStatsbeatConnectionString(string ingestionEndpoint)
+        {
+            var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
+            if (patternMatch.Success)
+            {
+                var endpoint = patternMatch.Groups[1].Value;
+                if (EU_Endpoints.Contains(endpoint))
+                {
+                    s_statsBeat_ConnectionString = StatsBeat_ConnectionString_EU;
+                }
+                else if (Non_EU_Endpoints.Contains(endpoint))
+                {
+                    s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
+                }
+                else
+                {
+                    // disable statsbeat
+                    s_isEnabled = false;
+                }
             }
         }
 
@@ -123,19 +219,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 AzureMonitorExporterEventSource.Log.WriteInformational("Failed to get VM metadata details", ex.ToInvariantString());
                 return null;
-            }
-        }
-
-        private static void SetStatsBeatConnectionStringAndCustomerIkey(string connectionString)
-        {
-            if (s_statsBeat_ConnectionString == null)
-            {
-                ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out string ingestionEndpoint);
-
-                s_customer_Ikey = instrumentationKey;
-
-                // TODO: adjust based on customer's endpoint EU vs Non-EU.
-                s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
             }
         }
 

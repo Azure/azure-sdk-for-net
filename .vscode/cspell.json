@@ -176,6 +176,12 @@
       ]
     },
     {
+      "filename": "**/sdk/billingbenefits/**/*.cs",
+      "words": [
+        "Hana"
+      ]
+    },
+    {
       "filename": "**/sdk/botservice/**/*.cs",
       "words": [
         "Alexa",
@@ -256,7 +262,8 @@
         "sysctls",
         "tcpkeepalive",
         "wasi",
-        "wmem"
+        "wmem",
+        "Oidc"
       ]
     },
     {
@@ -492,6 +499,17 @@
         "Hhmm",
         "Hhmmss",
         "Hhmms"
+      ]
+    },
+    {
+      "filename": "**/sdk/mobilenetwork/**/*.cs",
+      "words": [
+        "Napt",
+        "Plmn",
+        "Ambr",
+        "Rfsp",
+        "Snssai",
+        "AKSHCI"
       ]
     },
     {
@@ -969,6 +987,14 @@
         "Ackable",
         "awps"
         ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "Probs",
+        "Logprobs",
+        "Logit"
+      ]
     }
   ],
   "allowCompoundWords": true

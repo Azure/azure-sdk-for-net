@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppTemplate DeserializeContainerAppTemplate(JsonElement element)
         {
             Optional<string> revisionSuffix = default;
-            Optional<IList<InitContainer>> initContainers = default;
+            Optional<IList<ContainerAppInitContainer>> initContainers = default;
             Optional<IList<ContainerAppContainer>> containers = default;
             Optional<ContainerAppScale> scale = default;
             Optional<IList<ContainerAppVolume>> volumes = default;
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InitContainer> array = new List<InitContainer>();
+                    List<ContainerAppInitContainer> array = new List<ContainerAppInitContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InitContainer.DeserializeInitContainer(item));
+                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item));
                     }
                     initContainers = array;
                     continue;

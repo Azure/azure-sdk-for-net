@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,16 +13,14 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.DevCenter
 {
-    // Data plane generated client. The DevCenter service client.
+    // Data plane generated client.
     /// <summary> The DevCenter service client. </summary>
     public partial class DevCenterClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _tenantId;
-        private readonly string _devCenter;
-        private readonly string _devCenterDnsSuffix;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -40,35 +35,28 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Initializes a new instance of DevCenterClient. </summary>
-        /// <param name="tenantId"> The tenant to operate on. </param>
-        /// <param name="devCenter"> The DevCenter to operate on. </param>
+        /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantId"/>, <paramref name="devCenter"/> or <paramref name="credential"/> is null. </exception>
-        public DevCenterClient(string tenantId, string devCenter, TokenCredential credential) : this(tenantId, devCenter, credential, "devcenter.azure.com", new DevCenterClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevCenterClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DevCenterClient. </summary>
-        /// <param name="tenantId"> The tenant to operate on. </param>
-        /// <param name="devCenter"> The DevCenter to operate on. </param>
+        /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="devCenterDnsSuffix"> The DNS suffix used as the base for all devcenter requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantId"/>, <paramref name="devCenter"/>, <paramref name="credential"/> or <paramref name="devCenterDnsSuffix"/> is null. </exception>
-        public DevCenterClient(string tenantId, string devCenter, TokenCredential credential, string devCenterDnsSuffix, DevCenterClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevCenterClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
         {
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
-            Argument.AssertNotNull(devCenter, nameof(devCenter));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(devCenterDnsSuffix, nameof(devCenterDnsSuffix));
             options ??= new DevCenterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _tenantId = tenantId;
-            _devCenter = devCenter;
-            _devCenterDnsSuffix = devCenterDnsSuffix;
+            _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
@@ -133,24 +121,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("DevCenterClient.GetProjects", filter, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(filter, maxCount, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary> Lists all projects. </summary>
@@ -162,24 +135,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetProjects(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetProjectsImplementation("DevCenterClient.GetProjects", filter, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(filter, maxCount, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
@@ -191,24 +149,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetAllDevBoxesImplementationAsync("DevCenterClient.GetAllDevBoxes", filter, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllDevBoxesImplementationAsync(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesRequest(filter, maxCount, context)
-                        : CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
@@ -220,24 +163,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxes(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllDevBoxes(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetAllDevBoxesImplementation("DevCenterClient.GetAllDevBoxes", filter, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetAllDevBoxesImplementation(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesRequest(filter, maxCount, context)
-                        : CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
@@ -254,24 +182,9 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetAllDevBoxesByUserImplementationAsync("DevCenterClient.GetAllDevBoxesByUser", userId, filter, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllDevBoxesByUserImplementationAsync(string diagnosticsScopeName, string userId, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context)
-                        : CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
@@ -288,24 +201,9 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetAllDevBoxesByUserImplementation("DevCenterClient.GetAllDevBoxesByUser", userId, filter, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetAllDevBoxesByUserImplementation(string diagnosticsScopeName, string userId, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context)
-                        : CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetProjectsRequest(string filter, int? maxCount, RequestContext context)
@@ -314,12 +212,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
@@ -341,12 +234,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -361,12 +249,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/devboxes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
@@ -388,12 +271,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes", false);
@@ -417,12 +295,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -435,12 +308,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -453,12 +321,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

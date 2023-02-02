@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Calling `ToString` on an `EventHubsException` now includes details of any inner exception.
+
 ## 5.7.5 (2022-11-22)
 
 ### Bugs Fixed

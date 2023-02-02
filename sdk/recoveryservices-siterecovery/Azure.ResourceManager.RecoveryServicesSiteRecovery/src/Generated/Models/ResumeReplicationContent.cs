@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The provider specific input for resume replication.
         /// Please note <see cref="ResumeReplicationProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtResumeReplicationInput"/>.
+        /// Please note <see cref="ResumeReplicationProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtResumeReplicationInput"/>.
         /// </summary>
         public ResumeReplicationProviderSpecificInput ResumeReplicationInputProviderSpecificDetails
         {

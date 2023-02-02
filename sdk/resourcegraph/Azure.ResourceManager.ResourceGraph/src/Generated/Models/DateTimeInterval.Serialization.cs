@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("start");
-            writer.WriteStringValue(Start, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("end");
-            writer.WriteStringValue(End, "O");
+            writer.WriteStringValue(EndOn, "O");
             writer.WriteEndObject();
         }
     }

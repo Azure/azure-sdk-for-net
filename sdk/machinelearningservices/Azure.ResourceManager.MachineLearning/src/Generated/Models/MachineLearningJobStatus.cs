@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The status of a job.
-    /// Serialized Name: JobStatus
-    /// </summary>
+    /// <summary> The status of a job. </summary>
     public readonly partial struct MachineLearningJobStatus : IEquatable<MachineLearningJobStatus>
     {
         private readonly string _value;
@@ -40,76 +37,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PausedValue = "Paused";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// Run hasn&apos;t started yet.
-        /// Serialized Name: JobStatus.NotStarted
-        /// </summary>
+        /// <summary> Run hasn&apos;t started yet. </summary>
         public static MachineLearningJobStatus NotStarted { get; } = new MachineLearningJobStatus(NotStartedValue);
-        /// <summary>
-        /// Run has started. The user has a run ID.
-        /// Serialized Name: JobStatus.Starting
-        /// </summary>
+        /// <summary> Run has started. The user has a run ID. </summary>
         public static MachineLearningJobStatus Starting { get; } = new MachineLearningJobStatus(StartingValue);
-        /// <summary>
-        /// (Not used currently) It will be used if ES is creating the compute target.
-        /// Serialized Name: JobStatus.Provisioning
-        /// </summary>
+        /// <summary> (Not used currently) It will be used if ES is creating the compute target. </summary>
         public static MachineLearningJobStatus Provisioning { get; } = new MachineLearningJobStatus(ProvisioningValue);
-        /// <summary>
-        /// The run environment is being prepared.
-        /// Serialized Name: JobStatus.Preparing
-        /// </summary>
+        /// <summary> The run environment is being prepared. </summary>
         public static MachineLearningJobStatus Preparing { get; } = new MachineLearningJobStatus(PreparingValue);
-        /// <summary>
-        /// The job is queued in the compute target. For example, in BatchAI the job is in queued state, while waiting for all required nodes to be ready.
-        /// Serialized Name: JobStatus.Queued
-        /// </summary>
+        /// <summary> The job is queued in the compute target. For example, in BatchAI the job is in queued state, while waiting for all required nodes to be ready. </summary>
         public static MachineLearningJobStatus Queued { get; } = new MachineLearningJobStatus(QueuedValue);
-        /// <summary>
-        /// The job started to run in the compute target.
-        /// Serialized Name: JobStatus.Running
-        /// </summary>
+        /// <summary> The job started to run in the compute target. </summary>
         public static MachineLearningJobStatus Running { get; } = new MachineLearningJobStatus(RunningValue);
-        /// <summary>
-        /// Job is completed in the target. It is in output collection state now.
-        /// Serialized Name: JobStatus.Finalizing
-        /// </summary>
+        /// <summary> Job is completed in the target. It is in output collection state now. </summary>
         public static MachineLearningJobStatus Finalizing { get; } = new MachineLearningJobStatus(FinalizingValue);
-        /// <summary>
-        /// Cancellation has been requested for the job.
-        /// Serialized Name: JobStatus.CancelRequested
-        /// </summary>
+        /// <summary> Cancellation has been requested for the job. </summary>
         public static MachineLearningJobStatus CancelRequested { get; } = new MachineLearningJobStatus(CancelRequestedValue);
-        /// <summary>
-        /// Job completed successfully. This reflects that both the job itself and output collection states completed successfully
-        /// Serialized Name: JobStatus.Completed
-        /// </summary>
+        /// <summary> Job completed successfully. This reflects that both the job itself and output collection states completed successfully. </summary>
         public static MachineLearningJobStatus Completed { get; } = new MachineLearningJobStatus(CompletedValue);
-        /// <summary>
-        /// Job failed.
-        /// Serialized Name: JobStatus.Failed
-        /// </summary>
+        /// <summary> Job failed. </summary>
         public static MachineLearningJobStatus Failed { get; } = new MachineLearningJobStatus(FailedValue);
-        /// <summary>
-        /// Following cancellation request, the job is now successfully canceled.
-        /// Serialized Name: JobStatus.Canceled
-        /// </summary>
+        /// <summary> Following cancellation request, the job is now successfully canceled. </summary>
         public static MachineLearningJobStatus Canceled { get; } = new MachineLearningJobStatus(CanceledValue);
         /// <summary>
         /// When heartbeat is enabled, if the run isn&apos;t updating any information to RunHistory then the run goes to NotResponding state.
         /// NotResponding is the only state that is exempt from strict transition orders. A run can go from NotResponding to any of the previous states.
-        /// Serialized Name: JobStatus.NotResponding
         /// </summary>
         public static MachineLearningJobStatus NotResponding { get; } = new MachineLearningJobStatus(NotRespondingValue);
-        /// <summary>
-        /// The job is paused by users. Some adjustment to labeling jobs can be made only in paused state.
-        /// Serialized Name: JobStatus.Paused
-        /// </summary>
+        /// <summary> The job is paused by users. Some adjustment to labeling jobs can be made only in paused state. </summary>
         public static MachineLearningJobStatus Paused { get; } = new MachineLearningJobStatus(PausedValue);
-        /// <summary>
-        /// Default job status if not mapped to all other statuses
-        /// Serialized Name: JobStatus.Unknown
-        /// </summary>
+        /// <summary> Default job status if not mapped to all other statuses. </summary>
         public static MachineLearningJobStatus Unknown { get; } = new MachineLearningJobStatus(UnknownValue);
         /// <summary> Determines if two <see cref="MachineLearningJobStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningJobStatus left, MachineLearningJobStatus right) => left.Equals(right);

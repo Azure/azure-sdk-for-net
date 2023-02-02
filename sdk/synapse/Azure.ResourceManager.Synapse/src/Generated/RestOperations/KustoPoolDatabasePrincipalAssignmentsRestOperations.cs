@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, DatabasePrincipalAssignmentCheckNameContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, DatabasePrincipalAssignmentCheckNameContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<KustoPoolNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        CheckNameResult value = default;
+                        KustoPoolNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
+                        value = KustoPoolNameAvailabilityResult.DeserializeKustoPoolNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, DatabasePrincipalAssignmentCheckNameContent content, CancellationToken cancellationToken = default)
+        public Response<KustoPoolNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        CheckNameResult value = default;
+                        KustoPoolNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
+                        value = KustoPoolNameAvailabilityResult.DeserializeKustoPoolNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabasePrincipalAssignmentListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseDatabasePrincipalAssignmentListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        DatabasePrincipalAssignmentListResult value = default;
+                        SynapseDatabasePrincipalAssignmentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabasePrincipalAssignmentListResult.DeserializeDatabasePrincipalAssignmentListResult(document.RootElement);
+                        value = SynapseDatabasePrincipalAssignmentListResult.DeserializeSynapseDatabasePrincipalAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabasePrincipalAssignmentListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, CancellationToken cancellationToken = default)
+        public Response<SynapseDatabasePrincipalAssignmentListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        DatabasePrincipalAssignmentListResult value = default;
+                        SynapseDatabasePrincipalAssignmentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabasePrincipalAssignmentListResult.DeserializeDatabasePrincipalAssignmentListResult(document.RootElement);
+                        value = SynapseDatabasePrincipalAssignmentListResult.DeserializeSynapseDatabasePrincipalAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/> or <paramref name="principalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabasePrincipalAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseDatabasePrincipalAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -278,13 +278,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        DatabasePrincipalAssignmentData value = default;
+                        SynapseDatabasePrincipalAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabasePrincipalAssignmentData.DeserializeDatabasePrincipalAssignmentData(document.RootElement);
+                        value = SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabasePrincipalAssignmentData)null, message.Response);
+                    return Response.FromValue((SynapseDatabasePrincipalAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/> or <paramref name="principalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabasePrincipalAssignmentData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, CancellationToken cancellationToken = default)
+        public Response<SynapseDatabasePrincipalAssignmentData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -315,19 +315,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        DatabasePrincipalAssignmentData value = default;
+                        SynapseDatabasePrincipalAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabasePrincipalAssignmentData.DeserializeDatabasePrincipalAssignmentData(document.RootElement);
+                        value = SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabasePrincipalAssignmentData)null, message.Response);
+                    return Response.FromValue((SynapseDatabasePrincipalAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, DatabasePrincipalAssignmentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, SynapseDatabasePrincipalAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/>, <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, DatabasePrincipalAssignmentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, SynapseDatabasePrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/>, <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="databaseName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, DatabasePrincipalAssignmentData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName, string principalAssignmentName, SynapseDatabasePrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

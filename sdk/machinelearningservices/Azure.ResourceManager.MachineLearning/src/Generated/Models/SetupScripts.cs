@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Details of customized scripts to execute for setting up the cluster.
-    /// Serialized Name: SetupScripts
-    /// </summary>
+    /// <summary> Details of customized scripts to execute for setting up the cluster. </summary>
     internal partial class SetupScripts
     {
         /// <summary> Initializes a new instance of SetupScripts. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SetupScripts. </summary>
-        /// <param name="scripts">
-        /// Customized setup scripts
-        /// Serialized Name: SetupScripts.scripts
-        /// </param>
+        /// <param name="scripts"> Customized setup scripts. </param>
         internal SetupScripts(MachineLearningScriptsToExecute scripts)
         {
             Scripts = scripts;
         }
 
-        /// <summary>
-        /// Customized setup scripts
-        /// Serialized Name: SetupScripts.scripts
-        /// </summary>
+        /// <summary> Customized setup scripts. </summary>
         public MachineLearningScriptsToExecute Scripts { get; set; }
     }
 }

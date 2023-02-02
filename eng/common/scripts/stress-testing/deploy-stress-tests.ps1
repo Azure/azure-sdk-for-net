@@ -26,6 +26,9 @@ param(
     # Override remote stress-test-addons with local on-disk addons for development
     [System.IO.FileInfo]$LocalAddonsPath,
 
+    # Renders chart templates locally without deployment
+    [Parameter(Mandatory=$False)][switch]$Template,
+
     # Matrix generation parameters
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
     [Parameter(Mandatory=$False)][string]$MatrixSelection,
