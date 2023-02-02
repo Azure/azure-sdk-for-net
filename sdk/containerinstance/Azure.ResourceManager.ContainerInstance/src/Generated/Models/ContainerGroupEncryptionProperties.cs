@@ -29,11 +29,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             KeyVersion = keyVersion;
         }
 
+        /// <summary> Initializes a new instance of ContainerGroupEncryptionProperties. </summary>
+        /// <param name="vaultBaseUri"> The keyvault base url. </param>
+        /// <param name="keyName"> The encryption key name. </param>
+        /// <param name="keyVersion"> The encryption key version. </param>
+        /// <param name="identity"> The keyvault managed identity. </param>
+        internal ContainerGroupEncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion, string identity)
+        {
+            VaultBaseUri = vaultBaseUri;
+            KeyName = keyName;
+            KeyVersion = keyVersion;
+            Identity = identity;
+        }
+
         /// <summary> The keyvault base url. </summary>
         public Uri VaultBaseUri { get; set; }
         /// <summary> The encryption key name. </summary>
         public string KeyName { get; set; }
         /// <summary> The encryption key version. </summary>
         public string KeyVersion { get; set; }
+        /// <summary> The keyvault managed identity. </summary>
+        public string Identity { get; set; }
     }
 }

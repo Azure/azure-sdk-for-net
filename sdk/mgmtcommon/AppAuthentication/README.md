@@ -1,8 +1,7 @@
 ## Microsoft.Azure.Services.AppAuthentication Library
 
-### Note
-This library is no longer recommended to use with the new Azure SDK. It is replaced with the new **Azure Identity client library** available for .NET, Java, TypeScript and Python and should be used for all new development. Information about how to migrate to `Azure.Identity` can be found here: [AppAuthentication to Azure.Identity Migration Guidance](https://docs.microsoft.com/dotnet/api/overview/azure/app-auth-migration).
-***
+> ### ⚠️Deprecation Notice⚠️
+> This library is now deprecated and has been replaced with the [Azure Identity client library](https://www.nuget.org/packages/Azure.Identity) available for .NET, Java, TypeScript and Python and should be used for all new development. Information about how to migrate to Azure.Identity can be found here: [AppAuthentication to Azure.Identity Migration Guidance](https://docs.microsoft.com/dotnet/api/overview/azure/app-auth-migration).
 
 ### Purpose
 Make it easy to authenticate to Azure Services (that support Azure AD Authentication), and help avoid credentials in source code and configuration files. 

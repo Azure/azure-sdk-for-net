@@ -294,7 +294,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -330,7 +330,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -473,7 +473,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -509,7 +509,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -617,7 +617,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -653,7 +653,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -779,7 +779,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -817,7 +817,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1224,7 +1224,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1252,7 +1252,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1280,7 +1280,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default?api-version=**",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",

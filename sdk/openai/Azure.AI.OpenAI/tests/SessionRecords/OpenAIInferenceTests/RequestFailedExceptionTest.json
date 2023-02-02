@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://openai-gharper.openai.azure.com/openai/deployments/BAD_DEPLOYMENT_ID/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "26",
+        "Content-Type": "application/json",
+        "traceparent": "00-b3fad71ac56c3e27f600fac3691a9369-2494d3ca68f7b221-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230131.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "d0ef3d379ba5173a785d55c38b3fa075",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world"
+        ]
+      },
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "apim-request-id": "b52e535e-1956-4b21-a5cf-f25388d2226c",
+        "Content-Length": "224",
+        "Content-Type": "application/json",
+        "Date": "Tue, 31 Jan 2023 18:34:38 GMT"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "401",
+          "message": "Access denied due to invalid subscription key or wrong API endpoint. Make sure to provide a valid key for an active subscription and use a correct regional API endpoint for your resource."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "davinci-gharper-test",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "davinci-gharper-test",
+    "OPENAI_ENDPOINT": "https://openai-gharper.openai.azure.com/",
+    "RandomSeed": "1800493185"
+  }
+}

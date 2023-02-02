@@ -484,6 +484,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public static Azure.ResourceManager.RecoveryServicesBackup.ResourceGuardProxyBaseResourceCollection GetResourceGuardProxyBaseResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.Models.TokenInformation> GetSecurityPIN(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, Azure.ResourceManager.RecoveryServicesBackup.Models.SecurityPinBase securityPinBase = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.Models.TokenInformation>> GetSecurityPINAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, Azure.ResourceManager.RecoveryServicesBackup.Models.SecurityPinBase securityPinBase = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.RecoveryServicesBackup.ProtectionContainerResource> GetSoftDeletedProtectionContainers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesBackup.ProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.Models.ValidateOperationsResponse> GetValidateOperationResult(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.Models.ValidateOperationsResponse>> GetValidateOperationResultAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.Models.OperationStatus> GetValidateOperationStatus(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -626,6 +628,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public AzureFileShareRecoveryPoint() { }
         public System.Uri FileShareSnapshotUri { get { throw null; } set { } }
         public System.DateTimeOffset? RecoveryPointOn { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointProperties RecoveryPointProperties { get { throw null; } set { } }
         public int? RecoveryPointSizeInGB { get { throw null; } set { } }
         public string RecoveryPointType { get { throw null; } set { } }
     }
@@ -1079,6 +1082,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public AzureWorkloadRecoveryPoint() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointProperties RecoveryPointProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointTierInformationV2> RecoveryPointTierDetails { get { throw null; } }
         public System.DateTimeOffset? RecoveryPointTimeInUTC { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RestorePointType? RestorePointType { get { throw null; } set { } }
@@ -1733,6 +1737,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string FriendlyName { get { throw null; } set { } }
         public string RecoveryPointAdditionalInfo { get { throw null; } set { } }
         public System.DateTimeOffset? RecoveryPointOn { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointProperties RecoveryPointProperties { get { throw null; } set { } }
         public string RecoveryPointType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1871,6 +1876,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointDiskConfiguration RecoveryPointDiskConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get { throw null; } }
         public System.DateTimeOffset? RecoveryPointOn { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointProperties RecoveryPointProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.RecoveryPointTierInformationV2> RecoveryPointTierDetails { get { throw null; } }
         public string RecoveryPointType { get { throw null; } set { } }
         public string SourceVmStorageType { get { throw null; } set { } }
@@ -2486,6 +2492,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string PolicyId { get { throw null; } set { } }
         public string PolicyName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ResourceGuardOperationRequests { get { throw null; } }
+        public int? SoftDeleteRetentionPeriod { get { throw null; } set { } }
         public string SourceResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType? WorkloadType { get { throw null; } }
     }
@@ -2516,6 +2523,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ProtectedItemState(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItemState BackupsSuspended { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItemState Invalid { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItemState IRPending { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItemState Protected { get { throw null; } }
@@ -2562,6 +2570,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ProtectionState(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionState BackupsSuspended { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionState Invalid { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionState IRPending { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionState Protected { get { throw null; } }
@@ -2655,6 +2664,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public RecoveryPointMoveReadinessInfo() { }
         public string AdditionalInfo { get { throw null; } set { } }
         public bool? IsReadyForMove { get { throw null; } set { } }
+    }
+    public partial class RecoveryPointProperties
+    {
+        public RecoveryPointProperties() { }
+        public System.DateTimeOffset? ExpiryOn { get { throw null; } set { } }
+        public string RuleName { get { throw null; } set { } }
     }
     public partial class RecoveryPointRehydrationInfo
     {

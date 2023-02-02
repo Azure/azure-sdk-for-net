@@ -12,34 +12,45 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    /// <summary> The Embeddings. </summary>
+    /// <summary> Expected response schema to embeddings request. </summary>
     public partial class Embeddings
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
-        /// <param name="object"></param>
-        /// <param name="data"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="object"/> or <paramref name="data"/> is null. </exception>
-        internal Embeddings(string @object, IEnumerable<EmbeddingItem> data)
+        /// <param name="object"> Type of the data field. </param>
+        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
+        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="object"/>, <paramref name="data"/> or <paramref name="usage"/> is null. </exception>
+        internal Embeddings(string @object, IEnumerable<EmbeddingItem> data, EmbeddingsUsage usage)
         {
             Argument.AssertNotNull(@object, nameof(@object));
             Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(usage, nameof(usage));
 
             Object = @object;
             Data = data.ToList();
+            Usage = usage;
         }
 
         /// <summary> Initializes a new instance of Embeddings. </summary>
-        /// <param name="object"></param>
-        /// <param name="data"></param>
-        internal Embeddings(string @object, IReadOnlyList<EmbeddingItem> data)
+        /// <param name="object"> Type of the data field. </param>
+        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
+        /// <param name="model"> ID of the model to use. </param>
+        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
+        internal Embeddings(string @object, IReadOnlyList<EmbeddingItem> data, string model, EmbeddingsUsage usage)
         {
             Object = @object;
             Data = data.ToList();
+            Model = model;
+            Usage = usage;
         }
 
-        /// <summary> Gets the object. </summary>
+        /// <summary> Type of the data field. </summary>
         public string Object { get; }
-        /// <summary> Gets the data. </summary>
+        /// <summary> Embedding values for the prompts submitted in the request. </summary>
         public IReadOnlyList<EmbeddingItem> Data { get; }
+        /// <summary> ID of the model to use. </summary>
+        public string Model { get; }
+        /// <summary> Usage counts for tokens input using the embeddings API. </summary>
+        public EmbeddingsUsage Usage { get; }
     }
 }

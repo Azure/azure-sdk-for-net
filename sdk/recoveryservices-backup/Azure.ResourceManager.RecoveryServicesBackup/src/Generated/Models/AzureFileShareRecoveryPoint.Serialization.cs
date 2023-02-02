@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointSizeInGB");
                 writer.WriteNumberValue(RecoveryPointSizeInGB.Value);
             }
+            if (Optional.IsDefined(RecoveryPointProperties))
+            {
+                writer.WritePropertyName("recoveryPointProperties");
+                writer.WriteObjectValue(RecoveryPointProperties);
+            }
             writer.WritePropertyName("objectType");
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> recoveryPointTime = default;
             Optional<Uri> fileShareSnapshotUri = default;
             Optional<int> recoveryPointSizeInGB = default;
+            Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,13 +91,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointSizeInGB = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("recoveryPointProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("objectType"))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureFileShareRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB));
+            return new AzureFileShareRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB), recoveryPointProperties.Value);
         }
     }
 }
