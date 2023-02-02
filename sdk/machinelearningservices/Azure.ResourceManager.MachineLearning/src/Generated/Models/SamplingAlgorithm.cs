@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// The Sampling Algorithm used to generate hyperparameter values, along with properties to
     /// configure the algorithm
-    /// Serialized Name: SamplingAlgorithm
     /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
     /// </summary>
@@ -22,19 +21,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SamplingAlgorithm. </summary>
-        /// <param name="samplingAlgorithmType">
-        /// [Required] The algorithm used for generating hyperparameter values, along with configuration properties
-        /// Serialized Name: SamplingAlgorithm.samplingAlgorithmType
-        /// </param>
+        /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         internal SamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType)
         {
             SamplingAlgorithmType = samplingAlgorithmType;
         }
 
-        /// <summary>
-        /// [Required] The algorithm used for generating hyperparameter values, along with configuration properties
-        /// Serialized Name: SamplingAlgorithm.samplingAlgorithmType
-        /// </summary>
+        /// <summary> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </summary>
         internal SamplingAlgorithmType SamplingAlgorithmType { get; set; }
     }
 }

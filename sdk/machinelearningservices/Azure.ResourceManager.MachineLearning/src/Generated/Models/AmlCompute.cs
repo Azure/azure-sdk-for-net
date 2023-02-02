@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// An Azure Machine Learning compute.
-    /// Serialized Name: AmlCompute
-    /// </summary>
+    /// <summary> An Azure Machine Learning compute. </summary>
     public partial class AmlCompute : MachineLearningComputeProperties
     {
         /// <summary> Initializes a new instance of AmlCompute. </summary>
@@ -24,60 +21,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AmlCompute. </summary>
-        /// <param name="computeType">
-        /// The type of compute
-        /// Serialized Name: Compute.computeType
-        /// </param>
-        /// <param name="computeLocation">
-        /// Location for the underlying compute
-        /// Serialized Name: Compute.computeLocation
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed.
-        /// Serialized Name: Compute.provisioningState
-        /// </param>
-        /// <param name="description">
-        /// The description of the Machine Learning compute.
-        /// Serialized Name: Compute.description
-        /// </param>
-        /// <param name="createdOn">
-        /// The time at which the compute was created.
-        /// Serialized Name: Compute.createdOn
-        /// </param>
-        /// <param name="modifiedOn">
-        /// The time at which the compute was last modified.
-        /// Serialized Name: Compute.modifiedOn
-        /// </param>
-        /// <param name="resourceId">
-        /// ARM resource id of the underlying compute
-        /// Serialized Name: Compute.resourceId
-        /// </param>
-        /// <param name="provisioningErrors">
-        /// Errors during provisioning
-        /// Serialized Name: Compute.provisioningErrors
-        /// </param>
-        /// <param name="isAttachedCompute">
-        /// Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false.
-        /// Serialized Name: Compute.isAttachedCompute
-        /// </param>
-        /// <param name="disableLocalAuth">
-        /// Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication.
-        /// Serialized Name: Compute.disableLocalAuth
-        /// </param>
-        /// <param name="properties">
-        /// Properties of AmlCompute
-        /// Serialized Name: AmlComputeSchema.properties
-        /// </param>
+        /// <param name="computeType"> The type of compute. </param>
+        /// <param name="computeLocation"> Location for the underlying compute. </param>
+        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
+        /// <param name="description"> The description of the Machine Learning compute. </param>
+        /// <param name="createdOn"> The time at which the compute was created. </param>
+        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
+        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
+        /// <param name="provisioningErrors"> Errors during provisioning. </param>
+        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
+        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
+        /// <param name="properties"> Properties of AmlCompute. </param>
         internal AmlCompute(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<MachineLearningError> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, AmlComputeProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
         {
             Properties = properties;
             ComputeType = computeType;
         }
 
-        /// <summary>
-        /// Properties of AmlCompute
-        /// Serialized Name: AmlComputeSchema.properties
-        /// </summary>
+        /// <summary> Properties of AmlCompute. </summary>
         public AmlComputeProperties Properties { get; set; }
     }
 }

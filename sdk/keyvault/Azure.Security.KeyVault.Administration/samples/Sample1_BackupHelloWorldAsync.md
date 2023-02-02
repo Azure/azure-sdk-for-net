@@ -1,6 +1,6 @@
 # Performing a full key backup and restore (Async)
 
-This sample demonstrates how to a perform full key backup and restore in Azure Managed HSM.
+This sample demonstrates how to perform a full key backup and restore in Azure Managed HSM.
 To get started, you'll need a URI to an Azure Managed HSM. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
 ## Creating a KeyVaultBackupClient

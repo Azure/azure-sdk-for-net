@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -311,24 +308,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsAsync(Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentsAsync(int? maxCount = null, RequestContext context = null)
         {
-            return GetEnvironmentsImplementationAsync("EnvironmentsClient.GetEnvironments", maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetEnvironmentsImplementationAsync(string diagnosticsScopeName, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetEnvironmentsRequest(maxCount, context)
-                        : CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
         }
 
         /// <summary> Lists the environments for a project. </summary>
@@ -339,24 +321,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironments(Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironments(int? maxCount = null, RequestContext context = null)
         {
-            return GetEnvironmentsImplementation("EnvironmentsClient.GetEnvironments", maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetEnvironmentsImplementation(string diagnosticsScopeName, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetEnvironmentsRequest(maxCount, context)
-                        : CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
         }
 
         /// <summary> Lists the environments for a project and user. </summary>
@@ -372,24 +339,9 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetEnvironmentsByUserImplementationAsync("EnvironmentsClient.GetEnvironmentsByUser", userId, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetEnvironmentsByUserImplementationAsync(string diagnosticsScopeName, string userId, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetEnvironmentsByUserRequest(userId, maxCount, context)
-                        : CreateGetEnvironmentsByUserNextPageRequest(nextLink, userId, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsByUserRequest(userId, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsByUserNextPageRequest(nextLink, userId, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
         }
 
         /// <summary> Lists the environments for a project and user. </summary>
@@ -405,24 +357,9 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetEnvironmentsByUserImplementation("EnvironmentsClient.GetEnvironmentsByUser", userId, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetEnvironmentsByUserImplementation(string diagnosticsScopeName, string userId, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetEnvironmentsByUserRequest(userId, maxCount, context)
-                        : CreateGetEnvironmentsByUserNextPageRequest(nextLink, userId, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsByUserRequest(userId, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsByUserNextPageRequest(nextLink, userId, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
         }
 
         /// <summary> Lists the artifacts for an environment. </summary>
@@ -439,24 +376,9 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetArtifactsByEnvironmentImplementationAsync("EnvironmentsClient.GetArtifactsByEnvironment", environmentName, userId, context);
-        }
-
-        private AsyncPageable<BinaryData> GetArtifactsByEnvironmentImplementationAsync(string diagnosticsScopeName, string environmentName, string userId, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetArtifactsByEnvironmentRequest(environmentName, userId, context)
-                        : CreateGetArtifactsByEnvironmentNextPageRequest(nextLink, environmentName, userId, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetArtifactsByEnvironmentRequest(environmentName, userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetArtifactsByEnvironmentNextPageRequest(nextLink, environmentName, userId, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetArtifactsByEnvironment", "value", "nextLink", context);
         }
 
         /// <summary> Lists the artifacts for an environment. </summary>
@@ -473,24 +395,9 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetArtifactsByEnvironmentImplementation("EnvironmentsClient.GetArtifactsByEnvironment", environmentName, userId, context);
-        }
-
-        private Pageable<BinaryData> GetArtifactsByEnvironmentImplementation(string diagnosticsScopeName, string environmentName, string userId, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetArtifactsByEnvironmentRequest(environmentName, userId, context)
-                        : CreateGetArtifactsByEnvironmentNextPageRequest(nextLink, environmentName, userId, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetArtifactsByEnvironmentRequest(environmentName, userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetArtifactsByEnvironmentNextPageRequest(nextLink, environmentName, userId, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetArtifactsByEnvironment", "value", "nextLink", context);
         }
 
         /// <summary> Lists the artifacts for an environment at a specified path, or returns the file at the path. </summary>
@@ -509,24 +416,9 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(artifactPath, nameof(artifactPath));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetArtifactsByEnvironmentAndPathImplementationAsync("EnvironmentsClient.GetArtifactsByEnvironmentAndPath", environmentName, artifactPath, userId, context);
-        }
-
-        private AsyncPageable<BinaryData> GetArtifactsByEnvironmentAndPathImplementationAsync(string diagnosticsScopeName, string environmentName, string artifactPath, string userId, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetArtifactsByEnvironmentAndPathRequest(environmentName, artifactPath, userId, context)
-                        : CreateGetArtifactsByEnvironmentAndPathNextPageRequest(nextLink, environmentName, artifactPath, userId, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetArtifactsByEnvironmentAndPathRequest(environmentName, artifactPath, userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetArtifactsByEnvironmentAndPathNextPageRequest(nextLink, environmentName, artifactPath, userId, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetArtifactsByEnvironmentAndPath", "value", "nextLink", context);
         }
 
         /// <summary> Lists the artifacts for an environment at a specified path, or returns the file at the path. </summary>
@@ -545,24 +437,9 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(artifactPath, nameof(artifactPath));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetArtifactsByEnvironmentAndPathImplementation("EnvironmentsClient.GetArtifactsByEnvironmentAndPath", environmentName, artifactPath, userId, context);
-        }
-
-        private Pageable<BinaryData> GetArtifactsByEnvironmentAndPathImplementation(string diagnosticsScopeName, string environmentName, string artifactPath, string userId, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetArtifactsByEnvironmentAndPathRequest(environmentName, artifactPath, userId, context)
-                        : CreateGetArtifactsByEnvironmentAndPathNextPageRequest(nextLink, environmentName, artifactPath, userId, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetArtifactsByEnvironmentAndPathRequest(environmentName, artifactPath, userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetArtifactsByEnvironmentAndPathNextPageRequest(nextLink, environmentName, artifactPath, userId, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetArtifactsByEnvironmentAndPath", "value", "nextLink", context);
         }
 
         /// <summary> Lists latest version of all catalog items available for a project. </summary>
@@ -573,24 +450,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemsAsync(Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetCatalogItemsAsync(int? maxCount = null, RequestContext context = null)
         {
-            return GetCatalogItemsImplementationAsync("EnvironmentsClient.GetCatalogItems", maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetCatalogItemsImplementationAsync(string diagnosticsScopeName, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCatalogItemsRequest(maxCount, context)
-                        : CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
         }
 
         /// <summary> Lists latest version of all catalog items available for a project. </summary>
@@ -601,24 +463,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItems(Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetCatalogItems(int? maxCount = null, RequestContext context = null)
         {
-            return GetCatalogItemsImplementation("EnvironmentsClient.GetCatalogItems", maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetCatalogItemsImplementation(string diagnosticsScopeName, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCatalogItemsRequest(maxCount, context)
-                        : CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
         }
 
         /// <summary> List all versions of a catalog item from a project. </summary>
@@ -634,24 +481,9 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
 
-            return GetCatalogItemVersionsImplementationAsync("EnvironmentsClient.GetCatalogItemVersions", catalogItemId, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetCatalogItemVersionsImplementationAsync(string diagnosticsScopeName, string catalogItemId, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCatalogItemVersionsRequest(catalogItemId, maxCount, context)
-                        : CreateGetCatalogItemVersionsNextPageRequest(nextLink, catalogItemId, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemVersionsRequest(catalogItemId, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemVersionsNextPageRequest(nextLink, catalogItemId, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
         }
 
         /// <summary> List all versions of a catalog item from a project. </summary>
@@ -667,24 +499,9 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
 
-            return GetCatalogItemVersionsImplementation("EnvironmentsClient.GetCatalogItemVersions", catalogItemId, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetCatalogItemVersionsImplementation(string diagnosticsScopeName, string catalogItemId, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCatalogItemVersionsRequest(catalogItemId, maxCount, context)
-                        : CreateGetCatalogItemVersionsNextPageRequest(nextLink, catalogItemId, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemVersionsRequest(catalogItemId, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemVersionsNextPageRequest(nextLink, catalogItemId, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
         }
 
         /// <summary> Lists all environment types configured for a project. </summary>
@@ -695,24 +512,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypesAsync(Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentTypesAsync(int? maxCount = null, RequestContext context = null)
         {
-            return GetEnvironmentTypesImplementationAsync("EnvironmentsClient.GetEnvironmentTypes", maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetEnvironmentTypesImplementationAsync(string diagnosticsScopeName, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetEnvironmentTypesRequest(maxCount, context)
-                        : CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
         /// <summary> Lists all environment types configured for a project. </summary>
@@ -723,24 +525,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypes(Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironmentTypes(int? maxCount = null, RequestContext context = null)
         {
-            return GetEnvironmentTypesImplementation("EnvironmentsClient.GetEnvironmentTypes", maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetEnvironmentTypesImplementation(string diagnosticsScopeName, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetEnvironmentTypesRequest(maxCount, context)
-                        : CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
         /// <summary> Creates or updates an environment. </summary>

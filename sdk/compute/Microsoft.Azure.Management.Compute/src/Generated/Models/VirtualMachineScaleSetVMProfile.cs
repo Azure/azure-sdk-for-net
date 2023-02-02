@@ -87,7 +87,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hardwareProfile">Specifies the hardware profile
         /// related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2021-11-01.</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), VirtualMachineScaleSetHardwareProfile hardwareProfile = default(VirtualMachineScaleSetHardwareProfile))
+        /// <param name="serviceArtifactReference">Specifies the service
+        /// artifact reference id used to set same image version for all
+        /// virtual machines in the scale set when using 'latest' image
+        /// version. Minimum api-version: 2022-11-01</param>
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), VirtualMachineScaleSetHardwareProfile hardwareProfile = default(VirtualMachineScaleSetHardwareProfile), ServiceArtifactReference serviceArtifactReference = default(ServiceArtifactReference))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -104,6 +108,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             CapacityReservation = capacityReservation;
             ApplicationProfile = applicationProfile;
             HardwareProfile = hardwareProfile;
+            ServiceArtifactReference = serviceArtifactReference;
             CustomInit();
         }
 
@@ -244,6 +249,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "hardwareProfile")]
         public VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the service artifact reference id used to
+        /// set same image version for all virtual machines in the scale set
+        /// when using 'latest' image version. Minimum api-version: 2022-11-01
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceArtifactReference")]
+        public ServiceArtifactReference ServiceArtifactReference { get; set; }
 
         /// <summary>
         /// Validate the object.

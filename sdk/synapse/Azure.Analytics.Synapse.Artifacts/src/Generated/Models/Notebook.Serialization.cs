@@ -36,6 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("bigDataPool");
                 }
             }
+            if (Optional.IsDefined(TargetSparkConfiguration))
+            {
+                writer.WritePropertyName("targetSparkConfiguration");
+                writer.WriteObjectValue(TargetSparkConfiguration);
+            }
             if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
@@ -85,6 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Optional<string> description = default;
             Optional<BigDataPoolReference> bigDataPool = default;
+            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
             Optional<NotebookSessionProperties> sessionProperties = default;
             NotebookMetadata metadata = default;
             int nbformat = default;
@@ -108,6 +114,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     bigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("targetSparkConfiguration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetSparkConfiguration = SparkConfigurationReference.DeserializeSparkConfigurationReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sessionProperties"))
@@ -158,7 +174,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
+            return new Notebook(description.Value, bigDataPool.Value, targetSparkConfiguration.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
         }
 
         internal partial class NotebookConverter : JsonConverter<Notebook>

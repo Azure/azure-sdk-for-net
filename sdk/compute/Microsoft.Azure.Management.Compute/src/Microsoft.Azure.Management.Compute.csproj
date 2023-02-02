@@ -16,7 +16,13 @@
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
         1. CloudServiceRP API calls will use 2022-09-04 API version.
-        2. Zone property support for CloudService resource.
+        2. ComputeRP API calls will use 2022-11-01 API version.
+        3. Zone property support for CloudService resource.
+        4. Reimage support for standalone VMs.
+        5. Addition of userData property in RestorePointSourceMetadata class for restore points.
+        6. Support for requireGuestProvisionSignal, constrainedMaximumCapacity, serviceArtifactReference, and maxSurge properties in VMSS.
+        7. Addition of imageDeprecationStatus property to VirtualMachineImage response.
+        8. Support for rollbackFailedInstancesOnPolicyBreach in VMSS RollingUpgradePolicy.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

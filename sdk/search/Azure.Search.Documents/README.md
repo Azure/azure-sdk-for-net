@@ -346,8 +346,8 @@ SearchIndex index = new SearchIndex("hotels")
     Fields = new FieldBuilder().Build(typeof(Hotel)),
     Suggesters =
     {
-        // Suggest query terms from the hotelName field.
-        new SearchSuggester("sg", "hotelName")
+        // Suggest query terms from the HotelName field.
+        new SearchSuggester("sg", "HotelName")
     }
 };
 
@@ -364,26 +364,26 @@ SearchIndex index = new SearchIndex("hotels")
 {
     Fields =
     {
-        new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
-        new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-        new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
-        new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
-        new ComplexField("address")
+        new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+        new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
+        new SearchableField("Description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
+        new SearchableField("Tags", collection: true) { IsFilterable = true, IsFacetable = true },
+        new ComplexField("Address")
         {
             Fields =
             {
-                new SearchableField("streetAddress"),
-                new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
+                new SearchableField("StreetAddress"),
+                new SearchableField("City") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("StateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("Country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("PostalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
             }
         }
     },
     Suggesters =
     {
         // Suggest query terms from the hotelName field.
-        new SearchSuggester("sg", "hotelName")
+        new SearchSuggester("sg", "HotelName")
     }
 };
 

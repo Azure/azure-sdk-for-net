@@ -28,18 +28,20 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            List<CosmosDBAccountCapability> capabilities = new List<CosmosDBAccountCapability>();
-            capabilities.Add(new CosmosDBAccountCapability("EnableCassandra"));
+            List<CosmosDBAccountCapability> capabilities = new List<CosmosDBAccountCapability>
+            {
+                new CosmosDBAccountCapability("EnableCassandra")
+            };
             _keyspaceAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, capabilities)).Id;
             await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]
-        public virtual void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
             if (_keyspaceAccountIdentifier != null)
             {
-                ArmClient.GetCosmosDBAccountResource(_keyspaceAccountIdentifier).Delete(WaitUntil.Completed);
+                await ArmClient.GetCosmosDBAccountResource(_keyspaceAccountIdentifier).DeleteAsync(WaitUntil.Completed);
             }
         }
 

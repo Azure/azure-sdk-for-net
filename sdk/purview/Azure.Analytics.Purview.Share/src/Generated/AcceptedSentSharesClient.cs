@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -132,24 +129,9 @@ namespace Azure.Analytics.Purview.Share
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
-            return GetAcceptedSentSharesImplementationAsync("AcceptedSentSharesClient.GetAcceptedSentShares", sentShareName, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAcceptedSentSharesImplementationAsync(string diagnosticsScopeName, string sentShareName, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAcceptedSentSharesRequest(sentShareName, skipToken, context)
-                        : CreateGetAcceptedSentSharesNextPageRequest(nextLink, sentShareName, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAcceptedSentSharesRequest(sentShareName, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAcceptedSentSharesNextPageRequest(nextLink, sentShareName, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AcceptedSentSharesClient.GetAcceptedSentShares", "value", "nextLink", context);
         }
 
         /// <summary> List of accepted shares for the current sent share. </summary>
@@ -165,24 +147,9 @@ namespace Azure.Analytics.Purview.Share
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
-            return GetAcceptedSentSharesImplementation("AcceptedSentSharesClient.GetAcceptedSentShares", sentShareName, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAcceptedSentSharesImplementation(string diagnosticsScopeName, string sentShareName, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAcceptedSentSharesRequest(sentShareName, skipToken, context)
-                        : CreateGetAcceptedSentSharesNextPageRequest(nextLink, sentShareName, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAcceptedSentSharesRequest(sentShareName, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAcceptedSentSharesNextPageRequest(nextLink, sentShareName, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AcceptedSentSharesClient.GetAcceptedSentShares", "value", "nextLink", context);
         }
 
         /// <summary> Reinstate a revoked accepted sent share. </summary>

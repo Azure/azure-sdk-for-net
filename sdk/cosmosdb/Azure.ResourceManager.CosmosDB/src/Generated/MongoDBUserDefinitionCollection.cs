@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Creates or updates an Azure Cosmos DB Mongo User Definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
-        /// Operation Id: MongoDBResources_CreateUpdateMongoUserDefinition
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_CreateUpdateMongoUserDefinition</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Creates or updates an Azure Cosmos DB Mongo User Definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
-        /// Operation Id: MongoDBResources_CreateUpdateMongoUserDefinition
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_CreateUpdateMongoUserDefinition</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB Mongo User Definition with the given Id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
-        /// Operation Id: MongoDBResources_GetMongoUserDefinition
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoUserDefinition</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB Mongo User Definition with the given Id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
-        /// Operation Id: MongoDBResources_GetMongoUserDefinition
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoUserDefinition</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,62 +211,58 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Retrieves the list of all Azure Cosmos DB Mongo User Definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions
-        /// Operation Id: MongoDBResources_ListMongoUserDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_ListMongoUserDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MongoDBUserDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoDBUserDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MongoDBUserDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mongoDBUserDefinitionMongoDBResourcesRestClient.ListMongoUserDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MongoDBUserDefinitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateListMongoUserDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBUserDefinitionResource(Client, MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(e)), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBUserDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieves the list of all Azure Cosmos DB Mongo User Definition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions
-        /// Operation Id: MongoDBResources_ListMongoUserDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_ListMongoUserDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MongoDBUserDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoDBUserDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MongoDBUserDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mongoDBUserDefinitionMongoDBResourcesRestClient.ListMongoUserDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MongoDBUserDefinitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateListMongoUserDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBUserDefinitionResource(Client, MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(e)), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBUserDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
-        /// Operation Id: MongoDBResources_GetMongoUserDefinition
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoUserDefinition</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,8 +288,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
-        /// Operation Id: MongoDBResources_GetMongoUserDefinition
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoUserDefinition</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

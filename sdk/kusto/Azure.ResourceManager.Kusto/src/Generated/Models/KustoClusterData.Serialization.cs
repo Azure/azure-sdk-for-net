@@ -92,6 +92,11 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("enablePurge");
                 writer.WriteBooleanValue(IsPurgeEnabled.Value);
             }
+            if (Optional.IsDefined(LanguageExtensions))
+            {
+                writer.WritePropertyName("languageExtensions");
+                writer.WriteObjectValue(LanguageExtensions);
+            }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
                 writer.WritePropertyName("enableDoubleEncryption");

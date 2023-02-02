@@ -45,6 +45,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("enableHealthCheck");
                 writer.WriteBooleanValue(EnableHealthCheck.Value);
             }
+            if (Optional.IsCollectionDefined(CustomActions))
+            {
+                writer.WritePropertyName("customActions");
+                writer.WriteStartArray();
+                foreach (var item in CustomActions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(TargetRegions))
             {
                 writer.WritePropertyName("targetRegions");
@@ -60,10 +70,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("replicaCount");
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (Optional.IsDefined(ExcludeFromLatest))
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest");
-                writer.WriteBooleanValue(ExcludeFromLatest.Value);
+                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {
@@ -100,6 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<UserArtifactSettings> settings = default;
             Optional<IDictionary<string, string>> advancedSettings = default;
             Optional<bool> enableHealthCheck = default;
+            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
             Optional<IList<TargetRegion>> targetRegions = default;
             Optional<int> replicaCount = default;
             Optional<bool> excludeFromLatest = default;
@@ -158,6 +169,21 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     enableHealthCheck = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("customActions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item));
+                    }
+                    customActions = array;
                     continue;
                 }
                 if (property.NameEquals("targetRegions"))
@@ -251,7 +277,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck));
+            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck), Optional.ToList(customActions));
         }
     }
 }

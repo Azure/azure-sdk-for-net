@@ -38,7 +38,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            TokenCredential[] chain = new TokenCredential[8];
+            TokenCredential[] chain = new TokenCredential[9];
 
             if (!Options.ExcludeEnvironmentCredential)
             {
@@ -48,6 +48,11 @@ namespace Azure.Identity
             if (!Options.ExcludeManagedIdentityCredential)
             {
                 chain[i++] = CreateManagedIdentityCredential();
+            }
+
+            if (!Options.ExcludeAzureDeveloperCliCredential)
+            {
+                chain[i++] = CreateAzureDeveloperCliCredential();
             }
 
             if (!Options.ExcludeSharedTokenCacheCredential)
@@ -131,6 +136,22 @@ namespace Azure.Identity
                 Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId,
                 options,
                 Pipeline);
+        }
+
+        public virtual TokenCredential CreateAzureDeveloperCliCredential()
+        {
+            var options = new AzureDeveloperCliCredentialOptions
+            {
+                TenantId = Options.TenantId,
+                AzdCliProcessTimeout = Options.DeveloperCredentialTimeout
+            };
+
+            foreach (var additionalTenant in Options.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(additionalTenant);
+            }
+
+            return new AzureDeveloperCliCredential(Pipeline, default, options);
         }
 
         public virtual TokenCredential CreateAzureCliCredential()

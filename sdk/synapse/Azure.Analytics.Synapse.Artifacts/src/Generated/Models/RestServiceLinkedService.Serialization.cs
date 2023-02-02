@@ -73,6 +73,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("password");
                 writer.WriteObjectValue(Password);
             }
+            if (Optional.IsDefined(AuthHeaders))
+            {
+                writer.WritePropertyName("authHeaders");
+                writer.WriteObjectValue(AuthHeaders);
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId");
@@ -149,6 +154,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RestServiceAuthenticationType authenticationType = default;
             Optional<object> userName = default;
             Optional<SecretBase> password = default;
+            Optional<object> authHeaders = default;
             Optional<object> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
             Optional<object> tenant = default;
@@ -261,6 +267,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 continue;
                             }
                             password = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("authHeaders"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            authHeaders = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"))
@@ -379,7 +395,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, clientId.Value, clientSecret.Value, tokenEndpoint.Value, resource.Value, scope.Value);
+            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password.Value, authHeaders.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, clientId.Value, clientSecret.Value, tokenEndpoint.Value, resource.Value, scope.Value);
         }
 
         internal partial class RestServiceLinkedServiceConverter : JsonConverter<RestServiceLinkedService>

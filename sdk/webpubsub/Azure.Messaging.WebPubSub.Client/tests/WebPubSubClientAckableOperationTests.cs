@@ -212,5 +212,32 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.ThrowsAsync<SendMessageFailedException>(() => t2);
             Assert.ThrowsAsync<SendMessageFailedException>(() => t3);
         }
+
+        [Test]
+        public async Task AckableOperationCancellationTest()
+        {
+            var wsPair = new TestWebSocketClientPair(_webSocketClientMoc);
+            var options = new WebPubSubClientOptions();
+            options.MessageRetryOptions.MaxRetries = 0;
+            var client = new WebPubSubClient(new Uri("wss://test.com"), options);
+            client.WebSocketClientFactory = _factoryMoc.Object;
+
+            await client.StartAsync();
+
+            var cts = new CancellationTokenSource();
+            var t = client.JoinGroupAsync("group", 1, cancellationToken: cts.Token);
+            TestUtils.AssertTimeout(t);
+            await wsPair.Output().OrTimeout();
+
+            cts.Cancel();
+            var ex = Assert.ThrowsAsync<SendMessageFailedException>(() => t);
+
+            // Retry won't be affected
+            var t2 = client.JoinGroupAsync("group", ex.AckId);
+            TestUtils.AssertTimeout(t2);
+
+            wsPair.Input(TestUtils.GetAckMessagePayload(1, null), false);
+            await t2.OrTimeout();
+        }
     }
 }

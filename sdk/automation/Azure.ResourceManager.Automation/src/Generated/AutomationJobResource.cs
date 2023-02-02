@@ -93,8 +93,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,8 +126,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,8 +159,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Create a job of the runbook.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The parameters supplied to the create job operation. </param>
@@ -174,8 +198,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Create a job of the runbook.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The parameters supplied to the create job operation. </param>
@@ -205,8 +237,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job output identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/output
-        /// Operation Id: Job_GetOutput
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/output</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_GetOutput</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -228,8 +268,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job output identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/output
-        /// Operation Id: Job_GetOutput
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/output</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_GetOutput</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,8 +299,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the runbook content of the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent
-        /// Operation Id: Job_GetRunbookContent
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_GetRunbookContent</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,8 +330,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the runbook content of the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent
-        /// Operation Id: Job_GetRunbookContent
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_GetRunbookContent</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -297,8 +361,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Suspend the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/suspend
-        /// Operation Id: Job_Suspend
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Suspend</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -320,8 +392,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Suspend the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/suspend
-        /// Operation Id: Job_Suspend
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Suspend</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -343,8 +423,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Stop the job identified by jobName.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/stop
-        /// Operation Id: Job_Stop
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Stop</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -366,8 +454,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Stop the job identified by jobName.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/stop
-        /// Operation Id: Job_Stop
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Stop</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -389,8 +485,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Resume the job identified by jobName.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/resume
-        /// Operation Id: Job_Resume
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Resume</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -412,8 +516,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Resume the job identified by jobName.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/resume
-        /// Operation Id: Job_Resume
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Resume</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -435,8 +547,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job stream identified by job stream id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams/{jobStreamId}
-        /// Operation Id: JobStream_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams/{jobStreamId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobStream_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobStreamId"> The job stream id. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -463,8 +583,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job stream identified by job stream id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams/{jobStreamId}
-        /// Operation Id: JobStream_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams/{jobStreamId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobStream_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobStreamId"> The job stream id. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -491,8 +619,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a list of jobs streams identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams
-        /// Operation Id: JobStream_ListByJob
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobStream_ListByJob</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -500,43 +636,23 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobStream> GetJobStreamsAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationJobStream>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _jobStreamRestClient.ListByJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationJobStream>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _jobStreamRestClient.ListByJobNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of jobs streams identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams
-        /// Operation Id: JobStream_ListByJob
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobStream_ListByJob</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -544,37 +660,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobStream> GetJobStreams(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomationJobStream> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _jobStreamRestClient.ListByJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationJobStream> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _jobStreamRestClient.ListByJobNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
     }
 }

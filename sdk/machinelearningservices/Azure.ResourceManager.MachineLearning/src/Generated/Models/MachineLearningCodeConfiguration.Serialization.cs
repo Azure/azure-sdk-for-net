@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningCodeConfiguration DeserializeMachineLearningCodeConfiguration(JsonElement element)
         {
-            Optional<string> codeId = default;
+            Optional<ResourceIdentifier> codeId = default;
             string scoringScript = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeId = null;
                         continue;
                     }
-                    codeId = property.Value.GetString();
+                    codeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scoringScript"))

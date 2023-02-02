@@ -1,5 +1,5 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Samples'))">
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Samples')) And! $(MSBuildProjectName.StartsWith('Azure.ResourceManager'))">
     <IsTestProject>true</IsTestProject>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>

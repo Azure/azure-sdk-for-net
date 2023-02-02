@@ -3260,6 +3260,210 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(1, healthEvent.SequenceNumber);
         }
         #endregion
+
+        #region APIM
+        [Test]
+        public void ConsumeCloudEventGatewayApiAddedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}"",
+            ""subject"": ""/gateways/{gateway-name}/apis/example-api"",
+            ""type"": ""Microsoft.ApiManagement.GatewayAPIAdded"",
+            ""time"": ""2021-07-02T00:47:47.8536532Z"",
+            ""id"": ""92c502f2-a966-42a7-a428-d3b319844544"",
+            ""data"": {
+                ""resourceUri"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api""
+            },
+            ""specversion"": ""1.0""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var apimEvent = eventData as ApiManagementGatewayApiAddedEventData;
+            Assert.IsNotNull(apimEvent);
+            Assert.AreEqual("/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api", apimEvent.ResourceUri);
+        }
+
+        [Test]
+        public void ConsumeCloudEventGatewayApiRemovedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}"",
+            ""subject"": ""/gateways/{gateway-name}/apis/example-api"",
+            ""type"": ""Microsoft.ApiManagement.GatewayAPIRemoved"",
+            ""time"": ""2021-07-02T00:47:47.8536532Z"",
+            ""id"": ""92c502f2-a966-42a7-a428-d3b319844544"",
+            ""data"": {
+                ""resourceUri"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api""
+            },
+            ""specversion"": ""1.0""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var apimEvent = eventData as ApiManagementGatewayApiRemovedEventData;
+            Assert.IsNotNull(apimEvent);
+            Assert.AreEqual("/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api", apimEvent.ResourceUri);
+        }
+
+        [Test]
+        public void ConsumeCloudEventCertificateAuthorityCreatedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}"",
+            ""subject"": ""/gateways/{gateway-name}/apis/example-api"",
+            ""type"": ""Microsoft.ApiManagement.GatewayCertificateAuthorityCreated"",
+            ""time"": ""2021-07-02T00:47:47.8536532Z"",
+            ""id"": ""92c502f2-a966-42a7-a428-d3b319844544"",
+            ""data"": {
+                ""resourceUri"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api""
+            },
+            ""specversion"": ""1.0""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var apimEvent = eventData as ApiManagementGatewayCertificateAuthorityCreatedEventData;
+            Assert.IsNotNull(apimEvent);
+            Assert.AreEqual("/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api", apimEvent.ResourceUri);
+        }
+
+        [Test]
+        public void ConsumeCloudEventCertificateAuthorityDeletedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}"",
+            ""subject"": ""/gateways/{gateway-name}/apis/example-api"",
+            ""type"": ""Microsoft.ApiManagement.GatewayCertificateAuthorityDeleted"",
+            ""time"": ""2021-07-02T00:47:47.8536532Z"",
+            ""id"": ""92c502f2-a966-42a7-a428-d3b319844544"",
+            ""data"": {
+                ""resourceUri"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api""
+            },
+            ""specversion"": ""1.0""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var apimEvent = eventData as ApiManagementGatewayCertificateAuthorityDeletedEventData;
+            Assert.IsNotNull(apimEvent);
+            Assert.AreEqual("/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api", apimEvent.ResourceUri);
+        }
+
+        [Test]
+        public void ConsumeCloudEventCertificateAuthorityUpdatedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}"",
+            ""subject"": ""/gateways/{gateway-name}/apis/example-api"",
+            ""type"": ""Microsoft.ApiManagement.GatewayCertificateAuthorityUpdated"",
+            ""time"": ""2021-07-02T00:47:47.8536532Z"",
+            ""id"": ""92c502f2-a966-42a7-a428-d3b319844544"",
+            ""data"": {
+                ""resourceUri"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api""
+            },
+            ""specversion"": ""1.0""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var apimEvent = eventData as ApiManagementGatewayCertificateAuthorityUpdatedEventData;
+            Assert.IsNotNull(apimEvent);
+            Assert.AreEqual("/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.ApiManagement/service/{your-APIM-instance}/gateways/{gateway-name}/apis/example-api", apimEvent.ResourceUri);
+        }
+        #endregion
+
+        #region DataBox
+
+        [Test]
+        public void ConsumeCloudEventDataBoxCopyCompleted()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.DataBox/jobs/{your-resource}"",
+            ""subject"": ""/jobs/{your-resource}"",
+            ""type"": ""Microsoft.DataBox.CopyCompleted"",
+            ""time"": ""2022-10-16T02:51:26.4248221Z"",
+            ""id"": ""759c892a-a628-4e48-a116-2e1d54c555ce"",
+            ""data"": {
+                ""serialNumber"": ""SampleSerialNumber"",
+                ""stageName"": ""CopyCompleted"",
+                ""stageTime"": ""2022-10-12T19:38:08.0218897Z""
+            },
+            ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var dataBoxEvent = eventData as DataBoxCopyCompletedEventData;
+            Assert.IsNotNull(dataBoxEvent);
+            Assert.AreEqual("SampleSerialNumber", dataBoxEvent.SerialNumber);
+            Assert.AreEqual(DataBoxStageName.CopyCompleted, dataBoxEvent.StageName);
+            Assert.AreEqual(DateTimeOffset.Parse("2022-10-12T19:38:08.0218897Z"), dataBoxEvent.StageTime);
+        }
+
+        [Test]
+        public void ConsumeCloudEventDataBoxCopyStarted()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.DataBox/jobs/{your-resource}"",
+            ""subject"": ""/jobs/{your-resource}"",
+            ""type"": ""Microsoft.DataBox.CopyStarted"",
+            ""time"": ""2022-10-16T02:51:26.4248221Z"",
+            ""id"": ""759c892a-a628-4e48-a116-2e1d54c555ce"",
+            ""data"": {
+                ""serialNumber"": ""SampleSerialNumber"",
+                ""stageName"": ""CopyStarted"",
+                ""stageTime"": ""2022-10-12T19:38:08.0218897Z""
+            },
+            ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var dataBoxEvent = eventData as DataBoxCopyStartedEventData;
+            Assert.IsNotNull(dataBoxEvent);
+            Assert.AreEqual("SampleSerialNumber", dataBoxEvent.SerialNumber);
+            Assert.AreEqual(DataBoxStageName.CopyStarted, dataBoxEvent.StageName);
+            Assert.AreEqual(DateTimeOffset.Parse("2022-10-12T19:38:08.0218897Z"), dataBoxEvent.StageTime);
+        }
+
+        [Test]
+        public void ConsumeCloudEventDataBoxOrderCompleted()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{your-rg}/providers/Microsoft.DataBox/jobs/{your-resource}"",
+            ""subject"": ""/jobs/{your-resource}"",
+            ""type"": ""Microsoft.DataBox.OrderCompleted"",
+            ""time"": ""2022-10-16T02:51:26.4248221Z"",
+            ""id"": ""759c892a-a628-4e48-a116-2e1d54c555ce"",
+            ""data"": {
+                ""serialNumber"": ""SampleSerialNumber"",
+                ""stageName"": ""OrderCompleted"",
+                ""stageTime"": ""2022-10-12T19:38:08.0218897Z""
+            },
+            ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var dataBoxEvent = eventData as DataBoxOrderCompletedEventData;
+            Assert.IsNotNull(dataBoxEvent);
+            Assert.AreEqual("SampleSerialNumber", dataBoxEvent.SerialNumber);
+            Assert.AreEqual(DataBoxStageName.OrderCompleted, dataBoxEvent.StageName);
+            Assert.AreEqual(DateTimeOffset.Parse("2022-10-12T19:38:08.0218897Z"), dataBoxEvent.StageTime);
+        }
+        #endregion
         #endregion
     }
 }

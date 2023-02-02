@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The Usage Names.
-    /// Serialized Name: UsageName
-    /// </summary>
+    /// <summary> The Usage Names. </summary>
     public partial class MachineLearningUsageName
     {
         /// <summary> Initializes a new instance of MachineLearningUsageName. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningUsageName. </summary>
-        /// <param name="value">
-        /// The name of the resource.
-        /// Serialized Name: UsageName.value
-        /// </param>
-        /// <param name="localizedValue">
-        /// The localized name of the resource.
-        /// Serialized Name: UsageName.localizedValue
-        /// </param>
+        /// <param name="value"> The name of the resource. </param>
+        /// <param name="localizedValue"> The localized name of the resource. </param>
         internal MachineLearningUsageName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;
         }
 
-        /// <summary>
-        /// The name of the resource.
-        /// Serialized Name: UsageName.value
-        /// </summary>
+        /// <summary> The name of the resource. </summary>
         public string Value { get; }
-        /// <summary>
-        /// The localized name of the resource.
-        /// Serialized Name: UsageName.localizedValue
-        /// </summary>
+        /// <summary> The localized name of the resource. </summary>
         public string LocalizedValue { get; }
     }
 }

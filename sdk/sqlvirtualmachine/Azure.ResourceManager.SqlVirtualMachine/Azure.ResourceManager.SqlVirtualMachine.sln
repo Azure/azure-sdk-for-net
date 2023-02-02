@@ -7,6 +7,8 @@ Project("{99710766-8803-452A-8599-B9B8C3B5B529}") = "Azure.ResourceManager.SqlVi
 EndProject
 Project("{99710766-8803-452A-8599-B9B8C3B5B529}") = "Azure.ResourceManager.SqlVirtualMachine.Tests", "tests\Azure.ResourceManager.SqlVirtualMachine.Tests.csproj", "{3A9E0776-313D-4E9D-AB84-674265FCBF9D}"
 EndProject
+Project("{99710766-8803-452A-8599-B9B8C3B5B529}") = "Azure.ResourceManager.SqlVirtualMachine.Samples", "samples\Azure.ResourceManager.SqlVirtualMachine.Samples.csproj", "{4f46eba6-003c-488d-aabf-e7e681f82c0d}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

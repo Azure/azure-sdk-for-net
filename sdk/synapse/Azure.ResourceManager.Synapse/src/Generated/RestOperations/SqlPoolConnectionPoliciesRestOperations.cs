@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ConnectionPolicyName connectionPolicyName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolConnectionPolicyName connectionPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlPoolConnectionPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSqlPoolConnectionPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SqlPoolConnectionPolicyData value = default;
+                        SynapseSqlPoolConnectionPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlPoolConnectionPolicyData.DeserializeSqlPoolConnectionPolicyData(document.RootElement);
+                        value = SynapseSqlPoolConnectionPolicyData.DeserializeSynapseSqlPoolConnectionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlPoolConnectionPolicyData)null, message.Response);
+                    return Response.FromValue((SynapseSqlPoolConnectionPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlPoolConnectionPolicyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public Response<SynapseSqlPoolConnectionPolicyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SqlPoolConnectionPolicyData value = default;
+                        SynapseSqlPoolConnectionPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlPoolConnectionPolicyData.DeserializeSqlPoolConnectionPolicyData(document.RootElement);
+                        value = SynapseSqlPoolConnectionPolicyData.DeserializeSynapseSqlPoolConnectionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlPoolConnectionPolicyData)null, message.Response);
+                    return Response.FromValue((SynapseSqlPoolConnectionPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

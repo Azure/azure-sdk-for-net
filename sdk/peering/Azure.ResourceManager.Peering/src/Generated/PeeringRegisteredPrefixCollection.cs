@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Creates a new registered prefix with the specified name under the given subscription, resource group and peering.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}
-        /// Operation Id: RegisteredPrefixes_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Creates a new registered prefix with the specified name under the given subscription, resource group and peering.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}
-        /// Operation Id: RegisteredPrefixes_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Gets an existing registered prefix with the specified name under the given subscription, resource group and peering.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}
-        /// Operation Id: RegisteredPrefixes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Gets an existing registered prefix with the specified name under the given subscription, resource group and peering.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}
-        /// Operation Id: RegisteredPrefixes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all registered prefixes under the given subscription, resource group and peering.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes
-        /// Operation Id: RegisteredPrefixes_ListByPeering
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_ListByPeering</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringRegisteredPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringRegisteredPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PeeringRegisteredPrefixResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.ListByPeeringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PeeringRegisteredPrefixResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.ListByPeeringNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringRegisteredPrefixResource(Client, PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(e)), _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics, Pipeline, "PeeringRegisteredPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all registered prefixes under the given subscription, resource group and peering.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes
-        /// Operation Id: RegisteredPrefixes_ListByPeering
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_ListByPeering</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringRegisteredPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringRegisteredPrefixResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PeeringRegisteredPrefixResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.ListByPeering(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PeeringRegisteredPrefixResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.ListByPeeringNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringRegisteredPrefixResource(Client, PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(e)), _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics, Pipeline, "PeeringRegisteredPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}
-        /// Operation Id: RegisteredPrefixes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}
-        /// Operation Id: RegisteredPrefixes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

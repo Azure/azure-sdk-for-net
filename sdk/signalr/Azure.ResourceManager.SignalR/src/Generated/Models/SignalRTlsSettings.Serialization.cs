@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.SignalR.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientCertEnabled))
+            if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled");
-                writer.WriteBooleanValue(ClientCertEnabled.Value);
+                writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
             writer.WriteEndObject();
         }

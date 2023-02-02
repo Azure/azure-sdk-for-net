@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Create a reservation order alias.
-        /// Request Path: /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
-        /// Operation Id: ReservationOrderAlias_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrderAlias_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Create a reservation order alias.
-        /// Request Path: /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
-        /// Operation Id: ReservationOrderAlias_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrderAlias_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
@@ -120,8 +136,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Get a reservation order alias.
-        /// Request Path: /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
-        /// Operation Id: ReservationOrderAlias_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrderAlias_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +173,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Get a reservation order alias.
-        /// Request Path: /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
-        /// Operation Id: ReservationOrderAlias_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrderAlias_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,8 +210,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
-        /// Operation Id: ReservationOrderAlias_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrderAlias_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,8 +245,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
-        /// Operation Id: ReservationOrderAlias_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrderAlias_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

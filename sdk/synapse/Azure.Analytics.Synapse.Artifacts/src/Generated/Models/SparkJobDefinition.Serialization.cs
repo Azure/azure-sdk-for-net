@@ -26,6 +26,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("targetBigDataPool");
             writer.WriteObjectValue(TargetBigDataPool);
+            if (Optional.IsDefined(TargetSparkConfiguration))
+            {
+                writer.WritePropertyName("targetSparkConfiguration");
+                writer.WriteObjectValue(TargetSparkConfiguration);
+            }
             if (Optional.IsDefined(RequiredSparkVersion))
             {
                 writer.WritePropertyName("requiredSparkVersion");
@@ -62,6 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Optional<string> description = default;
             BigDataPoolReference targetBigDataPool = default;
+            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
             Optional<string> requiredSparkVersion = default;
             Optional<string> language = default;
             SparkJobProperties jobProperties = default;
@@ -78,6 +84,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("targetBigDataPool"))
                 {
                     targetBigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("targetSparkConfiguration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetSparkConfiguration = SparkConfigurationReference.DeserializeSparkConfigurationReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requiredSparkVersion"))
@@ -108,7 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobDefinition(description.Value, targetBigDataPool, requiredSparkVersion.Value, language.Value, jobProperties, folder.Value, additionalProperties);
+            return new SparkJobDefinition(description.Value, targetBigDataPool, targetSparkConfiguration.Value, requiredSparkVersion.Value, language.Value, jobProperties, folder.Value, additionalProperties);
         }
 
         internal partial class SparkJobDefinitionConverter : JsonConverter<SparkJobDefinition>

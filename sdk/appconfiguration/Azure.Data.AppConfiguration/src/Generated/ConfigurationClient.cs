@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -475,24 +473,9 @@ namespace Azure.Data.AppConfiguration
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeysAsync(String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetKeysAsync(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
-            return GetKeysImplementationAsync("ConfigurationClient.GetKeys", name, after, acceptDatetime, context);
-        }
-
-        private AsyncPageable<BinaryData> GetKeysImplementationAsync(string diagnosticsScopeName, string name, string after, string acceptDatetime, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeysRequest(name, after, acceptDatetime, context)
-                        : CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of keys. </summary>
@@ -505,24 +488,9 @@ namespace Azure.Data.AppConfiguration
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeys(String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetKeys(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
-            return GetKeysImplementation("ConfigurationClient.GetKeys", name, after, acceptDatetime, context);
-        }
-
-        private Pageable<BinaryData> GetKeysImplementation(string diagnosticsScopeName, string name, string after, string acceptDatetime, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeysRequest(name, after, acceptDatetime, context)
-                        : CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetKeys", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of key-values. </summary>
@@ -537,24 +505,9 @@ namespace Azure.Data.AppConfiguration
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingsAsync(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetConfigurationSettingsImplementationAsync("ConfigurationClient.GetConfigurationSettings", key, label, after, acceptDatetime, select, context);
-        }
-
-        private AsyncPageable<BinaryData> GetConfigurationSettingsImplementationAsync(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of key-values. </summary>
@@ -569,24 +522,9 @@ namespace Azure.Data.AppConfiguration
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettings(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetConfigurationSettings(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetConfigurationSettingsImplementation("ConfigurationClient.GetConfigurationSettings", key, label, after, acceptDatetime, select, context);
-        }
-
-        private Pageable<BinaryData> GetConfigurationSettingsImplementation(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of labels. </summary>
@@ -600,24 +538,9 @@ namespace Azure.Data.AppConfiguration
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabelsAsync(String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetLabelsAsync(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetLabelsImplementationAsync("ConfigurationClient.GetLabels", name, after, acceptDatetime, select, context);
-        }
-
-        private AsyncPageable<BinaryData> GetLabelsImplementationAsync(string diagnosticsScopeName, string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLabelsRequest(name, after, acceptDatetime, select, context)
-                        : CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of labels. </summary>
@@ -631,24 +554,9 @@ namespace Azure.Data.AppConfiguration
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabels(String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetLabels(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetLabelsImplementation("ConfigurationClient.GetLabels", name, after, acceptDatetime, select, context);
-        }
-
-        private Pageable<BinaryData> GetLabelsImplementation(string diagnosticsScopeName, string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLabelsRequest(name, after, acceptDatetime, select, context)
-                        : CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of key-value revisions. </summary>
@@ -663,24 +571,9 @@ namespace Azure.Data.AppConfiguration
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisionsAsync(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetRevisionsImplementationAsync("ConfigurationClient.GetRevisions", key, label, after, acceptDatetime, select, context);
-        }
-
-        private AsyncPageable<BinaryData> GetRevisionsImplementationAsync(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a list of key-value revisions. </summary>
@@ -695,24 +588,9 @@ namespace Azure.Data.AppConfiguration
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisions(String,String,String,String,IEnumerable,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetRevisionsImplementation("ConfigurationClient.GetRevisions", key, label, after, acceptDatetime, select, context);
-        }
-
-        private Pageable<BinaryData> GetRevisionsImplementation(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         internal HttpMessage CreateGetKeysRequest(string name, string after, string acceptDatetime, RequestContext context)

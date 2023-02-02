@@ -933,6 +933,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public static string ToAccessControlListString(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList) { throw null; }
         public static string ToOctalRolePermissions(this Azure.Storage.Files.DataLake.Models.RolePermissions rolePermissions) { throw null; }
         public static string ToSymbolicRolePermissions(this Azure.Storage.Files.DataLake.Models.RolePermissions rolePermissions) { throw null; }
+        public static string ToSymbolicRolePermissions(this Azure.Storage.Files.DataLake.Models.RolePermissions rolePermissions, bool stickyBit) { throw null; }
     }
     public partial class PathAccessControlItem
     {

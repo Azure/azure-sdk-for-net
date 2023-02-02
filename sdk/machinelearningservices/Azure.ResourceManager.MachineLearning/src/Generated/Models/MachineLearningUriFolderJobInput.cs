@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningUriFolderJobInput.
-    /// Serialized Name: UriFolderJobInput
-    /// </summary>
+    /// <summary> The MachineLearningUriFolderJobInput. </summary>
     public partial class MachineLearningUriFolderJobInput : MachineLearningJobInput
     {
         /// <summary> Initializes a new instance of MachineLearningUriFolderJobInput. </summary>
-        /// <param name="uri">
-        /// [Required] Input Asset URI.
-        /// Serialized Name: AssetJobInput.uri
-        /// </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public MachineLearningUriFolderJobInput(Uri uri)
         {
@@ -31,22 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningUriFolderJobInput. </summary>
-        /// <param name="description">
-        /// Description for the input.
-        /// Serialized Name: JobInput.description
-        /// </param>
-        /// <param name="jobInputType">
-        /// [Required] Specifies the type of job.
-        /// Serialized Name: JobInput.jobInputType
-        /// </param>
-        /// <param name="mode">
-        /// Input Asset Delivery Mode.
-        /// Serialized Name: AssetJobInput.mode
-        /// </param>
-        /// <param name="uri">
-        /// [Required] Input Asset URI.
-        /// Serialized Name: AssetJobInput.uri
-        /// </param>
+        /// <param name="description"> Description for the input. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="mode"> Input Asset Delivery Mode. </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
         internal MachineLearningUriFolderJobInput(string description, JobInputType jobInputType, MachineLearningInputDeliveryMode? mode, Uri uri) : base(description, jobInputType)
         {
             Mode = mode;
@@ -54,15 +36,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = jobInputType;
         }
 
-        /// <summary>
-        /// Input Asset Delivery Mode.
-        /// Serialized Name: AssetJobInput.mode
-        /// </summary>
+        /// <summary> Input Asset Delivery Mode. </summary>
         public MachineLearningInputDeliveryMode? Mode { get; set; }
-        /// <summary>
-        /// [Required] Input Asset URI.
-        /// Serialized Name: AssetJobInput.uri
-        /// </summary>
+        /// <summary> [Required] Input Asset URI. </summary>
         public Uri Uri { get; set; }
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -67,152 +65,6 @@ namespace Azure.AI.AnomalyDetector
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
-        public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelValuesAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AnomalyDetectionModel>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValues");
-                scope.Start();
-                try
-                {
-                    var response = await GetMultivariateModelsFirstPageAsync(skip, maxCount, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Models, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AnomalyDetectionModel>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValues");
-                scope.Start();
-                try
-                {
-                    var response = await GetMultivariateModelsNextPageAsync(nextLink, skip, maxCount, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Models, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
-        public virtual Pageable<AnomalyDetectionModel> GetMultivariateModelValues(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            Page<AnomalyDetectionModel> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValues");
-                scope.Start();
-                try
-                {
-                    var response = GetMultivariateModelsFirstPage(skip, maxCount, cancellationToken);
-                    return Page.FromValues(response.Value.Models, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AnomalyDetectionModel> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValues");
-                scope.Start();
-                try
-                {
-                    var response = GetMultivariateModelsNextPage(nextLink, skip, maxCount, cancellationToken);
-                    return Page.FromValues(response.Value.Models, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
-        private async Task<Response<ModelList>> GetMultivariateModelsFirstPageAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using var message = CreateGetMultivariateModelsRequest(skip, maxCount, context);
-            Response response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            return Response.FromValue(ModelList.FromResponse(response), response);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
-        private Response<ModelList> GetMultivariateModelsFirstPage(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using var message = CreateGetMultivariateModelsRequest(skip, maxCount, context);
-            Response response = _pipeline.ProcessMessage(message, context);
-            return Response.FromValue(ModelList.FromResponse(response), response);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> List models of a resource. </remarks>
-        private async Task<Response<ModelList>> GetMultivariateModelsNextPageAsync(string nextLink, int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using var message = CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            Response response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            return Response.FromValue(ModelList.FromResponse(response), response);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> List models of a resource. </remarks>
-        private Response<ModelList> GetMultivariateModelsNextPage(string nextLink, int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using var message = CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            Response response = _pipeline.ProcessMessage(message, context);
-            return Response.FromValue(ModelList.FromResponse(response), response);
         }
 
         /// <summary> Detect anomalies for the entire series in batch. </summary>
@@ -1034,30 +886,41 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> List Multivariate Models. </summary>
         /// <param name="skip"> Skip indicates how many models will be skipped. </param>
         /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List models of a resource. </remarks>
+        public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelValuesAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+        }
+
+        /// <summary> List Multivariate Models. </summary>
+        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
+        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List models of a resource. </remarks>
+        public virtual Pageable<AnomalyDetectionModel> GetMultivariateModelValues(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+        }
+
+        /// <summary> List Multivariate Models. </summary>
+        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
+        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModelsAsync(Int32,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetMultivariateModelsAsync(int? skip = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetMultivariateModelsImplementationAsync("AnomalyDetectorClient.GetMultivariateModels", skip, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetMultivariateModelsImplementationAsync(string diagnosticsScopeName, int? skip, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMultivariateModelsRequest(skip, maxCount, context)
-                        : CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "models", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         /// <summary> List Multivariate Models. </summary>
@@ -1069,24 +932,9 @@ namespace Azure.AI.AnomalyDetector
         /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModels(Int32,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetMultivariateModels(int? skip = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetMultivariateModelsImplementation("AnomalyDetectorClient.GetMultivariateModels", skip, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetMultivariateModelsImplementation(string diagnosticsScopeName, int? skip, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMultivariateModelsRequest(skip, maxCount, context)
-                        : CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "models", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         internal HttpMessage CreateDetectUnivariateEntireSeriesRequest(RequestContent content, RequestContext context)

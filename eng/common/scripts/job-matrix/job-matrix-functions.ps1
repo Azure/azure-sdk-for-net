@@ -380,7 +380,7 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
     }
 
     if (!(Test-Path $importPath)) {
-        Write-Error "`$IMPORT path '$importPath' does not exist."
+        Write-Error "`$IMPORT path '$importPath' does not exist. Current dir: $(Get-Location)"
         exit 1
     }
     $importedMatrixConfig = GetMatrixConfigFromFile (Get-Content -Raw $importPath)

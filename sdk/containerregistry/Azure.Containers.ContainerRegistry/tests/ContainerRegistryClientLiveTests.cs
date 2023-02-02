@@ -116,6 +116,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 // Act
                 await client.DeleteRepositoryAsync(repositoryId);
+                await Delay(5000);
 
                 // Assert
                 repositories = client.GetRepositoryNamesAsync();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
@@ -65,74 +64,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<KqlScriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KqlScriptResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("KqlScriptsClient.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<KqlScriptResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("KqlScriptsClient.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetAllRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetAllNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, KqlScriptResource.DeserializeKqlScriptResource, _clientDiagnostics, _pipeline, "KqlScriptsClient.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Get all KQL scripts. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<KqlScriptResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KqlScriptResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("KqlScriptsClient.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAll(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<KqlScriptResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("KqlScriptsClient.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetAllRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetAllNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, KqlScriptResource.DeserializeKqlScriptResource, _clientDiagnostics, _pipeline, "KqlScriptsClient.GetAll", "value", "nextLink", cancellationToken);
         }
     }
 }

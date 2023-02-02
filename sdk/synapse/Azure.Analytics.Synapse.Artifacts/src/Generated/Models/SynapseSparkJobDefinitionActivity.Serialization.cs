@@ -77,6 +77,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("file");
                 writer.WriteObjectValue(File);
             }
+            if (Optional.IsDefined(ScanFolder))
+            {
+                writer.WritePropertyName("scanFolder");
+                writer.WriteObjectValue(ScanFolder);
+            }
             if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className");
@@ -87,6 +92,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("files");
                 writer.WriteStartArray();
                 foreach (var item in Files)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PythonCodeReference))
+            {
+                writer.WritePropertyName("pythonCodeReference");
+                writer.WriteStartArray();
+                foreach (var item in PythonCodeReference)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(FilesV2))
+            {
+                writer.WritePropertyName("filesV2");
+                writer.WriteStartArray();
+                foreach (var item in FilesV2)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -115,7 +140,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors");
-                writer.WriteNumberValue(NumExecutors.Value);
+                writer.WriteObjectValue(NumExecutors);
+            }
+            if (Optional.IsDefined(ConfigurationType))
+            {
+                writer.WritePropertyName("configurationType");
+                writer.WriteStringValue(ConfigurationType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetSparkConfiguration))
+            {
+                writer.WritePropertyName("targetSparkConfiguration");
+                writer.WriteObjectValue(TargetSparkConfiguration);
+            }
+            if (Optional.IsCollectionDefined(SparkConfig))
+            {
+                writer.WritePropertyName("sparkConfig");
+                writer.WriteStartObject();
+                foreach (var item in SparkConfig)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -138,13 +184,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SynapseSparkJobReference sparkJob = default;
             Optional<IList<object>> args = default;
             Optional<object> file = default;
+            Optional<object> scanFolder = default;
             Optional<object> className = default;
             Optional<IList<object>> files = default;
+            Optional<IList<object>> pythonCodeReference = default;
+            Optional<IList<object>> filesV2 = default;
             Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
             Optional<object> executorSize = default;
             Optional<object> conf = default;
             Optional<object> driverSize = default;
-            Optional<int> numExecutors = default;
+            Optional<object> numExecutors = default;
+            Optional<ConfigurationType> configurationType = default;
+            Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
+            Optional<IDictionary<string, object>> sparkConfig = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -253,6 +305,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             file = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("scanFolder"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            scanFolder = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("className"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -276,6 +338,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 array.Add(item.GetObject());
                             }
                             files = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("pythonCodeReference"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<object> array = new List<object>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetObject());
+                            }
+                            pythonCodeReference = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("filesV2"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<object> array = new List<object>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetObject());
+                            }
+                            filesV2 = array;
                             continue;
                         }
                         if (property0.NameEquals("targetBigDataPool"))
@@ -325,7 +417,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            numExecutors = property0.Value.GetInt32();
+                            numExecutors = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            configurationType = new ConfigurationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("targetSparkConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetSparkConfiguration = SparkConfigurationParametrizationReference.DeserializeSparkConfigurationParametrizationReference(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("sparkConfig"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                            }
+                            sparkConfig = dictionary;
                             continue;
                         }
                     }
@@ -334,7 +461,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob, Optional.ToList(args), file.Value, className.Value, Optional.ToList(files), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, Optional.ToNullable(numExecutors));
+            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob, Optional.ToList(args), file.Value, scanFolder.Value, className.Value, Optional.ToList(files), Optional.ToList(pythonCodeReference), Optional.ToList(filesV2), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
         }
 
         internal partial class SynapseSparkJobDefinitionActivityConverter : JsonConverter<SynapseSparkJobDefinitionActivity>

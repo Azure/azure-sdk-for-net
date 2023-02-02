@@ -18,8 +18,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("server");
             writer.WriteStringValue(Server);
-            writer.WritePropertyName("username");
-            writer.WriteStringValue(Username);
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username");
+                writer.WriteStringValue(Username);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password");
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         internal static ContainerGroupImageRegistryCredential DeserializeContainerGroupImageRegistryCredential(JsonElement element)
         {
             string server = default;
-            string username = default;
+            Optional<string> username = default;
             Optional<string> password = default;
             Optional<string> identity = default;
             Optional<Uri> identityUrl = default;
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerGroupImageRegistryCredential(server, username, password.Value, identity.Value, identityUrl.Value);
+            return new ContainerGroupImageRegistryCredential(server, username.Value, password.Value, identity.Value, identityUrl.Value);
         }
     }
 }

@@ -653,7 +653,7 @@ var client = new FarmsClient(endpoint, credential);
 
 var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -711,7 +711,7 @@ var client = new FarmsClient(endpoint, credential);
 
 var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());

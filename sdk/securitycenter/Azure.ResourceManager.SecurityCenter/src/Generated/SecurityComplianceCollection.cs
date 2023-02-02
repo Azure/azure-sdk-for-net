@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Details of a specific Compliance.
-        /// Request Path: /{scope}/providers/Microsoft.Security/compliances/{complianceName}
-        /// Operation Id: Compliances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,8 +81,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Details of a specific Compliance.
-        /// Request Path: /{scope}/providers/Microsoft.Security/compliances/{complianceName}
-        /// Operation Id: Compliances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,92 +118,60 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// The Compliance scores of the specific management group.
-        /// Request Path: /{scope}/providers/Microsoft.Security/compliances
-        /// Operation Id: Compliances_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityComplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityComplianceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityComplianceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityComplianceCompliancesRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityComplianceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityComplianceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityComplianceCompliancesRestClient.ListNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityComplianceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityComplianceCompliancesRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityComplianceCompliancesRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityComplianceResource(Client, SecurityComplianceData.DeserializeSecurityComplianceData(e)), _securityComplianceCompliancesClientDiagnostics, Pipeline, "SecurityComplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// The Compliance scores of the specific management group.
-        /// Request Path: /{scope}/providers/Microsoft.Security/compliances
-        /// Operation Id: Compliances_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityComplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityComplianceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecurityComplianceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityComplianceCompliancesRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityComplianceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityComplianceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityComplianceCompliancesRestClient.ListNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityComplianceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityComplianceCompliancesRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityComplianceCompliancesRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityComplianceResource(Client, SecurityComplianceData.DeserializeSecurityComplianceData(e)), _securityComplianceCompliancesClientDiagnostics, Pipeline, "SecurityComplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Security/compliances/{complianceName}
-        /// Operation Id: Compliances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,8 +197,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Security/compliances/{complianceName}
-        /// Operation Id: Compliances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("restore");
                 writer.WriteBooleanValue(Restore.Value);
             }
+            if (Optional.IsDefined(Locations))
+            {
+                writer.WritePropertyName("locations");
+                writer.WriteObjectValue(Locations);
+            }
             writer.WriteEndObject();
         }
 
@@ -117,6 +122,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<bool> restore = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<string> scheduledPurgeDate = default;
+            Optional<CognitiveServicesMultiRegionSettings> locations = default;
+            Optional<IReadOnlyList<CommitmentPlanAssociation>> commitmentPlanAssociations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
@@ -364,8 +371,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     scheduledPurgeDate = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("locations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("commitmentPlanAssociations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<CommitmentPlanAssociation> array = new List<CommitmentPlanAssociation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item));
+                    }
+                    commitmentPlanAssociations = array;
+                    continue;
+                }
             }
-            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, Optional.ToList(capabilities), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, Optional.ToList(userOwnedStorage), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value);
+            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, Optional.ToList(capabilities), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, Optional.ToList(userOwnedStorage), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, Optional.ToList(commitmentPlanAssociations));
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,6 +16,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(CommitmentPlanGuid))
+            {
+                writer.WritePropertyName("commitmentPlanGuid");
+                writer.WriteStringValue(CommitmentPlanGuid.Value);
+            }
             if (Optional.IsDefined(HostingModel))
             {
                 writer.WritePropertyName("hostingModel");
@@ -45,6 +51,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPlanProperties DeserializeCommitmentPlanProperties(JsonElement element)
         {
+            Optional<CommitmentPlanProvisioningState> provisioningState = default;
+            Optional<Guid> commitmentPlanGuid = default;
             Optional<ServiceAccountHostingModel> hostingModel = default;
             Optional<string> planType = default;
             Optional<CommitmentPeriod> current = default;
@@ -53,6 +61,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CommitmentPeriod> last = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new CommitmentPlanProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("commitmentPlanGuid"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    commitmentPlanGuid = property.Value.GetGuid();
+                    continue;
+                }
                 if (property.NameEquals("hostingModel"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -109,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CommitmentPlanProperties(Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value);
+            return new CommitmentPlanProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(commitmentPlanGuid), Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value);
         }
     }
 }

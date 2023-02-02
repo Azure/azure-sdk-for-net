@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Create or update DigitalTwinsInstance endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}
-        /// Operation Id: DigitalTwinsEndpoint_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Create or update DigitalTwinsInstance endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}
-        /// Operation Id: DigitalTwinsEndpoint_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Get DigitalTwinsInstances Endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}
-        /// Operation Id: DigitalTwinsEndpoint_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Get DigitalTwinsInstances Endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}
-        /// Operation Id: DigitalTwinsEndpoint_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Get DigitalTwinsInstance Endpoints.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints
-        /// Operation Id: DigitalTwinsEndpoint_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DigitalTwinsEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DigitalTwinsEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DigitalTwinsEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DigitalTwinsEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsEndpointResource(Client, DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(e)), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, "DigitalTwinsEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get DigitalTwinsInstance Endpoints.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints
-        /// Operation Id: DigitalTwinsEndpoint_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DigitalTwinsEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DigitalTwinsEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DigitalTwinsEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DigitalTwinsEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsEndpointResource(Client, DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(e)), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, "DigitalTwinsEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}
-        /// Operation Id: DigitalTwinsEndpoint_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}
-        /// Operation Id: DigitalTwinsEndpoint_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

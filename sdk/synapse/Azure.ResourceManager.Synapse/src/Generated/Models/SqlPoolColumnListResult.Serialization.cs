@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SqlPoolColumnListResult DeserializeSqlPoolColumnListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SqlPoolColumnData>> value = default;
+            Optional<IReadOnlyList<SynapseSqlPoolColumnData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SqlPoolColumnData> array = new List<SqlPoolColumnData>();
+                    List<SynapseSqlPoolColumnData> array = new List<SynapseSqlPoolColumnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlPoolColumnData.DeserializeSqlPoolColumnData(item));
+                        array.Add(SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(item));
                     }
                     value = array;
                     continue;

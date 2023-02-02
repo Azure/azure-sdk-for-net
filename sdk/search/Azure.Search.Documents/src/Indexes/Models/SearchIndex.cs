@@ -82,8 +82,8 @@ namespace Azure.Search.Documents.Indexes.Models
         ///     Fields = new FieldBuilder().Build(typeof(Hotel)),
         ///     Suggesters =
         ///     {
-        ///         // Suggest query terms from the hotelName field.
-        ///         new SearchSuggester(&quot;sg&quot;, &quot;hotelName&quot;)
+        ///         // Suggest query terms from the HotelName field.
+        ///         new SearchSuggester(&quot;sg&quot;, &quot;HotelName&quot;)
         ///     }
         /// };
         /// </code>
@@ -94,26 +94,26 @@ namespace Azure.Search.Documents.Indexes.Models
         /// {
         ///     Fields =
         ///     {
-        ///         new SimpleField(&quot;hotelId&quot;, SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
-        ///         new SearchableField(&quot;hotelName&quot;) { IsFilterable = true, IsSortable = true },
-        ///         new SearchableField(&quot;description&quot;) { AnalyzerName = LexicalAnalyzerName.EnLucene },
-        ///         new SearchableField(&quot;tags&quot;, collection: true) { IsFilterable = true, IsFacetable = true },
-        ///         new ComplexField(&quot;address&quot;)
+        ///         new SimpleField(&quot;HotelId&quot;, SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+        ///         new SearchableField(&quot;HotelName&quot;) { IsFilterable = true, IsSortable = true },
+        ///         new SearchableField(&quot;Description&quot;) { AnalyzerName = LexicalAnalyzerName.EnLucene },
+        ///         new SearchableField(&quot;Tags&quot;, collection: true) { IsFilterable = true, IsFacetable = true },
+        ///         new ComplexField(&quot;Address&quot;)
         ///         {
         ///             Fields =
         ///             {
-        ///                 new SearchableField(&quot;streetAddress&quot;),
-        ///                 new SearchableField(&quot;city&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        ///                 new SearchableField(&quot;stateProvince&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        ///                 new SearchableField(&quot;country&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        ///                 new SearchableField(&quot;postalCode&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true }
+        ///                 new SearchableField(&quot;StreetAddress&quot;),
+        ///                 new SearchableField(&quot;City&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;StateProvince&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;Country&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;PostalCode&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true }
         ///             }
         ///         }
         ///     },
         ///     Suggesters =
         ///     {
         ///         // Suggest query terms from the hotelName field.
-        ///         new SearchSuggester(&quot;sg&quot;, &quot;hotelName&quot;)
+        ///         new SearchSuggester(&quot;sg&quot;, &quot;HotelName&quot;)
         ///     }
         /// };
         /// </code>

@@ -870,7 +870,7 @@ var data = new {
 
 var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
@@ -886,7 +886,7 @@ var data = new {
 
 var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data), <me>);
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -1011,7 +1011,7 @@ var data = new {
 
 var operation = client.CreateDevBox(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
@@ -1027,7 +1027,7 @@ var data = new {
 
 var operation = client.CreateDevBox(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data), <me>);
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -1148,7 +1148,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<devBoxName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
@@ -1159,7 +1159,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -1240,7 +1240,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = client.DeleteDevBox(WaitUntil.Completed, "<devBoxName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
@@ -1251,7 +1251,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = client.DeleteDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -1332,7 +1332,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<devBoxName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
@@ -1343,7 +1343,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -1424,7 +1424,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = client.StartDevBox(WaitUntil.Completed, "<devBoxName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
@@ -1435,7 +1435,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = client.StartDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -1516,7 +1516,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<devBoxName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
@@ -1527,7 +1527,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -1608,7 +1608,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = client.StopDevBox(WaitUntil.Completed, "<devBoxName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
@@ -1619,7 +1619,7 @@ var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", cr
 
 var operation = client.StopDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());

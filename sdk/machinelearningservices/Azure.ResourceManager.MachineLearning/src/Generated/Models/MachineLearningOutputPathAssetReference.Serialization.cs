@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOutputPathAssetReference DeserializeMachineLearningOutputPathAssetReference(JsonElement element)
         {
-            Optional<string> jobId = default;
+            Optional<ResourceIdentifier> jobId = default;
             Optional<string> path = default;
             ReferenceType referenceType = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         jobId = null;
                         continue;
                     }
-                    jobId = property.Value.GetString();
+                    jobId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("path"))
