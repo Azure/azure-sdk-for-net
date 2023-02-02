@@ -205,6 +205,7 @@ namespace Azure.Monitor.Ingestion
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             Response response = null;
             List<Exception> exceptions = null;
+            options ??= new UploadLogsOptions();
             scope.Start();
 
             // Keep track of the number of failed logs across batches
