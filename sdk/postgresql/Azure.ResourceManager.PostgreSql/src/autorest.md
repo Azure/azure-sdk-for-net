@@ -14,7 +14,7 @@ modelerfour:
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2022-12-01
+  - tag: package-flexibleserver-2021-06
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -142,10 +142,10 @@ directive:
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2022-12-01'
+``` yaml $(tag) == 'package-flexibleserver-2021-06'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/deba715c80b5b523a84d32fa2764c0f6e867b4d0/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
 
 format-by-name-rules:
@@ -223,49 +223,22 @@ rename-mapping:
   CapabilityProperties.zoneRedundantHaSupported: IsZoneRedundantHASupported
   CapabilityProperties.zoneRedundantHaAndGeoBackupSupported: IsZoneRedundantHAAndGeoBackupSupported
   CapabilitiesListResult: PostgreSqlFlexibleServerCapabilitiesListResult
-  CheckNameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityRequest
-  CheckNameAvailabilityResponse: PostgreSqlFlexibleServerNameAvailabilityResponse
-  CheckNameAvailabilityReason: PostgreSqlFlexibleServerNameUnavailableReason
+  NameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityRequest
   NameAvailability: PostgreSqlFlexibleServerNameAvailabilityResult
   CreateMode: PostgreSqlFlexibleServerCreateMode
   SkuTier: PostgreSqlFlexibleServerSkuTier
-  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  NameAvailability.nameAvailable: IsNameAvailable
   Storage.storageSizeGB: StorageSizeInGB
   StorageMBCapability.storageSizeMB: StorageSizeInMB
   StorageMBCapability: PostgreSqlFlexibleServerStorageCapability
   VcoreCapability.supportedMemoryPerVcoreMB: SupportedMemoryPerVCoreInMB
+  Reason: PostgreSqlFlexibleServerNameUnavailableReason
   RestartParameter: PostgreSqlFlexibleServerRestartParameter
   ServerHAState: PostgreSqlFlexibleServerHAState
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
   CapabilityProperties.supportedHAMode: SupportedHAModes
   StorageEditionCapability.supportedStorageMB: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
-  ActiveDirectoryAdministrator: PostgreSqlFlexibleServerActiveDirectoryAdministrator
-  ActiveDirectoryAuthEnum: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
-  AdministratorListResult: PostgreSqlFlexibleServerAdministratorListResult
-  ArmServerKeyType: PostgreSqlFlexibleServerKeyType
-  AuthConfig: PostgreSqlFlexibleServerAuthConfig
-  DataEncryption: PostgreSqlFlexibleServerDataEncryption
-  FastProvisioningEditionCapability: PostgreSqlFlexibleServerFastProvisioningEditionCapability
-  IdentityType: PostgreSqlFlexibleServerIdentityType
-  Origin: PostgreSqlFlexibleServerBackupOrigin
-  PasswordAuthEnum: PostgreSqlFlexibleServerPasswordAuthEnum
-  PrincipalType: PostgreSqlFlexibleServerPrincipalType
-  ReplicationRole: PostgreSqlFlexibleServerReplicationRole
-  ServerBackup: PostgreSqlFlexibleServerBackup
-  ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
-  StorageTierCapability: PostgreSqlFlexibleServerStorageTierCapability
-  UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
-  CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
-directive:
-  - from: Administrators.json
-    where: $.definitions
-    transform: >
-      $.AdministratorProperties.properties.objectId['format'] = 'uuid'
-  - from: FlexibleServers.json
-    where: $.definitions
-    transform: >
-      $.DataEncryption.properties.primaryUserAssignedIdentityId['format'] = 'arm-id'
 ```

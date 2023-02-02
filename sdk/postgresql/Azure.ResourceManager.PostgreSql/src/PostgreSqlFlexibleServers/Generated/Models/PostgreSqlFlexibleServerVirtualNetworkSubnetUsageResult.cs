@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
+        /// <param name="location"> The location the resource resides in. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="delegatedSubnetsUsage"></param>
-        /// <param name="location"> location of the delegated subnet usage. </param>
-        /// <param name="subscriptionId"> subscriptionId of the delegated subnet usage. </param>
-        internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage, AzureLocation? location, string subscriptionId)
+        internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(AzureLocation? location, string subscriptionId, IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage)
         {
-            DelegatedSubnetsUsage = delegatedSubnetsUsage;
             Location = location;
             SubscriptionId = subscriptionId;
+            DelegatedSubnetsUsage = delegatedSubnetsUsage;
         }
 
+        /// <summary> The location the resource resides in. </summary>
+        public AzureLocation? Location { get; }
+        /// <summary> The subscription ID. </summary>
+        public string SubscriptionId { get; }
         /// <summary> Gets the delegated subnets usage. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get; }
-        /// <summary> location of the delegated subnet usage. </summary>
-        public AzureLocation? Location { get; }
-        /// <summary> subscriptionId of the delegated subnet usage. </summary>
-        public string SubscriptionId { get; }
     }
 }

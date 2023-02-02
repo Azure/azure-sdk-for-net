@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string CreateValue = "Create";
         private const string UpdateValue = "Update";
         private const string PointInTimeRestoreValue = "PointInTimeRestore";
-        private const string GeoRestoreValue = "GeoRestore";
-        private const string ReplicaValue = "Replica";
 
         /// <summary> Default. </summary>
         public static PostgreSqlFlexibleServerCreateMode Default { get; } = new PostgreSqlFlexibleServerCreateMode(DefaultValue);
@@ -37,10 +35,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerCreateMode Update { get; } = new PostgreSqlFlexibleServerCreateMode(UpdateValue);
         /// <summary> PointInTimeRestore. </summary>
         public static PostgreSqlFlexibleServerCreateMode PointInTimeRestore { get; } = new PostgreSqlFlexibleServerCreateMode(PointInTimeRestoreValue);
-        /// <summary> GeoRestore. </summary>
-        public static PostgreSqlFlexibleServerCreateMode GeoRestore { get; } = new PostgreSqlFlexibleServerCreateMode(GeoRestoreValue);
-        /// <summary> Replica. </summary>
-        public static PostgreSqlFlexibleServerCreateMode Replica { get; } = new PostgreSqlFlexibleServerCreateMode(ReplicaValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerCreateMode left, PostgreSqlFlexibleServerCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateMode"/> values are not the same. </summary>
