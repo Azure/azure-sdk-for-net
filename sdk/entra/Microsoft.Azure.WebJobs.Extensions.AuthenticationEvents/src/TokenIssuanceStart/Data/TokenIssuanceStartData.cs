@@ -17,7 +17,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         public AuthenticationEventContext AuthenticationContext { get; set; }
 
         /// <summary>Json constructor for desearilization</summary>
-        [JsonConstructor]
         public TokenIssuanceStartData()
         {
         }
