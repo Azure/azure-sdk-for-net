@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace Azure.Storage.DataMovement
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct JobPartPlanTransfer
+    internal struct JobPartPlanTransferHeader
     {
         // Once set, the following fields are constants; they should never be modified
 

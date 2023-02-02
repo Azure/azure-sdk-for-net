@@ -21,7 +21,7 @@ namespace Azure.Storage.DataMovement
         /// Save the associated file name within a struct. This will contain
         /// our transfer id, job part id, verison etc.
         /// </summary>
-        internal JobPlanFileName _jobPlanFileName { get; set; }
+        internal JobPartPlanFileName _jobPlanFileName { get; set; }
 
         /// <summary>
         /// The associated file on disk. When the last process has finished working
@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement
             MemoryMappedFileReference = MemoryMappedFile.CreateNew(id, Constants.MB);
             Length = Constants.MB;
             Semaphore = new SemaphoreSlim(1);
-            _jobPlanFileName = new JobPlanFileName(id: id, jobPartNumber: jobPart);
+            _jobPlanFileName = new JobPartPlanFileName(id: id, jobPartNumber: jobPart);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Azure.Storage.DataMovement
         {
             existingFile.Contains(id);
             // TODO: verify job plan file
-            _jobPlanFileName = new JobPlanFileName(existingFile);
+            _jobPlanFileName = new JobPartPlanFileName(existingFile);
             MemoryMappedFileReference = MemoryMappedFile.CreateFromFile(existingFile);
         }
     }

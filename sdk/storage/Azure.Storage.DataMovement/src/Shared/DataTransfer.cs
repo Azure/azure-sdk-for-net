@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement
         /// Only to be created internally by the transfer manager when someone
         /// provides a valid job plan file to resume from.
         /// </summary>
-        internal DataTransfer(string id, long bytesTransferred)
+        internal DataTransfer(string id, long bytesTransferred = 0)
         {
             _state = new DataTransferState(id, bytesTransferred);
         }

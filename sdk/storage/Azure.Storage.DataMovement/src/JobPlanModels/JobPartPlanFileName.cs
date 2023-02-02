@@ -7,13 +7,14 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Saved Job Plan File
+    /// Saved Job Part Plan File
     ///
-    /// Format of the job plan file name
+    /// Format of the job part plan file name
     /// {transferid}--{jobpartNumber}.steV{schemaVersion}
     /// e.g. will look like
     /// 204b6e20-e642-fb40-4597-4a35ff5e199f--00001.steV17
@@ -22,7 +23,7 @@ namespace Azure.Storage.DataMovement
     /// job part number: 00001
     /// version schema: 17
     /// </summary>
-    internal struct JobPlanFileName
+    internal class JobPartPlanFileName
     {
         /// <summary>
         /// Transfer Id representing the respective transfer.
@@ -43,13 +44,17 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public string SchemaVersion { get; }
 
+        protected JobPartPlanFileName()
+        {
+        }
+
         /// <summary>
         /// Creates Job Part Plan File Name
         /// </summary>
         /// <param name="id"></param>
         /// <param name="jobPartNumber"></param>
         /// <param name="schemaVersion"></param>
-        public JobPlanFileName(
+        public JobPartPlanFileName(
             string id,
             int jobPartNumber,
             string schemaVersion = DataMovementConstants.PlanFile.SchemaVersion)
@@ -59,36 +64,49 @@ namespace Azure.Storage.DataMovement
             SchemaVersion = schemaVersion;
         }
 
-        public JobPlanFileName(string fullPath)
+        public JobPartPlanFileName(string fullPath)
         {
+            // Check if empty
+            Argument.CheckNotNullOrEmpty(fullPath, nameof(fullPath));
             // Format of the job plan file name
             // {transferid}--{jobpartNumber}.steV{schemaVersion}
+
+            // Check for valid Transfer Id
             int endTransferIdIndex = fullPath.IndexOf(DataMovementConstants.PlanFile.JobPlanFileNameDelimiter, StringComparison.InvariantCultureIgnoreCase);
             if (endTransferIdIndex != DataMovementConstants.PlanFile.IdSize)
             {
-                throw new ArgumentException($"Mismatch Transfer Id Size contained in the transfer file name: {fullPath}");
+                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains a Transfer ID that is either too long or short: {fullPath}");
             }
             Id = fullPath.Substring(0, endTransferIdIndex);
 
+            // Check for valid transfer part number
             int partStartIndex = endTransferIdIndex + DataMovementConstants.PlanFile.JobPlanFileNameDelimiter.Length;
             int endPartIndex = fullPath.IndexOf(DataMovementConstants.PlanFile.FileExtension, StringComparison.InvariantCultureIgnoreCase);
 
-            if (partStartIndex - endPartIndex != DataMovementConstants.PlanFile.JobPartLength)
+            if (endPartIndex - partStartIndex != DataMovementConstants.PlanFile.JobPartLength)
             {
-                throw new ArgumentException($"Mismatch Job Part Id contained in the transfer file name: {fullPath}");
+                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fullPath}");
             }
-            JobPartNumber = int.Parse(fullPath.Substring(partStartIndex, endPartIndex), NumberStyles.Number, CultureInfo.InvariantCulture);
+            if (!int.TryParse(
+                    fullPath.Substring(partStartIndex, DataMovementConstants.PlanFile.JobPartLength),
+                    NumberStyles.Number,
+                    CultureInfo.InvariantCulture,
+                    out int jobPartNumber))
+            {
+                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fullPath}");
+            }
+            JobPartNumber = jobPartNumber;
 
             int schemaStartIndex = endPartIndex + DataMovementConstants.PlanFile.FileExtension.Length;
 
             if (schemaStartIndex + 1 >= fullPath.Length)
             {
-                throw new ArgumentException($"Mismatch Job Plan Version Schema contained in the transfer file name: {fullPath}");
+                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Plan Schema Version: {fullPath}");
             }
             SchemaVersion = fullPath.Substring(schemaStartIndex);
             if (DataMovementConstants.PlanFile.SchemaVersion != SchemaVersion)
             {
-                throw new ArgumentException($"Job Part Schema version: {SchemaVersion} does not match the Schema Version supported by the package {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version");
+                throw new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {SchemaVersion} does not match the Schema Version supported by the package {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
             }
         }
 

@@ -21,7 +21,7 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource,
             SingleTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
-            TransferCheckpointer CheckPointFolderPath,
+            TransferCheckpointer checkpointer,
             ErrorHandlingOptions errorHandling,
             ArrayPool<byte> arrayPool)
             : base(dataTransfer,
@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement
                   destinationResource,
                   transferOptions,
                   queueChunkTask,
-                  CheckPointFolderPath,
+                  checkpointer,
                   errorHandling,
                   arrayPool)
         {

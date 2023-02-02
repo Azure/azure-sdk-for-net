@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// Size of a GUID
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = DataMovementConstants.PlanFile.IdSize)]
         public string TransferId;
 
         /// <summary>

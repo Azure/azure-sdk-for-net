@@ -9,14 +9,14 @@ namespace Azure.Storage.DataMovement
 {
     internal class PlanFileReader
     {
-        private readonly JobPlanFileName _planFile;
+        private readonly JobPartPlanFileName _planFile;
         /// <summary>
         /// Constructor.
         /// </summary>
         public PlanFileReader(string name)
         {
             // Resolve the given path to an absolute path in case it isn't one already
-            _planFile = new JobPlanFileName(name);
+            _planFile = new JobPartPlanFileName(name);
         }
 
         public static JobPartPlanHeader ReadPlanFile()

@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement
             internal const string JobPlanFileNameDelimiter = "--";
             internal const string SchemaVersion = "b1"; // TODO: remove b for beta
             internal const int JobPartLength = 5;
-            internal const int IdSize = 32;
+            internal const int IdSize = 36; // Size of a guid with hyphens
             // TODO: might change the value
             internal const long MemoryMappedFileSize = 4 * Constants.MB;
             internal const int CustomHeaderMaxBytes = 256;

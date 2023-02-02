@@ -55,16 +55,6 @@ namespace Azure.Storage.DataMovement
         internal int _maxJobChunkTasks;
 
         /// <summary>
-        /// Transfer Manager options
-        /// </summary>
-        private TransferManagerOptions _options;
-
-        /// <summary>
-        /// Transfer Manager options
-        /// </summary>
-        internal TransferManagerOptions Options => _options;
-
-        /// <summary>
         /// Ongoing transfers
         /// </summary>
         internal List<DataTransfer> _dataTransfers;
@@ -75,6 +65,14 @@ namespace Azure.Storage.DataMovement
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
         internal TransferCheckpointer _checkpointer;
+
+        /// <summary>
+        /// Defines the error handling method to follow when an error is seen. Defaults to
+        /// <see cref="ErrorHandlingOptions.StopOnAllFailures"/>.
+        ///
+        /// See <see cref="ErrorHandlingOptions"/>.
+        /// </summary>
+        internal ErrorHandlingOptions _errorHandling;
 
         /// <summary>
         /// Cancels the channels operations when disposing.
@@ -121,11 +119,11 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJob = Task.Run(() => NotifyOfPendingJobProcessing());
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
-            _options = options != default ? options : new TransferManagerOptions();
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
             _dataTransfers = new List<DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
-            _checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
+            _checkpointer = _checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
+            _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingOptions.StopOnAllFailures;
         }
 
         #region Job Channel Management
@@ -280,22 +278,30 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new SingleTransferOptions();
 
+            DataTransfer dataTransfer;
             // Check if this is a job that is being asked to resume
             if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
             {
                 if (_checkpointer._ids.Contains(transferOptions.ResumeFromCheckpointId))
                 {
+                    // TODO: replace with method that will compare the plan file and the params
+                    dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
                     // Grab plan file info to continue from the checkpointer
+                    Stream jobPlanHeader = await _checkpointer.OpenReadCheckPointStreamAsync(dataTransfer.Id, 0, _cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
                     throw new ArgumentException($"Cannot resume from id \"{transferOptions.ResumeFromCheckpointId}\". Could not load related checkpoint plan file.");
                 }
             }
+            else
+            {
+                // Add Transfer to Checkpointer
+                dataTransfer = await _checkpointer.AddNewTransferAsync().ConfigureAwait(false);
+            }
 
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
-            DataTransfer dataTransfer = new DataTransfer();
             TransferJobInternal transferJobInternal;
             if (sourceResource.CanProduceUri == ProduceUriType.NoUri)
             {
@@ -308,8 +314,8 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        CheckPointFolderPath: Options?.Checkpointer,
-                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        checkpointer: _checkpointer,
+                        errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
                     // Queue Job
                     await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
@@ -332,8 +338,8 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        CheckPointFolderPath: Options?.Checkpointer,
-                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        CheckPointFolderPath: _checkpointer,
+                        errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
                     // Queue Job
                     await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
@@ -349,8 +355,8 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        CheckPointFolderPath: Options?.Checkpointer,
-                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        CheckPointFolderPath: _checkpointer,
+                        errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
                     // Queue Job
                     await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
@@ -398,8 +404,8 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        checkpointer:Options?.Checkpointer,
-                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        checkpointer:_checkpointer,
+                        errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
                     // Queue Job
                     await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
@@ -422,8 +428,8 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        checkpointer: Options?.Checkpointer,
-                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        checkpointer: _checkpointer,
+                        errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
                     // Queue Job
                     await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
@@ -439,8 +445,8 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        checkpointer: Options?.Checkpointer,
-                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.StopOnAllFailures,
+                        checkpointer: _checkpointer,
+                        errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
                     // Queue Job
                     await QueueJobAsync(transferJobInternal).ConfigureAwait(false);

@@ -51,25 +51,22 @@ namespace Azure.Storage.DataMovement
         ///
         /// If the transfer ID already exists, this method will throw an exception.
         /// </summary>
-        /// <param name="id">The transfer ID.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override Task TryAddTransferAsync(string id, CancellationToken cancellationToken = default)
+        public override Task<DataTransfer> AddNewTransferAsync(CancellationToken cancellationToken = default)
         {
+            string id = GetNewTransferId(cancellationToken);
             if (!_memoryMappedFiles.ContainsKey(id))
             {
                 // Create empty list of memory mapped job parts
                 Dictionary<int, MemoryMappedPlanFile> tempJobParts = new Dictionary<int, MemoryMappedPlanFile>();
                 _memoryMappedFiles.Add(id, tempJobParts);
             }
-            else
-            {
-                throw new ArgumentException($"Transfer id {id} already has existing checkpoint information associated with the id. Consider cleaning out where the transfer information is stored.");
-            }
-            return Task.CompletedTask;
+            // TODO: create first plan file with part 00000
+            return Task.FromResult(new DataTransfer(id));
         }
 
         /// <summary>
@@ -82,7 +79,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
-        public override Task<Stream> ReadCheckPointStreamAsync(
+        public override Task<Stream> OpenReadCheckPointStreamAsync(
             string id,
             int partNumber,
             CancellationToken cancellationToken = default)
@@ -117,7 +114,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        internal override async Task WriteToCheckpointAsync(
+        public override async Task WriteToCheckpointAsync(
             string id,
             int partNumber,
             long offset,
@@ -211,6 +208,23 @@ namespace Azure.Storage.DataMovement
         public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(_memoryMappedFiles.Keys.ToList());
+        }
+
+        /// <summary>
+        /// Creates a new Transfer Id and avoids collisions with the existing
+        /// transfer id strings.
+        /// </summary>
+        /// <param name="cancellationToken">Cancels the operation</param>
+        /// <returns></returns>
+        private string GetNewTransferId(CancellationToken cancellationToken)
+        {
+            string id = Guid.NewGuid().ToString();
+            while (_ids.Contains(id))
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                id = Guid.NewGuid().ToString();
+            }
+            return id;
         }
     }
 }

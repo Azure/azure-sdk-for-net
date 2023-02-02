@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 namespace Azure.Storage.DataMovement
 {
-    internal enum PageBlobTier
+    internal enum JobPartPlanPageBlobTier
     {
         /// <summary> None. </summary>
         None = 0,

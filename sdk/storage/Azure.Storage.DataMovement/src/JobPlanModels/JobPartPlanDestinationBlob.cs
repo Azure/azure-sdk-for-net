@@ -26,8 +26,6 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Specifies the length of MIME content type of the blob
-        ///
-        /// TODO: make a type for this?
         /// </summary>
         public ushort ContentTypeLength;
 
@@ -39,8 +37,6 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Specifies length of content encoding which have been applied to the blob.
-        ///
-        /// TODO: make a type for this?
         /// </summary>
         public ushort ContentEncodingLength;
 
@@ -57,9 +53,6 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Specifies which content language has been applied to the blob.
-        ///
-        /// 256 byte array
-        /// TODO: force the size of this array onto this parameter. We need to constrain the 256 bytes parititon in the plan file
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
         public byte[] ContentLanguage;
@@ -71,9 +64,6 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Specifies the content disposition of the blob
-        ///
-        /// 256 byte array
-        /// TODO: force the size of this array onto this parameter. We need to constrain the 256 bytes parititon in the plan file
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
         public byte[] ContentDisposition;
@@ -93,7 +83,7 @@ namespace Azure.Storage.DataMovement
         /// Specifies the tier if this is a block or page blob respectfully. Only one or none can be specified at a time.
         /// </summary>
         public JobPartPlanBlockBlobTier BlockBlobTier;
-        public PageBlobTier PageBlobTier;
+        public JobPartPlanPageBlobTier PageBlobTier;
 
         /// <summary>
         /// Controls uploading of MD5 hashes

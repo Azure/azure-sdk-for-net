@@ -25,17 +25,15 @@ namespace Azure.Storage.DataMovement
         protected TransferCheckpointer() { }
 
         /// <summary>
-        /// Adds a new transfer to the checkpointer.
-        ///
-        /// If the transfer id already exists, this method will throw.
+        /// Adds a new transfer to the checkpointer and returns the associated
+        /// DataTransfer object to go with it.
         /// </summary>
-        /// <param name="id">The transfer ID.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public abstract Task TryAddTransferAsync(string id, CancellationToken cancellationToken = default);
+        public abstract Task<DataTransfer> AddNewTransferAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a stream to the stored memory stored checkpointing information.
@@ -47,7 +45,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
-        public abstract Task<Stream> ReadCheckPointStreamAsync(string id, int partNumber, CancellationToken cancellationToken = default);
+        public abstract Task<Stream> OpenReadCheckPointStreamAsync(string id, int partNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Writes to the memory mapped file to store the checkpointing information.
@@ -61,7 +59,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        internal abstract Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, CancellationToken cancellationToken = default);
+        public abstract Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes transfer checkpoint information from checkpointer.

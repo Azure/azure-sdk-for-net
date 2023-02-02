@@ -1,0 +1,83 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NUnit.Framework;
+
+namespace Azure.Storage.DataMovement.Tests
+{
+    public class JobPartPlanFileNameTests
+    {
+        private string schemaVersion = DataMovementConstants.PlanFile.SchemaVersion;
+        public JobPartPlanFileNameTests() { }
+
+        [Test]
+        public void Ctor()
+        {
+            // "12345678-1234-1234-1234-123456789abc--001.steV01"
+            // Transfer Id: 12345678-1234-1234-1234-123456789abc
+            // Part Num: 001
+            JobPartPlanFileName jobFileName = new JobPartPlanFileName($"12345678-1234-1234-1234-123456789abc--00001.steV{schemaVersion}");
+
+            Assert.AreEqual("12345678-1234-1234-1234-123456789abc", jobFileName.Id);
+            Assert.AreEqual(1, jobFileName.JobPartNumber);
+            Assert.AreEqual(schemaVersion, jobFileName.SchemaVersion);
+
+            // "randomtransferidthataddsupto36charac--jobpart.steV01"
+            // Transfer Id: randomtransferidthataddsupto36charac
+            // Part Num: 001
+            JobPartPlanFileName jobFileName2 = new JobPartPlanFileName($"randomtransferidthataddsupto36charac--00001.steV{schemaVersion}");
+
+            Assert.AreEqual("randomtransferidthataddsupto36charac", jobFileName2.Id);
+            Assert.AreEqual(1, jobFileName2.JobPartNumber);
+            Assert.AreEqual(schemaVersion, jobFileName2.SchemaVersion);
+
+            // "abcdefgh-abcd-abcd-abcd-123456789abc.steV02"
+            // Transfer Id: abcdefgh-abcd-abcd-abcd-123456789abc
+            // Part Num: 210
+            JobPartPlanFileName jobFileName3 = new JobPartPlanFileName($"abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV{schemaVersion}");
+
+            Assert.AreEqual("abcdefgh-abcd-abcd-abcd-123456789abc", jobFileName3.Id);
+            Assert.AreEqual(210, jobFileName3.JobPartNumber);
+            Assert.AreEqual(schemaVersion, jobFileName3.SchemaVersion);
+        }
+
+        [Test]
+        public void Ctor_Error()
+        {
+            Assert.Catch<ArgumentException>(
+                () => { new JobPartPlanFileName(""); },
+                "Cannot be null or empty",
+                default);
+
+            Assert.Catch<ArgumentException>(
+                () => { new JobPartPlanFileName(default); },
+                "Cannot be null or empty",
+                default);
+
+            Assert.Catch<ArgumentException>(
+                () => { new JobPartPlanFileName("badname"); },
+                "Bad Name",
+                default);
+
+            Assert.Catch<ArgumentException>(
+                () => { new JobPartPlanFileName("invalidJobId--001.steV01"); },
+                "Invalid job id",
+                default);
+
+            Assert.Catch<ArgumentException>(
+                () => { new JobPartPlanFileName("abcdefgh-abcd-abcd-abcd-123456789abc--XY.steV01"); },
+                "Invalid job part num",
+                default);
+
+            Assert.Catch<ArgumentException>(
+                () => { new JobPartPlanFileName("abcdefgh-abcd-abcd-abcd-123456789abc--001.txt"); },
+                "Invalid extension",
+                default);
+        }
+    }
+}
