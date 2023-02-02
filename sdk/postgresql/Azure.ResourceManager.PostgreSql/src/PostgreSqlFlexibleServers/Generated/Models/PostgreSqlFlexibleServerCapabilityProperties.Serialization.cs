@@ -16,35 +16,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         internal static PostgreSqlFlexibleServerCapabilityProperties DeserializePostgreSqlFlexibleServerCapabilityProperties(JsonElement element)
         {
             Optional<string> zone = default;
-            Optional<IReadOnlyList<string>> supportedHAMode = default;
             Optional<bool> geoBackupSupported = default;
             Optional<bool> zoneRedundantHaSupported = default;
             Optional<bool> zoneRedundantHaAndGeoBackupSupported = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerEditionCapability>> supportedFlexibleServerEditions = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>> supportedHyperscaleNodeEditions = default;
-            Optional<bool> fastProvisioningSupported = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>> supportedFastProvisioningEditions = default;
+            Optional<IReadOnlyList<string>> supportedHAMode = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zone"))
                 {
                     zone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("supportedHAMode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    supportedHAMode = array;
                     continue;
                 }
                 if (property.NameEquals("geoBackupSupported"))
@@ -107,29 +90,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedHyperscaleNodeEditions = array;
                     continue;
                 }
-                if (property.NameEquals("fastProvisioningSupported"))
+                if (property.NameEquals("supportedHAMode"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fastProvisioningSupported = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("supportedFastProvisioningEditions"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<PostgreSqlFlexibleServerFastProvisioningEditionCapability> array = new List<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerFastProvisioningEditionCapability.DeserializePostgreSqlFlexibleServerFastProvisioningEditionCapability(item));
+                        array.Add(item.GetString());
                     }
-                    supportedFastProvisioningEditions = array;
+                    supportedHAMode = array;
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -138,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerCapabilityProperties(zone.Value, Optional.ToList(supportedHAMode), Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToList(supportedFlexibleServerEditions), Optional.ToList(supportedHyperscaleNodeEditions), Optional.ToNullable(fastProvisioningSupported), Optional.ToList(supportedFastProvisioningEditions), status.Value);
+            return new PostgreSqlFlexibleServerCapabilityProperties(zone.Value, Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToList(supportedFlexibleServerEditions), Optional.ToList(supportedHyperscaleNodeEditions), Optional.ToList(supportedHAMode), status.Value);
         }
     }
 }

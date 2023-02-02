@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +17,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> name = default;
             Optional<long> supportedIops = default;
             Optional<long> storageSizeMB = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability>> supportedUpgradableTierList = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,28 +45,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     storageSizeMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedUpgradableTierList"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<PostgreSqlFlexibleServerStorageTierCapability> array = new List<PostgreSqlFlexibleServerStorageTierCapability>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PostgreSqlFlexibleServerStorageTierCapability.DeserializePostgreSqlFlexibleServerStorageTierCapability(item));
-                    }
-                    supportedUpgradableTierList = array;
-                    continue;
-                }
                 if (property.NameEquals("status"))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerStorageCapability(name.Value, Optional.ToNullable(supportedIops), Optional.ToNullable(storageSizeMB), Optional.ToList(supportedUpgradableTierList), status.Value);
+            return new PostgreSqlFlexibleServerStorageCapability(name.Value, Optional.ToNullable(supportedIops), Optional.ToNullable(storageSizeMB), status.Value);
         }
     }
 }

@@ -16,41 +16,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>
         internal PostgreSqlFlexibleServerCapabilityProperties()
         {
-            SupportedHAModes = new ChangeTrackingList<string>();
             SupportedFlexibleServerEditions = new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>();
             SupportedHyperscaleNodeEditions = new ChangeTrackingList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>();
-            SupportedFastProvisioningEditions = new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
+            SupportedHAModes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>
         /// <param name="zone"> zone name. </param>
-        /// <param name="supportedHAModes"> Supported high availability mode. </param>
         /// <param name="isGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
         /// <param name="isZoneRedundantHASupported"> A value indicating whether a new server in this region can support multi zone HA. </param>
         /// <param name="isZoneRedundantHAAndGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
         /// <param name="supportedFlexibleServerEditions"></param>
         /// <param name="supportedHyperscaleNodeEditions"></param>
-        /// <param name="fastProvisioningSupported"> A value indicating whether fast provisioning is supported in this region. </param>
-        /// <param name="supportedFastProvisioningEditions"></param>
+        /// <param name="supportedHAModes"> Supported high availability mode. </param>
         /// <param name="status"> The status. </param>
-        internal PostgreSqlFlexibleServerCapabilityProperties(string zone, IReadOnlyList<string> supportedHAModes, bool? isGeoBackupSupported, bool? isZoneRedundantHASupported, bool? isZoneRedundantHAAndGeoBackupSupported, IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedFlexibleServerEditions, IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions, bool? fastProvisioningSupported, IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions, string status)
+        internal PostgreSqlFlexibleServerCapabilityProperties(string zone, bool? isGeoBackupSupported, bool? isZoneRedundantHASupported, bool? isZoneRedundantHAAndGeoBackupSupported, IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedFlexibleServerEditions, IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions, IReadOnlyList<string> supportedHAModes, string status)
         {
             Zone = zone;
-            SupportedHAModes = supportedHAModes;
             IsGeoBackupSupported = isGeoBackupSupported;
             IsZoneRedundantHASupported = isZoneRedundantHASupported;
             IsZoneRedundantHAAndGeoBackupSupported = isZoneRedundantHAAndGeoBackupSupported;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
             SupportedHyperscaleNodeEditions = supportedHyperscaleNodeEditions;
-            FastProvisioningSupported = fastProvisioningSupported;
-            SupportedFastProvisioningEditions = supportedFastProvisioningEditions;
+            SupportedHAModes = supportedHAModes;
             Status = status;
         }
 
         /// <summary> zone name. </summary>
         public string Zone { get; }
-        /// <summary> Supported high availability mode. </summary>
-        public IReadOnlyList<string> SupportedHAModes { get; }
         /// <summary> A value indicating whether a new server in this region can have geo-backups to paired region. </summary>
         public bool? IsGeoBackupSupported { get; }
         /// <summary> A value indicating whether a new server in this region can support multi zone HA. </summary>
@@ -61,10 +54,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> SupportedFlexibleServerEditions { get; }
         /// <summary> Gets the supported hyperscale node editions. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> SupportedHyperscaleNodeEditions { get; }
-        /// <summary> A value indicating whether fast provisioning is supported in this region. </summary>
-        public bool? FastProvisioningSupported { get; }
-        /// <summary> Gets the supported fast provisioning editions. </summary>
-        public IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> SupportedFastProvisioningEditions { get; }
+        /// <summary> Supported high availability mode. </summary>
+        public IReadOnlyList<string> SupportedHAModes { get; }
         /// <summary> The status. </summary>
         public string Status { get; }
     }
