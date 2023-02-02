@@ -2267,6 +2267,28 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [RecordedTest]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup);
+
+            string directoryName = GetNewDirectoryName();
+            string destDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient sourceDirectory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await sourceDirectory.CreateAsync();
+
+            // Act
+            ShareDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destDirectoryName);
+
+            // Assert
+            await destDirectory.GetPropertiesAsync();
+        }
+
         #region GenerateSasTests
         [RecordedTest]
         public void CanGenerateSas_ClientConstructors()

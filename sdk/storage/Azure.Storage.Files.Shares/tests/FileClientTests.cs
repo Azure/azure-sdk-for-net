@@ -5924,6 +5924,43 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup);
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
+            string destFileName = GetNewFileName();
+            ShareFileClient sourceFile = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.KB);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceFile.UploadAsync(stream);
+
+            // Act
+            ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: directory.Name + "/" + destFileName);
+
+            // Assert
+            Response<ShareFileDownloadInfo> downloadResponse = await destFile.DownloadAsync(new ShareFileDownloadOptions
+            {
+                Range = new HttpRange(0, Constants.KB)
+            });
+
+            Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
         #region GenerateSasTests
         [RecordedTest]
         public void CanGenerateSas_ClientConstructors()

@@ -1734,6 +1734,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-source-allow-trailing-dot", _allowSourceTrailingDot.Value);
             }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
