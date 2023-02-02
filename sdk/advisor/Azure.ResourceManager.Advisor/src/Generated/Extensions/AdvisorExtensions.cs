@@ -38,8 +38,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Gets the metadata entity.
-        /// Request Path: /providers/Microsoft.Advisor/metadata/{name}
-        /// Operation Id: RecommendationMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of metadata entity. </param>
@@ -54,8 +62,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Gets the metadata entity.
-        /// Request Path: /providers/Microsoft.Advisor/metadata/{name}
-        /// Operation Id: RecommendationMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of metadata entity. </param>
@@ -79,8 +95,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -92,8 +116,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,8 +137,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
@@ -122,8 +162,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
@@ -139,8 +187,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations
-        /// Operation Id: Recommendations_Generate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Generate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +207,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations
-        /// Operation Id: Recommendations_Generate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Generate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,8 +227,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}
-        /// Operation Id: Recommendations_GetGenerateStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetGenerateStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
@@ -176,8 +248,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}
-        /// Operation Id: Recommendations_GetGenerateStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetGenerateStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
@@ -189,8 +269,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions
-        /// Operation Id: Suppressions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Suppressions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
@@ -204,8 +292,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions
-        /// Operation Id: Suppressions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Suppressions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
@@ -228,8 +324,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieve Azure Advisor configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -241,8 +345,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieve Azure Advisor configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -254,8 +366,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
@@ -271,8 +391,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
@@ -315,8 +443,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Obtains details of a cached recommendation.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}
-        /// Operation Id: Recommendations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -332,8 +468,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Obtains details of a cached recommendation.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}
-        /// Operation Id: Recommendations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>

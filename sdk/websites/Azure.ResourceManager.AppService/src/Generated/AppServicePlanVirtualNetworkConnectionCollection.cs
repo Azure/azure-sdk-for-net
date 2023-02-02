@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a Virtual Network associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a Virtual Network associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all Virtual Networks associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections
-        /// Operation Id: AppServicePlans_ListVnets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListVnets</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServicePlanVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -125,8 +149,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all Virtual Networks associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections
-        /// Operation Id: AppServicePlans_ListVnets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListVnets</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServicePlanVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -138,8 +170,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,8 +205,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

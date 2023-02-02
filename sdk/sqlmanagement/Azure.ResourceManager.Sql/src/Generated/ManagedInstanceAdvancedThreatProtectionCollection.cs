@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Creates or updates Advanced Threat Protection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
@@ -86,8 +94,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Creates or updates Advanced Threat Protection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
@@ -117,8 +133,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get a managed instance&apos;s Advanced Threat Protection state.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +166,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get a managed instance&apos;s Advanced Threat Protection state.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +199,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get the managed instance&apos;s Advanced Threat Protection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_ListByInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_ListByInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -181,8 +221,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Get the managed instance&apos;s Advanced Threat Protection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_ListByInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_ListByInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -195,8 +243,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,8 +274,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
-        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

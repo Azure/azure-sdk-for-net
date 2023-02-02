@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: UpdateSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UpdateSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sourceControlType"> Type of source control. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: UpdateSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UpdateSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sourceControlType"> Type of source control. </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: GetSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: GetSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +211,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the source controls available for Azure websites.
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols
-        /// Operation Id: ListSourceControls
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListSourceControls</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceSourceControlResource" /> that may take multiple service requests to iterate over. </returns>
@@ -193,8 +233,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the source controls available for Azure websites.
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols
-        /// Operation Id: ListSourceControls
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListSourceControls</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceSourceControlResource" /> that may take multiple service requests to iterate over. </returns>
@@ -207,8 +255,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: GetSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,8 +290,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: GetSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

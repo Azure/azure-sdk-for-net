@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get metadata information on an assessment type
-        /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
-        /// Operation Id: AssessmentsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get metadata information on an assessment type
-        /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
-        /// Operation Id: AssessmentsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get metadata information on all assessment types
-        /// Request Path: /providers/Microsoft.Security/assessmentMetadata
-        /// Operation Id: AssessmentsMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TenantAssessmentMetadataResource" /> that may take multiple service requests to iterate over. </returns>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get metadata information on all assessment types
-        /// Request Path: /providers/Microsoft.Security/assessmentMetadata
-        /// Operation Id: AssessmentsMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantAssessmentMetadataResource" /> that may take multiple service requests to iterate over. </returns>
@@ -141,8 +173,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
-        /// Operation Id: AssessmentsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,8 +208,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
-        /// Operation Id: AssessmentsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

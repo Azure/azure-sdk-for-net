@@ -58,8 +58,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
         /// 
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// Operation Id: ManagementGroups_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupId"> Management Group ID. </param>
@@ -94,8 +102,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
         /// 
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// Operation Id: ManagementGroups_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupId"> Management Group ID. </param>
@@ -129,8 +145,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Get the details of the management group.
         /// 
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// Operation Id: ManagementGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
@@ -163,8 +187,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Get the details of the management group.
         /// 
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// Operation Id: ManagementGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
@@ -197,8 +229,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// List management groups for the authenticated user.
         /// 
-        /// Request Path: /providers/Microsoft.Management/managementGroups
-        /// Operation Id: ManagementGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="skiptoken">
@@ -218,8 +258,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// List management groups for the authenticated user.
         /// 
-        /// Request Path: /providers/Microsoft.Management/managementGroups
-        /// Operation Id: ManagementGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="skiptoken">
@@ -238,8 +286,16 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Checks if the specified management group name is valid and unique
-        /// Request Path: /providers/Microsoft.Management/checkNameAvailability
-        /// Operation Id: ManagementGroups_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -264,8 +320,16 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Checks if the specified management group name is valid and unique
-        /// Request Path: /providers/Microsoft.Management/checkNameAvailability
-        /// Operation Id: ManagementGroups_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +354,16 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// Operation Id: ManagementGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
@@ -321,8 +393,16 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// Operation Id: ManagementGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>

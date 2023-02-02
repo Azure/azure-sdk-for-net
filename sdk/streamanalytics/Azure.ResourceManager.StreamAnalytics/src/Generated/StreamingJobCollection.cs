@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Creates a streaming job or replaces an already existing streaming job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}
-        /// Operation Id: StreamingJobs_CreateOrReplace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_CreateOrReplace</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> The name of the streaming job. </param>
@@ -90,8 +98,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Creates a streaming job or replaces an already existing streaming job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}
-        /// Operation Id: StreamingJobs_CreateOrReplace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_CreateOrReplace</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> The name of the streaming job. </param>
@@ -125,8 +141,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Gets details about the specified streaming job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}
-        /// Operation Id: StreamingJobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
@@ -155,8 +179,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Gets details about the specified streaming job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}
-        /// Operation Id: StreamingJobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
@@ -185,8 +217,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Lists all of the streaming jobs in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs
-        /// Operation Id: StreamingJobs_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,8 +240,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Lists all of the streaming jobs in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs
-        /// Operation Id: StreamingJobs_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -215,8 +263,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}
-        /// Operation Id: StreamingJobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
@@ -243,8 +299,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}
-        /// Operation Id: StreamingJobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>

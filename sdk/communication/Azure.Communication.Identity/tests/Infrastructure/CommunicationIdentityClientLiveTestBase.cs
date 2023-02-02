@@ -8,6 +8,8 @@ using Microsoft.Identity.Client;
 using System.Security;
 using System.Threading;
 using Azure.Core.TestFramework.Models;
+using System;
+using Azure.Communication.Tests;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -32,20 +34,20 @@ namespace Azure.Communication.Identity.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="CommunicationIdentityClient" />.</returns>
-        protected CommunicationIdentityClient CreateClientWithConnectionString()
+        private CommunicationIdentityClient CreateClientWithConnectionString()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicConnectionString,
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
-        protected CommunicationIdentityClient CreateClientWithAzureKeyCredential()
+        private CommunicationIdentityClient CreateClientWithAzureKeyCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
                     new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
-        protected CommunicationIdentityClient CreateClientWithTokenCredential()
+        private CommunicationIdentityClient CreateClientWithTokenCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
@@ -58,6 +60,15 @@ namespace Azure.Communication.Identity.Tests
             communicationIdentityClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(communicationIdentityClientOptions);
         }
+
+        protected CommunicationIdentityClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString)
+            => authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
 
         protected async Task<GetTokenForTeamsUserOptions> CreateTeamsUserParams()
         {

@@ -60,8 +60,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}
-        /// Operation Id: PaymentMethods_GetByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,8 +97,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}
-        /// Operation Id: PaymentMethods_GetByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Lists the payment methods available for a billing account. Along with the payment methods owned by the caller, these payment methods can be attached to a billing profile to make payments. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods
-        /// Operation Id: PaymentMethods_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingAccountPaymentMethodResource" /> that may take multiple service requests to iterate over. </returns>
@@ -132,8 +156,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Lists the payment methods available for a billing account. Along with the payment methods owned by the caller, these payment methods can be attached to a billing profile to make payments. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods
-        /// Operation Id: PaymentMethods_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingAccountPaymentMethodResource" /> that may take multiple service requests to iterate over. </returns>
@@ -146,8 +178,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}
-        /// Operation Id: PaymentMethods_GetByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,8 +213,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}
-        /// Operation Id: PaymentMethods_GetByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

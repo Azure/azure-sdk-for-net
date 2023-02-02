@@ -100,8 +100,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the preview feature with the specified name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// Operation Id: Features_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Features_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,8 +123,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the preview feature with the specified name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// Operation Id: Features_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Features_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,8 +146,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,8 +179,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Unregisters a subscription from a resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
-        /// Operation Id: Providers_Unregister
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Unregister</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceProviderResource>> UnregisterAsync(CancellationToken cancellationToken = default)
@@ -202,8 +242,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Unregisters a subscription from a resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
-        /// Operation Id: Providers_Unregister
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Unregister</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceProviderResource> Unregister(CancellationToken cancellationToken = default)
@@ -224,8 +272,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Get the provider permissions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
-        /// Operation Id: Providers_ProviderPermissions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_ProviderPermissions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
@@ -237,8 +293,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Get the provider permissions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
-        /// Operation Id: Providers_ProviderPermissions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_ProviderPermissions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
@@ -250,8 +314,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Registers a subscription with a resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
-        /// Operation Id: Providers_Register
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Register</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -273,8 +345,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Registers a subscription with a resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
-        /// Operation Id: Providers_Register
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Register</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -296,8 +376,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// List the resource types for a specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
-        /// Operation Id: ProviderResourceTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderResourceTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -310,8 +398,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// List the resource types for a specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
-        /// Operation Id: ProviderResourceTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderResourceTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -99,8 +99,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Fetches resource storage config.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BackupResourceConfigResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -123,8 +131,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Fetches resource storage config.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BackupResourceConfigResource> Get(CancellationToken cancellationToken = default)
@@ -147,8 +163,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Updates vault storage model type.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_patch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_patch</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Vault storage config request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,8 +197,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Updates vault storage model type.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_patch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_patch</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Vault storage config request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,8 +231,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Fetches operation status for data move operation on vault
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationStatus/{operationId}
-        /// Operation Id: GetOperationStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationStatus/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetOperationStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,8 +266,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Fetches operation status for data move operation on vault
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationStatus/{operationId}
-        /// Operation Id: GetOperationStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationStatus/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetOperationStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -253,8 +301,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Prepares source vault for Data Move operation
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/prepareDataMove
-        /// Operation Id: BMSPrepareDataMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/prepareDataMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BMSPrepareDataMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Prepare data move request. </param>
@@ -283,8 +339,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Prepares source vault for Data Move operation
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/prepareDataMove
-        /// Operation Id: BMSPrepareDataMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/prepareDataMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BMSPrepareDataMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Prepare data move request. </param>
@@ -313,8 +377,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Triggers Data Move Operation on target vault
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/triggerDataMove
-        /// Operation Id: BMSTriggerDataMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/triggerDataMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BMSTriggerDataMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Trigger data move request. </param>
@@ -343,8 +415,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Triggers Data Move Operation on target vault
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/triggerDataMove
-        /// Operation Id: BMSTriggerDataMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/triggerDataMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BMSTriggerDataMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Trigger data move request. </param>
@@ -373,8 +453,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Fetches Operation Result for Prepare Data Move
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationResults/{operationId}
-        /// Operation Id: BMSPrepareDataMoveOperationResult_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BMSPrepareDataMoveOperationResult_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -400,8 +488,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Fetches Operation Result for Prepare Data Move
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationResults/{operationId}
-        /// Operation Id: BMSPrepareDataMoveOperationResult_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BMSPrepareDataMoveOperationResult_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -427,8 +523,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -473,8 +577,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -519,8 +631,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -560,8 +680,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -601,8 +729,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -645,8 +781,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
-        /// Operation Id: BackupResourceStorageConfigsNonCRR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

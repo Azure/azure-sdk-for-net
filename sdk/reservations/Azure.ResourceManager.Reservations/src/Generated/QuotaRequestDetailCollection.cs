@@ -63,8 +63,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// For the specified Azure region (location), get the details and status of the quota request by the quota request ID for the resources of the resource provider. The PUT request for the quota (service limit) returns a response with the requestId parameter.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}
-        /// Operation Id: QuotaRequestStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// For the specified Azure region (location), get the details and status of the quota request by the quota request ID for the resources of the resource provider. The PUT request for the quota (service limit) returns a response with the requestId parameter.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}
-        /// Operation Id: QuotaRequestStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// For the specified Azure region (location), subscription, and resource provider, get the history of the quota requests for the past year. To select specific quota requests, use the oData filter.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests
-        /// Operation Id: QuotaRequestStatus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter">
         /// | Field | Supported operators |
@@ -134,8 +158,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// For the specified Azure region (location), subscription, and resource provider, get the history of the quota requests for the past year. To select specific quota requests, use the oData filter.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests
-        /// Operation Id: QuotaRequestStatus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter">
         /// | Field | Supported operators |
@@ -155,8 +187,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}
-        /// Operation Id: QuotaRequestStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,8 +218,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}
-        /// Operation Id: QuotaRequestStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

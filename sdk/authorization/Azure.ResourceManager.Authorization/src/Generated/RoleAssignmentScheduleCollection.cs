@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role assignment schedule for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,8 +81,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role assignment schedule for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,8 +118,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role assignment schedules for a resource scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules
-        /// Operation Id: RoleAssignmentSchedules_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo(&apos;{userId}&apos;) to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,8 +141,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role assignment schedules for a resource scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules
-        /// Operation Id: RoleAssignmentSchedules_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo(&apos;{userId}&apos;) to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,8 +164,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,8 +199,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -277,7 +277,7 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         public void UpdateConcurrency(int maxConcurrentCalls) { }
-        public void UpdatePrefetch(int prefetchCount) { }
+        public void UpdatePrefetchCount(int prefetchCount) { }
     }
     public partial class ServiceBusProcessorOptions
     {
@@ -501,7 +501,7 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession) { }
-        public void UpdatePrefetch(int prefetchCount) { }
+        public void UpdatePrefetchCount(int prefetchCount) { }
     }
     public partial class ServiceBusSessionProcessorOptions
     {

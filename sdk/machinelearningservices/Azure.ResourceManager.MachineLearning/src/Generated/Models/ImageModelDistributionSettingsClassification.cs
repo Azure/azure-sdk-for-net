@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-tune-hyperparameters
     /// For more information on the available settings please visit the official documentation:
     /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
-    /// Serialized Name: ImageModelDistributionSettingsClassification
     /// </summary>
     public partial class ImageModelDistributionSettingsClassification : ImageModelDistributionSettings
     {
@@ -30,143 +29,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ImageModelDistributionSettingsClassification. </summary>
-        /// <param name="amsGradient">
-        /// Enable AMSGrad when optimizer is &apos;adam&apos; or &apos;adamw&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.amsGradient
-        /// </param>
-        /// <param name="augmentations">
-        /// Settings for using Augmentations.
-        /// Serialized Name: ImageModelDistributionSettings.augmentations
-        /// </param>
-        /// <param name="beta1">
-        /// Value of &apos;beta1&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.beta1
-        /// </param>
-        /// <param name="beta2">
-        /// Value of &apos;beta2&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.beta2
-        /// </param>
-        /// <param name="distributed">
-        /// Whether to use distributer training.
-        /// Serialized Name: ImageModelDistributionSettings.distributed
-        /// </param>
-        /// <param name="earlyStopping">
-        /// Enable early stopping logic during training.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStopping
-        /// </param>
+        /// <param name="amsGradient"> Enable AMSGrad when optimizer is &apos;adam&apos; or &apos;adamw&apos;. </param>
+        /// <param name="augmentations"> Settings for using Augmentations. </param>
+        /// <param name="beta1"> Value of &apos;beta1&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="beta2"> Value of &apos;beta2&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="distributed"> Whether to use distributer training. </param>
+        /// <param name="earlyStopping"> Enable early stopping logic during training. </param>
         /// <param name="earlyStoppingDelay">
         /// Minimum number of epochs or validation evaluations to wait before primary metric improvement
         /// is tracked for early stopping. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStoppingDelay
         /// </param>
         /// <param name="earlyStoppingPatience">
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.earlyStoppingPatience
         /// </param>
-        /// <param name="enableOnnxNormalization">
-        /// Enable normalization when exporting ONNX model.
-        /// Serialized Name: ImageModelDistributionSettings.enableOnnxNormalization
-        /// </param>
-        /// <param name="evaluationFrequency">
-        /// Frequency to evaluate validation dataset to get metric scores. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.evaluationFrequency
-        /// </param>
+        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
+        /// <param name="evaluationFrequency"> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </param>
         /// <param name="gradientAccumulationStep">
         /// Gradient accumulation means running a configured number of &quot;GradAccumulationStep&quot; steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
         /// the accumulated gradients to compute the weight updates. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.gradientAccumulationStep
         /// </param>
         /// <param name="layersToFreeze">
         /// Number of layers to freeze for the model. Must be a positive integer.
         /// For instance, passing 2 as value for &apos;seresnext&apos; means
         /// freezing layer0 and layer1. For a full list of models supported and details on layer freeze, please
         /// see: https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
-        /// Serialized Name: ImageModelDistributionSettings.layersToFreeze
         /// </param>
-        /// <param name="learningRate">
-        /// Initial learning rate. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.learningRate
-        /// </param>
-        /// <param name="learningRateScheduler">
-        /// Type of learning rate scheduler. Must be &apos;warmup_cosine&apos; or &apos;step&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.learningRateScheduler
-        /// </param>
+        /// <param name="learningRate"> Initial learning rate. Must be a float in the range [0, 1]. </param>
+        /// <param name="learningRateScheduler"> Type of learning rate scheduler. Must be &apos;warmup_cosine&apos; or &apos;step&apos;. </param>
         /// <param name="modelName">
         /// Name of the model to use for training.
         /// For more information on the available models please visit the official documentation:
         /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
-        /// Serialized Name: ImageModelDistributionSettings.modelName
         /// </param>
-        /// <param name="momentum">
-        /// Value of momentum when optimizer is &apos;sgd&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.momentum
-        /// </param>
-        /// <param name="nesterov">
-        /// Enable nesterov when optimizer is &apos;sgd&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.nesterov
-        /// </param>
-        /// <param name="numberOfEpochs">
-        /// Number of training epochs. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.numberOfEpochs
-        /// </param>
-        /// <param name="numberOfWorkers">
-        /// Number of data loader workers. Must be a non-negative integer.
-        /// Serialized Name: ImageModelDistributionSettings.numberOfWorkers
-        /// </param>
-        /// <param name="optimizer">
-        /// Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;.
-        /// Serialized Name: ImageModelDistributionSettings.optimizer
-        /// </param>
-        /// <param name="randomSeed">
-        /// Random seed to be used when using deterministic training.
-        /// Serialized Name: ImageModelDistributionSettings.randomSeed
-        /// </param>
-        /// <param name="stepLRGamma">
-        /// Value of gamma when learning rate scheduler is &apos;step&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.stepLRGamma
-        /// </param>
-        /// <param name="stepLRStepSize">
-        /// Value of step size when learning rate scheduler is &apos;step&apos;. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.stepLRStepSize
-        /// </param>
-        /// <param name="trainingBatchSize">
-        /// Training batch size. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.trainingBatchSize
-        /// </param>
-        /// <param name="validationBatchSize">
-        /// Validation batch size. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.validationBatchSize
-        /// </param>
-        /// <param name="warmupCosineLRCycles">
-        /// Value of cosine cycle when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a float in the range [0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.warmupCosineLRCycles
-        /// </param>
-        /// <param name="warmupCosineLRWarmupEpochs">
-        /// Value of warmup epochs when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettings.warmupCosineLRWarmupEpochs
-        /// </param>
-        /// <param name="weightDecay">
-        /// Value of weight decay when optimizer is &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. Must be a float in the range[0, 1].
-        /// Serialized Name: ImageModelDistributionSettings.weightDecay
-        /// </param>
-        /// <param name="trainingCropSize">
-        /// Image crop size that is input to the neural network for the training dataset. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettingsClassification.trainingCropSize
-        /// </param>
-        /// <param name="validationCropSize">
-        /// Image crop size that is input to the neural network for the validation dataset. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettingsClassification.validationCropSize
-        /// </param>
-        /// <param name="validationResizeSize">
-        /// Image size to which to resize before cropping for validation dataset. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettingsClassification.validationResizeSize
-        /// </param>
+        /// <param name="momentum"> Value of momentum when optimizer is &apos;sgd&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="nesterov"> Enable nesterov when optimizer is &apos;sgd&apos;. </param>
+        /// <param name="numberOfEpochs"> Number of training epochs. Must be a positive integer. </param>
+        /// <param name="numberOfWorkers"> Number of data loader workers. Must be a non-negative integer. </param>
+        /// <param name="optimizer"> Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. </param>
+        /// <param name="randomSeed"> Random seed to be used when using deterministic training. </param>
+        /// <param name="stepLRGamma"> Value of gamma when learning rate scheduler is &apos;step&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="stepLRStepSize"> Value of step size when learning rate scheduler is &apos;step&apos;. Must be a positive integer. </param>
+        /// <param name="trainingBatchSize"> Training batch size. Must be a positive integer. </param>
+        /// <param name="validationBatchSize"> Validation batch size. Must be a positive integer. </param>
+        /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a float in the range [0, 1]. </param>
+        /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a positive integer. </param>
+        /// <param name="weightDecay"> Value of weight decay when optimizer is &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. Must be a float in the range[0, 1]. </param>
+        /// <param name="trainingCropSize"> Image crop size that is input to the neural network for the training dataset. Must be a positive integer. </param>
+        /// <param name="validationCropSize"> Image crop size that is input to the neural network for the validation dataset. Must be a positive integer. </param>
+        /// <param name="validationResizeSize"> Image size to which to resize before cropping for validation dataset. Must be a positive integer. </param>
         /// <param name="weightedLoss">
         /// Weighted loss. The accepted values are 0 for no weighted loss.
         /// 1 for weighted loss with sqrt.(class_weights). 2 for weighted loss with class_weights. Must be 0 or 1 or 2.
-        /// Serialized Name: ImageModelDistributionSettingsClassification.weightedLoss
         /// </param>
         internal ImageModelDistributionSettingsClassification(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, string trainingCropSize, string validationCropSize, string validationResizeSize, string weightedLoss) : base(amsGradient, augmentations, beta1, beta2, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay)
         {
@@ -176,25 +91,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             WeightedLoss = weightedLoss;
         }
 
-        /// <summary>
-        /// Image crop size that is input to the neural network for the training dataset. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettingsClassification.trainingCropSize
-        /// </summary>
+        /// <summary> Image crop size that is input to the neural network for the training dataset. Must be a positive integer. </summary>
         public string TrainingCropSize { get; set; }
-        /// <summary>
-        /// Image crop size that is input to the neural network for the validation dataset. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettingsClassification.validationCropSize
-        /// </summary>
+        /// <summary> Image crop size that is input to the neural network for the validation dataset. Must be a positive integer. </summary>
         public string ValidationCropSize { get; set; }
-        /// <summary>
-        /// Image size to which to resize before cropping for validation dataset. Must be a positive integer.
-        /// Serialized Name: ImageModelDistributionSettingsClassification.validationResizeSize
-        /// </summary>
+        /// <summary> Image size to which to resize before cropping for validation dataset. Must be a positive integer. </summary>
         public string ValidationResizeSize { get; set; }
         /// <summary>
         /// Weighted loss. The accepted values are 0 for no weighted loss.
         /// 1 for weighted loss with sqrt.(class_weights). 2 for weighted loss with class_weights. Must be 0 or 1 or 2.
-        /// Serialized Name: ImageModelDistributionSettingsClassification.weightedLoss
         /// </summary>
         public string WeightedLoss { get; set; }
     }

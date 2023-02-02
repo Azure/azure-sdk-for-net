@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves a single available sku for network virtual appliance.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
-        /// Operation Id: VirtualApplianceSkus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves a single available sku for network virtual appliance.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
-        /// Operation Id: VirtualApplianceSkus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List all SKUs available for a virtual appliance.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus
-        /// Operation Id: VirtualApplianceSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualApplianceSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkVirtualApplianceSkuResource" /> that may take multiple service requests to iterate over. </returns>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List all SKUs available for a virtual appliance.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus
-        /// Operation Id: VirtualApplianceSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualApplianceSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkVirtualApplianceSkuResource" /> that may take multiple service requests to iterate over. </returns>
@@ -141,8 +173,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
-        /// Operation Id: VirtualApplianceSkus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,8 +208,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
-        /// Operation Id: VirtualApplianceSkus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

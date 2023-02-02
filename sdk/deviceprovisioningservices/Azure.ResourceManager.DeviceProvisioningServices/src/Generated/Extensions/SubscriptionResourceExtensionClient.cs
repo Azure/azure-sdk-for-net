@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         /// <summary>
         /// List all the provisioning services for a given subscription id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/provisioningServices
-        /// Operation Id: IotDpsResource_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/provisioningServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -59,8 +67,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         /// <summary>
         /// List all the provisioning services for a given subscription id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/provisioningServices
-        /// Operation Id: IotDpsResource_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/provisioningServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -73,8 +89,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         /// <summary>
         /// Check if a provisioning service name is available. This will validate if the name is syntactically valid and if the name is usable
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability
-        /// Operation Id: IotDpsResource_CheckProvisioningServiceNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,8 +120,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         /// <summary>
         /// Check if a provisioning service name is available. This will validate if the name is syntactically valid and if the name is usable
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability
-        /// Operation Id: IotDpsResource_CheckProvisioningServiceNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

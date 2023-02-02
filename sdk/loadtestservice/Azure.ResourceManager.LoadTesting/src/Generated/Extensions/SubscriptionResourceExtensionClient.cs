@@ -51,8 +51,16 @@ namespace Azure.ResourceManager.LoadTesting
 
         /// <summary>
         /// Lists loadtests resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests
-        /// Operation Id: LoadTests_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
@@ -65,8 +73,16 @@ namespace Azure.ResourceManager.LoadTesting
 
         /// <summary>
         /// Lists loadtests resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests
-        /// Operation Id: LoadTests_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>

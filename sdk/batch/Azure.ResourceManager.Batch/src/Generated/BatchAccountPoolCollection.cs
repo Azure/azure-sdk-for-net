@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Creates a new pool inside the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
-        /// Operation Id: Pool_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
@@ -89,8 +97,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Creates a new pool inside the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
-        /// Operation Id: Pool_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
@@ -124,8 +140,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the specified pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
-        /// Operation Id: Pool_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -153,8 +177,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the specified pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
-        /// Operation Id: Pool_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,8 +214,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Lists all of the pools in the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools
-        /// Operation Id: Pool_ListByBatchAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_ListByBatchAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
@@ -213,8 +253,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Lists all of the pools in the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools
-        /// Operation Id: Pool_ListByBatchAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_ListByBatchAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
@@ -244,8 +292,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
-        /// Operation Id: Pool_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -271,8 +327,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
-        /// Operation Id: Pool_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

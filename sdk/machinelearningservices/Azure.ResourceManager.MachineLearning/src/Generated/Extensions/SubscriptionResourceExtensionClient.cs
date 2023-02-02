@@ -56,8 +56,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -71,8 +79,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,8 +102,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the current usage information as well as limits for AML resources for given subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,8 +125,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the current usage information as well as limits for AML resources for given subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,8 +148,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Returns supported VM Sizes in a location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes
-        /// Operation Id: VirtualMachineSizes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSizes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,8 +170,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Returns supported VM Sizes in a location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes
-        /// Operation Id: VirtualMachineSizes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSizes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,8 +192,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Update quota for each VM family in workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas
-        /// Operation Id: Quotas_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for update quota is queried. </param>
         /// <param name="content"> Quota update parameters. </param>
@@ -159,8 +215,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Update quota for each VM family in workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas
-        /// Operation Id: Quotas_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for update quota is queried. </param>
         /// <param name="content"> Quota update parameters. </param>
@@ -174,8 +238,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the currently assigned Workspace Quotas based on VMFamily.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas
-        /// Operation Id: Quotas_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,8 +261,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the currently assigned Workspace Quotas based on VMFamily.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas
-        /// Operation Id: Quotas_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

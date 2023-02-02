@@ -60,8 +60,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
-        /// Operation Id: IotHubResource_CreateEventHubConsumerGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_CreateEventHubConsumerGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the consumer group to add. </param>
@@ -93,8 +101,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
-        /// Operation Id: IotHubResource_CreateEventHubConsumerGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_CreateEventHubConsumerGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the consumer group to add. </param>
@@ -126,8 +142,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
-        /// Operation Id: IotHubResource_GetEventHubConsumerGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_GetEventHubConsumerGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the consumer group to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,8 +179,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
-        /// Operation Id: IotHubResource_GetEventHubConsumerGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_GetEventHubConsumerGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the consumer group to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -184,8 +216,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get a list of the consumer groups in the Event Hub-compatible device-to-cloud endpoint in an IoT hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups
-        /// Operation Id: IotHubResource_ListEventHubConsumerGroups
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_ListEventHubConsumerGroups</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventHubConsumerGroupInfoResource" /> that may take multiple service requests to iterate over. </returns>
@@ -198,8 +238,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get a list of the consumer groups in the Event Hub-compatible device-to-cloud endpoint in an IoT hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups
-        /// Operation Id: IotHubResource_ListEventHubConsumerGroups
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_ListEventHubConsumerGroups</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventHubConsumerGroupInfoResource" /> that may take multiple service requests to iterate over. </returns>
@@ -212,8 +260,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
-        /// Operation Id: IotHubResource_GetEventHubConsumerGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_GetEventHubConsumerGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the consumer group to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -239,8 +295,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
-        /// Operation Id: IotHubResource_GetEventHubConsumerGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_GetEventHubConsumerGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the consumer group to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

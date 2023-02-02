@@ -66,8 +66,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Creates or modifies a backup policy. This is an asynchronous operation. Status of the operation can be fetched
         /// using GetPolicyOperationResult API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}
-        /// Operation Id: ProtectionPolicies_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> Backup policy to be created. </param>
@@ -100,8 +108,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Creates or modifies a backup policy. This is an asynchronous operation. Status of the operation can be fetched
         /// using GetPolicyOperationResult API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}
-        /// Operation Id: ProtectionPolicies_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> Backup policy to be created. </param>
@@ -134,8 +150,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Provides the details of the backup policies associated to Recovery Services Vault. This is an asynchronous
         /// operation. Status of the operation can be fetched using GetPolicyOperationResult API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}
-        /// Operation Id: ProtectionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,8 +188,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Provides the details of the backup policies associated to Recovery Services Vault. This is an asynchronous
         /// operation. Status of the operation can be fetched using GetPolicyOperationResult API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}
-        /// Operation Id: ProtectionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +226,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Lists of backup policies associated with Recovery Services Vault. API provides pagination parameters to fetch
         /// scoped results.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies
-        /// Operation Id: BackupPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -210,8 +250,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Lists of backup policies associated with Recovery Services Vault. API provides pagination parameters to fetch
         /// scoped results.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies
-        /// Operation Id: BackupPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,8 +273,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}
-        /// Operation Id: ProtectionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -252,8 +308,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}
-        /// Operation Id: ProtectionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

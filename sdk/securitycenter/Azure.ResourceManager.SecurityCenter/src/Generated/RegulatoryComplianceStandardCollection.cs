@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Supported regulatory compliance details state for selected standard
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}
-        /// Operation Id: RegulatoryComplianceStandards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Supported regulatory compliance details state for selected standard
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}
-        /// Operation Id: RegulatoryComplianceStandards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Supported regulatory compliance standards details and state
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards
-        /// Operation Id: RegulatoryComplianceStandards_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,8 +152,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Supported regulatory compliance standards details and state
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards
-        /// Operation Id: RegulatoryComplianceStandards_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,8 +175,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}
-        /// Operation Id: RegulatoryComplianceStandards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,8 +210,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}
-        /// Operation Id: RegulatoryComplianceStandards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

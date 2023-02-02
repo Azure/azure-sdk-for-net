@@ -26,8 +26,8 @@ rename-mapping:
   LoadTestResource: LoadTestingResource
   QuotaResource: LoadTestingQuota
   CheckQuotaAvailabilityResponse: LoadTestingQuotaAvailabilityResult
-  EncryptionProperties: CustomerManagedKeyEncryptionProperties
-  EncryptionPropertiesIdentity: CustomerManagedKeyIdentity
+  EncryptionProperties: LoadTestingCmkEncryptionProperties
+  EncryptionPropertiesIdentity: LoadTestingCmkIdentity
   EndpointDependency: LoadTestingEndpointDependency
   EndpointDetail: LoadTestingEndpointDetail
   OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
@@ -35,8 +35,9 @@ rename-mapping:
   QuotaBucketRequestPropertiesDimensions: LoadTestingQuotaBucketDimensions
   QuotaResourceList: LoadTestingQuotaListResult
   ResourceState: LoadTestingProvisioningState
-  Type: CustomerManagedKeyIdentityType
+  Type: LoadTestingCmkIdentityType
   EncryptionPropertiesIdentity.resourceId: -|arm-id
+  OutboundEnvironmentEndpoint: LoadTestingOutboundEnvironmentEndpoint
 
 format-by-name-rules:
   'tenantId': 'uuid'

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Fulfills ARM Contract requirement to list all available SKUS for a resource.
-    /// Serialized Name: SkuResource
-    /// </summary>
+    /// <summary> Fulfills ARM Contract requirement to list all available SKUS for a resource. </summary>
     public partial class MachineLearningSkuDetail
     {
         /// <summary> Initializes a new instance of MachineLearningSkuDetail. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningSkuDetail. </summary>
-        /// <param name="capacity">
-        /// Gets or sets the Sku Capacity.
-        /// Serialized Name: SkuResource.capacity
-        /// </param>
-        /// <param name="resourceType">
-        /// The resource type name.
-        /// Serialized Name: SkuResource.resourceType
-        /// </param>
-        /// <param name="sku">
-        /// Gets or sets the Sku.
-        /// Serialized Name: SkuResource.sku
-        /// </param>
+        /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
+        /// <param name="resourceType"> The resource type name. </param>
+        /// <param name="sku"> Gets or sets the Sku. </param>
         internal MachineLearningSkuDetail(MachineLearningSkuCapacity capacity, string resourceType, MachineLearningSkuSetting sku)
         {
             Capacity = capacity;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Sku = sku;
         }
 
-        /// <summary>
-        /// Gets or sets the Sku Capacity.
-        /// Serialized Name: SkuResource.capacity
-        /// </summary>
+        /// <summary> Gets or sets the Sku Capacity. </summary>
         public MachineLearningSkuCapacity Capacity { get; }
-        /// <summary>
-        /// The resource type name.
-        /// Serialized Name: SkuResource.resourceType
-        /// </summary>
+        /// <summary> The resource type name. </summary>
         public string ResourceType { get; }
-        /// <summary>
-        /// Gets or sets the Sku.
-        /// Serialized Name: SkuResource.sku
-        /// </summary>
+        /// <summary> Gets or sets the Sku. </summary>
         public MachineLearningSkuSetting Sku { get; }
     }
 }

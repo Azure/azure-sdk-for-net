@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of MachineLearningDataVersionData. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: DataVersionBaseResource.properties
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: DataVersionBaseResource.properties
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
@@ -48,7 +46,6 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: DataVersionBaseResource.properties
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </summary>

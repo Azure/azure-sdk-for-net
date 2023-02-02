@@ -7,6 +7,8 @@ Project("{FB0E8C46-04FC-4C47-BCEA-3973EAEC1896}") = "Azure.ResourceManager.Quota
 EndProject
 Project("{FB0E8C46-04FC-4C47-BCEA-3973EAEC1896}") = "Azure.ResourceManager.Quota.Tests", "tests\Azure.ResourceManager.Quota.Tests.csproj", "{41D2F401-C1C8-477F-9FAD-3A7C4ADAB43E}"
 EndProject
+Project("{FB0E8C46-04FC-4C47-BCEA-3973EAEC1896}") = "Azure.ResourceManager.Quota.Samples", "samples\Azure.ResourceManager.Quota.Samples.csproj", "{1095BB62-9456-4D33-A6CF-18313491CF74}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

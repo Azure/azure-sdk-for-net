@@ -43,8 +43,16 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Lists the Private DNS zones in all resource groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateDnsZones
-        /// Operation Id: PrivateZones_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateDnsZones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateZones_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of Private DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -58,8 +66,16 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Lists the Private DNS zones in all resource groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateDnsZones
-        /// Operation Id: PrivateZones_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateDnsZones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateZones_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of Private DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

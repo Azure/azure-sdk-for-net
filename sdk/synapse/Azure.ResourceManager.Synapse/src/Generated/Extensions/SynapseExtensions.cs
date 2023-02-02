@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of privateLinkHubs in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs
-        /// Operation Id: PrivateLinkHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of privateLinkHubs in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs
-        /// Operation Id: PrivateLinkHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,8 +72,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of workspaces in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces
-        /// Operation Id: Workspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -69,8 +93,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of workspaces in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces
-        /// Operation Id: Workspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,8 +114,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Lists eligible SKUs for Kusto Pool resource.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus
-        /// Operation Id: KustoPools_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,8 +135,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Lists eligible SKUs for Kusto Pool resource.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus
-        /// Operation Id: KustoPools_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +156,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks that the kusto pool name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability
-        /// Operation Id: KustoPools_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -125,8 +181,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks that the kusto pool name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability
-        /// Operation Id: KustoPools_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -159,8 +223,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a privateLinkHub
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}
-        /// Operation Id: PrivateLinkHubs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
@@ -175,8 +247,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a privateLinkHub
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}
-        /// Operation Id: PrivateLinkHubs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
@@ -199,8 +279,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -215,8 +303,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>

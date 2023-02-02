@@ -96,8 +96,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of an Asset Filter associated with the specified Asset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
-        /// Operation Id: AssetFilters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssetFilters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filterName"> The Asset Filter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +119,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of an Asset Filter associated with the specified Asset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
-        /// Operation Id: AssetFilters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssetFilters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filterName"> The Asset Filter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,8 +149,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Track in the Asset
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
-        /// Operation Id: Tracks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tracks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="trackName"> The Asset Track name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -148,8 +172,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Track in the Asset
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
-        /// Operation Id: Tracks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tracks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="trackName"> The Asset Track name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,8 +195,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of an Asset in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
-        /// Operation Id: Assets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MediaAssetResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -187,8 +227,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of an Asset in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
-        /// Operation Id: Assets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MediaAssetResource> Get(CancellationToken cancellationToken = default)
@@ -211,8 +259,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Deletes an Asset in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
-        /// Operation Id: Assets_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -237,8 +293,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Deletes an Asset in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
-        /// Operation Id: Assets_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -263,8 +327,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Updates an existing Asset in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
-        /// Operation Id: Assets_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -289,8 +361,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Updates an existing Asset in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
-        /// Operation Id: Assets_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -315,8 +395,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas
-        /// Operation Id: Assets_ListContainerSas
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_ListContainerSas</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -332,8 +420,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas
-        /// Operation Id: Assets_ListContainerSas
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_ListContainerSas</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -349,8 +445,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/getEncryptionKey
-        /// Operation Id: Assets_GetEncryptionKey
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/getEncryptionKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_GetEncryptionKey</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StorageEncryptedAssetDecryptionInfo>> GetEncryptionKeyAsync(CancellationToken cancellationToken = default)
@@ -371,8 +475,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/getEncryptionKey
-        /// Operation Id: Assets_GetEncryptionKey
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/getEncryptionKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_GetEncryptionKey</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageEncryptedAssetDecryptionInfo> GetEncryptionKey(CancellationToken cancellationToken = default)
@@ -393,8 +505,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Lists Streaming Locators which are associated with this asset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators
-        /// Operation Id: Assets_ListStreamingLocators
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_ListStreamingLocators</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MediaAssetStreamingLocator" /> that may take multiple service requests to iterate over. </returns>
@@ -406,8 +526,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Lists Streaming Locators which are associated with this asset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators
-        /// Operation Id: Assets_ListStreamingLocators
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_ListStreamingLocators</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MediaAssetStreamingLocator" /> that may take multiple service requests to iterate over. </returns>

@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource group within the specified time range. Customer data will always be masked.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes
-        /// Operation Id: Changes_ListChangesByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Changes_ListChangesByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
@@ -61,8 +69,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource group within the specified time range. Customer data will always be masked.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes
-        /// Operation Id: Changes_ListChangesByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Changes_ListChangesByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
         /// <param name="endTime"> Specifies the end time of the changes request. </param>

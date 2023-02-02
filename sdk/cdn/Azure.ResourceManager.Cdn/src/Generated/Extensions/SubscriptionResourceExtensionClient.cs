@@ -57,8 +57,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityWithSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityWithSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,8 +88,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityWithSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityWithSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +119,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
-        /// Operation Id: ValidateProbe
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ValidateProbe</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
-        /// Operation Id: ValidateProbe
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ValidateProbe</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +181,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
-        /// Operation Id: Profiles_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
@@ -163,8 +203,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
-        /// Operation Id: Profiles_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
@@ -177,8 +225,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Check the quota and actual usage of the CDN profiles under the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage
-        /// Operation Id: ResourceUsage_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceUsage_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -191,8 +247,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Check the quota and actual usage of the CDN profiles under the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage
-        /// Operation Id: ResourceUsage_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceUsage_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -205,8 +269,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets
-        /// Operation Id: ManagedRuleSets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -219,8 +291,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets
-        /// Operation Id: ManagedRuleSets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>

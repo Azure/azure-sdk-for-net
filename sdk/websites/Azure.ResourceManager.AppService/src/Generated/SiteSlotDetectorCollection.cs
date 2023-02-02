@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get site detector response
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteDetectorResponseSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -86,8 +94,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get site detector response
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteDetectorResponseSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List Site Detector Responses
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors
-        /// Operation Id: Diagnostics_ListSiteDetectorResponsesSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_ListSiteDetectorResponsesSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotDetectorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -132,8 +156,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List Site Detector Responses
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors
-        /// Operation Id: Diagnostics_ListSiteDetectorResponsesSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_ListSiteDetectorResponsesSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotDetectorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -146,8 +178,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteDetectorResponseSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -176,8 +216,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteDetectorResponseSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>

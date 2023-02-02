@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Get information about a Automanage best practice
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
-        /// Operation Id: BestPractices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Get information about a Automanage best practice
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
-        /// Operation Id: BestPractices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of Automanage best practices
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices
-        /// Operation Id: BestPractices_ListByTenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_ListByTenant</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of Automanage best practices
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices
-        /// Operation Id: BestPractices_ListByTenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_ListByTenant</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
@@ -139,8 +171,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
-        /// Operation Id: BestPractices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,8 +206,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
-        /// Operation Id: BestPractices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

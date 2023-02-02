@@ -66,8 +66,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a single software data of the virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}
-        /// Operation Id: SoftwareInventories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareName"> Name of the installed software. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,8 +103,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a single software data of the virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}
-        /// Operation Id: SoftwareInventories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareName"> Name of the installed software. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -124,8 +140,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets the software inventory of the virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories
-        /// Operation Id: SoftwareInventories_ListByExtendedResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_ListByExtendedResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
@@ -138,8 +162,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets the software inventory of the virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories
-        /// Operation Id: SoftwareInventories_ListByExtendedResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_ListByExtendedResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
@@ -152,8 +184,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}
-        /// Operation Id: SoftwareInventories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareName"> Name of the installed software. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +219,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}
-        /// Operation Id: SoftwareInventories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareName"> Name of the installed software. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

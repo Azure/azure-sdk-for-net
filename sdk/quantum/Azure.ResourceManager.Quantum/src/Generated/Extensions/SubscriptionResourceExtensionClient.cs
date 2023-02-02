@@ -53,8 +53,16 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary>
         /// Gets the list of Workspaces within a Subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -67,8 +75,16 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary>
         /// Gets the list of Workspaces within a Subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -81,8 +97,16 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary>
         /// Returns the list of all provider offerings available for the given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings
-        /// Operation Id: Offerings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Offerings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,8 +120,16 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary>
         /// Returns the list of all provider offerings available for the given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings
-        /// Operation Id: Offerings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Offerings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +143,16 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary>
         /// Check the availability of the resource name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/checkNameAvailability
-        /// Operation Id: Workspace_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> Location. </param>
         /// <param name="content"> The name and type of the resource. </param>
@@ -135,8 +175,16 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary>
         /// Check the availability of the resource name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/checkNameAvailability
-        /// Operation Id: Workspace_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> Location. </param>
         /// <param name="content"> The name and type of the resource. </param>

@@ -48,8 +48,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets all permissions the caller has for a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions
-        /// Operation Id: AzurePermissionsForResourceGroup_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResourceGroup_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
@@ -62,8 +70,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets all permissions the caller has for a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions
-        /// Operation Id: AzurePermissionsForResourceGroup_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResourceGroup_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
@@ -76,8 +92,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets all permissions the caller has for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions
-        /// Operation Id: AzurePermissionsForResource_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResource_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="parentResourcePath"> The parent resource identity. </param>
@@ -94,8 +118,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets all permissions the caller has for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions
-        /// Operation Id: AzurePermissionsForResource_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResource_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="parentResourcePath"> The parent resource identity. </param>

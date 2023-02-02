@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Operation status.
-    /// Serialized Name: OperationStatus
-    /// </summary>
+    /// <summary> Operation status. </summary>
     public readonly partial struct MachineLearningOperationStatus : IEquatable<MachineLearningOperationStatus>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ReimageFailedValue = "ReimageFailed";
         private const string DeleteFailedValue = "DeleteFailed";
 
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: OperationStatus.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static MachineLearningOperationStatus InProgress { get; } = new MachineLearningOperationStatus(InProgressValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: OperationStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static MachineLearningOperationStatus Succeeded { get; } = new MachineLearningOperationStatus(SucceededValue);
-        /// <summary>
-        /// CreateFailed
-        /// Serialized Name: OperationStatus.CreateFailed
-        /// </summary>
+        /// <summary> CreateFailed. </summary>
         public static MachineLearningOperationStatus CreateFailed { get; } = new MachineLearningOperationStatus(CreateFailedValue);
-        /// <summary>
-        /// StartFailed
-        /// Serialized Name: OperationStatus.StartFailed
-        /// </summary>
+        /// <summary> StartFailed. </summary>
         public static MachineLearningOperationStatus StartFailed { get; } = new MachineLearningOperationStatus(StartFailedValue);
-        /// <summary>
-        /// StopFailed
-        /// Serialized Name: OperationStatus.StopFailed
-        /// </summary>
+        /// <summary> StopFailed. </summary>
         public static MachineLearningOperationStatus StopFailed { get; } = new MachineLearningOperationStatus(StopFailedValue);
-        /// <summary>
-        /// RestartFailed
-        /// Serialized Name: OperationStatus.RestartFailed
-        /// </summary>
+        /// <summary> RestartFailed. </summary>
         public static MachineLearningOperationStatus RestartFailed { get; } = new MachineLearningOperationStatus(RestartFailedValue);
-        /// <summary>
-        /// ReimageFailed
-        /// Serialized Name: OperationStatus.ReimageFailed
-        /// </summary>
+        /// <summary> ReimageFailed. </summary>
         public static MachineLearningOperationStatus ReimageFailed { get; } = new MachineLearningOperationStatus(ReimageFailedValue);
-        /// <summary>
-        /// DeleteFailed
-        /// Serialized Name: OperationStatus.DeleteFailed
-        /// </summary>
+        /// <summary> DeleteFailed. </summary>
         public static MachineLearningOperationStatus DeleteFailed { get; } = new MachineLearningOperationStatus(DeleteFailedValue);
         /// <summary> Determines if two <see cref="MachineLearningOperationStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOperationStatus left, MachineLearningOperationStatus right) => left.Equals(right);

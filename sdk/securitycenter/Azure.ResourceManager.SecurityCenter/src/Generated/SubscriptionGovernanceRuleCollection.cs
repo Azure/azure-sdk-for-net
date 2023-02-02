@@ -60,8 +60,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Creates or update a security GovernanceRule on the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
@@ -93,8 +101,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Creates or update a security GovernanceRule on the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
@@ -126,8 +142,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a specific governanceRule for the requested scope by ruleId
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,8 +179,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a specific governanceRule for the requested scope by ruleId
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -184,8 +216,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a list of all relevant governanceRules over a subscription level scope
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules
-        /// Operation Id: GovernanceRule_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRule_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionGovernanceRuleResource" /> that may take multiple service requests to iterate over. </returns>
@@ -198,8 +238,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a list of all relevant governanceRules over a subscription level scope
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules
-        /// Operation Id: GovernanceRule_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRule_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionGovernanceRuleResource" /> that may take multiple service requests to iterate over. </returns>
@@ -212,8 +260,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -239,8 +295,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

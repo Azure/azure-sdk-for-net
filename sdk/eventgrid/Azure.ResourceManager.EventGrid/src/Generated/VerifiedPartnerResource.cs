@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of a verified partner.
-        /// Request Path: /providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}
-        /// Operation Id: VerifiedPartners_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifiedPartners_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VerifiedPartnerResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of a verified partner.
-        /// Request Path: /providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}
-        /// Operation Id: VerifiedPartners_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifiedPartners_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VerifiedPartnerResource> Get(CancellationToken cancellationToken = default)

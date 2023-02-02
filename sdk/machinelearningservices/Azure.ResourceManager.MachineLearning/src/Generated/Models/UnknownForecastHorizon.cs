@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The UnknownForecastHorizon.
-    /// Serialized Name: UnknownForecastHorizon
-    /// </summary>
+    /// <summary> The UnknownForecastHorizon. </summary>
     internal partial class UnknownForecastHorizon : ForecastHorizon
     {
         /// <summary> Initializes a new instance of UnknownForecastHorizon. </summary>
-        /// <param name="mode">
-        /// [Required] Set forecast horizon value selection mode.
-        /// Serialized Name: ForecastHorizon.mode
-        /// </param>
+        /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
         internal UnknownForecastHorizon(ForecastHorizonMode mode) : base(mode)
         {
             Mode = mode;

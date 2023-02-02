@@ -52,8 +52,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a recommendation rule for an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
-        /// Operation Id: Recommendations_GetRuleDetailsByWebApp
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a recommendation rule for an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
-        /// Operation Id: Recommendations_GetRuleDetailsByWebApp
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
@@ -114,8 +130,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
-        /// Operation Id: Recommendations_GetRuleDetailsByWebApp
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
@@ -143,8 +167,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
-        /// Operation Id: Recommendations_GetRuleDetailsByWebApp
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>

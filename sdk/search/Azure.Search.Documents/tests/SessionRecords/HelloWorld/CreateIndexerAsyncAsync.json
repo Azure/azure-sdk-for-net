@@ -8,38 +8,38 @@
         "api-key": "Sanitized",
         "Content-Length": "5201",
         "Content-Type": "application/json",
-        "traceparent": "00-da794f9f8322ed8548bb31b5ef72ec1e-79ca804296e99951-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "72b4e7e3aea4158487f9bac324d3604c",
+        "traceparent": "00-70df1e485b3f184499975de3055f0189-13cbdde5166b194e-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "7b52127b28b5c9cd9cf05f375ff61087",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "tmolvpnv",
+        "name": "gqyxvjgn",
         "format": "solr",
         "synonyms": "Afghanistan,AF,AFG\n\u00C5land Islands,AX,ALA\nAlbania,AL,ALB\nAlgeria,DZ,DZA\nAmerican Samoa,AS,ASM\nAndorra,AD,AND\nAngola,AO,AGO\nAnguilla,AI,AIA\nAntarctica,AQ,ATA\nAntigua and Barbuda,AG,ATG\nArgentina,AR,ARG\nArmenia,AM,ARM\nAruba,AW,ABW\nAustralia,AU,AUS\nAustria,AT,AUT\nAzerbaijan,AZ,AZE\nBahamas,BS,BHS\nBahrain,BH,BHR\nBangladesh,BD,BGD\nBarbados,BB,BRB\nBelarus,BY,BLR\nBelgium,BE,BEL\nBelize,BZ,BLZ\nBenin,BJ,BEN\nBermuda,BM,BMU\nBhutan,BT,BTN\nBolivia,Plurinational State of Bolivia,BO,BOL\nBonaire,Sint Eustatius and Saba,BQ,BES\nBosnia and Herzegovina,BA,BIH\nBotswana,BW,BWA\nBouvet Island,BV,BVT\nBrazil,BR,BRA\nBritish Indian Ocean Territory,IO,IOT\nBrunei Darussalam,BN,BRN\nBulgaria,BG,BGR\nBurkina Faso,BF,BFA\nBurundi,BI,BDI\nCabo Verde,CV,CPV\nCambodia,KH,KHM\nCameroon,CM,CMR\nCanada,CA,CAN\nCayman Islands,KY,CYM\nCentral African Republic,CF,CAF\nChad,TD,TCD\nChile,CL,CHL\nChina,CN,CHN\nChristmas Island,CX,CXR\nCocos (Keeling) Islands,CC,CCK\nColombia,CO,COL\nComoros,KM,COM\nCongo,CG,COG\nDemocratic Republic of the Congo,CD,COD\nCook Islands,CK,COK\nCosta Rica,CR,CRI\nC\u00F4te d\u0027Ivoire,CI,CIV\nCroatia,HR,HRV\nCuba,CU,CUB\nCura\u00E7ao,CW,CUW\nCyprus,CY,CYP\nCzechia,CZ,CZE\nDenmark,DK,DNK\nDjibouti,DJ,DJI\nDominica,DM,DMA\nDominican Republic,DO,DOM\nEcuador,EC,ECU\nEgypt,EG,EGY\nEl Salvador,SV,SLV\nEquatorial Guinea,GQ,GNQ\nEritrea,ER,ERI\nEstonia,EE,EST\nEswatini,SZ,SWZ\nEthiopia,ET,ETH\nFalkland Islands (Malvinas),FK,FLK\nFaroe Islands,FO,FRO\nFiji,FJ,FJI\nFinland,FI,FIN\nFrance,FR,FRA\nFrench Guiana,GF,GUF\nFrench Polynesia,PF,PYF\nFrench Southern Territories,TF,ATF\nGabon,GA,GAB\nGambia,GM,GMB\nGeorgia,GE,GEO\nGermany,DE,DEU\nGhana,GH,GHA\nGibraltar,GI,GIB\nGreece,GR,GRC\nGreenland,GL,GRL\nGrenada,GD,GRD\nGuadeloupe,GP,GLP\nGuam,GU,GUM\nGuatemala,GT,GTM\nGuernsey,GG,GGY\nGuinea,GN,GIN\nGuinea-Bissau,GW,GNB\nGuyana,GY,GUY\nHaiti,HT,HTI\nHeard Island and McDonald Islands,HM,HMD\nHoly See,VA,VAT\nHonduras,HN,HND\nHong Kong,HK,HKG\nHungary,HU,HUN\nIceland,IS,ISL\nIndia,IN,IND\nIndonesia,ID,IDN\nIran,Islamic Republic of Iran,IR,IRN\nIraq,IQ,IRQ\nIreland,IE,IRL\nIsle of Man,IM,IMN\nIsrael,IL,ISR\nItaly,IT,ITA\nJamaica,JM,JAM\nJapan,JP,JPN\nJersey,JE,JEY\nJordan,JO,JOR\nKazakhstan,KZ,KAZ\nKenya,KE,KEN\nKiribati,KI,KIR\nDemocratic People\u0027s Republic of Korea,KP,PRK\nKorea,Republic of Korea,KR,KOR\nKuwait,KW,KWT\nKyrgyzstan,KG,KGZ\nLao People\u0027s Democratic Republic,LA,LAO\nLatvia,LV,LVA\nLebanon,LB,LBN\nLesotho,LS,LSO\nLiberia,LR,LBR\nLibya,LY,LBY\nLiechtenstein,LI,LIE\nLithuania,LT,LTU\nLuxembourg,LU,LUX\nMacao,MO,MAC\nMadagascar,MG,MDG\nMalawi,MW,MWI\nMalaysia,MY,MYS\nMaldives,MV,MDV\nMali,ML,MLI\nMalta,MT,MLT\nMarshall Islands,MH,MHL\nMartinique,MQ,MTQ\nMauritania,MR,MRT\nMauritius,MU,MUS\nMayotte,YT,MYT\nMexico,MX,MEX\nMicronesia,Federated States of Micronesia,FM,FSM\nMoldova,Republic of Moldova,MD,MDA\nMonaco,MC,MCO\nMongolia,MN,MNG\nMontenegro,ME,MNE\nMontserrat,MS,MSR\nMorocco,MA,MAR\nMozambique,MZ,MOZ\nMyanmar,MM,MMR\nNamibia,NA,NAM\nNauru,NR,NRU\nNepal,NP,NPL\nNetherlands,NL,NLD\nNew Caledonia,NC,NCL\nNew Zealand,NZ,NZL\nNicaragua,NI,NIC\nNiger,NE,NER\nNigeria,NG,NGA\nNiue,NU,NIU\nNorfolk Island,NF,NFK\nNorth Macedonia,MK,MKD\nNorthern Mariana Islands,MP,MNP\nNorway,NO,NOR\nOman,OM,OMN\nPakistan,PK,PAK\nPalau,PW,PLW\nPalestine,State of Palestine,PS,PSE\nPanama,PA,PAN\nPapua New Guinea,PG,PNG\nParaguay,PY,PRY\nPeru,PE,PER\nPhilippines,PH,PHL\nPitcairn,PN,PCN\nPoland,PL,POL\nPortugal,PT,PRT\nPuerto Rico,PR,PRI\nQatar,QA,QAT\nR\u00E9union,RE,REU\nRomania,RO,ROU\nRussia,Russian Federation,RU,RUS\nRwanda,RW,RWA\nSaint Barth\u00E9lemy,BL,BLM\nSaint Helena,Ascension and Tristan da Cunha,SH,SHN\nSaint Kitts and Nevis,KN,KNA\nSaint Lucia,LC,LCA\nSaint Martin (French part),MF,MAF\nSaint Pierre and Miquelon,PM,SPM\nSaint Vincent and the Grenadines,VC,VCT\nSamoa,WS,WSM\nSan Marino,SM,SMR\nSao Tome and Principe,ST,STP\nSaudi Arabia,SA,SAU\nSenegal,SN,SEN\nSerbia,RS,SRB\nSeychelles,SC,SYC\nSierra Leone,SL,SLE\nSingapore,SG,SGP\nSint Maarten (Dutch part),SX,SXM\nSlovakia,SK,SVK\nSlovenia,SI,SVN\nSolomon Islands,SB,SLB\nSomalia,SO,SOM\nSouth Africa,ZA,ZAF\nSouth Georgia and the South Sandwich Islands,GS,SGS\nSouth Sudan,SS,SSD\nSpain,ES,ESP\nSri Lanka,LK,LKA\nSudan,SD,SDN\nSuriname,SR,SUR\nSvalbard and Jan Mayen,SJ,SJM\nSweden,SE,SWE\nSwitzerland,CH,CHE\nSyrian Arab Republic,SY,SYR\nTaiwan,Province of China,TW,TWN\nTajikistan,TJ,TJK\nTanzania,United Republic of Tanzania,TZ,TZA\nThailand,TH,THA\nTimor-Leste,TL,TLS\nTogo,TG,TGO\nTokelau,TK,TKL\nTonga,TO,TON\nTrinidad and Tobago,TT,TTO\nTunisia,TN,TUN\nTurkey,TR,TUR\nTurkmenistan,TM,TKM\nTurks and Caicos Islands,TC,TCA\nTuvalu,TV,TUV\nUganda,UG,UGA\nUkraine,UA,UKR\nUnited Arab Emirates,AE,ARE\nUnited Kingdom of Great Britain and Northern Ireland,GB,GBR\nUnited States of America,US,USA\nUnited States Minor Outlying Islands,UM,UMI\nUruguay,UY,URY\nUzbekistan,UZ,UZB\nVanuatu,VU,VUT\nVenezuela (Bolivarian Republic of),VE,VEN\nViet Nam,VN,VNM\nVirgin Islands (British),VG,VGB\nVirgin Islands (U.S.),VI,VIR\nWallis and Futuna,WF,WLF\nWestern Sahara,EH,ESH\nYemen,YE,YEM\nZambia,ZM,ZMB\nZimbabwe,ZW,ZWE\n"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "72b4e7e3-aea4-1584-87f9-bac324d3604c",
+        "client-request-id": "7b52127b-28b5-c9cd-9cf0-5f375ff61087",
         "Content-Length": "5344",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 20:48:09 GMT",
-        "elapsed-time": "100",
-        "ETag": "W/\u00220x8DAF02751DB2992\u0022",
+        "Date": "Mon, 09 Jan 2023 18:03:29 GMT",
+        "elapsed-time": "25",
+        "ETag": "W/\u00220x8DAF26BD03AF04D\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-shrejaazsearch.search.windows.net/synonymmaps(\u0027tmolvpnv\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-shrejaazsearch.search.windows.net/synonymmaps(\u0027gqyxvjgn\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "72b4e7e3-aea4-1584-87f9-bac324d3604c",
+        "request-id": "7b52127b-28b5-c9cd-9cf0-5f375ff61087",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "72b4e7e3-aea4-1584-87f9-bac324d3604c"
+        "x-ms-client-request-id": "7b52127b-28b5-c9cd-9cf0-5f375ff61087"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#synonymmaps/$entity",
-        "@odata.etag": "\u00220x8DAF02751DB2992\u0022",
-        "name": "tmolvpnv",
+        "@odata.etag": "\u00220x8DAF26BD03AF04D\u0022",
+        "name": "gqyxvjgn",
         "format": "solr",
         "synonyms": "Afghanistan,AF,AFG\n\u00C5land Islands,AX,ALA\nAlbania,AL,ALB\nAlgeria,DZ,DZA\nAmerican Samoa,AS,ASM\nAndorra,AD,AND\nAngola,AO,AGO\nAnguilla,AI,AIA\nAntarctica,AQ,ATA\nAntigua and Barbuda,AG,ATG\nArgentina,AR,ARG\nArmenia,AM,ARM\nAruba,AW,ABW\nAustralia,AU,AUS\nAustria,AT,AUT\nAzerbaijan,AZ,AZE\nBahamas,BS,BHS\nBahrain,BH,BHR\nBangladesh,BD,BGD\nBarbados,BB,BRB\nBelarus,BY,BLR\nBelgium,BE,BEL\nBelize,BZ,BLZ\nBenin,BJ,BEN\nBermuda,BM,BMU\nBhutan,BT,BTN\nBolivia,Plurinational State of Bolivia,BO,BOL\nBonaire,Sint Eustatius and Saba,BQ,BES\nBosnia and Herzegovina,BA,BIH\nBotswana,BW,BWA\nBouvet Island,BV,BVT\nBrazil,BR,BRA\nBritish Indian Ocean Territory,IO,IOT\nBrunei Darussalam,BN,BRN\nBulgaria,BG,BGR\nBurkina Faso,BF,BFA\nBurundi,BI,BDI\nCabo Verde,CV,CPV\nCambodia,KH,KHM\nCameroon,CM,CMR\nCanada,CA,CAN\nCayman Islands,KY,CYM\nCentral African Republic,CF,CAF\nChad,TD,TCD\nChile,CL,CHL\nChina,CN,CHN\nChristmas Island,CX,CXR\nCocos (Keeling) Islands,CC,CCK\nColombia,CO,COL\nComoros,KM,COM\nCongo,CG,COG\nDemocratic Republic of the Congo,CD,COD\nCook Islands,CK,COK\nCosta Rica,CR,CRI\nC\u00F4te d\u0027Ivoire,CI,CIV\nCroatia,HR,HRV\nCuba,CU,CUB\nCura\u00E7ao,CW,CUW\nCyprus,CY,CYP\nCzechia,CZ,CZE\nDenmark,DK,DNK\nDjibouti,DJ,DJI\nDominica,DM,DMA\nDominican Republic,DO,DOM\nEcuador,EC,ECU\nEgypt,EG,EGY\nEl Salvador,SV,SLV\nEquatorial Guinea,GQ,GNQ\nEritrea,ER,ERI\nEstonia,EE,EST\nEswatini,SZ,SWZ\nEthiopia,ET,ETH\nFalkland Islands (Malvinas),FK,FLK\nFaroe Islands,FO,FRO\nFiji,FJ,FJI\nFinland,FI,FIN\nFrance,FR,FRA\nFrench Guiana,GF,GUF\nFrench Polynesia,PF,PYF\nFrench Southern Territories,TF,ATF\nGabon,GA,GAB\nGambia,GM,GMB\nGeorgia,GE,GEO\nGermany,DE,DEU\nGhana,GH,GHA\nGibraltar,GI,GIB\nGreece,GR,GRC\nGreenland,GL,GRL\nGrenada,GD,GRD\nGuadeloupe,GP,GLP\nGuam,GU,GUM\nGuatemala,GT,GTM\nGuernsey,GG,GGY\nGuinea,GN,GIN\nGuinea-Bissau,GW,GNB\nGuyana,GY,GUY\nHaiti,HT,HTI\nHeard Island and McDonald Islands,HM,HMD\nHoly See,VA,VAT\nHonduras,HN,HND\nHong Kong,HK,HKG\nHungary,HU,HUN\nIceland,IS,ISL\nIndia,IN,IND\nIndonesia,ID,IDN\nIran,Islamic Republic of Iran,IR,IRN\nIraq,IQ,IRQ\nIreland,IE,IRL\nIsle of Man,IM,IMN\nIsrael,IL,ISR\nItaly,IT,ITA\nJamaica,JM,JAM\nJapan,JP,JPN\nJersey,JE,JEY\nJordan,JO,JOR\nKazakhstan,KZ,KAZ\nKenya,KE,KEN\nKiribati,KI,KIR\nDemocratic People\u0027s Republic of Korea,KP,PRK\nKorea,Republic of Korea,KR,KOR\nKuwait,KW,KWT\nKyrgyzstan,KG,KGZ\nLao People\u0027s Democratic Republic,LA,LAO\nLatvia,LV,LVA\nLebanon,LB,LBN\nLesotho,LS,LSO\nLiberia,LR,LBR\nLibya,LY,LBY\nLiechtenstein,LI,LIE\nLithuania,LT,LTU\nLuxembourg,LU,LUX\nMacao,MO,MAC\nMadagascar,MG,MDG\nMalawi,MW,MWI\nMalaysia,MY,MYS\nMaldives,MV,MDV\nMali,ML,MLI\nMalta,MT,MLT\nMarshall Islands,MH,MHL\nMartinique,MQ,MTQ\nMauritania,MR,MRT\nMauritius,MU,MUS\nMayotte,YT,MYT\nMexico,MX,MEX\nMicronesia,Federated States of Micronesia,FM,FSM\nMoldova,Republic of Moldova,MD,MDA\nMonaco,MC,MCO\nMongolia,MN,MNG\nMontenegro,ME,MNE\nMontserrat,MS,MSR\nMorocco,MA,MAR\nMozambique,MZ,MOZ\nMyanmar,MM,MMR\nNamibia,NA,NAM\nNauru,NR,NRU\nNepal,NP,NPL\nNetherlands,NL,NLD\nNew Caledonia,NC,NCL\nNew Zealand,NZ,NZL\nNicaragua,NI,NIC\nNiger,NE,NER\nNigeria,NG,NGA\nNiue,NU,NIU\nNorfolk Island,NF,NFK\nNorth Macedonia,MK,MKD\nNorthern Mariana Islands,MP,MNP\nNorway,NO,NOR\nOman,OM,OMN\nPakistan,PK,PAK\nPalau,PW,PLW\nPalestine,State of Palestine,PS,PSE\nPanama,PA,PAN\nPapua New Guinea,PG,PNG\nParaguay,PY,PRY\nPeru,PE,PER\nPhilippines,PH,PHL\nPitcairn,PN,PCN\nPoland,PL,POL\nPortugal,PT,PRT\nPuerto Rico,PR,PRI\nQatar,QA,QAT\nR\u00E9union,RE,REU\nRomania,RO,ROU\nRussia,Russian Federation,RU,RUS\nRwanda,RW,RWA\nSaint Barth\u00E9lemy,BL,BLM\nSaint Helena,Ascension and Tristan da Cunha,SH,SHN\nSaint Kitts and Nevis,KN,KNA\nSaint Lucia,LC,LCA\nSaint Martin (French part),MF,MAF\nSaint Pierre and Miquelon,PM,SPM\nSaint Vincent and the Grenadines,VC,VCT\nSamoa,WS,WSM\nSan Marino,SM,SMR\nSao Tome and Principe,ST,STP\nSaudi Arabia,SA,SAU\nSenegal,SN,SEN\nSerbia,RS,SRB\nSeychelles,SC,SYC\nSierra Leone,SL,SLE\nSingapore,SG,SGP\nSint Maarten (Dutch part),SX,SXM\nSlovakia,SK,SVK\nSlovenia,SI,SVN\nSolomon Islands,SB,SLB\nSomalia,SO,SOM\nSouth Africa,ZA,ZAF\nSouth Georgia and the South Sandwich Islands,GS,SGS\nSouth Sudan,SS,SSD\nSpain,ES,ESP\nSri Lanka,LK,LKA\nSudan,SD,SDN\nSuriname,SR,SUR\nSvalbard and Jan Mayen,SJ,SJM\nSweden,SE,SWE\nSwitzerland,CH,CHE\nSyrian Arab Republic,SY,SYR\nTaiwan,Province of China,TW,TWN\nTajikistan,TJ,TJK\nTanzania,United Republic of Tanzania,TZ,TZA\nThailand,TH,THA\nTimor-Leste,TL,TLS\nTogo,TG,TGO\nTokelau,TK,TKL\nTonga,TO,TON\nTrinidad and Tobago,TT,TTO\nTunisia,TN,TUN\nTurkey,TR,TUR\nTurkmenistan,TM,TKM\nTurks and Caicos Islands,TC,TCA\nTuvalu,TV,TUV\nUganda,UG,UGA\nUkraine,UA,UKR\nUnited Arab Emirates,AE,ARE\nUnited Kingdom of Great Britain and Northern Ireland,GB,GBR\nUnited States of America,US,USA\nUnited States Minor Outlying Islands,UM,UMI\nUruguay,UY,URY\nUzbekistan,UZ,UZB\nVanuatu,VU,VUT\nVenezuela (Bolivarian Republic of),VE,VEN\nViet Nam,VN,VNM\nVirgin Islands (British),VG,VGB\nVirgin Islands (U.S.),VI,VIR\nWallis and Futuna,WF,WLF\nWestern Sahara,EH,ESH\nYemen,YE,YEM\nZambia,ZM,ZMB\nZimbabwe,ZW,ZWE\n",
         "encryptionKey": null
@@ -53,13 +53,13 @@
         "api-key": "Sanitized",
         "Content-Length": "1593",
         "Content-Type": "application/json",
-        "traceparent": "00-6a98e7c1de837bf138074a2663a4acf6-8ff9a24a6de51366-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "749b1a00eb7499d5b9b647c8c0040f49",
+        "traceparent": "00-f04be4ee02ddbb4b94d470eb2dafa336-96b2ddd3d470ea4b-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ff7bbd4c9d8df6041f6418eeaf643d4f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "ymeiniso",
+        "name": "whklfhqx",
         "fields": [
           {
             "name": "HotelId",
@@ -157,7 +157,7 @@
                 "sortable": true,
                 "facetable": true,
                 "synonymMaps": [
-                  "tmolvpnv"
+                  "gqyxvjgn"
                 ]
               },
               {
@@ -177,25 +177,25 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "749b1a00-eb74-99d5-b9b6-47c8c0040f49",
+        "client-request-id": "ff7bbd4c-9d8d-f604-1f64-18eeaf643d4f",
         "Content-Length": "2698",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 20:48:09 GMT",
-        "elapsed-time": "692",
-        "ETag": "W/\u00220x8DAF027526B949A\u0022",
+        "Date": "Mon, 09 Jan 2023 18:03:29 GMT",
+        "elapsed-time": "663",
+        "ETag": "W/\u00220x8DAF26BD0C938BC\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027ymeiniso\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027whklfhqx\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "749b1a00-eb74-99d5-b9b6-47c8c0040f49",
+        "request-id": "ff7bbd4c-9d8d-f604-1f64-18eeaf643d4f",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "749b1a00-eb74-99d5-b9b6-47c8c0040f49"
+        "x-ms-client-request-id": "ff7bbd4c-9d8d-f604-1f64-18eeaf643d4f"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8DAF027526B949A\u0022",
-        "name": "ymeiniso",
+        "@odata.etag": "\u00220x8DAF26BD0C938BC\u0022",
+        "name": "whklfhqx",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -327,7 +327,7 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "synonymMaps": [
-                  "tmolvpnv"
+                  "gqyxvjgn"
                 ]
               },
               {
@@ -370,43 +370,43 @@
         "api-key": "Sanitized",
         "Content-Length": "117",
         "Content-Type": "application/json",
-        "traceparent": "00-848426e301dc4b3a02fef9eba7f9f967-77714ce3f158f908-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e0f2ba07fea6a381dac67189130fa19b",
+        "traceparent": "00-3128bd6b701c1e438d4fcb89b8068223-adc04e33c3ff5644-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a3c6c45c8cb1fa7be4352ef8adcd3bff",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "ttmnouce",
+        "name": "rgdxaylo",
         "type": "azureblob",
         "credentials": {
           "connectionString": "Sanitized"
         },
         "container": {
-          "name": "elyjtapj"
+          "name": "obqfqrme"
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "e0f2ba07-fea6-a381-dac6-7189130fa19b",
+        "client-request-id": "a3c6c45c-8cb1-fa7b-e435-2ef8adcd3bff",
         "Content-Length": "383",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 20:48:11 GMT",
-        "elapsed-time": "39",
-        "ETag": "W/\u00220x8DAF02752CF9EF5\u0022",
+        "Date": "Mon, 09 Jan 2023 18:03:31 GMT",
+        "elapsed-time": "56",
+        "ETag": "W/\u00220x8DAF26BD1442318\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-shrejaazsearch.search.windows.net/datasources(\u0027ttmnouce\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-shrejaazsearch.search.windows.net/datasources(\u0027rgdxaylo\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "e0f2ba07-fea6-a381-dac6-7189130fa19b",
+        "request-id": "a3c6c45c-8cb1-fa7b-e435-2ef8adcd3bff",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "e0f2ba07-fea6-a381-dac6-7189130fa19b"
+        "x-ms-client-request-id": "a3c6c45c-8cb1-fa7b-e435-2ef8adcd3bff"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#datasources/$entity",
-        "@odata.etag": "\u00220x8DAF02752CF9EF5\u0022",
-        "name": "ttmnouce",
+        "@odata.etag": "\u00220x8DAF26BD1442318\u0022",
+        "name": "rgdxaylo",
         "description": null,
         "type": "azureblob",
         "subtype": null,
@@ -414,7 +414,7 @@
           "connectionString": null
         },
         "container": {
-          "name": "elyjtapj",
+          "name": "obqfqrme",
           "query": null
         },
         "dataChangeDetectionPolicy": null,
@@ -430,13 +430,13 @@
         "api-key": "Sanitized",
         "Content-Length": "1118",
         "Content-Type": "application/json",
-        "traceparent": "00-dc513a900cd0875472b50f4b9d73511f-9ecab0ede9679db3-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5749349ebc3e75210c876dbaf9f4f3bb",
+        "traceparent": "00-3d81b57eac7e24448b6a13bdbba877ef-4f873c1aa1f0f444-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "dee1adf7c88ca81e75a7a3c9d7604492",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "tsucfctu",
+        "name": "lihndkcj",
         "skills": [
           {
             "defaultToLanguageCode": "fr",
@@ -495,25 +495,25 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "5749349e-bc3e-7521-0c87-6dbaf9f4f3bb",
+        "client-request-id": "dee1adf7-c88c-a81e-75a7-a3c9d7604492",
         "Content-Length": "1506",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 20:48:14 GMT",
-        "elapsed-time": "2770",
-        "ETag": "W/\u00220x8DAF02754A81162\u0022",
+        "Date": "Mon, 09 Jan 2023 18:03:31 GMT",
+        "elapsed-time": "74",
+        "ETag": "W/\u00220x8DAF26BD1828283\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-shrejaazsearch.search.windows.net/skillsets(\u0027tsucfctu\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-shrejaazsearch.search.windows.net/skillsets(\u0027lihndkcj\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "5749349e-bc3e-7521-0c87-6dbaf9f4f3bb",
+        "request-id": "dee1adf7-c88c-a81e-75a7-a3c9d7604492",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "5749349e-bc3e-7521-0c87-6dbaf9f4f3bb"
+        "x-ms-client-request-id": "dee1adf7-c88c-a81e-75a7-a3c9d7604492"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8DAF02754A81162\u0022",
-        "name": "tsucfctu",
+        "@odata.etag": "\u00220x8DAF26BD1828283\u0022",
+        "name": "lihndkcj",
         "description": null,
         "skills": [
           {
@@ -593,16 +593,16 @@
         "api-key": "Sanitized",
         "Content-Length": "436",
         "Content-Type": "application/json",
-        "traceparent": "00-abe22c699b42bba281ee123c1a3dec2d-046d4b80e039f9bc-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "ab2b64eb9f816f862e5e4171b429651e",
+        "traceparent": "00-914c63c8d4c681479786a0dd4f98f348-6e870e389f58a740-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9679f43e4d8b39f6ec8dab04ab9c6e1b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "blsaetlq",
-        "dataSourceName": "ttmnouce",
-        "skillsetName": "tsucfctu",
-        "targetIndexName": "ymeiniso",
+        "name": "gsadpjhu",
+        "dataSourceName": "rgdxaylo",
+        "skillsetName": "lihndkcj",
+        "targetIndexName": "whklfhqx",
         "parameters": {
           "configuration": {
             "parsingMode": "json"
@@ -635,29 +635,29 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "ab2b64eb-9f81-6f86-2e5e-4171b429651e",
+        "client-request-id": "9679f43e-4d8b-39f6-ec8d-ab04ab9c6e1b",
         "Content-Length": "1016",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 20:48:15 GMT",
-        "elapsed-time": "575",
-        "ETag": "W/\u00220x8DAF0275534AC6D\u0022",
+        "Date": "Mon, 09 Jan 2023 18:03:32 GMT",
+        "elapsed-time": "567",
+        "ETag": "W/\u00220x8DAF26BD1E7C532\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexers(\u0027blsaetlq\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexers(\u0027gsadpjhu\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "ab2b64eb-9f81-6f86-2e5e-4171b429651e",
+        "request-id": "9679f43e-4d8b-39f6-ec8d-ab04ab9c6e1b",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "ab2b64eb-9f81-6f86-2e5e-4171b429651e"
+        "x-ms-client-request-id": "9679f43e-4d8b-39f6-ec8d-ab04ab9c6e1b"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#indexers/$entity",
-        "@odata.etag": "\u00220x8DAF0275534AC6D\u0022",
-        "name": "blsaetlq",
+        "@odata.etag": "\u00220x8DAF26BD1E7C532\u0022",
+        "name": "gsadpjhu",
         "description": null,
-        "dataSourceName": "ttmnouce",
-        "skillsetName": "tsucfctu",
-        "targetIndexName": "ymeiniso",
+        "dataSourceName": "rgdxaylo",
+        "skillsetName": "lihndkcj",
+        "targetIndexName": "whklfhqx",
         "disabled": null,
         "schedule": null,
         "parameters": {
@@ -707,46 +707,46 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexers(\u0027blsaetlq\u0027)/search.status?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexers(\u0027gsadpjhu\u0027)/search.status?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-5ded24a0bd1c95a3a56ef892910ea361-891414cc1e73cfb9-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8b7dfca4e7a12fa22d4e39e8aa910118",
+        "traceparent": "00-943f573a50b657439ca5ee315760145e-d90bef1fa5fa294d-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "05838516722a8b27238511c0185d02b2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "8b7dfca4-e7a1-2fa2-2d4e-39e8aa910118",
-        "Content-Length": "2420",
+        "client-request-id": "05838516-722a-8b27-2385-11c0185d02b2",
+        "Content-Length": "2422",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 20:48:25 GMT",
-        "elapsed-time": "37",
+        "Date": "Mon, 09 Jan 2023 18:03:42 GMT",
+        "elapsed-time": "16",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "8b7dfca4-e7a1-2fa2-2d4e-39e8aa910118",
+        "request-id": "05838516-722a-8b27-2385-11c0185d02b2",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "8b7dfca4-e7a1-2fa2-2d4e-39e8aa910118"
+        "x-ms-client-request-id": "05838516-722a-8b27-2385-11c0185d02b2"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.IndexerExecutionInfo",
-        "name": "blsaetlq",
+        "name": "gsadpjhu",
         "status": "running",
         "lastResult": {
           "status": "success",
           "errorMessage": null,
-          "startTime": "2023-01-06T20:48:15.695Z",
-          "endTime": "2023-01-06T20:48:16.82Z",
+          "startTime": "2023-01-09T18:03:34.722Z",
+          "endTime": "2023-01-09T18:03:35.847Z",
           "itemsProcessed": 10,
           "itemsFailed": 0,
-          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222023-01-06T20:48:15.758Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222023-01-06T20:47:45.7583777\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222023-01-06T20:47:45.7583777\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222023-01-09T18:03:34.784Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222023-01-09T18:03:04.7845763\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222023-01-09T18:03:04.7845763\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
           "errors": [],
           "warnings": [
             {
@@ -763,12 +763,12 @@
           {
             "status": "success",
             "errorMessage": null,
-            "startTime": "2023-01-06T20:48:15.695Z",
-            "endTime": "2023-01-06T20:48:16.82Z",
+            "startTime": "2023-01-09T18:03:34.722Z",
+            "endTime": "2023-01-09T18:03:35.847Z",
             "itemsProcessed": 10,
             "itemsFailed": 0,
-            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222023-01-06T20:48:15.758Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222023-01-06T20:47:45.7583777\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222023-01-06T20:47:45.7583777\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222023-01-09T18:03:34.784Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222023-01-09T18:03:04.7845763\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222023-01-09T18:03:04.7845763\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
             "errors": [],
             "warnings": [
               {
@@ -790,16 +790,16 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027ymeiniso\u0027)/docs/search.post.search?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027whklfhqx\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "23",
         "Content-Type": "application/json",
-        "traceparent": "00-86dcac2dbd05e4531347570fde5e9cf6-3c4aee091b76891c-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d96c77ff76906cf400fd8b9ab382060b",
+        "traceparent": "00-b56fb416c8975e42be95b2d22114cf59-360d05b193664645-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "97a0390a884f271db069dc49b43fe74c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -808,18 +808,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "d96c77ff-7690-6cf4-00fd-8b9ab382060b",
+        "client-request-id": "97a0390a-884f-271d-b069-dc49b43fe74c",
         "Content-Length": "986",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 06 Jan 2023 20:48:25 GMT",
-        "elapsed-time": "406",
+        "Date": "Mon, 09 Jan 2023 18:03:42 GMT",
+        "elapsed-time": "114",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "d96c77ff-7690-6cf4-00fd-8b9ab382060b",
+        "request-id": "97a0390a-884f-271d-b069-dc49b43fe74c",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "d96c77ff-7690-6cf4-00fd-8b9ab382060b"
+        "x-ms-client-request-id": "97a0390a-884f-271d-b069-dc49b43fe74c"
       },
       "ResponseBody": {
         "value": [
@@ -850,139 +850,144 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexers(\u0027blsaetlq\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexers(\u0027gsadpjhu\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-fa01f5f831ecb784c15289deecab55b9-50eca7433219a8c9-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9555ce3ea908042fc2fb7e32669ec59c",
+        "Content-Length": "0",
+        "traceparent": "00-66387ca5c466984f81e68828f499780a-3f9b7c660889c043-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "af64eeaf9cc2cc7dcced73063c36218e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "9555ce3e-a908-042f-c2fb-7e32669ec59c",
-        "Date": "Fri, 06 Jan 2023 20:48:27 GMT",
-        "elapsed-time": "63",
+        "client-request-id": "af64eeaf-9cc2-cc7d-cced-73063c36218e",
+        "Date": "Mon, 09 Jan 2023 18:03:44 GMT",
+        "elapsed-time": "62",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "9555ce3e-a908-042f-c2fb-7e32669ec59c",
+        "request-id": "af64eeaf-9cc2-cc7d-cced-73063c36218e",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "9555ce3e-a908-042f-c2fb-7e32669ec59c"
+        "x-ms-client-request-id": "af64eeaf-9cc2-cc7d-cced-73063c36218e"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/skillsets(\u0027tsucfctu\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/skillsets(\u0027lihndkcj\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-3c7920c0bff112208a429244c2d7c4cb-b738b9c27409e308-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3c71285d8bbd2e8e07108ba45b087cab",
+        "Content-Length": "0",
+        "traceparent": "00-f0d8a221169362428e3f9617af290ae1-15112eb2238bf545-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "71faf98ad7fc8dcc685c55c095ded6e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "3c71285d-8bbd-2e8e-0710-8ba45b087cab",
-        "Date": "Fri, 06 Jan 2023 20:48:27 GMT",
-        "elapsed-time": "44",
+        "client-request-id": "71faf98a-d7fc-8dcc-685c-55c095ded6e3",
+        "Date": "Mon, 09 Jan 2023 18:03:44 GMT",
+        "elapsed-time": "30",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "3c71285d-8bbd-2e8e-0710-8ba45b087cab",
+        "request-id": "71faf98a-d7fc-8dcc-685c-55c095ded6e3",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "3c71285d-8bbd-2e8e-0710-8ba45b087cab"
+        "x-ms-client-request-id": "71faf98a-d7fc-8dcc-685c-55c095ded6e3"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/datasources(\u0027ttmnouce\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/datasources(\u0027rgdxaylo\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-f8487e0fbd25164c7e7a0909f1ac5001-fb99527663248df9-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "dbaa2d476b3c551048671794f7c20562",
+        "Content-Length": "0",
+        "traceparent": "00-82e14a0e97584248a0179d91e93e77f8-2b0708e49fe5dd43-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "2911c49d53f96ef0bcd3ca611517ea7a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "dbaa2d47-6b3c-5510-4867-1794f7c20562",
-        "Date": "Fri, 06 Jan 2023 20:48:27 GMT",
-        "elapsed-time": "26",
+        "client-request-id": "2911c49d-53f9-6ef0-bcd3-ca611517ea7a",
+        "Date": "Mon, 09 Jan 2023 18:03:44 GMT",
+        "elapsed-time": "40",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "dbaa2d47-6b3c-5510-4867-1794f7c20562",
+        "request-id": "2911c49d-53f9-6ef0-bcd3-ca611517ea7a",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "dbaa2d47-6b3c-5510-4867-1794f7c20562"
+        "x-ms-client-request-id": "2911c49d-53f9-6ef0-bcd3-ca611517ea7a"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027ymeiniso\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027whklfhqx\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-2ba0f522722313a5a2528f57c9cfe975-aac402e6376a5fc2-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8a3dee38ca10b34e40278ef81e8ba8ba",
+        "Content-Length": "0",
+        "traceparent": "00-752c88d909a4d741b9bfcd27a16e32d5-eac92363872fa44d-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bbbe4d487645d75022d6466647bc36ee",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "8a3dee38-ca10-b34e-4027-8ef81e8ba8ba",
-        "Date": "Fri, 06 Jan 2023 20:48:28 GMT",
-        "elapsed-time": "235",
+        "client-request-id": "bbbe4d48-7645-d750-22d6-466647bc36ee",
+        "Date": "Mon, 09 Jan 2023 18:03:45 GMT",
+        "elapsed-time": "220",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "8a3dee38-ca10-b34e-4027-8ef81e8ba8ba",
+        "request-id": "bbbe4d48-7645-d750-22d6-466647bc36ee",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "8a3dee38-ca10-b34e-4027-8ef81e8ba8ba"
+        "x-ms-client-request-id": "bbbe4d48-7645-d750-22d6-466647bc36ee"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/synonymmaps(\u0027tmolvpnv\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/synonymmaps(\u0027gqyxvjgn\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-199cf107daf1106c541550fad8ff9912-6fe812e07aff7a7e-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "39ead37ee9f3f160181bf45573f93645",
+        "Content-Length": "0",
+        "traceparent": "00-1ef441a7a6134c4ebe3c3f2074826e48-37eb4847df8ab84d-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "78688f16f7243794098bb4280c6a7851",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "39ead37e-e9f3-f160-181b-f45573f93645",
-        "Date": "Fri, 06 Jan 2023 20:48:28 GMT",
-        "elapsed-time": "23",
+        "client-request-id": "78688f16-f724-3794-098b-b4280c6a7851",
+        "Date": "Mon, 09 Jan 2023 18:03:45 GMT",
+        "elapsed-time": "15",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "39ead37e-e9f3-f160-181b-f45573f93645",
+        "request-id": "78688f16-f724-3794-098b-b4280c6a7851",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "39ead37e-e9f3-f160-181b-f45573f93645"
+        "x-ms-client-request-id": "78688f16-f724-3794-098b-b4280c6a7851"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "BlobContainerName": "elyjtapj",
-    "RandomSeed": "1178905894",
+    "BlobContainerName": "obqfqrme",
+    "RandomSeed": "153048069",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_COGNITIVE_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",

@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the advertised prefixes for the specified peering location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/cdnPeeringPrefixes
-        /// Operation Id: CdnPeeringPrefixes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/cdnPeeringPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CdnPeeringPrefixes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +111,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the advertised prefixes for the specified peering location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/cdnPeeringPrefixes
-        /// Operation Id: CdnPeeringPrefixes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/cdnPeeringPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CdnPeeringPrefixes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Checks if the peering service provider is present within 1000 miles of customer&apos;s location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability
-        /// Operation Id: CheckServiceProviderAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckServiceProviderAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,8 +165,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Checks if the peering service provider is present within 1000 miles of customer&apos;s location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability
-        /// Operation Id: CheckServiceProviderAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckServiceProviderAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,8 +196,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings
-        /// Operation Id: LegacyPeerings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LegacyPeerings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="kind"> The kind of the peering. </param>
@@ -182,8 +222,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings
-        /// Operation Id: LegacyPeerings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LegacyPeerings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="kind"> The kind of the peering. </param>
@@ -200,8 +248,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Run looking glass functionality
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass
-        /// Operation Id: LookingGlass_Invoke
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LookingGlass_Invoke</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
         /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
@@ -226,8 +282,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Run looking glass functionality
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass
-        /// Operation Id: LookingGlass_Invoke
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LookingGlass_Invoke</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
         /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
@@ -252,8 +316,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the available peering locations for the specified kind of peering.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations
-        /// Operation Id: PeeringLocations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringLocations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
@@ -268,8 +340,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the available peering locations for the specified kind of peering.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations
-        /// Operation Id: PeeringLocations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringLocations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
@@ -284,8 +364,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the peerings under the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings
-        /// Operation Id: Peerings_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
@@ -298,8 +386,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the peerings under the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings
-        /// Operation Id: Peerings_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
@@ -312,8 +408,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the available countries for peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries
-        /// Operation Id: PeeringServiceCountries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceCountries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
@@ -326,8 +430,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the available countries for peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries
-        /// Operation Id: PeeringServiceCountries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceCountries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
@@ -340,8 +452,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the available locations for peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations
-        /// Operation Id: PeeringServiceLocations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceLocations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="country"> The country of interest, in which the locations are to be present. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -355,8 +475,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the available locations for peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations
-        /// Operation Id: PeeringServiceLocations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceLocations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="country"> The country of interest, in which the locations are to be present. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -370,8 +498,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the available peering service locations for the specified kind of peering.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders
-        /// Operation Id: PeeringServiceProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -384,8 +520,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the available peering service locations for the specified kind of peering.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders
-        /// Operation Id: PeeringServiceProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -398,8 +542,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the peerings under the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices
-        /// Operation Id: PeeringServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -412,8 +564,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all of the peerings under the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices
-        /// Operation Id: PeeringServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -426,8 +586,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Initialize Peering Service for Connection Monitor functionality
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor
-        /// Operation Id: PeeringServices_InitializeConnectionMonitor
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> InitializePeeringServiceConnectionMonitorAsync(CancellationToken cancellationToken = default)
@@ -448,8 +616,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Initialize Peering Service for Connection Monitor functionality
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor
-        /// Operation Id: PeeringServices_InitializeConnectionMonitor
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response InitializePeeringServiceConnectionMonitor(CancellationToken cancellationToken = default)

@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Get the current usage of a resource.
-        /// Request Path: /{scope}/providers/Microsoft.Quota/usages/{resourceName}
-        /// Operation Id: Usages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
@@ -78,8 +86,16 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Get the current usage of a resource.
-        /// Request Path: /{scope}/providers/Microsoft.Quota/usages/{resourceName}
-        /// Operation Id: Usages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Get a list of current usage for all resources for the scope specified.
-        /// Request Path: /{scope}/providers/Microsoft.Quota/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CurrentUsagesBaseResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Get a list of current usage for all resources for the scope specified.
-        /// Request Path: /{scope}/providers/Microsoft.Quota/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CurrentUsagesBaseResource" /> that may take multiple service requests to iterate over. </returns>
@@ -140,8 +172,16 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Quota/usages/{resourceName}
-        /// Operation Id: Usages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
@@ -172,8 +212,16 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Quota/usages/{resourceName}
-        /// Operation Id: Usages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:

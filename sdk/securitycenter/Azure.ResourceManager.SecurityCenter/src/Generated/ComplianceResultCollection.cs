@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Security Compliance Result
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
-        /// Operation Id: ComplianceResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,8 +81,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Security Compliance Result
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
-        /// Operation Id: ComplianceResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,8 +118,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Security compliance results in the subscription
-        /// Request Path: /{scope}/providers/Microsoft.Security/complianceResults
-        /// Operation Id: ComplianceResults_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/complianceResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ComplianceResultResource" /> that may take multiple service requests to iterate over. </returns>
@@ -116,8 +140,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Security compliance results in the subscription
-        /// Request Path: /{scope}/providers/Microsoft.Security/complianceResults
-        /// Operation Id: ComplianceResults_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/complianceResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComplianceResultResource" /> that may take multiple service requests to iterate over. </returns>
@@ -130,8 +162,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
-        /// Operation Id: ComplianceResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,8 +197,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
-        /// Operation Id: ComplianceResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

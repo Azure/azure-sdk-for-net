@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a security sub-assessment on your scanned resource
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}
-        /// Operation Id: SubAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a security sub-assessment on your scanned resource
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}
-        /// Operation Id: SubAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get security sub-assessments on all your scanned resources inside a scope
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments
-        /// Operation Id: SubAssessments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get security sub-assessments on all your scanned resources inside a scope
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments
-        /// Operation Id: SubAssessments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -140,8 +172,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}
-        /// Operation Id: SubAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +207,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}
-        /// Operation Id: SubAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

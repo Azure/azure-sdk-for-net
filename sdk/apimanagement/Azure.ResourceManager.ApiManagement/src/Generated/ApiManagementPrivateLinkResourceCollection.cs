@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Gets the private link resources
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}
-        /// Operation Id: PrivateEndpointConnection_GetPrivateLinkResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_GetPrivateLinkResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Gets the private link resources
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}
-        /// Operation Id: PrivateEndpointConnection_GetPrivateLinkResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_GetPrivateLinkResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Gets the private link resources
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources
-        /// Operation Id: PrivateEndpointConnection_ListPrivateLinkResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_ListPrivateLinkResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -125,8 +149,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Gets the private link resources
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources
-        /// Operation Id: PrivateEndpointConnection_ListPrivateLinkResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_ListPrivateLinkResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -138,8 +170,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}
-        /// Operation Id: PrivateEndpointConnection_GetPrivateLinkResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_GetPrivateLinkResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,8 +205,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}
-        /// Operation Id: PrivateEndpointConnection_GetPrivateLinkResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_GetPrivateLinkResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

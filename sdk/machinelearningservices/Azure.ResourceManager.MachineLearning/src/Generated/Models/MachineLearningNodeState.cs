@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted.
-    /// Serialized Name: NodeState
-    /// </summary>
+    /// <summary> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </summary>
     public readonly partial struct MachineLearningNodeState : IEquatable<MachineLearningNodeState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LeavingValue = "leaving";
         private const string PreemptedValue = "preempted";
 
-        /// <summary>
-        /// idle
-        /// Serialized Name: NodeState.idle
-        /// </summary>
+        /// <summary> idle. </summary>
         public static MachineLearningNodeState Idle { get; } = new MachineLearningNodeState(IdleValue);
-        /// <summary>
-        /// running
-        /// Serialized Name: NodeState.running
-        /// </summary>
+        /// <summary> running. </summary>
         public static MachineLearningNodeState Running { get; } = new MachineLearningNodeState(RunningValue);
-        /// <summary>
-        /// preparing
-        /// Serialized Name: NodeState.preparing
-        /// </summary>
+        /// <summary> preparing. </summary>
         public static MachineLearningNodeState Preparing { get; } = new MachineLearningNodeState(PreparingValue);
-        /// <summary>
-        /// unusable
-        /// Serialized Name: NodeState.unusable
-        /// </summary>
+        /// <summary> unusable. </summary>
         public static MachineLearningNodeState Unusable { get; } = new MachineLearningNodeState(UnusableValue);
-        /// <summary>
-        /// leaving
-        /// Serialized Name: NodeState.leaving
-        /// </summary>
+        /// <summary> leaving. </summary>
         public static MachineLearningNodeState Leaving { get; } = new MachineLearningNodeState(LeavingValue);
-        /// <summary>
-        /// preempted
-        /// Serialized Name: NodeState.preempted
-        /// </summary>
+        /// <summary> preempted. </summary>
         public static MachineLearningNodeState Preempted { get; } = new MachineLearningNodeState(PreemptedValue);
         /// <summary> Determines if two <see cref="MachineLearningNodeState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningNodeState left, MachineLearningNodeState right) => left.Equals(right);

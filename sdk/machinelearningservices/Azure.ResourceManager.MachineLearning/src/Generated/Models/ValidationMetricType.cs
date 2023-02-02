@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Metric computation method to use for validation metrics in image tasks.
-    /// Serialized Name: ValidationMetricType
-    /// </summary>
+    /// <summary> Metric computation method to use for validation metrics in image tasks. </summary>
     public readonly partial struct ValidationMetricType : IEquatable<ValidationMetricType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string VocValue = "Voc";
         private const string CocoVocValue = "CocoVoc";
 
-        /// <summary>
-        /// No metric.
-        /// Serialized Name: ValidationMetricType.None
-        /// </summary>
+        /// <summary> No metric. </summary>
         public static ValidationMetricType None { get; } = new ValidationMetricType(NoneValue);
-        /// <summary>
-        /// Coco metric.
-        /// Serialized Name: ValidationMetricType.Coco
-        /// </summary>
+        /// <summary> Coco metric. </summary>
         public static ValidationMetricType Coco { get; } = new ValidationMetricType(CocoValue);
-        /// <summary>
-        /// Voc metric.
-        /// Serialized Name: ValidationMetricType.Voc
-        /// </summary>
+        /// <summary> Voc metric. </summary>
         public static ValidationMetricType Voc { get; } = new ValidationMetricType(VocValue);
-        /// <summary>
-        /// CocoVoc metric.
-        /// Serialized Name: ValidationMetricType.CocoVoc
-        /// </summary>
+        /// <summary> CocoVoc metric. </summary>
         public static ValidationMetricType CocoVoc { get; } = new ValidationMetricType(CocoVocValue);
         /// <summary> Determines if two <see cref="ValidationMetricType"/> values are the same. </summary>
         public static bool operator ==(ValidationMetricType left, ValidationMetricType right) => left.Equals(right);

@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role management policy for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
-        /// Operation Id: RoleManagementPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,8 +81,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role management policy for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
-        /// Operation Id: RoleManagementPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,8 +118,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role management policies for a resource scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies
-        /// Operation Id: RoleManagementPolicies_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleManagementPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -116,8 +140,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role management policies for a resource scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies
-        /// Operation Id: RoleManagementPolicies_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleManagementPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -130,8 +162,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
-        /// Operation Id: RoleManagementPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,8 +197,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
-        /// Operation Id: RoleManagementPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

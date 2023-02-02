@@ -7,6 +7,8 @@ Project("{2B8EF0DE-CC63-4290-A6FF-12C1C49175BB}") = "Azure.ResourceManager.Relay
 EndProject
 Project("{2B8EF0DE-CC63-4290-A6FF-12C1C49175BB}") = "Azure.ResourceManager.Relay.Tests", "tests\Azure.ResourceManager.Relay.Tests.csproj", "{E68DA54A-5CDC-4393-AF1C-A24E91C51E9A}"
 EndProject
+Project("{2B8EF0DE-CC63-4290-A6FF-12C1C49175BB}") = "Azure.ResourceManager.Relay.Samples", "samples\Azure.ResourceManager.Relay.Samples.csproj", "{293D1C95-90BB-4361-9910-5010E42BC535}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

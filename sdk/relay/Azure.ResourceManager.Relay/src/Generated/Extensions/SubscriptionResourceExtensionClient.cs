@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Check the specified namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,8 +76,16 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Check the specified namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -91,8 +107,16 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -105,8 +129,16 @@ namespace Azure.ResourceManager.Relay
 
         /// <summary>
         /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>

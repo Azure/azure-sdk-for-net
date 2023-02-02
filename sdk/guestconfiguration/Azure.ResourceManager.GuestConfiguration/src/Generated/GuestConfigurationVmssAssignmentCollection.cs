@@ -60,8 +60,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// Get information about a guest configuration assignment for VMSS
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,8 +97,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// Get information about a guest configuration assignment for VMSS
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// List all guest configuration assignments for VMSS.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GuestConfigurationVmssAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -131,8 +155,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// List all guest configuration assignments for VMSS.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GuestConfigurationVmssAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -144,8 +176,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,8 +211,16 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
-        /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

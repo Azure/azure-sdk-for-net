@@ -262,8 +262,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the application gateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways
-        /// Operation Id: ApplicationGateways_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -276,8 +284,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the application gateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways
-        /// Operation Id: ApplicationGateways_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -290,8 +306,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all available server variables.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables
-        /// Operation Id: ApplicationGateways_ListAvailableServerVariables
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableServerVariables</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
@@ -303,8 +327,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all available server variables.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables
-        /// Operation Id: ApplicationGateways_ListAvailableServerVariables
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableServerVariables</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
@@ -316,8 +348,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all available request headers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders
-        /// Operation Id: ApplicationGateways_ListAvailableRequestHeaders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableRequestHeaders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
@@ -329,8 +369,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all available request headers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders
-        /// Operation Id: ApplicationGateways_ListAvailableRequestHeaders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableRequestHeaders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
@@ -342,8 +390,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all available response headers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders
-        /// Operation Id: ApplicationGateways_ListAvailableResponseHeaders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableResponseHeaders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
@@ -355,8 +411,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all available response headers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders
-        /// Operation Id: ApplicationGateways_ListAvailableResponseHeaders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableResponseHeaders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
@@ -368,8 +432,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all available web application firewall rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets
-        /// Operation Id: ApplicationGateways_ListAvailableWafRuleSets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableWafRuleSets</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
@@ -381,8 +453,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all available web application firewall rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets
-        /// Operation Id: ApplicationGateways_ListAvailableWafRuleSets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableWafRuleSets</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
@@ -394,8 +474,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists available Ssl options for configuring Ssl policy.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
-        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableSslOptions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken = default)
@@ -416,8 +504,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists available Ssl options for configuring Ssl policy.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
-        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableSslOptions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken = default)
@@ -438,8 +534,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all SSL predefined policies for configuring Ssl policy.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
-        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableSslPredefinedPolicies</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
@@ -452,8 +556,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all SSL predefined policies for configuring Ssl policy.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
-        /// Operation Id: ApplicationGateways_ListAvailableSslPredefinedPolicies
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_ListAvailableSslPredefinedPolicies</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
@@ -466,8 +578,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets Ssl predefined policy with the specified policy name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
-        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_GetSslPredefinedPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -489,8 +609,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets Ssl predefined policy with the specified policy name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
-        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGateways_GetSslPredefinedPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -512,8 +640,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all application security groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
-        /// Operation Id: ApplicationSecurityGroups_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationSecurityGroups_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -526,8 +662,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all application security groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
-        /// Operation Id: ApplicationSecurityGroups_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationSecurityGroups_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -540,8 +684,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all of the available subnet delegations for this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations
-        /// Operation Id: AvailableDelegations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableDelegations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -555,8 +707,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all of the available subnet delegations for this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations
-        /// Operation Id: AvailableDelegations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableDelegations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -570,8 +730,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all available service aliases for this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
-        /// Operation Id: AvailableServiceAliases_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableServiceAliases_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -585,8 +753,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all available service aliases for this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
-        /// Operation Id: AvailableServiceAliases_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableServiceAliases_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -600,8 +776,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Azure Firewalls in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls
-        /// Operation Id: AzureFirewalls_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureFirewalls_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
@@ -614,8 +798,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Azure Firewalls in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls
-        /// Operation Id: AzureFirewalls_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureFirewalls_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
@@ -628,8 +820,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Azure Firewall FQDN Tags in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags
-        /// Operation Id: AzureFirewallFqdnTags_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureFirewallFqdnTags_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
@@ -642,8 +842,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Azure Firewall FQDN Tags in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags
-        /// Operation Id: AzureFirewallFqdnTags_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureFirewallFqdnTags_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
@@ -656,8 +864,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all Bastion Hosts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts
-        /// Operation Id: BastionHosts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BastionHosts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
@@ -670,8 +886,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all Bastion Hosts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts
-        /// Operation Id: BastionHosts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BastionHosts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
@@ -684,8 +908,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability
-        /// Operation Id: CheckDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
@@ -708,8 +940,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability
-        /// Operation Id: CheckDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
@@ -732,8 +972,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the custom IP prefixes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes
-        /// Operation Id: CustomIPPrefixes_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomIPPrefixes_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
@@ -746,8 +994,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the custom IP prefixes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes
-        /// Operation Id: CustomIPPrefixes_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomIPPrefixes_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
@@ -760,8 +1016,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all DDoS protection plans in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans
-        /// Operation Id: DdosProtectionPlans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DdosProtectionPlans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
@@ -774,8 +1038,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all DDoS protection plans in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans
-        /// Operation Id: DdosProtectionPlans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DdosProtectionPlans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
@@ -788,8 +1060,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all dscp configurations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations
-        /// Operation Id: DscpConfiguration_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscpConfiguration_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -802,8 +1082,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all dscp configurations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations
-        /// Operation Id: DscpConfiguration_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscpConfiguration_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -816,8 +1104,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List what values of endpoint services are available for use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices
-        /// Operation Id: AvailableEndpointServices_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableEndpointServices_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -831,8 +1127,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List what values of endpoint services are available for use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices
-        /// Operation Id: AvailableEndpointServices_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableEndpointServices_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -846,8 +1150,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the express route circuits in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits
-        /// Operation Id: ExpressRouteCircuits_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
@@ -860,8 +1172,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the express route circuits in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits
-        /// Operation Id: ExpressRouteCircuits_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
@@ -874,8 +1194,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the available express route service providers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders
-        /// Operation Id: ExpressRouteServiceProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteServiceProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -888,8 +1216,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the available express route service providers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders
-        /// Operation Id: ExpressRouteServiceProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteServiceProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -902,8 +1238,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves all the ExpressRouteCrossConnections in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections
-        /// Operation Id: ExpressRouteCrossConnections_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCrossConnections_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -916,8 +1260,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves all the ExpressRouteCrossConnections in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections
-        /// Operation Id: ExpressRouteCrossConnections_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCrossConnections_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -930,8 +1282,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List all the ExpressRoutePort resources in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts
-        /// Operation Id: ExpressRoutePorts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePorts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
@@ -944,8 +1304,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List all the ExpressRoutePort resources in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts
-        /// Operation Id: ExpressRoutePorts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePorts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
@@ -958,8 +1326,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Firewall Policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies
-        /// Operation Id: FirewallPolicies_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallPolicies_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -972,8 +1348,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Firewall Policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies
-        /// Operation Id: FirewallPolicies_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallPolicies_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -986,8 +1370,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all IpAllocations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations
-        /// Operation Id: IpAllocations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpAllocations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1000,8 +1392,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all IpAllocations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations
-        /// Operation Id: IpAllocations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpAllocations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1014,8 +1414,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all IpGroups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups
-        /// Operation Id: IpGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1028,8 +1436,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all IpGroups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups
-        /// Operation Id: IpGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1042,8 +1458,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the load balancers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers
-        /// Operation Id: LoadBalancers_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1056,8 +1480,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the load balancers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers
-        /// Operation Id: LoadBalancers_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1070,8 +1502,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Swaps VIPs between two load balancers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_SwapPublicIpAddresses</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
@@ -1098,8 +1538,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Swaps VIPs between two load balancers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancers_SwapPublicIpAddresses</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
@@ -1126,8 +1574,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Nat Gateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways
-        /// Operation Id: NatGateways_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatGateways_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1140,8 +1596,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Nat Gateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways
-        /// Operation Id: NatGateways_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatGateways_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1154,8 +1618,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all network interfaces in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces
-        /// Operation Id: NetworkInterfaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1168,8 +1640,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all network interfaces in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces
-        /// Operation Id: NetworkInterfaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1182,8 +1662,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the network profiles in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles
-        /// Operation Id: NetworkProfiles_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkProfiles_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1196,8 +1684,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the network profiles in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles
-        /// Operation Id: NetworkProfiles_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkProfiles_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1210,8 +1706,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all network security groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups
-        /// Operation Id: NetworkSecurityGroups_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityGroups_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1224,8 +1728,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all network security groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups
-        /// Operation Id: NetworkSecurityGroups_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityGroups_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1238,8 +1750,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all Network Virtual Appliances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances
-        /// Operation Id: NetworkVirtualAppliances_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualAppliances_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1252,8 +1772,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all Network Virtual Appliances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances
-        /// Operation Id: NetworkVirtualAppliances_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualAppliances_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1266,8 +1794,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all network watchers by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers
-        /// Operation Id: NetworkWatchers_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkWatchers_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1279,8 +1815,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all network watchers by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers
-        /// Operation Id: NetworkWatchers_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkWatchers_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1292,8 +1836,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all private endpoints in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints
-        /// Operation Id: PrivateEndpoints_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpoints_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1306,8 +1858,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all private endpoints in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints
-        /// Operation Id: PrivateEndpoints_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpoints_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1320,8 +1880,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
-        /// Operation Id: AvailablePrivateEndpointTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailablePrivateEndpointTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1335,8 +1903,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
-        /// Operation Id: AvailablePrivateEndpointTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailablePrivateEndpointTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1350,8 +1926,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all private link service in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices
-        /// Operation Id: PrivateLinkServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1364,8 +1948,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all private link service in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices
-        /// Operation Id: PrivateLinkServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1378,8 +1970,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks whether the subscription is visible to private link service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
-        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibility
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -1406,8 +2006,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks whether the subscription is visible to private link service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
-        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibility
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -1434,8 +2042,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
-        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServices
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1449,8 +2065,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
-        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServices
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1464,8 +2088,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the public IP addresses in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses
-        /// Operation Id: PublicIPAddresses_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicIPAddresses_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1478,8 +2110,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the public IP addresses in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses
-        /// Operation Id: PublicIPAddresses_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicIPAddresses_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1492,8 +2132,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the public IP prefixes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes
-        /// Operation Id: PublicIPPrefixes_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicIPPrefixes_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1506,8 +2154,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the public IP prefixes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes
-        /// Operation Id: PublicIPPrefixes_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicIPPrefixes_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1520,8 +2176,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all route filters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters
-        /// Operation Id: RouteFilters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteFilters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1534,8 +2198,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all route filters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters
-        /// Operation Id: RouteFilters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteFilters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1548,8 +2220,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all route tables in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables
-        /// Operation Id: RouteTables_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteTables_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1562,8 +2242,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all route tables in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables
-        /// Operation Id: RouteTables_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteTables_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1576,8 +2264,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Security Partner Providers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders
-        /// Operation Id: SecurityPartnerProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPartnerProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1590,8 +2286,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Security Partner Providers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders
-        /// Operation Id: SecurityPartnerProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPartnerProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1604,8 +2308,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the available bgp service communities.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities
-        /// Operation Id: BgpServiceCommunities_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BgpServiceCommunities_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
@@ -1618,8 +2330,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the available bgp service communities.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities
-        /// Operation Id: BgpServiceCommunities_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BgpServiceCommunities_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
@@ -1632,8 +2352,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the service endpoint policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies
-        /// Operation Id: ServiceEndpointPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceEndpointPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1646,8 +2374,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the service endpoint policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies
-        /// Operation Id: ServiceEndpointPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceEndpointPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1660,8 +2396,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets a list of service tag information resources.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags
-        /// Operation Id: ServiceTags_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTags_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1683,8 +2427,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets a list of service tag information resources.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags
-        /// Operation Id: ServiceTags_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTags_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1706,8 +2458,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List network usages for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1721,8 +2481,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// List network usages for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1736,8 +2504,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all virtual networks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks
-        /// Operation Id: VirtualNetworks_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1750,8 +2526,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all virtual networks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks
-        /// Operation Id: VirtualNetworks_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1764,8 +2548,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the VirtualNetworkTaps in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps
-        /// Operation Id: VirtualNetworkTaps_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkTaps_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1778,8 +2570,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the VirtualNetworkTaps in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps
-        /// Operation Id: VirtualNetworkTaps_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkTaps_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1792,8 +2592,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Virtual Routers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters
-        /// Operation Id: VirtualRouters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualRouters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1806,8 +2614,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Virtual Routers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters
-        /// Operation Id: VirtualRouters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualRouters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1820,8 +2636,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VirtualWANs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans
-        /// Operation Id: VirtualWans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualWans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1834,8 +2658,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VirtualWANs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans
-        /// Operation Id: VirtualWans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualWans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1848,8 +2680,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VpnSites in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites
-        /// Operation Id: VpnSites_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnSites_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1862,8 +2702,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VpnSites in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites
-        /// Operation Id: VpnSites_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnSites_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1876,8 +2724,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VpnServerConfigurations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations
-        /// Operation Id: VpnServerConfigurations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnServerConfigurations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1890,8 +2746,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VpnServerConfigurations in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations
-        /// Operation Id: VpnServerConfigurations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnServerConfigurations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1904,8 +2768,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VirtualHubs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs
-        /// Operation Id: VirtualHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1918,8 +2790,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VirtualHubs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs
-        /// Operation Id: VirtualHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1932,8 +2812,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VpnGateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways
-        /// Operation Id: VpnGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1946,8 +2834,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the VpnGateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways
-        /// Operation Id: VpnGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1960,8 +2856,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the P2SVpnGateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways
-        /// Operation Id: P2sVpnGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>P2sVpnGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1974,8 +2878,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists all the P2SVpnGateways in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways
-        /// Operation Id: P2sVpnGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>P2sVpnGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1988,8 +2900,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists ExpressRoute gateways under a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways
-        /// Operation Id: ExpressRouteGateways_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -2001,8 +2921,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Lists ExpressRoute gateways under a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways
-        /// Operation Id: ExpressRouteGateways_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
@@ -2014,8 +2942,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the WAF policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies
-        /// Operation Id: WebApplicationFirewallPolicies_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApplicationFirewallPolicies_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -2028,8 +2964,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the WAF policies in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies
-        /// Operation Id: WebApplicationFirewallPolicies_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApplicationFirewallPolicies_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>

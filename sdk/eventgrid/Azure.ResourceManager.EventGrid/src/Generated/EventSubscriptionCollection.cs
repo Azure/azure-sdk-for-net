@@ -46,8 +46,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Asynchronously creates a new event subscription or updates an existing event subscription based on the specified scope.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. Event subscription names must be between 3 and 64 characters in length and should use alphanumeric letters only. </param>
@@ -79,8 +87,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Asynchronously creates a new event subscription or updates an existing event subscription based on the specified scope.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. Event subscription names must be between 3 and 64 characters in length and should use alphanumeric letters only. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,8 +165,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,14 +202,40 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List all aggregated global event subscriptions under a specific Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalBySubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalByResourceGroup
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListByResource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListByDomainTopic
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListGlobalBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListGlobalByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListByResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListByDomainTopic</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
@@ -213,14 +271,40 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List all aggregated global event subscriptions under a specific Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalBySubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalByResourceGroup
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListByResource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListByDomainTopic
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListGlobalBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListGlobalByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListByResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListByDomainTopic</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
@@ -256,8 +340,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -283,8 +375,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

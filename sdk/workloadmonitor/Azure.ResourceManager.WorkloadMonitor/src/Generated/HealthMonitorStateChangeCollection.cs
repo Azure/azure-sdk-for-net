@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}
-        /// Operation Id: HealthMonitors_GetStateChange
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -85,8 +93,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}
-        /// Operation Id: HealthMonitors_GetStateChange
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -115,8 +131,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history
-        /// Operation Id: HealthMonitors_ListStateChanges
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_ListStateChanges</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -133,8 +157,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history
-        /// Operation Id: HealthMonitors_ListStateChanges
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_ListStateChanges</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -151,8 +183,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}
-        /// Operation Id: HealthMonitors_GetStateChange
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -179,8 +219,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}
-        /// Operation Id: HealthMonitors_GetStateChange
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>

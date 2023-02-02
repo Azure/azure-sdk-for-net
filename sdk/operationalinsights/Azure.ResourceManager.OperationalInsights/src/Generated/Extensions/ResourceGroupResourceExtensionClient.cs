@@ -69,8 +69,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks
-        /// Operation Id: QueryPacks_CreateOrUpdateWithoutName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -92,8 +100,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks
-        /// Operation Id: QueryPacks_CreateOrUpdateWithoutName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,8 +131,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets recently deleted workspaces in a resource group, available for recovery.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces
-        /// Operation Id: DeletedWorkspaces_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWorkspaces_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -128,8 +152,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets recently deleted workspaces in a resource group, available for recovery.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces
-        /// Operation Id: DeletedWorkspaces_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWorkspaces_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>

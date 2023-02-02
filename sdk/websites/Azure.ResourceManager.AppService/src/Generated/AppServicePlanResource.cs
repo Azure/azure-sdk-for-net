@@ -97,8 +97,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
-        /// Operation Id: AppServicePlans_GetHybridConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetHybridConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
-        /// Operation Id: AppServicePlans_GetHybridConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetHybridConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
@@ -143,8 +159,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a Virtual Network associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,8 +182,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a Virtual Network associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,8 +205,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppServicePlanResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -197,8 +237,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServicePlanResource> Get(CancellationToken cancellationToken = default)
@@ -221,8 +269,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Delete an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -247,8 +303,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Delete an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -273,8 +337,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates or updates an App Service Plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,8 +371,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates or updates an App Service Plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,8 +405,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all capabilities of an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/capabilities
-        /// Operation Id: AppServicePlans_ListCapabilities
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListCapabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceSkuCapability" /> that may take multiple service requests to iterate over. </returns>
@@ -338,8 +426,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all capabilities of an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/capabilities
-        /// Operation Id: AppServicePlans_ListCapabilities
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListCapabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceSkuCapability" /> that may take multiple service requests to iterate over. </returns>
@@ -351,8 +447,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Retrieve all Hybrid Connections in use in an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionRelays
-        /// Operation Id: AppServicePlans_ListHybridConnections
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionRelays</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListHybridConnections</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridConnectionData" /> that may take multiple service requests to iterate over. </returns>
@@ -365,8 +469,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Retrieve all Hybrid Connections in use in an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionRelays
-        /// Operation Id: AppServicePlans_ListHybridConnections
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionRelays</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListHybridConnections</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridConnectionData" /> that may take multiple service requests to iterate over. </returns>
@@ -379,8 +491,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Restart all apps in an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/restartSites
-        /// Operation Id: AppServicePlans_RestartWebApps
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/restartSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_RestartWebApps</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softRestart"> Specify &lt;code&gt;true&lt;/code&gt; to perform a soft restart, applies the configuration settings and restarts the apps if necessary. The default is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions the apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -402,8 +522,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Restart all apps in an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/restartSites
-        /// Operation Id: AppServicePlans_RestartWebApps
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/restartSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_RestartWebApps</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softRestart"> Specify &lt;code&gt;true&lt;/code&gt; to perform a soft restart, applies the configuration settings and restarts the apps if necessary. The default is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions the apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -425,8 +553,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all apps associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
-        /// Operation Id: AppServicePlans_ListWebApps
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListWebApps</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip to a web app in the list of webapps associated with app service plan. If specified, the resulting list will contain web apps starting from (including) the skipToken. Otherwise, the resulting list contains web apps from the start of the list. </param>
         /// <param name="filter"> Supported filter: $filter=state eq running. Returns only web apps that are currently running. </param>
@@ -442,8 +578,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all apps associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
-        /// Operation Id: AppServicePlans_ListWebApps
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListWebApps</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip to a web app in the list of webapps associated with app service plan. If specified, the resulting list will contain web apps starting from (including) the skipToken. Otherwise, the resulting list contains web apps from the start of the list. </param>
         /// <param name="filter"> Supported filter: $filter=state eq running. Returns only web apps that are currently running. </param>
@@ -459,8 +603,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets all selectable SKUs for a given App Service Plan
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/skus
-        /// Operation Id: AppServicePlans_GetServerFarmSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetServerFarmSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BinaryData>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
@@ -481,8 +633,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets all selectable SKUs for a given App Service Plan
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/skus
-        /// Operation Id: AppServicePlans_GetServerFarmSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetServerFarmSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BinaryData> GetServerFarmSkus(CancellationToken cancellationToken = default)
@@ -503,8 +663,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets server farm usage information
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/usages
-        /// Operation Id: AppServicePlans_ListUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -518,8 +686,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets server farm usage information
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/usages
-        /// Operation Id: AppServicePlans_ListUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_ListUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -533,8 +709,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Reboot a worker machine in an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}/reboot
-        /// Operation Id: AppServicePlans_RebootWorker
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}/reboot</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_RebootWorker</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workerName"> Name of worker machine, which typically starts with RD. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -560,8 +744,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Reboot a worker machine in an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}/reboot
-        /// Operation Id: AppServicePlans_RebootWorker
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}/reboot</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_RebootWorker</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workerName"> Name of worker machine, which typically starts with RD. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

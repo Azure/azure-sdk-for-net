@@ -61,8 +61,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/botServices
-        /// Operation Id: Bots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/botServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BotResource" /> that may take multiple service requests to iterate over. </returns>
@@ -75,8 +83,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/botServices
-        /// Operation Id: Bots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/botServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BotResource" /> that may take multiple service requests to iterate over. </returns>
@@ -89,8 +105,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Lists the available Service Providers for creating Connection Settings
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders
-        /// Operation Id: BotConnection_ListServiceProviders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotConnection_ListServiceProviders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -102,8 +126,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Lists the available Service Providers for creating Connection Settings
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders
-        /// Operation Id: BotConnection_ListServiceProviders
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotConnection_ListServiceProviders</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -115,8 +147,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Lists the QnA Maker endpoint keys
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/listQnAMakerEndpointKeys
-        /// Operation Id: QnAMakerEndpointKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listQnAMakerEndpointKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QnAMakerEndpointKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="qnAMakerEndpointKeysRequestBody"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,8 +178,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Lists the QnA Maker endpoint keys
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/listQnAMakerEndpointKeys
-        /// Operation Id: QnAMakerEndpointKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listQnAMakerEndpointKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QnAMakerEndpointKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="qnAMakerEndpointKeysRequestBody"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,8 +209,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Get per subscription settings needed to host bot in compute resource such as Azure App Service
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/hostSettings
-        /// Operation Id: HostSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/hostSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HostSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HostSettingsResponse>> GetHostSettingAsync(CancellationToken cancellationToken = default)
@@ -183,8 +239,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Get per subscription settings needed to host bot in compute resource such as Azure App Service
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/hostSettings
-        /// Operation Id: HostSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/hostSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HostSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HostSettingsResponse> GetHostSetting(CancellationToken cancellationToken = default)
@@ -205,8 +269,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Get the operation result for a long running operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/operationresults/{operationResultId}
-        /// Operation Id: OperationResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/operationresults/{operationResultId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="operationResultId"> The ID of the operation result to get. </param>
@@ -232,8 +304,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Get the operation result for a long running operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.BotService/operationresults/{operationResultId}
-        /// Operation Id: OperationResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/operationresults/{operationResultId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="operationResultId"> The ID of the operation result to get. </param>

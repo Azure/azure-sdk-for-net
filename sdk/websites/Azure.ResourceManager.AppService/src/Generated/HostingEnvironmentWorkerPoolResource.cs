@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get properties of a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_GetWorkerPool</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get properties of a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_GetWorkerPool</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HostingEnvironmentWorkerPoolResource> Get(CancellationToken cancellationToken = default)
@@ -137,8 +153,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Create or update a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_UpdateWorkerPool</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,8 +187,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Create or update a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_UpdateWorkerPool</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,8 +221,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get metric definitions for a specific instance of a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions
-        /// Operation Id: AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -208,8 +248,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get metric definitions for a specific instance of a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions
-        /// Operation Id: AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -227,8 +275,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get metric definitions for a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions
-        /// Operation Id: AppServiceEnvironments_ListWebWorkerMetricDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWebWorkerMetricDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -241,8 +297,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get metric definitions for a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions
-        /// Operation Id: AppServiceEnvironments_ListWebWorkerMetricDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWebWorkerMetricDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -255,8 +319,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available SKUs for scaling a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus
-        /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWorkerPoolSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
@@ -269,8 +341,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available SKUs for scaling a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus
-        /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWorkerPoolSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
@@ -283,8 +363,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get usage metrics for a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages
-        /// Operation Id: AppServiceEnvironments_ListWebWorkerUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWebWorkerUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -297,8 +385,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get usage metrics for a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages
-        /// Operation Id: AppServiceEnvironments_ListWebWorkerUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWebWorkerUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>

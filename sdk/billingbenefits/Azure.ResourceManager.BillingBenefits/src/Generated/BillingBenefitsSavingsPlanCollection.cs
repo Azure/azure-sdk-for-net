@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Get savings plan.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
-        /// Operation Id: SavingsPlan_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Get savings plan.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
-        /// Operation Id: SavingsPlan_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
@@ -114,8 +130,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// List savings plans in an order.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans
-        /// Operation Id: SavingsPlan_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
@@ -128,8 +152,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// List savings plans in an order.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans
-        /// Operation Id: SavingsPlan_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
@@ -142,8 +174,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
-        /// Operation Id: SavingsPlan_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
@@ -170,8 +210,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
-        /// Operation Id: SavingsPlan_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>

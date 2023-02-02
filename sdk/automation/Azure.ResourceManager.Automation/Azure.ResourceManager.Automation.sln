@@ -7,6 +7,8 @@ Project("{78106D72-2E2E-4433-9188-E0703DBE21CD}") = "Azure.ResourceManager.Autom
 EndProject
 Project("{78106D72-2E2E-4433-9188-E0703DBE21CD}") = "Azure.ResourceManager.Automation.Tests", "tests\Azure.ResourceManager.Automation.Tests.csproj", "{1E8D0EFB-9AE9-4688-936D-98B4CCFF353E}"
 EndProject
+Project("{78106D72-2E2E-4433-9188-E0703DBE21CD}") = "Azure.ResourceManager.Automation.Samples", "samples\Azure.ResourceManager.Automation.Samples.csproj", "{01968879-950A-4318-834B-66ADDF7EE015}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

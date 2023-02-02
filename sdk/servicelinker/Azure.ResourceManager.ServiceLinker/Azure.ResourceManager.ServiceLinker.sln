@@ -7,6 +7,8 @@ Project("{265FAC58-2A34-471D-90C7-154DF969D6AF}") = "Azure.ResourceManager.Servi
 EndProject
 Project("{265FAC58-2A34-471D-90C7-154DF969D6AF}") = "Azure.ResourceManager.ServiceLinker.Tests", "tests\Azure.ResourceManager.ServiceLinker.Tests.csproj", "{C1DEC719-AC09-4407-9623-1600103E108C}"
 EndProject
+Project("{265FAC58-2A34-471D-90C7-154DF969D6AF}") = "Azure.ResourceManager.ServiceLinker.Samples", "samples\Azure.ResourceManager.ServiceLinker.Samples.csproj", "{DB9905E6-C034-4EDB-9971-2F60F8EC5ACF}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

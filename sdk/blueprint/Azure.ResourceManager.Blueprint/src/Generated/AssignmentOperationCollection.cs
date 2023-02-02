@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Get a blueprint assignment operation.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}
-        /// Operation Id: AssignmentOperations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assignmentOperationName"> Name of the blueprint assignment operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Get a blueprint assignment operation.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}
-        /// Operation Id: AssignmentOperations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assignmentOperationName"> Name of the blueprint assignment operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// List operations for given blueprint assignment within a subscription or a management group.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations
-        /// Operation Id: AssignmentOperations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssignmentOperations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AssignmentOperationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// List operations for given blueprint assignment within a subscription or a management group.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations
-        /// Operation Id: AssignmentOperations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssignmentOperations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AssignmentOperationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -140,8 +172,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}
-        /// Operation Id: AssignmentOperations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assignmentOperationName"> Name of the blueprint assignment operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +207,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}
-        /// Operation Id: AssignmentOperations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assignmentOperationName"> Name of the blueprint assignment operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

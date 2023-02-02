@@ -58,8 +58,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
-        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
-        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,8 +132,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions
-        /// Operation Id: CloudServiceOperatingSystems_ListOSVersions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_ListOSVersions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CloudServiceOSVersionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -130,8 +154,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions
-        /// Operation Id: CloudServiceOperatingSystems_ListOSVersions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_ListOSVersions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CloudServiceOSVersionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -144,8 +176,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
-        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,8 +211,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
-        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

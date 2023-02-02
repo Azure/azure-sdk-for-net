@@ -51,8 +51,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a list of Experiment resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments
-        /// Operation Id: Experiments_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
@@ -67,8 +75,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a list of Experiment resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments
-        /// Operation Id: Experiments_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>

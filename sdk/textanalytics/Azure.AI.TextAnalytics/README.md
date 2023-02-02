@@ -1,18 +1,19 @@
 # Azure Cognitive Services Text Analytics client library for .NET
+
 Text Analytics is part of the Azure Cognitive Service for Language, a cloud-based service that provides Natural Language Processing (NLP) features for understanding and analyzing text. This client library offers the following features:
 
-  * Language detection
-  * Sentiment analysis
-  * Key phrase extraction
-  * Named entity recognition (NER)
-  * Personally identifiable information (PII) entity recognition
-  * Entity linking
-  * Text analytics for health
-  * Custom named entity recognition (Custom NER)
-  * Custom text classification
-  * Dynamic text classification
-  * Extractive text summarization
-  * Abstractive text summarization
+* Language detection
+* Sentiment analysis
+* Key phrase extraction
+* Named entity recognition (NER)
+* Personally identifiable information (PII) entity recognition
+* Entity linking
+* Text analytics for health
+* Custom named entity recognition (Custom NER)
+* Custom text classification
+* Dynamic text classification
+* Extractive text summarization
+* Abstractive text summarization
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][language_service_docs] | [Samples][textanalytics_samples]
 
@@ -43,36 +44,11 @@ This table shows the relationship between SDK versions and supported API version
 * An [Azure subscription][azure_sub].
 * An existing Cognitive Services or Language service resource.
 
-#### Create a Cognitive Services or Language service resource
+#### Create a Cognitive Services resource or a Language service resource
 
-The Language service supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Language service access only, create a Language service resource.
+Azure Cognitive Service for Language supports both [multi-service and single-service access][service_access]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint and API key. To access the features of the Language service only, create a Language service resource instead.
 
-You can create either resource using:
-
-**Option 1:** [Azure Portal][cognitive_resource_portal].
-
-**Option 2:** [Azure CLI][cognitive_resource_cli].
-
-Below is an example of how you can create a Language service resource using the CLI:
-
-```PowerShell
-# Create a new resource group to hold the Language service resource -
-# if using an existing resource group, skip this step
-az group create --name <your-resource-name> --location <location>
-```
-
-```PowerShell
-# Create Text Analytics
-az cognitiveservices account create \
-    --name <your-resource-name> \
-    --resource-group <your-resource-group-name> \
-    --kind TextAnalytics \
-    --sku <sku> \
-    --location <location> \
-    --yes
-```
-
-For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
+You can create either resource via the [Azure portal][create_ta_resource_azure_portal] or, alternatively, you can follow the steps in [this document][create_ta_resource_azure_cli] to create it using the [Azure CLI][azure_cli].
 
 ### Authenticate the client
 
@@ -157,6 +133,7 @@ For long running operations in the Azure SDK, the client exposes a `Start<operat
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
+
 <!-- CLIENT COMMON BAR -->
 [Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
@@ -168,7 +145,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient-with-azure-active-directory-credential), and covers the main features present in this client library. Although most of the snippets below make use of synchronous service calls, keep in mind that the `Azure.AI.TextAnalytics` package supports both synchronous and asynchronous APIs.
+The following section provides several code snippets using the `client` [created above](#create-a-textanalyticsclient-using-an-api-key-credential), and covers the main features present in this client library. Although most of the snippets below make use of synchronous service calls, keep in mind that the `Azure.AI.TextAnalytics` package supports both synchronous and asynchronous APIs.
 
 ### Sync examples
 
@@ -802,8 +779,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
-[cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
-[cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt
 [mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
 
@@ -845,6 +820,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
+[service_access]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[create_ta_resource_azure_portal]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[create_ta_resource_azure_cli]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
 [moq]: https://github.com/Moq/moq4/

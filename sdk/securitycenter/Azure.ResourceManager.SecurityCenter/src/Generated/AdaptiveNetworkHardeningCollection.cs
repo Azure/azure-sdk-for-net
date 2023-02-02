@@ -66,8 +66,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a single Adaptive Network Hardening resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}
-        /// Operation Id: AdaptiveNetworkHardenings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,8 +103,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a single Adaptive Network Hardening resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}
-        /// Operation Id: AdaptiveNetworkHardenings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -124,8 +140,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of Adaptive Network Hardenings resources in scope of an extended resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings
-        /// Operation Id: AdaptiveNetworkHardenings_ListByExtendedResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_ListByExtendedResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AdaptiveNetworkHardeningResource" /> that may take multiple service requests to iterate over. </returns>
@@ -138,8 +162,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of Adaptive Network Hardenings resources in scope of an extended resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings
-        /// Operation Id: AdaptiveNetworkHardenings_ListByExtendedResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_ListByExtendedResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AdaptiveNetworkHardeningResource" /> that may take multiple service requests to iterate over. </returns>
@@ -152,8 +184,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}
-        /// Operation Id: AdaptiveNetworkHardenings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +219,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}
-        /// Operation Id: AdaptiveNetworkHardenings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -91,8 +91,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns a ResourceGuard belonging to a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceGuardResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -115,8 +123,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns a ResourceGuard belonging to a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceGuardResource> Get(CancellationToken cancellationToken = default)
@@ -139,8 +155,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Deletes a ResourceGuard resource from the resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,8 +189,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Deletes a ResourceGuard resource from the resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,13 +223,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Updates a ResourceGuard resource belonging to a resource group. For example, updating tags for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Patch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Patch</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ResourceGuardResource>> UpdateAsync(DataProtectionBackupPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardResource>> UpdateAsync(ResourceGuardPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -217,13 +257,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Updates a ResourceGuard resource belonging to a resource group. For example, updating tags for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Patch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Patch</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ResourceGuardResource> Update(DataProtectionBackupPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardResource> Update(ResourceGuardPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -243,8 +291,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests
-        /// Operation Id: ResourceGuards_GetDisableSoftDeleteRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDisableSoftDeleteRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -257,8 +313,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests
-        /// Operation Id: ResourceGuards_GetDisableSoftDeleteRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDisableSoftDeleteRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -271,8 +335,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests
-        /// Operation Id: ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -285,8 +357,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests
-        /// Operation Id: ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -299,8 +379,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests
-        /// Operation Id: ResourceGuards_GetBackupSecurityPINRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetBackupSecurityPINRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -313,8 +401,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests
-        /// Operation Id: ResourceGuards_GetBackupSecurityPINRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetBackupSecurityPINRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -327,8 +423,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests
-        /// Operation Id: ResourceGuards_GetDeleteProtectedItemRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDeleteProtectedItemRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -341,8 +445,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests
-        /// Operation Id: ResourceGuards_GetDeleteProtectedItemRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDeleteProtectedItemRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -355,8 +467,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests
-        /// Operation Id: ResourceGuards_GetUpdateProtectionPolicyRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetUpdateProtectionPolicyRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -369,8 +489,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests
-        /// Operation Id: ResourceGuards_GetUpdateProtectionPolicyRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetUpdateProtectionPolicyRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -383,8 +511,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests
-        /// Operation Id: ResourceGuards_GetUpdateProtectedItemRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetUpdateProtectedItemRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -397,8 +533,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests
-        /// Operation Id: ResourceGuards_GetUpdateProtectedItemRequestsObjects
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetUpdateProtectedItemRequestsObjects</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
@@ -411,8 +555,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultDisableSoftDeleteRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultDisableSoftDeleteRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -438,8 +590,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultDisableSoftDeleteRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultDisableSoftDeleteRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -465,8 +625,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -492,8 +660,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -519,8 +695,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultBackupSecurityPINRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultBackupSecurityPINRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -546,8 +730,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultBackupSecurityPINRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultBackupSecurityPINRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -573,8 +765,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultDeleteProtectedItemRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultDeleteProtectedItemRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -600,8 +800,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultDeleteProtectedItemRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultDeleteProtectedItemRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -627,8 +835,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -654,8 +870,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -681,8 +905,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultUpdateProtectedItemRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultUpdateProtectedItemRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -708,8 +940,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}
-        /// Operation Id: ResourceGuards_GetDefaultUpdateProtectedItemRequestsObject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetDefaultUpdateProtectedItemRequestsObject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -735,8 +975,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -762,7 +1010,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new ResourceGuardPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -781,8 +1029,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -808,7 +1064,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new ResourceGuardPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -827,8 +1083,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -853,7 +1117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new ResourceGuardPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -868,8 +1132,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -894,7 +1166,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new ResourceGuardPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -909,8 +1181,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -934,7 +1214,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new ResourceGuardPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -953,8 +1233,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -978,7 +1266,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataProtectionBackupPatch();
+                    var patch = new ResourceGuardPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

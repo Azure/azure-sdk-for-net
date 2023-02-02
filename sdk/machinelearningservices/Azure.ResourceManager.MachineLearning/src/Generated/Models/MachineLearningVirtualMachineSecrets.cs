@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Secrets related to a Machine Learning compute based on AKS.
-    /// Serialized Name: VirtualMachineSecrets
-    /// </summary>
+    /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
     public partial class MachineLearningVirtualMachineSecrets : MachineLearningComputeSecrets
     {
         /// <summary> Initializes a new instance of MachineLearningVirtualMachineSecrets. </summary>
@@ -20,24 +17,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningVirtualMachineSecrets. </summary>
-        /// <param name="computeType">
-        /// The type of compute
-        /// Serialized Name: ComputeSecrets.computeType
-        /// </param>
-        /// <param name="administratorAccount">
-        /// Admin credentials for virtual machine.
-        /// Serialized Name: VirtualMachineSecretsSchema.administratorAccount
-        /// </param>
+        /// <param name="computeType"> The type of compute. </param>
+        /// <param name="administratorAccount"> Admin credentials for virtual machine. </param>
         internal MachineLearningVirtualMachineSecrets(ComputeType computeType, MachineLearningVmSshCredentials administratorAccount) : base(computeType)
         {
             AdministratorAccount = administratorAccount;
             ComputeType = computeType;
         }
 
-        /// <summary>
-        /// Admin credentials for virtual machine.
-        /// Serialized Name: VirtualMachineSecretsSchema.administratorAccount
-        /// </summary>
+        /// <summary> Admin credentials for virtual machine. </summary>
         public MachineLearningVmSshCredentials AdministratorAccount { get; }
     }
 }

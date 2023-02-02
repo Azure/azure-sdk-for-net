@@ -53,8 +53,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets the user activities of a SQL pool which includes running and suspended queries
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
-        /// Operation Id: SqlPoolDataWarehouseUserActivities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,8 +86,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets the user activities of a SQL pool which includes running and suspended queries
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
-        /// Operation Id: SqlPoolDataWarehouseUserActivities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +119,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
-        /// Operation Id: SqlPoolDataWarehouseUserActivities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
-        /// Operation Id: SqlPoolDataWarehouseUserActivities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

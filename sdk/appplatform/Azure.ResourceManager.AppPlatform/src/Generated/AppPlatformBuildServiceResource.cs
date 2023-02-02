@@ -96,8 +96,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a KPack build.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}
-        /// Operation Id: BuildService_GetBuild
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildName"> The name of the build resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +119,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a KPack build.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}
-        /// Operation Id: BuildService_GetBuild
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildName"> The name of the build resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,8 +149,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get the supported buildpack resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedBuildpacks/{buildpackName}
-        /// Operation Id: BuildService_GetSupportedBuildpack
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedBuildpacks/{buildpackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -148,8 +172,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get the supported buildpack resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedBuildpacks/{buildpackName}
-        /// Operation Id: BuildService_GetSupportedBuildpack
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedBuildpacks/{buildpackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,8 +202,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get the supported stack resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedStacks/{stackName}
-        /// Operation Id: BuildService_GetSupportedStack
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedStacks/{stackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetSupportedStack</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="stackName"> The name of the stack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,8 +225,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get the supported stack resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedStacks/{stackName}
-        /// Operation Id: BuildService_GetSupportedStack
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedStacks/{stackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetSupportedStack</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="stackName"> The name of the stack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,8 +255,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a KPack builder.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}
-        /// Operation Id: BuildServiceBuilder_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildServiceBuilder_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="builderName"> The name of the builder resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,8 +278,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a KPack builder.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}
-        /// Operation Id: BuildServiceBuilder_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildServiceBuilder_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="builderName"> The name of the builder resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,8 +308,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get build service agent pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/agentPools/{agentPoolName}
-        /// Operation Id: BuildServiceAgentPool_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/agentPools/{agentPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildServiceAgentPool_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="agentPoolName"> The name of the build service agent pool resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,8 +331,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get build service agent pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/agentPools/{agentPoolName}
-        /// Operation Id: BuildServiceAgentPool_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/agentPools/{agentPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildServiceAgentPool_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="agentPoolName"> The name of the build service agent pool resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,8 +354,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a build service resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}
-        /// Operation Id: BuildService_GetBuildService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppPlatformBuildServiceResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -298,8 +386,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a build service resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}
-        /// Operation Id: BuildService_GetBuildService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppPlatformBuildServiceResource> Get(CancellationToken cancellationToken = default)
@@ -322,8 +418,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get an resource upload URL for build service, which may be artifacts or source archive.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/getResourceUploadUrl
-        /// Operation Id: BuildService_GetResourceUploadUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/getResourceUploadUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetResourceUploadUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppPlatformResourceUploadResult>> GetResourceUploadUriAsync(CancellationToken cancellationToken = default)
@@ -344,8 +448,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get an resource upload URL for build service, which may be artifacts or source archive.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/getResourceUploadUrl
-        /// Operation Id: BuildService_GetResourceUploadUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/getResourceUploadUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetResourceUploadUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppPlatformResourceUploadResult> GetResourceUploadUri(CancellationToken cancellationToken = default)

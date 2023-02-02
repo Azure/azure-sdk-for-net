@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Details of a specific setting
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}
-        /// Operation Id: AutoProvisioningSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="settingName"> Auto provisioning setting key. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Details of a specific setting
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}
-        /// Operation Id: AutoProvisioningSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="settingName"> Auto provisioning setting key. </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Details of a specific setting
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}
-        /// Operation Id: AutoProvisioningSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="settingName"> Auto provisioning setting key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Details of a specific setting
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}
-        /// Operation Id: AutoProvisioningSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="settingName"> Auto provisioning setting key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +211,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Exposes the auto provisioning settings of the subscriptions
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings
-        /// Operation Id: AutoProvisioningSettings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutoProvisioningSettingResource" /> that may take multiple service requests to iterate over. </returns>
@@ -193,8 +233,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Exposes the auto provisioning settings of the subscriptions
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings
-        /// Operation Id: AutoProvisioningSettings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoProvisioningSettingResource" /> that may take multiple service requests to iterate over. </returns>
@@ -207,8 +255,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}
-        /// Operation Id: AutoProvisioningSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="settingName"> Auto provisioning setting key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,8 +290,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}
-        /// Operation Id: AutoProvisioningSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="settingName"> Auto provisioning setting key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -81,7 +81,7 @@ function TestGetCodeOwner([string]$targetDirectory, [string]$codeOwnerFileLocati
 }
 
 if($Test) {
-  $testFile = (Resolve-Path $PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/CODEOWNERS)
+  $testFile = (Resolve-Path $PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/simple_path_CODEOWNERS)
   TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person1", "person2")
   TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person1", "person2")
   TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person3", "person4")

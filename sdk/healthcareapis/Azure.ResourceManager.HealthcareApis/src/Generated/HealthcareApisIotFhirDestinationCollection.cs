@@ -59,8 +59,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Creates or updates an IoT Connector FHIR destination resource with the specified parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}
-        /// Operation Id: IotConnectorFhirDestination_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
@@ -92,8 +100,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Creates or updates an IoT Connector FHIR destination resource with the specified parameters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}
-        /// Operation Id: IotConnectorFhirDestination_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
@@ -125,8 +141,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Gets the properties of the specified Iot Connector FHIR destination.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}
-        /// Operation Id: IotConnectorFhirDestination_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,8 +178,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Gets the properties of the specified Iot Connector FHIR destination.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}
-        /// Operation Id: IotConnectorFhirDestination_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,8 +215,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Lists all FHIR destinations for the given IoT Connector
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations
-        /// Operation Id: FhirDestinations_ListByIotConnector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirDestinations_ListByIotConnector</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HealthcareApisIotFhirDestinationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -197,8 +237,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Lists all FHIR destinations for the given IoT Connector
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations
-        /// Operation Id: FhirDestinations_ListByIotConnector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirDestinations_ListByIotConnector</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthcareApisIotFhirDestinationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -211,8 +259,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}
-        /// Operation Id: IotConnectorFhirDestination_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -238,8 +294,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}
-        /// Operation Id: IotConnectorFhirDestination_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

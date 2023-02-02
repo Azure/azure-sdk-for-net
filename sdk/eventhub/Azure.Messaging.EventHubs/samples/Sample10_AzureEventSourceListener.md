@@ -10,10 +10,10 @@ The Event Hubs client library is instrumented using the .NET [`EventSource`](htt
 - [Apply filtering logic to logs](#apply-filtering-logic-to-logs)
 - [Capture filtered logs to a file](#capture-filtered-logs-to-a-file)
 - [Finding the desired events](#finding-the-desired-events)
-    - [Event Source: "Azure-Messaging-EventHubs"](#event-source-"azure-messaging-eventhubs")
-    - [Event Source: "Azure-Messaging-EventHubs-Processor-EventProcessorClient"](#event-source-"azure-messaging-eventhubs-processor-eventprocessorclient")
-    - [Event Source: "Azure-Messaging-EventHubs-Processor-BlobEventStore"](#event-source-"azure-messaging-eventhubs-processor-blobeventstore")
-    - [Event Source: "Azure-Messaging-EventHubs-Processor-PartitionLoadBalancer"](#event-source-"azure-messaging-eventhubs-processor-partitionloadbalancer")
+    - [Event Source: "Azure-Messaging-EventHubs"](#event-source-azure-messaging-eventhubs)
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-EventProcessorClient"](#event-source-azure-messaging-eventhubs-processor-eventprocessorclient)
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-BlobEventStore"](#event-source-azure-messaging-eventhubs-processor-blobeventstore)
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-PartitionLoadBalancer"](#event-source-azure-messaging-eventhubs-processor-partitionloadbalancer)
 
 ## Azure Event Source Listener lifetime
 

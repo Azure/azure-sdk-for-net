@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Creates a new prefix with the specified name under the given subscription, resource group and peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}
-        /// Operation Id: Prefixes_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="prefixName"> The name of the prefix. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Creates a new prefix with the specified name under the given subscription, resource group and peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}
-        /// Operation Id: Prefixes_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="prefixName"> The name of the prefix. </param>
@@ -120,8 +136,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Gets an existing prefix with the specified name under the given subscription, resource group and peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}
-        /// Operation Id: Prefixes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="expand"> The properties to be expanded. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Gets an existing prefix with the specified name under the given subscription, resource group and peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}
-        /// Operation Id: Prefixes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="expand"> The properties to be expanded. </param>
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all prefixes under the given subscription, resource group and peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes
-        /// Operation Id: Prefixes_ListByPeeringService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_ListByPeeringService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,8 +235,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Lists all prefixes under the given subscription, resource group and peering service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes
-        /// Operation Id: Prefixes_ListByPeeringService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_ListByPeeringService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -210,8 +258,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}
-        /// Operation Id: Prefixes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="expand"> The properties to be expanded. </param>
@@ -238,8 +294,16 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}
-        /// Operation Id: Prefixes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Prefixes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="expand"> The properties to be expanded. </param>

@@ -59,8 +59,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get SparkConfiguration by name in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}
-        /// Operation Id: SparkConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SparkConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sparkConfigurationName"> SparkConfiguration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get SparkConfiguration by name in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}
-        /// Operation Id: SparkConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SparkConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sparkConfigurationName"> SparkConfiguration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,8 +133,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// List sparkConfigurations in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations
-        /// Operation Id: SparkConfigurations_ListByWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SparkConfigurations_ListByWorkspace</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseSparkConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -131,8 +155,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// List sparkConfigurations in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations
-        /// Operation Id: SparkConfigurations_ListByWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SparkConfigurations_ListByWorkspace</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseSparkConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -145,8 +177,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}
-        /// Operation Id: SparkConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SparkConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sparkConfigurationName"> SparkConfiguration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,8 +212,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}
-        /// Operation Id: SparkConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SparkConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sparkConfigurationName"> SparkConfiguration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

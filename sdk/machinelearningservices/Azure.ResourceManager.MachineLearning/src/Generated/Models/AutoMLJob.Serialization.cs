@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
             Optional<MachineLearningJobResourceConfiguration> resources = default;
             AutoMLVertical taskDetails = default;
-            Optional<string> componentId = default;
-            Optional<string> computeId = default;
+            Optional<ResourceIdentifier> componentId = default;
+            Optional<ResourceIdentifier> computeId = default;
             Optional<string> displayName = default;
             Optional<string> experimentName = default;
             Optional<MachineLearningIdentityConfiguration> identity = default;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         componentId = null;
                         continue;
                     }
-                    componentId = property.Value.GetString();
+                    componentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("computeId"))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         computeId = null;
                         continue;
                     }
-                    computeId = property.Value.GetString();
+                    computeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"))

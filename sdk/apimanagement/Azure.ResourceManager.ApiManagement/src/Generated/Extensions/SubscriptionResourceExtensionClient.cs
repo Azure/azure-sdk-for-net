@@ -60,8 +60,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Lists all soft-deleted services available for undelete for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/deletedservices
-        /// Operation Id: DeletedServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/deletedservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -74,8 +82,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Lists all soft-deleted services available for undelete for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/deletedservices
-        /// Operation Id: DeletedServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/deletedservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -88,8 +104,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Lists all API Management services within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/service
-        /// Operation Id: ApiManagementService_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/service</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -102,8 +126,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Lists all API Management services within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/service
-        /// Operation Id: ApiManagementService_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/service</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -116,8 +148,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Checks availability and correctness of a name for an API Management service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/checkNameAvailability
-        /// Operation Id: ApiManagementService_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,8 +179,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Checks availability and correctness of a name for an API Management service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/checkNameAvailability
-        /// Operation Id: ApiManagementService_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,8 +210,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Get the custom domain ownership identifier for an API Management service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/getDomainOwnershipIdentifier
-        /// Operation Id: ApiManagementService_GetDomainOwnershipIdentifier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/getDomainOwnershipIdentifier</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_GetDomainOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetApiManagementServiceDomainOwnershipIdentifierAsync(CancellationToken cancellationToken = default)
@@ -184,8 +240,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Get the custom domain ownership identifier for an API Management service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/getDomainOwnershipIdentifier
-        /// Operation Id: ApiManagementService_GetDomainOwnershipIdentifier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/getDomainOwnershipIdentifier</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_GetDomainOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetApiManagementServiceDomainOwnershipIdentifier(CancellationToken cancellationToken = default)
@@ -206,8 +270,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Gets the list of Microsoft.ApiManagement SKUs available for your Subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/skus
-        /// Operation Id: ApiManagementSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
@@ -220,8 +292,16 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary>
         /// Gets the list of Microsoft.ApiManagement SKUs available for your Subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/skus
-        /// Operation Id: ApiManagementSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>

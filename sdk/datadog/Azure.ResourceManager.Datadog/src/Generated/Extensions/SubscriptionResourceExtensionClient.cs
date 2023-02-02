@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// List Datadog marketplace agreements in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements
-        /// Operation Id: MarketplaceAgreements_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
@@ -63,8 +71,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// List Datadog marketplace agreements in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements
-        /// Operation Id: MarketplaceAgreements_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
@@ -77,8 +93,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// Create Datadog marketplace agreement in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default
-        /// Operation Id: MarketplaceAgreements_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> The DatadogAgreementResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -100,8 +124,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// Create Datadog marketplace agreement in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default
-        /// Operation Id: MarketplaceAgreements_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> The DatadogAgreementResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,8 +155,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// List all monitors under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors
-        /// Operation Id: Monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -137,8 +177,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// List all monitors under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors
-        /// Operation Id: Monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>

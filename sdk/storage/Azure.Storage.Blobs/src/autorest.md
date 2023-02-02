@@ -12,6 +12,12 @@ modelerfour:
     seal-single-value-enum-by-default: true
 ```
 
+### Setup DPG Methods
+``` yaml
+protocol-method-list:
+  - Blob_GetProperties
+```
+
 ### Don't include container name or blob in path - we have direct URIs.
 ``` yaml
 directive:

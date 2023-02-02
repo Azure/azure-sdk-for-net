@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary>
         /// List workspaces in subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -69,8 +77,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary>
         /// List workspaces in subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -83,8 +99,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary>
         /// List scaling plans in subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/scalingPlans
-        /// Operation Id: ScalingPlans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/scalingPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
@@ -97,8 +121,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary>
         /// List scaling plans in subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/scalingPlans
-        /// Operation Id: ScalingPlans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/scalingPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
@@ -111,8 +143,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary>
         /// List applicationGroups in subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/applicationGroups
-        /// Operation Id: ApplicationGroups_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/applicationGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,8 +166,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary>
         /// List applicationGroups in subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/applicationGroups
-        /// Operation Id: ApplicationGroups_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/applicationGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,8 +189,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary>
         /// List hostPools in subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/hostPools
-        /// Operation Id: HostPools_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/hostPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HostPools_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
@@ -155,8 +211,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary>
         /// List hostPools in subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/hostPools
-        /// Operation Id: HostPools_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/hostPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HostPools_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
