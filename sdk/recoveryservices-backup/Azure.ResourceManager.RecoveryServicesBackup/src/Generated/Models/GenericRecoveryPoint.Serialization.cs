@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointAdditionalInfo");
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
+            if (Optional.IsDefined(RecoveryPointProperties))
+            {
+                writer.WritePropertyName("recoveryPointProperties");
+                writer.WriteObjectValue(RecoveryPointProperties);
+            }
             writer.WritePropertyName("objectType");
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> recoveryPointType = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
             Optional<string> recoveryPointAdditionalInfo = default;
+            Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,13 +81,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointAdditionalInfo = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("recoveryPointProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("objectType"))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new GenericRecoveryPoint(objectType, friendlyName.Value, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value);
+            return new GenericRecoveryPoint(objectType, friendlyName.Value, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, recoveryPointProperties.Value);
         }
     }
 }

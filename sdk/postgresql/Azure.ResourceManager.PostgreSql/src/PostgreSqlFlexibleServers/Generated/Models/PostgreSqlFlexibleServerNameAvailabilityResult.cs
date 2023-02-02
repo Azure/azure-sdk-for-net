@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents a resource name availability. </summary>
-    public partial class PostgreSqlFlexibleServerNameAvailabilityResult
+    public partial class PostgreSqlFlexibleServerNameAvailabilityResult : PostgreSqlFlexibleServerNameAvailabilityResponse
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResult. </summary>
         internal PostgreSqlFlexibleServerNameAvailabilityResult()
@@ -18,29 +18,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResult. </summary>
-        /// <param name="message"> Error Message. </param>
-        /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is available. </param>
         /// <param name="name"> name of the PostgreSQL server. </param>
         /// <param name="resourceType"> type of the server. </param>
-        /// <param name="reason"> The name availability reason. </param>
-        internal PostgreSqlFlexibleServerNameAvailabilityResult(string message, bool? isNameAvailable, string name, ResourceType? resourceType, PostgreSqlFlexibleServerNameUnavailableReason? reason)
+        internal PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable, PostgreSqlFlexibleServerNameUnavailableReason? reason, string message, string name, ResourceType? resourceType) : base(isNameAvailable, reason, message)
         {
-            Message = message;
-            IsNameAvailable = isNameAvailable;
             Name = name;
             ResourceType = resourceType;
-            Reason = reason;
         }
 
-        /// <summary> Error Message. </summary>
-        public string Message { get; }
-        /// <summary> Indicates whether the resource name is available. </summary>
-        public bool? IsNameAvailable { get; }
         /// <summary> name of the PostgreSQL server. </summary>
         public string Name { get; }
         /// <summary> type of the server. </summary>
         public ResourceType? ResourceType { get; }
-        /// <summary> The name availability reason. </summary>
-        public PostgreSqlFlexibleServerNameUnavailableReason? Reason { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="restoreCriteria">
         /// Restore Criteria
         /// Please note <see cref="ItemLevelRestoreCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/> and <see cref="RangeBasedItemLevelRestoreCriteria"/>.
+        /// The available derived classes include <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/> and <see cref="RangeBasedItemLevelRestoreCriteria"/>.
         /// </param>
         /// <param name="datasourceInfo"> Information of target DS. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreCriteria"/> or <paramref name="datasourceInfo"/> is null. </exception>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary>
         /// Restore Criteria
         /// Please note <see cref="ItemLevelRestoreCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/> and <see cref="RangeBasedItemLevelRestoreCriteria"/>.
+        /// The available derived classes include <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/> and <see cref="RangeBasedItemLevelRestoreCriteria"/>.
         /// </summary>
         public IList<ItemLevelRestoreCriteria> RestoreCriteria { get; }
         /// <summary> Information of target DS. </summary>

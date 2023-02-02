@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI.Models
         {
             Optional<string> text = default;
             Optional<int?> index = default;
-            Optional<CompletionsLogProbsModel> logprobs = default;
+            Optional<CompletionsLogProbs> logprobs = default;
             Optional<string> finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -45,7 +45,7 @@ namespace Azure.AI.OpenAI.Models
                     }
                     else
                     {
-                        logprobs = CompletionsLogProbsModel.DeserializeCompletionsLogProbsModel(property.Value);
+                        logprobs = CompletionsLogProbs.DeserializeCompletionsLogProbs(property.Value);
                         continue;
                     }
                 }
