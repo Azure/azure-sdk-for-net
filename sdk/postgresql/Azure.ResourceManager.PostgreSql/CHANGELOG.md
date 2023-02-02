@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0 (2023-02-02)
+## 1.1.0 (2023-02-02)
 
 This release uses GA api version 2022-12-01 for PostgreSQL flexible server.
 

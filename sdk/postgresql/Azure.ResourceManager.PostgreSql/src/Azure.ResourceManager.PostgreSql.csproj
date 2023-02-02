@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>2.0.0</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <Version>1.1.0</Version>
     <PackageId>Azure.ResourceManager.PostgreSql</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DBforPostgreSQL.</Description>
     <PackageTags>azure;management;arm;resource manager;postgresql</PackageTags>
