@@ -74,10 +74,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             context.AddBindingRule<EventHubTriggerAttribute>()
                 .BindToTrigger(triggerBindingProvider);
 
-            // register our binding provider
+            // Allows binding to IAsyncCollector
             context.AddBindingRule<EventHubAttribute>()
                 .BindToCollector(BuildFromAttribute);
 
+            // Allows binding to EventHuAsyncCollector
+            context.AddBindingRule<EventHubAttribute>()
+                .BindToInput(attribute => BuildFromAttribute(attribute));
+
+            // Allows binding to EventHubProducerClient
             context.AddBindingRule<EventHubAttribute>()
                 .BindToInput(attribute => _clientFactory.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection));
 
@@ -95,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             Utility.LogException(e.Exception, message, logger);
         }
 
-        private IAsyncCollector<EventData> BuildFromAttribute(EventHubAttribute attribute)
+        private EventHubAsyncCollector BuildFromAttribute(EventHubAttribute attribute)
         {
             EventHubProducerClient client = _clientFactory.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection);
             return new EventHubAsyncCollector(new EventHubProducerClientImpl(client, _loggerFactory.CreateLogger<EventHubProducerClientImpl>()));

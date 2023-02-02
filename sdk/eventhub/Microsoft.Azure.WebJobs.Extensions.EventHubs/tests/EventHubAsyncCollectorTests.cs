@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
@@ -20,20 +21,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.Throws<ArgumentNullException>(() => new EventHubAsyncCollector(null));
         }
 
-        public EventData CreateEvent(byte[] body, string partitionKey)
-        {
-            var data = new TestEventData(body, partitionKey: partitionKey);
-            return data;
-        }
-
         [Test]
         public async Task SendMultiplePartitions()
         {
             var client = new TestEventHubProducerClient();
             var collector = new EventHubAsyncCollector(client);
 
-            await collector.AddAsync(this.CreateEvent(new byte[] { 1 }, "pk1"));
-            await collector.AddAsync(CreateEvent(new byte[] { 2 }, "pk2"));
+            await collector.AddAsync(new EventData(new byte[] { 1 }), "pk1");
+            await collector.AddAsync(new EventData(new byte[] { 2 }), "pk2");
 
             // Not physically sent yet since we haven't flushed
             Assert.IsEmpty(client.SentBatches);
@@ -237,7 +232,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             public List<TestEventDataBatch> CreatedBatches { get; } = new List<TestEventDataBatch>();
             public List<TestEventDataBatch> SentBatches { get; } = new List<TestEventDataBatch>();
 
-            public async Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken)
+            public Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken) =>
+                CreateBatchAsync(null, cancellationToken);
+
+            public async Task<IEventDataBatch> CreateBatchAsync(CreateBatchOptions options, CancellationToken cancellationToken)
             {
                 var batch = new TestEventDataBatch(_batchSize);
 
