@@ -3163,7 +3163,7 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                SingleUploadContent = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken)
+                SingleUploadBinaryData = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken)
                     => await client.UploadInternal(
                         content.ToStream(),
                         args?.HttpHeaders,
@@ -3199,7 +3199,7 @@ namespace Azure.Storage.Blobs.Specialized
                             async,
                             cancellationToken).ConfigureAwait(false);
                 },
-                UploadPartitionContent = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.

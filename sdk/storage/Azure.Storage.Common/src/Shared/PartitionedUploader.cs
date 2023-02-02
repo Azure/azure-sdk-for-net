@@ -129,7 +129,7 @@ namespace Azure.Storage
             string operationName,
             bool async,
             CancellationToken cancellationToken);
-        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadContentInternal(
+        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadBinaryDataInternal(
             BinaryData content,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
@@ -145,7 +145,7 @@ namespace Azure.Storage
             UploadTransferValidationOptions transferValidation,
             bool async,
             CancellationToken cancellationToken);
-        public delegate Task UploadPartitionContentInternal(
+        public delegate Task UploadPartitionBinaryDataInternal(
             BinaryData content,
             long offset,
             TServiceSpecificData args,
@@ -163,9 +163,9 @@ namespace Azure.Storage
         {
             public InitializeDestinationInternal InitializeDestination { get; set; }
             public SingleUploadStreamingInternal SingleUploadStreaming { get; set; }
-            public SingleUploadContentInternal SingleUploadContent { get; set; }
+            public SingleUploadBinaryDataInternal SingleUploadBinaryData { get; set; }
             public UploadPartitionStreamingInternal UploadPartitionStreaming { get; set; }
-            public UploadPartitionContentInternal UploadPartitionContent { get; set; }
+            public UploadPartitionBinaryDataInternal UploadPartitionBinaryData { get; set; }
             public CommitPartitionedUploadInternal CommitPartitionedUpload { get; set; }
             public CreateScope Scope { get; set; }
         }
@@ -176,9 +176,9 @@ namespace Azure.Storage
 
         private readonly InitializeDestinationInternal _initializeDestinationInternal;
         private readonly SingleUploadStreamingInternal _singleUploadStreamingInternal;
-        private readonly SingleUploadContentInternal _singleUploadContentInternal;
+        private readonly SingleUploadBinaryDataInternal _singleUploadBinaryDataInternal;
         private readonly UploadPartitionStreamingInternal _uploadPartitionStreamingInternal;
-        private readonly UploadPartitionContentInternal _uploadPartitionContentInternal;
+        private readonly UploadPartitionBinaryDataInternal _uploadPartitionBinaryDataInternal;
         private readonly CommitPartitionedUploadInternal _commitPartitionedUploadInternal;
         private readonly CreateScope _createScope;
 
@@ -225,12 +225,12 @@ namespace Azure.Storage
             _initializeDestinationInternal = behaviors.InitializeDestination ?? InitializeNoOp;
             _singleUploadStreamingInternal = Argument.CheckNotNull(
                 behaviors.SingleUploadStreaming, nameof(behaviors.SingleUploadStreaming));
-            _singleUploadContentInternal = Argument.CheckNotNull(
-                behaviors.SingleUploadContent, nameof(behaviors.SingleUploadContent));
+            _singleUploadBinaryDataInternal = Argument.CheckNotNull(
+                behaviors.SingleUploadBinaryData, nameof(behaviors.SingleUploadBinaryData));
             _uploadPartitionStreamingInternal = Argument.CheckNotNull(
                 behaviors.UploadPartitionStreaming, nameof(behaviors.UploadPartitionStreaming));
-            _uploadPartitionContentInternal = Argument.CheckNotNull(
-                behaviors.UploadPartitionContent, nameof(behaviors.UploadPartitionContent));
+            _uploadPartitionBinaryDataInternal = Argument.CheckNotNull(
+                behaviors.UploadPartitionBinaryData, nameof(behaviors.UploadPartitionBinaryData));
             _commitPartitionedUploadInternal = Argument.CheckNotNull(
                 behaviors.CommitPartitionedUpload, nameof(behaviors.CommitPartitionedUpload));
             _createScope = Argument.CheckNotNull(
@@ -293,7 +293,7 @@ namespace Azure.Storage
 
             if (length < _singleUploadThreshold)
             {
-                return await _singleUploadContentInternal(
+                return await _singleUploadBinaryDataInternal(
                     content,
                     args,
                     progressHandler,
@@ -706,7 +706,7 @@ namespace Azure.Storage
             bool async,
             CancellationToken cancellationToken)
         {
-            await _uploadPartitionContentInternal(
+            await _uploadPartitionBinaryDataInternal(
                 content,
                 offset,
                 args,

@@ -5252,7 +5252,7 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                SingleUploadContent = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                SingleUploadBinaryData = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
                 {
                     // After the File is Create, Lease ID is the only valid request parameter.
                     if (args?.Conditions != null)
@@ -5301,7 +5301,7 @@ namespace Azure.Storage.Files.DataLake
                         flush: null,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                UploadPartitionContent = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     => await client.AppendInternal(
                         content.ToStream(),
                         offset,
