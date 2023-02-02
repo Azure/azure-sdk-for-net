@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.OpenAI.Models;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests.Samples
@@ -12,32 +13,20 @@ namespace Azure.AI.OpenAI.Tests.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void GetChatbotResponses()
+        public void GetChatbotResponse()
         {
-            // Replace with your Azure subscription key
-            string key = "YOUR_AZURE_KEY";
-            string endpoint = "http://myaccount.openai.azure.com/";
-            OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
+            #region Snippet:GenerateChatbotResponse
+            #region Snippet:CreateOpenAIClientTokenCredential
+            string endpoint = "https://myaccount.openai.azure.com/";
+            OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+            #endregion
 
-            #region Snippet:GenerateChatbotResponses
-            List<string> examplePrompts = new(){
-                "How are you today?",
-                "What is Azure OpenAI?",
-                "Why do children love dinosaurs?",
-                "Generate a proof of Euler's identity",
-                "Describe in single words only the good things that come into your mind about your mother.",
-            };
+            string prompt = "What is Azure OpenAI?";
+            Console.Write($"Input: {prompt}");
 
-            foreach (var prompt in examplePrompts)
-            {
-                Console.Write($"Input: {prompt}");
-                var request = new CompletionsOptions();
-                request.Prompt.Add(prompt);
-
-                Completions completion = client.GetCompletions("myModelDeployment", request);
-                var response = completion.Choices[0].Text;
-                Console.WriteLine($"Chatbot: {response}");
-            }
+            Response<Completions> completionsResponse = client.GetCompletions("myDeploymentId", prompt);
+            string completion = completionsResponse.Value.Choices[0].Text;
+            Console.WriteLine($"Chatbot: {completion}");
             #endregion
         }
     }

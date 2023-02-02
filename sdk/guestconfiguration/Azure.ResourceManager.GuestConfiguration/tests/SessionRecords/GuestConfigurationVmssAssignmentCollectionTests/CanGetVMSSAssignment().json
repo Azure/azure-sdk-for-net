@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourcegroups/aashishDeleteRG?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourcegroups/aashishDeleteRG?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

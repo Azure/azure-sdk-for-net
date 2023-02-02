@@ -3,6 +3,7 @@
 ## 5.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Blob storage support for ParameterBindingData reference type (#31757)
 
 ### Breaking Changes
 

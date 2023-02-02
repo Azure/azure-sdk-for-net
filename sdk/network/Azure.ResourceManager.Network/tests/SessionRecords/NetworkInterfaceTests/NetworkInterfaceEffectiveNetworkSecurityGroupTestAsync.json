@@ -654,7 +654,7 @@
       ]
     },
     {
-      "RequestUri": "/subscriptions/7e6898e7-868d-490f-8f91-0cffa67c48a0/resourcegroups/csmrg3523?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/7e6898e7-868d-490f-8f91-0cffa67c48a0/resourcegroups/csmrg3523?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "accept-language": "en-US",

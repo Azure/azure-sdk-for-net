@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
@@ -33,6 +34,46 @@ namespace Azure.AI.OpenAI.Models
             writer.WritePropertyName("input");
             writer.WriteStringValue(Input);
             writer.WriteEndObject();
+        }
+
+        internal static EmbeddingsOptions DeserializeEmbeddingsOptions(JsonElement element)
+        {
+            Optional<string> user = default;
+            Optional<string> inputType = default;
+            Optional<string> model = default;
+            string input = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("user"))
+                {
+                    user = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("input_type"))
+                {
+                    inputType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("model"))
+                {
+                    model = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("input"))
+                {
+                    input = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new EmbeddingsOptions(user, inputType, model, input);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EmbeddingsOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEmbeddingsOptions(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

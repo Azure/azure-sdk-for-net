@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-02-02)
+
+This release uses GA api version 2022-12-01 for PostgreSQL flexible server.
+
+### Features Added
+
+- Data encryption
+- User managed identities
+- Active Directory authentication
+- Geo-Restore
+- Read Replicas
+- Same Zone HA
+- Server backups
+- Major version upgrade
 
 ## 1.0.0 (2022-09-05)
 

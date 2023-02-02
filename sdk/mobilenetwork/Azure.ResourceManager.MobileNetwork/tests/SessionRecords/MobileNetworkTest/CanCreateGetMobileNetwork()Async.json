@@ -85,7 +85,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a3a5abbf-2e1d-4776-adf2-0f00b3b43a70/resourcegroups/DotNetSDKUTRG6839?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/a3a5abbf-2e1d-4776-adf2-0f00b3b43a70/resourcegroups/DotNetSDKUTRG6839?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
