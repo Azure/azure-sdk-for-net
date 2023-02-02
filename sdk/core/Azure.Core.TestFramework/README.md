@@ -146,6 +146,28 @@ public class AppConfigurationTestEnvironment : TestEnvironment
 }
 ```
 
+### Running live tests serially
+
+By default, NUnit does not run tests within each assembly in parallel, but this be [configured](https://docs.nunit.org/articles/nunit/technical-notes/usage/Framework-Parallel-Test-Execution.html).
+Especially for unit tests, this is often desirable; however, live and [recorded tests](#recorded-tests) may run into some issues. Thus, by default, the `RecordedTestBase` described below is attributed
+as `[NonParallelizable]`.
+
+However, when projects are built and tested in CIs, all projects are testing in parallel. This means, for example, you can have two or more assemblies running tests such as one backing up or restoring
+a resource while another assembly's tests are trying to use that resource. The service may return an error like HTTP 409.
+
+To isolate one or more projects so that they are tested serially, add a _service.projects_ file to your service directory e.g., _sdk/keyvault/service.projects_ with content like the following to set the
+`TestInParallel` metadata to `false`:
+
+```xml
+<Project>
+  <ItemGroup>
+    <ProjectReference Update="$(MSBuildThisFileDirectory)Azure.Security.KeyVault.Administration/tests/*.csproj">
+        <TestInParallel>false</TestInParallel>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
+```
+
 ## Test settings
 
 Test settings can be configured via `.runsettings` files. See [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) for available knobs.
