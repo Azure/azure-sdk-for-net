@@ -49,9 +49,6 @@ namespace Azure.AI.OpenAI.Tests
         protected OpenAIClient GetClientWithCredential() => InstrumentClient(
             new OpenAIClient(_endpoint, TestEnvironment.Credential, GetInstrumentedClientOptions()));
 
-        protected OpenAIClient GetClientWithCompletionsDeploymentId() => InstrumentClient(
-            new OpenAIClient(_endpoint, CompletionsDeploymentId, TestEnvironment.Credential, GetInstrumentedClientOptions()));
-
         [SetUp]
         public void CreateDeployment()
         {
