@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Holds transfer information
     /// </summary>
-    public class DataTransfer : IAsyncDisposable
+    public class DataTransfer
     {
         /// <summary>
         /// Defines whether the DataTransfer has completed.
@@ -63,22 +64,12 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Disposes the DataTransfer object.
-        /// </summary>
-        /// <returns></returns>
-        public async ValueTask DisposeAsync()
-        {
-            await _state.DisposeAsync().ConfigureAwait(false);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         /// Ensures completion of the DataTransfer and attempts to get result
         /// </summary>
         public void EnsureCompleted(CancellationToken cancellationToken = default)
         {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            AwaitCompletion(cancellationToken);
+            AwaitCompletion(cancellationToken).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
@@ -86,16 +77,15 @@ namespace Azure.Storage.DataMovement
         /// Waits until the data transfer itself has completed
         /// </summary>
         /// <param name="cancellationToken"></param>
-        public Task AwaitCompletion(CancellationToken cancellationToken = default)
+        public async Task AwaitCompletion(CancellationToken cancellationToken = default)
         {
-            SpinWait spinWait = new SpinWait();
-            while (!HasCompleted)
+            if ( _state.HasCompleted ||
+                (cancellationToken != default && cancellationToken.IsCancellationRequested))
             {
-                spinWait.SpinOnce();
-                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return;
             }
-
-            return Task.CompletedTask;
+            cancellationToken.Register(() => _state._completionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
+            await _state._completionSource.Task.ConfigureAwait(false);
         }
     }
 }

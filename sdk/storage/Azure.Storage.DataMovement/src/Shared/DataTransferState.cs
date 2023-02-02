@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,15 +14,13 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the state of the transfer
     /// </summary>
-    internal class DataTransferState : IAsyncDisposable
+    internal class DataTransferState
     {
-        // To detect redundant calls
-        private bool _disposedValue;
-
+        private readonly object statusLock = new object();
         private string _id;
         private StorageTransferStatus _status;
         private long _currentTransferredBytes;
-        private SemaphoreSlim _statusSemaphore;
+        public TaskCompletionSource<StorageTransferStatus> _completionSource;
 
         public StorageTransferStatus Status => _status;
 
@@ -29,12 +28,8 @@ namespace Azure.Storage.DataMovement
         /// constructor
         /// </summary>
         public DataTransferState()
+            : this(StorageTransferStatus.Queued)
         {
-            _disposedValue = false;
-            _statusSemaphore = new SemaphoreSlim(1, 1);
-            _id = Guid.NewGuid().ToString();
-            _status = StorageTransferStatus.Queued;
-            _currentTransferredBytes = 0;
         }
 
         /// <summary>
@@ -45,6 +40,15 @@ namespace Azure.Storage.DataMovement
             _id = Guid.NewGuid().ToString();
             _status = status;
             _currentTransferredBytes = 0;
+            _completionSource = new TaskCompletionSource<StorageTransferStatus>(
+                _status,
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            if (StorageTransferStatus.Completed == status ||
+                        StorageTransferStatus.CompletedWithSkippedTransfers == status ||
+                        StorageTransferStatus.CompletedWithFailedTransfers == status)
+            {
+                _completionSource.SetResult(status);
+            }
         }
 
         /// <summary>
@@ -55,20 +59,9 @@ namespace Azure.Storage.DataMovement
             _id = id;
             _status = StorageTransferStatus.Queued;
             _currentTransferredBytes = bytesTransferred;
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (!_disposedValue)
-            {
-                _disposedValue = true;
-                if (_statusSemaphore.CurrentCount == 0)
-                {
-                    await _statusSemaphore.WaitAsync().ConfigureAwait(false);
-                    _statusSemaphore.Release();
-                }
-                _statusSemaphore.Dispose();
-            }
+            _completionSource = new TaskCompletionSource<StorageTransferStatus>(
+                _status,
+                TaskCreationOptions.RunContinuationsAsynchronously);
         }
 
         /// <summary>
@@ -111,17 +104,22 @@ namespace Azure.Storage.DataMovement
         /// Sets the completion status
         /// </summary>
         /// <param name="status"></param>
-        public async Task SetTransferStatus(StorageTransferStatus status)
+        public Task SetTransferStatus(StorageTransferStatus status)
         {
-            if (!_disposedValue)
+            lock (statusLock)
             {
-                await _statusSemaphore.WaitAsync().ConfigureAwait(false);
                 if (_status != status)
                 {
+                    if (StorageTransferStatus.Completed == status ||
+                        StorageTransferStatus.CompletedWithSkippedTransfers == status ||
+                        StorageTransferStatus.CompletedWithFailedTransfers == status)
+                    {
+                        _completionSource.SetResult(status);
+                    }
                     _status = status;
                 }
-                _statusSemaphore.Release();
             }
+            return Task.CompletedTask;
         }
 
         /// <summary>
