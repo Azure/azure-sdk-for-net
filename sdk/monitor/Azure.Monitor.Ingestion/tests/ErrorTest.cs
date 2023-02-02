@@ -141,7 +141,6 @@ namespace Azure.Monitor.Ingestion.Tests
                 Assert.AreEqual("ContentLengthLimitExceeded", ((RequestFailedException)(e.Exception)).ErrorCode);
                 Assert.IsNull(((RequestFailedException)(e.Exception)).InnerException);
                 Assert.AreEqual(413, ((RequestFailedException)(e.Exception)).Status);
-                //cts.Cancel();
                 return Task.CompletedTask;
             }
         }
@@ -181,7 +180,6 @@ namespace Azure.Monitor.Ingestion.Tests
                 Assert.AreEqual("ContentLengthLimitExceeded", ((RequestFailedException)(e.Exception)).ErrorCode);
                 Assert.IsNull(((RequestFailedException)(e.Exception)).InnerException);
                 Assert.AreEqual(413, ((RequestFailedException)(e.Exception)).Status);
-                //cts.Cancel();
                 return Task.CompletedTask;
             }
         }

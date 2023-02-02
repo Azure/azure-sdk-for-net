@@ -310,7 +310,7 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
-            options = (options == null) ? new UploadLogsOptions() : options;
+            options ??= new UploadLogsOptions();
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
@@ -362,7 +362,7 @@ namespace Azure.Monitor.Ingestion
                             }
                             else
                             {
-                                Exception exceptionEventHandler = ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).Result;
+                                Exception exceptionEventHandler = await ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).ConfigureAwait(false);
                                 shouldAbort = exceptionEventHandler != null;
                                 if (shouldAbort)
                                     AddException(ref exceptions, exceptionEventHandler);
@@ -392,7 +392,7 @@ namespace Azure.Monitor.Ingestion
                 }
                 else
                 {
-                    Exception exceptionEventHandler = ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).Result;
+                    Exception exceptionEventHandler = await ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).ConfigureAwait(false);
                     shouldAbort = exceptionEventHandler != null;
                     if (shouldAbort)
                         AddException(ref exceptions, exceptionEventHandler);
