@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Added the ability to bind to the `EventHubAsyncCollector` for output, which supports an overload allowing a partition key to be specified.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed a bug with creation of the event processor used by the trigger, where configuring an `eventHubName` that does not match the one that appears as `EntityPath` in the connection string would throw.  The behavior now follows that of other clients and gives precedence to the entity path in the connection string.
 
 ### Other Changes
 

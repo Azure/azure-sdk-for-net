@@ -66,13 +66,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(item));
             }
 
-            // If the partition key has no value, set it to null.
-            if (partitionKey is { Length: 0 })
-            {
-                partitionKey = null;
-            }
-
-            var key = partitionKey ?? string.Empty;
+            // Normalize the partition key to an empty string so that it can be
+            // used with the dictionary.  The batch options consider null and empty
+            // to indicate that no partition key is specified.
+            partitionKey ??= string.Empty;
 
             while (true)
             {
@@ -81,10 +78,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 IEventDataBatch batchToSend;
                 try
                 {
-                    if (!_batches.TryGetValue(key, out IEventDataBatch batch))
+                    if (!_batches.TryGetValue(partitionKey, out IEventDataBatch batch))
                     {
                         batch = await _client.CreateBatchAsync(new CreateBatchOptions { PartitionKey = partitionKey }, cancellationToken).ConfigureAwait(false);
-                        _batches[key] = batch;
+                        _batches[partitionKey] = batch;
                     }
 
                     if (batch.TryAdd(item))
@@ -102,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         throw new InvalidOperationException(msg);
                     }
 
-                    _batches.Remove(key);
+                    _batches.Remove(partitionKey);
                     batchToSend = batch;
                 }
                 finally
