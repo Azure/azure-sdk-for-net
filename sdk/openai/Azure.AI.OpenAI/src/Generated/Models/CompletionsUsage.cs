@@ -11,9 +11,9 @@ namespace Azure.AI.OpenAI.Models
     public partial class CompletionsUsage
     {
         /// <summary> Initializes a new instance of CompletionsUsage. </summary>
-        /// <param name="completionToken"></param>
-        /// <param name="promptTokens"></param>
-        /// <param name="totalTokens"></param>
+        /// <param name="completionToken"> Number of tokens received in the completion. </param>
+        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
+        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
         internal CompletionsUsage(int completionToken, int promptTokens, int totalTokens)
         {
             CompletionToken = completionToken;
@@ -21,11 +21,11 @@ namespace Azure.AI.OpenAI.Models
             TotalTokens = totalTokens;
         }
 
-        /// <summary> Gets the completion token. </summary>
+        /// <summary> Number of tokens received in the completion. </summary>
         public int CompletionToken { get; }
-        /// <summary> Gets the prompt tokens. </summary>
+        /// <summary> Number of tokens sent in the original request. </summary>
         public int PromptTokens { get; }
-        /// <summary> Gets the total tokens. </summary>
+        /// <summary> Total number of tokens transacted in this request/response. </summary>
         public int TotalTokens { get; }
     }
 }

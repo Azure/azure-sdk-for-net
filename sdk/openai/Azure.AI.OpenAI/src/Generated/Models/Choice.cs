@@ -16,11 +16,11 @@ namespace Azure.AI.OpenAI.Models
         }
 
         /// <summary> Initializes a new instance of Choice. </summary>
-        /// <param name="text"></param>
-        /// <param name="index"></param>
-        /// <param name="logprobs"></param>
-        /// <param name="finishReason"></param>
-        internal Choice(string text, int? index, CompletionsLogProbsModel logprobs, string finishReason)
+        /// <param name="text"> Generated text for given completion prompt. </param>
+        /// <param name="index"> Index. </param>
+        /// <param name="logprobs"> Log Prob Model. </param>
+        /// <param name="finishReason"> Reason for finishing. </param>
+        internal Choice(string text, int? index, CompletionsLogProbs logprobs, string finishReason)
         {
             Text = text;
             Index = index;
@@ -28,13 +28,13 @@ namespace Azure.AI.OpenAI.Models
             FinishReason = finishReason;
         }
 
-        /// <summary> Gets the text. </summary>
+        /// <summary> Generated text for given completion prompt. </summary>
         public string Text { get; }
-        /// <summary> Gets the index. </summary>
+        /// <summary> Index. </summary>
         public int? Index { get; }
-        /// <summary> Gets the logprobs. </summary>
-        public CompletionsLogProbsModel Logprobs { get; }
-        /// <summary> Gets the finish reason. </summary>
+        /// <summary> Log Prob Model. </summary>
+        public CompletionsLogProbs Logprobs { get; }
+        /// <summary> Reason for finishing. </summary>
         public string FinishReason { get; }
     }
 }

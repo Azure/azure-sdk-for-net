@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/sdk-tests-dotNet-php-4851?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/sdk-tests-dotNet-php-4851?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

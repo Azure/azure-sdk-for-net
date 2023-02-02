@@ -43,7 +43,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/9e347dc4-e2fb-4892-b7c0-ca6f58eeed6d/resourcegroups/SdkRg1480?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/9e347dc4-e2fb-4892-b7c0-ca6f58eeed6d/resourcegroups/SdkRg1480?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -84,7 +84,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/9e347dc4-e2fb-4892-b7c0-ca6f58eeed6d/resourcegroups/SdkRg1480?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/9e347dc4-e2fb-4892-b7c0-ca6f58eeed6d/resourcegroups/SdkRg1480?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

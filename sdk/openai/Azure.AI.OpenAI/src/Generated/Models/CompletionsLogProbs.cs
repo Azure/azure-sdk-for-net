@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Models
 {
     /// <summary> LogProbs model within completion choice. </summary>
-    public partial class CompletionsLogProbsModel
+    public partial class CompletionsLogProbs
     {
-        /// <summary> Initializes a new instance of CompletionsLogProbsModel. </summary>
-        internal CompletionsLogProbsModel()
+        /// <summary> Initializes a new instance of CompletionsLogProbs. </summary>
+        internal CompletionsLogProbs()
         {
             Tokens = new ChangeTrackingList<string>();
             TokenLogprobs = new ChangeTrackingList<float>();
@@ -23,12 +23,12 @@ namespace Azure.AI.OpenAI.Models
             TextOffset = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of CompletionsLogProbsModel. </summary>
-        /// <param name="tokens"></param>
-        /// <param name="tokenLogprobs"></param>
-        /// <param name="topLogprobs"></param>
-        /// <param name="textOffset"></param>
-        internal CompletionsLogProbsModel(IReadOnlyList<string> tokens, IReadOnlyList<float> tokenLogprobs, IReadOnlyList<IDictionary<string, float>> topLogprobs, IReadOnlyList<int> textOffset)
+        /// <summary> Initializes a new instance of CompletionsLogProbs. </summary>
+        /// <param name="tokens"> Tokens. </param>
+        /// <param name="tokenLogprobs"> LogProbs of Tokens. </param>
+        /// <param name="topLogprobs"> Top LogProbs. </param>
+        /// <param name="textOffset"> Text offset. </param>
+        internal CompletionsLogProbs(IReadOnlyList<string> tokens, IReadOnlyList<float> tokenLogprobs, IReadOnlyList<IDictionary<string, float>> topLogprobs, IReadOnlyList<int> textOffset)
         {
             Tokens = tokens.ToList();
             TokenLogprobs = tokenLogprobs.ToList();
@@ -36,13 +36,13 @@ namespace Azure.AI.OpenAI.Models
             TextOffset = textOffset.ToList();
         }
 
-        /// <summary> Gets the tokens. </summary>
+        /// <summary> Tokens. </summary>
         public IReadOnlyList<string> Tokens { get; }
-        /// <summary> Gets the token logprobs. </summary>
+        /// <summary> LogProbs of Tokens. </summary>
         public IReadOnlyList<float> TokenLogprobs { get; }
-        /// <summary> Gets the top logprobs. </summary>
+        /// <summary> Top LogProbs. </summary>
         public IReadOnlyList<IDictionary<string, float>> TopLogprobs { get; }
-        /// <summary> Gets the text offset. </summary>
+        /// <summary> Text offset. </summary>
         public IReadOnlyList<int> TextOffset { get; }
     }
 }
