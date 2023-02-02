@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         internal static PostgreSqlFlexibleServerDatabaseListResult DeserializePostgreSqlFlexibleServerDatabaseListResult(JsonElement element)
         {
             Optional<IReadOnlyList<PostgreSqlFlexibleServerDatabaseData>> value = default;
-            Optional<Uri> nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -38,12 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        nextLink = null;
-                        continue;
-                    }
-                    nextLink = new Uri(property.Value.GetString());
+                    nextLink = property.Value.GetString();
                     continue;
                 }
             }

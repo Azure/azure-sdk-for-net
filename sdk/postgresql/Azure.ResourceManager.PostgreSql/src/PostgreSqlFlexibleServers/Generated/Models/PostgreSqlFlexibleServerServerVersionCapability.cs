@@ -16,27 +16,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerVersionCapability. </summary>
         internal PostgreSqlFlexibleServerServerVersionCapability()
         {
-            SupportedVersionsToUpgrade = new ChangeTrackingList<string>();
             SupportedVCores = new ChangeTrackingList<PostgreSqlFlexibleServerVCoreCapability>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerVersionCapability. </summary>
         /// <param name="name"> server version. </param>
-        /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
         /// <param name="supportedVCores"></param>
         /// <param name="status"> The status. </param>
-        internal PostgreSqlFlexibleServerServerVersionCapability(string name, IReadOnlyList<string> supportedVersionsToUpgrade, IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability> supportedVCores, string status)
+        internal PostgreSqlFlexibleServerServerVersionCapability(string name, IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability> supportedVCores, string status)
         {
             Name = name;
-            SupportedVersionsToUpgrade = supportedVersionsToUpgrade;
             SupportedVCores = supportedVCores;
             Status = status;
         }
 
         /// <summary> server version. </summary>
         public string Name { get; }
-        /// <summary> Supported servers versions to upgrade. </summary>
-        public IReadOnlyList<string> SupportedVersionsToUpgrade { get; }
         /// <summary> Gets the supported v cores. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability> SupportedVCores { get; }
         /// <summary> The status. </summary>
