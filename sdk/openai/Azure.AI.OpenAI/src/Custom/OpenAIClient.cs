@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
     public partial class OpenAIClient
     {
         /// <summary> Return the completion for a given prompt. </summary>
-        /// <param name="deploymentId"> default deployment id to use for operations </param>
+        /// <param name="deploymentId"> Deployment id (also known as model name) to use for operations </param>
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Completions>> GetCompletionsAsync(string deploymentId, string prompt, CancellationToken cancellationToken = default)
@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
-        /// <param name="deploymentId"> deployment id (also known as model name) to use for operations </param>
+        /// <param name="deploymentId"> Deployment id (also known as model name) to use for operations </param>
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Completions> GetCompletions(string deploymentId, string prompt, CancellationToken cancellationToken = default)
