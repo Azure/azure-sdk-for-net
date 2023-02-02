@@ -42,8 +42,10 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string StandardL16sV2Value = "Standard_L16s_v2";
         private const string StandardL8sV3Value = "Standard_L8s_v3";
         private const string StandardL16sV3Value = "Standard_L16s_v3";
+        private const string StandardL32sV3Value = "Standard_L32s_v3";
         private const string StandardL8asV3Value = "Standard_L8as_v3";
         private const string StandardL16asV3Value = "Standard_L16as_v3";
+        private const string StandardL32asV3Value = "Standard_L32as_v3";
         private const string StandardE64iV3Value = "Standard_E64i_v3";
         private const string StandardE80idsV4Value = "Standard_E80ids_v4";
         private const string StandardE2aV4Value = "Standard_E2a_v4";
@@ -125,10 +127,14 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoSkuName StandardL8sV3 { get; } = new KustoSkuName(StandardL8sV3Value);
         /// <summary> Standard_L16s_v3. </summary>
         public static KustoSkuName StandardL16sV3 { get; } = new KustoSkuName(StandardL16sV3Value);
+        /// <summary> Standard_L32s_v3. </summary>
+        public static KustoSkuName StandardL32sV3 { get; } = new KustoSkuName(StandardL32sV3Value);
         /// <summary> Standard_L8as_v3. </summary>
         public static KustoSkuName StandardL8asV3 { get; } = new KustoSkuName(StandardL8asV3Value);
         /// <summary> Standard_L16as_v3. </summary>
         public static KustoSkuName StandardL16asV3 { get; } = new KustoSkuName(StandardL16asV3Value);
+        /// <summary> Standard_L32as_v3. </summary>
+        public static KustoSkuName StandardL32asV3 { get; } = new KustoSkuName(StandardL32asV3Value);
         /// <summary> Standard_E64i_v3. </summary>
         public static KustoSkuName StandardE64iV3 { get; } = new KustoSkuName(StandardE64iV3Value);
         /// <summary> Standard_E80ids_v4. </summary>

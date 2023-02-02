@@ -14,8 +14,13 @@ namespace Azure.Template.Tests.Samples
     public partial class TemplateSamples: SamplesBase<TemplateClientTestEnvironment>
     {
         /* please refer to SamplesLink to write samples. */
-        #region Snippet:Azure_Template_Scenario
-
-        #endregion
+        [Test]
+        [SyncOnly]
+        public void Scenario()
+        {
+            #region Snippet:Azure_Template_Scenario
+            Console.WriteLine("Hello, world!");
+            #endregion
+        }
     }
 }

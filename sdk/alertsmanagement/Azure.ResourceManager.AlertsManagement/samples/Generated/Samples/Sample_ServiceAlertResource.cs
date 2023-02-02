@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AlertsSummaryGroupByField groupby = new AlertsSummaryGroupByField("severity,alertState");
-            ServiceAlertSummary result = await subscriptionResource.GetServiceAlertSummaryAsync(groupby);
+            SubscriptionGetServiceAlertSummaryOptions options = new SubscriptionGetServiceAlertSummaryOptions(groupby: new AlertsSummaryGroupByField("severity,alertState")) { };
+            ServiceAlertSummary result = await subscriptionResource.GetServiceAlertSummaryAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }

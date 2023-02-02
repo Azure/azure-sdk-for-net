@@ -26,12 +26,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1,2.2)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="3.1.0" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFrameworkVersion)' != '' and $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '6.0'))">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="5.0.0" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>

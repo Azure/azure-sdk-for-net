@@ -62,5 +62,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
         public RecordingStorageType? RecordingStorageType { get; set; }
+
+        /// <summary> The location where recording is stored, when RecordingStorageType is set to BlobStorage. </summary>
+        public Uri ExternalStorageLocation { get; set; }
     }
 }

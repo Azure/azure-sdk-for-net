@@ -111,6 +111,7 @@
   </PropertyGroup>
 
   <!-- TargetFramework default properties -->
+  <!-- Update pipelines/templates/steps/install-dotnet.yml as needed, without re-installing SDKs already found on all supported agents -->
   <PropertyGroup>
     <!-- Client libraries are moving forward to NS 2.0 and Net 4.6.1 as the min supported versions -->
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>

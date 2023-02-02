@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             DeviceProvisioningServicesCertificateResource deviceProvisioningServicesCertificate = client.GetDeviceProvisioningServicesCertificateResource(deviceProvisioningServicesCertificateResourceId);
 
             // invoke the operation
-            string ifMatch = "AAAAAAAADGk=";
-            await deviceProvisioningServicesCertificate.DeleteAsync(WaitUntil.Completed, ifMatch);
+            DeviceProvisioningServicesCertificateResourceDeleteOptions options = new DeviceProvisioningServicesCertificateResourceDeleteOptions(ifMatch: "AAAAAAAADGk=") { };
+            await deviceProvisioningServicesCertificate.DeleteAsync(WaitUntil.Completed, options);
 
             Console.WriteLine($"Succeeded");
         }
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             DeviceProvisioningServicesCertificateResource deviceProvisioningServicesCertificate = client.GetDeviceProvisioningServicesCertificateResource(deviceProvisioningServicesCertificateResourceId);
 
             // invoke the operation
-            string ifMatch = "AAAAAAAADGk=";
-            CertificateVerificationCodeResult result = await deviceProvisioningServicesCertificate.GenerateVerificationCodeAsync(ifMatch);
+            DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions options = new DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions(ifMatch: "AAAAAAAADGk=") { };
+            CertificateVerificationCodeResult result = await deviceProvisioningServicesCertificate.GenerateVerificationCodeAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             DeviceProvisioningServicesCertificateResource deviceProvisioningServicesCertificate = client.GetDeviceProvisioningServicesCertificateResource(deviceProvisioningServicesCertificateResourceId);
 
             // invoke the operation
-            string ifMatch = "AAAAAAAADGk=";
-            CertificateVerificationCodeContent content = new CertificateVerificationCodeContent()
+            DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions options = new DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions(ifMatch: "AAAAAAAADGk=", content: new CertificateVerificationCodeContent()
             {
                 Certificate = "#####################################",
-            };
-            DeviceProvisioningServicesCertificateResource result = await deviceProvisioningServicesCertificate.VerifyCertificateAsync(ifMatch, content);
+            })
+            { };
+            DeviceProvisioningServicesCertificateResource result = await deviceProvisioningServicesCertificate.VerifyCertificateAsync(options);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
