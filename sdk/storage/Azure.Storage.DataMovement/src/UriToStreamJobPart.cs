@@ -81,6 +81,39 @@ namespace Azure.Storage.DataMovement
                   length: length)
         { }
 
+        /// <summary>
+        /// Creating transfer job based on a storage resource created from listing.
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="sourceResource"></param>
+        /// <param name="destinationResource"></param>
+        /// <param name="partNumber"></param>
+        /// <param name="jobPartStatus"></param>
+        public UriToStreamJobPart(
+            UriToStreamTransferJob job,
+            int partNumber,
+            StorageTransferStatus jobPartStatus,
+            StorageResource sourceResource,
+            StorageResource destinationResource)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  jobPartStatus: jobPartStatus,
+                  sourceResource: sourceResource,
+                  destinationResource: destinationResource,
+                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  initialTransferSize: job._initialTransferSize,
+                  errorHandling: job._errorHandling,
+                  createMode: job._createMode,
+                  checkpointer: job._checkpointer,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  cancellationTokenSource: job._cancellationTokenSource)
+        { }
+
         public async ValueTask DisposeAsync()
         {
             await DisposeHandlers().ConfigureAwait(false);
@@ -150,6 +183,9 @@ namespace Azure.Storage.DataMovement
             // If the initial request returned no content (i.e., a 304),
             // we'll pass that back to the user immediately
             long initialLength = initialResult.Properties.ContentLength;
+
+            // There needs to be at least 1 chunk to create the blob even if the
+            // length is 0 bytes.
             if (initialResult == default || initialLength == 0)
             {
                 // We just need to at minimum create the file
@@ -163,6 +199,7 @@ namespace Azure.Storage.DataMovement
                     async () =>
                     await CompleteFileDownload().ConfigureAwait(false))
                     .ConfigureAwait(false);
+                await AddJobPartToCheckpointer(1).ConfigureAwait(false);
                 return;
             }
 
@@ -181,6 +218,7 @@ namespace Azure.Storage.DataMovement
                     async () =>
                     await CompleteFileDownload().ConfigureAwait(false))
                     .ConfigureAwait(false);
+                await AddJobPartToCheckpointer(1).ConfigureAwait(false);
             }
             else
             {
@@ -189,6 +227,7 @@ namespace Azure.Storage.DataMovement
 
                 // Get list of ranges of the blob
                 IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
+                await AddJobPartToCheckpointer(ranges.Count).ConfigureAwait(false);
                 // Create Download Chunk event handler to manage when the ranges finish downloading
                 _downloadChunkHandler = GetDownloadChunkHandler(
                     currentTranferred: initialLength,

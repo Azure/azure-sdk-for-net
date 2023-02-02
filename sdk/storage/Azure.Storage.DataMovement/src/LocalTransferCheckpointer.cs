@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,30 +21,61 @@ namespace Azure.Storage.DataMovement
     public class LocalTransferCheckpointer : TransferCheckpointer
     {
         internal string _pathToCheckpointer;
+
         /// <summary>
         /// Stores references to the memory mapped files stored by IDs.
         /// </summary>
-        internal Dictionary<string, Dictionary<int, MemoryMappedPlanFile>> _memoryMappedFiles;
+        internal Dictionary<string, List<JobPartPlanFile>> _transferStates;
 
         /// <summary>
         /// Initializes a new instance of <see cref="LocalTransferCheckpointer"/> class.
         /// </summary>
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
-        public LocalTransferCheckpointer(string folderPath)
+        public LocalTransferCheckpointer(string folderPath = default)
         {
-            Argument.CheckNotNullOrEmpty(folderPath, nameof(folderPath));
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                _pathToCheckpointer = Path.Combine(Environment.CurrentDirectory, "/", DataMovementConstants.DefaultCheckpointerPath);
+                if (!Directory.Exists(_pathToCheckpointer))
+                {
+                    // If it does not already exist, create the default folder.
+                    Directory.CreateDirectory(_pathToCheckpointer);
+                }
+                return;
+            }
             if (!Directory.Exists(folderPath))
             {
-                throw new DirectoryNotFoundException($"The following directory path, \"{folderPath}\" was not found.");
-            }
-            FileAttributes attributes = File.GetAttributes(folderPath);
-            if (attributes != FileAttributes.Directory)
-            {
-                throw new DirectoryNotFoundException($"The following directory path, \"{folderPath}\" was not found not to have the attributes of a Directory but of ${attributes}");
+                throw Errors.MissingCheckpointerPath(folderPath);
             }
             _pathToCheckpointer = folderPath;
+            _transferStates = new Dictionary<string, List<JobPartPlanFile>>();
+        }
 
-            _memoryMappedFiles = new Dictionary<string, Dictionary<int, MemoryMappedPlanFile>>();
+        /// <summary>
+        /// Adds a new transfer to the checkpointer and returns the associated
+        /// DataTransfer object to go with it.
+        /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns></returns>
+        public override Task AddNewJobAsync(
+            string transferId,
+            CancellationToken cancellationToken = default)
+        {
+            if (!_transferStates.ContainsKey(transferId))
+            {
+                // Add new transfer id to the list of memory mapped files
+                List<JobPartPlanFile> tempJobParts = new List<JobPartPlanFile>();
+                _transferStates.Add(transferId, tempJobParts);
+            }
+            else
+            {
+                throw Errors.CollisionTransferIdCheckpointer(transferId);
+            }
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -51,22 +83,126 @@ namespace Azure.Storage.DataMovement
         ///
         /// If the transfer ID already exists, this method will throw an exception.
         /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="partNumber"></param>
+        /// <param name="chunksTotal"></param>
+        /// <param name="headerStream"></param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override Task<DataTransfer> AddNewTransferAsync(CancellationToken cancellationToken = default)
+        public override async Task AddNewJobPartAsync(
+            string transferId,
+            int partNumber,
+            int chunksTotal,
+            Stream headerStream,
+            CancellationToken cancellationToken = default)
         {
-            string id = GetNewTransferId(cancellationToken);
-            if (!_memoryMappedFiles.ContainsKey(id))
+            JobPartPlanFile mappedFile = new JobPartPlanFile(_pathToCheckpointer, transferId, partNumber, chunksTotal);
+            await mappedFile.WriteHeaderAsync(headerStream).ConfigureAwait(false);
+
+            // Add the job part in the spec
+            if (_transferStates.ContainsKey(transferId))
             {
-                // Create empty list of memory mapped job parts
-                Dictionary<int, MemoryMappedPlanFile> tempJobParts = new Dictionary<int, MemoryMappedPlanFile>();
-                _memoryMappedFiles.Add(id, tempJobParts);
+                _transferStates[transferId][partNumber] = mappedFile;
             }
-            // TODO: create first plan file with part 00000
-            return Task.FromResult(new DataTransfer(id));
+            else
+            {
+                // We should never get here because AddNewJobAsync should
+                // always be called first.
+                throw Errors.MissingTransferIdCheckpointer(transferId, partNumber);
+            }
+        }
+
+        /// <summary>
+        /// Add existing job to the checkpointer with verification. This function will throw
+        /// if no existing job plan files exist in the checkpointer, and the job plan files have
+        /// mismatch information from the information to resume from.
+        /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="sourcePath"></param>
+        /// <param name="destinationPath"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override Task AddExistingJobAsync(
+            string transferId,
+            string sourcePath,
+            string destinationPath,
+            CancellationToken cancellationToken = default)
+        {
+            // Check if the transfer id already exists, if it does, then we don't
+            // have to go through all these checks.
+            if (!_transferStates.ContainsKey(transferId))
+            {
+                // Keep track of the correlating job part plan files
+                List<JobPartPlanFileName> fileNames = new List<JobPartPlanFileName>();
+
+                // Search for existing plan files with the correlating transfer id
+                string searchPattern = string.Join(transferId, "*");
+                foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer, searchPattern, SearchOption.TopDirectoryOnly)
+                    .Where( f => Path.HasExtension(string.Join(
+                        DataMovementConstants.PlanFile.FileExtension,
+                        DataMovementConstants.PlanFile.SchemaVersion))))
+                {
+                    // Ensure each file has the matching header
+                    if (JobPartPlanFileName.TryParseJobPartPlanFileName(path, out JobPartPlanFileName partPlanFileName))
+                    {
+                        fileNames.Add(partPlanFileName);
+                    }
+                }
+                if (fileNames.Count == 0)
+                {
+                    // If no files exist, there's nothing to resume from
+                    throw Errors.PlanFilesMissing(_pathToCheckpointer, transferId);
+                }
+
+                // Sort by job part
+                fileNames.Sort( delegate(JobPartPlanFileName a, JobPartPlanFileName b)
+                {
+                    return a.JobPartNumber.CompareTo(b.JobPartNumber);
+                });
+
+                // Verify each existing file and then add it to our transfer states.
+                // TODO: move verification to transfer manager to prevent from opening job plan file
+                // more than once.
+                List<JobPartPlanFile> jobParts = new List<JobPartPlanFile>();
+                foreach (JobPartPlanFileName partFileName in fileNames)
+                {
+                    // Grab the header info
+                    JobPartPlanHeader header = partFileName.GetJobPartPlanHeader();
+
+                    // Verify the job part plan header
+                    CheckInputWithHeader(sourcePath, destinationPath, transferId, header);
+
+                    // Add to list of job parts
+                    JobPartPlanFile jobFile = new JobPartPlanFile(partFileName);
+                    jobParts.Add(jobFile);
+                }
+
+                // Add new transfer id to the list of memory mapped files
+                _transferStates.Add(transferId, jobParts);
+            }
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Gets the current number of chunk counts stored in the job part with the
+        /// respective transfer id.
+        /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override int CurrentJobPartCount(
+            string transferId,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            if (_transferStates.TryGetValue(transferId, out var result))
+            {
+                return result.Count;
+            }
+            throw Errors.MissingTransferIdCheckpointer(transferId);
         }
 
         /// <summary>
@@ -74,23 +210,26 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="id">The transfer ID.</param>
         /// <param name="partNumber">The part number of the current transfer.</param>
+        /// <param name="readSize">
+        /// The size of how many bytes to read.
+        /// Specify 0 (zero) to create a stream that ends approximately at the end of the file.
+        /// </param>
+        /// <param name="offset">The offset of the current transfer.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
-        public override Task<Stream> OpenReadCheckPointStreamAsync(
+        public override Task<Stream> ReadableStreamAsync(
             string id,
             int partNumber,
+            long offset,
+            long readSize,
             CancellationToken cancellationToken = default)
         {
-            if (_memoryMappedFiles.TryGetValue(id, out Dictionary<int, MemoryMappedPlanFile> jobPartFiles))
+            if (_transferStates.TryGetValue(id, out List<JobPartPlanFile> jobPartFiles))
             {
-                if (!jobPartFiles.ContainsKey(partNumber))
-                {
-                    throw new ArgumentException($"Checkpointer information from Transfer id \"{id}\", at part number \"{partNumber}\" was not found. Cannot read from plan file");
-                }
-                return Task.FromResult<Stream>(jobPartFiles[partNumber].MemoryMappedFileReference.CreateViewStream());
+                return Task.FromResult<Stream>(jobPartFiles[partNumber].MemoryMappedFileReference.CreateViewStream(offset, readSize, MemoryMappedFileAccess.Read));
             }
             else
             {
@@ -105,7 +244,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="id">The transfer ID.</param>
         /// <param name="partNumber">The part number of the current transfer.</param>
-        /// <param name="offset">The offset of the current transfer.</param>
+        /// <param name="chunkIndex">The offset of the current transfer.</param>
         /// <param name="buffer">The buffer to write data from to the checkpoint.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -114,10 +253,10 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public override async Task WriteToCheckpointAsync(
+        public override Task WriteToCheckpointAsync(
             string id,
             int partNumber,
-            long offset,
+            long chunkIndex,
             byte[] buffer,
             CancellationToken cancellationToken = default)
         {
@@ -127,34 +266,33 @@ namespace Azure.Storage.DataMovement
             {
                 throw new ArgumentException("Buffer cannot be empty");
             }
-            if (_memoryMappedFiles.TryGetValue(id, out Dictionary<int, MemoryMappedPlanFile> jobPartFiles))
+            if (_transferStates.TryGetValue(id, out List<JobPartPlanFile> jobPartFiles))
             {
-                if (!jobPartFiles.ContainsKey(partNumber))
+                if (jobPartFiles[partNumber] == default)
                 {
-                    MemoryMappedPlanFile mappedFile = new MemoryMappedPlanFile(id, partNumber);
-                    _memoryMappedFiles[id].Add(partNumber, mappedFile);
+                    // TODO: better exception message.
+                    throw new ArgumentException("Missing job part file call add job part file instead");
                 }
                 else
                 {
                     // partNumber file already exists
-                    // lock file
-                    await _memoryMappedFiles[id][partNumber].Semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-
-                    using (MemoryMappedViewAccessor accessor = _memoryMappedFiles[id][partNumber].MemoryMappedFileReference
-                    .CreateViewAccessor(offset, buffer.Length, MemoryMappedFileAccess.Write))
+                    lock (_transferStates[id][partNumber].writeLock)
                     {
-                        accessor.WriteArray(0, buffer, 0, buffer.Length);
-                        // to flush to the underlying file that supports the mmf
-                        accessor.Flush();
+                        using (MemoryMappedViewAccessor accessor = _transferStates[id][partNumber].MemoryMappedFileReference
+                        .CreateViewAccessor(chunkIndex, buffer.Length, MemoryMappedFileAccess.Write))
+                        {
+                            accessor.WriteArray(0, buffer, 0, buffer.Length);
+                            // to flush to the underlying file that supports the mmf
+                            accessor.Flush();
+                        }
                     }
-                    // unlock file
-                    _memoryMappedFiles[id][partNumber].Semaphore.Release();
                 }
             }
             else
             {
                 throw new ArgumentException($"Checkpointer information from Transfer id \"{id}\" was not found. Call TryAddTransferAsync before attempting to add transfer information");
             }
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -170,11 +308,11 @@ namespace Azure.Storage.DataMovement
         {
             bool result = true;
             Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
-            if (!_memoryMappedFiles.TryGetValue(id, out Dictionary<int, MemoryMappedPlanFile> jobPartFiles))
+            if (!_transferStates.TryGetValue(id, out List<JobPartPlanFile> jobPartFiles))
             {
                 throw new ArgumentException($"Checkpointer information from Transfer id \"{id}\" was not found. Call TryAddTransferAsync before attempting to add transfer information");
             }
-            foreach (MemoryMappedPlanFile jobPartPair in jobPartFiles.Values)
+            foreach (JobPartPlanFile jobPartPair in jobPartFiles)
             {
                 try
                 {
@@ -207,24 +345,68 @@ namespace Azure.Storage.DataMovement
         /// <returns>The list of all the transfers contained in the checkpointer.</returns>
         public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(_memoryMappedFiles.Keys.ToList());
+            return Task.FromResult(_transferStates.Keys.ToList());
         }
 
         /// <summary>
-        /// Creates a new Transfer Id and avoids collisions with the existing
-        /// transfer id strings.
+        /// Sets the Job Transfer Status in the Job Part Plan files.
         /// </summary>
-        /// <param name="cancellationToken">Cancels the operation</param>
+        /// <param name="transferId"></param>
+        /// <param name="status"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private string GetNewTransferId(CancellationToken cancellationToken)
+        public override Task SetJobTransferStatus(
+            string transferId,
+            StorageTransferStatus status,
+            CancellationToken cancellationToken)
         {
-            string id = Guid.NewGuid().ToString();
-            while (_ids.Contains(id))
+            long length = Marshal.SizeOf(status);
+            IntPtr offset = Marshal.OffsetOf(typeof(JobPartPlanHeader), nameof(JobPartPlanHeader.atomicJobStatus));
+            foreach (JobPartPlanFile jobPartFile in _transferStates[transferId])
             {
                 CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-                id = Guid.NewGuid().ToString();
+                lock (jobPartFile.writeLock)
+                {
+                    using (MemoryMappedViewAccessor accessor = jobPartFile.MemoryMappedFileReference
+                        .CreateViewAccessor(offset.ToInt64(), length, MemoryMappedFileAccess.Write))
+                    {
+                        accessor.Write(0, (int)status);
+                        // to flush to the underlying file that supports the mmf
+                        accessor.Flush();
+                    }
+                }
             }
-            return id;
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Sets the Job Part Transfer Status in the Job Part Plan files.
+        /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="partNumber"></param>
+        /// <param name="status"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override Task SetJobPartTransferStatus(
+            string transferId,
+            int partNumber,
+            StorageTransferStatus status,
+            CancellationToken cancellationToken)
+        {
+            long length = Marshal.SizeOf(status);
+            IntPtr offset = Marshal.OffsetOf(typeof(JobPartPlanHeader), nameof(JobPartPlanHeader.atomicPartStatus));
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            lock (_transferStates[transferId][partNumber].writeLock)
+            {
+                using (MemoryMappedViewAccessor accessor = _transferStates[transferId][partNumber].MemoryMappedFileReference
+                    .CreateViewAccessor(offset.ToInt64(), length, MemoryMappedFileAccess.Write))
+                {
+                    accessor.Write(0, (int)status);
+                    // to flush to the underlying file that supports the mmf
+                    accessor.Flush();
+                }
+            }
+            return Task.CompletedTask;
         }
     }
 }

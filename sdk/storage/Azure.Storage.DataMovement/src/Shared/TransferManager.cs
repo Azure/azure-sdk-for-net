@@ -10,6 +10,7 @@ using System.Buffers;
 using Azure.Storage.DataMovement.Models;
 using System.IO;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -79,6 +80,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private CancellationTokenSource _channelCancellationTokenSource;
         private CancellationToken _cancellationToken => _channelCancellationTokenSource.Token;
+
+        /// <summary>
+        /// All transfer ids
+        /// </summary>
+        internal List<string> _ids;
 
         /// <summary>
         /// Array pools for reading from streams to upload
@@ -278,26 +284,36 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new SingleTransferOptions();
 
+            bool resumeJob = false;
             DataTransfer dataTransfer;
             // Check if this is a job that is being asked to resume
             if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
             {
-                if (_checkpointer._ids.Contains(transferOptions.ResumeFromCheckpointId))
+                resumeJob = true;
+                string resumeId = transferOptions.ResumeFromCheckpointId;
+                // Attempt to add existing job to the checkpointer.
+                await _checkpointer.AddExistingJobAsync(
+                    transferId: resumeId,
+                    sourcePath: sourceResource.Path,
+                    destinationPath: destinationResource.Path,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+                // Check if it's a single part transfer.
+                if ( _checkpointer.CurrentJobPartCount(
+                    transferId: resumeId,
+                    cancellationToken: _cancellationToken) > 1)
                 {
-                    // TODO: replace with method that will compare the plan file and the params
-                    dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
-                    // Grab plan file info to continue from the checkpointer
-                    Stream jobPlanHeader = await _checkpointer.OpenReadCheckPointStreamAsync(dataTransfer.Id, 0, _cancellationToken).ConfigureAwait(false);
+                    throw Errors.MismatchIdSingleContainer(resumeId);
                 }
-                else
-                {
-                    throw new ArgumentException($"Cannot resume from id \"{transferOptions.ResumeFromCheckpointId}\". Could not load related checkpoint plan file.");
-                }
+
+                dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
             }
             else
             {
                 // Add Transfer to Checkpointer
-                dataTransfer = await _checkpointer.AddNewTransferAsync().ConfigureAwait(false);
+                string transferId = GetNewTransferId();
+                dataTransfer = new DataTransfer(transferId, 0);
+                await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
             }
 
             // If the resource cannot produce a Uri, it means it can only produce a local path
@@ -308,7 +324,7 @@ namespace Azure.Storage.DataMovement
                 if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
                     // Stream to Uri job (Upload Job)
-                    transferJobInternal = new StreamToUriTransferJob(
+                    StreamToUriTransferJob streamToUriJob = new StreamToUriTransferJob(
                         dataTransfer: dataTransfer,
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
@@ -317,22 +333,36 @@ namespace Azure.Storage.DataMovement
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
-                    // Queue Job
-                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-                    _dataTransfers.Add(dataTransfer);
+
+                    if (resumeJob)
+                    {
+                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            id: dataTransfer.Id,
+                            partNumber: 0,
+                            offset: 0,
+                            readSize: 0,
+                            cancellationToken: _cancellationToken).ConfigureAwait(false))
+                        {
+                            streamToUriJob.AppendJobPart(streamToUriJob.ToJobPart(
+                                stream,
+                                sourceResource,
+                                destinationResource));
+                        }
+                    }
+                    transferJobInternal = streamToUriJob;
                 }
                 else // Invalid argument that both resources do not produce a Uri
                 {
                     throw Errors.InvalidSourceDestinationParams();
                 }
             }
-            else if (sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            else // (sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
                 // Source is remote
                 if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
                     // Service to Service Job (Copy job)
-                    transferJobInternal = new ServiceToServiceTransferJob(
+                    ServiceToServiceTransferJob serviceToServiceJob = new ServiceToServiceTransferJob(
                         dataTransfer: dataTransfer,
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
@@ -341,15 +371,29 @@ namespace Azure.Storage.DataMovement
                         CheckPointFolderPath: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
-                    // Queue Job
-                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-                    _dataTransfers.Add(dataTransfer);
+
+                    if (resumeJob)
+                    {
+                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            id: dataTransfer.Id,
+                            partNumber: 0,
+                            offset: 0,
+                            readSize: 0,
+                            cancellationToken: _cancellationToken).ConfigureAwait(false))
+                        {
+                            serviceToServiceJob.AppendJobPart(serviceToServiceJob.ToJobPart(
+                                stream,
+                                sourceResource,
+                                destinationResource));
+                        }
+                    }
+                    transferJobInternal = serviceToServiceJob;
                 }
                 else
                 {
                     // Download to local operation
                     // Service to Local job (Download Job)
-                    transferJobInternal = new UriToStreamTransferJob(
+                    UriToStreamTransferJob uriToStreamJob = new UriToStreamTransferJob(
                         dataTransfer: dataTransfer,
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
@@ -358,11 +402,30 @@ namespace Azure.Storage.DataMovement
                         CheckPointFolderPath: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
-                    // Queue Job
-                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-                    _dataTransfers.Add(dataTransfer);
+
+                    if (resumeJob)
+                    {
+                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            id: dataTransfer.Id,
+                            partNumber: 0,
+                            offset: 0,
+                            readSize: 0,
+                            cancellationToken: _cancellationToken).ConfigureAwait(false))
+                        {
+                            uriToStreamJob.AppendJobPart(uriToStreamJob.ToJobPart(
+                                stream,
+                                sourceResource,
+                                destinationResource));
+                        }
+                    }
+                    transferJobInternal = uriToStreamJob;
                 }
             }
+
+            // Queue Job
+            await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+            _dataTransfers.Add(dataTransfer);
+
             return dataTransfer;
         }
 
@@ -389,16 +452,47 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new ContainerTransferOptions();
 
+            bool resumeJob = false;
+            DataTransfer dataTransfer;
+            // Check if this is a job that is being asked to resume
+            if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
+            {
+                resumeJob = true;
+                string resumeId = transferOptions.ResumeFromCheckpointId;
+                // Attempt to add existing job to the checkpointer.
+                await _checkpointer.AddExistingJobAsync(
+                    transferId: resumeId,
+                    sourcePath: sourceResource.Path,
+                    destinationPath: destinationResource.Path,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+                // Check if it's a single part transfer.
+                if (_checkpointer.CurrentJobPartCount(
+                    transferId: resumeId,
+                    cancellationToken: _cancellationToken) > 1)
+                {
+                    throw Errors.MismatchIdSingleContainer(resumeId);
+                }
+
+                dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
+            }
+            else
+            {
+                // Add Transfer to Checkpointer
+                string transferId = GetNewTransferId();
+                dataTransfer = new DataTransfer(transferId, 0);
+                await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
+            }
+
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
-            DataTransfer dataTransfer = new DataTransfer();
             TransferJobInternal transferJobInternal;
             if (sourceResource.CanProduceUri == ProduceUriType.NoUri)
             {
                 if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
                     // Stream to Uri job (Upload Job)
-                    transferJobInternal = new StreamToUriTransferJob(
+                    StreamToUriTransferJob streamToUriJob = new StreamToUriTransferJob(
                         dataTransfer: dataTransfer,
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
@@ -407,22 +501,43 @@ namespace Azure.Storage.DataMovement
                         checkpointer:_checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
-                    // Queue Job
-                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-                    _dataTransfers.Add(dataTransfer);
+
+                    if (resumeJob)
+                    {
+                        // Iterate through all job parts and append to the job
+                        int jobPartCount = _checkpointer.CurrentJobPartCount(
+                            transferId: dataTransfer.Id,
+                            cancellationToken: _cancellationToken);
+                        for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
+                        {
+                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                                id: dataTransfer.Id,
+                                partNumber: currentJobPart,
+                                offset: 0,
+                                readSize: 0,
+                                cancellationToken: _cancellationToken).ConfigureAwait(false))
+                            {
+                                streamToUriJob.AppendJobPart(streamToUriJob.ToJobPart(
+                                    stream,
+                                    sourceResource,
+                                    destinationResource));
+                            }
+                        }
+                    }
+                    transferJobInternal = streamToUriJob;
                 }
                 else // Invalid argument that both resources do not produce a Uri
                 {
                     throw Errors.InvalidSourceDestinationParams();
                 }
             }
-            else if (sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            else // (sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
                 // Source is remote
                 if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
                 {
                     // Service to Service Job (Copy job)
-                    transferJobInternal = new ServiceToServiceTransferJob(
+                    ServiceToServiceTransferJob serviceToServiceJob = new ServiceToServiceTransferJob(
                         dataTransfer: dataTransfer,
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
@@ -431,15 +546,36 @@ namespace Azure.Storage.DataMovement
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
-                    // Queue Job
-                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-                    _dataTransfers.Add(dataTransfer);
+
+                    if (resumeJob)
+                    {
+                        // Iterate through all job parts and append to the job
+                        int jobPartCount = _checkpointer.CurrentJobPartCount(
+                            transferId: dataTransfer.Id,
+                            cancellationToken: _cancellationToken);
+                        for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
+                        {
+                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                                id: dataTransfer.Id,
+                                partNumber: currentJobPart,
+                                offset: 0,
+                                readSize: 0,
+                                cancellationToken: _cancellationToken).ConfigureAwait(false))
+                            {
+                                serviceToServiceJob.AppendJobPart(serviceToServiceJob.ToJobPart(
+                                    stream,
+                                    sourceResource,
+                                    destinationResource));
+                            }
+                        }
+                    }
+                    transferJobInternal = serviceToServiceJob;
                 }
                 else
                 {
                     // Download to local operation
                     // Service to Local job (Download Job)
-                    transferJobInternal = new UriToStreamTransferJob(
+                    UriToStreamTransferJob uriToStreamJob = new UriToStreamTransferJob(
                         dataTransfer: dataTransfer,
                         sourceResource: sourceResource,
                         destinationResource: destinationResource,
@@ -448,25 +584,55 @@ namespace Azure.Storage.DataMovement
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
-                    // Queue Job
-                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-                    _dataTransfers.Add(dataTransfer);
+
+                    if (resumeJob)
+                    {
+                        // Iterate through all job parts and append to the job
+                        int jobPartCount = _checkpointer.CurrentJobPartCount(
+                            transferId: dataTransfer.Id,
+                            cancellationToken: _cancellationToken);
+                        for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
+                        {
+                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                                id: dataTransfer.Id,
+                                partNumber: currentJobPart,
+                                offset: 0,
+                                readSize: 0,
+                                cancellationToken: _cancellationToken).ConfigureAwait(false))
+                            {
+                                uriToStreamJob.AppendJobPart(uriToStreamJob.ToJobPart(
+                                    stream,
+                                    sourceResource,
+                                    destinationResource));
+                            }
+                        }
+                    }
+                    transferJobInternal = uriToStreamJob;
                 }
             }
+
+            // Queue Job
+            await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+            _dataTransfers.Add(dataTransfer);
+
             return dataTransfer;
         }
         #endregion
 
+        /// <summary>
+        /// Returns a default checkpointer if not specified by the user already.
+        ///
+        /// By default a local folder will be used to store the job transfer files.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="LocalTransferCheckpointer"/> using the folder
+        /// where the application is stored with and making a new folder called
+        /// .azstoragedml to store all the job plan files.
+        /// </returns>
         private static LocalTransferCheckpointer CreateDefaultCheckpointer()
         {
-            // Make folder path
-            string defaultPath = Path.Combine(Environment.CurrentDirectory, "/", DataMovementConstants.DefaultTransferFilesPath);
-            // Create folder if it does not already exists. It's possible that this library could be run
-            // multiple times in the same directory without defining a checkpointer.
-            Directory.CreateDirectory(defaultPath);
-
             // Return checkpointer
-            return new LocalTransferCheckpointer(defaultPath);
+            return new LocalTransferCheckpointer();
         }
 
         /// <summary>
@@ -482,6 +648,22 @@ namespace Azure.Storage.DataMovement
             }
             GC.SuppressFinalize(this);
             return default;
+        }
+
+        /// <summary>
+        /// Creates a new Transfer Id and avoids collisions with the existing
+        /// transfer id strings.
+        /// </summary>
+        /// <returns>A unique transfer id in the form of a GUID.</returns>
+        private string GetNewTransferId()
+        {
+            string id = Guid.NewGuid().ToString();
+            while (_ids.Contains(id))
+            {
+                CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
+                id = Guid.NewGuid().ToString();
+            }
+            return id;
         }
     }
 }

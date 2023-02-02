@@ -59,18 +59,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Resume respective job
-        /// </summary>
-        /// <param name="sourceCredential"></param>
-        /// <param name="destinationCredential"></param>
-        public override void ProcessResumeTransfer(
-            object sourceCredential = default,
-            object destinationCredential = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job parts</returns>
@@ -79,34 +67,49 @@ namespace Azure.Storage.DataMovement
             JobPartStatusEvents += JobPartEvent;
             await OnJobStatusChangedAsync(StorageTransferStatus.InProgress).ConfigureAwait(false);
             int partNumber = 0;
-            if (_isSingleResource)
+            if (_jobParts.Count == 0)
             {
-                // Single resource transfer, we can skip to chunking the job.
-                StreamToUriJobPart part = new StreamToUriJobPart(this, partNumber);
-                _jobParts.Add(part);
-                yield return part;
+                if (_isSingleResource)
+                {
+                    // Single resource transfer, we can skip to chunking the job.
+                    StreamToUriJobPart part = new StreamToUriJobPart(this, partNumber);
+                    _jobParts.Add(part);
+                    yield return part;
+                }
+                else
+                {
+                    // Call listing operation on the source container
+                    await foreach (StorageResource resource
+                        in _sourceResourceContainer.GetStorageResourcesAsync(
+                            cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false))
+                    {
+                        // Pass each storage resource found in each list call
+                        if (!resource.IsContainer)
+                        {
+                            string sourceName = resource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                            StreamToUriJobPart part = new StreamToUriJobPart(
+                                job: this,
+                                partNumber: partNumber,
+                                sourceResource: resource,
+                                destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName));
+                            _jobParts.Add(part);
+                            yield return part;
+                            partNumber++;
+                        }
+                        // When we have to deal with files we have to manually go and create each subdirectory
+                    }
+                }
             }
             else
             {
-                // Call listing operation on the source container
-                await foreach (StorageResource resource
-                    in _sourceResourceContainer.GetStorageResourcesAsync(
-                        cancellationToken:_cancellationTokenSource.Token).ConfigureAwait(false))
+                // Resuming old job with existing job parts
+                foreach (JobPartInternal part in _jobParts)
                 {
-                    // Pass each storage resource found in each list call
-                    if (!resource.IsContainer)
+                    if (part.JobPartStatus != StorageTransferStatus.Completed)
                     {
-                        string sourceName = resource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
-                        StreamToUriJobPart part = new StreamToUriJobPart(
-                            job: this,
-                            partNumber: partNumber,
-                            sourceResource: resource,
-                            destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName));
-                        _jobParts.Add(part);
+                        part.JobPartStatus = StorageTransferStatus.Queued;
                         yield return part;
-                        partNumber++;
                     }
-                    // When we have to deal with files we have to manually go and create each subdirectory
                 }
             }
             _enumerationComplete = true;

@@ -264,15 +264,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Resume respective job
-        /// </summary>
-        /// <param name="sourceCredential"></param>
-        /// <param name="destinationCredential"></param>
-        public abstract void ProcessResumeTransfer(
-            object sourceCredential = default,
-            object destinationCredential = default);
-
-        /// <summary>
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job parts</returns>
@@ -327,6 +318,7 @@ namespace Azure.Storage.DataMovement
                             isRunningSynchronously: false,
                             cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
                 }
+                await SetCheckpointerStatus(status).ConfigureAwait(false);
                 await _dataTransfer._state.SetTransferStatus(status).ConfigureAwait(false);
             }
         }
@@ -340,6 +332,14 @@ namespace Azure.Storage.DataMovement
                     transferStatus: status,
                     isRunningSynchronously: false,
                     cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
+        }
+
+        internal async virtual Task SetCheckpointerStatus(StorageTransferStatus status)
+        {
+            await _checkpointer.SetJobTransferStatus(
+                transferId: _dataTransfer.Id,
+                status: status,
+                cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
         }
 
         internal async Task OnEnumerationComplete()
@@ -376,6 +376,11 @@ namespace Azure.Storage.DataMovement
                     await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
                 }
             }
+        }
+
+        public void AppendJobPart(JobPartInternal jobPart)
+        {
+            _jobParts.Add(jobPart);
         }
     }
 }

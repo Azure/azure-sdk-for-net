@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Core;
 
@@ -26,6 +28,11 @@ namespace Azure.Storage.DataMovement
     internal class JobPartPlanFileName
     {
         /// <summary>
+        /// Prefix path
+        /// </summary>
+        public string PrefixPath { get; }
+
+        /// <summary>
         /// Transfer Id representing the respective transfer.
         /// </summary>
         public string Id { get; }
@@ -44,6 +51,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public string SchemaVersion { get; }
 
+        /// <summary>
+        /// Full path of the file.
+        /// </summary>
+        public string FullPath { get; }
+
         protected JobPartPlanFileName()
         {
         }
@@ -51,49 +63,61 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creates Job Part Plan File Name
         /// </summary>
+        /// <param name="checkpointerPath">Path to where all checkpointer files are stored.</param>
         /// <param name="id"></param>
         /// <param name="jobPartNumber"></param>
         /// <param name="schemaVersion"></param>
         public JobPartPlanFileName(
+            string checkpointerPath,
             string id,
             int jobPartNumber,
             string schemaVersion = DataMovementConstants.PlanFile.SchemaVersion)
         {
+            PrefixPath = checkpointerPath;
             Id = id;
             JobPartNumber = jobPartNumber;
             SchemaVersion = schemaVersion;
+
+            string fileName = $"{Id}--{JobPartNumber.ToString("D5", NumberFormatInfo.CurrentInfo)}.{DataMovementConstants.PlanFile.FileExtension}{SchemaVersion}";
+            FullPath = string.Join(PrefixPath, fileName);
         }
 
         public JobPartPlanFileName(string fullPath)
         {
             // Check if empty
             Argument.CheckNotNullOrEmpty(fullPath, nameof(fullPath));
+
+            FileInfo fileInfo = new FileInfo(fullPath);
+            PrefixPath = fileInfo.DirectoryName;
+
+            string fileName = fileInfo.Name;
+
             // Format of the job plan file name
             // {transferid}--{jobpartNumber}.steV{schemaVersion}
 
             // Check for valid Transfer Id
-            int endTransferIdIndex = fullPath.IndexOf(DataMovementConstants.PlanFile.JobPlanFileNameDelimiter, StringComparison.InvariantCultureIgnoreCase);
+            int endTransferIdIndex = fileName.IndexOf(DataMovementConstants.PlanFile.JobPlanFileNameDelimiter, StringComparison.InvariantCultureIgnoreCase);
             if (endTransferIdIndex != DataMovementConstants.PlanFile.IdSize)
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains a Transfer ID that is either too long or short: {fullPath}");
+                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains a Transfer ID that is either too long or short: {fileName}");
             }
             Id = fullPath.Substring(0, endTransferIdIndex);
 
             // Check for valid transfer part number
             int partStartIndex = endTransferIdIndex + DataMovementConstants.PlanFile.JobPlanFileNameDelimiter.Length;
-            int endPartIndex = fullPath.IndexOf(DataMovementConstants.PlanFile.FileExtension, StringComparison.InvariantCultureIgnoreCase);
+            int endPartIndex = fileName.IndexOf(DataMovementConstants.PlanFile.FileExtension, StringComparison.InvariantCultureIgnoreCase);
 
             if (endPartIndex - partStartIndex != DataMovementConstants.PlanFile.JobPartLength)
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fullPath}");
+                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fileName}");
             }
             if (!int.TryParse(
-                    fullPath.Substring(partStartIndex, DataMovementConstants.PlanFile.JobPartLength),
+                    fileName.Substring(partStartIndex, DataMovementConstants.PlanFile.JobPartLength),
                     NumberStyles.Number,
                     CultureInfo.InvariantCulture,
                     out int jobPartNumber))
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fullPath}");
+                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
             }
             JobPartNumber = jobPartNumber;
 
@@ -101,13 +125,15 @@ namespace Azure.Storage.DataMovement
 
             if (schemaStartIndex + 1 >= fullPath.Length)
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Plan Schema Version: {fullPath}");
+                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Plan Schema Version: {fileName}");
             }
             SchemaVersion = fullPath.Substring(schemaStartIndex);
             if (DataMovementConstants.PlanFile.SchemaVersion != SchemaVersion)
             {
                 throw new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {SchemaVersion} does not match the Schema Version supported by the package {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
             }
+
+            FullPath = fullPath;
         }
 
         /// <summary>
@@ -116,7 +142,24 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public override string ToString()
         {
-            return $"{Id}--{JobPartNumber.ToString("D5", NumberFormatInfo.CurrentInfo)}.{DataMovementConstants.PlanFile.FileExtension}{SchemaVersion}";
+            return FullPath;
+        }
+
+        internal static bool TryParseJobPartPlanFileName(
+            string path,
+            out JobPartPlanFileName fileName)
+        {
+            try
+            {
+                fileName = new JobPartPlanFileName(path);
+            }
+            catch
+            {
+                // Was not a valid job part plan file name
+                fileName = default;
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement
             // To populate as jobs get added
             if (string.IsNullOrEmpty(planFolderPath))
             {
-                planFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), DataMovementConstants.DefaultTransferFilesPath);
+                planFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), DataMovementConstants.DefaultCheckpointerPath);
                 Directory.CreateDirectory(planFolderPath);
             }
             TransferId = transferId;

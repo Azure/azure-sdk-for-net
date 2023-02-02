@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal const int DuplicateFileNameLimit = 100;
 
-        internal const string DefaultTransferFilesPath = ".azstoragedml";
+        internal const string DefaultCheckpointerPath = ".azstoragedml";
 
         /// <summary>
         ///  Constants used for logger extensions
@@ -65,6 +65,7 @@ namespace Azure.Storage.DataMovement
             // TODO: might change the value
             internal const long MemoryMappedFileSize = 4 * Constants.MB;
             internal const int CustomHeaderMaxBytes = 256;
+            internal const int Padding = 8;
         }
     }
 }

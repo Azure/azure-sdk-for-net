@@ -58,53 +58,5 @@ namespace Azure.Storage.DataMovement
                 lastAccessed: fileInfo.LastAccessTimeUtc,
                 resourceType: StorageResourceType.LocalFile);
         }
-
-        /// <summary>
-        /// Translate the initial job part header to a job plan format file
-        /// </summary>
-        internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart, StorageTransferStatus jobStatus)
-        {
-            byte[] sourceRoot = jobPart._sourceResource.UriToByteArray();
-            byte[] sourceQueryParams = jobPart._sourceResource.UriQueryToByteArray();
-            byte[] destinationRoot = jobPart._destinationResource.UriToByteArray();
-            byte[] destinationQueryParams = jobPart._destinationResource.UriQueryToByteArray();
-            return new JobPartPlanHeader()
-            {
-                Version = Encoding.Unicode.GetBytes(DataMovementConstants.PlanFile.SchemaVersion),
-                StartTime = 0, // TODO: update to job start time
-                TransferId = jobPart._dataTransfer.Id,
-                PartNum = (uint)jobPart.PartNumber,
-                SourceRootLength = (ushort)sourceRoot.Length,
-                SourceRoot = sourceRoot,
-                SourceExtraQueryLength = (ushort) sourceQueryParams.Length,
-                SourceExtraQuery = sourceQueryParams,
-                DestinationRootLength = (ushort) destinationRoot.Length,
-                DestinationRoot = destinationRoot,
-                DestExtraQueryLength= (ushort) destinationQueryParams.Length,
-                DestExtraQuery = destinationQueryParams,
-                IsFinalPart = false, // TODO: change but we might remove this param
-                ForceWrite = jobPart._createMode == StorageResourceCreateMode.Overwrite, // TODO: change to enum value
-                ForceIfReadOnly = false, // TODO: revisit for Azure Files
-                AutoDecompress = false, // TODO: revisit if we want to support this feature
-                Priority = 0, // TODO: add priority feature
-                TTLAfterCompletion = 0, // TODO: revisit for Azure Files
-                FromTo = 0, // TODO: revisit when we add this feature
-                FolderPropertyOption = FolderPropertiesMode.None, // TODO: revisit for Azure Files
-                NumTransfers = 0, // TODO: revisit when added
-                DstBlobData = default, // TODO: revisit when we add feature to cache this info
-                DstLocalData = default, // TODO: revisit when we add feature to cache this info
-                PreserveSMBPermissions = 0, // TODO: revisit for Azure Files
-                PreserveSMBInfo = false, // TODO: revisit for Azure Files
-                S2SGetPropertiesInBackend = false, // TODO: revisit for Azure Files
-                S2SSourceChangeValidation = false, // TODO: revisit for Azure Files
-                DestLengthValidation = false, // TODO: revisit when features is added
-                S2SInvalidMetadataHandleOption = 0, // TODO: revisit when supported
-                atomicJobStatus = (uint) jobStatus,
-                atomicPartStatus = (uint) jobPart.JobPartStatus,
-                DeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None, // TODO: revisit when feature is added
-                PermanentDeleteOption = JobPartPermanentDeleteOption.None, // TODO: revisit when feature is added
-                RehydratePriorityType = JobPartPlanRehydratePriorityType.None, // TODO: revisit when feature is added
-            };
-        }
     }
 }

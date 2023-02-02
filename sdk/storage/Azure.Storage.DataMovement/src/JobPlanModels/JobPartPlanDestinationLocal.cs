@@ -8,7 +8,6 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// This matching the JobPartPlanDstLocal of azcopy
     /// </summary>
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal struct JobPartPlanDestinationLocal
     {

@@ -10,7 +10,6 @@ namespace Azure.Storage.DataMovement
     ///
     /// Comes to a total of 6311 bytes
     /// </summary>
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal struct JobPartPlanDestinationBlob
     {

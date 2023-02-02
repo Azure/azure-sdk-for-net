@@ -73,6 +73,40 @@ namespace Azure.Storage.DataMovement
         {
         }
 
+        /// <summary>
+        /// Creating transfer job based on a storage resource created from listing.
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="sourceResource"></param>
+        /// <param name="destinationResource"></param>
+        /// <param name="partNumber"></param>
+        /// <param name="jobPartStatus"></param>
+        public StreamToUriJobPart(
+            StreamToUriTransferJob job,
+            int partNumber,
+            StorageTransferStatus jobPartStatus,
+            StorageResource sourceResource,
+            StorageResource destinationResource)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  jobPartStatus: jobPartStatus,
+                  sourceResource: sourceResource,
+                  destinationResource: destinationResource,
+                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  initialTransferSize: job._initialTransferSize,
+                  errorHandling: job._errorHandling,
+                  createMode: job._createMode,
+                  checkpointer: job._checkpointer,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  cancellationTokenSource: job._cancellationTokenSource)
+        {
+        }
+
         public async ValueTask DisposeAsync()
         {
             await DisposeHandlers().ConfigureAwait(false);
@@ -108,6 +142,7 @@ namespace Azure.Storage.DataMovement
                 {
                     // If we can create the destination in one call
                     await CreateDestinationResource(length, length, true).ConfigureAwait(false);
+                    await AddJobPartToCheckpointer(1).ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);
@@ -122,6 +157,7 @@ namespace Azure.Storage.DataMovement
 
                 // If we cannot upload in one shot, initiate the parallel block uploader
                 List<(long Offset, long Length)> rangeList = GetRangeList(blockSize, length);
+                await AddJobPartToCheckpointer(rangeList.Count).ConfigureAwait(false);
                 if (_destinationResource.TransferType == TransferType.Concurrent)
                 {
                     await QueueStageBlockRequests(rangeList, length).ConfigureAwait(false);
@@ -154,7 +190,6 @@ namespace Azure.Storage.DataMovement
                 // Whether or not we continue is up to whether this was single put call or not.
                 return !singleCall;
             }
-
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreateMode.Skip
                     && exception.ErrorCode == "BlobAlreadyExists")

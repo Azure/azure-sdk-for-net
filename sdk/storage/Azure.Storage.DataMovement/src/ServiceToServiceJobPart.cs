@@ -91,6 +91,39 @@ namespace Azure.Storage.DataMovement
                   length: length)
         { }
 
+        /// <summary>
+        /// Creating transfer job based on a storage resource created from listing.
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="sourceResource"></param>
+        /// <param name="destinationResource"></param>
+        /// <param name="partNumber"></param>
+        /// <param name="jobPartStatus"></param>
+        public ServiceToServiceJobPart(
+            ServiceToServiceTransferJob job,
+            int partNumber,
+            StorageTransferStatus jobPartStatus,
+            StorageResource sourceResource,
+            StorageResource destinationResource)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  jobPartStatus: jobPartStatus,
+                  sourceResource: sourceResource,
+                  destinationResource: destinationResource,
+                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  initialTransferSize: job._initialTransferSize,
+                  errorHandling: job._errorHandling,
+                  createMode: job._createMode,
+                  checkpointer: job._checkpointer,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  cancellationTokenSource: job._cancellationTokenSource)
+        { }
+
         public override async Task ProcessPartToChunkAsync()
         {
             await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
@@ -123,12 +156,14 @@ namespace Azure.Storage.DataMovement
             {
                 // Perform a one call method to copy the resource.
                 await StartSingleCallCopy(length, true).ConfigureAwait(false);
+                await AddJobPartToCheckpointer(1).ConfigureAwait(false);
             }
             else // For now we default to sync copy
             {
                 if (_initialTransferSize >= length)
                 {
                     await StartSingleCallCopy(length, false).ConfigureAwait(false);
+                    await AddJobPartToCheckpointer(1).ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);
@@ -142,6 +177,7 @@ namespace Azure.Storage.DataMovement
                 if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
                 {
                     List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
+                    await AddJobPartToCheckpointer(commitBlockList.Count).ConfigureAwait(false);
                     if (_destinationResource.TransferType == TransferType.Concurrent)
                     {
                         await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);

@@ -22,8 +22,8 @@ namespace Azure.Storage
             => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". Because" +
                 $"the respective transfer job does not exist or is no longer stored in the transfer manager.");
 
-        public static ArgumentException PlanFileMissing(string path, string transferId)
-            => new ArgumentException($"Cannot resume transfer job, \"{transferId}\", because the job plan file cannot be found at the following path: \"{path}\"");
+        public static ArgumentException PlanFilesMissing(string path, string transferId)
+            => new ArgumentException($"Cannot resume transfer job, \"{transferId}\", because the job plan file(s) cannot be found at the checkpointer path: \"{path}\"");
 
         public static ArgumentException JobCancelledOrPaused(string transferId)
             => new ArgumentException($"The following transfer job with the respective transfer id: \"{transferId}\" is currently being cancelled or paused.");
@@ -54,5 +54,31 @@ namespace Azure.Storage
         public static ArgumentException MismatchSchemaVersion(string schemaVersion)
             => throw new ArgumentException($"Mismatch Schema Version: Schema Version of the Job Plan file does not match the Schema Version supported by" +
                     $"the SDK: {DataMovementConstants.PlanFile.SchemaVersion}. Please update to the Azure.Storage.DataMovement version which supports this Job Plan file Version Schema: {schemaVersion}.");
+
+        public static ArgumentException MismatchTransferId(string passedTransferId, string storedTransferId)
+            => throw new ArgumentException($"Mismatch Transfer Id: Transfer ID stored in the Job Plan file does not match the Transfer ID" +
+                    $"the Transfer ID passed to resume the transfer, and the job plan file name. Transfer ID passed: {passedTransferId}, Transfer ID stored in file: {storedTransferId}. ");
+
+        public static ArgumentException CollisionTransferIdCheckpointer(string transferId)
+            => throw new ArgumentException($"Transfer Id Collision Checkpointer: The transfer id, {transferId}, already exists in the checkpointer.");
+
+        public static ArgumentException MissingTransferIdCheckpointer(string transferId, int partNumber)
+            => throw new ArgumentException($"Missing Transfer Id Checkpointer: The transfer id, {transferId}, could not be found in the checkpointer when" +
+                $"attempting to add a new job part, {partNumber}.");
+
+        public static ArgumentException CannotReadMmfStream(string filePath)
+            => throw new ArgumentException($"Unable to read Job Part Header from the job part plan file: {filePath}.");
+
+        public static ArgumentException MissingTransferIdCheckpointer(string transferId)
+            => throw new ArgumentException($"The transfer id, {transferId}, could not be found in the checkpointer.");
+
+        public static ArgumentException MismatchIdSingleContainer(string transferId)
+            => throw new ArgumentException($"Cannot Resume Error: Transfer Id, {transferId} is being attempted as a single transfer when it's a container transfer.");
+
+        public static ArgumentException CollisionJobPart(string transferId, int jobPart)
+            => throw new ArgumentException($"Job Part Collision Checkpointer: The job part {jobPart} for transfer id {transferId}, already exists in the checkpointer.");
+
+        public static ArgumentException MissingCheckpointerPath(string directoryPath)
+            => throw new ArgumentException($"Could not initialize the LocalTransferCheckpointer because the folderPath passed does not exist. Please create the {directoryPath}, folder path first.");
     }
 }

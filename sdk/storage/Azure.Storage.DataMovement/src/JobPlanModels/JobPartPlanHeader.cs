@@ -3,6 +3,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Azure.Storage.DataMovement.JobPlanModels;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -12,8 +13,7 @@ namespace Azure.Storage.DataMovement
     ///
     /// TODO: check if we want to set the pack and/or size for the struct layout
     /// </summary>
-    [Serializable]
-    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
+    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode, Pack=1)]
     internal struct JobPartPlanHeader
     {
         /// <summary>
@@ -29,14 +29,14 @@ namespace Azure.Storage.DataMovement
         public byte[] Version;
 
         /// <summary>
-        /// The start time of the job part
+        /// The start time of the job part.
         /// </summary>
         public long StartTime;
 
         /// <summary>
         /// The Transfer/Job Id
         ///
-        /// Size of a GUID
+        /// Size of a GUID.
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = DataMovementConstants.PlanFile.IdSize)]
         public string TransferId;
@@ -141,7 +141,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// TODO: change to object for storing transfer source and destination
         /// </summary>
-        public uint FromTo;
+        public JobPlanFromTo FromTo;
 
         /// <summary>
         /// option specifying how folders will be handled
@@ -205,6 +205,21 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public byte S2SInvalidMetadataHandleOption;
 
+        /// <summary>
+        /// For delete operation specify what to do with snapshots
+        /// </summary>
+        public JobPartDeleteSnapshotsOption DeleteSnapshotsOption;
+
+        /// <summary>
+        /// Permanent Delete Option
+        /// </summary>
+        public JobPartPermanentDeleteOption PermanentDeleteOption;
+
+        /// <summary>
+        /// Rehydrate Priority type
+        /// </summary>
+        public JobPartPlanRehydratePriorityType RehydratePriorityType;
+
         // Any fields below this comment are NOT constants; they may change over as the job part is processed.
         // Care must be taken to read/write to these fields in a thread-safe way!
 
@@ -214,14 +229,5 @@ namespace Azure.Storage.DataMovement
         public uint atomicJobStatus;
 
         public uint atomicPartStatus;
-
-        /// <summary>
-        /// For delete operation specify what to do with snapshots
-        /// </summary>
-        public JobPartDeleteSnapshotsOption DeleteSnapshotsOption;
-
-        public JobPartPermanentDeleteOption PermanentDeleteOption;
-
-        public JobPartPlanRehydratePriorityType RehydratePriorityType;
     }
 }
