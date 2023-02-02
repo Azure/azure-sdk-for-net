@@ -118,7 +118,7 @@ namespace Azure.Core.Dynamic
         internal abstract void WriteTo(System.IO.Stream stream);
         public static void WriteTo(System.IO.Stream stream, Azure.Core.Dynamic.DynamicData data) { }
     }
-    public partial class DynamicJson : System.Dynamic.IDynamicMetaObjectProvider
+    public partial class DynamicJson : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider
     {
         internal DynamicJson() { }
         public static implicit operator bool (Azure.Core.Dynamic.DynamicJson value) { throw null; }
@@ -150,7 +150,6 @@ namespace Azure.Core.Dynamic
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         }
     }
-    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonConverter))]
     public partial class MutableJsonDocument
     {
         internal MutableJsonDocument() { }
