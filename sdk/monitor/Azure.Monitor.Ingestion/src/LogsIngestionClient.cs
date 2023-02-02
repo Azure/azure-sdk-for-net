@@ -80,7 +80,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="logEntries"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        internal static IEnumerable<BatchedLogs> Batch(IEnumerable<object> logEntries, UploadLogsOptions options = null)
+        internal static IEnumerable<BatchedLogs> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
         {
             // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
             ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
@@ -211,7 +211,7 @@ namespace Azure.Monitor.Ingestion
             int logsFailed = 0;
             var shouldAbort = false;
             // Partition the stream into individual blocks
-            foreach (BatchedLogs batch in Batch((List<object>)logs, options))
+            foreach (BatchedLogs batch in Batch(logs, options))
             {
                 //stop queuing new work on abort
                 if (shouldAbort)
@@ -325,7 +325,7 @@ namespace Azure.Monitor.Ingestion
             int logsFailed = 0;
 
             // Partition the stream into individual blocks
-            foreach (BatchedLogs batch in Batch((List<object>) logs, options))
+            foreach (BatchedLogs batch in Batch(logs, options))
             {
                 if (shouldAbort)
                     break;
