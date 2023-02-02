@@ -45,11 +45,10 @@ namespace Azure.Core
                 {
                     // This is the first time we're setting the signature, so we need to add it to the query.
                     query = string.IsNullOrEmpty(query) ? '?' + signature : query + '&' + signature;
-
-                    // Store the signature in the message property bag so we can replace it if it changes.
-                    message.SetProperty(typeof(AzureSasSignatureHistory), signature);
                 }
                 message.Request.Uri.Query = query;
+                // Store the signature in the message property bag so we can replace it if it changes.
+                message.SetProperty(typeof(AzureSasSignatureHistory), signature);
 
                 base.OnSendingRequest(message);
             }
@@ -58,6 +57,6 @@ namespace Azure.Core
         /// <summary>
         /// A marker class used to represent AzureSasCredential signature history on the <see cref="HttpMessage"/> property bag.
         /// </summary>
-         private class AzureSasSignatureHistory { }
+        private class AzureSasSignatureHistory { }
     }
 }
