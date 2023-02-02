@@ -25,7 +25,7 @@ You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) 
 
 ### Authenticate the client
 
-In order to interact with the App Configuration service, you'll need to create an instance of the [OpenAIClient][openai_client_class] class. To make this possible, you'll need the endpoint URI for your Azure OpenAI resource and an API key to access that resource.
+In order to interact with the Azure OpenAI service, you'll need to create an instance of the [OpenAIClient][openai_client_class] class. To make this possible, you'll need the endpoint URI for your Azure OpenAI resource and an API key to access that resource.
 
 #### Get credentials
 
@@ -53,7 +53,7 @@ dotnet add package Azure.Identity
 
 ```C# Snippet:CreateOpenAIClientTokenCredential
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -102,12 +102,12 @@ The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredentia
 
 ```C# Snippet:GenerateChatbotResponse
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
 string prompt = "What is Azure OpenAI?";
 Console.Write($"Input: {prompt}");
 
-Response<Completions> completionsResponse = client.GetCompletions(prompt);
+Response<Completions> completionsResponse = client.GetCompletions("myDeploymentId", prompt);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Chatbot: {completion}");
 ```
@@ -148,7 +148,7 @@ The `SummarizeText` method generates a summarization of the given input prompt.
 
 ```C# Snippet:SummarizeText
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
 string textToSummarize = @"
     Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.
@@ -198,6 +198,8 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
 <!-- LINKS -->
+[azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
+[azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [msdocs_openai_completion]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
 [msdocs_openai_embedding]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
