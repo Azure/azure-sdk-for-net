@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             _options = options;
 
             _lastScaleUpTime = DateTime.MinValue;
-            _lastTargetScalerResult = new TargetScalerResult { };
+            _lastTargetScalerResult = new TargetScalerResult();
 
             TargetScalerDescriptor = new TargetScalerDescriptor(_functionId);
         }
