@@ -86,6 +86,6 @@ namespace Azure.DigitalTwins.Core.Tests
         /// <summary>
         /// Default Job Id.
         /// </summary>
-        public const string JobId = "job1";
+        public const string ImportJobId = "job1";
     }
 }
