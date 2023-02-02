@@ -19,7 +19,6 @@ namespace Azure.AI.OpenAI.Models
         /// We generally recommend using this or `temperature` but not
         /// both.
         /// Minimum of 0 and maximum of 1 allowed.
-        ///
         /// </summary>
         [CodeGenMember("TopP")]
         public float? NucleusSamplingFactor { get; set; }
