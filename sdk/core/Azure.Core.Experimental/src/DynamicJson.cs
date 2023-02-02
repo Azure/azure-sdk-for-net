@@ -91,8 +91,8 @@ namespace Azure.Core.Dynamic
 #if NET6_0_OR_GREATER
             return JsonSerializer.Deserialize<T>(_element.GetJsonElement(), MutableJsonDocument.DefaultJsonSerializerOptions)!;
 #else
-            // TODO: Could we optimize this by serializing from the byte array instead?  We don't currently slice into this in WriteTo(), but could look at storing that.
-            return JsonSerializer.Deserialize<T>(_element.ToString(), MutableJsonDocument.DefaultJsonSerializerOptions);
+            Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(_element.GetJsonElement());
+            return JsonSerializer.Deserialize<T>(ref reader, MutableJsonDocument.DefaultJsonSerializerOptions);
 #endif
         }
 

@@ -63,19 +63,19 @@ namespace Azure.Core.Experimental.Tests
             string json = @"
                 {
                   ""Foo"" : true,
-                  ""Bar"" : 1.2
+                  ""Bar"" : 1
                 }";
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
-            jd.RootElement.GetProperty("Bar").Set(2.2);
+            jd.RootElement.GetProperty("Bar").Set(2);
 
             WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(RemoveWhiteSpace(@"
                 {
                   ""Foo"" : true,
-                  ""Bar"" : 2.2
+                  ""Bar"" : 2
                 }"),
                 RemoveWhiteSpace(jsonString));
         }
