@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("This test is failing due to the api-version sanitization.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33867")]
         public async Task TestWorkspaceLifeCycle()
         {
             // create workspace
