@@ -10,13 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerNameAvailabilityRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");

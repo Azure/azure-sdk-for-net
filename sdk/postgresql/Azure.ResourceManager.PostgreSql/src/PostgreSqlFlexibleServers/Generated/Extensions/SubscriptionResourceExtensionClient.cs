@@ -19,12 +19,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _postgreSqlFlexibleServerServersClientDiagnostics;
-        private ServersRestOperations _postgreSqlFlexibleServerServersRestClient;
-        private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
-        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
         private ClientDiagnostics _locationBasedCapabilitiesClientDiagnostics;
         private LocationBasedCapabilitiesRestOperations _locationBasedCapabilitiesRestClient;
+        private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
+        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
+        private ClientDiagnostics _checkNameAvailabilityWithLocationClientDiagnostics;
+        private CheckNameAvailabilityWithLocationRestOperations _checkNameAvailabilityWithLocationRestClient;
+        private ClientDiagnostics _postgreSqlFlexibleServerServersClientDiagnostics;
+        private ServersRestOperations _postgreSqlFlexibleServerServersRestClient;
         private ClientDiagnostics _virtualNetworkSubnetUsageClientDiagnostics;
         private VirtualNetworkSubnetUsageRestOperations _virtualNetworkSubnetUsageRestClient;
 
@@ -40,12 +42,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
         }
 
-        private ClientDiagnostics PostgreSqlFlexibleServerServersClientDiagnostics => _postgreSqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations PostgreSqlFlexibleServerServersRestClient => _postgreSqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PostgreSqlFlexibleServerResource.ResourceType));
-        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics LocationBasedCapabilitiesClientDiagnostics => _locationBasedCapabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationBasedCapabilitiesRestOperations LocationBasedCapabilitiesRestClient => _locationBasedCapabilitiesRestClient ??= new LocationBasedCapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CheckNameAvailabilityWithLocationClientDiagnostics => _checkNameAvailabilityWithLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CheckNameAvailabilityWithLocationRestOperations CheckNameAvailabilityWithLocationRestClient => _checkNameAvailabilityWithLocationRestClient ??= new CheckNameAvailabilityWithLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics PostgreSqlFlexibleServerServersClientDiagnostics => _postgreSqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations PostgreSqlFlexibleServerServersRestClient => _postgreSqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PostgreSqlFlexibleServerResource.ResourceType));
         private ClientDiagnostics VirtualNetworkSubnetUsageClientDiagnostics => _virtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private VirtualNetworkSubnetUsageRestOperations VirtualNetworkSubnetUsageRestClient => _virtualNetworkSubnetUsageRestClient ??= new VirtualNetworkSubnetUsageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -53,112 +57,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// List all the servers in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/flexibleServers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the servers in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/flexibleServers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServers(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Check the availability of name for resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_Execute</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The required parameters for checking if resource name is available. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await CheckNameAvailabilityRestClient.ExecuteAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Check the availability of name for resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_Execute</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The required parameters for checking if resource name is available. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = CheckNameAvailabilityRestClient.Execute(Id.SubscriptionId, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -205,6 +103,176 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedCapabilitiesRestClient.CreateExecuteRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationBasedCapabilitiesRestClient.CreateExecuteNextPageRequest(nextLink, Id.SubscriptionId, locationName);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties, LocationBasedCapabilitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.ExecuteLocationBasedCapabilities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="nameAvailabilityRequest"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await CheckNameAvailabilityRestClient.ExecuteAsync(Id.SubscriptionId, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="nameAvailabilityRequest"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = CheckNameAvailabilityRestClient.Execute(Id.SubscriptionId, nameAvailabilityRequest, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityWithLocation_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="nameAvailabilityRequest"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            using var scope = CheckNameAvailabilityWithLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
+            scope.Start();
+            try
+            {
+                var response = await CheckNameAvailabilityWithLocationRestClient.ExecuteAsync(Id.SubscriptionId, locationName, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityWithLocation_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="nameAvailabilityRequest"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            using var scope = CheckNameAvailabilityWithLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
+            scope.Start();
+            try
+            {
+                var response = CheckNameAvailabilityWithLocationRestClient.Execute(Id.SubscriptionId, locationName, nameAvailabilityRequest, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all the servers in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/flexibleServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the servers in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/flexibleServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServers(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PostgreSqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), PostgreSqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
