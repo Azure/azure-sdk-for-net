@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -51,7 +53,8 @@ namespace Azure.Monitor.Ingestion.Tests
         public void OneFailure()
         {
             LogsIngestionClient client = CreateClient();
-            LogsIngestionClient.Compression = null;
+            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
+            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(new object[] {
                     new {
@@ -77,9 +80,9 @@ namespace Azure.Monitor.Ingestion.Tests
         public void TwoFailures()
         {
             LogsIngestionClient client = CreateClient();
-            LogsIngestionClient.Compression = null;
+            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
+            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
-
             // Add 2 entries that are going to fail in 2 batches
             entries.Add(new object[] {
                     new {
@@ -105,6 +108,79 @@ namespace Azure.Monitor.Ingestion.Tests
                 Assert.AreEqual("ContentLengthLimitExceeded", exception.ErrorCode);
                 Assert.IsNull(exception.InnerException);
                 Assert.AreEqual(413, exception.Status);
+            }
+        }
+
+        [Test]
+        public async Task OneFailureWithEventHandler()
+        {
+            LogsIngestionClient client = CreateClient();
+            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
+            LogsIngestionClient.Compression = "gzip";
+            var entries = GenerateEntries(800, Recording.Now.DateTime);
+            entries.Add(new object[] {
+                    new {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer" + new string('*', Mb),
+                        AdditionalContext = 1
+                    }
+                });
+
+            // Make the request
+            UploadLogsOptions options = new UploadLogsOptions();
+            var cts = new CancellationTokenSource();
+            bool isTriggered = false;
+            options.UploadFailedEventHandler += Options_UploadFailed;
+            //await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options, cts.Token).ConfigureAwait(false);
+            await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
+            Assert.IsTrue(isTriggered);
+            Task Options_UploadFailed(UploadFailedEventArgs e)
+            {
+                isTriggered = true;
+                Assert.IsInstanceOf<RequestFailedException>(e.Exception);
+                Assert.AreEqual("ContentLengthLimitExceeded", ((RequestFailedException)(e.Exception)).ErrorCode);
+                Assert.IsNull(((RequestFailedException)(e.Exception)).InnerException);
+                Assert.AreEqual(413, ((RequestFailedException)(e.Exception)).Status);
+                return Task.CompletedTask;
+            }
+        }
+
+        [Test]
+        public async Task TwoFailuresWithEventHandler()
+        {
+            LogsIngestionClient client = CreateClient();
+            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
+            LogsIngestionClient.Compression = "gzip";
+            var entries = GenerateEntries(800, Recording.Now.DateTime);
+            entries.Add(new object[] {
+                    new {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer" + new string('*', Mb),
+                        AdditionalContext = 1
+                    }
+                });
+            entries.Add(new object[] {
+                    new {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer" + new string('!', Mb),
+                        AdditionalContext = 1
+                    }
+                });
+
+            // Make the request
+            UploadLogsOptions options = new UploadLogsOptions();
+            bool isTriggered = false;
+            options.UploadFailedEventHandler += Options_UploadFailed;
+            await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
+            Assert.IsTrue(isTriggered);
+            Task Options_UploadFailed(UploadFailedEventArgs e)
+            {
+                isTriggered = true;
+                Assert.IsInstanceOf<RequestFailedException>(e.Exception);
+                Assert.AreEqual("ContentLengthLimitExceeded", ((RequestFailedException)(e.Exception)).ErrorCode);
+                Assert.IsNull(((RequestFailedException)(e.Exception)).InnerException);
+                Assert.AreEqual(413, ((RequestFailedException)(e.Exception)).Status);
+                return Task.CompletedTask;
             }
         }
     }
