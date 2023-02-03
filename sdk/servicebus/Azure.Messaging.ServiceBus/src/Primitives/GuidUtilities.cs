@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
+using System.Buffers.Binary;
 using System.Runtime.InteropServices;
 
 namespace Azure.Messaging.ServiceBus.Primitives;
@@ -16,27 +16,56 @@ internal static class GuidUtilities
 
     public static Guid ParseGuidBytes(ReadOnlyMemory<byte> bytes)
     {
-        if (bytes.Length == GuidSizeInBytes)
+        if (bytes.Length != GuidSizeInBytes)
         {
-            // Use TryRead to avoid allocating an array if we are on a little endian machine.
-            if (!BitConverter.IsLittleEndian || !MemoryMarshal.TryRead<Guid>(bytes.Span, out var lockTokenGuid))
-            {
-                // Either we are on a big endian machine or the bytes were not a valid GUID.
-                // Even if the bytes were not valid, use the Guid constructor to leverage the Guid validation rather than throwing ourselves.
-                lockTokenGuid = new Guid(bytes.ToArray());
-            }
-            return lockTokenGuid;
+            ThrowArgumentException();
         }
 
-        return default;
+        ReadOnlySpan<byte> bytesSpan = bytes.Span;
+        if (BitConverter.IsLittleEndian)
+        {
+            return MemoryMarshal.Read<Guid>(bytesSpan);
+        }
+
+        // slower path for BigEndian:
+        byte k = bytesSpan[15];  // hoist bounds checks
+        int a = BinaryPrimitives.ReadInt32LittleEndian(bytesSpan);
+        short b = BinaryPrimitives.ReadInt16LittleEndian(bytesSpan.Slice(4));
+        short c = BinaryPrimitives.ReadInt16LittleEndian(bytesSpan.Slice(6));
+        byte d = bytesSpan[8];
+        byte e = bytesSpan[9];
+        byte f = bytesSpan[10];
+        byte g = bytesSpan[11];
+        byte h = bytesSpan[12];
+        byte i = bytesSpan[13];
+        byte j = bytesSpan[14];
+
+        return new Guid(a, b, c, d, e, f, g, h, i, j, k);
+
+        static void ThrowArgumentException()
+        {
+            throw new ArgumentException("TBD", nameof(bytes));
+        }
     }
 
     public static void WriteGuidBytes(Guid guid, byte[] buffer)
     {
-        Debug.Assert(buffer is { Length: 16 });
-        if (!BitConverter.IsLittleEndian || !MemoryMarshal.TryWrite(buffer, ref guid))
+        if (buffer.Length != GuidSizeInBytes)
         {
-            guid.ToByteArray().AsSpan().CopyTo(buffer);
+            ThrowArgumentException();
+        }
+
+        if (BitConverter.IsLittleEndian)
+        {
+            MemoryMarshal.Write(buffer, ref guid);
+            return;
+        }
+
+        guid.ToByteArray().AsSpan().CopyTo(buffer);
+
+        static void ThrowArgumentException()
+        {
+            throw new ArgumentException("TBD", nameof(buffer));
         }
     }
 }

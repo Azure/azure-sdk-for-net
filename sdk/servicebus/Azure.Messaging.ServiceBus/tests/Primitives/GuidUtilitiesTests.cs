@@ -25,6 +25,6 @@ public class GuidUtilitiesTests
         var buffer = new byte[16];
 
         GuidUtilities.WriteGuidBytes(input, buffer);
-        Assert.AreEqual(input.ToByteArray(), buffer);
+        CollectionAssert.AreEqual(input.ToByteArray(), buffer);
     }
 }
