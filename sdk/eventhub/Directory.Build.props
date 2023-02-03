@@ -24,6 +24,6 @@
     this needs to be set after the common properties import.
   -->
   <PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Azure.')) and $(MSBuildProjectName.EndsWith('.Tests'))">
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>11.0</LangVersion>
   </PropertyGroup>
 </Project>
