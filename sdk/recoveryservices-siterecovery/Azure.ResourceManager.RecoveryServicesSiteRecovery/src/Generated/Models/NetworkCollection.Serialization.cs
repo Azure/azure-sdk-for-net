@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static NetworkCollection DeserializeNetworkCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkData>> value = default;
+            Optional<IReadOnlyList<ReplicationNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkData> array = new List<NetworkData>();
+                    List<ReplicationNetworkData> array = new List<ReplicationNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkData.DeserializeNetworkData(item));
+                        array.Add(ReplicationNetworkData.DeserializeReplicationNetworkData(item));
                     }
                     value = array;
                     continue;

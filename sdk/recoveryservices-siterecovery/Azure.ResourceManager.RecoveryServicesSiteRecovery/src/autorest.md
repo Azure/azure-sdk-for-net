@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
-require: https://github.com/Azure/azure-rest-api-specs/blob/ddbdba6d960f83647257d6dc08be7b81dc5eb8f8/specification/recoveryservicessiterecovery/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d1eb4e42e24016044e150c0fb8f0dc6c1182b5f5/specification/recoveryservicessiterecovery/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -19,11 +19,39 @@ mgmt-debug:
   show-serialized-names: true
 
 rename-mapping:
-  Alert: ReplicationAlertConfiguration
-  AlertCollection: ReplicationAlertConfigurationListResult
+  Alert: ReplicationAlert
+  AlertProperties: ReplicationAlertProperties
+  AlertCollection: ReplicationAlertListResult
   Event: SiteRecoveryEvent
   Fabric: SiteRecoveryFabric
   Job: SiteRecoveryJob
+  LogicalNetwork: ReplicationLogicalNetwork
+  MigrationItem: ReplicationMigrationItem
+  MigrationRecoveryPointCollection: MigrationRecoveryPointListResult
+  Network: ReplicationNetwork
+  NetworkProperties: ReplicationNetworkProperties
+  NetworkMapping: ReplicationNetworkMapping
+  Policy: ReplicationPolicy
+  PolicyProperties: ReplicationPolicyProperties
+  ProtectableItem: ReplicationProtectableItem
+  ProtectionContainer: ReplicationProtectionContainer
+  ProtectionContainerMapping: ReplicationProtectionContainerMapping
+  RecoveryPlan: ReplicationRecoveryPlan
+  RecoveryPoint: SiteRecoveryPoint
+  RecoveryServicesProvider: SiteRecoveryServicesProvider
+  StorageClassification: ReplicationStorageClassification
+  StorageClassificationMapping: ReplicationStorageClassificationMapping
+  VaultSetting: ReplicationVaultSetting
+  VCenter: ReplicationVCenter
+  AddDisksInput: AddDisksInputContent
+  AddRecoveryServicesProviderInputProperties: AddSiteRecoveryServicesProviderInputProperties
+  AddVCenterRequestProperties: AddReplicationVCenterRequestProperties
+  ApplianceCollection: ReplicationApplianceListResult
+  ApplianceSpecificDetails: ReplicationApplianceSpecificDetails
+  ApplyRecoveryPointInput: ApplySiteRecoveryPointInputContent
+  ApplyRecoveryPointInputProperties: ApplySiteRecoveryPointInputProperties
+  ApplyRecoveryPointProviderSpecificInput: ApplySiteRecoveryPointProviderSpecificInput
+  ASRTask: AsrTask
   InMageRcmFailbackReplicationDetails.targetvCenterId: TargetVCenterId
 
 format-by-name-rules:

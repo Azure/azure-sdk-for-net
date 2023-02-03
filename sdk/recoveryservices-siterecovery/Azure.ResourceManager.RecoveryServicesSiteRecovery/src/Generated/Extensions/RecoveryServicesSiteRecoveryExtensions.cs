@@ -343,17 +343,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return resourceGroupResource.GetSiteRecoveryJobs(resourceName).Get(jobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PolicyResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ReplicationPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of PolicyResources and their operations over a PolicyResource. </returns>
-        public static PolicyCollection GetPolicies(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <returns> An object representing collection of ReplicationPolicyResources and their operations over a ReplicationPolicyResource. </returns>
+        public static ReplicationPolicyCollection GetReplicationPolicies(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetPolicies(resourceName);
+            return GetExtensionClient(resourceGroupResource).GetReplicationPolicies(resourceName);
         }
 
         /// <summary>
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PolicyResource>> GetPolicyAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ReplicationPolicyResource>> GetReplicationPolicyAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPolicies(resourceName).GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetReplicationPolicies(resourceName).GetAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -401,9 +401,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PolicyResource> GetPolicy(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
+        public static Response<ReplicationPolicyResource> GetReplicationPolicy(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPolicies(resourceName).Get(policyName, cancellationToken);
+            return resourceGroupResource.GetReplicationPolicies(resourceName).Get(policyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ReplicationProtectionIntentResources in the ResourceGroupResource. </summary>
@@ -469,17 +469,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return resourceGroupResource.GetReplicationProtectionIntents(resourceName).Get(intentObjectName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RecoveryPlanResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ReplicationRecoveryPlanResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of RecoveryPlanResources and their operations over a RecoveryPlanResource. </returns>
-        public static RecoveryPlanCollection GetRecoveryPlans(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <returns> An object representing collection of ReplicationRecoveryPlanResources and their operations over a ReplicationRecoveryPlanResource. </returns>
+        public static ReplicationRecoveryPlanCollection GetReplicationRecoveryPlans(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetRecoveryPlans(resourceName);
+            return GetExtensionClient(resourceGroupResource).GetReplicationRecoveryPlans(resourceName);
         }
 
         /// <summary>
@@ -502,9 +502,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RecoveryPlanResource>> GetRecoveryPlanAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ReplicationRecoveryPlanResource>> GetReplicationRecoveryPlanAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRecoveryPlans(resourceName).GetAsync(recoveryPlanName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetReplicationRecoveryPlans(resourceName).GetAsync(recoveryPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -527,22 +527,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RecoveryPlanResource> GetRecoveryPlan(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
+        public static Response<ReplicationRecoveryPlanResource> GetReplicationRecoveryPlan(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRecoveryPlans(resourceName).Get(recoveryPlanName, cancellationToken);
+            return resourceGroupResource.GetReplicationRecoveryPlans(resourceName).Get(recoveryPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VaultSettingResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ReplicationVaultSettingResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of VaultSettingResources and their operations over a VaultSettingResource. </returns>
-        public static VaultSettingCollection GetVaultSettings(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <returns> An object representing collection of ReplicationVaultSettingResources and their operations over a ReplicationVaultSettingResource. </returns>
+        public static ReplicationVaultSettingCollection GetReplicationVaultSettings(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetVaultSettings(resourceName);
+            return GetExtensionClient(resourceGroupResource).GetReplicationVaultSettings(resourceName);
         }
 
         /// <summary>
@@ -565,9 +565,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VaultSettingResource>> GetVaultSettingAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ReplicationVaultSettingResource>> GetReplicationVaultSettingAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVaultSettings(resourceName).GetAsync(vaultSettingName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetReplicationVaultSettings(resourceName).GetAsync(vaultSettingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -590,9 +590,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VaultSettingResource> GetVaultSetting(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        public static Response<ReplicationVaultSettingResource> GetReplicationVaultSetting(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVaultSettings(resourceName).Get(vaultSettingName, cancellationToken);
+            return resourceGroupResource.GetReplicationVaultSettings(resourceName).Get(vaultSettingName, cancellationToken);
         }
 
         /// <summary>
@@ -667,12 +667,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkResource> GetNetworksAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationNetworkResource> GetReplicationNetworksAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetNetworksAsync(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationNetworksAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -693,12 +693,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkResource> GetNetworks(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationNetworkResource> GetReplicationNetworks(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetNetworks(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationNetworks(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -719,12 +719,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkMappingResource> GetNetworkMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationNetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationNetworkMappingResource> GetReplicationNetworkMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetNetworkMappingsAsync(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationNetworkMappingsAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -745,12 +745,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkMappingResource> GetNetworkMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationNetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationNetworkMappingResource> GetReplicationNetworkMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetNetworkMappings(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationNetworkMappings(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -771,12 +771,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProtectionContainerResource> GetProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationProtectionContainerResource> GetReplicationProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetProtectionContainersAsync(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionContainersAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -797,12 +797,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProtectionContainerResource> GetProtectionContainers(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationProtectionContainerResource> GetReplicationProtectionContainers(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetProtectionContainers(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionContainers(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -826,12 +826,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MigrationItemResource> GetMigrationItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationMigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationMigrationItemResource> GetReplicationMigrationItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetMigrationItemsAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationMigrationItemsAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
         }
 
         /// <summary>
@@ -855,12 +855,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MigrationItemResource> GetMigrationItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationMigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationMigrationItemResource> GetReplicationMigrationItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetMigrationItems(resourceName, skipToken, takeToken, filter, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationMigrationItems(resourceName, skipToken, takeToken, filter, cancellationToken);
         }
 
         /// <summary>
@@ -937,12 +937,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProtectionContainerMappingResource> GetProtectionContainerMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationProtectionContainerMappingResource> GetReplicationProtectionContainerMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetProtectionContainerMappingsAsync(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionContainerMappingsAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -963,12 +963,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProtectionContainerMappingResource> GetProtectionContainerMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationProtectionContainerMappingResource> GetReplicationProtectionContainerMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetProtectionContainerMappings(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationProtectionContainerMappings(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -989,12 +989,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RecoveryServicesProviderResource> GetRecoveryServicesProvidersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteRecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProvidersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetRecoveryServicesProvidersAsync(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetSiteRecoveryServicesProvidersAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1015,12 +1015,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="RecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RecoveryServicesProviderResource> GetRecoveryServicesProviders(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteRecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProviders(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetRecoveryServicesProviders(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetSiteRecoveryServicesProviders(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1041,12 +1041,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageClassificationResource> GetStorageClassificationsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationStorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationStorageClassificationResource> GetReplicationStorageClassificationsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetStorageClassificationsAsync(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationStorageClassificationsAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1067,12 +1067,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="StorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageClassificationResource> GetStorageClassifications(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationStorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationStorageClassificationResource> GetReplicationStorageClassifications(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetStorageClassifications(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationStorageClassifications(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1093,12 +1093,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageClassificationMappingResource> GetStorageClassificationMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationStorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationStorageClassificationMappingResource> GetReplicationStorageClassificationMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetStorageClassificationMappingsAsync(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationStorageClassificationMappingsAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1119,12 +1119,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="StorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageClassificationMappingResource> GetStorageClassificationMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationStorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationStorageClassificationMappingResource> GetReplicationStorageClassificationMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetStorageClassificationMappings(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationStorageClassificationMappings(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1145,12 +1145,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VCenterResource> GetVCentersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationVCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationVCenterResource> GetReplicationVCentersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetVCentersAsync(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationVCentersAsync(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1171,12 +1171,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VCenterResource> GetVCenters(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationVCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationVCenterResource> GetReplicationVCenters(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetVCenters(resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetReplicationVCenters(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1409,96 +1409,96 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
         #endregion
 
-        #region LogicalNetworkResource
+        #region ReplicationLogicalNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="LogicalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="LogicalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationLogicalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationLogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationLogicalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicalNetworkResource" /> object. </returns>
-        public static LogicalNetworkResource GetLogicalNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationLogicalNetworkResource" /> object. </returns>
+        public static ReplicationLogicalNetworkResource GetReplicationLogicalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LogicalNetworkResource.ValidateResourceId(id);
-                return new LogicalNetworkResource(client, id);
+                ReplicationLogicalNetworkResource.ValidateResourceId(id);
+                return new ReplicationLogicalNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NetworkResource
+        #region ReplicationNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkResource" /> object. </returns>
-        public static NetworkResource GetNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationNetworkResource" /> object. </returns>
+        public static ReplicationNetworkResource GetReplicationNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetworkResource.ValidateResourceId(id);
-                return new NetworkResource(client, id);
+                ReplicationNetworkResource.ValidateResourceId(id);
+                return new ReplicationNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NetworkMappingResource
+        #region ReplicationNetworkMappingResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkMappingResource.CreateResourceIdentifier" /> to create a <see cref="NetworkMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationNetworkMappingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationNetworkMappingResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationNetworkMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkMappingResource" /> object. </returns>
-        public static NetworkMappingResource GetNetworkMappingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationNetworkMappingResource" /> object. </returns>
+        public static ReplicationNetworkMappingResource GetReplicationNetworkMappingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetworkMappingResource.ValidateResourceId(id);
-                return new NetworkMappingResource(client, id);
+                ReplicationNetworkMappingResource.ValidateResourceId(id);
+                return new ReplicationNetworkMappingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProtectionContainerResource
+        #region ReplicationProtectionContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProtectionContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProtectionContainerResource.CreateResourceIdentifier" /> to create a <see cref="ProtectionContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionContainerResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectionContainerResource" /> object. </returns>
-        public static ProtectionContainerResource GetProtectionContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationProtectionContainerResource" /> object. </returns>
+        public static ReplicationProtectionContainerResource GetReplicationProtectionContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProtectionContainerResource.ValidateResourceId(id);
-                return new ProtectionContainerResource(client, id);
+                ReplicationProtectionContainerResource.ValidateResourceId(id);
+                return new ReplicationProtectionContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MigrationItemResource
+        #region ReplicationMigrationItemResource
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationItemResource.CreateResourceIdentifier" /> to create a <see cref="MigrationItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationMigrationItemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationMigrationItemResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationMigrationItemResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationItemResource" /> object. </returns>
-        public static MigrationItemResource GetMigrationItemResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationMigrationItemResource" /> object. </returns>
+        public static ReplicationMigrationItemResource GetReplicationMigrationItemResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MigrationItemResource.ValidateResourceId(id);
-                return new MigrationItemResource(client, id);
+                ReplicationMigrationItemResource.ValidateResourceId(id);
+                return new ReplicationMigrationItemResource(client, id);
             }
             );
         }
@@ -1523,20 +1523,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
         #endregion
 
-        #region ProtectableItemResource
+        #region ReplicationProtectableItemResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProtectableItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProtectableItemResource.CreateResourceIdentifier" /> to create a <see cref="ProtectableItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectableItemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectableItemResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectableItemResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectableItemResource" /> object. </returns>
-        public static ProtectableItemResource GetProtectableItemResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationProtectableItemResource" /> object. </returns>
+        public static ReplicationProtectableItemResource GetReplicationProtectableItemResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProtectableItemResource.ValidateResourceId(id);
-                return new ProtectableItemResource(client, id);
+                ReplicationProtectableItemResource.ValidateResourceId(id);
+                return new ReplicationProtectableItemResource(client, id);
             }
             );
         }
@@ -1561,115 +1561,115 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
         #endregion
 
-        #region RecoveryPointResource
+        #region SiteRecoveryPointResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryPointResource" /> object. </returns>
-        public static RecoveryPointResource GetRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteRecoveryPointResource" /> object. </returns>
+        public static SiteRecoveryPointResource GetSiteRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecoveryPointResource.ValidateResourceId(id);
-                return new RecoveryPointResource(client, id);
+                SiteRecoveryPointResource.ValidateResourceId(id);
+                return new SiteRecoveryPointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProtectionContainerMappingResource
+        #region ReplicationProtectionContainerMappingResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProtectionContainerMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProtectionContainerMappingResource.CreateResourceIdentifier" /> to create a <see cref="ProtectionContainerMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionContainerMappingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionContainerMappingResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionContainerMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectionContainerMappingResource" /> object. </returns>
-        public static ProtectionContainerMappingResource GetProtectionContainerMappingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationProtectionContainerMappingResource" /> object. </returns>
+        public static ReplicationProtectionContainerMappingResource GetReplicationProtectionContainerMappingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProtectionContainerMappingResource.ValidateResourceId(id);
-                return new ProtectionContainerMappingResource(client, id);
+                ReplicationProtectionContainerMappingResource.ValidateResourceId(id);
+                return new ReplicationProtectionContainerMappingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RecoveryServicesProviderResource
+        #region SiteRecoveryServicesProviderResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesProviderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesProviderResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteRecoveryServicesProviderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecoveryServicesProviderResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryServicesProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesProviderResource" /> object. </returns>
-        public static RecoveryServicesProviderResource GetRecoveryServicesProviderResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteRecoveryServicesProviderResource" /> object. </returns>
+        public static SiteRecoveryServicesProviderResource GetSiteRecoveryServicesProviderResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecoveryServicesProviderResource.ValidateResourceId(id);
-                return new RecoveryServicesProviderResource(client, id);
+                SiteRecoveryServicesProviderResource.ValidateResourceId(id);
+                return new SiteRecoveryServicesProviderResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StorageClassificationResource
+        #region ReplicationStorageClassificationResource
         /// <summary>
-        /// Gets an object representing a <see cref="StorageClassificationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageClassificationResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationStorageClassificationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationStorageClassificationResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationStorageClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageClassificationResource" /> object. </returns>
-        public static StorageClassificationResource GetStorageClassificationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationStorageClassificationResource" /> object. </returns>
+        public static ReplicationStorageClassificationResource GetReplicationStorageClassificationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StorageClassificationResource.ValidateResourceId(id);
-                return new StorageClassificationResource(client, id);
+                ReplicationStorageClassificationResource.ValidateResourceId(id);
+                return new ReplicationStorageClassificationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StorageClassificationMappingResource
+        #region ReplicationStorageClassificationMappingResource
         /// <summary>
-        /// Gets an object representing a <see cref="StorageClassificationMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageClassificationMappingResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassificationMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationStorageClassificationMappingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationStorageClassificationMappingResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationStorageClassificationMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageClassificationMappingResource" /> object. </returns>
-        public static StorageClassificationMappingResource GetStorageClassificationMappingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationStorageClassificationMappingResource" /> object. </returns>
+        public static ReplicationStorageClassificationMappingResource GetReplicationStorageClassificationMappingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StorageClassificationMappingResource.ValidateResourceId(id);
-                return new StorageClassificationMappingResource(client, id);
+                ReplicationStorageClassificationMappingResource.ValidateResourceId(id);
+                return new ReplicationStorageClassificationMappingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VCenterResource
+        #region ReplicationVCenterResource
         /// <summary>
-        /// Gets an object representing a <see cref="VCenterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VCenterResource.CreateResourceIdentifier" /> to create a <see cref="VCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationVCenterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationVCenterResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationVCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VCenterResource" /> object. </returns>
-        public static VCenterResource GetVCenterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationVCenterResource" /> object. </returns>
+        public static ReplicationVCenterResource GetReplicationVCenterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VCenterResource.ValidateResourceId(id);
-                return new VCenterResource(client, id);
+                ReplicationVCenterResource.ValidateResourceId(id);
+                return new ReplicationVCenterResource(client, id);
             }
             );
         }
@@ -1694,20 +1694,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
         #endregion
 
-        #region PolicyResource
+        #region ReplicationPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="PolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PolicyResource.CreateResourceIdentifier" /> to create a <see cref="PolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyResource" /> object. </returns>
-        public static PolicyResource GetPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationPolicyResource" /> object. </returns>
+        public static ReplicationPolicyResource GetReplicationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PolicyResource.ValidateResourceId(id);
-                return new PolicyResource(client, id);
+                ReplicationPolicyResource.ValidateResourceId(id);
+                return new ReplicationPolicyResource(client, id);
             }
             );
         }
@@ -1732,39 +1732,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
         #endregion
 
-        #region RecoveryPlanResource
+        #region ReplicationRecoveryPlanResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryPlanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryPlanResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationRecoveryPlanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationRecoveryPlanResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationRecoveryPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryPlanResource" /> object. </returns>
-        public static RecoveryPlanResource GetRecoveryPlanResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationRecoveryPlanResource" /> object. </returns>
+        public static ReplicationRecoveryPlanResource GetReplicationRecoveryPlanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecoveryPlanResource.ValidateResourceId(id);
-                return new RecoveryPlanResource(client, id);
+                ReplicationRecoveryPlanResource.ValidateResourceId(id);
+                return new ReplicationRecoveryPlanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VaultSettingResource
+        #region ReplicationVaultSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="VaultSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultSettingResource.CreateResourceIdentifier" /> to create a <see cref="VaultSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationVaultSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationVaultSettingResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationVaultSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultSettingResource" /> object. </returns>
-        public static VaultSettingResource GetVaultSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationVaultSettingResource" /> object. </returns>
+        public static ReplicationVaultSettingResource GetReplicationVaultSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VaultSettingResource.ValidateResourceId(id);
-                return new VaultSettingResource(client, id);
+                ReplicationVaultSettingResource.ValidateResourceId(id);
+                return new ReplicationVaultSettingResource(client, id);
             }
             );
         }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ProtectableItemCollection. </summary>
         internal ProtectableItemCollection()
         {
-            Value = new ChangeTrackingList<ProtectableItemData>();
+            Value = new ChangeTrackingList<ReplicationProtectableItemData>();
         }
 
         /// <summary> Initializes a new instance of ProtectableItemCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: ProtectableItemCollection.nextLink
         /// </param>
-        internal ProtectableItemCollection(IReadOnlyList<ProtectableItemData> value, string nextLink)
+        internal ProtectableItemCollection(IReadOnlyList<ReplicationProtectableItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Protectable item details.
         /// Serialized Name: ProtectableItemCollection.value
         /// </summary>
-        public IReadOnlyList<ProtectableItemData> Value { get; }
+        public IReadOnlyList<ReplicationProtectableItemData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: ProtectableItemCollection.nextLink

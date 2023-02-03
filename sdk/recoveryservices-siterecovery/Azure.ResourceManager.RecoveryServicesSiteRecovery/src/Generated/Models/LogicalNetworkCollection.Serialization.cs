@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static LogicalNetworkCollection DeserializeLogicalNetworkCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<LogicalNetworkData>> value = default;
+            Optional<IReadOnlyList<ReplicationLogicalNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LogicalNetworkData> array = new List<LogicalNetworkData>();
+                    List<ReplicationLogicalNetworkData> array = new List<ReplicationLogicalNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicalNetworkData.DeserializeLogicalNetworkData(item));
+                        array.Add(ReplicationLogicalNetworkData.DeserializeReplicationLogicalNetworkData(item));
                     }
                     value = array;
                     continue;

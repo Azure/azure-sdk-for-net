@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static StorageClassificationCollection DeserializeStorageClassificationCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<StorageClassificationData>> value = default;
+            Optional<IReadOnlyList<ReplicationStorageClassificationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StorageClassificationData> array = new List<StorageClassificationData>();
+                    List<ReplicationStorageClassificationData> array = new List<ReplicationStorageClassificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageClassificationData.DeserializeStorageClassificationData(item));
+                        array.Add(ReplicationStorageClassificationData.DeserializeReplicationStorageClassificationData(item));
                     }
                     value = array;
                     continue;

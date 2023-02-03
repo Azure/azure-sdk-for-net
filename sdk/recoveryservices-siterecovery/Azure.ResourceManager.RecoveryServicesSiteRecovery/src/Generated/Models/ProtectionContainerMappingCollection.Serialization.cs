@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ProtectionContainerMappingCollection DeserializeProtectionContainerMappingCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ProtectionContainerMappingData>> value = default;
+            Optional<IReadOnlyList<ReplicationProtectionContainerMappingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProtectionContainerMappingData> array = new List<ProtectionContainerMappingData>();
+                    List<ReplicationProtectionContainerMappingData> array = new List<ReplicationProtectionContainerMappingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(item));
+                        array.Add(ReplicationProtectionContainerMappingData.DeserializeReplicationProtectionContainerMappingData(item));
                     }
                     value = array;
                     continue;

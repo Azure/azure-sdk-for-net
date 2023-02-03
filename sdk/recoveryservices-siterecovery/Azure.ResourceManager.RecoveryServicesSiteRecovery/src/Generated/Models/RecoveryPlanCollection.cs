@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of RecoveryPlanCollection. </summary>
         internal RecoveryPlanCollection()
         {
-            Value = new ChangeTrackingList<RecoveryPlanData>();
+            Value = new ChangeTrackingList<ReplicationRecoveryPlanData>();
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: RecoveryPlanCollection.nextLink
         /// </param>
-        internal RecoveryPlanCollection(IReadOnlyList<RecoveryPlanData> value, string nextLink)
+        internal RecoveryPlanCollection(IReadOnlyList<ReplicationRecoveryPlanData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of recovery plans.
         /// Serialized Name: RecoveryPlanCollection.value
         /// </summary>
-        public IReadOnlyList<RecoveryPlanData> Value { get; }
+        public IReadOnlyList<ReplicationRecoveryPlanData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: RecoveryPlanCollection.nextLink

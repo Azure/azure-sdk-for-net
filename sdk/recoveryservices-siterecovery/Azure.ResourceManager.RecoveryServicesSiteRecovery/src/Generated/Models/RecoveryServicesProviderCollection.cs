@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of RecoveryServicesProviderCollection. </summary>
         internal RecoveryServicesProviderCollection()
         {
-            Value = new ChangeTrackingList<RecoveryServicesProviderData>();
+            Value = new ChangeTrackingList<SiteRecoveryServicesProviderData>();
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesProviderCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: RecoveryServicesProviderCollection.nextLink
         /// </param>
-        internal RecoveryServicesProviderCollection(IReadOnlyList<RecoveryServicesProviderData> value, string nextLink)
+        internal RecoveryServicesProviderCollection(IReadOnlyList<SiteRecoveryServicesProviderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Servers details.
         /// Serialized Name: RecoveryServicesProviderCollection.value
         /// </summary>
-        public IReadOnlyList<RecoveryServicesProviderData> Value { get; }
+        public IReadOnlyList<SiteRecoveryServicesProviderData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: RecoveryServicesProviderCollection.nextLink

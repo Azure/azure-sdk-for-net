@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static NetworkMappingCollection DeserializeNetworkMappingCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkMappingData>> value = default;
+            Optional<IReadOnlyList<ReplicationNetworkMappingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkMappingData> array = new List<NetworkMappingData>();
+                    List<ReplicationNetworkMappingData> array = new List<ReplicationNetworkMappingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkMappingData.DeserializeNetworkMappingData(item));
+                        array.Add(ReplicationNetworkMappingData.DeserializeReplicationNetworkMappingData(item));
                     }
                     value = array;
                     continue;

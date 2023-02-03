@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// A Class representing a MigrationRecoveryPoint along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MigrationRecoveryPointResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMigrationRecoveryPointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MigrationItemResource" /> using the GetMigrationRecoveryPoint method.
+    /// Otherwise you can get one from its parent resource <see cref="ReplicationMigrationItemResource" /> using the GetMigrationRecoveryPoint method.
     /// </summary>
     public partial class MigrationRecoveryPointResource : ArmResource
     {

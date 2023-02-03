@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VaultSettingCollection DeserializeVaultSettingCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<VaultSettingData>> value = default;
+            Optional<IReadOnlyList<ReplicationVaultSettingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VaultSettingData> array = new List<VaultSettingData>();
+                    List<ReplicationVaultSettingData> array = new List<ReplicationVaultSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultSettingData.DeserializeVaultSettingData(item));
+                        array.Add(ReplicationVaultSettingData.DeserializeReplicationVaultSettingData(item));
                     }
                     value = array;
                     continue;

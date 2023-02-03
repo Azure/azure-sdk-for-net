@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static MigrationItemCollection DeserializeMigrationItemCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<MigrationItemData>> value = default;
+            Optional<IReadOnlyList<ReplicationMigrationItemData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MigrationItemData> array = new List<MigrationItemData>();
+                    List<ReplicationMigrationItemData> array = new List<ReplicationMigrationItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrationItemData.DeserializeMigrationItemData(item));
+                        array.Add(ReplicationMigrationItemData.DeserializeReplicationMigrationItemData(item));
                     }
                     value = array;
                     continue;

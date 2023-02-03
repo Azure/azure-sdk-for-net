@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static PolicyCollection DeserializePolicyCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<PolicyData>> value = default;
+            Optional<IReadOnlyList<ReplicationPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PolicyData> array = new List<PolicyData>();
+                    List<ReplicationPolicyData> array = new List<ReplicationPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyData.DeserializePolicyData(item));
+                        array.Add(ReplicationPolicyData.DeserializeReplicationPolicyData(item));
                     }
                     value = array;
                     continue;

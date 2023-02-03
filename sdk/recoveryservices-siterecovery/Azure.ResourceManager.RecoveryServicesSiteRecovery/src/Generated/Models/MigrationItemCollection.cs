@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of MigrationItemCollection. </summary>
         internal MigrationItemCollection()
         {
-            Value = new ChangeTrackingList<MigrationItemData>();
+            Value = new ChangeTrackingList<ReplicationMigrationItemData>();
         }
 
         /// <summary> Initializes a new instance of MigrationItemCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: MigrationItemCollection.nextLink
         /// </param>
-        internal MigrationItemCollection(IReadOnlyList<MigrationItemData> value, string nextLink)
+        internal MigrationItemCollection(IReadOnlyList<ReplicationMigrationItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of migration items.
         /// Serialized Name: MigrationItemCollection.value
         /// </summary>
-        public IReadOnlyList<MigrationItemData> Value { get; }
+        public IReadOnlyList<ReplicationMigrationItemData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: MigrationItemCollection.nextLink

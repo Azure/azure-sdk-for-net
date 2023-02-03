@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VaultSettingCollection. </summary>
         internal VaultSettingCollection()
         {
-            Value = new ChangeTrackingList<VaultSettingData>();
+            Value = new ChangeTrackingList<ReplicationVaultSettingData>();
         }
 
         /// <summary> Initializes a new instance of VaultSettingCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: VaultSettingCollection.nextLink
         /// </param>
-        internal VaultSettingCollection(IReadOnlyList<VaultSettingData> value, string nextLink)
+        internal VaultSettingCollection(IReadOnlyList<ReplicationVaultSettingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of vault setting.
         /// Serialized Name: VaultSettingCollection.value
         /// </summary>
-        public IReadOnlyList<VaultSettingData> Value { get; }
+        public IReadOnlyList<ReplicationVaultSettingData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: VaultSettingCollection.nextLink

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of RecoveryPointCollection. </summary>
         internal RecoveryPointCollection()
         {
-            Value = new ChangeTrackingList<RecoveryPointData>();
+            Value = new ChangeTrackingList<SiteRecoveryPointData>();
         }
 
         /// <summary> Initializes a new instance of RecoveryPointCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: RecoveryPointCollection.nextLink
         /// </param>
-        internal RecoveryPointCollection(IReadOnlyList<RecoveryPointData> value, string nextLink)
+        internal RecoveryPointCollection(IReadOnlyList<SiteRecoveryPointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The recovery point details.
         /// Serialized Name: RecoveryPointCollection.value
         /// </summary>
-        public IReadOnlyList<RecoveryPointData> Value { get; }
+        public IReadOnlyList<SiteRecoveryPointData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: RecoveryPointCollection.nextLink

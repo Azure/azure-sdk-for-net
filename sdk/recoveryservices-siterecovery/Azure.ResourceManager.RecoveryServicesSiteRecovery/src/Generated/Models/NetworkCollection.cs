@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of NetworkCollection. </summary>
         internal NetworkCollection()
         {
-            Value = new ChangeTrackingList<NetworkData>();
+            Value = new ChangeTrackingList<ReplicationNetworkData>();
         }
 
         /// <summary> Initializes a new instance of NetworkCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: NetworkCollection.nextLink
         /// </param>
-        internal NetworkCollection(IReadOnlyList<NetworkData> value, string nextLink)
+        internal NetworkCollection(IReadOnlyList<ReplicationNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Networks list details.
         /// Serialized Name: NetworkCollection.value
         /// </summary>
-        public IReadOnlyList<NetworkData> Value { get; }
+        public IReadOnlyList<ReplicationNetworkData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: NetworkCollection.nextLink

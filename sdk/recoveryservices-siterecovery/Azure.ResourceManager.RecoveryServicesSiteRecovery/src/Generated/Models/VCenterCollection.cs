@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VCenterCollection. </summary>
         internal VCenterCollection()
         {
-            Value = new ChangeTrackingList<VCenterData>();
+            Value = new ChangeTrackingList<ReplicationVCenterData>();
         }
 
         /// <summary> Initializes a new instance of VCenterCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: VCenterCollection.nextLink
         /// </param>
-        internal VCenterCollection(IReadOnlyList<VCenterData> value, string nextLink)
+        internal VCenterCollection(IReadOnlyList<ReplicationVCenterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The vCenter details.
         /// Serialized Name: VCenterCollection.value
         /// </summary>
-        public IReadOnlyList<VCenterData> Value { get; }
+        public IReadOnlyList<ReplicationVCenterData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: VCenterCollection.nextLink

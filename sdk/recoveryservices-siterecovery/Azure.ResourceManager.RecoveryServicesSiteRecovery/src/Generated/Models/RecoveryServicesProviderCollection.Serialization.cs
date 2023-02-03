@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RecoveryServicesProviderCollection DeserializeRecoveryServicesProviderCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<RecoveryServicesProviderData>> value = default;
+            Optional<IReadOnlyList<SiteRecoveryServicesProviderData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RecoveryServicesProviderData> array = new List<RecoveryServicesProviderData>();
+                    List<SiteRecoveryServicesProviderData> array = new List<SiteRecoveryServicesProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(item));
+                        array.Add(SiteRecoveryServicesProviderData.DeserializeSiteRecoveryServicesProviderData(item));
                     }
                     value = array;
                     continue;

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// A Class representing a ReplicationProtectedItem along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReplicationProtectedItemResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetReplicationProtectedItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProtectionContainerResource" /> using the GetReplicationProtectedItem method.
+    /// Otherwise you can get one from its parent resource <see cref="ReplicationProtectionContainerResource" /> using the GetReplicationProtectedItem method.
     /// </summary>
     public partial class ReplicationProtectedItemResource : ArmResource
     {
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RecoveryPointResources in the ReplicationProtectedItem. </summary>
-        /// <returns> An object representing collection of RecoveryPointResources and their operations over a RecoveryPointResource. </returns>
-        public virtual RecoveryPointCollection GetRecoveryPoints()
+        /// <summary> Gets a collection of SiteRecoveryPointResources in the ReplicationProtectedItem. </summary>
+        /// <returns> An object representing collection of SiteRecoveryPointResources and their operations over a SiteRecoveryPointResource. </returns>
+        public virtual SiteRecoveryPointCollection GetSiteRecoveryPoints()
         {
-            return GetCachedClient(Client => new RecoveryPointCollection(Client, Id));
+            return GetCachedClient(Client => new SiteRecoveryPointCollection(Client, Id));
         }
 
         /// <summary>
@@ -116,9 +116,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RecoveryPointResource>> GetRecoveryPointAsync(string recoveryPointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryPointResource>> GetSiteRecoveryPointAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            return await GetRecoveryPoints().GetAsync(recoveryPointName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteRecoveryPoints().GetAsync(recoveryPointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RecoveryPointResource> GetRecoveryPoint(string recoveryPointName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryPointResource> GetSiteRecoveryPoint(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            return GetRecoveryPoints().Get(recoveryPointName, cancellationToken);
+            return GetSiteRecoveryPoints().Get(recoveryPointName, cancellationToken);
         }
 
         /// <summary>

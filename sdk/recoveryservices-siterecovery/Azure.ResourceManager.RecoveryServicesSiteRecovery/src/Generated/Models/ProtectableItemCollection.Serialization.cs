@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ProtectableItemCollection DeserializeProtectableItemCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ProtectableItemData>> value = default;
+            Optional<IReadOnlyList<ReplicationProtectableItemData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProtectableItemData> array = new List<ProtectableItemData>();
+                    List<ReplicationProtectableItemData> array = new List<ReplicationProtectableItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectableItemData.DeserializeProtectableItemData(item));
+                        array.Add(ReplicationProtectableItemData.DeserializeReplicationProtectableItemData(item));
                     }
                     value = array;
                     continue;

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="MigrationRecoveryPointResource" /> and their operations.
-    /// Each <see cref="MigrationRecoveryPointResource" /> in the collection will belong to the same instance of <see cref="MigrationItemResource" />.
-    /// To get a <see cref="MigrationRecoveryPointCollection" /> instance call the GetMigrationRecoveryPoints method from an instance of <see cref="MigrationItemResource" />.
+    /// Each <see cref="MigrationRecoveryPointResource" /> in the collection will belong to the same instance of <see cref="ReplicationMigrationItemResource" />.
+    /// To get a <see cref="MigrationRecoveryPointCollection" /> instance call the GetMigrationRecoveryPoints method from an instance of <see cref="ReplicationMigrationItemResource" />.
     /// </summary>
     public partial class MigrationRecoveryPointCollection : ArmCollection, IEnumerable<MigrationRecoveryPointResource>, IAsyncEnumerable<MigrationRecoveryPointResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MigrationItemResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MigrationItemResource.ResourceType), nameof(id));
+            if (id.ResourceType != ReplicationMigrationItemResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ReplicationMigrationItemResource.ResourceType), nameof(id));
         }
 
         /// <summary>
