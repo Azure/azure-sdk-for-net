@@ -161,7 +161,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Compute?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Compute?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
