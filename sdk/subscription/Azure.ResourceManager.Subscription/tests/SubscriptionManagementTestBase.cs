@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.Subscription.Tests
         }
 
         protected SubscriptionManagementTestBase(bool isAsync)
-            : this(isAsync, default)
+            : base(isAsync)
         {
+            IgnoreApiVersionInTagOperations();
         }
 
         [SetUp]
