@@ -78,20 +78,25 @@ internal static class GuidUtilities
         buffer[14] = data.J;
     }
 
+    // This struct has the fields layed out to be GUID-like in order to read the GUID fields
+    // to efficiently write them into memory without having to deal with endianness
+    // Do not rename or reorder the fields.
     private readonly struct GuidData
     {
-        public readonly int A;   // Do not rename (binary serialization)
-        public readonly short B; // Do not rename (binary serialization)
-        public readonly short C; // Do not rename (binary serialization)
-        public readonly byte D;  // Do not rename (binary serialization)
-        public readonly byte E;  // Do not rename (binary serialization)
-        public readonly byte F;  // Do not rename (binary serialization)
-        public readonly byte G;  // Do not rename (binary serialization)
-        public readonly byte H;  // Do not rename (binary serialization)
-        public readonly byte I;  // Do not rename (binary serialization)
-        public readonly byte J;  // Do not rename (binary serialization)
-        public readonly byte K;  // Do not rename (binary serialization)
+        public readonly int A;
+        public readonly short B;
+        public readonly short C;
+        public readonly byte D;
+        public readonly byte E;
+        public readonly byte F; 
+        public readonly byte G; 
+        public readonly byte H;
+        public readonly byte I;
+        public readonly byte J;
+        public readonly byte K;
 
+        // Creates a new GUID like struct initialized to the value represented by the
+        // arguments.  The bytes are specified like this to avoid endianness issues.
         public GuidData(int a, short b, short c, byte d, byte e, byte f, byte g, byte h, byte i, byte j, byte k)
         {
             A = a;
