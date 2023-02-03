@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using Azure.Core;
 using OpenTelemetry.Metrics;
@@ -21,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="configure">Exporter configuration options.</param>
         /// <param name="credential"><see cref="TokenCredential" /></param>
         /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
-        public static MeterProviderBuilder AddAzureMonitorMetricExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null, TokenCredential credential = null)
+        public static MeterProviderBuilder AddAzureMonitorMetricExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions>? configure = null, TokenCredential? credential = null)
         {
             if (builder == null)
             {
