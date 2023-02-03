@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A Class representing a DataProtectionDeletedBackupInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataProtectionDeletedBackupInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataProtectionDeletedBackupInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupVaultResource" /> using the GetDataProtectionDeletedBackupInstance method.
+    /// A Class representing a DeletedDataProtectionBackupInstance along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedDataProtectionBackupInstanceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDeletedDataProtectionBackupInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupVaultResource" /> using the GetDeletedDataProtectionBackupInstance method.
     /// </summary>
-    public partial class DataProtectionDeletedBackupInstanceResource : ArmResource
+    public partial class DeletedDataProtectionBackupInstanceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataProtectionDeletedBackupInstanceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DeletedDataProtectionBackupInstanceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataProtectionDeletedBackupInstanceDeletedBackupInstancesClientDiagnostics;
-        private readonly DeletedBackupInstancesRestOperations _dataProtectionDeletedBackupInstanceDeletedBackupInstancesRestClient;
-        private readonly DataProtectionDeletedBackupInstanceData _data;
+        private readonly ClientDiagnostics _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics;
+        private readonly DeletedBackupInstancesRestOperations _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient;
+        private readonly DeletedDataProtectionBackupInstanceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataProtectionDeletedBackupInstanceResource"/> class for mocking. </summary>
-        protected DataProtectionDeletedBackupInstanceResource()
+        /// <summary> Initializes a new instance of the <see cref="DeletedDataProtectionBackupInstanceResource"/> class for mocking. </summary>
+        protected DeletedDataProtectionBackupInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataProtectionDeletedBackupInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DeletedDataProtectionBackupInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataProtectionDeletedBackupInstanceResource(ArmClient client, DataProtectionDeletedBackupInstanceData data) : this(client, data.Id)
+        internal DeletedDataProtectionBackupInstanceResource(ArmClient client, DeletedDataProtectionBackupInstanceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataProtectionDeletedBackupInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedDataProtectionBackupInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataProtectionDeletedBackupInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DeletedDataProtectionBackupInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataProtectionDeletedBackupInstanceDeletedBackupInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataProtectionDeletedBackupInstanceDeletedBackupInstancesApiVersion);
-            _dataProtectionDeletedBackupInstanceDeletedBackupInstancesRestClient = new DeletedBackupInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionDeletedBackupInstanceDeletedBackupInstancesApiVersion);
+            _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string deletedDataProtectionBackupInstanceDeletedBackupInstancesApiVersion);
+            _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient = new DeletedBackupInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedDataProtectionBackupInstanceDeletedBackupInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataProtectionDeletedBackupInstanceData Data
+        public virtual DeletedDataProtectionBackupInstanceData Data
         {
             get
             {
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataProtectionDeletedBackupInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedDataProtectionBackupInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataProtectionDeletedBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DataProtectionDeletedBackupInstanceResource.Get");
+            using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataProtectionDeletedBackupInstanceDeletedBackupInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataProtectionDeletedBackupInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedDataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataProtectionDeletedBackupInstanceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DeletedDataProtectionBackupInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataProtectionDeletedBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DataProtectionDeletedBackupInstanceResource.Get");
+            using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = _dataProtectionDeletedBackupInstanceDeletedBackupInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataProtectionDeletedBackupInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedDataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> UndeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataProtectionDeletedBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DataProtectionDeletedBackupInstanceResource.Undelete");
+            using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceResource.Undelete");
             scope.Start();
             try
             {
-                var response = await _dataProtectionDeletedBackupInstanceDeletedBackupInstancesRestClient.UndeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation(_dataProtectionDeletedBackupInstanceDeletedBackupInstancesClientDiagnostics, Pipeline, _dataProtectionDeletedBackupInstanceDeletedBackupInstancesRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.UndeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DataProtectionBackupArmOperation(_deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics, Pipeline, _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Undelete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataProtectionDeletedBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DataProtectionDeletedBackupInstanceResource.Undelete");
+            using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceResource.Undelete");
             scope.Start();
             try
             {
-                var response = _dataProtectionDeletedBackupInstanceDeletedBackupInstancesRestClient.Undelete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation(_dataProtectionDeletedBackupInstanceDeletedBackupInstancesClientDiagnostics, Pipeline, _dataProtectionDeletedBackupInstanceDeletedBackupInstancesRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.Undelete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new DataProtectionBackupArmOperation(_deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics, Pipeline, _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

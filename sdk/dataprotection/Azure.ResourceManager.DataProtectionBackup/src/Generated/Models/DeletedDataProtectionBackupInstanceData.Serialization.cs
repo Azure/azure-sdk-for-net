@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    public partial class DataProtectionDeletedBackupInstanceData : IUtf8JsonSerializable
+    public partial class DeletedDataProtectionBackupInstanceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionDeletedBackupInstanceData DeserializeDataProtectionDeletedBackupInstanceData(JsonElement element)
+        internal static DeletedDataProtectionBackupInstanceData DeserializeDeletedDataProtectionBackupInstanceData(JsonElement element)
         {
-            Optional<DataProtectionDeletedBackupInstanceProperties> properties = default;
+            Optional<DeletedDataProtectionBackupInstanceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = DataProtectionDeletedBackupInstanceProperties.DeserializeDataProtectionDeletedBackupInstanceProperties(property.Value);
+                    properties = DeletedDataProtectionBackupInstanceProperties.DeserializeDeletedDataProtectionBackupInstanceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     continue;
                 }
             }
-            return new DataProtectionDeletedBackupInstanceData(id, name, type, systemData.Value, properties.Value);
+            return new DeletedDataProtectionBackupInstanceData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

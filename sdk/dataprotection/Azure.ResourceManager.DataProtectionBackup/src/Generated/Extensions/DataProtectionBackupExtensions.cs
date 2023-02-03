@@ -428,20 +428,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
         #endregion
 
-        #region DataProtectionDeletedBackupInstanceResource
+        #region DeletedDataProtectionBackupInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionDeletedBackupInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataProtectionDeletedBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionDeletedBackupInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeletedDataProtectionBackupInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedDataProtectionBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DeletedDataProtectionBackupInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProtectionDeletedBackupInstanceResource" /> object. </returns>
-        public static DataProtectionDeletedBackupInstanceResource GetDataProtectionDeletedBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedDataProtectionBackupInstanceResource" /> object. </returns>
+        public static DeletedDataProtectionBackupInstanceResource GetDeletedDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataProtectionDeletedBackupInstanceResource.ValidateResourceId(id);
-                return new DataProtectionDeletedBackupInstanceResource(client, id);
+                DeletedDataProtectionBackupInstanceResource.ValidateResourceId(id);
+                return new DeletedDataProtectionBackupInstanceResource(client, id);
             }
             );
         }

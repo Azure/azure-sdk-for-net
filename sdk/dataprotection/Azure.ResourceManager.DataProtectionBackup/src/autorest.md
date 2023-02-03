@@ -220,8 +220,8 @@ rename-mapping:
   SyncType: BackupInstanceSyncType
   ScheduleBasedBackupCriteria.daysOfTheWeek: DaysOfWeek
   ScheduleBasedBackupCriteria.weeksOfTheMonth: WeeksOfMonth
-  DeletedBackupInstanceResource: DataProtectionDeletedBackupInstance
-  DeletedBackupInstance: DataProtectionDeletedBackupInstanceProperties
+  DeletedBackupInstanceResource: DeletedDataProtectionBackupInstance
+  DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
   BackupDatasourceParameters: BackupDataSourceSettings
   BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
