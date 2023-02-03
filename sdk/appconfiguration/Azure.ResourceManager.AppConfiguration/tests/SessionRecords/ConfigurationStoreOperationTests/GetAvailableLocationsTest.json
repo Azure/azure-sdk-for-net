@@ -260,7 +260,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.AppConfiguration?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppConfiguration?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
