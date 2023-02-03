@@ -15,7 +15,7 @@ You must have an [Azure subscription][azure_subscription] and a [Purview resourc
 
 ### Authenticate the client
 
-Since the Workflow service uses an Azure Active Directory (AAD) bearer token for authentication and identification, an email address should be encoded into the token to allow for notification when using Workflow. It is recommended that the [Azure Identity][azure_identity] library be used  with a the [UsernamePasswordCredential][username_password_credential]. Before using the [Azure Identity][azure_identity] library with Workflow, [an application][app_registration] should be registered and used for the clientId passed to the [UsernamePasswordCredential][username_password_credentail].
+Since the Workflow service uses an Azure Active Directory (AAD) bearer token for authentication and identification, an email address should be encoded into the token to allow for notification when using Workflow. It is recommended that the [Azure Identity][azure_identity] library be used  with a the [UsernamePasswordCredential][username_password_credential]. Before using the [Azure Identity][azure_identity] library with Workflow, [an application][app_registration] should be registered and used for the clientId passed to the [UsernamePasswordCredential][username_password_credential].
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_CreateClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
@@ -72,4 +72,4 @@ Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestCo
 [purview_resource]: https://docs.microsoft.com/azure/purview/create-catalog-portal
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [app_registration]: https://learn.microsoft.com/azure/active-directory/develop/quickstart-register-app
-[username_password_credentail]: https://learn.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet
+[username_password_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet

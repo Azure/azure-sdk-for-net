@@ -2,8 +2,6 @@
 
 This sample shows how to approve s workflow task.
 
-To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and have obtained all of the resources required by [Authenticate the client][authenticate_the_client].
-
 ## Create a WorkflowClient
 
 To create a new `WorkflowClient`, you need the endpoint, API version, and credentials from your resource. In the sample below you'll use `UsernamePasswordCredential` to authenticate.
@@ -30,6 +28,3 @@ string request = "{\"comment\":\"Thanks!\"}";
 
 Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestContent.Create(request));
 ```
-
-[prerequisites]: https://github.com/Azure/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.Workflows/README.md#Prerequisites
-[authenticate_the_client]: https://github.com/Azure/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.Workflows/README.md#authenticate-the-client

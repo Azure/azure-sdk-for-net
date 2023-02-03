@@ -2,8 +2,6 @@
 
 This sample shows how to create and get a workflow.
 
-To get started, make sure you have satisfied all the [Prerequisites][prerequisites] and have obtained all of the resources required by [Authenticate the client][authenticate_the_client].
-
 ## Create a WorkflowClient
 
 To create a new `WorkflowClient`, you need the endpoint, API version, and credentials from your resource. In the sample below you'll use `UsernamePasswordCredential` to authenticate.
@@ -38,7 +36,4 @@ Guid workflowId = new Guid("8af1ecae-16ee-4b2d-8972-00d611dd2f99");
 
 Response getResult = await client.GetWorkflowAsync(workflowId);
 ```
-
-[prerequisites]: https://github.com/Azure/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.Workflows/README.md#Prerequisites
-[authenticate_the_client]: https://github.com/Azure/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.Workflows/README.md#authenticate-the-client
 
