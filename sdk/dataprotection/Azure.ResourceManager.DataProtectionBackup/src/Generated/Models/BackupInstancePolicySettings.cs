@@ -11,30 +11,30 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Parameters in Policy. </summary>
-    public partial class PolicyParameters
+    public partial class BackupInstancePolicySettings
     {
-        /// <summary> Initializes a new instance of PolicyParameters. </summary>
-        public PolicyParameters()
+        /// <summary> Initializes a new instance of BackupInstancePolicySettings. </summary>
+        public BackupInstancePolicySettings()
         {
             DataStoreParametersList = new ChangeTrackingList<DataStoreSettings>();
-            BackupDatasourceParametersList = new ChangeTrackingList<BackupDatasourceParameters>();
+            BackupDataSourceParametersList = new ChangeTrackingList<BackupDataSourceSettings>();
         }
 
-        /// <summary> Initializes a new instance of PolicyParameters. </summary>
+        /// <summary> Initializes a new instance of BackupInstancePolicySettings. </summary>
         /// <param name="dataStoreParametersList">
         /// Gets or sets the DataStore Parameters
         /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OperationalDataStoreSettings"/>.
         /// </param>
-        /// <param name="backupDatasourceParametersList">
+        /// <param name="backupDataSourceParametersList">
         /// Gets or sets the Backup Data Source Parameters
-        /// Please note <see cref="BackupDatasourceParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobBackupDatasourceParameters"/> and <see cref="KubernetesClusterBackupDatasourceParameters"/>.
+        /// Please note <see cref="BackupDataSourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BlobBackupDataSourceSettings"/> and <see cref="KubernetesClusterBackupDataSourceSettings"/>.
         /// </param>
-        internal PolicyParameters(IList<DataStoreSettings> dataStoreParametersList, IList<BackupDatasourceParameters> backupDatasourceParametersList)
+        internal BackupInstancePolicySettings(IList<DataStoreSettings> dataStoreParametersList, IList<BackupDataSourceSettings> backupDataSourceParametersList)
         {
             DataStoreParametersList = dataStoreParametersList;
-            BackupDatasourceParametersList = backupDatasourceParametersList;
+            BackupDataSourceParametersList = backupDataSourceParametersList;
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public IList<DataStoreSettings> DataStoreParametersList { get; }
         /// <summary>
         /// Gets or sets the Backup Data Source Parameters
-        /// Please note <see cref="BackupDatasourceParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobBackupDatasourceParameters"/> and <see cref="KubernetesClusterBackupDatasourceParameters"/>.
+        /// Please note <see cref="BackupDataSourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BlobBackupDataSourceSettings"/> and <see cref="KubernetesClusterBackupDataSourceSettings"/>.
         /// </summary>
-        public IList<BackupDatasourceParameters> BackupDatasourceParametersList { get; }
+        public IList<BackupDataSourceSettings> BackupDataSourceParametersList { get; }
     }
 }

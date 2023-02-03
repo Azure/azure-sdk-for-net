@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Parameters to be used during configuration of backup of blobs. </summary>
-    public partial class BlobBackupDatasourceParameters : BackupDatasourceParameters
+    public partial class BlobBackupDataSourceSettings : BackupDataSourceSettings
     {
-        /// <summary> Initializes a new instance of BlobBackupDatasourceParameters. </summary>
+        /// <summary> Initializes a new instance of BlobBackupDataSourceSettings. </summary>
         /// <param name="containersList"> List of containers to be backed up during configuration of backup of blobs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containersList"/> is null. </exception>
-        public BlobBackupDatasourceParameters(IEnumerable<string> containersList)
+        public BlobBackupDataSourceSettings(IEnumerable<string> containersList)
         {
             Argument.AssertNotNull(containersList, nameof(containersList));
 
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "BlobBackupDatasourceParameters";
         }
 
-        /// <summary> Initializes a new instance of BlobBackupDatasourceParameters. </summary>
+        /// <summary> Initializes a new instance of BlobBackupDataSourceSettings. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="containersList"> List of containers to be backed up during configuration of backup of blobs. </param>
-        internal BlobBackupDatasourceParameters(string objectType, IList<string> containersList) : base(objectType)
+        internal BlobBackupDataSourceSettings(string objectType, IList<string> containersList) : base(objectType)
         {
             ContainersList = containersList;
             ObjectType = objectType ?? "BlobBackupDatasourceParameters";

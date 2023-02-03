@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Soft delete related settings. </summary>
-    public partial class SoftDeleteSettings
+    public partial class BackupVaultSoftDeleteSettings
     {
-        /// <summary> Initializes a new instance of SoftDeleteSettings. </summary>
-        public SoftDeleteSettings()
+        /// <summary> Initializes a new instance of BackupVaultSoftDeleteSettings. </summary>
+        public BackupVaultSoftDeleteSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftDeleteSettings. </summary>
+        /// <summary> Initializes a new instance of BackupVaultSoftDeleteSettings. </summary>
         /// <param name="state"> State of soft delete. </param>
         /// <param name="retentionDurationInDays"> Soft delete retention duration. </param>
-        internal SoftDeleteSettings(SoftDeleteState? state, double? retentionDurationInDays)
+        internal BackupVaultSoftDeleteSettings(BackupVaultSoftDeleteState? state, double? retentionDurationInDays)
         {
             State = state;
             RetentionDurationInDays = retentionDurationInDays;
         }
 
         /// <summary> State of soft delete. </summary>
-        public SoftDeleteState? State { get; set; }
+        public BackupVaultSoftDeleteState? State { get; set; }
         /// <summary> Soft delete retention duration. </summary>
         public double? RetentionDurationInDays { get; set; }
     }

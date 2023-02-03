@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class KubernetesClusterBackupDatasourceParameters : IUtf8JsonSerializable
+    public partial class KubernetesClusterBackupDataSourceSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("snapshotVolumes");
-            writer.WriteBooleanValue(SnapshotVolumes);
+            writer.WriteBooleanValue(IsSnapshotVolumesEnabled);
             writer.WritePropertyName("includeClusterScopeResources");
-            writer.WriteBooleanValue(IncludeClusterScopeResources);
+            writer.WriteBooleanValue(IsClusterScopeResourcesIncluded);
             if (Optional.IsCollectionDefined(IncludedNamespaces))
             {
                 writer.WritePropertyName("includedNamespaces");
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static KubernetesClusterBackupDatasourceParameters DeserializeKubernetesClusterBackupDatasourceParameters(JsonElement element)
+        internal static KubernetesClusterBackupDataSourceSettings DeserializeKubernetesClusterBackupDataSourceSettings(JsonElement element)
         {
             bool snapshotVolumes = default;
             bool includeClusterScopeResources = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new KubernetesClusterBackupDatasourceParameters(objectType, snapshotVolumes, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors));
+            return new KubernetesClusterBackupDataSourceSettings(objectType, snapshotVolumes, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors));
         }
     }
 }
