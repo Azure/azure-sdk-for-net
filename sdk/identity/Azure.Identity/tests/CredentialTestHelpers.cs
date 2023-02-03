@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 
@@ -61,7 +63,7 @@ namespace Azure.Identity.Tests
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
         {
             var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString();
-            var expiresOn = DateTimeOffset.Parse(expiresOnString,  CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var expiresOn = DateTimeOffset.Parse(expiresOnString, CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
             var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
             var xml = @$"<Object Type=""Microsoft.Azure.Commands.Profile.Models.PSAccessToken""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.DateTimeOffset"">{expiresOnString}</Property><Property Name=""TenantId"" Type=""System.String"">{Guid.NewGuid().ToString()}</Property><Property Name=""UserId"" Type=""System.String"">foo@contoso.com</Property><Property Name=""Type"" Type=""System.String"">Bearer</Property></Object>";
             return (token, expiresOn, xml);
@@ -192,6 +194,14 @@ namespace Azure.Identity.Tests
             }
 
             throw new PlatformNotSupportedException();
+        }
+
+        public static bool ExtractMsalDisableInstanceDiscoveryProperty(TokenCredential cred)
+        {
+            var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
+            var msalClient = targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(targetCred);
+            bool DisableInstanceDiscovery = (bool)msalClient.GetType().GetProperty("DisableInstanceDiscovery", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(msalClient);
+            return DisableInstanceDiscovery;
         }
 
         private sealed class RefreshTokenRetriever

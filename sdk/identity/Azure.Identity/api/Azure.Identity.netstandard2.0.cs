@@ -168,6 +168,7 @@ namespace Azure.Identity
         public DefaultAzureCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public System.TimeSpan? DeveloperCredentialTimeout { get { throw null; } set { } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
         public bool ExcludeAzureDeveloperCliCredential { get { throw null; } set { } }
         public bool ExcludeAzurePowerShellCredential { get { throw null; } set { } }
@@ -234,9 +235,15 @@ namespace Azure.Identity
     public partial class EnvironmentCredential : Azure.Core.TokenCredential
     {
         public EnvironmentCredential() { }
+        public EnvironmentCredential(Azure.Identity.EnvironmentCredentialOptions options) { }
         public EnvironmentCredential(Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class EnvironmentCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public EnvironmentCredentialOptions() { }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
     }
     public static partial class IdentityModelFactory
     {
