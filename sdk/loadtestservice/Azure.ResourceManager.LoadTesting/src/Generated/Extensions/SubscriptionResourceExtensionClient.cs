@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,86 +51,46 @@ namespace Azure.ResourceManager.LoadTesting
 
         /// <summary>
         /// Lists loadtests resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests
-        /// Operation Id: LoadTests_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LoadTestingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LoadTestingResourceLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestingResources");
-                scope.Start();
-                try
-                {
-                    var response = await LoadTestingResourceLoadTestsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LoadTestingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LoadTestingResourceLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestingResources");
-                scope.Start();
-                try
-                {
-                    var response = await LoadTestingResourceLoadTestsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), LoadTestingResourceLoadTestsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLoadTestingResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists loadtests resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests
-        /// Operation Id: LoadTests_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadTestingResource> GetLoadTestingResources(CancellationToken cancellationToken = default)
         {
-            Page<LoadTestingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LoadTestingResourceLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestingResources");
-                scope.Start();
-                try
-                {
-                    var response = LoadTestingResourceLoadTestsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LoadTestingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LoadTestingResourceLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestingResources");
-                scope.Start();
-                try
-                {
-                    var response = LoadTestingResourceLoadTestsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), LoadTestingResourceLoadTestsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLoadTestingResources", "value", "nextLink", cancellationToken);
         }
     }
 }

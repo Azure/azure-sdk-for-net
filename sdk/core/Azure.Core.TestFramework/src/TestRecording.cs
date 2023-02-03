@@ -262,8 +262,9 @@ namespace Azure.Core.TestFramework
             {
                 if (currentTransport is ProxyTransport)
                 {
-                    //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30029
-                    return currentTransport;
+                    throw new InvalidOperationException(
+                        "The supplied options have already been instrumented. Each test must pass a unique options instance to " +
+                        "InstrumentClientOptions.");
                 }
                 return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
             }

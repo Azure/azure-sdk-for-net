@@ -11,16 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Azure Blob datastore configuration.
-    /// Serialized Name: AzureBlobDatastore
-    /// </summary>
+    /// <summary> Azure Blob datastore configuration. </summary>
     public partial class MachineLearningAzureBlobDatastore : MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of MachineLearningAzureBlobDatastore. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: Datastore.credentials
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
@@ -33,52 +29,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningAzureBlobDatastore. </summary>
-        /// <param name="description">
-        /// The asset description text.
-        /// Serialized Name: ResourceBase.description
-        /// </param>
-        /// <param name="properties">
-        /// The asset property dictionary.
-        /// Serialized Name: ResourceBase.properties
-        /// </param>
-        /// <param name="tags">
-        /// Tag dictionary. Tags can be added, removed, and updated.
-        /// Serialized Name: ResourceBase.tags
-        /// </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Serialized Name: Datastore.credentials
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
-        /// <param name="datastoreType">
-        /// [Required] Storage type backing the datastore.
-        /// Serialized Name: Datastore.datastoreType
-        /// </param>
-        /// <param name="isDefault">
-        /// Readonly property to indicate if datastore is the workspace default datastore
-        /// Serialized Name: Datastore.isDefault
-        /// </param>
-        /// <param name="accountName">
-        /// Storage account name.
-        /// Serialized Name: AzureBlobDatastore.accountName
-        /// </param>
-        /// <param name="containerName">
-        /// Storage account container name.
-        /// Serialized Name: AzureBlobDatastore.containerName
-        /// </param>
-        /// <param name="endpoint">
-        /// Azure cloud endpoint for the storage account.
-        /// Serialized Name: AzureBlobDatastore.endpoint
-        /// </param>
-        /// <param name="protocol">
-        /// Protocol used to communicate with the storage account.
-        /// Serialized Name: AzureBlobDatastore.protocol
-        /// </param>
-        /// <param name="serviceDataAccessAuthIdentity">
-        /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
-        /// Serialized Name: AzureBlobDatastore.serviceDataAccessAuthIdentity
-        /// </param>
+        /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
+        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
+        /// <param name="accountName"> Storage account name. </param>
+        /// <param name="containerName"> Storage account container name. </param>
+        /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
+        /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
         internal MachineLearningAzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             AccountName = accountName;
@@ -89,30 +54,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = datastoreType;
         }
 
-        /// <summary>
-        /// Storage account name.
-        /// Serialized Name: AzureBlobDatastore.accountName
-        /// </summary>
+        /// <summary> Storage account name. </summary>
         public string AccountName { get; set; }
-        /// <summary>
-        /// Storage account container name.
-        /// Serialized Name: AzureBlobDatastore.containerName
-        /// </summary>
+        /// <summary> Storage account container name. </summary>
         public string ContainerName { get; set; }
-        /// <summary>
-        /// Azure cloud endpoint for the storage account.
-        /// Serialized Name: AzureBlobDatastore.endpoint
-        /// </summary>
+        /// <summary> Azure cloud endpoint for the storage account. </summary>
         public string Endpoint { get; set; }
-        /// <summary>
-        /// Protocol used to communicate with the storage account.
-        /// Serialized Name: AzureBlobDatastore.protocol
-        /// </summary>
+        /// <summary> Protocol used to communicate with the storage account. </summary>
         public string Protocol { get; set; }
-        /// <summary>
-        /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
-        /// Serialized Name: AzureBlobDatastore.serviceDataAccessAuthIdentity
-        /// </summary>
+        /// <summary> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </summary>
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Mutable batch inference settings per deployment.
-    /// Serialized Name: PartialBatchDeployment
-    /// </summary>
+    /// <summary> Mutable batch inference settings per deployment. </summary>
     internal partial class PartialBatchDeployment
     {
         /// <summary> Initializes a new instance of PartialBatchDeployment. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary>
-        /// Description of the endpoint deployment.
-        /// Serialized Name: PartialBatchDeployment.description
-        /// </summary>
+        /// <summary> Description of the endpoint deployment. </summary>
         public string Description { get; set; }
     }
 }

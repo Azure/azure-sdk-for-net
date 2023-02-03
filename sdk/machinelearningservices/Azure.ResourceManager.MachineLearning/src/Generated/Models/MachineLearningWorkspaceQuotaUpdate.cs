@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The properties for update Quota response.
-    /// Serialized Name: UpdateWorkspaceQuotas
-    /// </summary>
+    /// <summary> The properties for update Quota response. </summary>
     public partial class MachineLearningWorkspaceQuotaUpdate
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
-        /// <param name="id">
-        /// Specifies the resource ID.
-        /// Serialized Name: UpdateWorkspaceQuotas.id
-        /// </param>
-        /// <param name="updateWorkspaceQuotasType">
-        /// Specifies the resource type.
-        /// Serialized Name: UpdateWorkspaceQuotas.type
-        /// </param>
-        /// <param name="limit">
-        /// The maximum permitted quota of the resource.
-        /// Serialized Name: UpdateWorkspaceQuotas.limit
-        /// </param>
-        /// <param name="unit">
-        /// An enum describing the unit of quota measurement.
-        /// Serialized Name: UpdateWorkspaceQuotas.unit
-        /// </param>
-        /// <param name="status">
-        /// Status of update workspace quota.
-        /// Serialized Name: UpdateWorkspaceQuotas.status
-        /// </param>
+        /// <param name="id"> Specifies the resource ID. </param>
+        /// <param name="updateWorkspaceQuotasType"> Specifies the resource type. </param>
+        /// <param name="limit"> The maximum permitted quota of the resource. </param>
+        /// <param name="unit"> An enum describing the unit of quota measurement. </param>
+        /// <param name="status"> Status of update workspace quota. </param>
         internal MachineLearningWorkspaceQuotaUpdate(string id, string updateWorkspaceQuotasType, long? limit, MachineLearningQuotaUnit? unit, MachineLearningWorkspaceQuotaStatus? status)
         {
             Id = id;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary>
-        /// Specifies the resource ID.
-        /// Serialized Name: UpdateWorkspaceQuotas.id
-        /// </summary>
+        /// <summary> Specifies the resource ID. </summary>
         public string Id { get; }
-        /// <summary>
-        /// Specifies the resource type.
-        /// Serialized Name: UpdateWorkspaceQuotas.type
-        /// </summary>
+        /// <summary> Specifies the resource type. </summary>
         public string UpdateWorkspaceQuotasType { get; }
-        /// <summary>
-        /// The maximum permitted quota of the resource.
-        /// Serialized Name: UpdateWorkspaceQuotas.limit
-        /// </summary>
+        /// <summary> The maximum permitted quota of the resource. </summary>
         public long? Limit { get; }
-        /// <summary>
-        /// An enum describing the unit of quota measurement.
-        /// Serialized Name: UpdateWorkspaceQuotas.unit
-        /// </summary>
+        /// <summary> An enum describing the unit of quota measurement. </summary>
         public MachineLearningQuotaUnit? Unit { get; }
-        /// <summary>
-        /// Status of update workspace quota.
-        /// Serialized Name: UpdateWorkspaceQuotas.status
-        /// </summary>
+        /// <summary> Status of update workspace quota. </summary>
         public MachineLearningWorkspaceQuotaStatus? Status { get; }
     }
 }

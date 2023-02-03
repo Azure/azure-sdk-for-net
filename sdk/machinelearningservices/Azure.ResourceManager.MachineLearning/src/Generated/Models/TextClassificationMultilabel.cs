@@ -13,15 +13,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// Text Classification Multilabel task in AutoML NLP vertical.
     /// NLP - Natural Language Processing.
-    /// Serialized Name: TextClassificationMultilabel
     /// </summary>
     public partial class TextClassificationMultilabel : AutoMLVertical
     {
         /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
-        /// <param name="trainingData">
-        /// [Required] Training data input.
-        /// Serialized Name: AutoMLVertical.trainingData
-        /// </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public TextClassificationMultilabel(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
@@ -31,40 +27,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
-        /// <param name="logVerbosity">
-        /// Log verbosity for the job.
-        /// Serialized Name: AutoMLVertical.logVerbosity
-        /// </param>
+        /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
-        /// Serialized Name: AutoMLVertical.targetColumnName
         /// </param>
-        /// <param name="taskType">
-        /// [Required] Task type for AutoMLJob.
-        /// Serialized Name: AutoMLVertical.taskType
-        /// </param>
-        /// <param name="trainingData">
-        /// [Required] Training data input.
-        /// Serialized Name: AutoMLVertical.trainingData
-        /// </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="primaryMetric">
         /// Primary metric for Text-Classification-Multilabel task.
         /// Currently only Accuracy is supported as primary metric, hence user need not set it explicitly.
-        /// Serialized Name: TextClassificationMultilabel.primaryMetric
         /// </param>
-        /// <param name="featurizationSettings">
-        /// Featurization inputs needed for AutoML job.
-        /// Serialized Name: NlpVertical.featurizationSettings
-        /// </param>
-        /// <param name="limitSettings">
-        /// Execution constraints for AutoMLJob.
-        /// Serialized Name: NlpVertical.limitSettings
-        /// </param>
-        /// <param name="validationData">
-        /// Validation data inputs.
-        /// Serialized Name: NlpVertical.validationData
-        /// </param>
+        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
+        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
+        /// <param name="validationData"> Validation data inputs. </param>
         internal TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationMultilabelPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PrimaryMetric = primaryMetric;
@@ -77,18 +53,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Primary metric for Text-Classification-Multilabel task.
         /// Currently only Accuracy is supported as primary metric, hence user need not set it explicitly.
-        /// Serialized Name: TextClassificationMultilabel.primaryMetric
         /// </summary>
         public ClassificationMultilabelPrimaryMetric? PrimaryMetric { get; }
-        /// <summary>
-        /// Featurization inputs needed for AutoML job.
-        /// Serialized Name: NlpVertical.featurizationSettings
-        /// </summary>
+        /// <summary> Featurization inputs needed for AutoML job. </summary>
         internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
-        /// <summary>
-        /// Dataset language, useful for the text data.
-        /// Serialized Name: FeaturizationSettings.datasetLanguage
-        /// </summary>
+        /// <summary> Dataset language, useful for the text data. </summary>
         public string FeaturizationDatasetLanguage
         {
             get => FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
@@ -100,15 +69,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary>
-        /// Execution constraints for AutoMLJob.
-        /// Serialized Name: NlpVertical.limitSettings
-        /// </summary>
+        /// <summary> Execution constraints for AutoMLJob. </summary>
         public NlpVerticalLimitSettings LimitSettings { get; set; }
-        /// <summary>
-        /// Validation data inputs.
-        /// Serialized Name: NlpVertical.validationData
-        /// </summary>
+        /// <summary> Validation data inputs. </summary>
         public MachineLearningTableJobInput ValidationData { get; set; }
     }
 }

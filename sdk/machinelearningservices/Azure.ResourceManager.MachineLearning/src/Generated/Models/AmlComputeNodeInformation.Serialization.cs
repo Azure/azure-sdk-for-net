@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element)
         {
             Optional<string> nodeId = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> publicIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
+            Optional<IPAddress> publicIPAddress = default;
             Optional<int> port = default;
             Optional<MachineLearningNodeState> nodeState = default;
             Optional<string> runId = default;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         privateIPAddress = null;
                         continue;
                     }
-                    privateIPAddress = property.Value.GetString();
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"))
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         publicIPAddress = null;
                         continue;
                     }
-                    publicIPAddress = property.Value.GetString();
+                    publicIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))

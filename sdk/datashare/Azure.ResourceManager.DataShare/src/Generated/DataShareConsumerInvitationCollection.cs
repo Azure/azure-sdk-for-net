@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="invitationId"> An invitation id. </param>
@@ -82,8 +89,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="invitationId"> An invitation id. </param>
@@ -108,94 +123,62 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Lists invitations
-        /// Request Path: /providers/Microsoft.DataShare/listInvitations
-        /// Operation Id: ConsumerInvitations_ListInvitations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/listInvitations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_ListInvitations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataShareConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareConsumerInvitationResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataShareConsumerInvitationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataShareConsumerInvitationConsumerInvitationsRestClient.ListInvitationsAsync(skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareConsumerInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataShareConsumerInvitationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataShareConsumerInvitationConsumerInvitationsRestClient.ListInvitationsNextPageAsync(nextLink, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareConsumerInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsRequest(skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsNextPageRequest(nextLink, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists invitations
-        /// Request Path: /providers/Microsoft.DataShare/listInvitations
-        /// Operation Id: ConsumerInvitations_ListInvitations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/listInvitations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_ListInvitations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataShareConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareConsumerInvitationResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<DataShareConsumerInvitationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataShareConsumerInvitationConsumerInvitationsRestClient.ListInvitations(skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareConsumerInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataShareConsumerInvitationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataShareConsumerInvitationConsumerInvitationsRestClient.ListInvitationsNextPage(nextLink, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareConsumerInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsRequest(skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsNextPageRequest(nextLink, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="invitationId"> An invitation id. </param>
@@ -218,8 +201,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="invitationId"> An invitation id. </param>

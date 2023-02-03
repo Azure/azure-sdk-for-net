@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address");
-                writer.WriteStringValue(Address);
+                writer.WriteStringValue(Address.ToString());
             }
             if (Optional.IsDefined(AdministratorAccount))
             {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> virtualMachineSize = default;
             Optional<int> sshPort = default;
             Optional<int> notebookServerPort = default;
-            Optional<string> address = default;
+            Optional<IPAddress> address = default;
             Optional<MachineLearningVmSshCredentials> administratorAccount = default;
             Optional<bool> isNotebookInstanceCompute = default;
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("address"))
                 {
-                    address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("administratorAccount"))

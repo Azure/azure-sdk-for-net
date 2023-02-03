@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Update workspace managed sql server&apos;s minimal tls settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dedicatedSQLminimalTlsSettingsName"> The name of the dedicated sql minimal tls settings. </param>
@@ -87,8 +94,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Update workspace managed sql server&apos;s minimal tls settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dedicatedSQLminimalTlsSettingsName"> The name of the dedicated sql minimal tls settings. </param>
@@ -118,8 +133,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get workspace managed sql server&apos;s minimal tls settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dedicatedSQLminimalTlsSettingsName"> The name of the dedicated sql minimal tls settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -147,8 +170,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get workspace managed sql server&apos;s minimal tls settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dedicatedSQLminimalTlsSettingsName"> The name of the dedicated sql minimal tls settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,92 +207,60 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// List workspace managed sql server&apos;s minimal tls settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseDedicatedSqlMinimalTlsSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseDedicatedSqlMinimalTlsSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseDedicatedSqlMinimalTlsSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseDedicatedSqlMinimalTlsSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseDedicatedSqlMinimalTlsSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseDedicatedSqlMinimalTlsSettingResource(Client, SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(e)), _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, "SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List workspace managed sql server&apos;s minimal tls settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseDedicatedSqlMinimalTlsSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseDedicatedSqlMinimalTlsSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseDedicatedSqlMinimalTlsSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseDedicatedSqlMinimalTlsSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseDedicatedSqlMinimalTlsSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseDedicatedSqlMinimalTlsSettingResource(Client, SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(e)), _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, "SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dedicatedSQLminimalTlsSettingsName"> The name of the dedicated sql minimal tls settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -287,8 +286,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dedicatedSQLminimalTlsSettingsName"> The name of the dedicated sql minimal tls settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

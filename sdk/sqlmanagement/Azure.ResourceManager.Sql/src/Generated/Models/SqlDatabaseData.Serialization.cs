@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> isLedgerOn = default;
             Optional<bool> isInfraEncryptionEnabled = default;
             Optional<Guid> federatedClientId = default;
-            Optional<AlwaysEncryptedEnclaveType> preferredEnclaveType = default;
+            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            preferredEnclaveType = new AlwaysEncryptedEnclaveType(property0.Value.GetString());
+                            preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceResourceId"))

@@ -17,28 +17,28 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of ManagedInstanceDtcSecuritySettings. </summary>
         /// <param name="transactionManagerCommunicationSettings"> Transaction Manager communication settings of managed instance DTC. </param>
-        /// <param name="xaTransactionsEnabled"> Allow XA Transactions to managed instance DTC. </param>
+        /// <param name="isXATransactionsEnabled"> Allow XA Transactions to managed instance DTC. </param>
         /// <param name="snaLu6Point2TransactionsEnabled"> Allow SNA LU 6.2 Transactions to managed instance DTC. </param>
-        /// <param name="xaTransactionsDefaultTimeout"> Default timeout for XA Transactions (in seconds). </param>
-        /// <param name="xaTransactionsMaximumTimeout"> Maximum timeout for XA Transactions (in seconds). </param>
-        internal ManagedInstanceDtcSecuritySettings(ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings, bool? xaTransactionsEnabled, bool? snaLu6Point2TransactionsEnabled, int? xaTransactionsDefaultTimeout, int? xaTransactionsMaximumTimeout)
+        /// <param name="xaTransactionsDefaultTimeoutInSeconds"> Default timeout for XA Transactions (in seconds). </param>
+        /// <param name="xaTransactionsMaximumTimeoutInSeconds"> Maximum timeout for XA Transactions (in seconds). </param>
+        internal ManagedInstanceDtcSecuritySettings(ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings, bool? isXATransactionsEnabled, bool? snaLu6Point2TransactionsEnabled, int? xaTransactionsDefaultTimeoutInSeconds, int? xaTransactionsMaximumTimeoutInSeconds)
         {
             TransactionManagerCommunicationSettings = transactionManagerCommunicationSettings;
-            XaTransactionsEnabled = xaTransactionsEnabled;
+            IsXATransactionsEnabled = isXATransactionsEnabled;
             SnaLu6Point2TransactionsEnabled = snaLu6Point2TransactionsEnabled;
-            XaTransactionsDefaultTimeout = xaTransactionsDefaultTimeout;
-            XaTransactionsMaximumTimeout = xaTransactionsMaximumTimeout;
+            XATransactionsDefaultTimeoutInSeconds = xaTransactionsDefaultTimeoutInSeconds;
+            XATransactionsMaximumTimeoutInSeconds = xaTransactionsMaximumTimeoutInSeconds;
         }
 
         /// <summary> Transaction Manager communication settings of managed instance DTC. </summary>
         public ManagedInstanceDtcTransactionManagerCommunicationSettings TransactionManagerCommunicationSettings { get; set; }
         /// <summary> Allow XA Transactions to managed instance DTC. </summary>
-        public bool? XaTransactionsEnabled { get; set; }
+        public bool? IsXATransactionsEnabled { get; set; }
         /// <summary> Allow SNA LU 6.2 Transactions to managed instance DTC. </summary>
         public bool? SnaLu6Point2TransactionsEnabled { get; set; }
         /// <summary> Default timeout for XA Transactions (in seconds). </summary>
-        public int? XaTransactionsDefaultTimeout { get; set; }
+        public int? XATransactionsDefaultTimeoutInSeconds { get; set; }
         /// <summary> Maximum timeout for XA Transactions (in seconds). </summary>
-        public int? XaTransactionsMaximumTimeout { get; set; }
+        public int? XATransactionsMaximumTimeoutInSeconds { get; set; }
     }
 }

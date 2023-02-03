@@ -11,10 +11,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.
-    /// Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult
-    /// </summary>
+    /// <summary> The WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
     internal partial class WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
@@ -24,17 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
-        /// <param name="value"> Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.value. </param>
-        /// <param name="nextLink"> Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.nextLink. </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(IReadOnlyList<MachineLearningWorkspaceConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<MachineLearningWorkspaceConnectionData> Value { get; }
-        /// <summary> Serialized Name: WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.nextLink. </summary>
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

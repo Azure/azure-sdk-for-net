@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to determine the Job Output Type.
-    /// Serialized Name: JobOutputType
-    /// </summary>
+    /// <summary> Enum to determine the Job Output Type. </summary>
     internal readonly partial struct JobOutputType : IEquatable<JobOutputType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string MlflowModelValue = "mlflow_model";
         private const string TritonModelValue = "triton_model";
 
-        /// <summary>
-        /// uri_file
-        /// Serialized Name: JobOutputType.uri_file
-        /// </summary>
+        /// <summary> uri_file. </summary>
         public static JobOutputType UriFile { get; } = new JobOutputType(UriFileValue);
-        /// <summary>
-        /// uri_folder
-        /// Serialized Name: JobOutputType.uri_folder
-        /// </summary>
+        /// <summary> uri_folder. </summary>
         public static JobOutputType UriFolder { get; } = new JobOutputType(UriFolderValue);
-        /// <summary>
-        /// mltable
-        /// Serialized Name: JobOutputType.mltable
-        /// </summary>
+        /// <summary> mltable. </summary>
         public static JobOutputType Mltable { get; } = new JobOutputType(MltableValue);
-        /// <summary>
-        /// custom_model
-        /// Serialized Name: JobOutputType.custom_model
-        /// </summary>
+        /// <summary> custom_model. </summary>
         public static JobOutputType CustomModel { get; } = new JobOutputType(CustomModelValue);
-        /// <summary>
-        /// mlflow_model
-        /// Serialized Name: JobOutputType.mlflow_model
-        /// </summary>
+        /// <summary> mlflow_model. </summary>
         public static JobOutputType MlflowModel { get; } = new JobOutputType(MlflowModelValue);
-        /// <summary>
-        /// triton_model
-        /// Serialized Name: JobOutputType.triton_model
-        /// </summary>
+        /// <summary> triton_model. </summary>
         public static JobOutputType TritonModel { get; } = new JobOutputType(TritonModelValue);
         /// <summary> Determines if two <see cref="JobOutputType"/> values are the same. </summary>
         public static bool operator ==(JobOutputType left, JobOutputType right) => left.Equals(right);

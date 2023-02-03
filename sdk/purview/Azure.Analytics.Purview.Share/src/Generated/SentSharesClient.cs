@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -181,24 +178,9 @@ namespace Azure.Analytics.Purview.Share
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentSharesAsync(String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSentSharesAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
-            return GetSentSharesImplementationAsync("SentSharesClient.GetSentShares", skipToken, filter, orderby, context);
-        }
-
-        private AsyncPageable<BinaryData> GetSentSharesImplementationAsync(string diagnosticsScopeName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentSharesRequest(skipToken, filter, orderby, context)
-                        : CreateGetSentSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentSharesRequest(skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetSentShares", "value", "nextLink", context);
         }
 
         /// <summary> Get list of sent shares in the given Purview account. </summary>
@@ -211,24 +193,9 @@ namespace Azure.Analytics.Purview.Share
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShares(String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSentShares(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
-            return GetSentSharesImplementation("SentSharesClient.GetSentShares", skipToken, filter, orderby, context);
-        }
-
-        private Pageable<BinaryData> GetSentSharesImplementation(string diagnosticsScopeName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentSharesRequest(skipToken, filter, orderby, context)
-                        : CreateGetSentSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentSharesRequest(skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetSentShares", "value", "nextLink", context);
         }
 
         /// <summary> Deletes a sent share. </summary>

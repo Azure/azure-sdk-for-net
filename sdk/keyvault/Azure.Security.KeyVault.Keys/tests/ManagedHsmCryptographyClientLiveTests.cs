@@ -196,47 +196,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(plaintext, decrypted.Key);
         }
 
-        [RecordedTest]
-        public async Task EdDSASignVerifyRoundTrip()
-        {
-            SignatureAlgorithm algorithm = SignatureAlgorithm.EdDsa;
-
-            KeyVaultKey key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key.Name);
-
-            CryptographyClient cryptoClient = GetCryptoClient(key.Id);
-
-            byte[] data = new byte[32];
-            Recording.Random.NextBytes(data);
-
-            using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
-            byte[] digest = hashAlgo.ComputeHash(data);
-
-            SignResult signResult = await cryptoClient.SignAsync(algorithm, digest);
-            SignResult signDataResult = await cryptoClient.SignDataAsync(algorithm, data);
-
-            Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(algorithm, signDataResult.Algorithm);
-
-            Assert.AreEqual(key.Id, signResult.KeyId);
-            Assert.AreEqual(key.Id, signDataResult.KeyId);
-
-            Assert.NotNull(signResult.Signature);
-            Assert.NotNull(signDataResult.Signature);
-
-            VerifyResult verifyResult = await cryptoClient.VerifyAsync(algorithm, digest, signDataResult.Signature);
-            VerifyResult verifyDataResult = await cryptoClient.VerifyDataAsync(algorithm, data, signResult.Signature);
-
-            Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(algorithm, verifyDataResult.Algorithm);
-
-            Assert.AreEqual(key.Id, verifyResult.KeyId);
-            Assert.AreEqual(key.Id, verifyDataResult.KeyId);
-
-            Assert.True(verifyResult.IsValid);
-            Assert.True(verifyResult.IsValid);
-        }
-
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();

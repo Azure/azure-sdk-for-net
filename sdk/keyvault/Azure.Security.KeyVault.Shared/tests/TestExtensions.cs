@@ -56,24 +56,5 @@ namespace Azure.Security.KeyVault.Tests
             stream.Seek(0, SeekOrigin.Begin);
             return stream;
         }
-
-        public static MockResponse WithContent(this MockResponse response, string content)
-        {
-            response.SetContent(content);
-            return response;
-        }
-
-        public static MockResponse WithHeader(this MockResponse response, string name, string value)
-        {
-            response.AddHeader(new HttpHeader(name, value));
-            return response;
-        }
-
-        public static MockResponse WithJson(this MockResponse response, string json)
-        {
-            response.AddHeader(HttpHeader.Common.JsonContentType);
-            response.SetContent(json);
-            return response;
-        }
     }
 }

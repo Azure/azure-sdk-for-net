@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to cancel a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel
-        /// Operation Id: Subscription_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(CancellationToken cancellationToken = default)
@@ -67,8 +75,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to cancel a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel
-        /// Operation Id: Subscription_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CanceledSubscriptionId> CancelSubscription(CancellationToken cancellationToken = default)
@@ -89,8 +105,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to rename a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename
-        /// Operation Id: Subscription_Rename
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Rename</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> Subscription Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +136,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to rename a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename
-        /// Operation Id: Subscription_Rename
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Rename</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> Subscription Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,8 +167,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to enable a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable
-        /// Operation Id: Subscription_Enable
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Enable</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(CancellationToken cancellationToken = default)
@@ -157,8 +197,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to enable a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable
-        /// Operation Id: Subscription_Enable
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Enable</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EnabledSubscriptionId> EnableSubscription(CancellationToken cancellationToken = default)

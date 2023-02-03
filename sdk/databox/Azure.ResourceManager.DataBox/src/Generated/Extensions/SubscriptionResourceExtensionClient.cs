@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -50,94 +49,62 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// Lists all the jobs available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs
-        /// Operation Id: Jobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
-                scope.Start();
-                try
-                {
-                    var response = await DataBoxJobJobsRestClient.ListAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
-                scope.Start();
-                try
-                {
-                    var response = await DataBoxJobJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the jobs available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs
-        /// Operation Id: Jobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxJobResource> GetDataBoxJobs(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<DataBoxJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
-                scope.Start();
-                try
-                {
-                    var response = DataBoxJobJobsRestClient.List(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
-                scope.Start();
-                try
-                {
-                    var response = DataBoxJobJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress
-        /// Operation Id: Service_ValidateAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Shipping address of the customer. </param>
@@ -160,8 +127,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress
-        /// Operation Id: Service_ValidateAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Shipping address of the customer. </param>
@@ -184,8 +159,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
@@ -208,8 +191,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
@@ -232,8 +223,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Subscription level.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfiguration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region. </param>
@@ -256,8 +255,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Subscription level.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfiguration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region. </param>

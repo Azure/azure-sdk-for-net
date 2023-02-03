@@ -127,7 +127,7 @@ To troubleshoot:
 
 - Verify that the connection string or fully qualified domain name specified when creating the client is correct. For information on how to acquire a connection string, see: [Get a Service Bus connection string][GetConnectionString].
 
-- Check the firewall and port permissions in your hosting environment and that the AMQP ports 5671 and 5762 are open and that the endpoint is allowed through the firewall.
+- Check the firewall and port permissions in your hosting environment and that the AMQP ports 5671 and 5672 are open and that the endpoint is allowed through the firewall.
 
 - Try using the Web Socket transport option, which connects using port 443. For details, see: [configure the transport][TransportSample].
 

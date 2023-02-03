@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The current deployment state of schedule.
-    /// Serialized Name: ScheduleProvisioningState
-    /// </summary>
+    /// <summary> The current deployment state of schedule. </summary>
     public readonly partial struct MachineLearningScheduleProvisioningState : IEquatable<MachineLearningScheduleProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ProvisioningValue = "Provisioning";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Completed
-        /// Serialized Name: ScheduleProvisioningState.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static MachineLearningScheduleProvisioningState Completed { get; } = new MachineLearningScheduleProvisioningState(CompletedValue);
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: ScheduleProvisioningState.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static MachineLearningScheduleProvisioningState Provisioning { get; } = new MachineLearningScheduleProvisioningState(ProvisioningValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ScheduleProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static MachineLearningScheduleProvisioningState Failed { get; } = new MachineLearningScheduleProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="MachineLearningScheduleProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningScheduleProvisioningState left, MachineLearningScheduleProvisioningState right) => left.Equals(right);

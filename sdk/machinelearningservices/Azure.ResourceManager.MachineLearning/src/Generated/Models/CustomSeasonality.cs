@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The CustomSeasonality.
-    /// Serialized Name: CustomSeasonality
-    /// </summary>
+    /// <summary> The CustomSeasonality. </summary>
     public partial class CustomSeasonality : ForecastingSeasonality
     {
         /// <summary> Initializes a new instance of CustomSeasonality. </summary>
-        /// <param name="value">
-        /// [Required] Seasonality value.
-        /// Serialized Name: CustomSeasonality.value
-        /// </param>
+        /// <param name="value"> [Required] Seasonality value. </param>
         public CustomSeasonality(int value)
         {
             Value = value;
@@ -25,24 +19,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CustomSeasonality. </summary>
-        /// <param name="mode">
-        /// [Required] Seasonality mode.
-        /// Serialized Name: Seasonality.mode
-        /// </param>
-        /// <param name="value">
-        /// [Required] Seasonality value.
-        /// Serialized Name: CustomSeasonality.value
-        /// </param>
+        /// <param name="mode"> [Required] Seasonality mode. </param>
+        /// <param name="value"> [Required] Seasonality value. </param>
         internal CustomSeasonality(SeasonalityMode mode, int value) : base(mode)
         {
             Value = value;
             Mode = mode;
         }
 
-        /// <summary>
-        /// [Required] Seasonality value.
-        /// Serialized Name: CustomSeasonality.value
-        /// </summary>
+        /// <summary> [Required] Seasonality value. </summary>
         public int Value { get; set; }
     }
 }

@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: VirtualClusters_UpdateDnsServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceUpdateDnsServersOperationData>> UpdateDnsServersAsync(CancellationToken cancellationToken = default) =>
             await (await UpdateDnsServersAsync(WaitUntil.Started, cancellationToken).ConfigureAwait(false)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         /// <summary>
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: VirtualClusters_UpdateDnsServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceUpdateDnsServersOperationData> UpdateDnsServers(CancellationToken cancellationToken = default) =>
             UpdateDnsServers(WaitUntil.Started, cancellationToken).WaitForCompletion(cancellationToken);
     }

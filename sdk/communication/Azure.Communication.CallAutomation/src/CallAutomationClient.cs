@@ -20,10 +20,11 @@ namespace Azure.Communication.CallAutomation
         internal readonly ClientDiagnostics _clientDiagnostics;
         internal readonly HttpPipeline _pipeline;
 
-        internal CallConnectionsRestClient CallConnectionsRestClient { get; }
-        internal ServerCallingRestClient ServerCallingRestClient { get; }
-        internal ContentRestClient ContentRestClient { get; }
-        internal ServerCallsRestClient ServerCallsRestClient { get; }
+        internal CallConnectionRestClient CallConnectionRestClient { get; }
+        internal AzureCommunicationServicesRestClient AzureCommunicationServicesRestClient { get; }
+        internal CallMediaRestClient CallMediaRestClient { get; }
+        internal CallRecordingRestClient CallRecordingRestClient { get; }
+        internal EventProcessor EventProcessor { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -80,10 +81,11 @@ namespace Azure.Communication.CallAutomation
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint.AbsoluteUri;
             _clientDiagnostics = new ClientDiagnostics(options);
-            ServerCallingRestClient = new ServerCallingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            ContentRestClient = new ContentRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            EventProcessor = new EventProcessor(options.EventProcessorOptions);
         }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
@@ -100,9 +102,9 @@ namespace Azure.Communication.CallAutomation
             _pipeline = null;
             _resourceEndpoint = null;
             _clientDiagnostics = null;
-            CallConnectionsRestClient = null;
-            ServerCallingRestClient = null;
-            ContentRestClient = null;
+            CallConnectionRestClient = null;
+            AzureCommunicationServicesRestClient = null;
+            CallMediaRestClient = null;
         }
 
         /// Answer an incoming call.
@@ -140,13 +142,16 @@ namespace Azure.Communication.CallAutomation
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                var answerResponse = await ServerCallingRestClient.AnswerCallAsync(request,
+                var answerResponse = await AzureCommunicationServicesRestClient.AnswerCallAsync(request,
                         options.RepeatabilityHeaders?.RepeatabilityRequestId,
                         options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                         cancellationToken)
                     .ConfigureAwait(false);
 
-                return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
+                var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
+                result.SetEventProcessor(EventProcessor, answerResponse.Value.CallConnectionId, null);
+
+                return Response.FromValue(result,
                     answerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -191,12 +196,15 @@ namespace Azure.Communication.CallAutomation
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                var answerResponse = ServerCallingRestClient.AnswerCall(request,
+                var answerResponse = AzureCommunicationServicesRestClient.AnswerCall(request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken);
 
-                return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
+                var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
+                result.SetEventProcessor(EventProcessor, answerResponse.Value.CallConnectionId, null);
+
+                return Response.FromValue(result,
                     answerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -261,7 +269,7 @@ namespace Azure.Communication.CallAutomation
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                return await ServerCallingRestClient.RedirectCallAsync(
+                return await AzureCommunicationServicesRestClient.RedirectCallAsync(
                     request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
@@ -307,7 +315,7 @@ namespace Azure.Communication.CallAutomation
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                return ServerCallingRestClient.RedirectCall(
+                return AzureCommunicationServicesRestClient.RedirectCall(
                     request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
@@ -351,7 +359,7 @@ namespace Azure.Communication.CallAutomation
                 request.CallRejectReason = options.CallRejectReason.ToString();
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                return await ServerCallingRestClient.RejectCallAsync(
+                return await AzureCommunicationServicesRestClient.RejectCallAsync(
                     request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
@@ -396,7 +404,7 @@ namespace Azure.Communication.CallAutomation
                 request.CallRejectReason = options.CallRejectReason.ToString();
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                return ServerCallingRestClient.RejectCall(
+                return AzureCommunicationServicesRestClient.RejectCall(
                     request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
@@ -432,14 +440,19 @@ namespace Azure.Communication.CallAutomation
                 CreateCallRequestInternal request = CreateCallRequest(options);
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                var createCallResponse = await ServerCallingRestClient.CreateCallAsync(
+                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
                     request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
 
-                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                var result = new CreateCallResult(
+                    GetCallConnection(createCallResponse.Value.CallConnectionId),
+                    new CallConnectionProperties(createCallResponse.Value));
+                result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result,
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -471,14 +484,19 @@ namespace Azure.Communication.CallAutomation
                 CreateCallRequestInternal request = CreateCallRequest(options);
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                var createCallResponse = ServerCallingRestClient.CreateCall(
+                var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
                     request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     );
 
-                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                var result = new CreateCallResult(
+                    GetCallConnection(createCallResponse.Value.CallConnectionId),
+                    new CallConnectionProperties(createCallResponse.Value));
+                result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result,
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -556,7 +574,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient,_clientDiagnostics);
+                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor);
             }
             catch (Exception ex)
             {
@@ -572,7 +590,23 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallRecording(_resourceEndpoint, ServerCallsRestClient, ContentRestClient, _clientDiagnostics, _pipeline);
+                return new CallRecording(_resourceEndpoint, CallRecordingRestClient, _clientDiagnostics, _pipeline);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Get CallAtumation's EventProcessor for handling Call Automation's event more easily.</summary>
+        public virtual EventProcessor GetEventProcessor()
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetEventProcessor)}");
+            scope.Start();
+            try
+            {
+                return EventProcessor;
             }
             catch (Exception ex)
             {

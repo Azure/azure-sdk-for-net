@@ -34,10 +34,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="endpoint"> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Required to specify MSI, if using system assigned managed identity as authentication method. Type: string (or Expression with resultType string). </param>
-        internal AzureSynapseArtifactsLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object authentication) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="workspaceResourceId"> The resource ID of the Synapse workspace. The format should be: /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}. Type: string (or Expression with resultType string). </param>
+        internal AzureSynapseArtifactsLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object authentication, object workspaceResourceId) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             Authentication = authentication;
+            WorkspaceResourceId = workspaceResourceId;
             Type = type ?? "AzureSynapseArtifacts";
         }
 
@@ -45,5 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Endpoint { get; set; }
         /// <summary> Required to specify MSI, if using system assigned managed identity as authentication method. Type: string (or Expression with resultType string). </summary>
         public object Authentication { get; set; }
+        /// <summary> The resource ID of the Synapse workspace. The format should be: /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}. Type: string (or Expression with resultType string). </summary>
+        public object WorkspaceResourceId { get; set; }
     }
 }

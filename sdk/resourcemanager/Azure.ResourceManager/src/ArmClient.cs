@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -27,8 +28,7 @@ namespace Azure.ResourceManager
         private bool? _canUseTagResource;
 
         internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
-
-        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
         internal ConcurrentDictionary<string, string> NamespaceVersionCache { get; } = new ConcurrentDictionary<string, string>();
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager
                 ApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
                 if (!ResourceApiVersionCache.TryGetValue(keyValuePair.Key.Namespace, out var apiVersionCache))
                 {
-                    apiVersionCache = new Dictionary<string, string>();
+                    apiVersionCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                     ResourceApiVersionCache.TryAdd(keyValuePair.Key.Namespace, apiVersionCache);
                 }
                 apiVersionCache.Add(keyValuePair.Key.Type, keyValuePair.Value);

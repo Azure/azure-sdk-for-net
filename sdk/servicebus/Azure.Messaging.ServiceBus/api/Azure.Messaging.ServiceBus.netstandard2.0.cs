@@ -277,7 +277,7 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         public void UpdateConcurrency(int maxConcurrentCalls) { }
-        public void UpdatePrefetch(int prefetchCount) { }
+        public void UpdatePrefetchCount(int prefetchCount) { }
     }
     public partial class ServiceBusProcessorOptions
     {
@@ -501,7 +501,7 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession) { }
-        public void UpdatePrefetch(int prefetchCount) { }
+        public void UpdatePrefetchCount(int prefetchCount) { }
     }
     public partial class ServiceBusSessionProcessorOptions
     {
@@ -1005,6 +1005,14 @@ namespace Azure.Messaging.ServiceBus.Administration
         public static bool operator ==(Azure.Messaging.ServiceBus.Administration.TrueRuleFilter left, Azure.Messaging.ServiceBus.Administration.TrueRuleFilter right) { throw null; }
         public static bool operator !=(Azure.Messaging.ServiceBus.Administration.TrueRuleFilter left, Azure.Messaging.ServiceBus.Administration.TrueRuleFilter right) { throw null; }
         public override string ToString() { throw null; }
+    }
+}
+namespace Azure.Messaging.ServiceBus.Primitives
+{
+    public static partial class ServiceBusAmqpExtensions
+    {
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage FromAmqpBytes(System.BinaryData messageBytes, System.BinaryData lockTokenBytes) { throw null; }
+        public static System.BinaryData ToAmqpBytes(this Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

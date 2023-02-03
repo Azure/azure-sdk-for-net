@@ -419,6 +419,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>The <see cref="ServiceBusReceivedMessage" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
+        /// <seealso href="https://aka.ms/azsdk/servicebus/message-browsing">Service Bus message browsing</seealso>
         public virtual async Task<ServiceBusReceivedMessage> PeekMessageAsync(
             long? fromSequenceNumber = default,
             CancellationToken cancellationToken = default)
@@ -451,6 +452,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>An <see cref="IReadOnlyList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
+        /// <seealso href="https://aka.ms/azsdk/servicebus/message-browsing">Service Bus message browsing</seealso>
         public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
             int maxMessages,
             long? fromSequenceNumber = default,

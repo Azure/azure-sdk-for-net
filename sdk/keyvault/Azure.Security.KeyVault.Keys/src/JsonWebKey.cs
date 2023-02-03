@@ -219,7 +219,7 @@ namespace Azure.Security.KeyVault.Keys
         public KeyCurveName? CurveName { get; set; }
 
         /// <summary>
-        /// Gets the X coordinate of the elliptic curve point, or the OKP public key.
+        /// Gets the X coordinate of the elliptic curve point.
         /// </summary>
         public byte[] X { get; set; }
 
@@ -233,7 +233,7 @@ namespace Azure.Security.KeyVault.Keys
         #region EC and RSA Private Key Parameters
 
         /// <summary>
-        /// Gets the RSA private exponent, EC private key, or OKP private key.
+        /// Gets the RSA private exponent or EC private key.
         /// </summary>
         public byte[] D { get; set; }
 
@@ -257,7 +257,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             get
             {
-                if (KeyType == KeyType.Rsa || KeyType == KeyType.Ec || KeyType == KeyType.Okp || KeyType == KeyType.RsaHsm || KeyType == KeyType.EcHsm || KeyType == KeyType.OkpHsm)
+                if (KeyType == KeyType.Rsa || KeyType == KeyType.Ec || KeyType == KeyType.RsaHsm || KeyType == KeyType.EcHsm)
                 {
                     return D != null;
                 }

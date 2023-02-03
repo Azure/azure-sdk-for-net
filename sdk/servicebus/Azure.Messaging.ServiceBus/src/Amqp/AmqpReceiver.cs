@@ -385,7 +385,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
 
-                    receivedMessages.Add(_messageConverter.AmqpMessageToSBMessage(message));
+                    receivedMessages.Add(_messageConverter.AmqpMessageToSBReceivedMessage(message));
                     message.Dispose();
                 }
 
@@ -1001,7 +1001,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                    message = _messageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                    message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage, true);
                     messages.Add(message);
                 }
 
@@ -1311,7 +1311,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage =
                             AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        var message = _messageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.LockTokenGuid = lockToken;
@@ -1358,13 +1358,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
-                // This should be updated when the AMQP library adds deterministic support for draining via an async method to remove the
-                // somewhat arbitrary delay and to also work for prefetch.
 
-                if (!_isSessionReceiver && !link.Settings.AutoSendFlow && link.LinkCredit > 0)
+                if (!_isSessionReceiver && link.LinkCredit > 0)
                 {
-                    link.IssueCredit(link.LinkCredit, true, AmqpConstants.NullBinary);
-                    await Task.Delay(200, cancellationToken).ConfigureAwait(false);
+                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
                 }
 
                 await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);

@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk6955.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-e540a882c3753d6f05eda41371089cef-56697acbcbe2c644-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230201.1 (.NET 7.0.2; Microsoft Windows 10.0.25281)",
+        "x-ms-client-request-id": "b95fd63d0797a15391a3abecadb95329",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+            "Hello world",
+            "running over the same old ground"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "d4e00e18-6994-4e2b-bad5-7c2b4d6ac773",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "411",
+        "Content-Type": "application/json",
+        "Date": "Wed, 01 Feb 2023 20:50:38 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "400.0167",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b95fd63d0797a15391a3abecadb95329",
+        "x-ms-region": "East US",
+        "X-Request-ID": "ca4e743c-74cb-457a-af59-e11b428d0519"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6fELuXl5b4XapFwcQjpS0BI9Tbrth",
+        "object": "text_completion",
+        "created": 1675284638,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "!\n\nthis is a test",
+            "index": 0,
+            "finish_reason": "stop",
+            "logprobs": null
+          },
+          {
+            "text": " this time did not make it any easier. To his own surprise, he found",
+            "index": 1,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 23,
+          "prompt_tokens": 8,
+          "total_tokens": 31
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
+    "OPENAI_ENDPOINT": "https://sdk6955.openai.azure.com/",
+    "RandomSeed": "431206662",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

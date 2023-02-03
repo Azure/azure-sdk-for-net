@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedDatabaseStartMoveDefinition. </summary>
         /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destinationManagedDatabaseId"/> is null. </exception>
-        public ManagedDatabaseStartMoveDefinition(string destinationManagedDatabaseId)
+        public ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId)
         {
             Argument.AssertNotNull(destinationManagedDatabaseId, nameof(destinationManagedDatabaseId));
 
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The destination managed database ID. </summary>
-        public string DestinationManagedDatabaseId { get; }
+        public ResourceIdentifier DestinationManagedDatabaseId { get; }
         /// <summary> The move operation mode. </summary>
-        public MoveOperationMode? OperationMode { get; set; }
+        public ManagedDatabaseMoveOperationMode? OperationMode { get; set; }
     }
 }

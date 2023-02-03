@@ -51,7 +51,6 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultAdministrationClientOptions"/> class.
-        /// class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when

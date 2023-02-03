@@ -1048,7 +1048,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="prefetchCount">The new prefetch count value. This will be reflected in the <see cref="ServiceBusProcessor.PrefetchCount"/>
         /// property.</param>
-        public void UpdatePrefetch(int prefetchCount)
+        public void UpdatePrefetchCount(int prefetchCount)
         {
             lock (_optionsLock)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SynapseLinkWorkspaceListResult DeserializeSynapseLinkWorkspaceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SynapseLinkWorkspace>> value = default;
+            Optional<IReadOnlyList<SqlSynapseLinkWorkspace>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SynapseLinkWorkspace> array = new List<SynapseLinkWorkspace>();
+                    List<SqlSynapseLinkWorkspace> array = new List<SqlSynapseLinkWorkspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseLinkWorkspace.DeserializeSynapseLinkWorkspace(item));
+                        array.Add(SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace(item));
                     }
                     value = array;
                     continue;

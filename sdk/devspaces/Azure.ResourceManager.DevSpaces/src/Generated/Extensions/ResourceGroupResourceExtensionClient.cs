@@ -52,8 +52,16 @@ namespace Azure.ResourceManager.DevSpaces
 
         /// <summary>
         /// Returns container host mapping object for a container host resource ID if an associated controller exists.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/locations/{location}/checkContainerHostMapping
-        /// Operation Id: ContainerHostMappings_GetContainerHostMapping
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/locations/{location}/checkContainerHostMapping</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerHostMappings_GetContainerHostMapping</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the container host. </param>
         /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
@@ -76,8 +84,16 @@ namespace Azure.ResourceManager.DevSpaces
 
         /// <summary>
         /// Returns container host mapping object for a container host resource ID if an associated controller exists.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/locations/{location}/checkContainerHostMapping
-        /// Operation Id: ContainerHostMappings_GetContainerHostMapping
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/locations/{location}/checkContainerHostMapping</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerHostMappings_GetContainerHostMapping</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the container host. </param>
         /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>

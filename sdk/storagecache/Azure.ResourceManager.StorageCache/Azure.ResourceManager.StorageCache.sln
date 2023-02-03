@@ -7,6 +7,8 @@ Project("{55E7DA27-BC5F-406C-B961-74B84F17C09A}") = "Azure.ResourceManager.Stora
 EndProject
 Project("{55E7DA27-BC5F-406C-B961-74B84F17C09A}") = "Azure.ResourceManager.StorageCache.Tests", "tests\Azure.ResourceManager.StorageCache.Tests.csproj", "{CB757061-AA59-45B0-8911-7860E1765D6E}"
 EndProject
+Project("{55E7DA27-BC5F-406C-B961-74B84F17C09A}") = "Azure.ResourceManager.StorageCache.Samples", "samples\Azure.ResourceManager.StorageCache.Samples.csproj", "{A3AAE477-6A8F-4435-BB68-FE3219B1F813}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

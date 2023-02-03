@@ -20,6 +20,11 @@ namespace Azure.Messaging.EventHubs.Primitives
     /// <typeparam name="TPartition">The context of the partition for which an operation is being performed.</typeparam>
     ///
     /// <remarks>
+    ///   To enable coordination for sharing of partitions between <see cref="PluggableCheckpointStoreEventProcessor{TPartition}"/> instances, they will assert exclusive
+    ///   read access to partitions for the consumer group.  No other readers should be active in the consumer group other than processors intending to collaborate.
+    ///   Non-exclusive readers will be denied access; exclusive readers, including processors using a different storage locations, will interfere with the processor's
+    ///   operation and performance.
+    ///
     ///   The <see cref="PluggableCheckpointStoreEventProcessor{TPartition}" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
     ///   processes events regularly or semi-regularly.  The processor holds responsibility for efficient resource management, working to keep resource usage low during
     ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="EventProcessor{TPartition}.StopProcessingAsync" /> or <see cref="EventProcessor{TPartition}.StopProcessing" />
@@ -35,9 +40,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Initializes a new instance of the <see cref="PluggableCheckpointStoreEventProcessor{TPartition}"/> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.</param>
+        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.  Processor instances sharing this storage will attempt to coordinate and share work.</param>
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
@@ -68,9 +73,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Initializes a new instance of the <see cref="PluggableCheckpointStoreEventProcessor{TPartition}"/> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.</param>
+        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.  Processor instances sharing this storage will attempt to coordinate and share work.</param>
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="options">The set of options to use for the processor.</param>
@@ -100,9 +105,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Initializes a new instance of the <see cref="PluggableCheckpointStoreEventProcessor{TPartition}"/> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.</param>
+        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.  Processor instances sharing this storage will attempt to coordinate and share work.</param>
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -126,9 +131,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Initializes a new instance of the <see cref="PluggableCheckpointStoreEventProcessor{TPartition}"/> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.</param>
+        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.  Processor instances sharing this storage will attempt to coordinate and share work.</param>
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The shared signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -152,9 +157,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Initializes a new instance of the <see cref="PluggableCheckpointStoreEventProcessor{TPartition}"/> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.</param>
+        /// <param name="checkpointStore">The provider of checkpoint and ownership data for the processor.  Processor instances sharing this storage will attempt to coordinate and share work.</param>
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
