@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
 using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp.Encoding;
 using NUnit.Framework;
 
@@ -71,6 +72,33 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsInstanceOf(typeof(DateTime), receivedMsg.ApplicationProperties["DateTime"]);
                 Assert.IsInstanceOf(typeof(DateTimeOffset), receivedMsg.ApplicationProperties["DateTimeOffset"]);
                 Assert.IsInstanceOf(typeof(TimeSpan), receivedMsg.ApplicationProperties["TimeSpan"]);
+
+                var bytes = receivedMsg.ToAmqpBytes();
+
+                var copyReceivedMessage = ServiceBusAmqpExtensions.FromAmqpBytes(
+                    bytes,
+                    BinaryData.FromBytes(receivedMsg.LockTokenGuid.ToByteArray()));
+
+                Assert.AreEqual(receivedMsg.LockToken, copyReceivedMessage.LockToken);
+                Assert.IsInstanceOf(typeof(byte), copyReceivedMessage.ApplicationProperties["byte"]);
+                Assert.IsInstanceOf(typeof(sbyte), copyReceivedMessage.ApplicationProperties["sbyte"]);
+                Assert.IsInstanceOf(typeof(char), copyReceivedMessage.ApplicationProperties["char"]);
+                Assert.IsInstanceOf(typeof(short), copyReceivedMessage.ApplicationProperties["short"]);
+                Assert.IsInstanceOf(typeof(ushort), copyReceivedMessage.ApplicationProperties["ushort"]);
+                Assert.IsInstanceOf(typeof(int), copyReceivedMessage.ApplicationProperties["int"]);
+                Assert.IsInstanceOf(typeof(uint), copyReceivedMessage.ApplicationProperties["uint"]);
+                Assert.IsInstanceOf(typeof(long), copyReceivedMessage.ApplicationProperties["long"]);
+                Assert.IsInstanceOf(typeof(ulong), copyReceivedMessage.ApplicationProperties["ulong"]);
+                Assert.IsInstanceOf(typeof(float), copyReceivedMessage.ApplicationProperties["float"]);
+                Assert.IsInstanceOf(typeof(double), copyReceivedMessage.ApplicationProperties["double"]);
+                Assert.IsInstanceOf(typeof(decimal), copyReceivedMessage.ApplicationProperties["decimal"]);
+                Assert.IsInstanceOf(typeof(bool), copyReceivedMessage.ApplicationProperties["bool"]);
+                Assert.IsInstanceOf(typeof(Guid), copyReceivedMessage.ApplicationProperties["Guid"]);
+                Assert.IsInstanceOf(typeof(string), copyReceivedMessage.ApplicationProperties["string"]);
+                Assert.IsInstanceOf(typeof(Uri), copyReceivedMessage.ApplicationProperties["Uri"]);
+                Assert.IsInstanceOf(typeof(DateTime), copyReceivedMessage.ApplicationProperties["DateTime"]);
+                Assert.IsInstanceOf(typeof(DateTimeOffset), copyReceivedMessage.ApplicationProperties["DateTimeOffset"]);
+                Assert.IsInstanceOf(typeof(TimeSpan), copyReceivedMessage.ApplicationProperties["TimeSpan"]);
             }
         }
 
@@ -612,6 +640,63 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 Assert.AreEqual(expiry.ToUnixTimeSeconds(), received.Properties.AbsoluteExpiryTime.Value.ToUnixTimeSeconds());
                 Assert.AreEqual(creation.ToUnixTimeSeconds(), received.Properties.CreationTime.Value.ToUnixTimeSeconds());
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanSerializeDeserializeAmqpBytes(bool useSession)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: useSession))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var msg = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
+                msg.ContentType = "contenttype";
+                msg.CorrelationId = "correlationid";
+                msg.Subject = "label";
+                msg.MessageId = "messageId";
+                msg.PartitionKey = "key";
+                msg.ApplicationProperties.Add("testProp", "my prop");
+                msg.ReplyTo = "replyto";
+
+                msg.ScheduledEnqueueTime = DateTimeOffset.Now;
+                if (useSession)
+                {
+                    msg.SessionId = "key";
+                    msg.ReplyToSessionId = "replytosession";
+                }
+
+                msg.TimeToLive = TimeSpan.FromSeconds(60);
+                msg.To = "to";
+                await sender.SendMessageAsync(msg);
+
+                ServiceBusReceiver receiver;
+                if (useSession)
+                    receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+                else
+                    receiver = client.CreateReceiver(scope.QueueName);
+
+                ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
+
+                var serializedBytes = received.ToAmqpBytes();
+                var deserialized = ServiceBusAmqpExtensions.FromAmqpBytes(
+                    serializedBytes,
+                    BinaryData.FromBytes(received.LockTokenGuid.ToByteArray()));
+                Assert.AreEqual(received.ContentType, deserialized.ContentType);
+                Assert.AreEqual(received.CorrelationId, deserialized.CorrelationId);
+                Assert.AreEqual(received.Subject, deserialized.Subject);
+                Assert.AreEqual(received.MessageId, deserialized.MessageId);
+                Assert.AreEqual(received.PartitionKey, deserialized.PartitionKey);
+                Assert.AreEqual(received.ApplicationProperties["testProp"], deserialized.ApplicationProperties["testProp"]);
+                Assert.AreEqual(received.ReplyTo, deserialized.ReplyTo);
+                Assert.AreEqual(received.ReplyToSessionId, deserialized.ReplyToSessionId);
+                Assert.AreEqual(received.ScheduledEnqueueTime, deserialized.ScheduledEnqueueTime);
+                Assert.AreEqual(received.SessionId, deserialized.SessionId);
+                Assert.AreEqual(received.TimeToLive, deserialized.TimeToLive);
+                Assert.AreEqual(received.To, deserialized.To);
+                Assert.AreEqual(received.LockTokenGuid, deserialized.LockTokenGuid);
             }
         }
 

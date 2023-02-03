@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.PolicyInsights;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Samples

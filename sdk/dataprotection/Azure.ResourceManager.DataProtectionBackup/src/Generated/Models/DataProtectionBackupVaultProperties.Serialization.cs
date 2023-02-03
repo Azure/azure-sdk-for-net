@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<DataProtectionBackupProvisioningState> provisioningState = default;
             Optional<BackupVaultResourceMoveState> resourceMoveState = default;
             Optional<BackupVaultResourceMoveDetails> resourceMoveDetails = default;
-            Optional<SecuritySettings> securitySettings = default;
+            Optional<BackupVaultSecuritySettings> securitySettings = default;
             IList<DataProtectionBackupStorageSetting> storageSettings = default;
             Optional<bool> isVaultProtectedByResourceGuard = default;
             Optional<FeatureSettings> featureSettings = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    securitySettings = SecuritySettings.DeserializeSecuritySettings(property.Value);
+                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageSettings"))

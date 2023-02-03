@@ -190,7 +190,8 @@ namespace Azure.Core.Pipeline
             foreach (HttpHeader responseHeader in response.Headers)
             {
                 string headerValue = sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
-                messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
+                string header = $"{responseHeader.Name}: {headerValue}";
+                messageBuilder.AppendLine(header);
             }
 
             return messageBuilder.ToString();
