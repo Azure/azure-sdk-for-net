@@ -17,18 +17,13 @@ namespace Microsoft.Azure.WebJobs
         public string ConsumerGroup { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
     }
+    public static partial class IAsyncCollectorExtensions
+    {
+        public static System.Threading.Tasks.Task AddAsync(this Microsoft.Azure.WebJobs.IAsyncCollector<Azure.Messaging.EventHubs.EventData> instance, Azure.Messaging.EventHubs.EventData item, string partitionKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
-    public partial class EventHubAsyncCollector : Microsoft.Azure.WebJobs.IAsyncCollector<Azure.Messaging.EventHubs.EventData>, System.IDisposable
-    {
-        protected EventHubAsyncCollector() { }
-        public virtual System.Threading.Tasks.Task AddAsync(Azure.Messaging.EventHubs.EventData item, string partitionKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task AddAsync(Azure.Messaging.EventHubs.EventData item, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        public virtual System.Threading.Tasks.Task FlushAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class EventHubOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
         public EventHubOptions() { }

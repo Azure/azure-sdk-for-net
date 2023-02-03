@@ -516,7 +516,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await collector.FlushAsync();
             }
 
-            public static async Task SendEventsWithKey([EventHub(TestHubName, Connection = TestHubName)] EventHubAsyncCollector collector)
+            public static async Task SendEventsWithKey([EventHub(TestHubName, Connection = TestHubName)] IAsyncCollector<EventData> collector)
             {
                 s_partitionKey = "test-key";
 

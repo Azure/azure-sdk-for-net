@@ -115,7 +115,7 @@ To send multiple events from a single Azure Function invocation you can apply th
 [FunctionName("BindingToCollector")]
 public static async Task Run(
     [TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
-    [EventHub("<event_hub_name>", Connection = "<connection_name>")] EventHubAsyncCollector collector)
+    [EventHub("<event_hub_name>", Connection = "<connection_name>")] IAsyncCollector<EventData> collector)
 {
     // When no partition key is used, partitiions will be assigned via round-robin.
     await collector.AddAsync(new EventData($"Event 1 added at: {DateTime.Now}"));

@@ -15,19 +15,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     /// <summary>
     /// This collector allows events to be published to Event Hubs asynchronously in the background.
     /// </summary>
-    public class EventHubAsyncCollector : IAsyncCollector<EventData>, IDisposable
+    internal sealed class EventHubAsyncCollector : IAsyncCollector<EventData>, IDisposable
     {
         private readonly IEventHubProducerClient _client;
         private readonly SemaphoreSlim _batchSemaphore;
         private readonly Dictionary<string, IEventDataBatch> _batches = new Dictionary<string, IEventDataBatch>();
 
-        private bool _disposed;
-
-        /// <summary>
-        /// Create a sender around the given client.
-        /// </summary>
-        /// <param name="client">The producer to use for publishing events.</param>
-        internal EventHubAsyncCollector(IEventHubProducerClient client)
+        public EventHubAsyncCollector(IEventHubProducerClient client)
         {
             if (client == null)
             {
@@ -39,19 +33,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHubAsyncCollector" /> class.
-        /// </summary>
-        /// <remarks>This constructor is intended to be used for mocking scenarios only.</remarks>
-        protected EventHubAsyncCollector()
-        {
-        }
-
-        /// <summary>
         /// Add an event to be published with round-robin partition assignment.
         /// </summary>
         /// <param name="item">The event to add</param>
         /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
-        public virtual Task AddAsync(EventData item, CancellationToken cancellationToken = default(CancellationToken)) => AddAsync(item, null, cancellationToken);
+        public Task AddAsync(EventData item, CancellationToken cancellationToken = default(CancellationToken)) => AddAsync(item, null, cancellationToken);
 
         /// <summary>
         /// Add an event to be published using the provided <paramref name="partitionKey"/> for partition assignment.
@@ -59,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// <param name="item">The event to add</param>
         /// <param name="partitionKey">The partition key to use for partition assignment.  If <c>null</c>, round-robin partition assignment will be used.</param>
         /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
-        public virtual async Task AddAsync(EventData item, string partitionKey, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task AddAsync(EventData item, string partitionKey, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (item == null)
             {
@@ -115,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// Flushes events collected, publishing them to the Event Hub.
         /// </summary>
         /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
-        public virtual async Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await _batchSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
@@ -139,24 +125,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Disposes the collector, ensuring that its resources
-        /// have been properly cleaned-up.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> if disposing; <c>false</c> if being executed from a finalizer.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
             _batchSemaphore.Dispose();
-            _disposed = true;
+            GC.SuppressFinalize(this);
         }
     }
 }
