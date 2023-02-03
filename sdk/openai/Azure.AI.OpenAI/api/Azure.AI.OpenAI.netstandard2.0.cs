@@ -7,15 +7,13 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
-        public OpenAIClient(System.Uri endpoint, string deploymentId, Azure.Core.TokenCredential credential) { }
-        public OpenAIClient(System.Uri endpoint, string deploymentId, Azure.Core.TokenCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.OpenAI.Models.Completions> GetCompletions(string deploymentId, Azure.AI.OpenAI.Models.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCompletions(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Models.Completions> GetCompletions(string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Models.Completions> GetCompletions(string deploymentId, string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Models.Completions>> GetCompletionsAsync(string deploymentId, Azure.AI.OpenAI.Models.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCompletionsAsync(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Models.Completions>> GetCompletionsAsync(string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Models.Completions>> GetCompletionsAsync(string deploymentId, string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Models.Embeddings> GetEmbeddings(string deploymentId, Azure.AI.OpenAI.Models.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetEmbeddings(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Models.Embeddings>> GetEmbeddingsAsync(string deploymentId, Azure.AI.OpenAI.Models.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -37,7 +35,7 @@ namespace Azure.AI.OpenAI.Models
         internal Choice() { }
         public string FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
-        public Azure.AI.OpenAI.Models.CompletionsLogProbsModel Logprobs { get { throw null; } }
+        public Azure.AI.OpenAI.Models.CompletionsLogProbs Logprobs { get { throw null; } }
         public string Text { get { throw null; } }
     }
     public partial class Completions
@@ -50,9 +48,9 @@ namespace Azure.AI.OpenAI.Models
         public string Object { get { throw null; } }
         public Azure.AI.OpenAI.Models.CompletionsUsage Usage { get { throw null; } }
     }
-    public partial class CompletionsLogProbsModel
+    public partial class CompletionsLogProbs
     {
-        internal CompletionsLogProbsModel() { }
+        internal CompletionsLogProbs() { }
         public System.Collections.Generic.IReadOnlyList<int> TextOffset { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<float> TokenLogprobs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
@@ -103,7 +101,7 @@ namespace Azure.AI.OpenAI.Models
     public partial class EmbeddingsOptions
     {
         public EmbeddingsOptions(string input) { }
-        public string Input { get { throw null; } }
+        public string Input { get { throw null; } set { } }
         public string InputType { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
