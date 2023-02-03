@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.TestFramework;
@@ -55,6 +56,16 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Assert.Ignore();
             }
+        }
+
+        private void IgnoreApiVersionForResourceProviders()
+        {
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/[^/]+/providers/Microsoft.Resources\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
     }
 }
