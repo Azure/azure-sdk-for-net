@@ -5,6 +5,8 @@
 
 using System;
 using Azure.Core;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 
@@ -16,42 +18,49 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     public static class AzureMonitorExporterTraceExtensions
     {
         /// <summary>
-        /// Registers an Azure Monitor trace exporter that will receive <see cref="System.Diagnostics.Activity"/> instances.
+        /// Adds Azure Monitor Trace exporter to the TracerProvider.
         /// </summary>
         /// <param name="builder"><see cref="TracerProviderBuilder"/> builder to use.</param>
-        /// <param name="configure">Exporter configuration options.</param>
+        /// <param name="configure">Callback action for configuring <see cref="AzureMonitorExporterOptions"/>.</param>
         /// <param name="credential"><see cref="TokenCredential" /></param>
+        /// <param name="name">Name which is used when retrieving options.</param>
         /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-        public static TracerProviderBuilder AddAzureMonitorTraceExporter(this TracerProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null, TokenCredential credential = null)
+        public static TracerProviderBuilder AddAzureMonitorTraceExporter(
+            this TracerProviderBuilder builder,
+            Action<AzureMonitorExporterOptions> configure = null,
+            TokenCredential credential = null,
+            string name = null)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            if (builder is IDeferredTracerProviderBuilder deferredTracerProviderBuilder)
+            var finalOptionsName = name ?? Options.DefaultName;
+
+            if (name != null && configure != null)
             {
-                return deferredTracerProviderBuilder.Configure((sp, builder) =>
-                {
-                    AddAzureMonitorTraceExporter(builder, sp.GetOptions<AzureMonitorExporterOptions>(), configure, credential);
-                });
+                // If we are using named options we register the
+                // configuration delegate into options pipeline.
+                builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
             }
 
-            return AddAzureMonitorTraceExporter(builder, new AzureMonitorExporterOptions(), configure, credential);
-        }
+            return builder.AddProcessor(sp =>
+            {
+                var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
 
-        private static TracerProviderBuilder AddAzureMonitorTraceExporter(
-            TracerProviderBuilder builder,
-            AzureMonitorExporterOptions exporterOptions,
-            Action<AzureMonitorExporterOptions> configure,
-            TokenCredential credential)
-        {
-            configure?.Invoke(exporterOptions);
+                if (name == null && configure != null)
+                {
+                    // If we are NOT using named options, we execute the
+                    // configuration delegate inline. The reason for this is
+                    // AzureMonitorExporterOptions is shared by all signals. Without a
+                    // name, delegates for all signals will mix together. See:
+                    // https://github.com/open-telemetry/opentelemetry-dotnet/issues/4043
+                    configure(exporterOptions);
+                }
 
-            // TODO: provide a way to turn off statsbeat
-            // Statsbeat.InitializeAttachStatsbeat(options.ConnectionString);
-
-            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential)));
+                return new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential));
+            });
         }
     }
 }
