@@ -20,6 +20,7 @@ internal static class GuidUtilities
     {
         if (bytes.Length != GuidSizeInBytes)
         {
+            guid = default;
             return false;
         }
 
