@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -17,10 +18,11 @@ namespace Azure.ResourceManager.Subscription.Tests
         protected SubscriptionManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreApiVersionInTagOperations();
         }
 
         protected SubscriptionManagementTestBase(bool isAsync)
-            : base(isAsync)
+            : this(isAsync, default)
         {
         }
 
@@ -36,6 +38,16 @@ namespace Azure.ResourceManager.Subscription.Tests
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        private void IgnoreApiVersionInTagOperations()
+        {
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/[^/]+/tagNames/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
     }
 }
