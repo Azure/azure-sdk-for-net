@@ -21,13 +21,13 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of CorrelationChanges. </summary>
-        /// <param name="changedVariables"></param>
+        /// <param name="changedVariables"> The correlated variables that have correlation changes under an anomaly. </param>
         internal CorrelationChanges(IReadOnlyList<string> changedVariables)
         {
             ChangedVariables = changedVariables.ToList();
         }
 
-        /// <summary> Gets the changed variables. </summary>
+        /// <summary> The correlated variables that have correlation changes under an anomaly. </summary>
         public IReadOnlyList<string> ChangedVariables { get; }
     }
 }

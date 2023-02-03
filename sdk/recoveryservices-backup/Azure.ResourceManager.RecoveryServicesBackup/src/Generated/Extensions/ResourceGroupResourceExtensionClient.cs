@@ -51,6 +51,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private BackupProtectableItemsRestOperations _backupProtectableItemsRestClient;
         private ClientDiagnostics _backupProtectionContainersClientDiagnostics;
         private BackupProtectionContainersRestOperations _backupProtectionContainersRestClient;
+        private ClientDiagnostics _deletedProtectionContainersClientDiagnostics;
+        private DeletedProtectionContainersRestOperations _deletedProtectionContainersRestClient;
         private ClientDiagnostics _securityPINsClientDiagnostics;
         private SecurityPINsRestOperations _securityPINsRestClient;
 
@@ -98,6 +100,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private BackupProtectableItemsRestOperations BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BackupProtectionContainersClientDiagnostics => _backupProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BackupProtectionContainersRestOperations BackupProtectionContainersRestClient => _backupProtectionContainersRestClient ??= new BackupProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DeletedProtectionContainersClientDiagnostics => _deletedProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DeletedProtectionContainersRestOperations DeletedProtectionContainersRestClient => _deletedProtectionContainersRestClient ??= new DeletedProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SecurityPINsClientDiagnostics => _securityPINsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecurityPINsRestOperations SecurityPINsRestClient => _securityPINsRestClient ??= new SecurityPINsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -1147,6 +1151,54 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the soft deleted containers registered to Recovery Services Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupDeletedProtectionContainers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedProtectionContainers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the soft deleted containers registered to Recovery Services Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupDeletedProtectionContainers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedProtectionContainers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

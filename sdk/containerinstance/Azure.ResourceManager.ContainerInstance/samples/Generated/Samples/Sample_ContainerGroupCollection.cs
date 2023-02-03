@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ContainerGroupsListByResourceGroup()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsListByResourceGroup.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsListByResourceGroup.json
             // this example is just showing the usage of "ContainerGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,12 +57,76 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // ContainerGroupsGetWithPriority
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_ContainerGroupsGetWithPriority()
+        {
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGetPriority.json
+            // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "demo";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ContainerGroupResource
+            ContainerGroupCollection collection = resourceGroupResource.GetContainerGroups();
+
+            // invoke the operation
+            string containerGroupName = "demo1";
+            ContainerGroupResource result = await collection.GetAsync(containerGroupName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // ContainerGroupsGetWithPriority
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_ContainerGroupsGetWithPriority()
+        {
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGetPriority.json
+            // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "demo";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ContainerGroupResource
+            ContainerGroupCollection collection = resourceGroupResource.GetContainerGroups();
+
+            // invoke the operation
+            string containerGroupName = "demo1";
+            bool result = await collection.ExistsAsync(containerGroupName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // ContainerGroupsGet_Failed
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ContainerGroupsGetFailed()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsGet_Failed.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGet_Failed.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ContainerGroupsGetFailed()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsGet_Failed.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGet_Failed.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +190,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ContainerGroupsGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsGet_Succeeded.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGet_Succeeded.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +224,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ContainerGroupsGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsGet_Succeeded.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGet_Succeeded.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,12 +249,237 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // ConfidentialContainerGroup
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_ConfidentialContainerGroup()
+        {
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupCreateConfidential.json
+            // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "demo";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ContainerGroupResource
+            ContainerGroupCollection collection = resourceGroupResource.GetContainerGroups();
+
+            // invoke the operation
+            string containerGroupName = "demo1";
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("westeurope"), new ContainerInstanceContainer[]
+            {
+new ContainerInstanceContainer("accdemo","confiimage",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5,1)))
+{
+Command =
+{
+},
+Ports =
+{
+new ContainerPort(8000)
+},
+EnvironmentVariables =
+{
+},
+}
+            }, ContainerInstanceOperatingSystemType.Linux)
+            {
+                ImageRegistryCredentials =
+{
+},
+                IPAddress = new ContainerGroupIPAddress(new ContainerGroupPort[]
+            {
+new ContainerGroupPort(8000)
+{
+Protocol = ContainerGroupNetworkProtocol.Tcp,
+}
+            }, ContainerGroupIPAddressType.Public),
+                Sku = ContainerGroupSku.Confidential,
+                ConfidentialComputeCcePolicy = "eyJhbGxvd19hbGwiOiB0cnVlLCAiY29udGFpbmVycyI6IHsibGVuZ3RoIjogMCwgImVsZW1lbnRzIjogbnVsbH19",
+            };
+            ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
+            ContainerGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // ContainerGroupCreateWithExtensions
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_ContainerGroupCreateWithExtensions()
+        {
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupExtensions.json
+            // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "demo";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ContainerGroupResource
+            ContainerGroupCollection collection = resourceGroupResource.GetContainerGroups();
+
+            // invoke the operation
+            string containerGroupName = "demo1";
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus2"), new ContainerInstanceContainer[]
+            {
+new ContainerInstanceContainer("demo1","nginx",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5,1)))
+{
+Command =
+{
+},
+Ports =
+{
+new ContainerPort(80)
+},
+EnvironmentVariables =
+{
+},
+}
+            }, ContainerInstanceOperatingSystemType.Linux)
+            {
+                ImageRegistryCredentials =
+{
+},
+                IPAddress = new ContainerGroupIPAddress(new ContainerGroupPort[]
+            {
+new ContainerGroupPort(80)
+{
+Protocol = ContainerGroupNetworkProtocol.Tcp,
+}
+            }, ContainerGroupIPAddressType.Private),
+                SubnetIds =
+{
+new ContainerGroupSubnetId(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-rg-vnet/subnets/test-subnet"))
+},
+                Extensions =
+{
+new DeploymentExtensionSpec("kube-proxy")
+{
+ExtensionType = "kube-proxy",
+Version = "1.0",
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+["clusterCidr"] = "10.240.0.0/16",
+["kubeVersion"] = "v1.9.10"}),
+ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+["kubeConfig"] = "<kubeconfig encoded string>"}),
+},new DeploymentExtensionSpec("vk-realtime-metrics")
+{
+ExtensionType = "realtime-metrics",
+Version = "1.0",
+}
+},
+            };
+            ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
+            ContainerGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // ContainerGroupWithEncryptionProperties
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_ContainerGroupWithEncryptionProperties()
+        {
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupEncryptionProperties.json
+            // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "demo";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ContainerGroupResource
+            ContainerGroupCollection collection = resourceGroupResource.GetContainerGroups();
+
+            // invoke the operation
+            string containerGroupName = "demo1";
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus2"), new ContainerInstanceContainer[]
+            {
+new ContainerInstanceContainer("demo1","nginx",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5,1)))
+{
+Command =
+{
+},
+Ports =
+{
+new ContainerPort(80)
+},
+EnvironmentVariables =
+{
+},
+}
+            }, ContainerInstanceOperatingSystemType.Linux)
+            {
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/container-group-identity")] = new UserAssignedIdentity(),
+},
+                },
+                ImageRegistryCredentials =
+{
+},
+                IPAddress = new ContainerGroupIPAddress(new ContainerGroupPort[]
+            {
+new ContainerGroupPort(80)
+{
+Protocol = ContainerGroupNetworkProtocol.Tcp,
+}
+            }, ContainerGroupIPAddressType.Public),
+                EncryptionProperties = new ContainerGroupEncryptionProperties(new Uri("https://testkeyvault.vault.azure.net"), "test-key", "<key version>")
+                {
+                    Identity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/container-group-identity",
+                },
+            };
+            ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
+            ContainerGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // ContainerGroupsCreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ContainerGroupsCreateOrUpdate()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsCreateOrUpdate.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsCreateOrUpdate.json
             // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -262,7 +551,7 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
             }, ContainerGroupIPAddressType.Public)
                 {
                     DnsNameLabel = "dnsnamelabel1",
-                    DnsNameLabelReusePolicy = AutoGeneratedDomainNameLabelScope.Unsecure,
+                    AutoGeneratedDomainNameLabelScope = DnsNameLabelReusePolicy.Unsecure,
                 },
                 Volumes =
 {
@@ -307,6 +596,56 @@ new ContainerGroupSubnetId(new ResourceIdentifier("[resourceId('Microsoft.Networ
                     SearchDomains = "cluster.local svc.cluster.local",
                     Options = "ndots:2",
                 },
+            };
+            ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
+            ContainerGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // ContainerGroupsCreateWithPriority
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_ContainerGroupsCreateWithPriority()
+        {
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsCreatePriority.json
+            // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "demo";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ContainerGroupResource
+            ContainerGroupCollection collection = resourceGroupResource.GetContainerGroups();
+
+            // invoke the operation
+            string containerGroupName = "demo1";
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus"), new ContainerInstanceContainer[]
+            {
+new ContainerInstanceContainer("test-container-001","alpine:latest",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1,1)))
+{
+Command =
+{
+"/bin/sh","-c","sleep 10"
+},
+}
+            }, ContainerInstanceOperatingSystemType.Linux)
+            {
+                RestartPolicy = ContainerGroupRestartPolicy.Never,
+                Sku = ContainerGroupSku.Standard,
+                Priority = ContainerGroupPriority.Spot,
             };
             ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
             ContainerGroupResource result = lro.Value;

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    [CodeGenSuppress("LoadTestAdministrationClient", typeof(string), typeof(TokenCredential))]
-    [CodeGenSuppress("LoadTestAdministrationClient", typeof(string), typeof(TokenCredential), typeof(AzureLoadTestingClientOptions))]
-    [CodeGenSuppress("UploadTestFile", typeof(string), typeof(string), typeof(RequestContent), typeof(int?), typeof(RequestContent))]
-    [CodeGenSuppress("UploadTestFileAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(int?), typeof(RequestContent))]
-    public partial class LoadTestAdministrationClient { }
+    [CodeGenSuppress("GetTestsAsync", typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(int?), typeof(RequestContext))]
+    [CodeGenSuppress("GetTests", typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(int?), typeof(RequestContext))]
+    public partial class LoadTestAdministrationClient
+    {
+    }
 }

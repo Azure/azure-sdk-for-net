@@ -92,6 +92,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyName");
                 writer.WriteStringValue(PolicyName);
             }
+            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            {
+                writer.WritePropertyName("softDeleteRetentionPeriod");
+                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
+            }
             writer.WriteEndObject();
         }
 

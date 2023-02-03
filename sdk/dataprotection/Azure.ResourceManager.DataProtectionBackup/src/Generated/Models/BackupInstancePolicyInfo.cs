@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="policyId"></param>
         /// <param name="policyVersion"></param>
         /// <param name="policyParameters"> Policy parameters for the backup instance. </param>
-        internal BackupInstancePolicyInfo(ResourceIdentifier policyId, string policyVersion, PolicyParameters policyParameters)
+        internal BackupInstancePolicyInfo(ResourceIdentifier policyId, string policyVersion, BackupInstancePolicySettings policyParameters)
         {
             PolicyId = policyId;
             PolicyVersion = policyVersion;
@@ -40,20 +39,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Gets the policy version. </summary>
         public string PolicyVersion { get; }
         /// <summary> Policy parameters for the backup instance. </summary>
-        internal PolicyParameters PolicyParameters { get; set; }
-        /// <summary>
-        /// Gets or sets the DataStore Parameters
-        /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OperationalDataStoreSettings"/>.
-        /// </summary>
-        public IList<DataStoreSettings> DataStoreParametersList
-        {
-            get
-            {
-                if (PolicyParameters is null)
-                    PolicyParameters = new PolicyParameters();
-                return PolicyParameters.DataStoreParametersList;
-            }
-        }
+        public BackupInstancePolicySettings PolicyParameters { get; set; }
     }
 }

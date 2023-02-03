@@ -16,6 +16,17 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            {
+                writer.WritePropertyName("experimentalOptions");
+                writer.WriteStartObject();
+                foreach (var item in ExperimentalOptions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters");
@@ -42,12 +53,28 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element)
         {
+            Optional<IDictionary<string, string>> experimentalOptions = default;
             Optional<FilteringOperations> filters = default;
             IList<MediaCodecBase> codecs = default;
             IList<MediaFormatBase> formats = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("experimentalOptions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    experimentalOptions = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("filters"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -84,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StandardEncoderPreset(odataType, filters.Value, codecs, formats);
+            return new StandardEncoderPreset(odataType, Optional.ToDictionary(experimentalOptions), filters.Value, codecs, formats);
         }
     }
 }

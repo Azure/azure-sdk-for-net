@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AlertsManagement;
+using Azure.ResourceManager.AlertsManagement.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement.Samples
@@ -40,7 +41,8 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
             ServiceAlertCollection collection = subscriptionResource.GetServiceAlerts();
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceAlertResource item in collection.GetAllAsync())
+            ServiceAlertCollectionGetAllOptions options = new ServiceAlertCollectionGetAllOptions() { };
+            await foreach (ServiceAlertResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Media
 namespace: Azure.ResourceManager.Media
-require: https://github.com/Azure/azure-rest-api-specs/blob/aefbcc5fb18a3b33f401394ebeae01df0733c830/specification/mediaservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c91eca4e2081703002581da6f58f9d9332e1afd1/specification/mediaservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -131,6 +131,7 @@ rename-mapping:
   EntropyMode: LayerEntropyMode
   EntityNameAvailabilityCheckOutput: MediaServicesNameAvailabilityResult
   EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
+  Fade: FadeOptions
   Filters: FilteringOperations
   Format: MediaFormatBase
   GetEdgePoliciesContent: EdgePoliciesRequestContent

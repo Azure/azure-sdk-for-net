@@ -91,12 +91,18 @@ if ($relatedCadlProjectFolder) {
       throw "Not provide service name or namespace."
   }
   $projectFolder = (Join-Path $sdkPath "sdk" $service $namespace)
+  $specRoot = $swaggerDir
+  if ((-Not $relatedCadlProjectFolder.Contains("specification")) -And $swaggerDir.Contains("specification"))
+  {
+    $relatedCadlProjectFolder = "specification/$relatedCadlProjectFolder"
+    $specRoot = Split-Path $specRoot
+  }
   New-CADLPackageFolder `
       -service $service `
       -namespace $namespace `
       -sdkPath $sdkPath `
       -relatedCadlProjectFolder $relatedCadlProjectFolder `
-      -specRoot $swaggerDir `
+      -specRoot $specRoot `
       -outputJsonFile $newpackageoutput
   $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
   $relativeSdkPath = $newPackageOutputJson.path

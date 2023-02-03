@@ -101,6 +101,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             {
                 callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
             }
+            //callAutomationClient = new CallAutomationClient(new Uri("https://pma-dev-fmorales.plat-dev.skype.net"), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
 
             return InstrumentClient(callAutomationClient);
         }
