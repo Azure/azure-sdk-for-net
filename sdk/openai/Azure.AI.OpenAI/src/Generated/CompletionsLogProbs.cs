@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Models
+namespace Azure.AI.OpenAI
 {
     /// <summary> LogProbs model within completion choice. </summary>
     public partial class CompletionsLogProbs

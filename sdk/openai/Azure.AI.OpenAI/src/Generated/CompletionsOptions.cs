@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Models
+namespace Azure.AI.OpenAI
 {
     /// <summary> Post body schema to create a prompt completion from a deployment. </summary>
     public partial class CompletionsOptions

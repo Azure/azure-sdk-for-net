@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using Azure.AI.OpenAI.Models;
 using Azure.Core.TestFramework;
 using System.Threading.Tasks;
 
