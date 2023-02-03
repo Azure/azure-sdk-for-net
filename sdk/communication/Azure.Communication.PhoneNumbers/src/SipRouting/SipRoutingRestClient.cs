@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
@@ -15,9 +18,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/sip", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (body != null)
@@ -28,6 +31,56 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 request.Content = content;
             }
             return message;
+        }
+
+        /// <summary> Patches SIP configuration for resource. </summary>
+        /// <param name="body"> Configuration patch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PatchSipConfigurationAsync(SipConfiguration body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchSipConfigurationRequest(body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SipConfiguration value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SipConfiguration.DeserializeSipConfiguration(document.RootElement);
+                        var response = Response.FromValue(value, message.Response);
+                        Response mappedResponse = response.GetRawResponse();
+                        mappedResponse.ContentStream = null;
+
+                        return mappedResponse;
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Patches SIP configuration for resource. </summary>
+        /// <param name="body"> Configuration patch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PatchSipConfiguration(SipConfiguration body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchSipConfigurationRequest(body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SipConfiguration value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SipConfiguration.DeserializeSipConfiguration(document.RootElement);
+                        var response = Response.FromValue(value, message.Response);
+                        Response mappedResponse = response.GetRawResponse();
+                        mappedResponse.ContentStream = null;
+
+                        return mappedResponse;
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
     }
 }

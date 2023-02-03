@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> The location the resource resides in. </summary>
+        public AzureLocation? Location { get; set; }
         /// <summary> The password of the administrator login. </summary>
         public string AdministratorLoginPassword { get; set; }
         /// <summary> PostgreSQL Server version. </summary>
