@@ -11,7 +11,7 @@
 
 ### Other Changes
 
-- Changed API version from 2022-05-01 to 2023-01-01.
+- Upgraded API version to 2023-01-01.
 
 ## 1.0.0 (2022-11-04)
 
