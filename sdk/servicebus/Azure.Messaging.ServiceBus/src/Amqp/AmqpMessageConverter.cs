@@ -549,10 +549,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             AmqpAnnotatedMessage annotatedMessage = AmqpMessageToAnnotatedMessage(amqpMessage, isPeeked);
 
-            ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage)
+            ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage);
+            if (GuidUtilities.TryParseGuidBytes(amqpMessage.DeliveryTag, out Guid lockToken))
             {
                 // lock token
-                LockTokenGuid = GuidUtilities.ParseGuidBytes(amqpMessage.DeliveryTag)
+                sbMessage.LockTokenGuid = lockToken;
             };
 
             amqpMessage.Dispose();

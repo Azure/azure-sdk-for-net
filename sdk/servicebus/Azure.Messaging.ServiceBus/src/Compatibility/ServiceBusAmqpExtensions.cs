@@ -36,7 +36,10 @@ namespace Azure.Messaging.ServiceBus.Primitives
             var amqpMessage = AmqpLib.AmqpMessage.CreateInputMessage(bufferStream);
 
             var message = AmqpMessageConverter.Default.AmqpMessageToSBReceivedMessage(amqpMessage);
-            message.LockTokenGuid = GuidUtilities.ParseGuidBytes(lockTokenBytes);
+            if (GuidUtilities.TryParseGuidBytes(lockTokenBytes, out Guid lockToken))
+            {
+                message.LockTokenGuid = lockToken;
+            }
             return message;
         }
     }
