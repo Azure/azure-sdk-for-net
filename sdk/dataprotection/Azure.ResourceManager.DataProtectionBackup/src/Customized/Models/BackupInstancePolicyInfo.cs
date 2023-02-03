@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             get
             {
                 if (PolicyParameters is null)
-                    PolicyParameters = new PolicyParameters();
+                    PolicyParameters = new BackupInstancePolicySettings();
                 return PolicyParameters.DataStoreParametersList;
             }
         }

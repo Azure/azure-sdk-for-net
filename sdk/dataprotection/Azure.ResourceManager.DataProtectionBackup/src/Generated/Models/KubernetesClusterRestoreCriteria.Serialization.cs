@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("includeClusterScopeResources");
-            writer.WriteBooleanValue(IncludeClusterScopeResources);
+            writer.WriteBooleanValue(IsClusterScopeResourcesIncluded);
             if (Optional.IsCollectionDefined(IncludedNamespaces))
             {
                 writer.WritePropertyName("includedNamespaces");
