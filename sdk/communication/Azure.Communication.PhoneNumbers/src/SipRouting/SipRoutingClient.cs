@@ -172,8 +172,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = _restClient.PatchSipConfiguration(config, cancellationToken);
-                return response.GetRawResponse();
+                return _restClient.PatchSipConfiguration(config, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -197,8 +196,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = await _restClient.PatchSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
-                return response.GetRawResponse();
+                return await _restClient.PatchSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -222,8 +220,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = _restClient.PatchSipConfiguration(removeConfig, cancellationToken);
-                return response.GetRawResponse();
+                return _restClient.PatchSipConfiguration(removeConfig, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -247,8 +244,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = await _restClient.PatchSipConfigurationAsync(removeConfig, cancellationToken).ConfigureAwait(false);
-                return response.GetRawResponse();
+                return await _restClient.PatchSipConfigurationAsync(removeConfig, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -376,8 +372,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     return currentConfig.GetRawResponse();
                 }
 
-                var response = _restClient.PatchSipConfiguration(new SipConfiguration(newTrunks), cancellationToken);
-                return response.GetRawResponse();
+                return _restClient.PatchSipConfiguration(new SipConfiguration(newTrunks), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -417,8 +412,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     return currentConfig.GetRawResponse();
                 }
 
-                var response = await _restClient.PatchSipConfigurationAsync(new SipConfiguration(newTrunks), cancellationToken).ConfigureAwait(false);
-                return response.GetRawResponse();
+                return await _restClient.PatchSipConfigurationAsync(new SipConfiguration(newTrunks), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex) {
                 scope.Failed(ex);
@@ -441,7 +435,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             {
                 var config = new SipConfiguration(routes);
                 var response = _restClient.PatchSipConfiguration(config, cancellationToken);
-                return response.GetRawResponse();
+
+                return response;
             }
             catch (Exception ex)
             {
@@ -464,8 +459,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             try
             {
                 var config = new SipConfiguration(routes);
-                var response = await _restClient.PatchSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
-                return response.GetRawResponse();
+                return await _restClient.PatchSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
