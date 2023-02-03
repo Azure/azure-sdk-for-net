@@ -2,9 +2,9 @@
 
 The following shows examples of how to use the basic functionality of the `SchemaRegistryClient` with each of the available schema format types. All of the client methods can be used with each format by passing in the proper 'SchemaFormat' value when needed.
 
-Each Event Hubs Namespace can only accept one format of schemas.
+Each Event Hubs namespace can only accept one format of schemas.
 
-In the current service version, the Schema Registry service only accepts and validates draft 3 Json schemas. Functionality to support additional drafts of Json will be added.
+In the current service version, the Schema Registry service only accepts and validates draft 3 JSON schemas. Functionality to support additional drafts of JSON will be added.
 
 - [Registering and retrieving Avro, Json, and custom schemas (preview)](#registering-and-retrieving-avro-json-and-custom-schemas-preview)
     - [Register an Avro schema](#register-an-avro-schema)
