@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Models
+namespace Azure.AI.OpenAI
 {
     /// <summary> LogProbs model within completion choice. </summary>
     [CodeGenModel("CompletionsLogProbs")]
