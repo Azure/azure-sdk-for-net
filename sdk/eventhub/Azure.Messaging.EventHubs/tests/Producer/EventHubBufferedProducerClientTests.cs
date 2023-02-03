@@ -5742,7 +5742,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
 
                     while (state.TryReadEvent(out _)) {}
-                    state.BufferedEventCount = 0;
+                    Volatile.Write(ref state.BufferedEventCount, 0);
 
                     if (releaseFlag)
                     {
@@ -5779,7 +5779,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Start publishing and validate that publishing does not complete right away.
 
                 await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
-                await startedCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);;
+                await startedCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
                 await Task.Delay(500);
 
                 Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
@@ -5800,7 +5800,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var partition in validPartitions)
             {
                 var state = mockBufferedProducer.Object.ActivePartitionStateMap[partition];
-                Assert.That(state.BufferedEventCount, Is.EqualTo(0), $"There should be no events in the buffer for partition: [{ partition }].");
+                Assert.That(Volatile.Read(ref state.BufferedEventCount), Is.EqualTo(0), $"There should be no events in the buffer for partition: [{ partition }].");
             }
 
             mockLogger
