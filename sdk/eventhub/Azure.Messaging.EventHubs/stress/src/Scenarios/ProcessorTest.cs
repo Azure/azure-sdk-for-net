@@ -17,16 +17,10 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The test scenario responsible for running all of the roles needed for the Processor test scenario.
 /// <summary/>
 ///
-public class ProcessorTest
+public class ProcessorTest : TestScenario
 {
-    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
-    private readonly TestParameters _testParameters;
-
-    // <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
-    private readonly string _jobIndex;
-
-    /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
-    private Metrics _metrics;
+    /// <summary> The name of this test.</summary>
+    public override string Name { get; } = "ConsumerTest";
 
     /// <summary>The identifier of the <see cref="Processor"/> used by this instance.</summary>
     private string _identifier;
@@ -41,7 +35,7 @@ public class ProcessorTest
     private ConcurrentDictionary<string, int> _lastReadPartitionSequence { get; } = new ConcurrentDictionary<string, int>();
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles = {Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor};
+    private static Role[] _roles { get; } = {Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor};
 
     /// <summary>
     ///  Initializes a new <see cref="ProcessorTest"/> instance.
@@ -53,12 +47,8 @@ public class ProcessorTest
     ///
     public ProcessorTest(TestParameters testParameters,
                          Metrics metrics,
-                         string jobIndex = default)
+                         string jobIndex = default) : base(testParameters, metrics, jobIndex, $"net-processor-{Guid.NewGuid().ToString()}")
     {
-        _testParameters = testParameters;
-        _jobIndex = jobIndex;
-        _metrics = metrics;
-        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-processor-{Guid.NewGuid().ToString()}";
     }
 
     /// <summary>
@@ -67,7 +57,7 @@ public class ProcessorTest
     ///
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunTestAsync(CancellationToken cancellationToken)
+    public async override Task RunTestAsync(CancellationToken cancellationToken)
     {
         var partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
         var partitionCount = partitionIds.Length;
@@ -98,7 +88,7 @@ public class ProcessorTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private Task RunRoleAsync(Role role,
+    internal override Task RunRoleAsync(Role role,
                               int roleIndex,
                               string[] partitionIds,
                               CancellationToken cancellationToken)

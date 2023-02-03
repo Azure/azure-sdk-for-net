@@ -14,19 +14,13 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The test scenario responsible for running all of the roles needed for the Consumer test scenario.
 /// <summary/>
 ///
-public class ConsumerTest
+public class ConsumerTest : TestScenario
 {
-    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
-    private readonly TestParameters _testParameters;
-
-    /// <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
-    private readonly string _jobIndex;
-
-    /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
-    private Metrics _metrics;
+    /// <summary> The name of this test.</summary>
+    public override string Name { get; } = "ConsumerTest";
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles = {Role.PartitionPublisher, Role.Consumer};
+    private static Role[] _roles { get; } = {Role.PartitionPublisher, Role.Consumer};
 
     /// <summary>Holds the set of events that have been read by this instance. The key is the unique Id set by the producer.</summary>
     private ConcurrentDictionary<string, byte> _readEvents { get; } = new ConcurrentDictionary<string, byte>();
@@ -44,39 +38,8 @@ public class ConsumerTest
     ///
     public ConsumerTest(TestParameters testParameters,
                         Metrics metrics,
-                        string jobIndex = default)
+                        string jobIndex = default) : base(testParameters, metrics, jobIndex, $"net-consumer-{Guid.NewGuid().ToString()}")
     {
-        _testParameters = testParameters;
-        _jobIndex = jobIndex;
-        _metrics = metrics;
-        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-consumer-{Guid.NewGuid().ToString()}";
-    }
-
-    /// <summary>
-    ///   Runs all of the roles required for this instance of the Consumer test scenario.
-    /// </summary>
-    ///
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-    ///
-    public async Task RunTestAsync(CancellationToken cancellationToken)
-    {
-        var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
-        var testRunTasks = new List<Task>();
-        var partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
-
-        if (runAllRoles)
-        {
-            foreach (Role role in _roles)
-            {
-                testRunTasks.Add(RunRoleAsync(role, roleIndex, partitionIds, cancellationToken));
-            }
-        }
-        else
-        {
-            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], roleIndex, partitionIds, cancellationToken));
-        }
-
-        await Task.WhenAll(testRunTasks).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -86,7 +49,7 @@ public class ConsumerTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private Task RunRoleAsync(Role role,
+    internal override Task RunRoleAsync(Role role,
                               int roleIndex,
                               string[] partitionIds,
                               CancellationToken cancellationToken)

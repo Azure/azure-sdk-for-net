@@ -59,7 +59,7 @@ public class Program
         // test scenario runs are run in parallel.
 
         var testScenarioTasks = new List<Task>();
-        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenario)) : new TestScenario[]{StringToTestScenario(opts.Test)};
+        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenarioName)) : new TestScenarioName[]{StringToTestScenario(opts.Test)};
 
         var testParameters = new TestParameters();
         testParameters.EventHubsConnectionString = eventHubsConnectionString;
@@ -74,7 +74,7 @@ public class Program
 
         try
         {
-            foreach (TestScenario testScenario in testsToRun)
+            foreach (TestScenarioName testScenario in testsToRun)
             {
                 var testName = testScenario.ToString();
                 metrics.Client.Context.GlobalProperties["TestName"] = testName;
@@ -86,7 +86,7 @@ public class Program
 
                 switch (testScenario)
                 {
-                    case TestScenario.BufferedProducerTest:
+                    case TestScenarioName.BufferedProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
@@ -94,7 +94,7 @@ public class Program
                         testScenarioTasks.Add(bufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.BurstBufferedProducerTest:
+                    case TestScenarioName.BurstBufferedProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
@@ -102,7 +102,7 @@ public class Program
                         testScenarioTasks.Add(burstBufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.EventProducerTest:
+                    case TestScenarioName.EventProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
@@ -110,7 +110,7 @@ public class Program
                         testScenarioTasks.Add(eventProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.ProcessorTest:
+                    case TestScenarioName.ProcessorTest:
                         // Get the Event Hub name for this test
                         environment.TryGetValue(EnvironmentVariables.EventHubProcessorTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
@@ -127,7 +127,7 @@ public class Program
                         testScenarioTasks.Add(processorTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.ConsumerTest:
+                    case TestScenarioName.ConsumerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
@@ -175,20 +175,20 @@ public class Program
     }
 
     /// <summary>
-    ///   Converts a string into a <see cref="TestScenario"/> value.
+    ///   Converts a string into a <see cref="TestScenarioName"/> value.
     /// </summary>
     ///
-    /// <param name="testScenario">The string to convert to a <see cref="TestScenario"/>.</param>
+    /// <param name="testScenario">The string to convert to a <see cref="TestScenarioName"/>.</param>
     ///
-    /// <returns>The <see cref="TestScenario"/> of the string input.</returns>
+    /// <returns>The <see cref="TestScenarioName"/> of the string input.</returns>
     ///
-    public static TestScenario StringToTestScenario(string testScenario) => testScenario switch
+    public static TestScenarioName StringToTestScenario(string testScenario) => testScenario switch
     {
-        "BufferedProducerTest" or "BuffProd" => TestScenario.BufferedProducerTest,
-        "BurstBufferedProducerTest" or "BurstBuffProd" => TestScenario.BurstBufferedProducerTest,
-        "EventProducerTest" or "EventProd" => TestScenario.EventProducerTest,
-        "ProcessorTest" or "Processor" => TestScenario.ProcessorTest,
-        "ConsumerTest" or "Consumer" => TestScenario.ConsumerTest,
+        "BufferedProducerTest" or "BuffProd" => TestScenarioName.BufferedProducerTest,
+        "BurstBufferedProducerTest" or "BurstBuffProd" => TestScenarioName.BurstBufferedProducerTest,
+        "EventProducerTest" or "EventProd" => TestScenarioName.EventProducerTest,
+        "ProcessorTest" or "Processor" => TestScenarioName.ProcessorTest,
+        "ConsumerTest" or "Consumer" => TestScenarioName.ConsumerTest,
         _ => throw new ArgumentNullException(),
     };
 
