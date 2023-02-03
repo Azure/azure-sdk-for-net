@@ -156,5 +156,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             Assert.AreEqual(DateTimeOffset.MaxValue, convertedSbMessage.ExpiresAt);
         }
+
+        [Test]
+        public void CanParseGuidBytes()
+        {
+            var input = Guid.NewGuid();
+
+            Guid output = AmqpMessageConverter.ParseGuidBytes(input.ToByteArray());
+            Assert.AreEqual(input, output);
+        }
+
+        [Test]
+        public void CanWriteGuidBytes()
+        {
+            var input = Guid.NewGuid();
+            var buffer = new byte[16];
+
+            AmqpMessageConverter.WriteGuidBytes(input, buffer);
+            Assert.AreEqual(input.ToByteArray(), buffer);
+        }
     }
 }

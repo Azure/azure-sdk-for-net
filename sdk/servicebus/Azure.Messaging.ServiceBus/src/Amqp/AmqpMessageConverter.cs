@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -564,7 +565,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return sbMessage;
         }
 
-        public virtual Guid ParseGuidBytes(ReadOnlyMemory<byte> bytes)
+        public static Guid ParseGuidBytes(ReadOnlyMemory<byte> bytes)
         {
             if (bytes.Length == GuidSizeInBytes)
             {
@@ -579,6 +580,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             return default;
+        }
+
+        public static void WriteGuidBytes(Guid guid, byte[] buffer)
+        {
+            Debug.Assert(buffer is { Length: 16 });
+            if (!BitConverter.IsLittleEndian || !MemoryMarshal.TryWrite(buffer, ref guid))
+            {
+                guid.ToByteArray().AsSpan().CopyTo(buffer);
+            }
         }
 
         internal static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
