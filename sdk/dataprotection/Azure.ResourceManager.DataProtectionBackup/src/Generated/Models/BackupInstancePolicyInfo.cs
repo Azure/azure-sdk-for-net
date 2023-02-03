@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="policyId"></param>
         /// <param name="policyVersion"></param>
         /// <param name="policyParameters"> Policy parameters for the backup instance. </param>
-        internal BackupInstancePolicyInfo(ResourceIdentifier policyId, string policyVersion, PolicyParameters policyParameters)
+        internal BackupInstancePolicyInfo(ResourceIdentifier policyId, string policyVersion, BackupInstancePolicySettings policyParameters)
         {
             PolicyId = policyId;
             PolicyVersion = policyVersion;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Gets the policy version. </summary>
         public string PolicyVersion { get; }
         /// <summary> Policy parameters for the backup instance. </summary>
-        public PolicyParameters PolicyParameters { get; set; }
+        public BackupInstancePolicySettings PolicyParameters { get; set; }
     }
 }

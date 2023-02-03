@@ -117,12 +117,11 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources'
+    } elseif (!$clusterGroup -or !$subscription) {
+        throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
     }
 
     if ($login) {
-        if (!$clusterGroup -or !$subscription) {
-            throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not pg or prod."
-        }
         Login -subscription $subscription -clusterGroup $clusterGroup -pushImages:$pushImages
     }
 
@@ -160,7 +159,9 @@ function DeployStressTests(
             -environment $environment `
             -repositoryBase $repository `
             -pushImages:$pushImages `
-            -login:$login
+            -login:$login `
+            -clusterGroup $clusterGroup `
+            -subscription $subscription
     }
 
     if ($FailedCommands.Count -lt $pkgs.Count) {
@@ -185,7 +186,9 @@ function DeployStressPackage(
     [string]$environment,
     [string]$repositoryBase,
     [switch]$pushImages,
-    [switch]$login
+    [switch]$login,
+    [string]$clusterGroup,
+    [string]$subscription
 ) {
     $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
     $registryName = ($registry | ConvertFrom-Json).name

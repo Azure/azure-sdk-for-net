@@ -116,7 +116,7 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
-    <PackageReference Update="OpenTelemetry" Version="[1.4.0-rc.2]"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    <PackageReference Update="OpenTelemetry" Version="[1.4.0-rc.3]"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
     <PackageReference Update="OpenTelemetry.Extensions.PersistentStorage" Version="1.0.0-beta.1" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
   </ItemGroup>
 
@@ -134,8 +134,8 @@
     <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.19.2" />
     <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.19.2" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
-    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.33" />
-    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.35" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.35" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
@@ -255,11 +255,11 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.3.1" />
-    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.4.0-rc.2" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.4.0-rc.3" />
     <PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" Version="1.0.0-beta.2" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.4.0-rc.2" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.11" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.11" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.4.0-rc.3" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.12" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.12" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
@@ -287,7 +287,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20221111.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20230201.10</TestProxyVersion>
   </PropertyGroup>
 
 </Project>
