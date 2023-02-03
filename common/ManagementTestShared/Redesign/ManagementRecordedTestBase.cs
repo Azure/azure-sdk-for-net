@@ -73,20 +73,30 @@ namespace Azure.ResourceManager.TestFramework
 
         private void IgnoreArmCoreDependencyVersions()
         {
+            // Ignore the api-version for resource group operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
                 @"/resourcegroups/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
             )
             {
                 GroupForReplace = "group"
             });
+            // Ignore the api-version for LRO query status operation for resource group deletion
             UriRegexSanitizers.Add(new UriRegexSanitizer(
                 @"/subscriptions/[^/]+/operationresults/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
             )
             {
                 GroupForReplace = "group"
             });
+            // Ignore the api-version for TagResource operation
             UriRegexSanitizers.Add(new UriRegexSanitizer(
                 @"/providers/Microsoft.Resources/tags/default\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version for the operation to query resources provider
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/[^/]+/providers/Microsoft.Resources\?api-version=(?<group>[a-z0-9-]+)", "**"
             )
             {
                 GroupForReplace = "group"
