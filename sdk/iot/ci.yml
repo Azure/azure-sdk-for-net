@@ -20,8 +20,9 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: iot
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.IoT.Hub.Service
       safeName: AzureIoTHubService
-      
+
