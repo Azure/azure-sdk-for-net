@@ -30,7 +30,7 @@ public class GuidUtilitiesTests
         var input = Guid.NewGuid();
         var buffer = new byte[16];
 
-        GuidUtilities.WriteGuidBytes(input, buffer);
+        GuidUtilities.WriteGuidToBuffer(input, buffer);
         CollectionAssert.AreEqual(input.ToByteArray(), buffer);
     }
 
@@ -39,6 +39,6 @@ public class GuidUtilitiesTests
     {
         var input = Guid.NewGuid();
         var buffer = new byte[15];
-        Assert.Throws<ArgumentException>(() => GuidUtilities.WriteGuidBytes(input, buffer));
+        Assert.Throws<ArgumentException>(() => GuidUtilities.WriteGuidToBuffer(input, buffer));
     }
 }

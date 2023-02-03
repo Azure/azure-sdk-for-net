@@ -46,7 +46,7 @@ internal static class GuidUtilities
         return new Guid(a, b, c, d, e, f, g, h, i, j, k);
     }
 
-    public static void WriteGuidBytes(Guid guid, byte[] buffer)
+    public static void WriteGuidToBuffer(Guid guid, byte[] buffer)
     {
         if (buffer.Length != GuidSizeInBytes)
         {
