@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach");
                 writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
             }
-            if (Optional.IsDefined(MaxSurge))
+            if (Optional.IsDefined(IsMaxSurgeEnabled))
             {
                 writer.WritePropertyName("maxSurge");
-                writer.WriteBooleanValue(MaxSurge.Value);
+                writer.WriteBooleanValue(IsMaxSurgeEnabled.Value);
             }
             writer.WriteEndObject();
         }

@@ -1949,11 +1949,11 @@ namespace Azure.ResourceManager.Compute
         public VirtualMachineScaleSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy AutomaticRepairsPolicy { get { throw null; } set { } }
-        public bool? ConstrainedMaximumCapacity { get { throw null; } set { } }
         public bool? DoNotRunExtensionsOnOverprovisionedVms { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? IsMaximumCapacityConstrained { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OrchestrationMode? OrchestrationMode { get { throw null; } set { } }
         public bool? Overprovision { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
@@ -4766,8 +4766,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public RollingUpgradePolicy() { }
         public bool? EnableCrossZoneUpgrade { get { throw null; } set { } }
+        public bool? IsMaxSurgeEnabled { get { throw null; } set { } }
         public int? MaxBatchInstancePercent { get { throw null; } set { } }
-        public bool? MaxSurge { get { throw null; } set { } }
         public int? MaxUnhealthyInstancePercent { get { throw null; } set { } }
         public int? MaxUnhealthyUpgradedInstancePercent { get { throw null; } set { } }
         public string PauseTimeBetweenBatches { get { throw null; } set { } }
@@ -5583,8 +5583,8 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? AllowExtensionOperations { get { throw null; } set { } }
         public string ComputerName { get { throw null; } set { } }
         public string CustomData { get { throw null; } set { } }
+        public bool? IsGuestProvisionSignalRequired { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
-        public bool? RequireGuestProvisionSignal { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
     }

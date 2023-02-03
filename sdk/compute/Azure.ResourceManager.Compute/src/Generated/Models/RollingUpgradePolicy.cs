@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. </param>
         /// <param name="prioritizeUnhealthyInstances"> Upgrade all unhealthy instances in a scale set before any healthy instances. </param>
         /// <param name="rollbackFailedInstancesOnPolicyBreach"> Rollback failed instances to previous model if the Rolling Upgrade policy is violated. </param>
-        /// <param name="maxSurge"> Create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines. Existing virtual machines will be deleted once the new virtual machines are created for each batch. </param>
-        internal RollingUpgradePolicy(int? maxBatchInstancePercent, int? maxUnhealthyInstancePercent, int? maxUnhealthyUpgradedInstancePercent, string pauseTimeBetweenBatches, bool? enableCrossZoneUpgrade, bool? prioritizeUnhealthyInstances, bool? rollbackFailedInstancesOnPolicyBreach, bool? maxSurge)
+        /// <param name="isMaxSurgeEnabled"> Create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines. Existing virtual machines will be deleted once the new virtual machines are created for each batch. </param>
+        internal RollingUpgradePolicy(int? maxBatchInstancePercent, int? maxUnhealthyInstancePercent, int? maxUnhealthyUpgradedInstancePercent, string pauseTimeBetweenBatches, bool? enableCrossZoneUpgrade, bool? prioritizeUnhealthyInstances, bool? rollbackFailedInstancesOnPolicyBreach, bool? isMaxSurgeEnabled)
         {
             MaxBatchInstancePercent = maxBatchInstancePercent;
             MaxUnhealthyInstancePercent = maxUnhealthyInstancePercent;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableCrossZoneUpgrade = enableCrossZoneUpgrade;
             PrioritizeUnhealthyInstances = prioritizeUnhealthyInstances;
             RollbackFailedInstancesOnPolicyBreach = rollbackFailedInstancesOnPolicyBreach;
-            MaxSurge = maxSurge;
+            IsMaxSurgeEnabled = isMaxSurgeEnabled;
         }
 
         /// <summary> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The default value for this parameter is 20%. </summary>
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Rollback failed instances to previous model if the Rolling Upgrade policy is violated. </summary>
         public bool? RollbackFailedInstancesOnPolicyBreach { get; set; }
         /// <summary> Create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines. Existing virtual machines will be deleted once the new virtual machines are created for each batch. </summary>
-        public bool? MaxSurge { get; set; }
+        public bool? IsMaxSurgeEnabled { get; set; }
     }
 }

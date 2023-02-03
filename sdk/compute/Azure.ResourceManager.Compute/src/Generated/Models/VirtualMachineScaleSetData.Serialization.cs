@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("priorityMixPolicy");
                 writer.WriteObjectValue(PriorityMixPolicy);
             }
-            if (Optional.IsDefined(ConstrainedMaximumCapacity))
+            if (Optional.IsDefined(IsMaximumCapacityConstrained))
             {
                 writer.WritePropertyName("constrainedMaximumCapacity");
-                writer.WriteBooleanValue(ConstrainedMaximumCapacity.Value);
+                writer.WriteBooleanValue(IsMaximumCapacityConstrained.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -251,6 +251,9 @@ rename-mapping:
   VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
   AlternativeOption: ImageAlternativeOption
   AlternativeType: ImageAlternativeType
+  VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
+  OSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
