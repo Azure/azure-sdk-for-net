@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,7 +11,7 @@ using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Ingestion.Tests.Samples
 {
-    public partial class IngestionSamples: SamplesBase<MonitorIngestionTestEnvironment>
+    public partial class IngestionSamples : SamplesBase<MonitorIngestionTestEnvironment>
     {
         public async Task LogDataAsync()
         {
@@ -94,86 +93,6 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
 
             Console.WriteLine("Table entry count: " +
                 queryResponse.Value.GetResult<int>(countQueryId).Single());
-            #endregion
-        }
-
-        public async Task LogDataIEnumerableEventHandlerAsync()
-        {
-            #region Snippet:LogDataIEnumerableEventHandlerAsync
-            var endpoint = new Uri("<data_collection_endpoint_uri>");
-            var ruleId = "<data_collection_rule_id>";
-            var streamName = "<stream_name>";
-
-#if SNIPPET
-            var credential = new DefaultAzureCredential();
-#else
-            TokenCredential credential = new DefaultAzureCredential();
-            endpoint = new Uri(TestEnvironment.DCREndpoint);
-            credential = TestEnvironment.Credential;
-#endif
-            LogsIngestionClient client = new(endpoint, credential);
-
-            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
-
-            var entries = new List<Object>();
-            for (int i = 0; i < 100; i++)
-            {
-                entries.Add(new Object[] {
-                    new {
-                        Time = currentTime,
-                        Computer = "Computer" + i.ToString(),
-                        AdditionalContext = i
-                    }
-                });
-            }
-            // Set concurrency and EventHandler in UploadLogsOptions
-            UploadLogsOptions options = new UploadLogsOptions();
-            options.MaxConcurrency = 10;
-            options.UploadFailedEventHandler += Options_UploadFailed;
-
-            // Upload our logs
-            Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);
-
-            Task Options_UploadFailed(UploadFailedEventArgs e)
-            {
-                // Throw exception from EventHandler to stop Upload if there is a failure
-                throw e.Exception;
-            }
-            #endregion
-        }
-
-        public async Task LogDataIEnumerableAsync()
-        {
-            #region Snippet:LogDataIEnumerableAsync
-            var endpoint = new Uri("<data_collection_endpoint_uri>");
-            var ruleId = "<data_collection_rule_id>";
-            var streamName = "<stream_name>";
-
-#if SNIPPET
-            var credential = new DefaultAzureCredential();
-#else
-            TokenCredential credential = new DefaultAzureCredential();
-            endpoint = new Uri(TestEnvironment.DCREndpoint);
-            credential = TestEnvironment.Credential;
-#endif
-            LogsIngestionClient client = new(endpoint, credential);
-
-            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
-
-            var entries = new List<Object>();
-            for (int i = 0; i < 100; i++)
-            {
-                entries.Add(new Object[] {
-                    new {
-                        Time = currentTime,
-                        Computer = "Computer" + i.ToString(),
-                        AdditionalContext = i
-                    }
-                });
-            }
-
-            // Upload our logs
-            Response response = await client.UploadAsync(ruleId, streamName, entries).ConfigureAwait(false);
             #endregion
         }
     }
