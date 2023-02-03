@@ -50,10 +50,7 @@ internal static class GuidUtilities
 
     public static void WriteGuidToBuffer(Guid guid, Span<byte> buffer)
     {
-        if (buffer.Length != GuidSizeInBytes)
-        {
-            throw new ArgumentException($"The length of the supplied buffer must be {GuidSizeInBytes}.", nameof(buffer));
-        }
+        AssertBufferSize(buffer);
 
         // Based on https://github.com/dotnet/runtime/blob/9129083c2fc6ef32479168f0555875b54aee4dfb/src/libraries/System.Private.CoreLib/src/System/Guid.cs#L836
 
@@ -78,6 +75,14 @@ internal static class GuidUtilities
         buffer[14] = data.J;
     }
 
+    private static void AssertBufferSize(Span<byte> buffer)
+    {
+        if (buffer.Length != GuidSizeInBytes)
+        {
+            throw new ArgumentException($"The length of the supplied buffer must be {GuidSizeInBytes}.", nameof(buffer));
+        }
+    }
+
     // This struct has the fields layed out to be GUID-like in order to read the GUID fields
     // to efficiently write them into memory without having to deal with endianness
     // Do not rename or reorder the fields.
@@ -88,8 +93,8 @@ internal static class GuidUtilities
         public readonly short C;
         public readonly byte D;
         public readonly byte E;
-        public readonly byte F; 
-        public readonly byte G; 
+        public readonly byte F;
+        public readonly byte G;
         public readonly byte H;
         public readonly byte I;
         public readonly byte J;
