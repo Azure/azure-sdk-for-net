@@ -104,39 +104,6 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxJobStage(stageName, displayName, stageStatus, stageTime, jobStageDetails);
         }
 
-        /// <summary> Initializes a new instance of DataBoxContactDetails. </summary>
-        /// <param name="contactName"> Contact name of the person. </param>
-        /// <param name="phone"> Phone number of the contact person. </param>
-        /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
-        /// <param name="mobile"> Mobile number of the contact person. </param>
-        /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
-        /// <param name="notificationPreference"> Notification preference for a job stage. </param>
-        /// <returns> A new <see cref="Models.DataBoxContactDetails"/> instance for mocking. </returns>
-        public static DataBoxContactDetails DataBoxContactDetails(string contactName = null, string phone = null, string phoneExtension = null, string mobile = null, IEnumerable<string> emailList = null, IEnumerable<NotificationPreference> notificationPreference = null)
-        {
-            emailList ??= new List<string>();
-            notificationPreference ??= new List<NotificationPreference>();
-
-            return new DataBoxContactDetails(contactName, phone, phoneExtension, mobile, emailList?.ToList(), notificationPreference?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DataBoxShippingAddress. </summary>
-        /// <param name="streetAddress1"> Street Address line 1. </param>
-        /// <param name="streetAddress2"> Street Address line 2. </param>
-        /// <param name="streetAddress3"> Street Address line 3. </param>
-        /// <param name="city"> Name of the City. </param>
-        /// <param name="stateOrProvince"> Name of the State or Province. </param>
-        /// <param name="country"> Name of the Country. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <param name="zipExtendedCode"> Extended Zip Code. </param>
-        /// <param name="companyName"> Name of the company. </param>
-        /// <param name="addressType"> Type of address. </param>
-        /// <returns> A new <see cref="Models.DataBoxShippingAddress"/> instance for mocking. </returns>
-        public static DataBoxShippingAddress DataBoxShippingAddress(string streetAddress1 = null, string streetAddress2 = null, string streetAddress3 = null, string city = null, string stateOrProvince = null, string country = null, string postalCode = null, string zipExtendedCode = null, string companyName = null, DataBoxShippingAddressType? addressType = null)
-        {
-            return new DataBoxShippingAddress(streetAddress1, streetAddress2, streetAddress3, city, stateOrProvince, country, postalCode, zipExtendedCode, companyName, addressType);
-        }
-
         /// <summary> Initializes a new instance of PackageShippingDetails. </summary>
         /// <param name="trackingUri"> Url where shipment can be tracked. </param>
         /// <param name="carrierName"> Name of the carrier. </param>
@@ -147,125 +114,6 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PackageShippingDetails(trackingUri, carrierName, trackingId);
         }
 
-        /// <summary> Initializes a new instance of DataImportDetails. </summary>
-        /// <param name="accountDetails">
-        /// Account details of the data to be transferred
-        /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
-        /// </param>
-        /// <param name="logCollectionLevel"> Level of the logs to be collected. </param>
-        /// <returns> A new <see cref="Models.DataImportDetails"/> instance for mocking. </returns>
-        public static DataImportDetails DataImportDetails(DataAccountDetails accountDetails = null, LogCollectionLevel? logCollectionLevel = null)
-        {
-            return new DataImportDetails(accountDetails, logCollectionLevel);
-        }
-
-        /// <summary> Initializes a new instance of DataAccountDetails. </summary>
-        /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
-        /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        /// <returns> A new <see cref="Models.DataAccountDetails"/> instance for mocking. </returns>
-        public static DataAccountDetails DataAccountDetails(string dataAccountType = "Unknown", string sharePassword = null)
-        {
-            return new UnknownDataAccountDetails(dataAccountType, sharePassword);
-        }
-
-        /// <summary> Initializes a new instance of DataExportDetails. </summary>
-        /// <param name="transferConfiguration"> Configuration for the data transfer. </param>
-        /// <param name="logCollectionLevel"> Level of the logs to be collected. </param>
-        /// <param name="accountDetails">
-        /// Account details of the data to be transferred
-        /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.DataExportDetails"/> instance for mocking. </returns>
-        public static DataExportDetails DataExportDetails(TransferConfiguration transferConfiguration = null, LogCollectionLevel? logCollectionLevel = null, DataAccountDetails accountDetails = null)
-        {
-            return new DataExportDetails(transferConfiguration, logCollectionLevel, accountDetails);
-        }
-
-        /// <summary> Initializes a new instance of TransferConfiguration. </summary>
-        /// <param name="transferConfigurationType"> Type of the configuration for transfer. </param>
-        /// <param name="transferFilterDetailsInclude"> Map of filter type and the details to filter. This field is required only if the TransferConfigurationType is given as TransferUsingFilter. </param>
-        /// <param name="transferAllDetailsInclude"> Map of filter type and the details to transfer all data. This field is required only if the TransferConfigurationType is given as TransferAll. </param>
-        /// <returns> A new <see cref="Models.TransferConfiguration"/> instance for mocking. </returns>
-        public static TransferConfiguration TransferConfiguration(TransferConfigurationType transferConfigurationType = default, TransferFilterDetails transferFilterDetailsInclude = null, TransferAllDetails transferAllDetailsInclude = null)
-        {
-            return new TransferConfiguration(transferConfigurationType, transferFilterDetailsInclude != null ? new TransferConfigurationTransferFilterDetails(transferFilterDetailsInclude) : null, transferAllDetailsInclude != null ? new TransferConfigurationTransferAllDetails(transferAllDetailsInclude) : null);
-        }
-
-        /// <summary> Initializes a new instance of TransferFilterDetails. </summary>
-        /// <param name="dataAccountType"> Type of the account of data. </param>
-        /// <param name="blobFilterDetails"> Filter details to transfer blobs. </param>
-        /// <param name="azureFileFilterDetails"> Filter details to transfer Azure files. </param>
-        /// <param name="filterFileDetails"> Details of the filter files to be used for data transfer. </param>
-        /// <returns> A new <see cref="Models.TransferFilterDetails"/> instance for mocking. </returns>
-        public static TransferFilterDetails TransferFilterDetails(DataAccountType dataAccountType = default, BlobFilterDetails blobFilterDetails = null, AzureFileFilterDetails azureFileFilterDetails = null, IEnumerable<FilterFileDetails> filterFileDetails = null)
-        {
-            filterFileDetails ??= new List<FilterFileDetails>();
-
-            return new TransferFilterDetails(dataAccountType, blobFilterDetails, azureFileFilterDetails, filterFileDetails?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of BlobFilterDetails. </summary>
-        /// <param name="blobPrefixList"> Prefix list of the Azure blobs to be transferred. </param>
-        /// <param name="blobPathList"> List of full path of the blobs to be transferred. </param>
-        /// <param name="containerList"> List of blob containers to be transferred. </param>
-        /// <returns> A new <see cref="Models.BlobFilterDetails"/> instance for mocking. </returns>
-        public static BlobFilterDetails BlobFilterDetails(IEnumerable<string> blobPrefixList = null, IEnumerable<string> blobPathList = null, IEnumerable<string> containerList = null)
-        {
-            blobPrefixList ??= new List<string>();
-            blobPathList ??= new List<string>();
-            containerList ??= new List<string>();
-
-            return new BlobFilterDetails(blobPrefixList?.ToList(), blobPathList?.ToList(), containerList?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AzureFileFilterDetails. </summary>
-        /// <param name="filePrefixList"> Prefix list of the Azure files to be transferred. </param>
-        /// <param name="filePathList"> List of full path of the files to be transferred. </param>
-        /// <param name="fileShareList"> List of file shares to be transferred. </param>
-        /// <returns> A new <see cref="Models.AzureFileFilterDetails"/> instance for mocking. </returns>
-        public static AzureFileFilterDetails AzureFileFilterDetails(IEnumerable<string> filePrefixList = null, IEnumerable<string> filePathList = null, IEnumerable<string> fileShareList = null)
-        {
-            filePrefixList ??= new List<string>();
-            filePathList ??= new List<string>();
-            fileShareList ??= new List<string>();
-
-            return new AzureFileFilterDetails(filePrefixList?.ToList(), filePathList?.ToList(), fileShareList?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of TransferAllDetails. </summary>
-        /// <param name="dataAccountType"> Type of the account of data. </param>
-        /// <param name="transferAllBlobs"> To indicate if all Azure blobs have to be transferred. </param>
-        /// <param name="transferAllFiles"> To indicate if all Azure Files have to be transferred. </param>
-        /// <returns> A new <see cref="Models.TransferAllDetails"/> instance for mocking. </returns>
-        public static TransferAllDetails TransferAllDetails(DataAccountType dataAccountType = default, bool? transferAllBlobs = null, bool? transferAllFiles = null)
-        {
-            return new TransferAllDetails(dataAccountType, transferAllBlobs, transferAllFiles);
-        }
-
-        /// <summary> Initializes a new instance of DataBoxOrderPreferences. </summary>
-        /// <param name="preferredDataCenterRegion"> Preferred data center region. </param>
-        /// <param name="transportPreferencesPreferredShipmentType"> Preferences related to the shipment logistics of the sku. </param>
-        /// <param name="doubleEncryption"> Preferences related to the Encryption. </param>
-        /// <param name="storageAccountAccessTierPreferences"> Preferences related to the Access Tier of storage accounts. </param>
-        /// <returns> A new <see cref="Models.DataBoxOrderPreferences"/> instance for mocking. </returns>
-        public static DataBoxOrderPreferences DataBoxOrderPreferences(IEnumerable<string> preferredDataCenterRegion = null, TransportShipmentType? transportPreferencesPreferredShipmentType = null, DataBoxDoubleEncryption? doubleEncryption = null, IEnumerable<string> storageAccountAccessTierPreferences = null)
-        {
-            preferredDataCenterRegion ??= new List<string>();
-            storageAccountAccessTierPreferences ??= new List<string>();
-
-            return new DataBoxOrderPreferences(preferredDataCenterRegion?.ToList(), transportPreferencesPreferredShipmentType.HasValue ? new TransportPreferences(transportPreferencesPreferredShipmentType.Value) : null, doubleEncryption != null ? new DataBoxEncryptionPreferences(doubleEncryption) : null, storageAccountAccessTierPreferences?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CopyLogDetails. </summary>
-        /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        /// <returns> A new <see cref="Models.CopyLogDetails"/> instance for mocking. </returns>
-        public static CopyLogDetails CopyLogDetails(string copyLogDetailsType = "Unknown")
-        {
-            return new UnknownCopyLogDetails(copyLogDetailsType);
-        }
-
         /// <summary> Initializes a new instance of DeviceErasureDetails. </summary>
         /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
         /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
@@ -273,26 +121,6 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DeviceErasureDetails DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus = null, string erasureOrDestructionCertificateSasKey = null)
         {
             return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey);
-        }
-
-        /// <summary> Initializes a new instance of DataBoxKeyEncryptionKey. </summary>
-        /// <param name="kekType"> Type of encryption key used for key encryption. </param>
-        /// <param name="managedIdentity"> Managed identity properties used for key encryption. </param>
-        /// <param name="kekUri"> Key encryption key. It is required in case of Customer managed KekType. </param>
-        /// <param name="kekVaultResourceId"> Kek vault resource id. It is required in case of Customer managed KekType. </param>
-        /// <returns> A new <see cref="Models.DataBoxKeyEncryptionKey"/> instance for mocking. </returns>
-        public static DataBoxKeyEncryptionKey DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType = default, DataBoxManagedIdentity managedIdentity = null, Uri kekUri = null, ResourceIdentifier kekVaultResourceId = null)
-        {
-            return new DataBoxKeyEncryptionKey(kekType, managedIdentity, kekUri, kekVaultResourceId);
-        }
-
-        /// <summary> Initializes a new instance of DataBoxManagedIdentity. </summary>
-        /// <param name="identityType"> Managed service identity type. </param>
-        /// <param name="userAssignedResourceId"> User assigned identity properties. </param>
-        /// <returns> A new <see cref="Models.DataBoxManagedIdentity"/> instance for mocking. </returns>
-        public static DataBoxManagedIdentity DataBoxManagedIdentity(string identityType = null, ResourceIdentifier userAssignedResourceId = null)
-        {
-            return new DataBoxManagedIdentity(identityType, userAssignedResourceId != null ? new DataBoxUserAssignedIdentity(userAssignedResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of LastMitigationActionOnJob. </summary>
@@ -318,25 +146,6 @@ namespace Azure.ResourceManager.DataBox.Models
             supportedCarriersForReturnShipment ??= new List<string>();
 
             return new UnknownDataCenterAddressResponse(dataCenterAddressType, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation);
-        }
-
-        /// <summary> Initializes a new instance of DataBoxSku. </summary>
-        /// <param name="name"> The sku name. </param>
-        /// <param name="displayName"> The display name of the sku. </param>
-        /// <param name="family"> The sku family. </param>
-        /// <returns> A new <see cref="Models.DataBoxSku"/> instance for mocking. </returns>
-        public static DataBoxSku DataBoxSku(DataBoxSkuName name = default, string displayName = null, string family = null)
-        {
-            return new DataBoxSku(name, displayName, family);
-        }
-
-        /// <summary> Initializes a new instance of PackageCarrierInfo. </summary>
-        /// <param name="carrierName"> Name of the carrier. </param>
-        /// <param name="trackingId"> Tracking Id of shipment. </param>
-        /// <returns> A new <see cref="Models.PackageCarrierInfo"/> instance for mocking. </returns>
-        public static PackageCarrierInfo PackageCarrierInfo(string carrierName = null, string trackingId = null)
-        {
-            return new PackageCarrierInfo(carrierName, trackingId);
         }
 
         /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
@@ -434,16 +243,6 @@ namespace Azure.ResourceManager.DataBox.Models
             individualResponseDetails ??= new List<DataBoxValidationInputResult>();
 
             return new DataBoxValidationResult(status, individualResponseDetails?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PackageCarrierDetails. </summary>
-        /// <param name="carrierAccountNumber"> Carrier Account Number of customer for customer disk. </param>
-        /// <param name="carrierName"> Name of the carrier. </param>
-        /// <param name="trackingId"> Tracking Id of shipment. </param>
-        /// <returns> A new <see cref="Models.PackageCarrierDetails"/> instance for mocking. </returns>
-        public static PackageCarrierDetails PackageCarrierDetails(string carrierAccountNumber = null, string carrierName = null, string trackingId = null)
-        {
-            return new PackageCarrierDetails(carrierAccountNumber, carrierName, trackingId);
         }
 
         /// <summary> Initializes a new instance of DataBoxShipmentPickUpResult. </summary>
@@ -1051,16 +850,6 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, error, status);
         }
 
-        /// <summary> Initializes a new instance of ManagedDiskDetails. </summary>
-        /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        /// <param name="resourceGroupId"> Resource Group Id of the compute disks. </param>
-        /// <param name="stagingStorageAccountId"> Resource Id of the storage account that can be used to copy the vhd for staging. </param>
-        /// <returns> A new <see cref="Models.ManagedDiskDetails"/> instance for mocking. </returns>
-        public static ManagedDiskDetails ManagedDiskDetails(string sharePassword = null, ResourceIdentifier resourceGroupId = null, ResourceIdentifier stagingStorageAccountId = null)
-        {
-            return new ManagedDiskDetails(DataAccountType.ManagedDisk, sharePassword, resourceGroupId, stagingStorageAccountId);
-        }
-
         /// <summary> Initializes a new instance of PreferencesValidationResult. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of requested data center and transport. </param>
@@ -1077,15 +866,6 @@ namespace Azure.ResourceManager.DataBox.Models
         public static SkuAvailabilityValidationResult SkuAvailabilityValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
         {
             return new SkuAvailabilityValidationResult(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, error, status);
-        }
-
-        /// <summary> Initializes a new instance of DataBoxStorageAccountDetails. </summary>
-        /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        /// <param name="storageAccountId"> Storage Account Resource Id. </param>
-        /// <returns> A new <see cref="Models.DataBoxStorageAccountDetails"/> instance for mocking. </returns>
-        public static DataBoxStorageAccountDetails DataBoxStorageAccountDetails(string sharePassword = null, ResourceIdentifier storageAccountId = null)
-        {
-            return new DataBoxStorageAccountDetails(DataAccountType.StorageAccount, sharePassword, storageAccountId);
         }
 
         /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationResult. </summary>

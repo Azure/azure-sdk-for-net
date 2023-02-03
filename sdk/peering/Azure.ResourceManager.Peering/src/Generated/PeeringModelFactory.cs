@@ -114,17 +114,6 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringBgpSession(sessionPrefixV4, sessionPrefixV6, microsoftSessionIPv4Address, microsoftSessionIPv6Address, peerSessionIPv4Address, peerSessionIPv6Address, sessionStateV4, sessionStateV6, maxPrefixesAdvertisedV4, maxPrefixesAdvertisedV6, md5AuthenticationKey);
         }
 
-        /// <summary> Initializes a new instance of ExchangePeeringProperties. </summary>
-        /// <param name="connections"> The set of connections that constitute an exchange peering. </param>
-        /// <param name="peerAsnId"> The reference of the peer ASN. </param>
-        /// <returns> A new <see cref="Models.ExchangePeeringProperties"/> instance for mocking. </returns>
-        public static ExchangePeeringProperties ExchangePeeringProperties(IEnumerable<PeeringExchangeConnection> connections = null, ResourceIdentifier peerAsnId = null)
-        {
-            connections ??= new List<PeeringExchangeConnection>();
-
-            return new ExchangePeeringProperties(connections?.ToList(), peerAsnId != null ? ResourceManagerModelFactory.WritableSubResource(peerAsnId) : null);
-        }
-
         /// <summary> Initializes a new instance of PeeringExchangeConnection. </summary>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility at which the connection has to be set up. </param>
         /// <param name="connectionState"> The state of the connection. </param>
@@ -164,16 +153,6 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeerAsnData(id, name, resourceType, systemData, peerAsn, peerContactDetail?.ToList(), peerName, validationState, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of PeerAsnContactDetail. </summary>
-        /// <param name="role"> The role of the contact. </param>
-        /// <param name="email"> The e-mail address of the contact. </param>
-        /// <param name="phone"> The phone number of the contact. </param>
-        /// <returns> A new <see cref="Models.PeerAsnContactDetail"/> instance for mocking. </returns>
-        public static PeerAsnContactDetail PeerAsnContactDetail(PeeringRole? role = null, string email = null, string phone = null)
-        {
-            return new PeerAsnContactDetail(role, email, phone);
-        }
-
         /// <summary> Initializes a new instance of PeeringLocation. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -191,53 +170,6 @@ namespace Azure.ResourceManager.Peering.Models
             exchangePeeringFacilities ??= new List<ExchangePeeringFacility>();
 
             return new PeeringLocation(id, name, resourceType, systemData, kind, direct, exchangePeeringFacilities != null ? new PeeringLocationPropertiesExchange(exchangePeeringFacilities?.ToList()) : null, peeringLocationValue, country, azureRegion);
-        }
-
-        /// <summary> Initializes a new instance of DirectPeeringLocationProperties. </summary>
-        /// <param name="peeringFacilities"> The list of direct peering facilities at the peering location. </param>
-        /// <param name="bandwidthOffers"> The list of bandwidth offers available at the peering location. </param>
-        /// <returns> A new <see cref="Models.DirectPeeringLocationProperties"/> instance for mocking. </returns>
-        public static DirectPeeringLocationProperties DirectPeeringLocationProperties(IEnumerable<DirectPeeringFacility> peeringFacilities = null, IEnumerable<PeeringBandwidthOffer> bandwidthOffers = null)
-        {
-            peeringFacilities ??= new List<DirectPeeringFacility>();
-            bandwidthOffers ??= new List<PeeringBandwidthOffer>();
-
-            return new DirectPeeringLocationProperties(peeringFacilities?.ToList(), bandwidthOffers?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
-        /// <param name="address"> The address of the direct peering facility. </param>
-        /// <param name="directPeeringType"> The type of the direct peering. </param>
-        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
-        /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
-        /// <returns> A new <see cref="Models.DirectPeeringFacility"/> instance for mocking. </returns>
-        public static DirectPeeringFacility DirectPeeringFacility(string address = null, DirectPeeringType? directPeeringType = null, int? peeringDBFacilityId = null, string peeringDBFacilityLink = null)
-        {
-            return new DirectPeeringFacility(address, directPeeringType, peeringDBFacilityId, peeringDBFacilityLink);
-        }
-
-        /// <summary> Initializes a new instance of PeeringBandwidthOffer. </summary>
-        /// <param name="offerName"> The name of the bandwidth offer. </param>
-        /// <param name="valueInMbps"> The value of the bandwidth offer in Mbps. </param>
-        /// <returns> A new <see cref="Models.PeeringBandwidthOffer"/> instance for mocking. </returns>
-        public static PeeringBandwidthOffer PeeringBandwidthOffer(string offerName = null, int? valueInMbps = null)
-        {
-            return new PeeringBandwidthOffer(offerName, valueInMbps);
-        }
-
-        /// <summary> Initializes a new instance of ExchangePeeringFacility. </summary>
-        /// <param name="exchangeName"> The name of the exchange peering facility. </param>
-        /// <param name="bandwidthInMbps"> The bandwidth of the connection between Microsoft and the exchange peering facility. </param>
-        /// <param name="microsoftIPv4Address"> The IPv4 address of Microsoft at the exchange peering facility. </param>
-        /// <param name="microsoftIPv6Address"> The IPv6 address of Microsoft at the exchange peering facility. </param>
-        /// <param name="facilityIPv4Prefix"> The IPv4 prefixes associated with the exchange peering facility. </param>
-        /// <param name="facilityIPv6Prefix"> The IPv6 prefixes associated with the exchange peering facility. </param>
-        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
-        /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
-        /// <returns> A new <see cref="Models.ExchangePeeringFacility"/> instance for mocking. </returns>
-        public static ExchangePeeringFacility ExchangePeeringFacility(string exchangeName = null, int? bandwidthInMbps = null, IPAddress microsoftIPv4Address = null, IPAddress microsoftIPv6Address = null, string facilityIPv4Prefix = null, string facilityIPv6Prefix = null, int? peeringDBFacilityId = null, string peeringDBFacilityLink = null)
-        {
-            return new ExchangePeeringFacility(exchangeName, bandwidthInMbps, microsoftIPv4Address, microsoftIPv6Address, facilityIPv4Prefix, facilityIPv6Prefix, peeringDBFacilityId, peeringDBFacilityLink);
         }
 
         /// <summary> Initializes a new instance of PeeringRegisteredAsnData. </summary>

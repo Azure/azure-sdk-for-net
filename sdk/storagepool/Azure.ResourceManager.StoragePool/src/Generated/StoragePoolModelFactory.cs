@@ -47,15 +47,6 @@ namespace Azure.ResourceManager.StoragePool.Models
             return new DiskPoolData(id, name, resourceType, systemData, tags, location, sku, managedBy, managedByExtended?.ToList(), provisioningState, availabilityZones?.ToList(), status, disks?.ToList(), subnetId, additionalCapabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSku. </summary>
-        /// <param name="name"> Sku name. </param>
-        /// <param name="tier"> Sku tier. </param>
-        /// <returns> A new <see cref="Models.StoragePoolSku"/> instance for mocking. </returns>
-        public static StoragePoolSku StoragePoolSku(string name = null, string tier = null)
-        {
-            return new StoragePoolSku(name, tier);
-        }
-
         /// <summary> Initializes a new instance of DiskPoolZoneInfo. </summary>
         /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>

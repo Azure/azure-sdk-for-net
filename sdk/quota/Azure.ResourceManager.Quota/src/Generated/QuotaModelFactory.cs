@@ -112,14 +112,6 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaProperties(limit, unit, name, resourceType, quotaPeriod, isQuotaApplicable, properties);
         }
 
-        /// <summary> Initializes a new instance of LimitJsonObject. </summary>
-        /// <param name="limitObjectType"> The limit object type. </param>
-        /// <returns> A new <see cref="Models.LimitJsonObject"/> instance for mocking. </returns>
-        public static LimitJsonObject LimitJsonObject(string limitObjectType = "Unknown")
-        {
-            return new UnknownLimitJsonObject(limitObjectType);
-        }
-
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -175,15 +167,6 @@ namespace Azure.ResourceManager.Quota.Models
         public static OperationDisplay OperationDisplay(string provider = null, string resource = null, string operation = null, string description = null)
         {
             return new OperationDisplay(provider, resource, operation, description);
-        }
-
-        /// <summary> Initializes a new instance of LimitObject. </summary>
-        /// <param name="value"> The quota/limit value. </param>
-        /// <param name="limitType"> The quota or usages limit types. </param>
-        /// <returns> A new <see cref="Models.LimitObject"/> instance for mocking. </returns>
-        public static LimitObject LimitObject(int value = default, QuotaLimitType? limitType = null)
-        {
-            return new LimitObject(LimitType.LimitValue, value, limitType);
         }
     }
 }

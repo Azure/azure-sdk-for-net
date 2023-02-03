@@ -64,16 +64,6 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.StorageSyncPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static StorageSyncPrivateLinkServiceConnectionState StorageSyncPrivateLinkServiceConnectionState(StorageSyncPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new StorageSyncPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of StorageSyncPrivateLinkResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

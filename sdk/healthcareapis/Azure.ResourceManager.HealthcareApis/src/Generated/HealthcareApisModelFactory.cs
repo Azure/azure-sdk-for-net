@@ -57,41 +57,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisServiceProperties(provisioningState, accessPolicies?.ToList(), cosmosDbConfiguration, authenticationConfiguration, corsConfiguration, exportStorageAccountName != null ? new ServiceExportConfigurationInfo(exportStorageAccountName) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, acrConfiguration, importConfiguration);
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceCosmosDbConfiguration. </summary>
-        /// <param name="offerThroughput"> The provisioned throughput for the backing database. </param>
-        /// <param name="keyVaultKeyUri"> The URI of the customer-managed key for the backing database. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisServiceCosmosDbConfiguration"/> instance for mocking. </returns>
-        public static HealthcareApisServiceCosmosDbConfiguration HealthcareApisServiceCosmosDbConfiguration(int? offerThroughput = null, Uri keyVaultKeyUri = null)
-        {
-            return new HealthcareApisServiceCosmosDbConfiguration(offerThroughput, keyVaultKeyUri);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisServiceAuthenticationConfiguration. </summary>
-        /// <param name="authority"> The authority url for the service. </param>
-        /// <param name="audience"> The audience url for the service. </param>
-        /// <param name="isSmartProxyEnabled"> If the SMART on FHIR proxy is enabled. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisServiceAuthenticationConfiguration"/> instance for mocking. </returns>
-        public static HealthcareApisServiceAuthenticationConfiguration HealthcareApisServiceAuthenticationConfiguration(string authority = null, string audience = null, bool? isSmartProxyEnabled = null)
-        {
-            return new HealthcareApisServiceAuthenticationConfiguration(authority, audience, isSmartProxyEnabled);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisServiceCorsConfiguration. </summary>
-        /// <param name="origins"> The origins to be allowed via CORS. </param>
-        /// <param name="headers"> The headers to be allowed via CORS. </param>
-        /// <param name="methods"> The methods to be allowed via CORS. </param>
-        /// <param name="maxAge"> The max age to be allowed via CORS. </param>
-        /// <param name="allowCredentials"> If credentials are allowed via CORS. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisServiceCorsConfiguration"/> instance for mocking. </returns>
-        public static HealthcareApisServiceCorsConfiguration HealthcareApisServiceCorsConfiguration(IEnumerable<string> origins = null, IEnumerable<string> headers = null, IEnumerable<string> methods = null, int? maxAge = null, bool? allowCredentials = null)
-        {
-            origins ??= new List<string>();
-            headers ??= new List<string>();
-            methods ??= new List<string>();
-
-            return new HealthcareApisServiceCorsConfiguration(origins?.ToList(), headers?.ToList(), methods?.ToList(), maxAge, allowCredentials);
-        }
-
         /// <summary> Initializes a new instance of HealthcareApisPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -104,48 +69,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static HealthcareApisPrivateEndpointConnectionData HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, HealthcareApisPrivateLinkServiceConnectionState connectionState = null, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             return new HealthcareApisPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static HealthcareApisPrivateLinkServiceConnectionState HealthcareApisPrivateLinkServiceConnectionState(HealthcareApisPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new HealthcareApisPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisServiceAcrConfiguration. </summary>
-        /// <param name="loginServers"> The list of the ACR login servers. </param>
-        /// <param name="ociArtifacts"> The list of Open Container Initiative (OCI) artifacts. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisServiceAcrConfiguration"/> instance for mocking. </returns>
-        public static HealthcareApisServiceAcrConfiguration HealthcareApisServiceAcrConfiguration(IEnumerable<string> loginServers = null, IEnumerable<HealthcareApisServiceOciArtifactEntry> ociArtifacts = null)
-        {
-            loginServers ??= new List<string>();
-            ociArtifacts ??= new List<HealthcareApisServiceOciArtifactEntry>();
-
-            return new HealthcareApisServiceAcrConfiguration(loginServers?.ToList(), ociArtifacts?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisServiceOciArtifactEntry. </summary>
-        /// <param name="loginServer"> The Azure Container Registry login server. </param>
-        /// <param name="imageName"> The artifact name. </param>
-        /// <param name="digest"> The artifact digest. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisServiceOciArtifactEntry"/> instance for mocking. </returns>
-        public static HealthcareApisServiceOciArtifactEntry HealthcareApisServiceOciArtifactEntry(string loginServer = null, string imageName = null, string digest = null)
-        {
-            return new HealthcareApisServiceOciArtifactEntry(loginServer, imageName, digest);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisServiceImportConfiguration. </summary>
-        /// <param name="integrationDataStore"> The name of the default integration storage account. </param>
-        /// <param name="isInitialImportMode"> If the FHIR service is in InitialImportMode. </param>
-        /// <param name="isEnabled"> If the import operation is enabled. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisServiceImportConfiguration"/> instance for mocking. </returns>
-        public static HealthcareApisServiceImportConfiguration HealthcareApisServiceImportConfiguration(string integrationDataStore = null, bool? isInitialImportMode = null, bool? isEnabled = null)
-        {
-            return new HealthcareApisServiceImportConfiguration(integrationDataStore, isInitialImportMode, isEnabled);
         }
 
         /// <summary> Initializes a new instance of HealthcareApisNameAvailabilityResult. </summary>
@@ -204,26 +127,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisWorkspaceProperties(provisioningState, privateEndpointConnections?.ToList(), publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisResourceTags. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisResourceTags"/> instance for mocking. </returns>
-        public static HealthcareApisResourceTags HealthcareApisResourceTags(IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new HealthcareApisResourceTags(tags);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisWorkspacePatch. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisWorkspacePatch"/> instance for mocking. </returns>
-        public static HealthcareApisWorkspacePatch HealthcareApisWorkspacePatch(IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new HealthcareApisWorkspacePatch(tags);
-        }
-
         /// <summary> Initializes a new instance of DicomServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -259,33 +162,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new DicomServiceAuthenticationConfiguration(authority, audiences?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DicomServiceCorsConfiguration. </summary>
-        /// <param name="origins"> The origins to be allowed via CORS. </param>
-        /// <param name="headers"> The headers to be allowed via CORS. </param>
-        /// <param name="methods"> The methods to be allowed via CORS. </param>
-        /// <param name="maxAge"> The max age to be allowed via CORS. </param>
-        /// <param name="allowCredentials"> If credentials are allowed via CORS. </param>
-        /// <returns> A new <see cref="Models.DicomServiceCorsConfiguration"/> instance for mocking. </returns>
-        public static DicomServiceCorsConfiguration DicomServiceCorsConfiguration(IEnumerable<string> origins = null, IEnumerable<string> headers = null, IEnumerable<string> methods = null, int? maxAge = null, bool? allowCredentials = null)
-        {
-            origins ??= new List<string>();
-            headers ??= new List<string>();
-            methods ??= new List<string>();
-
-            return new DicomServiceCorsConfiguration(origins?.ToList(), headers?.ToList(), methods?.ToList(), maxAge, allowCredentials);
-        }
-
-        /// <summary> Initializes a new instance of DicomServicePatch. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <returns> A new <see cref="Models.DicomServicePatch"/> instance for mocking. </returns>
-        public static DicomServicePatch DicomServicePatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DicomServicePatch(tags, identity);
-        }
-
         /// <summary> Initializes a new instance of HealthcareApisIotConnectorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -304,35 +180,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             tags ??= new Dictionary<string, string>();
 
             return new HealthcareApisIotConnectorData(id, name, resourceType, systemData, tags, location, provisioningState, ingestionEndpointConfiguration, deviceMappingContent != null ? new HealthcareApisIotMappingProperties(deviceMappingContent) : null, identity, etag);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
-        /// <param name="eventHubName"> Event Hub name to connect to. </param>
-        /// <param name="consumerGroup"> Consumer group of the event hub to connected to. </param>
-        /// <param name="fullyQualifiedEventHubNamespace"> Fully qualified namespace of the Event Hub to connect to. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisIotConnectorEventHubIngestionConfiguration"/> instance for mocking. </returns>
-        public static HealthcareApisIotConnectorEventHubIngestionConfiguration HealthcareApisIotConnectorEventHubIngestionConfiguration(string eventHubName = null, string consumerGroup = null, string fullyQualifiedEventHubNamespace = null)
-        {
-            return new HealthcareApisIotConnectorEventHubIngestionConfiguration(eventHubName, consumerGroup, fullyQualifiedEventHubNamespace);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
-        /// <param name="content"> The mapping. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisIotMappingProperties"/> instance for mocking. </returns>
-        public static HealthcareApisIotMappingProperties HealthcareApisIotMappingProperties(BinaryData content = null)
-        {
-            return new HealthcareApisIotMappingProperties(content);
-        }
-
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorPatch. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <returns> A new <see cref="Models.HealthcareApisIotConnectorPatch"/> instance for mocking. </returns>
-        public static HealthcareApisIotConnectorPatch HealthcareApisIotConnectorPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new HealthcareApisIotConnectorPatch(tags, identity);
         }
 
         /// <summary> Initializes a new instance of HealthcareApisIotFhirDestinationData. </summary>
@@ -381,76 +228,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             privateEndpointConnections ??= new List<HealthcareApisPrivateEndpointConnectionData>();
 
             return new FhirServiceData(id, name, resourceType, systemData, tags, location, kind, provisioningState, accessPolicies?.ToList(), acrConfiguration, authenticationConfiguration, corsConfiguration, exportStorageAccountName != null ? new FhirServiceExportConfiguration(exportStorageAccountName) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, eventState, resourceVersionPolicyConfiguration, importConfiguration, identity, etag);
-        }
-
-        /// <summary> Initializes a new instance of FhirServiceAcrConfiguration. </summary>
-        /// <param name="loginServers"> The list of the Azure container registry login servers. </param>
-        /// <param name="ociArtifacts"> The list of Open Container Initiative (OCI) artifacts. </param>
-        /// <returns> A new <see cref="Models.FhirServiceAcrConfiguration"/> instance for mocking. </returns>
-        public static FhirServiceAcrConfiguration FhirServiceAcrConfiguration(IEnumerable<string> loginServers = null, IEnumerable<HealthcareApisServiceOciArtifactEntry> ociArtifacts = null)
-        {
-            loginServers ??= new List<string>();
-            ociArtifacts ??= new List<HealthcareApisServiceOciArtifactEntry>();
-
-            return new FhirServiceAcrConfiguration(loginServers?.ToList(), ociArtifacts?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FhirServiceAuthenticationConfiguration. </summary>
-        /// <param name="authority"> The authority url for the service. </param>
-        /// <param name="audience"> The audience url for the service. </param>
-        /// <param name="isSmartProxyEnabled"> If the SMART on FHIR proxy is enabled. </param>
-        /// <returns> A new <see cref="Models.FhirServiceAuthenticationConfiguration"/> instance for mocking. </returns>
-        public static FhirServiceAuthenticationConfiguration FhirServiceAuthenticationConfiguration(string authority = null, string audience = null, bool? isSmartProxyEnabled = null)
-        {
-            return new FhirServiceAuthenticationConfiguration(authority, audience, isSmartProxyEnabled);
-        }
-
-        /// <summary> Initializes a new instance of FhirServiceCorsConfiguration. </summary>
-        /// <param name="origins"> The origins to be allowed via CORS. </param>
-        /// <param name="headers"> The headers to be allowed via CORS. </param>
-        /// <param name="methods"> The methods to be allowed via CORS. </param>
-        /// <param name="maxAge"> The max age to be allowed via CORS. </param>
-        /// <param name="allowCredentials"> If credentials are allowed via CORS. </param>
-        /// <returns> A new <see cref="Models.FhirServiceCorsConfiguration"/> instance for mocking. </returns>
-        public static FhirServiceCorsConfiguration FhirServiceCorsConfiguration(IEnumerable<string> origins = null, IEnumerable<string> headers = null, IEnumerable<string> methods = null, int? maxAge = null, bool? allowCredentials = null)
-        {
-            origins ??= new List<string>();
-            headers ??= new List<string>();
-            methods ??= new List<string>();
-
-            return new FhirServiceCorsConfiguration(origins?.ToList(), headers?.ToList(), methods?.ToList(), maxAge, allowCredentials);
-        }
-
-        /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>
-        /// <param name="default"> The default value for tracking history across all resources. </param>
-        /// <param name="resourceTypeOverrides"> A list of FHIR Resources and their version policy overrides. </param>
-        /// <returns> A new <see cref="Models.FhirServiceResourceVersionPolicyConfiguration"/> instance for mocking. </returns>
-        public static FhirServiceResourceVersionPolicyConfiguration FhirServiceResourceVersionPolicyConfiguration(FhirResourceVersionPolicy? @default = null, IDictionary<string, FhirResourceVersionPolicy> resourceTypeOverrides = null)
-        {
-            resourceTypeOverrides ??= new Dictionary<string, FhirResourceVersionPolicy>();
-
-            return new FhirServiceResourceVersionPolicyConfiguration(@default, resourceTypeOverrides);
-        }
-
-        /// <summary> Initializes a new instance of FhirServiceImportConfiguration. </summary>
-        /// <param name="integrationDataStore"> The name of the default integration storage account. </param>
-        /// <param name="isInitialImportMode"> If the FHIR service is in InitialImportMode. </param>
-        /// <param name="isEnabled"> If the import operation is enabled. </param>
-        /// <returns> A new <see cref="Models.FhirServiceImportConfiguration"/> instance for mocking. </returns>
-        public static FhirServiceImportConfiguration FhirServiceImportConfiguration(string integrationDataStore = null, bool? isInitialImportMode = null, bool? isEnabled = null)
-        {
-            return new FhirServiceImportConfiguration(integrationDataStore, isInitialImportMode, isEnabled);
-        }
-
-        /// <summary> Initializes a new instance of FhirServicePatch. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <returns> A new <see cref="Models.FhirServicePatch"/> instance for mocking. </returns>
-        public static FhirServicePatch FhirServicePatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new FhirServicePatch(tags, identity);
         }
     }
 }

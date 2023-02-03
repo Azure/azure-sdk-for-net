@@ -96,15 +96,6 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayNamespaceData(id, name, resourceType, systemData, tags, location, sku, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, metricId, privateEndpointConnections?.ToList(), publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of RelaySku. </summary>
-        /// <param name="name"> Name of this SKU. </param>
-        /// <param name="tier"> The tier of this SKU. </param>
-        /// <returns> A new <see cref="Models.RelaySku"/> instance for mocking. </returns>
-        public static RelaySku RelaySku(RelaySkuName name = default, RelaySkuTier? tier = null)
-        {
-            return new RelaySku(name, tier);
-        }
-
         /// <summary> Initializes a new instance of RelayPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -118,15 +109,6 @@ namespace Azure.ResourceManager.Relay.Models
         public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RelayPrivateLinkServiceConnectionState connectionState = null, RelayPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
             return new RelayPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location);
-        }
-
-        /// <summary> Initializes a new instance of RelayPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Status of the connection. </param>
-        /// <param name="description"> Description of the connection state. </param>
-        /// <returns> A new <see cref="Models.RelayPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static RelayPrivateLinkServiceConnectionState RelayPrivateLinkServiceConnectionState(RelayPrivateLinkConnectionStatus? status = null, string description = null)
-        {
-            return new RelayPrivateLinkServiceConnectionState(status, description);
         }
 
         /// <summary> Initializes a new instance of RelayNamespacePatch. </summary>
@@ -184,15 +166,6 @@ namespace Azure.ResourceManager.Relay.Models
             ipRules ??= new List<RelayNetworkRuleSetIPRule>();
 
             return new RelayNetworkRuleSetData(id, name, resourceType, systemData, defaultAction, publicNetworkAccess, ipRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RelayNetworkRuleSetIPRule. </summary>
-        /// <param name="ipMask"> IP Mask. </param>
-        /// <param name="action"> The IP Filter Action. </param>
-        /// <returns> A new <see cref="Models.RelayNetworkRuleSetIPRule"/> instance for mocking. </returns>
-        public static RelayNetworkRuleSetIPRule RelayNetworkRuleSetIPRule(string ipMask = null, RelayNetworkRuleIPAction? action = null)
-        {
-            return new RelayNetworkRuleSetIPRule(ipMask, action);
         }
 
         /// <summary> Initializes a new instance of WcfRelayData. </summary>

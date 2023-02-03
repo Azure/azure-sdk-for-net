@@ -485,18 +485,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans);
         }
 
-        /// <summary> Initializes a new instance of VulnerabilityAssessmentRecurringScansProperties. </summary>
-        /// <param name="isEnabled"> Recurring scans state. </param>
-        /// <param name="emailSubscriptionAdmins"> Specifies that the schedule scan notification will be is sent to the subscription administrators. </param>
-        /// <param name="emails"> Specifies an array of e-mail addresses to which the scan notification is sent. </param>
-        /// <returns> A new <see cref="Models.VulnerabilityAssessmentRecurringScansProperties"/> instance for mocking. </returns>
-        public static VulnerabilityAssessmentRecurringScansProperties VulnerabilityAssessmentRecurringScansProperties(bool? isEnabled = null, bool? emailSubscriptionAdmins = null, IEnumerable<string> emails = null)
-        {
-            emails ??= new List<string>();
-
-            return new VulnerabilityAssessmentRecurringScansProperties(isEnabled, emailSubscriptionAdmins, emails?.ToList());
-        }
-
         /// <summary> Initializes a new instance of VulnerabilityAssessmentScanRecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -633,15 +621,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new FailoverGroupData(id, name, resourceType, systemData, location, tags, readWriteEndpoint, readOnlyEndpointFailoverPolicy != null ? new FailoverGroupReadOnlyEndpoint(readOnlyEndpointFailoverPolicy) : null, replicationRole, replicationState, partnerServers?.ToList(), databases?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FailoverGroupReadWriteEndpoint. </summary>
-        /// <param name="failoverPolicy"> Failover policy of the read-write endpoint for the failover group. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </param>
-        /// <param name="failoverWithDataLossGracePeriodMinutes"> Grace period before failover with data loss is attempted for the read-write endpoint. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </param>
-        /// <returns> A new <see cref="Models.FailoverGroupReadWriteEndpoint"/> instance for mocking. </returns>
-        public static FailoverGroupReadWriteEndpoint FailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy failoverPolicy = default, int? failoverWithDataLossGracePeriodMinutes = null)
-        {
-            return new FailoverGroupReadWriteEndpoint(failoverPolicy, failoverWithDataLossGracePeriodMinutes);
-        }
-
         /// <summary> Initializes a new instance of PartnerServerInfo. </summary>
         /// <param name="id"> Resource identifier of the partner server. </param>
         /// <param name="location"> Geo location of the partner server. </param>
@@ -704,15 +683,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new InstanceFailoverGroupData(id, name, resourceType, systemData, readWriteEndpoint, readOnlyEndpointFailoverPolicy != null ? new InstanceFailoverGroupReadOnlyEndpoint(readOnlyEndpointFailoverPolicy) : null, replicationRole, replicationState, partnerRegions?.ToList(), managedInstancePairs?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupReadWriteEndpoint. </summary>
-        /// <param name="failoverPolicy"> Failover policy of the read-write endpoint for the failover group. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </param>
-        /// <param name="failoverWithDataLossGracePeriodMinutes"> Grace period before failover with data loss is attempted for the read-write endpoint. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </param>
-        /// <returns> A new <see cref="Models.InstanceFailoverGroupReadWriteEndpoint"/> instance for mocking. </returns>
-        public static InstanceFailoverGroupReadWriteEndpoint InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy failoverPolicy = default, int? failoverWithDataLossGracePeriodMinutes = null)
-        {
-            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, failoverWithDataLossGracePeriodMinutes);
-        }
-
         /// <summary> Initializes a new instance of PartnerRegionInfo. </summary>
         /// <param name="location"> Geo location of the partner managed instances. </param>
         /// <param name="replicationRole"> Replication role of the partner managed instances. </param>
@@ -720,15 +690,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static PartnerRegionInfo PartnerRegionInfo(AzureLocation? location = null, InstanceFailoverGroupReplicationRole? replicationRole = null)
         {
             return new PartnerRegionInfo(location, replicationRole);
-        }
-
-        /// <summary> Initializes a new instance of ManagedInstancePairInfo. </summary>
-        /// <param name="primaryManagedInstanceId"> Id of Primary Managed Instance in pair. </param>
-        /// <param name="partnerManagedInstanceId"> Id of Partner Managed Instance in pair. </param>
-        /// <returns> A new <see cref="Models.ManagedInstancePairInfo"/> instance for mocking. </returns>
-        public static ManagedInstancePairInfo ManagedInstancePairInfo(ResourceIdentifier primaryManagedInstanceId = null, ResourceIdentifier partnerManagedInstanceId = null)
-        {
-            return new ManagedInstancePairInfo(primaryManagedInstanceId, partnerManagedInstanceId);
         }
 
         /// <summary> Initializes a new instance of InstancePoolData. </summary>
@@ -748,18 +709,6 @@ namespace Azure.ResourceManager.Sql.Models
             tags ??= new Dictionary<string, string>();
 
             return new InstancePoolData(id, name, resourceType, systemData, tags, location, sku, subnetId, vCores, licenseType);
-        }
-
-        /// <summary> Initializes a new instance of SqlSku. </summary>
-        /// <param name="name"> The name of the SKU, typically, a letter + Number code, e.g. P3. </param>
-        /// <param name="tier"> The tier or edition of the particular SKU, e.g. Basic, Premium. </param>
-        /// <param name="size"> Size of the particular SKU. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> Capacity of the particular SKU. </param>
-        /// <returns> A new <see cref="Models.SqlSku"/> instance for mocking. </returns>
-        public static SqlSku SqlSku(string name = null, string tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new SqlSku(name, tier, size, family, capacity);
         }
 
         /// <summary> Initializes a new instance of SqlServerJobAgentData. </summary>
@@ -841,18 +790,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobData(id, name, resourceType, systemData, description, version, schedule);
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobSchedule. </summary>
-        /// <param name="startOn"> Schedule start time. </param>
-        /// <param name="endOn"> Schedule end time. </param>
-        /// <param name="scheduleType"> Schedule interval type. </param>
-        /// <param name="isEnabled"> Whether or not the schedule is enabled. </param>
-        /// <param name="interval"> Value of the schedule&apos;s recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </param>
-        /// <returns> A new <see cref="Models.SqlServerJobSchedule"/> instance for mocking. </returns>
-        public static SqlServerJobSchedule SqlServerJobSchedule(DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, SqlServerJobScheduleType? scheduleType = null, bool? isEnabled = null, TimeSpan? interval = null)
-        {
-            return new SqlServerJobSchedule(startOn, endOn, scheduleType, isEnabled, interval);
-        }
-
         /// <summary> Initializes a new instance of SqlServerJobStepData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -870,43 +807,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobStepData(id, name, resourceType, systemData, stepId, targetGroup, credential, action, output, executionOptions);
         }
 
-        /// <summary> Initializes a new instance of JobStepAction. </summary>
-        /// <param name="actionType"> Type of action being executed by the job step. </param>
-        /// <param name="source"> The source of the action to execute. </param>
-        /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>
-        /// <returns> A new <see cref="Models.JobStepAction"/> instance for mocking. </returns>
-        public static JobStepAction JobStepAction(JobStepActionType? actionType = null, JobStepActionSource? source = null, string value = null)
-        {
-            return new JobStepAction(actionType, source, value);
-        }
-
-        /// <summary> Initializes a new instance of JobStepOutput. </summary>
-        /// <param name="outputType"> The output destination type. </param>
-        /// <param name="subscriptionId"> The output destination subscription id. </param>
-        /// <param name="resourceGroupName"> The output destination resource group. </param>
-        /// <param name="serverName"> The output destination server name. </param>
-        /// <param name="databaseName"> The output destination database. </param>
-        /// <param name="schemaName"> The output destination schema. </param>
-        /// <param name="tableName"> The output destination table. </param>
-        /// <param name="credential"> The resource ID of the credential to use to connect to the output destination. </param>
-        /// <returns> A new <see cref="Models.JobStepOutput"/> instance for mocking. </returns>
-        public static JobStepOutput JobStepOutput(JobStepOutputType? outputType = null, Guid? subscriptionId = null, string resourceGroupName = null, string serverName = null, string databaseName = null, string schemaName = null, string tableName = null, string credential = null)
-        {
-            return new JobStepOutput(outputType, subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, credential);
-        }
-
-        /// <summary> Initializes a new instance of JobStepExecutionOptions. </summary>
-        /// <param name="timeoutSeconds"> Execution timeout for the job step. </param>
-        /// <param name="retryAttempts"> Maximum number of times the job step will be reattempted if the first attempt fails. </param>
-        /// <param name="initialRetryIntervalSeconds"> Initial delay between retries for job step execution. </param>
-        /// <param name="maximumRetryIntervalSeconds"> The maximum amount of time to wait between retries for job step execution. </param>
-        /// <param name="retryIntervalBackoffMultiplier"> The backoff multiplier for the time between retries. </param>
-        /// <returns> A new <see cref="Models.JobStepExecutionOptions"/> instance for mocking. </returns>
-        public static JobStepExecutionOptions JobStepExecutionOptions(int? timeoutSeconds = null, int? retryAttempts = null, int? initialRetryIntervalSeconds = null, int? maximumRetryIntervalSeconds = null, float? retryIntervalBackoffMultiplier = null)
-        {
-            return new JobStepExecutionOptions(timeoutSeconds, retryAttempts, initialRetryIntervalSeconds, maximumRetryIntervalSeconds, retryIntervalBackoffMultiplier);
-        }
-
         /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -919,20 +819,6 @@ namespace Azure.ResourceManager.Sql.Models
             members ??= new List<JobTarget>();
 
             return new SqlServerJobTargetGroupData(id, name, resourceType, systemData, members?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of JobTarget. </summary>
-        /// <param name="membershipType"> Whether the target is included or excluded from the group. </param>
-        /// <param name="targetType"> The target type. </param>
-        /// <param name="serverName"> The target server name. </param>
-        /// <param name="databaseName"> The target database name. </param>
-        /// <param name="elasticPoolName"> The target elastic pool name. </param>
-        /// <param name="shardMapName"> The target shard map. </param>
-        /// <param name="refreshCredential"> The resource ID of the credential that is used during job execution to connect to the target and determine the list of databases inside the target. </param>
-        /// <returns> A new <see cref="Models.JobTarget"/> instance for mocking. </returns>
-        public static JobTarget JobTarget(JobTargetGroupMembershipType? membershipType = null, JobTargetType targetType = default, string serverName = null, string databaseName = null, string elasticPoolName = null, string shardMapName = null, string refreshCredential = null)
-        {
-            return new JobTarget(membershipType, targetType, serverName, databaseName, elasticPoolName, shardMapName, refreshCredential);
         }
 
         /// <summary> Initializes a new instance of SqlServerJobVersionData. </summary>
@@ -1336,16 +1222,6 @@ namespace Azure.ResourceManager.Sql.Models
             maintenanceWindowCycles ??= new List<MaintenanceWindowTimeRange>();
 
             return new MaintenanceWindowOptionData(id, name, resourceType, systemData, isEnabled, maintenanceWindowCycles?.ToList(), minDurationInMinutes, defaultDurationInMinutes, minCycles, timeGranularityInMinutes, allowMultipleMaintenanceWindowsPerCycle);
-        }
-
-        /// <summary> Initializes a new instance of MaintenanceWindowTimeRange. </summary>
-        /// <param name="dayOfWeek"> Day of maintenance window. </param>
-        /// <param name="startTime"> Start time minutes offset from 12am. </param>
-        /// <param name="duration"> Duration of maintenance window in minutes. </param>
-        /// <returns> A new <see cref="Models.MaintenanceWindowTimeRange"/> instance for mocking. </returns>
-        public static MaintenanceWindowTimeRange MaintenanceWindowTimeRange(SqlDayOfWeek? dayOfWeek = null, string startTime = null, TimeSpan? duration = null)
-        {
-            return new MaintenanceWindowTimeRange(dayOfWeek, startTime, duration);
         }
 
         /// <summary> Initializes a new instance of MaintenanceWindowsData. </summary>
@@ -2197,38 +2073,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new SyncGroupData(id, name, resourceType, systemData, sku, interval, lastSyncOn, conflictResolutionPolicy, syncDatabaseId, hubDatabaseUserName, hubDatabasePassword, syncState, schema, isConflictLoggingEnabled, conflictLoggingRetentionInDays, usePrivateLinkConnection, privateEndpointName);
         }
 
-        /// <summary> Initializes a new instance of SyncGroupSchema. </summary>
-        /// <param name="tables"> List of tables in sync group schema. </param>
-        /// <param name="masterSyncMemberName"> Name of master sync member where the schema is from. </param>
-        /// <returns> A new <see cref="Models.SyncGroupSchema"/> instance for mocking. </returns>
-        public static SyncGroupSchema SyncGroupSchema(IEnumerable<SyncGroupSchemaTable> tables = null, string masterSyncMemberName = null)
-        {
-            tables ??= new List<SyncGroupSchemaTable>();
-
-            return new SyncGroupSchema(tables?.ToList(), masterSyncMemberName);
-        }
-
-        /// <summary> Initializes a new instance of SyncGroupSchemaTable. </summary>
-        /// <param name="columns"> List of columns in sync group schema. </param>
-        /// <param name="quotedName"> Quoted name of sync group schema table. </param>
-        /// <returns> A new <see cref="Models.SyncGroupSchemaTable"/> instance for mocking. </returns>
-        public static SyncGroupSchemaTable SyncGroupSchemaTable(IEnumerable<SyncGroupSchemaTableColumn> columns = null, string quotedName = null)
-        {
-            columns ??= new List<SyncGroupSchemaTableColumn>();
-
-            return new SyncGroupSchemaTable(columns?.ToList(), quotedName);
-        }
-
-        /// <summary> Initializes a new instance of SyncGroupSchemaTableColumn. </summary>
-        /// <param name="quotedName"> Quoted name of sync group table column. </param>
-        /// <param name="dataSize"> Data size of the column. </param>
-        /// <param name="dataType"> Data type of the column. </param>
-        /// <returns> A new <see cref="Models.SyncGroupSchemaTableColumn"/> instance for mocking. </returns>
-        public static SyncGroupSchemaTableColumn SyncGroupSchemaTableColumn(string quotedName = null, string dataSize = null, string dataType = null)
-        {
-            return new SyncGroupSchemaTableColumn(quotedName, dataSize, dataType);
-        }
-
         /// <summary> Initializes a new instance of SyncMemberData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2477,19 +2321,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerPrivateEndpointConnection(id, properties);
         }
 
-        /// <summary> Initializes a new instance of ServerExternalAdministrator. </summary>
-        /// <param name="administratorType"> Type of the sever administrator. </param>
-        /// <param name="principalType"> Principal Type of the sever administrator. </param>
-        /// <param name="login"> Login name of the server administrator. </param>
-        /// <param name="sid"> SID (object ID) of the server administrator. </param>
-        /// <param name="tenantId"> Tenant ID of the administrator. </param>
-        /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
-        /// <returns> A new <see cref="Models.ServerExternalAdministrator"/> instance for mocking. </returns>
-        public static ServerExternalAdministrator ServerExternalAdministrator(SqlAdministratorType? administratorType = null, SqlServerPrincipalType? principalType = null, string login = null, Guid? sid = null, Guid? tenantId = null, bool? isAzureADOnlyAuthenticationEnabled = null)
-        {
-            return new ServerExternalAdministrator(administratorType, principalType, login, sid, tenantId, isAzureADOnlyAuthenticationEnabled);
-        }
-
         /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2681,19 +2512,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstancePecProperty(id, properties);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceExternalAdministrator. </summary>
-        /// <param name="administratorType"> Type of the sever administrator. </param>
-        /// <param name="principalType"> Principal Type of the sever administrator. </param>
-        /// <param name="login"> Login name of the server administrator. </param>
-        /// <param name="sid"> SID (object ID) of the server administrator. </param>
-        /// <param name="tenantId"> Tenant ID of the administrator. </param>
-        /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
-        /// <returns> A new <see cref="Models.ManagedInstanceExternalAdministrator"/> instance for mocking. </returns>
-        public static ManagedInstanceExternalAdministrator ManagedInstanceExternalAdministrator(SqlAdministratorType? administratorType = null, SqlServerPrincipalType? principalType = null, string login = null, Guid? sid = null, Guid? tenantId = null, bool? isAzureADOnlyAuthenticationEnabled = null)
-        {
-            return new ManagedInstanceExternalAdministrator(administratorType, principalType, login, sid, tenantId, isAzureADOnlyAuthenticationEnabled);
-        }
-
         /// <summary> Initializes a new instance of SqlServicePrincipal. </summary>
         /// <param name="principalId"> The Azure Active Directory application object id. </param>
         /// <param name="clientId"> The Azure Active Directory application client id. </param>
@@ -2843,15 +2661,6 @@ namespace Azure.ResourceManager.Sql.Models
             tags ??= new Dictionary<string, string>();
 
             return new ElasticPoolData(id, name, resourceType, systemData, tags, location, sku, kind, state, createdOn, maxSizeBytes, perDatabaseSettings, isZoneRedundant, licenseType, maintenanceConfigurationId, highAvailabilityReplicaCount);
-        }
-
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseSettings. </summary>
-        /// <param name="minCapacity"> The minimum capacity all databases are guaranteed. </param>
-        /// <param name="maxCapacity"> The maximum capacity any one database can consume. </param>
-        /// <returns> A new <see cref="Models.ElasticPoolPerDatabaseSettings"/> instance for mocking. </returns>
-        public static ElasticPoolPerDatabaseSettings ElasticPoolPerDatabaseSettings(double? minCapacity = null, double? maxCapacity = null)
-        {
-            return new ElasticPoolPerDatabaseSettings(minCapacity, maxCapacity);
         }
 
         /// <summary> Initializes a new instance of IPv6FirewallRuleData. </summary>
@@ -3795,28 +3604,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceDtcData(id, name, resourceType, systemData, dtcEnabled, securitySettings, externalDnsSuffixSearchList?.ToList(), dtcHostNameDnsSuffix, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDtcSecuritySettings. </summary>
-        /// <param name="transactionManagerCommunicationSettings"> Transaction Manager communication settings of managed instance DTC. </param>
-        /// <param name="isXATransactionsEnabled"> Allow XA Transactions to managed instance DTC. </param>
-        /// <param name="snaLu6Point2TransactionsEnabled"> Allow SNA LU 6.2 Transactions to managed instance DTC. </param>
-        /// <param name="xaTransactionsDefaultTimeoutInSeconds"> Default timeout for XA Transactions (in seconds). </param>
-        /// <param name="xaTransactionsMaximumTimeoutInSeconds"> Maximum timeout for XA Transactions (in seconds). </param>
-        /// <returns> A new <see cref="Models.ManagedInstanceDtcSecuritySettings"/> instance for mocking. </returns>
-        public static ManagedInstanceDtcSecuritySettings ManagedInstanceDtcSecuritySettings(ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings = null, bool? isXATransactionsEnabled = null, bool? snaLu6Point2TransactionsEnabled = null, int? xaTransactionsDefaultTimeoutInSeconds = null, int? xaTransactionsMaximumTimeoutInSeconds = null)
-        {
-            return new ManagedInstanceDtcSecuritySettings(transactionManagerCommunicationSettings, isXATransactionsEnabled, snaLu6Point2TransactionsEnabled, xaTransactionsDefaultTimeoutInSeconds, xaTransactionsMaximumTimeoutInSeconds);
-        }
-
-        /// <summary> Initializes a new instance of ManagedInstanceDtcTransactionManagerCommunicationSettings. </summary>
-        /// <param name="allowInboundEnabled"> Allow Inbound traffic to managed instance DTC. </param>
-        /// <param name="allowOutboundEnabled"> Allow Outbound traffic of managed instance DTC. </param>
-        /// <param name="authentication"> Authentication type of managed instance DTC. </param>
-        /// <returns> A new <see cref="Models.ManagedInstanceDtcTransactionManagerCommunicationSettings"/> instance for mocking. </returns>
-        public static ManagedInstanceDtcTransactionManagerCommunicationSettings ManagedInstanceDtcTransactionManagerCommunicationSettings(bool? allowInboundEnabled = null, bool? allowOutboundEnabled = null, string authentication = null)
-        {
-            return new ManagedInstanceDtcTransactionManagerCommunicationSettings(allowInboundEnabled, allowOutboundEnabled, authentication);
-        }
-
         /// <summary> Initializes a new instance of SqlSynapseLinkWorkspace. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3829,15 +3616,6 @@ namespace Azure.ResourceManager.Sql.Models
             workspaces ??= new List<SqlSynapseLinkWorkspaceInfo>();
 
             return new SqlSynapseLinkWorkspace(id, name, resourceType, systemData, workspaces?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SqlSynapseLinkWorkspaceInfo. </summary>
-        /// <param name="workspaceId"> Synapse link workspace id. </param>
-        /// <param name="linkConnectionName"> Link connection name. </param>
-        /// <returns> A new <see cref="Models.SqlSynapseLinkWorkspaceInfo"/> instance for mocking. </returns>
-        public static SqlSynapseLinkWorkspaceInfo SqlSynapseLinkWorkspaceInfo(ResourceIdentifier workspaceId = null, string linkConnectionName = null)
-        {
-            return new SqlSynapseLinkWorkspaceInfo(workspaceId, linkConnectionName);
         }
 
         /// <summary> Initializes a new instance of VirtualClusterData. </summary>

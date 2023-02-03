@@ -50,14 +50,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationAppliance(replicationApplianceProviderSpecificDetails != null ? new ReplicationApplianceProperties(replicationApplianceProviderSpecificDetails) : null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <returns> A new <see cref="Models.ApplianceSpecificDetails"/> instance for mocking. </returns>
-        public static ApplianceSpecificDetails ApplianceSpecificDetails(string instanceType = null)
-        {
-            return new UnknownApplianceSpecificDetails(instanceType);
-        }
-
         /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -132,22 +124,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             healthErrors ??= new List<HealthError>();
 
             return new EventProperties(eventCode, description, eventType, affectedObjectFriendlyName, affectedObjectCorrelationId, severity, timeOfOccurrence, fabricId, providerSpecificDetails, eventSpecificDetails, healthErrors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of EventProviderSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <returns> A new <see cref="Models.EventProviderSpecificDetails"/> instance for mocking. </returns>
-        public static EventProviderSpecificDetails EventProviderSpecificDetails(string instanceType = null)
-        {
-            return new UnknownEventProviderSpecificDetails(instanceType);
-        }
-
-        /// <summary> Initializes a new instance of EventSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <returns> A new <see cref="Models.EventSpecificDetails"/> instance for mocking. </returns>
-        public static EventSpecificDetails EventSpecificDetails(string instanceType = null)
-        {
-            return new UnknownEventSpecificDetails(instanceType);
         }
 
         /// <summary> Initializes a new instance of HealthError. </summary>
@@ -237,14 +213,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static EncryptionDetails EncryptionDetails(string kekState = null, string kekCertThumbprint = null, DateTimeOffset? kekCertExpiryOn = null)
         {
             return new EncryptionDetails(kekState, kekCertThumbprint, kekCertExpiryOn);
-        }
-
-        /// <summary> Initializes a new instance of FabricSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <returns> A new <see cref="Models.FabricSpecificDetails"/> instance for mocking. </returns>
-        public static FabricSpecificDetails FabricSpecificDetails(string instanceType = null)
-        {
-            return new UnknownFabricSpecificDetails(instanceType);
         }
 
         /// <summary> Initializes a new instance of LogicalNetworkData. </summary>
@@ -340,14 +308,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static NetworkMappingProperties NetworkMappingProperties(string state = null, string primaryNetworkFriendlyName = null, string primaryNetworkId = null, string primaryFabricFriendlyName = null, string recoveryNetworkFriendlyName = null, string recoveryNetworkId = null, string recoveryFabricArmId = null, string recoveryFabricFriendlyName = null, NetworkMappingFabricSpecificSettings fabricSpecificSettings = null)
         {
             return new NetworkMappingProperties(state, primaryNetworkFriendlyName, primaryNetworkId, primaryFabricFriendlyName, recoveryNetworkFriendlyName, recoveryNetworkId, recoveryFabricArmId, recoveryFabricFriendlyName, fabricSpecificSettings);
-        }
-
-        /// <summary> Initializes a new instance of NetworkMappingFabricSpecificSettings. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <returns> A new <see cref="Models.NetworkMappingFabricSpecificSettings"/> instance for mocking. </returns>
-        public static NetworkMappingFabricSpecificSettings NetworkMappingFabricSpecificSettings(string instanceType = null)
-        {
-            return new UnknownNetworkMappingFabricSpecificSettings(instanceType);
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerData. </summary>
@@ -446,14 +406,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new CriticalJobHistoryDetails(jobName, jobId, startOn, jobStatus);
         }
 
-        /// <summary> Initializes a new instance of MigrationProviderSpecificSettings. </summary>
-        /// <param name="instanceType"> Gets the instance type. </param>
-        /// <returns> A new <see cref="Models.MigrationProviderSpecificSettings"/> instance for mocking. </returns>
-        public static MigrationProviderSpecificSettings MigrationProviderSpecificSettings(string instanceType = null)
-        {
-            return new UnknownMigrationProviderSpecificSettings(instanceType);
-        }
-
         /// <summary> Initializes a new instance of MigrationRecoveryPointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -508,14 +460,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             supportedReplicationProviders ??= new List<string>();
 
             return new ProtectableItemProperties(friendlyName, protectionStatus, replicationProtectedItemId, recoveryServicesProviderId, protectionReadinessErrors?.ToList(), supportedReplicationProviders?.ToList(), customDetails);
-        }
-
-        /// <summary> Initializes a new instance of ConfigurationSettings. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <returns> A new <see cref="Models.ConfigurationSettings"/> instance for mocking. </returns>
-        public static ConfigurationSettings ConfigurationSettings(string instanceType = null)
-        {
-            return new UnknownConfigurationSettings(instanceType);
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemData. </summary>
@@ -585,14 +529,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new CurrentScenarioDetails(scenarioName, jobId, startOn);
         }
 
-        /// <summary> Initializes a new instance of ReplicationProviderSpecificSettings. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <returns> A new <see cref="Models.ReplicationProviderSpecificSettings"/> instance for mocking. </returns>
-        public static ReplicationProviderSpecificSettings ReplicationProviderSpecificSettings(string instanceType = null)
-        {
-            return new UnknownReplicationProviderSpecificSettings(instanceType);
-        }
-
         /// <summary> Initializes a new instance of RecoveryPointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -618,14 +554,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static RecoveryPointProperties RecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, string recoveryPointType = null, ProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
         {
             return new RecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails);
-        }
-
-        /// <summary> Initializes a new instance of ProviderSpecificRecoveryPointDetails. </summary>
-        /// <param name="instanceType"> Gets the provider type. </param>
-        /// <returns> A new <see cref="Models.ProviderSpecificRecoveryPointDetails"/> instance for mocking. </returns>
-        public static ProviderSpecificRecoveryPointDetails ProviderSpecificRecoveryPointDetails(string instanceType = null)
-        {
-            return new UnknownProviderSpecificRecoveryPointDetails(instanceType);
         }
 
         /// <summary> Initializes a new instance of TargetComputeSize. </summary>
@@ -704,14 +632,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             healthErrorDetails ??= new List<HealthError>();
 
             return new ProtectionContainerMappingProperties(targetProtectionContainerId, targetProtectionContainerFriendlyName, providerSpecificDetails, health, healthErrorDetails?.ToList(), policyId, state, sourceProtectionContainerFriendlyName, sourceFabricFriendlyName, targetFabricFriendlyName, policyFriendlyName);
-        }
-
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProviderSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <returns> A new <see cref="Models.ProtectionContainerMappingProviderSpecificDetails"/> instance for mocking. </returns>
-        public static ProtectionContainerMappingProviderSpecificDetails ProtectionContainerMappingProviderSpecificDetails(string instanceType = null)
-        {
-            return new UnknownProtectionContainerMappingProviderSpecificDetails(instanceType);
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesProviderData. </summary>
@@ -910,14 +830,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ASRTask(taskId, name, startOn, endOn, allowedActions?.ToList(), friendlyName, state, stateDescription, taskType, customDetails, groupTaskCustomDetails, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TaskTypeDetails. </summary>
-        /// <param name="instanceType"> The type of task details. </param>
-        /// <returns> A new <see cref="Models.TaskTypeDetails"/> instance for mocking. </returns>
-        public static TaskTypeDetails TaskTypeDetails(string instanceType = null)
-        {
-            return new UnknownTaskTypeDetails(instanceType);
-        }
-
         /// <summary> Initializes a new instance of GroupTaskDetails. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
@@ -1002,14 +914,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new PolicyProperties(friendlyName, providerSpecificDetails);
         }
 
-        /// <summary> Initializes a new instance of PolicyProviderSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <returns> A new <see cref="Models.PolicyProviderSpecificDetails"/> instance for mocking. </returns>
-        public static PolicyProviderSpecificDetails PolicyProviderSpecificDetails(string instanceType = null)
-        {
-            return new UnknownPolicyProviderSpecificDetails(instanceType);
-        }
-
         /// <summary> Initializes a new instance of ReplicationProtectionIntentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1038,14 +942,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static ReplicationProtectionIntentProperties ReplicationProtectionIntentProperties(string friendlyName = null, string jobId = null, string jobState = null, bool? isActive = null, string creationTimeUTC = null, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = null)
         {
             return new ReplicationProtectionIntentProperties(friendlyName, jobId, jobState, isActive, creationTimeUTC, providerSpecificDetails);
-        }
-
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentProviderSpecificSettings. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <returns> A new <see cref="Models.ReplicationProtectionIntentProviderSpecificSettings"/> instance for mocking. </returns>
-        public static ReplicationProtectionIntentProviderSpecificSettings ReplicationProtectionIntentProviderSpecificSettings(string instanceType = null)
-        {
-            return new UnknownReplicationProtectionIntentProviderSpecificSettings(instanceType);
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanData. </summary>
@@ -1091,46 +987,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             providerSpecificDetails ??= new List<RecoveryPlanProviderSpecificDetails>();
 
             return new RecoveryPlanProperties(friendlyName, primaryFabricId, primaryFabricFriendlyName, recoveryFabricId, recoveryFabricFriendlyName, failoverDeploymentModel, replicationProviders?.ToList(), allowedOperations?.ToList(), lastPlannedFailoverOn, lastUnplannedFailoverOn, lastTestFailoverOn, currentScenario, currentScenarioStatus, currentScenarioStatusDescription, groups?.ToList(), providerSpecificDetails?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RecoveryPlanGroup. </summary>
-        /// <param name="groupType"> The group type. </param>
-        /// <param name="replicationProtectedItems"> The list of protected items. </param>
-        /// <param name="startGroupActions"> The start group actions. </param>
-        /// <param name="endGroupActions"> The end group actions. </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanGroup"/> instance for mocking. </returns>
-        public static RecoveryPlanGroup RecoveryPlanGroup(RecoveryPlanGroupType groupType = default, IEnumerable<RecoveryPlanProtectedItem> replicationProtectedItems = null, IEnumerable<RecoveryPlanAction> startGroupActions = null, IEnumerable<RecoveryPlanAction> endGroupActions = null)
-        {
-            replicationProtectedItems ??= new List<RecoveryPlanProtectedItem>();
-            startGroupActions ??= new List<RecoveryPlanAction>();
-            endGroupActions ??= new List<RecoveryPlanAction>();
-
-            return new RecoveryPlanGroup(groupType, replicationProtectedItems?.ToList(), startGroupActions?.ToList(), endGroupActions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RecoveryPlanProtectedItem. </summary>
-        /// <param name="id"> The ARM Id of the recovery plan protected item. </param>
-        /// <param name="virtualMachineId"> The virtual machine Id. </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanProtectedItem"/> instance for mocking. </returns>
-        public static RecoveryPlanProtectedItem RecoveryPlanProtectedItem(string id = null, string virtualMachineId = null)
-        {
-            return new RecoveryPlanProtectedItem(id, virtualMachineId);
-        }
-
-        /// <summary> Initializes a new instance of RecoveryPlanActionDetails. </summary>
-        /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanActionDetails"/> instance for mocking. </returns>
-        public static RecoveryPlanActionDetails RecoveryPlanActionDetails(string instanceType = null)
-        {
-            return new UnknownRecoveryPlanActionDetails(instanceType);
-        }
-
-        /// <summary> Initializes a new instance of RecoveryPlanProviderSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanProviderSpecificDetails"/> instance for mocking. </returns>
-        public static RecoveryPlanProviderSpecificDetails RecoveryPlanProviderSpecificDetails(string instanceType = null)
-        {
-            return new UnknownRecoveryPlanProviderSpecificDetails(instanceType);
         }
 
         /// <summary> Initializes a new instance of SupportedOperatingSystems. </summary>
@@ -1255,121 +1111,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static VaultSettingProperties VaultSettingProperties(string migrationSolutionId = null, string vmwareToAzureProviderType = null)
         {
             return new VaultSettingProperties(migrationSolutionId, vmwareToAzureProviderType);
-        }
-
-        /// <summary> Initializes a new instance of DiskEncryptionInfo. </summary>
-        /// <param name="diskEncryptionKeyInfo"> The recovery KeyVault reference for secret. </param>
-        /// <param name="keyEncryptionKeyInfo"> The recovery KeyVault reference for key. </param>
-        /// <returns> A new <see cref="Models.DiskEncryptionInfo"/> instance for mocking. </returns>
-        public static DiskEncryptionInfo DiskEncryptionInfo(DiskEncryptionKeyInfo diskEncryptionKeyInfo = null, KeyEncryptionKeyInfo keyEncryptionKeyInfo = null)
-        {
-            return new DiskEncryptionInfo(diskEncryptionKeyInfo, keyEncryptionKeyInfo);
-        }
-
-        /// <summary> Initializes a new instance of DiskEncryptionKeyInfo. </summary>
-        /// <param name="secretIdentifier"> The secret url / identifier. </param>
-        /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM id for secret. </param>
-        /// <returns> A new <see cref="Models.DiskEncryptionKeyInfo"/> instance for mocking. </returns>
-        public static DiskEncryptionKeyInfo DiskEncryptionKeyInfo(string secretIdentifier = null, string keyVaultResourceArmId = null)
-        {
-            return new DiskEncryptionKeyInfo(secretIdentifier, keyVaultResourceArmId);
-        }
-
-        /// <summary> Initializes a new instance of KeyEncryptionKeyInfo. </summary>
-        /// <param name="keyIdentifier"> The key URL / identifier. </param>
-        /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM Id for key. </param>
-        /// <returns> A new <see cref="Models.KeyEncryptionKeyInfo"/> instance for mocking. </returns>
-        public static KeyEncryptionKeyInfo KeyEncryptionKeyInfo(string keyIdentifier = null, string keyVaultResourceArmId = null)
-        {
-            return new KeyEncryptionKeyInfo(keyIdentifier, keyVaultResourceArmId);
-        }
-
-        /// <summary> Initializes a new instance of ProtectionProfileCustomDetails. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <returns> A new <see cref="Models.ProtectionProfileCustomDetails"/> instance for mocking. </returns>
-        public static ProtectionProfileCustomDetails ProtectionProfileCustomDetails(string resourceType = null)
-        {
-            return new UnknownProtectionProfileCustomDetails(resourceType);
-        }
-
-        /// <summary> Initializes a new instance of StorageAccountCustomDetails. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <returns> A new <see cref="Models.StorageAccountCustomDetails"/> instance for mocking. </returns>
-        public static StorageAccountCustomDetails StorageAccountCustomDetails(string resourceType = null)
-        {
-            return new UnknownStorageAccountCustomDetails(resourceType);
-        }
-
-        /// <summary> Initializes a new instance of RecoveryAvailabilitySetCustomDetails. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <returns> A new <see cref="Models.RecoveryAvailabilitySetCustomDetails"/> instance for mocking. </returns>
-        public static RecoveryAvailabilitySetCustomDetails RecoveryAvailabilitySetCustomDetails(string resourceType = null)
-        {
-            return new UnknownRecoveryAvailabilitySetCustomDetails(resourceType);
-        }
-
-        /// <summary> Initializes a new instance of RecoveryVirtualNetworkCustomDetails. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <returns> A new <see cref="Models.RecoveryVirtualNetworkCustomDetails"/> instance for mocking. </returns>
-        public static RecoveryVirtualNetworkCustomDetails RecoveryVirtualNetworkCustomDetails(string resourceType = null)
-        {
-            return new UnknownRecoveryVirtualNetworkCustomDetails(resourceType);
-        }
-
-        /// <summary> Initializes a new instance of RecoveryProximityPlacementGroupCustomDetails. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <returns> A new <see cref="Models.RecoveryProximityPlacementGroupCustomDetails"/> instance for mocking. </returns>
-        public static RecoveryProximityPlacementGroupCustomDetails RecoveryProximityPlacementGroupCustomDetails(string resourceType = null)
-        {
-            return new UnknownRecoveryProximityPlacementGroupCustomDetails(resourceType);
-        }
-
-        /// <summary> Initializes a new instance of A2AProtectionIntentDiskInputDetails. </summary>
-        /// <param name="diskUri"> The disk Uri. </param>
-        /// <param name="recoveryAzureStorageAccountCustomInput">
-        /// The recovery VHD storage account input.
-        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExistingStorageAccount"/>.
-        /// </param>
-        /// <param name="primaryStagingStorageAccountCustomInput">
-        /// The primary staging storage account input.
-        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExistingStorageAccount"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.A2AProtectionIntentDiskInputDetails"/> instance for mocking. </returns>
-        public static A2AProtectionIntentDiskInputDetails A2AProtectionIntentDiskInputDetails(Uri diskUri = null, StorageAccountCustomDetails recoveryAzureStorageAccountCustomInput = null, StorageAccountCustomDetails primaryStagingStorageAccountCustomInput = null)
-        {
-            return new A2AProtectionIntentDiskInputDetails(diskUri, recoveryAzureStorageAccountCustomInput, primaryStagingStorageAccountCustomInput);
-        }
-
-        /// <summary> Initializes a new instance of A2AProtectionIntentManagedDiskInputDetails. </summary>
-        /// <param name="diskId"> The disk Id. </param>
-        /// <param name="primaryStagingStorageAccountCustomInput">
-        /// The primary staging storage account input.
-        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExistingStorageAccount"/>.
-        /// </param>
-        /// <param name="recoveryResourceGroupCustomInput">
-        /// The recovery resource group input.
-        /// Please note <see cref="RecoveryResourceGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExistingRecoveryResourceGroup"/>.
-        /// </param>
-        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </param>
-        /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
-        /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
-        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
-        /// <returns> A new <see cref="Models.A2AProtectionIntentManagedDiskInputDetails"/> instance for mocking. </returns>
-        public static A2AProtectionIntentManagedDiskInputDetails A2AProtectionIntentManagedDiskInputDetails(string diskId = null, StorageAccountCustomDetails primaryStagingStorageAccountCustomInput = null, RecoveryResourceGroupCustomDetails recoveryResourceGroupCustomInput = null, string recoveryReplicaDiskAccountType = null, string recoveryTargetDiskAccountType = null, string recoveryDiskEncryptionSetId = null, DiskEncryptionInfo diskEncryptionInfo = null)
-        {
-            return new A2AProtectionIntentManagedDiskInputDetails(diskId, primaryStagingStorageAccountCustomInput, recoveryResourceGroupCustomInput, recoveryReplicaDiskAccountType, recoveryTargetDiskAccountType, recoveryDiskEncryptionSetId, diskEncryptionInfo);
-        }
-
-        /// <summary> Initializes a new instance of RecoveryResourceGroupCustomDetails. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <returns> A new <see cref="Models.RecoveryResourceGroupCustomDetails"/> instance for mocking. </returns>
-        public static RecoveryResourceGroupCustomDetails RecoveryResourceGroupCustomDetails(string resourceType = null)
-        {
-            return new UnknownRecoveryResourceGroupCustomDetails(resourceType);
         }
 
         /// <summary> Initializes a new instance of A2ACrossClusterMigrationReplicationDetails. </summary>
@@ -1891,55 +1632,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             healthErrors ??= new List<HealthError>();
 
             return new DraDetails(id, name, biosId, version, lastHeartbeatUtc, health, healthErrors?.ToList(), forwardProtectedItemCount, reverseProtectedItemCount);
-        }
-
-        /// <summary> Initializes a new instance of ExistingProtectionProfile. </summary>
-        /// <param name="protectionProfileId"> The protection profile Arm Id. Throw error, if resource does not exists. </param>
-        /// <returns> A new <see cref="Models.ExistingProtectionProfile"/> instance for mocking. </returns>
-        public static ExistingProtectionProfile ExistingProtectionProfile(string protectionProfileId = null)
-        {
-            return new ExistingProtectionProfile("Existing", protectionProfileId);
-        }
-
-        /// <summary> Initializes a new instance of ExistingRecoveryAvailabilitySet. </summary>
-        /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. Will throw error, if resource does not exist. </param>
-        /// <returns> A new <see cref="Models.ExistingRecoveryAvailabilitySet"/> instance for mocking. </returns>
-        public static ExistingRecoveryAvailabilitySet ExistingRecoveryAvailabilitySet(string recoveryAvailabilitySetId = null)
-        {
-            return new ExistingRecoveryAvailabilitySet("Existing", recoveryAvailabilitySetId);
-        }
-
-        /// <summary> Initializes a new instance of ExistingRecoveryProximityPlacementGroup. </summary>
-        /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. Will throw error, if resource does not exist. </param>
-        /// <returns> A new <see cref="Models.ExistingRecoveryProximityPlacementGroup"/> instance for mocking. </returns>
-        public static ExistingRecoveryProximityPlacementGroup ExistingRecoveryProximityPlacementGroup(string recoveryProximityPlacementGroupId = null)
-        {
-            return new ExistingRecoveryProximityPlacementGroup("Existing", recoveryProximityPlacementGroupId);
-        }
-
-        /// <summary> Initializes a new instance of ExistingRecoveryResourceGroup. </summary>
-        /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
-        /// <returns> A new <see cref="Models.ExistingRecoveryResourceGroup"/> instance for mocking. </returns>
-        public static ExistingRecoveryResourceGroup ExistingRecoveryResourceGroup(string recoveryResourceGroupId = null)
-        {
-            return new ExistingRecoveryResourceGroup("Existing", recoveryResourceGroupId);
-        }
-
-        /// <summary> Initializes a new instance of ExistingRecoveryVirtualNetwork. </summary>
-        /// <param name="recoveryVirtualNetworkId"> The recovery virtual network Id. Will throw error, if resource does not exist. </param>
-        /// <param name="recoverySubnetName"> The recovery subnet name. </param>
-        /// <returns> A new <see cref="Models.ExistingRecoveryVirtualNetwork"/> instance for mocking. </returns>
-        public static ExistingRecoveryVirtualNetwork ExistingRecoveryVirtualNetwork(string recoveryVirtualNetworkId = null, string recoverySubnetName = null)
-        {
-            return new ExistingRecoveryVirtualNetwork("Existing", recoveryVirtualNetworkId, recoverySubnetName);
-        }
-
-        /// <summary> Initializes a new instance of ExistingStorageAccount. </summary>
-        /// <param name="azureStorageAccountId"> The storage account Arm Id. Throw error, if resource does not exists. </param>
-        /// <returns> A new <see cref="Models.ExistingStorageAccount"/> instance for mocking. </returns>
-        public static ExistingStorageAccount ExistingStorageAccount(string azureStorageAccountId = null)
-        {
-            return new ExistingStorageAccount("Existing", azureStorageAccountId);
         }
 
         /// <summary> Initializes a new instance of ExportJobDetails. </summary>
@@ -3312,27 +3004,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MobilityServiceUpdate(version, rebootStatus, osType);
         }
 
-        /// <summary> Initializes a new instance of NewProtectionProfile. </summary>
-        /// <param name="policyName"> The protection profile input. </param>
-        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
-        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
-        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
-        /// <returns> A new <see cref="Models.NewProtectionProfile"/> instance for mocking. </returns>
-        public static NewProtectionProfile NewProtectionProfile(string policyName = null, int? recoveryPointHistory = null, int? crashConsistentFrequencyInMinutes = null, int? appConsistentFrequencyInMinutes = null, SetMultiVmSyncStatus multiVmSyncStatus = default)
-        {
-            return new NewProtectionProfile("New", policyName, recoveryPointHistory, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes, multiVmSyncStatus);
-        }
-
-        /// <summary> Initializes a new instance of NewRecoveryVirtualNetwork. </summary>
-        /// <param name="recoveryVirtualNetworkResourceGroupName"> The name of the resource group to be used to create the recovery virtual network. If absent, target network would be created in the same resource group as target VM. </param>
-        /// <param name="recoveryVirtualNetworkName"> The recovery virtual network name. </param>
-        /// <returns> A new <see cref="Models.NewRecoveryVirtualNetwork"/> instance for mocking. </returns>
-        public static NewRecoveryVirtualNetwork NewRecoveryVirtualNetwork(string recoveryVirtualNetworkResourceGroupName = null, string recoveryVirtualNetworkName = null)
-        {
-            return new NewRecoveryVirtualNetwork("New", recoveryVirtualNetworkResourceGroupName, recoveryVirtualNetworkName);
-        }
-
         /// <summary> Initializes a new instance of ProcessServer. </summary>
         /// <param name="friendlyName"> The Process Server&apos;s friendly name. </param>
         /// <param name="id"> The Process Server Id. </param>
@@ -3390,16 +3061,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanA2ADetails("A2A", primaryZone, recoveryZone, primaryExtendedLocation, recoveryExtendedLocation);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanAutomationRunbookActionDetails. </summary>
-        /// <param name="runbookId"> The runbook ARM Id. </param>
-        /// <param name="timeout"> The runbook timeout. </param>
-        /// <param name="fabricLocation"> The fabric location. </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanAutomationRunbookActionDetails"/> instance for mocking. </returns>
-        public static RecoveryPlanAutomationRunbookActionDetails RecoveryPlanAutomationRunbookActionDetails(string runbookId = null, string timeout = null, RecoveryPlanActionLocation fabricLocation = default)
-        {
-            return new RecoveryPlanAutomationRunbookActionDetails("AutomationRunbookActionDetails", runbookId, timeout, fabricLocation);
-        }
-
         /// <summary> Initializes a new instance of RecoveryPlanGroupTaskDetails. </summary>
         /// <param name="childTasks"> The child tasks. </param>
         /// <param name="name"> The name. </param>
@@ -3413,24 +3074,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanGroupTaskDetails("RecoveryPlanGroupTaskDetails", childTasks?.ToList(), name, groupId, rpGroupType);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanManualActionDetails. </summary>
-        /// <param name="description"> The manual action description. </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanManualActionDetails"/> instance for mocking. </returns>
-        public static RecoveryPlanManualActionDetails RecoveryPlanManualActionDetails(string description = null)
-        {
-            return new RecoveryPlanManualActionDetails("ManualActionDetails", description);
-        }
-
-        /// <summary> Initializes a new instance of RecoveryPlanScriptActionDetails. </summary>
-        /// <param name="path"> The script path. </param>
-        /// <param name="timeout"> The script timeout. </param>
-        /// <param name="fabricLocation"> The fabric location. </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanScriptActionDetails"/> instance for mocking. </returns>
-        public static RecoveryPlanScriptActionDetails RecoveryPlanScriptActionDetails(string path = null, string timeout = null, RecoveryPlanActionLocation fabricLocation = default)
-        {
-            return new RecoveryPlanScriptActionDetails("ScriptActionDetails", path, timeout, fabricLocation);
-        }
-
         /// <summary> Initializes a new instance of RecoveryPlanShutdownGroupTaskDetails. </summary>
         /// <param name="childTasks"> The child tasks. </param>
         /// <param name="name"> The name. </param>
@@ -3442,13 +3085,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             childTasks ??= new List<ASRTask>();
 
             return new RecoveryPlanShutdownGroupTaskDetails("RecoveryPlanShutdownGroupTaskDetails", childTasks?.ToList(), name, groupId, rpGroupType);
-        }
-
-        /// <summary> Initializes a new instance of ReplicationGroupDetails. </summary>
-        /// <returns> A new <see cref="Models.ReplicationGroupDetails"/> instance for mocking. </returns>
-        public static ReplicationGroupDetails ReplicationGroupDetails()
-        {
-            return new ReplicationGroupDetails("ReplicationGroupDetails");
         }
 
         /// <summary> Initializes a new instance of RunAsAccount. </summary>
@@ -3507,27 +3143,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static VirtualMachineTaskDetails VirtualMachineTaskDetails(JobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
         {
             return new VirtualMachineTaskDetails("VirtualMachineTaskDetails", jobTask, skippedReason, skippedReasonString);
-        }
-
-        /// <summary> Initializes a new instance of VmmDetails. </summary>
-        /// <returns> A new <see cref="Models.VmmDetails"/> instance for mocking. </returns>
-        public static VmmDetails VmmDetails()
-        {
-            return new VmmDetails("VMM");
-        }
-
-        /// <summary> Initializes a new instance of VmmToAzureNetworkMappingSettings. </summary>
-        /// <returns> A new <see cref="Models.VmmToAzureNetworkMappingSettings"/> instance for mocking. </returns>
-        public static VmmToAzureNetworkMappingSettings VmmToAzureNetworkMappingSettings()
-        {
-            return new VmmToAzureNetworkMappingSettings("VmmToAzure");
-        }
-
-        /// <summary> Initializes a new instance of VmmToVmmNetworkMappingSettings. </summary>
-        /// <returns> A new <see cref="Models.VmmToVmmNetworkMappingSettings"/> instance for mocking. </returns>
-        public static VmmToVmmNetworkMappingSettings VmmToVmmNetworkMappingSettings()
-        {
-            return new VmmToVmmNetworkMappingSettings("VmmToVmm");
         }
 
         /// <summary> Initializes a new instance of VmmVirtualMachineDetails. </summary>

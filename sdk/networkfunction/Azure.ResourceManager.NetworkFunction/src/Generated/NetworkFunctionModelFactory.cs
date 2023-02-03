@@ -58,44 +58,5 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
             return new CollectorPolicyData(id, name, resourceType, systemData, tags, location, etag, ingestionPolicy, emissionPolicies?.ToList(), provisioningState);
         }
-
-        /// <summary> Initializes a new instance of IngestionPolicyPropertiesFormat. </summary>
-        /// <param name="ingestionType"> The ingestion type. </param>
-        /// <param name="ingestionSources"> Ingestion Sources. </param>
-        /// <returns> A new <see cref="Models.IngestionPolicyPropertiesFormat"/> instance for mocking. </returns>
-        public static IngestionPolicyPropertiesFormat IngestionPolicyPropertiesFormat(IngestionType? ingestionType = null, IEnumerable<IngestionSourcesPropertiesFormat> ingestionSources = null)
-        {
-            ingestionSources ??= new List<IngestionSourcesPropertiesFormat>();
-
-            return new IngestionPolicyPropertiesFormat(ingestionType, ingestionSources?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of IngestionSourcesPropertiesFormat. </summary>
-        /// <param name="sourceType"> Ingestion source type. </param>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <returns> A new <see cref="Models.IngestionSourcesPropertiesFormat"/> instance for mocking. </returns>
-        public static IngestionSourcesPropertiesFormat IngestionSourcesPropertiesFormat(IngestionSourceType? sourceType = null, string resourceId = null)
-        {
-            return new IngestionSourcesPropertiesFormat(sourceType, resourceId);
-        }
-
-        /// <summary> Initializes a new instance of EmissionPoliciesPropertiesFormat. </summary>
-        /// <param name="emissionType"> Emission format type. </param>
-        /// <param name="emissionDestinations"> Emission policy destinations. </param>
-        /// <returns> A new <see cref="Models.EmissionPoliciesPropertiesFormat"/> instance for mocking. </returns>
-        public static EmissionPoliciesPropertiesFormat EmissionPoliciesPropertiesFormat(EmissionType? emissionType = null, IEnumerable<EmissionPolicyDestination> emissionDestinations = null)
-        {
-            emissionDestinations ??= new List<EmissionPolicyDestination>();
-
-            return new EmissionPoliciesPropertiesFormat(emissionType, emissionDestinations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of EmissionPolicyDestination. </summary>
-        /// <param name="destinationType"> Emission destination type. </param>
-        /// <returns> A new <see cref="Models.EmissionPolicyDestination"/> instance for mocking. </returns>
-        public static EmissionPolicyDestination EmissionPolicyDestination(EmissionDestinationType? destinationType = null)
-        {
-            return new EmissionPolicyDestination(destinationType);
-        }
     }
 }

@@ -37,16 +37,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new HubData(id, name, resourceType, systemData, tags, location, apiEndpoint, webEndpoint, provisioningState, tenantFeatures, hubBillingInfo);
         }
 
-        /// <summary> Initializes a new instance of HubBillingInfoFormat. </summary>
-        /// <param name="skuName"> The sku name. </param>
-        /// <param name="minUnits"> The minimum number of units will be billed. One unit is 10,000 Profiles and 100,000 Interactions. </param>
-        /// <param name="maxUnits"> The maximum number of units can be used.  One unit is 10,000 Profiles and 100,000 Interactions. </param>
-        /// <returns> A new <see cref="Models.HubBillingInfoFormat"/> instance for mocking. </returns>
-        public static HubBillingInfoFormat HubBillingInfoFormat(string skuName = null, int? minUnits = null, int? maxUnits = null)
-        {
-            return new HubBillingInfoFormat(skuName, minUnits, maxUnits);
-        }
-
         /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -83,21 +73,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new ProfileResourceFormatData(id, name, resourceType, systemData, attributes, description, displayName, localizedAttributes, smallImage, mediumImage, largeImage, apiEntitySetName, entityType, fields?.ToList(), instancesCount, lastChangedUtc, provisioningState, schemaItemTypeLink, tenantId, timestampFieldName, typeName, strongIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of StrongId. </summary>
-        /// <param name="keyPropertyNames"> The properties which make up the unique ID. </param>
-        /// <param name="strongIdName"> The Name identifying the strong ID. </param>
-        /// <param name="displayName"> Localized display name. </param>
-        /// <param name="description"> Localized descriptions. </param>
-        /// <returns> A new <see cref="Models.StrongId"/> instance for mocking. </returns>
-        public static StrongId StrongId(IEnumerable<string> keyPropertyNames = null, string strongIdName = null, IDictionary<string, string> displayName = null, IDictionary<string, string> description = null)
-        {
-            keyPropertyNames ??= new List<string>();
-            displayName ??= new Dictionary<string, string>();
-            description ??= new Dictionary<string, string>();
-
-            return new StrongId(keyPropertyNames?.ToList(), strongIdName, displayName, description);
-        }
-
         /// <summary> Initializes a new instance of PropertyDefinition. </summary>
         /// <param name="arrayValueSeparator"> Array value separator for properties with isArray set. </param>
         /// <param name="enumValidValues"> Describes valid values for an enum property. </param>
@@ -122,17 +97,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             dataSourcePrecedenceRules ??= new List<DataSourcePrecedence>();
 
             return new PropertyDefinition(arrayValueSeparator, enumValidValues?.ToList(), fieldName, fieldType, isArray, isEnum, isFlagEnum, isImage, isLocalizedString, isName, isRequired, propertyId, schemaItemPropLink, maxLength, isAvailableInGraph, dataSourcePrecedenceRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ProfileEnumValidValuesFormat. </summary>
-        /// <param name="value"> The integer value of the enum member. </param>
-        /// <param name="localizedValueNames"> Localized names of the enum member. </param>
-        /// <returns> A new <see cref="Models.ProfileEnumValidValuesFormat"/> instance for mocking. </returns>
-        public static ProfileEnumValidValuesFormat ProfileEnumValidValuesFormat(int? value = null, IDictionary<string, string> localizedValueNames = null)
-        {
-            localizedValueNames ??= new Dictionary<string, string>();
-
-            return new ProfileEnumValidValuesFormat(value, localizedValueNames);
         }
 
         /// <summary> Initializes a new instance of DataSourcePrecedence. </summary>
@@ -255,23 +219,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new InteractionResourceFormatData(id, name, resourceType, systemData, attributes, description, displayName, localizedAttributes, smallImage, mediumImage, largeImage, apiEntitySetName, entityType, fields?.ToList(), instancesCount, lastChangedUtc, provisioningState, schemaItemTypeLink, tenantId, timestampFieldName, typeName, idPropertyNames?.ToList(), participantProfiles?.ToList(), primaryParticipantProfilePropertyName, dataSourcePrecedenceRules?.ToList(), isActivity, namePropertiesDefaultDataSourceName, dataSourceType, status, idPropertiesDefaultDataSourceId, dataSourceReferenceId);
         }
 
-        /// <summary> Initializes a new instance of Participant. </summary>
-        /// <param name="profileTypeName"> Profile type name. </param>
-        /// <param name="participantPropertyReferences"> The property references. </param>
-        /// <param name="participantName"> Participant name. </param>
-        /// <param name="displayName"> Localized display name. </param>
-        /// <param name="description"> Localized descriptions. </param>
-        /// <param name="role"> The role that the participant is playing in the interaction. </param>
-        /// <returns> A new <see cref="Models.Participant"/> instance for mocking. </returns>
-        public static Participant Participant(string profileTypeName = null, IEnumerable<ParticipantPropertyReference> participantPropertyReferences = null, string participantName = null, IDictionary<string, string> displayName = null, IDictionary<string, string> description = null, string role = null)
-        {
-            participantPropertyReferences ??= new List<ParticipantPropertyReference>();
-            displayName ??= new Dictionary<string, string>();
-            description ??= new Dictionary<string, string>();
-
-            return new Participant(profileTypeName, participantPropertyReferences?.ToList(), participantName, displayName, description, role);
-        }
-
         /// <summary> Initializes a new instance of SuggestRelationshipLinksResponse. </summary>
         /// <param name="interactionName"> The interaction name. </param>
         /// <param name="suggestedRelationships"> Suggested relationships for the type. </param>
@@ -354,16 +301,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new RelationshipLinkResourceFormatData(id, name, resourceType, systemData, displayName, description, interactionType, linkName, mappings?.ToList(), profilePropertyReferences?.ToList(), provisioningState, relatedProfilePropertyReferences?.ToList(), relationshipName, relationshipGuidId, tenantId);
         }
 
-        /// <summary> Initializes a new instance of RelationshipLinkFieldMapping. </summary>
-        /// <param name="interactionFieldName"> The field name on the Interaction Type. </param>
-        /// <param name="linkType"> Link type. </param>
-        /// <param name="relationshipFieldName"> The field name on the Relationship metadata. </param>
-        /// <returns> A new <see cref="Models.RelationshipLinkFieldMapping"/> instance for mocking. </returns>
-        public static RelationshipLinkFieldMapping RelationshipLinkFieldMapping(string interactionFieldName = null, LinkType? linkType = null, string relationshipFieldName = null)
-        {
-            return new RelationshipLinkFieldMapping(interactionFieldName, linkType, relationshipFieldName);
-        }
-
         /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -442,74 +379,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static ConnectorMappingResourceFormatData ConnectorMappingResourceFormatData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string connectorName = null, ConnectorType? connectorType = null, DateTimeOffset? created = null, DateTimeOffset? lastModified = null, EntityType? entityType = null, string entityTypeName = null, string connectorMappingName = null, string displayName = null, string description = null, string dataFormatId = null, ConnectorMappingProperties mappingProperties = null, DateTimeOffset? nextRunOn = null, string runId = null, ConnectorMappingState? state = null, Guid? tenantId = null)
         {
             return new ConnectorMappingResourceFormatData(id, name, resourceType, systemData, connectorName, connectorType, created, lastModified, entityType, entityTypeName, connectorMappingName, displayName, description, dataFormatId, mappingProperties, nextRunOn, runId, state, tenantId);
-        }
-
-        /// <summary> Initializes a new instance of ConnectorMappingProperties. </summary>
-        /// <param name="folderPath"> The folder path for the mapping. </param>
-        /// <param name="fileFilter"> The file filter for the mapping. </param>
-        /// <param name="hasHeader"> If the file contains a header or not. </param>
-        /// <param name="errorManagement"> The error management setting for the mapping. </param>
-        /// <param name="format"> The format of mapping property. </param>
-        /// <param name="availability"> The availability of mapping property. </param>
-        /// <param name="structure"> Ingestion mapping information at property level. </param>
-        /// <param name="completeOperation"> The operation after import is done. </param>
-        /// <returns> A new <see cref="Models.ConnectorMappingProperties"/> instance for mocking. </returns>
-        public static ConnectorMappingProperties ConnectorMappingProperties(string folderPath = null, string fileFilter = null, bool? hasHeader = null, ConnectorMappingErrorManagement errorManagement = null, ConnectorMappingFormat format = null, ConnectorMappingAvailability availability = null, IEnumerable<ConnectorMappingStructure> structure = null, ConnectorMappingCompleteOperation completeOperation = null)
-        {
-            structure ??= new List<ConnectorMappingStructure>();
-
-            return new ConnectorMappingProperties(folderPath, fileFilter, hasHeader, errorManagement, format, availability, structure?.ToList(), completeOperation);
-        }
-
-        /// <summary> Initializes a new instance of ConnectorMappingErrorManagement. </summary>
-        /// <param name="errorManagementType"> The type of error management to use for the mapping. </param>
-        /// <param name="errorLimit"> The error limit allowed while importing data. </param>
-        /// <returns> A new <see cref="Models.ConnectorMappingErrorManagement"/> instance for mocking. </returns>
-        public static ConnectorMappingErrorManagement ConnectorMappingErrorManagement(ErrorManagementType errorManagementType = default, int? errorLimit = null)
-        {
-            return new ConnectorMappingErrorManagement(errorManagementType, errorLimit);
-        }
-
-        /// <summary> Initializes a new instance of ConnectorMappingFormat. </summary>
-        /// <param name="formatType"> The type mapping format. </param>
-        /// <param name="columnDelimiter"> The character that signifies a break between columns. </param>
-        /// <param name="acceptLanguage"> The oData language. </param>
-        /// <param name="quoteCharacter"> Quote character, used to indicate enquoted fields. </param>
-        /// <param name="quoteEscapeCharacter"> Escape character for quotes, can be the same as the quoteCharacter. </param>
-        /// <param name="arraySeparator"> Character separating array elements. </param>
-        /// <returns> A new <see cref="Models.ConnectorMappingFormat"/> instance for mocking. </returns>
-        public static ConnectorMappingFormat ConnectorMappingFormat(FormatType formatType = default, string columnDelimiter = null, string acceptLanguage = null, string quoteCharacter = null, string quoteEscapeCharacter = null, string arraySeparator = null)
-        {
-            return new ConnectorMappingFormat(formatType, columnDelimiter, acceptLanguage, quoteCharacter, quoteEscapeCharacter, arraySeparator);
-        }
-
-        /// <summary> Initializes a new instance of ConnectorMappingAvailability. </summary>
-        /// <param name="frequency"> The frequency to update. </param>
-        /// <param name="interval"> The interval of the given frequency to use. </param>
-        /// <returns> A new <see cref="Models.ConnectorMappingAvailability"/> instance for mocking. </returns>
-        public static ConnectorMappingAvailability ConnectorMappingAvailability(FrequencyType? frequency = null, int interval = default)
-        {
-            return new ConnectorMappingAvailability(frequency, interval);
-        }
-
-        /// <summary> Initializes a new instance of ConnectorMappingStructure. </summary>
-        /// <param name="propertyName"> The property name of the mapping entity. </param>
-        /// <param name="columnName"> The column name of the import file. </param>
-        /// <param name="customFormatSpecifier"> Custom format specifier for input parsing. </param>
-        /// <param name="isEncrypted"> Indicates if the column is encrypted. </param>
-        /// <returns> A new <see cref="Models.ConnectorMappingStructure"/> instance for mocking. </returns>
-        public static ConnectorMappingStructure ConnectorMappingStructure(string propertyName = null, string columnName = null, string customFormatSpecifier = null, bool? isEncrypted = null)
-        {
-            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier, isEncrypted);
-        }
-
-        /// <summary> Initializes a new instance of ConnectorMappingCompleteOperation. </summary>
-        /// <param name="completionOperationType"> The type of completion operation. </param>
-        /// <param name="destinationFolder"> The destination folder where files will be moved to once the import is done. </param>
-        /// <returns> A new <see cref="Models.ConnectorMappingCompleteOperation"/> instance for mocking. </returns>
-        public static ConnectorMappingCompleteOperation ConnectorMappingCompleteOperation(CompletionOperationType? completionOperationType = null, string destinationFolder = null)
-        {
-            return new ConnectorMappingCompleteOperation(completionOperationType, destinationFolder);
         }
 
         /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>
@@ -621,16 +490,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new LinkResourceFormatData(id, name, resourceType, systemData, tenantId, linkName, sourceEntityType, targetEntityType, sourceEntityTypeName, targetEntityTypeName, displayName, description, mappings?.ToList(), participantPropertyReferences?.ToList(), provisioningState, referenceOnly, operationType);
         }
 
-        /// <summary> Initializes a new instance of TypePropertiesMapping. </summary>
-        /// <param name="sourcePropertyName"> Property name on the source Entity Type. </param>
-        /// <param name="targetPropertyName"> Property name on the target Entity Type. </param>
-        /// <param name="linkType"> Link type. </param>
-        /// <returns> A new <see cref="Models.TypePropertiesMapping"/> instance for mocking. </returns>
-        public static TypePropertiesMapping TypePropertiesMapping(string sourcePropertyName = null, string targetPropertyName = null, LinkType? linkType = null)
-        {
-            return new TypePropertiesMapping(sourcePropertyName, targetPropertyName, linkType);
-        }
-
         /// <summary> Initializes a new instance of RoleResourceFormat. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -679,30 +538,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new RoleAssignmentResourceFormatData(id, name, resourceType, systemData, tenantId, assignmentName, displayName, description, provisioningState, role, principals?.ToList(), profiles, interactions, links, kpis, sasPolicies, connectors, views, relationshipLinks, relationships, widgetTypes, roleAssignments, conflationPolicies, segments);
         }
 
-        /// <summary> Initializes a new instance of AssignmentPrincipal. </summary>
-        /// <param name="principalId"> The principal id being assigned to. </param>
-        /// <param name="principalType"> The Type of the principal ID. </param>
-        /// <param name="principalMetadata"> Other metadata for the principal. </param>
-        /// <returns> A new <see cref="Models.AssignmentPrincipal"/> instance for mocking. </returns>
-        public static AssignmentPrincipal AssignmentPrincipal(string principalId = null, string principalType = null, IDictionary<string, string> principalMetadata = null)
-        {
-            principalMetadata ??= new Dictionary<string, string>();
-
-            return new AssignmentPrincipal(principalId, principalType, principalMetadata);
-        }
-
-        /// <summary> Initializes a new instance of ResourceSetDescription. </summary>
-        /// <param name="elements"> The elements included in the set. </param>
-        /// <param name="exceptions"> The elements that are not included in the set, in case elements contains &apos;*&apos; indicating &apos;all&apos;. </param>
-        /// <returns> A new <see cref="Models.ResourceSetDescription"/> instance for mocking. </returns>
-        public static ResourceSetDescription ResourceSetDescription(IEnumerable<string> elements = null, IEnumerable<string> exceptions = null)
-        {
-            elements ??= new List<string>();
-            exceptions ??= new List<string>();
-
-            return new ResourceSetDescription(elements?.ToList(), exceptions?.ToList());
-        }
-
         /// <summary> Initializes a new instance of ImageDefinition. </summary>
         /// <param name="imageExists"> Whether image exists already. </param>
         /// <param name="contentUri"> Content URL for the image blob. </param>
@@ -746,16 +581,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             grades ??= new List<PredictionGradesItem>();
 
             return new PredictionResourceFormatData(id, name, resourceType, systemData, description, displayName, involvedInteractionTypes?.ToList(), involvedKpiTypes?.ToList(), involvedRelationships?.ToList(), negativeOutcomeExpression, positiveOutcomeExpression, primaryProfileType, provisioningState, predictionName, scopeExpression, tenantId, autoAnalyze, mappings, scoreLabel, grades?.ToList(), systemGeneratedEntities);
-        }
-
-        /// <summary> Initializes a new instance of PredictionGradesItem. </summary>
-        /// <param name="gradeName"> Name of the grade. </param>
-        /// <param name="minScoreThreshold"> Minimum score threshold. </param>
-        /// <param name="maxScoreThreshold"> Maximum score threshold. </param>
-        /// <returns> A new <see cref="Models.PredictionGradesItem"/> instance for mocking. </returns>
-        public static PredictionGradesItem PredictionGradesItem(string gradeName = null, int? minScoreThreshold = null, int? maxScoreThreshold = null)
-        {
-            return new PredictionGradesItem(gradeName, minScoreThreshold, maxScoreThreshold);
         }
 
         /// <summary> Initializes a new instance of PredictionSystemGeneratedEntities. </summary>

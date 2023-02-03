@@ -12,7 +12,6 @@ using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -85,16 +84,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformServiceRequiredTraffic(protocol, port, ips?.ToList(), fqdns?.ToList(), direction);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSku. </summary>
-        /// <param name="name"> Name of the Sku. </param>
-        /// <param name="tier"> Tier of the Sku. </param>
-        /// <param name="capacity"> Current capacity of the target resource. </param>
-        /// <returns> A new <see cref="Models.AppPlatformSku"/> instance for mocking. </returns>
-        public static AppPlatformSku AppPlatformSku(string name = null, string tier = null, int? capacity = null)
-        {
-            return new AppPlatformSku(name, tier, capacity);
-        }
-
         /// <summary> Initializes a new instance of AppPlatformServiceTestKeys. </summary>
         /// <param name="primaryKey"> Primary key. </param>
         /// <param name="secondaryKey"> Secondary key. </param>
@@ -127,64 +116,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformConfigServerProperties AppPlatformConfigServerProperties(AppPlatformConfigServerState? provisioningState = null, AppPlatformErrorInfo error = null, AppPlatformConfigServerGitProperty configServerGitProperty = null)
         {
             return new AppPlatformConfigServerProperties(provisioningState, error, configServerGitProperty != null ? new ConfigServerSettings(configServerGitProperty) : null);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformErrorInfo. </summary>
-        /// <param name="code"> The code of error. </param>
-        /// <param name="message"> The message of error. </param>
-        /// <returns> A new <see cref="Models.AppPlatformErrorInfo"/> instance for mocking. </returns>
-        public static AppPlatformErrorInfo AppPlatformErrorInfo(string code = null, string message = null)
-        {
-            return new AppPlatformErrorInfo(code, message);
-        }
-
-        /// <summary> Initializes a new instance of ConfigServerSettings. </summary>
-        /// <param name="gitProperty"> Property of git environment. </param>
-        /// <returns> A new <see cref="Models.ConfigServerSettings"/> instance for mocking. </returns>
-        public static ConfigServerSettings ConfigServerSettings(AppPlatformConfigServerGitProperty gitProperty = null)
-        {
-            return new ConfigServerSettings(gitProperty);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformConfigServerGitProperty. </summary>
-        /// <param name="repositories"> Repositories of git. </param>
-        /// <param name="uri"> URI of the repository. </param>
-        /// <param name="label"> Label of the repository. </param>
-        /// <param name="searchPaths"> Searching path of the repository. </param>
-        /// <param name="username"> Username of git repository basic auth. </param>
-        /// <param name="password"> Password of git repository basic auth. </param>
-        /// <param name="hostKey"> Public sshKey of git repository. </param>
-        /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
-        /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
-        /// <param name="isHostKeyCheckingStrict"> Strict host key checking or not. </param>
-        /// <returns> A new <see cref="Models.AppPlatformConfigServerGitProperty"/> instance for mocking. </returns>
-        public static AppPlatformConfigServerGitProperty AppPlatformConfigServerGitProperty(IEnumerable<ConfigServerGitPatternRepository> repositories = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? isHostKeyCheckingStrict = null)
-        {
-            repositories ??= new List<ConfigServerGitPatternRepository>();
-            searchPaths ??= new List<string>();
-
-            return new AppPlatformConfigServerGitProperty(repositories?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, isHostKeyCheckingStrict);
-        }
-
-        /// <summary> Initializes a new instance of ConfigServerGitPatternRepository. </summary>
-        /// <param name="name"> Name of the repository. </param>
-        /// <param name="pattern"> Collection of pattern of the repository. </param>
-        /// <param name="uri"> URI of the repository. </param>
-        /// <param name="label"> Label of the repository. </param>
-        /// <param name="searchPaths"> Searching path of the repository. </param>
-        /// <param name="username"> Username of git repository basic auth. </param>
-        /// <param name="password"> Password of git repository basic auth. </param>
-        /// <param name="hostKey"> Public sshKey of git repository. </param>
-        /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
-        /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
-        /// <param name="isHostKeyCheckingStrict"> Strict host key checking or not. </param>
-        /// <returns> A new <see cref="Models.ConfigServerGitPatternRepository"/> instance for mocking. </returns>
-        public static ConfigServerGitPatternRepository ConfigServerGitPatternRepository(string name = null, IEnumerable<string> pattern = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? isHostKeyCheckingStrict = null)
-        {
-            pattern ??= new List<string>();
-            searchPaths ??= new List<string>();
-
-            return new ConfigServerGitPatternRepository(name, pattern?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, isHostKeyCheckingStrict);
         }
 
         /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>
@@ -253,37 +184,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformConfigurationServiceInstance AppPlatformConfigurationServiceInstance(string name = null, string status = null)
         {
             return new AppPlatformConfigurationServiceInstance(name, status);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettings. </summary>
-        /// <param name="configurationServiceGitRepositories"> Property of git environment. </param>
-        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceSettings"/> instance for mocking. </returns>
-        public static AppPlatformConfigurationServiceSettings AppPlatformConfigurationServiceSettings(IEnumerable<AppPlatformConfigurationServiceGitRepository> configurationServiceGitRepositories = null)
-        {
-            configurationServiceGitRepositories ??= new List<AppPlatformConfigurationServiceGitRepository>();
-
-            return new AppPlatformConfigurationServiceSettings(configurationServiceGitRepositories != null ? new ConfigurationServiceGitProperty(configurationServiceGitRepositories?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitRepository. </summary>
-        /// <param name="name"> Name of the repository. </param>
-        /// <param name="patterns"> Collection of patterns of the repository. </param>
-        /// <param name="uri"> URI of the repository. </param>
-        /// <param name="label"> Label of the repository. </param>
-        /// <param name="searchPaths"> Searching path of the repository. </param>
-        /// <param name="username"> Username of git repository basic auth. </param>
-        /// <param name="password"> Password of git repository basic auth. </param>
-        /// <param name="hostKey"> Public sshKey of git repository. </param>
-        /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
-        /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
-        /// <param name="isHostKeyCheckingStrict"> Strict host key checking or not. </param>
-        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceGitRepository"/> instance for mocking. </returns>
-        public static AppPlatformConfigurationServiceGitRepository AppPlatformConfigurationServiceGitRepository(string name = null, IEnumerable<string> patterns = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? isHostKeyCheckingStrict = null)
-        {
-            patterns ??= new List<string>();
-            searchPaths ??= new List<string>();
-
-            return new AppPlatformConfigurationServiceGitRepository(name, patterns?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, isHostKeyCheckingStrict);
         }
 
         /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettingsValidateResult. </summary>
@@ -418,21 +318,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuildProperties(relativePath, builder, agentPool, provisioningState, env, triggeredBuildResultId != null ? ResourceManagerModelFactory.SubResource(triggeredBuildResultId) : null, resourceRequests);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResourceRequirements. </summary>
-        /// <param name="cpu">
-        /// Optional Cpu allocated to the build resource. 1 core can be represented by 1 or 1000m. 
-        /// The default value is 1, this should not exceed build service agent pool cpu size.
-        /// </param>
-        /// <param name="memory">
-        /// Optional Memory allocated to the build resource. 1 GB can be represented by 1Gi or 1024Mi. 
-        /// The default value is 2Gi, this should not exceed build service agent pool memory size.
-        /// </param>
-        /// <returns> A new <see cref="Models.AppPlatformBuildResourceRequirements"/> instance for mocking. </returns>
-        public static AppPlatformBuildResourceRequirements AppPlatformBuildResourceRequirements(string cpu = null, string memory = null)
-        {
-            return new AppPlatformBuildResourceRequirements(cpu, memory);
-        }
-
         /// <summary> Initializes a new instance of AppPlatformBuildpackBindingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -453,18 +338,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformBuildpackBindingProperties AppPlatformBuildpackBindingProperties(BuildpackBindingType? bindingType = null, BuildpackBindingProvisioningState? provisioningState = null, BuildpackBindingLaunchProperties launchProperties = null)
         {
             return new AppPlatformBuildpackBindingProperties(bindingType, provisioningState, launchProperties);
-        }
-
-        /// <summary> Initializes a new instance of BuildpackBindingLaunchProperties. </summary>
-        /// <param name="properties"> Non-sensitive properties for launchProperties. </param>
-        /// <param name="secrets"> Sensitive properties for launchProperties. </param>
-        /// <returns> A new <see cref="Models.BuildpackBindingLaunchProperties"/> instance for mocking. </returns>
-        public static BuildpackBindingLaunchProperties BuildpackBindingLaunchProperties(IDictionary<string, string> properties = null, IDictionary<string, string> secrets = null)
-        {
-            properties ??= new Dictionary<string, string>();
-            secrets ??= new Dictionary<string, string>();
-
-            return new BuildpackBindingLaunchProperties(properties, secrets);
         }
 
         /// <summary> Initializes a new instance of AppPlatformBuildResultData. </summary>
@@ -533,26 +406,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformClusterStackProperties. </summary>
-        /// <param name="id"> Id of the ClusterStack. </param>
-        /// <param name="version"> Version of the ClusterStack. </param>
-        /// <returns> A new <see cref="Models.AppPlatformClusterStackProperties"/> instance for mocking. </returns>
-        public static AppPlatformClusterStackProperties AppPlatformClusterStackProperties(string id = null, string version = null)
-        {
-            return new AppPlatformClusterStackProperties(id, version);
-        }
-
-        /// <summary> Initializes a new instance of BuildpacksGroupProperties. </summary>
-        /// <param name="name"> Buildpack group name. </param>
-        /// <param name="buildpacks"> Buildpacks in the buildpack group. </param>
-        /// <returns> A new <see cref="Models.BuildpacksGroupProperties"/> instance for mocking. </returns>
-        public static BuildpacksGroupProperties BuildpacksGroupProperties(string name = null, IEnumerable<WritableSubResource> buildpacks = null)
-        {
-            buildpacks ??= new List<WritableSubResource>();
-
-            return new BuildpacksGroupProperties(name, buildpacks?.ToList());
-        }
-
         /// <summary> Initializes a new instance of AppPlatformResourceUploadResult. </summary>
         /// <param name="relativePath"> Source relative path. </param>
         /// <param name="uploadUri"> Upload URL. </param>
@@ -584,15 +437,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformSupportedStackData AppPlatformSupportedStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformSupportedStackProperties properties = null)
         {
             return new AppPlatformSupportedStackData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformSupportedStackProperties. </summary>
-        /// <param name="stackId"> The id of supported stack. </param>
-        /// <param name="version"> The version of supported stack. </param>
-        /// <returns> A new <see cref="Models.AppPlatformSupportedStackProperties"/> instance for mocking. </returns>
-        public static AppPlatformSupportedStackProperties AppPlatformSupportedStackProperties(string stackId = null, string version = null)
-        {
-            return new AppPlatformSupportedStackProperties(stackId, version);
         }
 
         /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolData. </summary>
@@ -689,15 +533,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformAppProperties(isPublic, uri, addonConfigs, provisioningState, fqdn, isHttpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), isEndToEndTlsEnabled, loadedCertificates?.ToList(), vnetAddons, ingressSettings);
         }
 
-        /// <summary> Initializes a new instance of AppTemporaryDisk. </summary>
-        /// <param name="sizeInGB"> Size of the temporary disk in GB. </param>
-        /// <param name="mountPath"> Mount path of the temporary disk. </param>
-        /// <returns> A new <see cref="Models.AppTemporaryDisk"/> instance for mocking. </returns>
-        public static AppTemporaryDisk AppTemporaryDisk(int? sizeInGB = null, string mountPath = null)
-        {
-            return new AppTemporaryDisk(sizeInGB, mountPath);
-        }
-
         /// <summary> Initializes a new instance of AppPersistentDisk. </summary>
         /// <param name="sizeInGB"> Size of the persistent disk in GB. </param>
         /// <param name="usedInGB"> Size of the used persistent disk in GB. </param>
@@ -708,41 +543,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPersistentDisk(sizeInGB, usedInGB, mountPath);
         }
 
-        /// <summary> Initializes a new instance of AppCustomPersistentDisk. </summary>
-        /// <param name="customPersistentDiskProperties">
-        /// Properties of the custom persistent disk resource payload.
-        /// Please note <see cref="AppCustomPersistentDiskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppPlatformAzureFileVolume"/>.
-        /// </param>
-        /// <param name="storageId"> The resource id of Azure Spring Apps Storage resource. </param>
-        /// <returns> A new <see cref="Models.AppCustomPersistentDisk"/> instance for mocking. </returns>
-        public static AppCustomPersistentDisk AppCustomPersistentDisk(AppCustomPersistentDiskProperties customPersistentDiskProperties = null, string storageId = null)
-        {
-            return new AppCustomPersistentDisk(customPersistentDiskProperties, storageId);
-        }
-
-        /// <summary> Initializes a new instance of AppCustomPersistentDiskProperties. </summary>
-        /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
-        /// <param name="mountPath"> The mount path of the persistent disk. </param>
-        /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
-        /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
-        /// <returns> A new <see cref="Models.AppCustomPersistentDiskProperties"/> instance for mocking. </returns>
-        public static AppCustomPersistentDiskProperties AppCustomPersistentDiskProperties(string underlyingResourceType = "Unknown", string mountPath = null, bool? isReadOnly = null, IEnumerable<string> mountOptions = null)
-        {
-            mountOptions ??= new List<string>();
-
-            return new UnknownCustomPersistentDiskProperties(underlyingResourceType, mountPath, isReadOnly, mountOptions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AppLoadedCertificate. </summary>
-        /// <param name="resourceId"> Resource Id of loaded certificate. </param>
-        /// <param name="loadTrustStore"> Indicate whether the certificate will be loaded into default trust store, only work for Java runtime. </param>
-        /// <returns> A new <see cref="Models.AppLoadedCertificate"/> instance for mocking. </returns>
-        public static AppLoadedCertificate AppLoadedCertificate(ResourceIdentifier resourceId = null, bool? loadTrustStore = null)
-        {
-            return new AppLoadedCertificate(resourceId, loadTrustStore);
-        }
-
         /// <summary> Initializes a new instance of AppVnetAddons. </summary>
         /// <param name="isPublicEndpoint"> Indicates whether the App in vnet injection instance exposes endpoint which could be accessed from internet. </param>
         /// <param name="publicEndpointUri"> URL of the App in vnet injection instance which could be accessed from internet. </param>
@@ -750,21 +550,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppVnetAddons AppVnetAddons(bool? isPublicEndpoint = null, Uri publicEndpointUri = null)
         {
             return new AppVnetAddons(isPublicEndpoint, publicEndpointUri);
-        }
-
-        /// <summary> Initializes a new instance of AppIngressSettings. </summary>
-        /// <param name="readTimeoutInSeconds"> Ingress read time out in seconds. </param>
-        /// <param name="sendTimeoutInSeconds"> Ingress send time out in seconds. </param>
-        /// <param name="sessionAffinity"> Type of the affinity, set this to Cookie to enable session affinity. </param>
-        /// <param name="sessionCookieMaxAge"> Time in seconds until the cookie expires. </param>
-        /// <param name="backendProtocol"> How ingress should communicate with this app backend service. </param>
-        /// <param name="clientAuthCertificates"> Client-Certification Authentication. </param>
-        /// <returns> A new <see cref="Models.AppIngressSettings"/> instance for mocking. </returns>
-        public static AppIngressSettings AppIngressSettings(int? readTimeoutInSeconds = null, int? sendTimeoutInSeconds = null, AppSessionAffinity? sessionAffinity = null, int? sessionCookieMaxAge = null, AppBackendProtocol? backendProtocol = null, IEnumerable<string> clientAuthCertificates = null)
-        {
-            clientAuthCertificates ??= new List<string>();
-
-            return new AppIngressSettings(readTimeoutInSeconds, sendTimeoutInSeconds, sessionAffinity, sessionCookieMaxAge, backendProtocol, clientAuthCertificates != null ? new IngressSettingsClientAuth(clientAuthCertificates?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AppPlatformBindingData. </summary>
@@ -810,14 +595,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformStorageData AppPlatformStorageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformStorageProperties properties = null)
         {
             return new AppPlatformStorageData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
-        /// <param name="storageType"> The type of the storage. </param>
-        /// <returns> A new <see cref="Models.AppPlatformStorageProperties"/> instance for mocking. </returns>
-        public static AppPlatformStorageProperties AppPlatformStorageProperties(string storageType = "Unknown")
-        {
-            return new UnknownStorageProperties(storageType);
         }
 
         /// <summary> Initializes a new instance of AppPlatformCertificateData. </summary>
@@ -926,68 +703,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             instances ??= new List<AppPlatformDeploymentInstance>();
 
             return new AppPlatformDeploymentProperties(source, deploymentSettings, provisioningState, status, isActive, instances?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformUserSourceInfo. </summary>
-        /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
-        /// <param name="version"> Version of the source. </param>
-        /// <returns> A new <see cref="Models.AppPlatformUserSourceInfo"/> instance for mocking. </returns>
-        public static AppPlatformUserSourceInfo AppPlatformUserSourceInfo(string userSourceInfoType = null, string version = null)
-        {
-            return new UnknownUserSourceInfo(userSourceInfoType, version);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformDeploymentSettings. </summary>
-        /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. It is recommended that using this field to represent the required CPU and Memory, the old field cpu and memoryInGB will be deprecated later. </param>
-        /// <param name="environmentVariables"> Collection of environment variables. </param>
-        /// <param name="addonConfigs"> Collection of addons. </param>
-        /// <param name="livenessProbe"> Periodic probe of App Instance liveness. App Instance will be restarted if the probe fails. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
-        /// <param name="readinessProbe"> Periodic probe of App Instance service readiness. App Instance will be removed from service endpoints if the probe fails. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
-        /// <param name="startupProbe"> StartupProbe indicates that the App Instance has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a App Instance&apos;s lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
-        /// <param name="terminationGracePeriodInSeconds"> Optional duration in seconds the App Instance needs to terminate gracefully. May be decreased in delete request. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. The grace period is the duration in seconds after the processes running in the App Instance are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. Defaults to 90 seconds. </param>
-        /// <param name="isProbeDisabled"> Container liveness and readiness probe settings. </param>
-        /// <returns> A new <see cref="Models.AppPlatformDeploymentSettings"/> instance for mocking. </returns>
-        public static AppPlatformDeploymentSettings AppPlatformDeploymentSettings(AppPlatformDeploymentResourceRequirements resourceRequests = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, AppInstanceProbe livenessProbe = null, AppInstanceProbe readinessProbe = null, AppInstanceProbe startupProbe = null, int? terminationGracePeriodInSeconds = null, bool? isProbeDisabled = null)
-        {
-            environmentVariables ??= new Dictionary<string, string>();
-            addonConfigs ??= new Dictionary<string, IDictionary<string, BinaryData>>();
-
-            return new AppPlatformDeploymentSettings(resourceRequests, environmentVariables, addonConfigs, livenessProbe, readinessProbe, startupProbe, terminationGracePeriodInSeconds, isProbeDisabled != null ? new ContainerProbeSettings(isProbeDisabled) : null);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformDeploymentResourceRequirements. </summary>
-        /// <param name="cpu"> Required CPU. 1 core can be represented by 1 or 1000m. This should be 500m or 1 for Basic tier, and {500m, 1, 2, 3, 4} for Standard tier. </param>
-        /// <param name="memory"> Required memory. 1 GB can be represented by 1Gi or 1024Mi. This should be {512Mi, 1Gi, 2Gi} for Basic tier, and {512Mi, 1Gi, 2Gi, ..., 8Gi} for Standard tier. </param>
-        /// <returns> A new <see cref="Models.AppPlatformDeploymentResourceRequirements"/> instance for mocking. </returns>
-        public static AppPlatformDeploymentResourceRequirements AppPlatformDeploymentResourceRequirements(string cpu = null, string memory = null)
-        {
-            return new AppPlatformDeploymentResourceRequirements(cpu, memory);
-        }
-
-        /// <summary> Initializes a new instance of AppInstanceProbe. </summary>
-        /// <param name="probeAction">
-        /// The action of the probe.
-        /// Please note <see cref="AppInstanceProbeAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInstanceExecAction"/>, <see cref="AppInstanceHttpGetAction"/> and <see cref="AppInstanceTcpSocketAction"/>.
-        /// </param>
-        /// <param name="isProbeDisabled"> Indicate whether the probe is disabled. </param>
-        /// <param name="initialDelayInSeconds"> Number of seconds after the App Instance has started before probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
-        /// <param name="periodInSeconds"> How often (in seconds) to perform the probe. Minimum value is 1. </param>
-        /// <param name="timeoutInSeconds"> Number of seconds after which the probe times out. Minimum value is 1. </param>
-        /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Minimum value is 1. </param>
-        /// <param name="successThreshold"> Minimum consecutive successes for the probe to be considered successful after having failed. Must be 1 for liveness and startup. Minimum value is 1. </param>
-        /// <returns> A new <see cref="Models.AppInstanceProbe"/> instance for mocking. </returns>
-        public static AppInstanceProbe AppInstanceProbe(AppInstanceProbeAction probeAction = null, bool isProbeDisabled = default, int? initialDelayInSeconds = null, int? periodInSeconds = null, int? timeoutInSeconds = null, int? failureThreshold = null, int? successThreshold = null)
-        {
-            return new AppInstanceProbe(probeAction, isProbeDisabled, initialDelayInSeconds, periodInSeconds, timeoutInSeconds, failureThreshold, successThreshold);
-        }
-
-        /// <summary> Initializes a new instance of AppInstanceProbeAction. </summary>
-        /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
-        /// <returns> A new <see cref="Models.AppInstanceProbeAction"/> instance for mocking. </returns>
-        public static AppInstanceProbeAction AppInstanceProbeAction(string probeActionType = "Unknown")
-        {
-            return new UnknownProbeAction(probeActionType);
         }
 
         /// <summary> Initializes a new instance of AppPlatformDeploymentInstance. </summary>
@@ -1168,58 +883,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformGatewayProperties(provisioningState, isPublic, uri, isHttpsOnly, ssoProperties, apiMetadataProperties, corsProperties, resourceRequests, instances?.ToList(), operatorProperties);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>
-        /// <param name="scope"> It defines the specific actions applications can be allowed to do on a user&apos;s behalf. </param>
-        /// <param name="clientId"> The public identifier for the application. </param>
-        /// <param name="clientSecret"> The secret known only to the application and the authorization server. </param>
-        /// <param name="issuerUri"> The URI of Issuer Identifier. </param>
-        /// <returns> A new <see cref="Models.AppPlatformSsoProperties"/> instance for mocking. </returns>
-        public static AppPlatformSsoProperties AppPlatformSsoProperties(IEnumerable<string> scope = null, string clientId = null, string clientSecret = null, Uri issuerUri = null)
-        {
-            scope ??= new List<string>();
-
-            return new AppPlatformSsoProperties(scope?.ToList(), clientId, clientSecret, issuerUri);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiMetadataProperties. </summary>
-        /// <param name="title"> Title describing the context of the APIs available on the Gateway instance (default: `Spring Cloud Gateway for K8S`). </param>
-        /// <param name="description"> Detailed description of the APIs available on the Gateway instance (default: `Generated OpenAPI 3 document that describes the API routes configured.`). </param>
-        /// <param name="documentation"> Location of additional documentation for the APIs available on the Gateway instance. </param>
-        /// <param name="version"> Version of APIs available on this Gateway instance (default: `unspecified`). </param>
-        /// <param name="serverUri"> Base URL that API consumers will use to access APIs on the Gateway instance. </param>
-        /// <returns> A new <see cref="Models.AppPlatformGatewayApiMetadataProperties"/> instance for mocking. </returns>
-        public static AppPlatformGatewayApiMetadataProperties AppPlatformGatewayApiMetadataProperties(string title = null, string description = null, string documentation = null, string version = null, Uri serverUri = null)
-        {
-            return new AppPlatformGatewayApiMetadataProperties(title, description, documentation, version, serverUri);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
-        /// <param name="allowedOrigins"> Allowed origins to make cross-site requests. The special value `*` allows all domains. </param>
-        /// <param name="allowedMethods"> Allowed HTTP methods on cross-site requests. The special value `*` allows all methods. If not set, `GET` and `HEAD` are allowed by default. </param>
-        /// <param name="allowedHeaders"> Allowed headers in cross-site requests. The special value `*` allows actual requests to send any header. </param>
-        /// <param name="maxAge"> How long, in seconds, the response from a pre-flight request can be cached by clients. </param>
-        /// <param name="areCredentialsAllowed"> Whether user credentials are supported on cross-site requests. Valid values: `true`, `false`. </param>
-        /// <param name="exposedHeaders"> HTTP response headers to expose for cross-site requests. </param>
-        /// <returns> A new <see cref="Models.AppPlatformGatewayCorsProperties"/> instance for mocking. </returns>
-        public static AppPlatformGatewayCorsProperties AppPlatformGatewayCorsProperties(IEnumerable<string> allowedOrigins = null, IEnumerable<string> allowedMethods = null, IEnumerable<string> allowedHeaders = null, int? maxAge = null, bool? areCredentialsAllowed = null, IEnumerable<string> exposedHeaders = null)
-        {
-            allowedOrigins ??= new List<string>();
-            allowedMethods ??= new List<string>();
-            allowedHeaders ??= new List<string>();
-            exposedHeaders ??= new List<string>();
-
-            return new AppPlatformGatewayCorsProperties(allowedOrigins?.ToList(), allowedMethods?.ToList(), allowedHeaders?.ToList(), maxAge, areCredentialsAllowed, exposedHeaders?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformGatewayResourceRequirements. </summary>
-        /// <param name="cpu"> Cpu allocated to each Spring Cloud Gateway instance. </param>
-        /// <param name="memory"> Memory allocated to each Spring Cloud Gateway instance. </param>
-        /// <returns> A new <see cref="Models.AppPlatformGatewayResourceRequirements"/> instance for mocking. </returns>
-        public static AppPlatformGatewayResourceRequirements AppPlatformGatewayResourceRequirements(string cpu = null, string memory = null)
-        {
-            return new AppPlatformGatewayResourceRequirements(cpu, memory);
-        }
-
         /// <summary> Initializes a new instance of AppPlatformGatewayInstance. </summary>
         /// <param name="name"> Name of the Spring Cloud Gateway instance. </param>
         /// <param name="status"> Status of the Spring Cloud Gateway instance. </param>
@@ -1274,26 +937,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             routes ??= new List<AppPlatformGatewayApiRoute>();
 
             return new AppPlatformGatewayRouteConfigProperties(provisioningState, appResourceId, openApiUri != null ? new GatewayRouteConfigOpenApiProperties(openApiUri) : null, protocol, routes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiRoute. </summary>
-        /// <param name="title"> A title, will be applied to methods in the generated OpenAPI documentation. </param>
-        /// <param name="description"> A description, will be applied to methods in the generated OpenAPI documentation. </param>
-        /// <param name="uri"> Full uri, will override `appName`. </param>
-        /// <param name="isSsoEnabled"> Enable sso validation. </param>
-        /// <param name="isTokenRelayed"> Pass currently-authenticated user&apos;s identity token to application service, default is &apos;false&apos;. </param>
-        /// <param name="predicates"> A number of conditions to evaluate a route for each request. Each predicate may be evaluated against request headers and parameter values. All of the predicates associated with a route must evaluate to true for the route to be matched to the request. </param>
-        /// <param name="filters"> To modify the request before sending it to the target endpoint, or the received response. </param>
-        /// <param name="order"> Route processing order. </param>
-        /// <param name="tags"> Classification tags, will be applied to methods in the generated OpenAPI documentation. </param>
-        /// <returns> A new <see cref="Models.AppPlatformGatewayApiRoute"/> instance for mocking. </returns>
-        public static AppPlatformGatewayApiRoute AppPlatformGatewayApiRoute(string title = null, string description = null, Uri uri = null, bool? isSsoEnabled = null, bool? isTokenRelayed = null, IEnumerable<string> predicates = null, IEnumerable<string> filters = null, int? order = null, IEnumerable<string> tags = null)
-        {
-            predicates ??= new List<string>();
-            filters ??= new List<string>();
-            tags ??= new List<string>();
-
-            return new AppPlatformGatewayApiRoute(title, description, uri, isSsoEnabled, isTokenRelayed, predicates?.ToList(), filters?.ToList(), order, tags?.ToList());
         }
 
         /// <summary> Initializes a new instance of AppPlatformGatewayCustomDomainData. </summary>
@@ -1408,148 +1051,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
             dnsNames ??= new List<string>();
 
             return new AppPlatformContentCertificateProperties("ContentCertificate", thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, content);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformStorageAccount. </summary>
-        /// <param name="accountName"> The account name of the Azure Storage Account. </param>
-        /// <param name="accountKey"> The account key of the Azure Storage Account. </param>
-        /// <returns> A new <see cref="Models.AppPlatformStorageAccount"/> instance for mocking. </returns>
-        public static AppPlatformStorageAccount AppPlatformStorageAccount(string accountName = null, string accountKey = null)
-        {
-            return new AppPlatformStorageAccount(StorageType.StorageAccount, accountName, accountKey);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformAzureFileVolume. </summary>
-        /// <param name="mountPath"> The mount path of the persistent disk. </param>
-        /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
-        /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
-        /// <param name="shareName"> The share name of the Azure File share. </param>
-        /// <returns> A new <see cref="Models.AppPlatformAzureFileVolume"/> instance for mocking. </returns>
-        public static AppPlatformAzureFileVolume AppPlatformAzureFileVolume(string mountPath = null, bool? isReadOnly = null, IEnumerable<string> mountOptions = null, string shareName = null)
-        {
-            mountOptions ??= new List<string>();
-
-            return new AppPlatformAzureFileVolume(UnderlyingResourceType.AzureFileVolume, mountPath, isReadOnly, mountOptions?.ToList(), shareName);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformUploadedUserSourceInfo. </summary>
-        /// <param name="version"> Version of the source. </param>
-        /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
-        /// <returns> A new <see cref="Models.AppPlatformUploadedUserSourceInfo"/> instance for mocking. </returns>
-        public static AppPlatformUploadedUserSourceInfo AppPlatformUploadedUserSourceInfo(string version = null, string relativePath = null)
-        {
-            return new AppPlatformUploadedUserSourceInfo("UploadedUserSourceInfo", version, relativePath);
-        }
-
-        /// <summary> Initializes a new instance of JarUploadedUserSourceInfo. </summary>
-        /// <param name="version"> Version of the source. </param>
-        /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
-        /// <param name="runtimeVersion"> Runtime version of the Jar file. </param>
-        /// <param name="jvmOptions"> JVM parameter. </param>
-        /// <returns> A new <see cref="Models.JarUploadedUserSourceInfo"/> instance for mocking. </returns>
-        public static JarUploadedUserSourceInfo JarUploadedUserSourceInfo(string version = null, string relativePath = null, string runtimeVersion = null, string jvmOptions = null)
-        {
-            return new JarUploadedUserSourceInfo("Jar", version, relativePath, runtimeVersion, jvmOptions);
-        }
-
-        /// <summary> Initializes a new instance of SourceUploadedUserSourceInfo. </summary>
-        /// <param name="version"> Version of the source. </param>
-        /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
-        /// <param name="artifactSelector">
-        /// Selector for the artifact to be used for the deployment for multi-module projects. This should be
-        /// the relative path to the target module/project.
-        /// </param>
-        /// <param name="runtimeVersion"> Runtime version of the source file. </param>
-        /// <returns> A new <see cref="Models.SourceUploadedUserSourceInfo"/> instance for mocking. </returns>
-        public static SourceUploadedUserSourceInfo SourceUploadedUserSourceInfo(string version = null, string relativePath = null, string artifactSelector = null, string runtimeVersion = null)
-        {
-            return new SourceUploadedUserSourceInfo("Source", version, relativePath, artifactSelector, runtimeVersion);
-        }
-
-        /// <summary> Initializes a new instance of NetCoreZipUploadedUserSourceInfo. </summary>
-        /// <param name="version"> Version of the source. </param>
-        /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
-        /// <param name="netCoreMainEntryPath"> The path to the .NET executable relative to zip root. </param>
-        /// <param name="runtimeVersion"> Runtime version of the .Net file. </param>
-        /// <returns> A new <see cref="Models.NetCoreZipUploadedUserSourceInfo"/> instance for mocking. </returns>
-        public static NetCoreZipUploadedUserSourceInfo NetCoreZipUploadedUserSourceInfo(string version = null, string relativePath = null, string netCoreMainEntryPath = null, string runtimeVersion = null)
-        {
-            return new NetCoreZipUploadedUserSourceInfo("NetCoreZip", version, relativePath, netCoreMainEntryPath, runtimeVersion);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformBuildResultUserSourceInfo. </summary>
-        /// <param name="version"> Version of the source. </param>
-        /// <param name="buildResultId"> Resource id of an existing succeeded build result under the same Spring instance. </param>
-        /// <returns> A new <see cref="Models.AppPlatformBuildResultUserSourceInfo"/> instance for mocking. </returns>
-        public static AppPlatformBuildResultUserSourceInfo AppPlatformBuildResultUserSourceInfo(string version = null, string buildResultId = null)
-        {
-            return new AppPlatformBuildResultUserSourceInfo("BuildResult", version, buildResultId);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformCustomContainerUserSourceInfo. </summary>
-        /// <param name="version"> Version of the source. </param>
-        /// <param name="customContainer"> Custom container payload. </param>
-        /// <returns> A new <see cref="Models.AppPlatformCustomContainerUserSourceInfo"/> instance for mocking. </returns>
-        public static AppPlatformCustomContainerUserSourceInfo AppPlatformCustomContainerUserSourceInfo(string version = null, AppPlatformCustomContainer customContainer = null)
-        {
-            return new AppPlatformCustomContainerUserSourceInfo("Container", version, customContainer);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformCustomContainer. </summary>
-        /// <param name="server"> The name of the registry that contains the container image. </param>
-        /// <param name="containerImage"> Container image of the custom container. This should be in the form of &lt;repository&gt;:&lt;tag&gt; without the server name of the registry. </param>
-        /// <param name="command"> Entrypoint array. Not executed within a shell. The docker image&apos;s ENTRYPOINT is used if this is not provided. </param>
-        /// <param name="args"> Arguments to the entrypoint. The docker image&apos;s CMD is used if this is not provided. </param>
-        /// <param name="imageRegistryCredential"> Credential of the image registry. </param>
-        /// <param name="languageFramework"> Language framework of the container image uploaded. </param>
-        /// <returns> A new <see cref="Models.AppPlatformCustomContainer"/> instance for mocking. </returns>
-        public static AppPlatformCustomContainer AppPlatformCustomContainer(string server = null, string containerImage = null, IEnumerable<string> command = null, IEnumerable<string> args = null, AppPlatformImageRegistryCredential imageRegistryCredential = null, string languageFramework = null)
-        {
-            command ??= new List<string>();
-            args ??= new List<string>();
-
-            return new AppPlatformCustomContainer(server, containerImage, command?.ToList(), args?.ToList(), imageRegistryCredential, languageFramework);
-        }
-
-        /// <summary> Initializes a new instance of AppPlatformImageRegistryCredential. </summary>
-        /// <param name="username"> The username of the image registry credential. </param>
-        /// <param name="password"> The password of the image registry credential. </param>
-        /// <returns> A new <see cref="Models.AppPlatformImageRegistryCredential"/> instance for mocking. </returns>
-        public static AppPlatformImageRegistryCredential AppPlatformImageRegistryCredential(string username = null, string password = null)
-        {
-            return new AppPlatformImageRegistryCredential(username, password);
-        }
-
-        /// <summary> Initializes a new instance of AppInstanceHttpGetAction. </summary>
-        /// <param name="path"> Path to access on the HTTP server. </param>
-        /// <param name="scheme">
-        /// Scheme to use for connecting to the host. Defaults to HTTP.
-        /// 
-        /// Possible enum values:
-        ///  - `&quot;HTTP&quot;` means that the scheme used will be http://
-        ///  - `&quot;HTTPS&quot;` means that the scheme used will be https://
-        /// </param>
-        /// <returns> A new <see cref="Models.AppInstanceHttpGetAction"/> instance for mocking. </returns>
-        public static AppInstanceHttpGetAction AppInstanceHttpGetAction(string path = null, AppInstanceHttpSchemeType? scheme = null)
-        {
-            return new AppInstanceHttpGetAction(ProbeActionType.HttpGetAction, path, scheme);
-        }
-
-        /// <summary> Initializes a new instance of AppInstanceExecAction. </summary>
-        /// <param name="command"> Command is the command line to execute inside the container, the working directory for the command is root (&apos;/&apos;) in the container&apos;s filesystem. The command is not run inside a shell, so traditional shell instructions (&apos;|&apos;, etc) won&apos;t work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy. </param>
-        /// <returns> A new <see cref="Models.AppInstanceExecAction"/> instance for mocking. </returns>
-        public static AppInstanceExecAction AppInstanceExecAction(IEnumerable<string> command = null)
-        {
-            command ??= new List<string>();
-
-            return new AppInstanceExecAction(ProbeActionType.ExecAction, command?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AppInstanceTcpSocketAction. </summary>
-        /// <returns> A new <see cref="Models.AppInstanceTcpSocketAction"/> instance for mocking. </returns>
-        public static AppInstanceTcpSocketAction AppInstanceTcpSocketAction()
-        {
-            return new AppInstanceTcpSocketAction(ProbeActionType.TCPSocketAction);
         }
     }
 }

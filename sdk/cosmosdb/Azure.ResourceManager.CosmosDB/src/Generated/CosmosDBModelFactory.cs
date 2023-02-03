@@ -85,32 +85,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBAccountData(id, name, resourceType, systemData, tags, location, kind, identity, provisioningState, documentEndpoint, databaseAccountOfferType, ipRules?.ToList(), isVirtualNetworkFilterEnabled, enableAutomaticFailover, consistencyPolicy, capabilities?.ToList(), writeLocations?.ToList(), readLocations?.ToList(), locations?.ToList(), failoverPolicies?.ToList(), virtualNetworkRules?.ToList(), privateEndpointConnections?.ToList(), enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, defaultIdentity, publicNetworkAccess, isFreeTierEnabled, apiServerVersion != null ? new ApiProperties(apiServerVersion) : null, isAnalyticalStorageEnabled, analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType) : null, instanceId, createMode, restoreParameters, backupPolicy, cors?.ToList(), networkAclBypass, networkAclBypassResourceIds?.ToList(), disableLocalAuth, capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit) : null, keysMetadata, enablePartitionMerge);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBIPAddressOrRange. </summary>
-        /// <param name="ipAddressOrRange"> A single IPv4 address or a single IPv4 address range in CIDR format. Provided IPs must be well-formatted and cannot be contained in one of the following ranges: 10.0.0.0/8, 100.64.0.0/10, 172.16.0.0/12, 192.168.0.0/16, since these are not enforceable by the IP address filter. Example of valid inputs: “23.40.210.245” or “23.40.210.0/8”. </param>
-        /// <returns> A new <see cref="Models.CosmosDBIPAddressOrRange"/> instance for mocking. </returns>
-        public static CosmosDBIPAddressOrRange CosmosDBIPAddressOrRange(string ipAddressOrRange = null)
-        {
-            return new CosmosDBIPAddressOrRange(ipAddressOrRange);
-        }
-
-        /// <summary> Initializes a new instance of ConsistencyPolicy. </summary>
-        /// <param name="defaultConsistencyLevel"> The default consistency level and configuration settings of the Cosmos DB account. </param>
-        /// <param name="maxStalenessPrefix"> When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 1 – 2,147,483,647. Required when defaultConsistencyPolicy is set to &apos;BoundedStaleness&apos;. </param>
-        /// <param name="maxIntervalInSeconds"> When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400. Required when defaultConsistencyPolicy is set to &apos;BoundedStaleness&apos;. </param>
-        /// <returns> A new <see cref="Models.ConsistencyPolicy"/> instance for mocking. </returns>
-        public static ConsistencyPolicy ConsistencyPolicy(DefaultConsistencyLevel defaultConsistencyLevel = default, long? maxStalenessPrefix = null, int? maxIntervalInSeconds = null)
-        {
-            return new ConsistencyPolicy(defaultConsistencyLevel, maxStalenessPrefix, maxIntervalInSeconds);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBAccountCapability. </summary>
-        /// <param name="name"> Name of the Cosmos DB capability. For example, &quot;name&quot;: &quot;EnableCassandra&quot;. Current values also include &quot;EnableTable&quot; and &quot;EnableGremlin&quot;. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountCapability"/> instance for mocking. </returns>
-        public static CosmosDBAccountCapability CosmosDBAccountCapability(string name = null)
-        {
-            return new CosmosDBAccountCapability(name);
-        }
-
         /// <summary> Initializes a new instance of CosmosDBAccountLocation. </summary>
         /// <param name="id"> The unique identifier of the region within the database account. Example: &amp;lt;accountName&amp;gt;-&amp;lt;locationName&amp;gt;. </param>
         /// <param name="locationName"> The name of the region. </param>
@@ -132,15 +106,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBFailoverPolicy CosmosDBFailoverPolicy(string id = null, AzureLocation? locationName = null, int? failoverPriority = null)
         {
             return new CosmosDBFailoverPolicy(id, locationName, failoverPriority);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBVirtualNetworkRule. </summary>
-        /// <param name="id"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
-        /// <returns> A new <see cref="Models.CosmosDBVirtualNetworkRule"/> instance for mocking. </returns>
-        public static CosmosDBVirtualNetworkRule CosmosDBVirtualNetworkRule(ResourceIdentifier id = null, bool? ignoreMissingVnetServiceEndpoint = null)
-        {
-            return new CosmosDBVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint);
         }
 
         /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionData. </summary>
@@ -166,61 +131,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBPrivateLinkServiceConnectionStateProperty CosmosDBPrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null)
         {
             return new CosmosDBPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBAccountRestoreParameters. </summary>
-        /// <param name="restoreMode"> Describes the mode of the restore. </param>
-        /// <param name="restoreSource"> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </param>
-        /// <param name="restoreTimestampInUtc"> Time to which the account has to be restored (ISO-8601 format). </param>
-        /// <param name="databasesToRestore"> List of specific databases available for restore. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountRestoreParameters"/> instance for mocking. </returns>
-        public static CosmosDBAccountRestoreParameters CosmosDBAccountRestoreParameters(CosmosDBAccountRestoreMode? restoreMode = null, string restoreSource = null, DateTimeOffset? restoreTimestampInUtc = null, IEnumerable<DatabaseRestoreResourceInfo> databasesToRestore = null)
-        {
-            databasesToRestore ??= new List<DatabaseRestoreResourceInfo>();
-
-            return new CosmosDBAccountRestoreParameters(restoreMode, restoreSource, restoreTimestampInUtc, databasesToRestore?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DatabaseRestoreResourceInfo. </summary>
-        /// <param name="databaseName"> The name of the database available for restore. </param>
-        /// <param name="collectionNames"> The names of the collections available for restore. </param>
-        /// <returns> A new <see cref="Models.DatabaseRestoreResourceInfo"/> instance for mocking. </returns>
-        public static DatabaseRestoreResourceInfo DatabaseRestoreResourceInfo(string databaseName = null, IEnumerable<string> collectionNames = null)
-        {
-            collectionNames ??= new List<string>();
-
-            return new DatabaseRestoreResourceInfo(databaseName, collectionNames?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBAccountBackupPolicy. </summary>
-        /// <param name="backupPolicyType"> Describes the mode of backups. </param>
-        /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountBackupPolicy"/> instance for mocking. </returns>
-        public static CosmosDBAccountBackupPolicy CosmosDBAccountBackupPolicy(string backupPolicyType = "Unknown", BackupPolicyMigrationState migrationState = null)
-        {
-            return new UnknownBackupPolicy(backupPolicyType, migrationState);
-        }
-
-        /// <summary> Initializes a new instance of BackupPolicyMigrationState. </summary>
-        /// <param name="status"> Describes the status of migration between backup policy types. </param>
-        /// <param name="targetType"> Describes the target backup policy type of the backup policy migration. </param>
-        /// <param name="startOn"> Time at which the backup policy migration started (ISO-8601 format). </param>
-        /// <returns> A new <see cref="Models.BackupPolicyMigrationState"/> instance for mocking. </returns>
-        public static BackupPolicyMigrationState BackupPolicyMigrationState(BackupPolicyMigrationStatus? status = null, BackupPolicyType? targetType = null, DateTimeOffset? startOn = null)
-        {
-            return new BackupPolicyMigrationState(status, targetType, startOn);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBAccountCorsPolicy. </summary>
-        /// <param name="allowedOrigins"> The origin domains that are permitted to make a request against the service via CORS. </param>
-        /// <param name="allowedMethods"> The methods (HTTP request verbs) that the origin domain may use for a CORS request. </param>
-        /// <param name="allowedHeaders"> The request headers that the origin domain may specify on the CORS request. </param>
-        /// <param name="exposedHeaders"> The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer. </param>
-        /// <param name="maxAgeInSeconds"> The maximum amount time that a browser should cache the preflight OPTIONS request. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountCorsPolicy"/> instance for mocking. </returns>
-        public static CosmosDBAccountCorsPolicy CosmosDBAccountCorsPolicy(string allowedOrigins = null, string allowedMethods = null, string allowedHeaders = null, string exposedHeaders = null, long? maxAgeInSeconds = null)
-        {
-            return new CosmosDBAccountCorsPolicy(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
 
         /// <summary> Initializes a new instance of DatabaseAccountKeysMetadata. </summary>
@@ -493,24 +403,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedCosmosDBSqlDatabaseResourceInfo(databaseName, colls, users, rid, timestamp, etag);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlDatabasePropertiesConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlDatabasePropertiesConfig"/> instance for mocking. </returns>
-        public static CosmosDBSqlDatabasePropertiesConfig CosmosDBSqlDatabasePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new CosmosDBSqlDatabasePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBBaseConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.CosmosDBBaseConfig"/> instance for mocking. </returns>
-        public static CosmosDBBaseConfig CosmosDBBaseConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new CosmosDBBaseConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
-        }
-
         /// <summary> Initializes a new instance of CosmosDBSqlDatabaseCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -526,15 +418,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             tags ??= new Dictionary<string, string>();
 
             return new CosmosDBSqlDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resourceDatabaseName != null ? new CosmosDBSqlDatabaseResourceInfo(resourceDatabaseName) : null, options);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBCreateUpdateConfig. </summary>
-        /// <param name="throughput"> Request Units per second. For example, &quot;throughput&quot;: 10000. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.CosmosDBCreateUpdateConfig"/> instance for mocking. </returns>
-        public static CosmosDBCreateUpdateConfig CosmosDBCreateUpdateConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new CosmosDBCreateUpdateConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of ThroughputSettingData. </summary>
@@ -586,15 +469,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static AutoscaleSettingsResourceInfo AutoscaleSettingsResourceInfo(int maxThroughput = default, ThroughputPolicyResourceInfo autoUpgradeThroughputPolicy = null, int? targetMaxThroughput = null)
         {
             return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradeThroughputPolicy != null ? new AutoUpgradePolicyResourceInfo(autoUpgradeThroughputPolicy) : null, targetMaxThroughput);
-        }
-
-        /// <summary> Initializes a new instance of ThroughputPolicyResourceInfo. </summary>
-        /// <param name="isEnabled"> Determines whether the ThroughputPolicy is active or not. </param>
-        /// <param name="incrementPercent"> Represents the percentage by which throughput can increase every time throughput policy kicks in. </param>
-        /// <returns> A new <see cref="Models.ThroughputPolicyResourceInfo"/> instance for mocking. </returns>
-        public static ThroughputPolicyResourceInfo ThroughputPolicyResourceInfo(bool? isEnabled = null, int? incrementPercent = null)
-        {
-            return new ThroughputPolicyResourceInfo(isEnabled, incrementPercent);
         }
 
         /// <summary> Initializes a new instance of ThroughputSettingsUpdateData. </summary>
@@ -649,89 +523,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedCosmosDBSqlContainerResourceInfo(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl, rid, timestamp, etag);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlContainerResourceInfo. </summary>
-        /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
-        /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
-        /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
-        /// <param name="defaultTtl"> Default time to live. </param>
-        /// <param name="uniqueKeys"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
-        /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the container. </param>
-        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlContainerResourceInfo"/> instance for mocking. </returns>
-        public static CosmosDBSqlContainerResourceInfo CosmosDBSqlContainerResourceInfo(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, long? analyticalStorageTtl = null)
-        {
-            uniqueKeys ??= new List<CosmosDBUniqueKey>();
-
-            return new CosmosDBSqlContainerResourceInfo(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBIndexingPolicy. </summary>
-        /// <param name="isAutomatic"> Indicates if the indexing policy is automatic. </param>
-        /// <param name="indexingMode"> Indicates the indexing mode. </param>
-        /// <param name="includedPaths"> List of paths to include in the indexing. </param>
-        /// <param name="excludedPaths"> List of paths to exclude from indexing. </param>
-        /// <param name="compositeIndexes"> List of composite path list. </param>
-        /// <param name="spatialIndexes"> List of spatial specifics. </param>
-        /// <returns> A new <see cref="Models.CosmosDBIndexingPolicy"/> instance for mocking. </returns>
-        public static CosmosDBIndexingPolicy CosmosDBIndexingPolicy(bool? isAutomatic = null, CosmosDBIndexingMode? indexingMode = null, IEnumerable<CosmosDBIncludedPath> includedPaths = null, IEnumerable<CosmosDBExcludedPath> excludedPaths = null, IEnumerable<IList<CosmosDBCompositePath>> compositeIndexes = null, IEnumerable<SpatialSpec> spatialIndexes = null)
-        {
-            includedPaths ??= new List<CosmosDBIncludedPath>();
-            excludedPaths ??= new List<CosmosDBExcludedPath>();
-            compositeIndexes ??= new List<IList<CosmosDBCompositePath>>();
-            spatialIndexes ??= new List<SpatialSpec>();
-
-            return new CosmosDBIndexingPolicy(isAutomatic, indexingMode, includedPaths?.ToList(), excludedPaths?.ToList(), compositeIndexes?.ToList(), spatialIndexes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBIncludedPath. </summary>
-        /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
-        /// <param name="indexes"> List of indexes for this path. </param>
-        /// <returns> A new <see cref="Models.CosmosDBIncludedPath"/> instance for mocking. </returns>
-        public static CosmosDBIncludedPath CosmosDBIncludedPath(string path = null, IEnumerable<CosmosDBPathIndexes> indexes = null)
-        {
-            indexes ??= new List<CosmosDBPathIndexes>();
-
-            return new CosmosDBIncludedPath(path, indexes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBPathIndexes. </summary>
-        /// <param name="dataType"> The datatype for which the indexing behavior is applied to. </param>
-        /// <param name="precision"> The precision of the index. -1 is maximum precision. </param>
-        /// <param name="kind"> Indicates the type of index. </param>
-        /// <returns> A new <see cref="Models.CosmosDBPathIndexes"/> instance for mocking. </returns>
-        public static CosmosDBPathIndexes CosmosDBPathIndexes(CosmosDBDataType? dataType = null, int? precision = null, CosmosDBIndexKind? kind = null)
-        {
-            return new CosmosDBPathIndexes(dataType, precision, kind);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBExcludedPath. </summary>
-        /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
-        /// <returns> A new <see cref="Models.CosmosDBExcludedPath"/> instance for mocking. </returns>
-        public static CosmosDBExcludedPath CosmosDBExcludedPath(string path = null)
-        {
-            return new CosmosDBExcludedPath(path);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBCompositePath. </summary>
-        /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
-        /// <param name="order"> Sort order for composite paths. </param>
-        /// <returns> A new <see cref="Models.CosmosDBCompositePath"/> instance for mocking. </returns>
-        public static CosmosDBCompositePath CosmosDBCompositePath(string path = null, CompositePathSortOrder? order = null)
-        {
-            return new CosmosDBCompositePath(path, order);
-        }
-
-        /// <summary> Initializes a new instance of SpatialSpec. </summary>
-        /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
-        /// <param name="types"> List of path&apos;s spatial type. </param>
-        /// <returns> A new <see cref="Models.SpatialSpec"/> instance for mocking. </returns>
-        public static SpatialSpec SpatialSpec(string path = null, IEnumerable<CosmosDBSpatialType> types = null)
-        {
-            types ??= new List<CosmosDBSpatialType>();
-
-            return new SpatialSpec(path, types?.ToList());
-        }
-
         /// <summary> Initializes a new instance of CosmosDBContainerPartitionKey. </summary>
         /// <param name="paths"> List of paths using which data within the container can be partitioned. </param>
         /// <param name="kind"> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </param>
@@ -743,35 +534,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             paths ??= new List<string>();
 
             return new CosmosDBContainerPartitionKey(paths?.ToList(), kind, version, isSystemKey);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBUniqueKey. </summary>
-        /// <param name="paths"> List of paths must be unique for each document in the Azure Cosmos DB service. </param>
-        /// <returns> A new <see cref="Models.CosmosDBUniqueKey"/> instance for mocking. </returns>
-        public static CosmosDBUniqueKey CosmosDBUniqueKey(IEnumerable<string> paths = null)
-        {
-            paths ??= new List<string>();
-
-            return new CosmosDBUniqueKey(paths?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ConflictResolutionPolicy. </summary>
-        /// <param name="mode"> Indicates the conflict resolution mode. </param>
-        /// <param name="conflictResolutionPath"> The conflict resolution path in the case of LastWriterWins mode. </param>
-        /// <param name="conflictResolutionProcedure"> The procedure to resolve conflicts in the case of custom mode. </param>
-        /// <returns> A new <see cref="Models.ConflictResolutionPolicy"/> instance for mocking. </returns>
-        public static ConflictResolutionPolicy ConflictResolutionPolicy(ConflictResolutionMode? mode = null, string conflictResolutionPath = null, string conflictResolutionProcedure = null)
-        {
-            return new ConflictResolutionPolicy(mode, conflictResolutionPath, conflictResolutionProcedure);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBSqlContainerPropertiesConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlContainerPropertiesConfig"/> instance for mocking. </returns>
-        public static CosmosDBSqlContainerPropertiesConfig CosmosDBSqlContainerPropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new CosmosDBSqlContainerPropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlContainerCreateOrUpdateContent. </summary>
@@ -819,15 +581,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedCosmosDBSqlStoredProcedureResourceInfo(storedProcedureName, body, rid, timestamp, etag);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureResourceInfo. </summary>
-        /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
-        /// <param name="body"> Body of the Stored Procedure. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlStoredProcedureResourceInfo"/> instance for mocking. </returns>
-        public static CosmosDBSqlStoredProcedureResourceInfo CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName = null, string body = null)
-        {
-            return new CosmosDBSqlStoredProcedureResourceInfo(storedProcedureName, body);
-        }
-
         /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -871,15 +624,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string functionName = null, string body = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
             return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(functionName, body, rid, timestamp, etag);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
-        /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
-        /// <param name="body"> Body of the User Defined Function. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlUserDefinedFunctionResourceInfo"/> instance for mocking. </returns>
-        public static CosmosDBSqlUserDefinedFunctionResourceInfo CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName = null, string body = null)
-        {
-            return new CosmosDBSqlUserDefinedFunctionResourceInfo(functionName, body);
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent. </summary>
@@ -927,17 +671,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static ExtendedCosmosDBSqlTriggerResourceInfo ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName = null, string body = null, CosmosDBSqlTriggerType? triggerType = null, CosmosDBSqlTriggerOperation? triggerOperation = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
             return new ExtendedCosmosDBSqlTriggerResourceInfo(triggerName, body, triggerType, triggerOperation, rid, timestamp, etag);
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBSqlTriggerResourceInfo. </summary>
-        /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
-        /// <param name="body"> Body of the Trigger. </param>
-        /// <param name="triggerType"> Type of the Trigger. </param>
-        /// <param name="triggerOperation"> The operation the trigger is associated with. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlTriggerResourceInfo"/> instance for mocking. </returns>
-        public static CosmosDBSqlTriggerResourceInfo CosmosDBSqlTriggerResourceInfo(string triggerName = null, string body = null, CosmosDBSqlTriggerType? triggerType = null, CosmosDBSqlTriggerOperation? triggerOperation = null)
-        {
-            return new CosmosDBSqlTriggerResourceInfo(triggerName, body, triggerType, triggerOperation);
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlTriggerCreateOrUpdateContent. </summary>
@@ -991,15 +724,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedMongoDBDatabaseResourceInfo(databaseName, rid, timestamp, etag);
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabasePropertiesConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.MongoDBDatabasePropertiesConfig"/> instance for mocking. </returns>
-        public static MongoDBDatabasePropertiesConfig MongoDBDatabasePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new MongoDBDatabasePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
-        }
-
         /// <summary> Initializes a new instance of MongoDBDatabaseCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1049,49 +773,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             indexes ??= new List<MongoDBIndex>();
 
             return new ExtendedMongoDBCollectionResourceInfo(collectionName, shardKey, indexes?.ToList(), analyticalStorageTtl, rid, timestamp, etag);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBCollectionResourceInfo. </summary>
-        /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
-        /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
-        /// <param name="indexes"> List of index keys. </param>
-        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        /// <returns> A new <see cref="Models.MongoDBCollectionResourceInfo"/> instance for mocking. </returns>
-        public static MongoDBCollectionResourceInfo MongoDBCollectionResourceInfo(string collectionName = null, IDictionary<string, string> shardKey = null, IEnumerable<MongoDBIndex> indexes = null, int? analyticalStorageTtl = null)
-        {
-            shardKey ??= new Dictionary<string, string>();
-            indexes ??= new List<MongoDBIndex>();
-
-            return new MongoDBCollectionResourceInfo(collectionName, shardKey, indexes?.ToList(), analyticalStorageTtl);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBIndex. </summary>
-        /// <param name="keys"> Cosmos DB MongoDB collection index keys. </param>
-        /// <param name="options"> Cosmos DB MongoDB collection index key options. </param>
-        /// <returns> A new <see cref="Models.MongoDBIndex"/> instance for mocking. </returns>
-        public static MongoDBIndex MongoDBIndex(IEnumerable<string> keys = null, MongoDBIndexConfig options = null)
-        {
-            keys ??= new List<string>();
-
-            return new MongoDBIndex(keys != null ? new MongoIndexKeys(keys?.ToList()) : null, options);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBIndexConfig. </summary>
-        /// <param name="expireAfterSeconds"> Expire after seconds. </param>
-        /// <param name="isUnique"> Is unique or not. </param>
-        /// <returns> A new <see cref="Models.MongoDBIndexConfig"/> instance for mocking. </returns>
-        public static MongoDBIndexConfig MongoDBIndexConfig(int? expireAfterSeconds = null, bool? isUnique = null)
-        {
-            return new MongoDBIndexConfig(expireAfterSeconds, isUnique);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBCollectionPropertiesConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.MongoDBCollectionPropertiesConfig"/> instance for mocking. </returns>
-        public static MongoDBCollectionPropertiesConfig MongoDBCollectionPropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new MongoDBCollectionPropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of MongoDBCollectionCreateOrUpdateContent. </summary>
@@ -1145,15 +826,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBTablePropertiesResource(tableName, rid, timestamp, etag);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBTablePropertiesOptions. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.CosmosDBTablePropertiesOptions"/> instance for mocking. </returns>
-        public static CosmosDBTablePropertiesOptions CosmosDBTablePropertiesOptions(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new CosmosDBTablePropertiesOptions(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
-        }
-
         /// <summary> Initializes a new instance of CosmosDBTableCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1205,15 +877,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedCassandraKeyspaceResourceInfo(keyspaceName, rid, timestamp, etag);
         }
 
-        /// <summary> Initializes a new instance of CassandraKeyspacePropertiesConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.CassandraKeyspacePropertiesConfig"/> instance for mocking. </returns>
-        public static CassandraKeyspacePropertiesConfig CassandraKeyspacePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new CassandraKeyspacePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
-        }
-
         /// <summary> Initializes a new instance of CassandraKeyspaceCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1260,66 +923,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static ExtendedCassandraTableResourceInfo ExtendedCassandraTableResourceInfo(string tableName = null, int? defaultTtl = null, CassandraSchema schema = null, int? analyticalStorageTtl = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
             return new ExtendedCassandraTableResourceInfo(tableName, defaultTtl, schema, analyticalStorageTtl, rid, timestamp, etag);
-        }
-
-        /// <summary> Initializes a new instance of CassandraTableResourceInfo. </summary>
-        /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
-        /// <param name="defaultTtl"> Time to live of the Cosmos DB Cassandra table. </param>
-        /// <param name="schema"> Schema of the Cosmos DB Cassandra table. </param>
-        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        /// <returns> A new <see cref="Models.CassandraTableResourceInfo"/> instance for mocking. </returns>
-        public static CassandraTableResourceInfo CassandraTableResourceInfo(string tableName = null, int? defaultTtl = null, CassandraSchema schema = null, int? analyticalStorageTtl = null)
-        {
-            return new CassandraTableResourceInfo(tableName, defaultTtl, schema, analyticalStorageTtl);
-        }
-
-        /// <summary> Initializes a new instance of CassandraSchema. </summary>
-        /// <param name="columns"> List of Cassandra table columns. </param>
-        /// <param name="partitionKeys"> List of partition key. </param>
-        /// <param name="clusterKeys"> List of cluster key. </param>
-        /// <returns> A new <see cref="Models.CassandraSchema"/> instance for mocking. </returns>
-        public static CassandraSchema CassandraSchema(IEnumerable<CassandraColumn> columns = null, IEnumerable<CassandraPartitionKey> partitionKeys = null, IEnumerable<CassandraClusterKey> clusterKeys = null)
-        {
-            columns ??= new List<CassandraColumn>();
-            partitionKeys ??= new List<CassandraPartitionKey>();
-            clusterKeys ??= new List<CassandraClusterKey>();
-
-            return new CassandraSchema(columns?.ToList(), partitionKeys?.ToList(), clusterKeys?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CassandraColumn. </summary>
-        /// <param name="name"> Name of the Cosmos DB Cassandra table column. </param>
-        /// <param name="cassandraColumnType"> Type of the Cosmos DB Cassandra table column. </param>
-        /// <returns> A new <see cref="Models.CassandraColumn"/> instance for mocking. </returns>
-        public static CassandraColumn CassandraColumn(string name = null, string cassandraColumnType = null)
-        {
-            return new CassandraColumn(name, cassandraColumnType);
-        }
-
-        /// <summary> Initializes a new instance of CassandraPartitionKey. </summary>
-        /// <param name="name"> Name of the Cosmos DB Cassandra table partition key. </param>
-        /// <returns> A new <see cref="Models.CassandraPartitionKey"/> instance for mocking. </returns>
-        public static CassandraPartitionKey CassandraPartitionKey(string name = null)
-        {
-            return new CassandraPartitionKey(name);
-        }
-
-        /// <summary> Initializes a new instance of CassandraClusterKey. </summary>
-        /// <param name="name"> Name of the Cosmos DB Cassandra table cluster key. </param>
-        /// <param name="orderBy"> Order of the Cosmos DB Cassandra table cluster key, only support &quot;Asc&quot; and &quot;Desc&quot;. </param>
-        /// <returns> A new <see cref="Models.CassandraClusterKey"/> instance for mocking. </returns>
-        public static CassandraClusterKey CassandraClusterKey(string name = null, string orderBy = null)
-        {
-            return new CassandraClusterKey(name, orderBy);
-        }
-
-        /// <summary> Initializes a new instance of CassandraTablePropertiesConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.CassandraTablePropertiesConfig"/> instance for mocking. </returns>
-        public static CassandraTablePropertiesConfig CassandraTablePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new CassandraTablePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of CassandraTableCreateOrUpdateContent. </summary>
@@ -1373,15 +976,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedGremlinDatabaseResourceInfo(databaseName, rid, timestamp, etag);
         }
 
-        /// <summary> Initializes a new instance of GremlinDatabasePropertiesConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.GremlinDatabasePropertiesConfig"/> instance for mocking. </returns>
-        public static GremlinDatabasePropertiesConfig GremlinDatabasePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new GremlinDatabasePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
-        }
-
         /// <summary> Initializes a new instance of GremlinDatabaseCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1433,31 +1027,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
 
             return new ExtendedGremlinGraphResourceInfo(graphName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl, rid, timestamp, etag);
-        }
-
-        /// <summary> Initializes a new instance of GremlinGraphResourceInfo. </summary>
-        /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
-        /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </param>
-        /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
-        /// <param name="defaultTtl"> Default time to live. </param>
-        /// <param name="uniqueKeys"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
-        /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
-        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        /// <returns> A new <see cref="Models.GremlinGraphResourceInfo"/> instance for mocking. </returns>
-        public static GremlinGraphResourceInfo GremlinGraphResourceInfo(string graphName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, long? analyticalStorageTtl = null)
-        {
-            uniqueKeys ??= new List<CosmosDBUniqueKey>();
-
-            return new GremlinGraphResourceInfo(graphName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl);
-        }
-
-        /// <summary> Initializes a new instance of GremlinGraphPropertiesConfig. </summary>
-        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
-        /// <param name="autoscaleMaxThroughput"> Specifies the Autoscale settings. </param>
-        /// <returns> A new <see cref="Models.GremlinGraphPropertiesConfig"/> instance for mocking. </returns>
-        public static GremlinGraphPropertiesConfig GremlinGraphPropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
-        {
-            return new GremlinGraphPropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of GremlinGraphCreateOrUpdateContent. </summary>
@@ -1546,22 +1115,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             seedNodes ??= new List<CassandraDataCenterSeedNode>();
 
             return new CassandraClusterProperties(provisioningState, restoreFromBackupId, delegatedManagementSubnetId, cassandraVersion, clusterNameOverride, authenticationMethod, initialCassandraAdminPassword, prometheusEndpointIPAddress != null ? new CassandraDataCenterSeedNode(prometheusEndpointIPAddress) : null, isRepairEnabled, clientCertificates?.ToList(), externalGossipCertificates?.ToList(), gossipCertificates?.ToList(), externalSeedNodes?.ToList(), seedNodes?.ToList(), hoursBetweenBackups, isDeallocated, isCassandraAuditLoggingEnabled);
-        }
-
-        /// <summary> Initializes a new instance of CassandraDataCenterSeedNode. </summary>
-        /// <param name="ipAddress"> IP address of this seed node. </param>
-        /// <returns> A new <see cref="Models.CassandraDataCenterSeedNode"/> instance for mocking. </returns>
-        public static CassandraDataCenterSeedNode CassandraDataCenterSeedNode(string ipAddress = null)
-        {
-            return new CassandraDataCenterSeedNode(ipAddress);
-        }
-
-        /// <summary> Initializes a new instance of CassandraCertificate. </summary>
-        /// <param name="pem"> PEM formatted public key. </param>
-        /// <returns> A new <see cref="Models.CassandraCertificate"/> instance for mocking. </returns>
-        public static CassandraCertificate CassandraCertificate(string pem = null)
-        {
-            return new CassandraCertificate(pem);
         }
 
         /// <summary> Initializes a new instance of CassandraCommandOutput. </summary>
@@ -1718,35 +1271,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new MongoDBRoleDefinitionData(id, name, resourceType, systemData, roleName, roleDefinitionType, databaseName, privileges?.ToList(), roles?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MongoDBPrivilege. </summary>
-        /// <param name="resource"> An Azure Cosmos DB Mongo DB Resource. </param>
-        /// <param name="actions"> An array of actions that are allowed. </param>
-        /// <returns> A new <see cref="Models.MongoDBPrivilege"/> instance for mocking. </returns>
-        public static MongoDBPrivilege MongoDBPrivilege(MongoDBPrivilegeResourceInfo resource = null, IEnumerable<string> actions = null)
-        {
-            actions ??= new List<string>();
-
-            return new MongoDBPrivilege(resource, actions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MongoDBPrivilegeResourceInfo. </summary>
-        /// <param name="dbName"> The database name the role is applied. </param>
-        /// <param name="collection"> The collection name the role is applied. </param>
-        /// <returns> A new <see cref="Models.MongoDBPrivilegeResourceInfo"/> instance for mocking. </returns>
-        public static MongoDBPrivilegeResourceInfo MongoDBPrivilegeResourceInfo(string dbName = null, string collection = null)
-        {
-            return new MongoDBPrivilegeResourceInfo(dbName, collection);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBRole. </summary>
-        /// <param name="dbName"> The database name the role is applied. </param>
-        /// <param name="role"> The role name. </param>
-        /// <returns> A new <see cref="Models.MongoDBRole"/> instance for mocking. </returns>
-        public static MongoDBRole MongoDBRole(string dbName = null, string role = null)
-        {
-            return new MongoDBRole(dbName, role);
-        }
-
         /// <summary> Initializes a new instance of MongoDBUserDefinitionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1782,18 +1306,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             permissions ??= new List<CosmosDBSqlRolePermission>();
 
             return new CosmosDBSqlRoleDefinitionData(id, name, resourceType, systemData, roleName, roleDefinitionType, assignableScopes?.ToList(), permissions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CosmosDBSqlRolePermission. </summary>
-        /// <param name="dataActions"> An array of data actions that are allowed. </param>
-        /// <param name="notDataActions"> An array of data actions that are denied. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlRolePermission"/> instance for mocking. </returns>
-        public static CosmosDBSqlRolePermission CosmosDBSqlRolePermission(IEnumerable<string> dataActions = null, IEnumerable<string> notDataActions = null)
-        {
-            dataActions ??= new List<string>();
-            notDataActions ??= new List<string>();
-
-            return new CosmosDBSqlRolePermission(dataActions?.ToList(), notDataActions?.ToList());
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentData. </summary>
@@ -2045,33 +1557,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new CosmosDBServiceProperties(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of PeriodicModeBackupPolicy. </summary>
-        /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        /// <param name="periodicModeProperties"> Configuration values for periodic mode backup. </param>
-        /// <returns> A new <see cref="Models.PeriodicModeBackupPolicy"/> instance for mocking. </returns>
-        public static PeriodicModeBackupPolicy PeriodicModeBackupPolicy(BackupPolicyMigrationState migrationState = null, PeriodicModeProperties periodicModeProperties = null)
-        {
-            return new PeriodicModeBackupPolicy(BackupPolicyType.Periodic, migrationState, periodicModeProperties);
-        }
-
-        /// <summary> Initializes a new instance of PeriodicModeProperties. </summary>
-        /// <param name="backupIntervalInMinutes"> An integer representing the interval in minutes between two backups. </param>
-        /// <param name="backupRetentionIntervalInHours"> An integer representing the time (in hours) that each backup is retained. </param>
-        /// <param name="backupStorageRedundancy"> Enum to indicate type of backup residency. </param>
-        /// <returns> A new <see cref="Models.PeriodicModeProperties"/> instance for mocking. </returns>
-        public static PeriodicModeProperties PeriodicModeProperties(int? backupIntervalInMinutes = null, int? backupRetentionIntervalInHours = null, CosmosDBBackupStorageRedundancy? backupStorageRedundancy = null)
-        {
-            return new PeriodicModeProperties(backupIntervalInMinutes, backupRetentionIntervalInHours, backupStorageRedundancy);
-        }
-
-        /// <summary> Initializes a new instance of ContinuousModeBackupPolicy. </summary>
-        /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        /// <returns> A new <see cref="Models.ContinuousModeBackupPolicy"/> instance for mocking. </returns>
-        public static ContinuousModeBackupPolicy ContinuousModeBackupPolicy(BackupPolicyMigrationState migrationState = null)
-        {
-            return new ContinuousModeBackupPolicy(BackupPolicyType.Continuous, migrationState);
         }
 
         /// <summary> Initializes a new instance of DataTransferServiceProperties. </summary>

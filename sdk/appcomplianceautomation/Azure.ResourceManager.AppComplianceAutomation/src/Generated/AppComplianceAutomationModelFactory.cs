@@ -55,20 +55,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportProperties(id, status, tenantId, reportName, offerGuid, timeZone, triggerOn, nextTriggerOn, lastTriggerOn, subscriptions?.ToList(), resources?.ToList(), complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365) : null, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
-        /// <param name="resourceId"> Resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceKind"> Resource kind. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="tags"> Resource&apos;s tag type. </param>
-        /// <returns> A new <see cref="Models.ResourceMetadata"/> instance for mocking. </returns>
-        public static ResourceMetadata ResourceMetadata(string resourceId = null, string resourceType = null, string resourceKind = null, string resourceName = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ResourceMetadata(resourceId, resourceType, resourceKind, resourceName, tags);
-        }
-
         /// <summary> Initializes a new instance of OverviewStatus. </summary>
         /// <param name="passedCount"> The count of all passed full automation control. </param>
         /// <param name="failedCount"> The count of all failed full automation control. </param>

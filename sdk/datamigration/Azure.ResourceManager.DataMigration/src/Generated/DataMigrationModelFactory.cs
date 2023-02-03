@@ -87,19 +87,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new CopyProgressDetails(tableName, status, parallelCopyType, usedParallelCopies, dataRead, dataWritten, rowsRead, rowsCopied, copyStart, copyThroughput, copyDuration);
         }
 
-        /// <summary> Initializes a new instance of SqlConnectionInformation. </summary>
-        /// <param name="dataSource"> Data source. </param>
-        /// <param name="authentication"> Authentication type. </param>
-        /// <param name="userName"> User name to connect to source SQL. </param>
-        /// <param name="password"> Password to connect to source SQL. </param>
-        /// <param name="encryptConnection"> Whether to encrypt connection or not. </param>
-        /// <param name="trustServerCertificate"> Whether to trust server certificate or not. </param>
-        /// <returns> A new <see cref="Models.SqlConnectionInformation"/> instance for mocking. </returns>
-        public static SqlConnectionInformation SqlConnectionInformation(string dataSource = null, string authentication = null, string userName = null, string password = null, bool? encryptConnection = null, bool? trustServerCertificate = null)
-        {
-            return new SqlConnectionInformation(dataSource, authentication, userName, password, encryptConnection, trustServerCertificate);
-        }
-
         /// <summary> Initializes a new instance of DatabaseMigrationProperties. </summary>
         /// <param name="kind"></param>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
@@ -225,15 +212,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlBackupFileInfo(fileName, status, totalSize, dataRead, dataWritten, copyThroughput, copyDuration, familySequenceNumber);
         }
 
-        /// <summary> Initializes a new instance of BackupConfiguration. </summary>
-        /// <param name="sourceLocation"> Source location of backups. </param>
-        /// <param name="targetLocation"> Target location for copying backups. </param>
-        /// <returns> A new <see cref="Models.BackupConfiguration"/> instance for mocking. </returns>
-        public static BackupConfiguration BackupConfiguration(SourceLocation sourceLocation = null, TargetLocation targetLocation = null)
-        {
-            return new BackupConfiguration(sourceLocation, targetLocation);
-        }
-
         /// <summary> Initializes a new instance of SourceLocation. </summary>
         /// <param name="fileShare"> Source File share. </param>
         /// <param name="azureBlob"> Source Azure Blob. </param>
@@ -242,44 +220,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static SourceLocation SourceLocation(SqlFileShare fileShare = null, AzureBlob azureBlob = null, string fileStorageType = null)
         {
             return new SourceLocation(fileShare, azureBlob, fileStorageType);
-        }
-
-        /// <summary> Initializes a new instance of SqlFileShare. </summary>
-        /// <param name="path"> Location as SMB share or local drive where backups are placed. </param>
-        /// <param name="username"> Username to access the file share location for backups. </param>
-        /// <param name="password"> Password for username to access file share location. </param>
-        /// <returns> A new <see cref="Models.SqlFileShare"/> instance for mocking. </returns>
-        public static SqlFileShare SqlFileShare(string path = null, string username = null, string password = null)
-        {
-            return new SqlFileShare(path, username, password);
-        }
-
-        /// <summary> Initializes a new instance of AzureBlob. </summary>
-        /// <param name="storageAccountResourceId"> Resource Id of the storage account where backups are stored. </param>
-        /// <param name="accountKey"> Storage Account Key. </param>
-        /// <param name="blobContainerName"> Blob container name where backups are stored. </param>
-        /// <returns> A new <see cref="Models.AzureBlob"/> instance for mocking. </returns>
-        public static AzureBlob AzureBlob(string storageAccountResourceId = null, string accountKey = null, string blobContainerName = null)
-        {
-            return new AzureBlob(storageAccountResourceId, accountKey, blobContainerName);
-        }
-
-        /// <summary> Initializes a new instance of TargetLocation. </summary>
-        /// <param name="storageAccountResourceId"> Resource Id of the storage account copying backups. </param>
-        /// <param name="accountKey"> Storage Account Key. </param>
-        /// <returns> A new <see cref="Models.TargetLocation"/> instance for mocking. </returns>
-        public static TargetLocation TargetLocation(string storageAccountResourceId = null, string accountKey = null)
-        {
-            return new TargetLocation(storageAccountResourceId, accountKey);
-        }
-
-        /// <summary> Initializes a new instance of OfflineConfiguration. </summary>
-        /// <param name="offline"> Offline migration. </param>
-        /// <param name="lastBackupName"> Last backup name for offline migration. This is optional for migrations from file share. If it is not provided, then the service will determine the last backup file name based on latest backup files present in file share. </param>
-        /// <returns> A new <see cref="Models.OfflineConfiguration"/> instance for mocking. </returns>
-        public static OfflineConfiguration OfflineConfiguration(bool? offline = null, string lastBackupName = null)
-        {
-            return new OfflineConfiguration(offline, lastBackupName);
         }
 
         /// <summary> Initializes a new instance of DatabaseMigrationSqlVmData. </summary>
@@ -341,25 +281,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static AuthenticationKeys AuthenticationKeys(string authKey1 = null, string authKey2 = null)
         {
             return new AuthenticationKeys(authKey1, authKey2);
-        }
-
-        /// <summary> Initializes a new instance of RegenAuthKeys. </summary>
-        /// <param name="keyName"> The name of authentication key to generate. </param>
-        /// <param name="authKey1"> The first authentication key. </param>
-        /// <param name="authKey2"> The second authentication key. </param>
-        /// <returns> A new <see cref="Models.RegenAuthKeys"/> instance for mocking. </returns>
-        public static RegenAuthKeys RegenAuthKeys(string keyName = null, string authKey1 = null, string authKey2 = null)
-        {
-            return new RegenAuthKeys(keyName, authKey1, authKey2);
-        }
-
-        /// <summary> Initializes a new instance of DeleteNode. </summary>
-        /// <param name="nodeName"> The name of node to delete. </param>
-        /// <param name="integrationRuntimeName"> The name of integration runtime. </param>
-        /// <returns> A new <see cref="Models.DeleteNode"/> instance for mocking. </returns>
-        public static DeleteNode DeleteNode(string nodeName = null, string integrationRuntimeName = null)
-        {
-            return new DeleteNode(nodeName, integrationRuntimeName);
         }
 
         /// <summary> Initializes a new instance of DatabaseMigration. </summary>
@@ -510,18 +431,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DataMigrationServiceData(id, name, resourceType, systemData, tags, location, etag, kind, sku, provisioningState, publicKey, virtualSubnetId, virtualNicId, autoStopDelay, deleteResourcesOnStop);
         }
 
-        /// <summary> Initializes a new instance of ServiceSku. </summary>
-        /// <param name="name"> The unique name of the SKU, such as &apos;P3&apos;. </param>
-        /// <param name="tier"> The tier of the SKU, such as &apos;Basic&apos;, &apos;General Purpose&apos;, or &apos;Business Critical&apos;. </param>
-        /// <param name="family"> The SKU family, used when the service has multiple performance classes within a tier, such as &apos;A&apos;, &apos;D&apos;, etc. for virtual machines. </param>
-        /// <param name="size"> The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. &apos;A1&apos; for virtual machines. </param>
-        /// <param name="capacity"> The capacity of the SKU, if it supports scaling. </param>
-        /// <returns> A new <see cref="Models.ServiceSku"/> instance for mocking. </returns>
-        public static ServiceSku ServiceSku(string name = null, string tier = null, string family = null, string size = null, int? capacity = null)
-        {
-            return new ServiceSku(name, tier, family, size, capacity);
-        }
-
         /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
         /// <param name="agentVersion"> The DMS instance agent version. </param>
         /// <param name="agentConfiguration"> Agent Configuration. </param>
@@ -660,27 +569,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ProjectData(id, name, resourceType, systemData, tags, location, etag, sourcePlatform, azureAuthenticationInfo, targetPlatform, createdOn, sourceConnectionInfo, targetConnectionInfo, databasesInfo?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AzureActiveDirectoryApp. </summary>
-        /// <param name="applicationId"> Application ID of the Azure Active Directory Application. </param>
-        /// <param name="appKey"> Key used to authenticate to the Azure Active Directory Application. </param>
-        /// <param name="tenantId"> Tenant id of the customer. </param>
-        /// <param name="ignoreAzurePermissions"> Ignore checking azure permissions on the AAD app. </param>
-        /// <returns> A new <see cref="Models.AzureActiveDirectoryApp"/> instance for mocking. </returns>
-        public static AzureActiveDirectoryApp AzureActiveDirectoryApp(string applicationId = null, string appKey = null, Guid? tenantId = null, bool? ignoreAzurePermissions = null)
-        {
-            return new AzureActiveDirectoryApp(applicationId, appKey, tenantId, ignoreAzurePermissions);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionInfo. </summary>
-        /// <param name="connectionInfoType"> Type of connection info. </param>
-        /// <param name="userName"> User name. </param>
-        /// <param name="password"> Password credential. </param>
-        /// <returns> A new <see cref="Models.ConnectionInfo"/> instance for mocking. </returns>
-        public static ConnectionInfo ConnectionInfo(string connectionInfoType = null, string userName = null, string password = null)
-        {
-            return new UnknownConnectionInfo(connectionInfoType, userName, password);
-        }
-
         /// <summary> Initializes a new instance of Quota. </summary>
         /// <param name="currentValue"> The current value of the quota. If null or missing, the current value cannot be determined in the context of the request. </param>
         /// <param name="id"> The resource ID of the quota object. </param>
@@ -752,15 +640,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSyncCompleteCommandProperties(CommandType.MigrateSyncCompleteDatabase, errors?.ToList(), state, input, output, commandId);
         }
 
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandInput. </summary>
-        /// <param name="databaseName"> Name of database. </param>
-        /// <param name="commitTimeStamp"> Time stamp to complete. </param>
-        /// <returns> A new <see cref="Models.MigrateSyncCompleteCommandInput"/> instance for mocking. </returns>
-        public static MigrateSyncCompleteCommandInput MigrateSyncCompleteCommandInput(string databaseName = null, DateTimeOffset? commitTimeStamp = null)
-        {
-            return new MigrateSyncCompleteCommandInput(databaseName, commitTimeStamp);
-        }
-
         /// <summary> Initializes a new instance of MigrateSyncCompleteCommandOutput. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="errors"> List of errors that happened during the command execution. </param>
@@ -799,104 +678,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMISyncCompleteCommandProperties(CommandType.MigrateSqlServerAzureDBSqlMIComplete, errors?.ToList(), state, inputSourceDatabaseName != null ? new MigrateMISyncCompleteCommandInput(inputSourceDatabaseName) : null, outputErrors != null ? new MigrateMISyncCompleteCommandOutput(outputErrors?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of MongoDBConnectionInfo. </summary>
-        /// <param name="userName"> User name. </param>
-        /// <param name="password"> Password credential. </param>
-        /// <param name="connectionString"> A MongoDB connection string or blob container URL. The user name and password can be specified here or in the userName and password properties. </param>
-        /// <param name="dataSource"> Data source. </param>
-        /// <param name="encryptConnection"> Whether to encrypt the connection. </param>
-        /// <param name="serverBrandVersion"> server brand version. </param>
-        /// <param name="serverVersion"> server version. </param>
-        /// <param name="serverName"> name of the server. </param>
-        /// <param name="trustServerCertificate"> Whether to trust the server certificate. </param>
-        /// <param name="enforceSSL"></param>
-        /// <param name="port"> port for server. </param>
-        /// <param name="additionalSettings"> Additional connection settings. </param>
-        /// <param name="authentication"> Authentication type to use for connection. </param>
-        /// <returns> A new <see cref="Models.MongoDBConnectionInfo"/> instance for mocking. </returns>
-        public static MongoDBConnectionInfo MongoDBConnectionInfo(string userName = null, string password = null, string connectionString = null, string dataSource = null, bool? encryptConnection = null, string serverBrandVersion = null, string serverVersion = null, string serverName = null, bool? trustServerCertificate = null, bool? enforceSSL = null, int? port = null, string additionalSettings = null, AuthenticationType? authentication = null)
-        {
-            return new MongoDBConnectionInfo("MongoDbConnectionInfo", userName, password, connectionString, dataSource, encryptConnection, serverBrandVersion, serverVersion, serverName, trustServerCertificate, enforceSSL, port, additionalSettings, authentication);
-        }
-
-        /// <summary> Initializes a new instance of SqlConnectionInfo. </summary>
-        /// <param name="userName"> User name. </param>
-        /// <param name="password"> Password credential. </param>
-        /// <param name="dataSource"> Data source in the format Protocol:MachineName\SQLServerInstanceName,PortNumber. </param>
-        /// <param name="serverName"> name of the server. </param>
-        /// <param name="port"> Port for Server. </param>
-        /// <param name="serverVersion"> server version. </param>
-        /// <param name="serverBrandVersion"> server brand version. </param>
-        /// <param name="resourceId"> Represents the ID of an HTTP resource represented by an Azure resource provider. </param>
-        /// <param name="authentication"> Authentication type to use for connection. </param>
-        /// <param name="encryptConnection"> Whether to encrypt the connection. </param>
-        /// <param name="additionalSettings"> Additional connection settings. </param>
-        /// <param name="trustServerCertificate"> Whether to trust the server certificate. </param>
-        /// <param name="platform"> Server platform type for connection. </param>
-        /// <returns> A new <see cref="Models.SqlConnectionInfo"/> instance for mocking. </returns>
-        public static SqlConnectionInfo SqlConnectionInfo(string userName = null, string password = null, string dataSource = null, string serverName = null, int? port = null, string serverVersion = null, string serverBrandVersion = null, string resourceId = null, AuthenticationType? authentication = null, bool? encryptConnection = null, string additionalSettings = null, bool? trustServerCertificate = null, SqlSourcePlatform? platform = null)
-        {
-            return new SqlConnectionInfo("SqlConnectionInfo", userName, password, dataSource, serverName, port, serverVersion, serverBrandVersion, resourceId, authentication, encryptConnection, additionalSettings, trustServerCertificate, platform);
-        }
-
-        /// <summary> Initializes a new instance of MySqlConnectionInfo. </summary>
-        /// <param name="userName"> User name. </param>
-        /// <param name="password"> Password credential. </param>
-        /// <param name="serverName"> Name of the server. </param>
-        /// <param name="dataSource"> Data source. </param>
-        /// <param name="port"> Port for Server. </param>
-        /// <param name="encryptConnection"> Whether to encrypt the connection. </param>
-        /// <param name="authentication"> Authentication type to use for connection. </param>
-        /// <param name="additionalSettings"> Additional connection settings. </param>
-        /// <returns> A new <see cref="Models.MySqlConnectionInfo"/> instance for mocking. </returns>
-        public static MySqlConnectionInfo MySqlConnectionInfo(string userName = null, string password = null, string serverName = null, string dataSource = null, int port = default, bool? encryptConnection = null, AuthenticationType? authentication = null, string additionalSettings = null)
-        {
-            return new MySqlConnectionInfo("MySqlConnectionInfo", userName, password, serverName, dataSource, port, encryptConnection, authentication, additionalSettings);
-        }
-
-        /// <summary> Initializes a new instance of OracleConnectionInfo. </summary>
-        /// <param name="userName"> User name. </param>
-        /// <param name="password"> Password credential. </param>
-        /// <param name="dataSource"> EZConnect or TNSName connection string. </param>
-        /// <param name="serverName"> name of the server. </param>
-        /// <param name="serverVersion"> server version. </param>
-        /// <param name="port"> port for server. </param>
-        /// <param name="authentication"> Authentication type to use for connection. </param>
-        /// <returns> A new <see cref="Models.OracleConnectionInfo"/> instance for mocking. </returns>
-        public static OracleConnectionInfo OracleConnectionInfo(string userName = null, string password = null, string dataSource = null, string serverName = null, string serverVersion = null, int? port = null, AuthenticationType? authentication = null)
-        {
-            return new OracleConnectionInfo("OracleConnectionInfo", userName, password, dataSource, serverName, serverVersion, port, authentication);
-        }
-
-        /// <summary> Initializes a new instance of PostgreSqlConnectionInfo. </summary>
-        /// <param name="userName"> User name. </param>
-        /// <param name="password"> Password credential. </param>
-        /// <param name="serverName"> Name of the server. </param>
-        /// <param name="dataSource"> Data source. </param>
-        /// <param name="serverVersion"> server version. </param>
-        /// <param name="databaseName"> Name of the database. </param>
-        /// <param name="port"> Port for Server. </param>
-        /// <param name="encryptConnection"> Whether to encrypt the connection. </param>
-        /// <param name="trustServerCertificate"> Whether to trust the server certificate. </param>
-        /// <param name="additionalSettings"> Additional connection settings. </param>
-        /// <param name="serverBrandVersion"> server brand version. </param>
-        /// <param name="authentication"> Authentication type to use for connection. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlConnectionInfo"/> instance for mocking. </returns>
-        public static PostgreSqlConnectionInfo PostgreSqlConnectionInfo(string userName = null, string password = null, string serverName = null, string dataSource = null, string serverVersion = null, string databaseName = null, int port = default, bool? encryptConnection = null, bool? trustServerCertificate = null, string additionalSettings = null, string serverBrandVersion = null, AuthenticationType? authentication = null)
-        {
-            return new PostgreSqlConnectionInfo("PostgreSqlConnectionInfo", userName, password, serverName, dataSource, serverVersion, databaseName, port, encryptConnection, trustServerCertificate, additionalSettings, serverBrandVersion, authentication);
-        }
-
-        /// <summary> Initializes a new instance of MISqlConnectionInfo. </summary>
-        /// <param name="userName"> User name. </param>
-        /// <param name="password"> Password credential. </param>
-        /// <param name="managedInstanceResourceId"> Resource id for Azure SQL database Managed instance. </param>
-        /// <returns> A new <see cref="Models.MISqlConnectionInfo"/> instance for mocking. </returns>
-        public static MISqlConnectionInfo MISqlConnectionInfo(string userName = null, string password = null, string managedInstanceResourceId = null)
-        {
-            return new MISqlConnectionInfo("MiSqlConnectionInfo", userName, password, managedInstanceResourceId);
-        }
-
         /// <summary> Initializes a new instance of BackupSetInfo. </summary>
         /// <param name="backupSetId"> Id for the set of backup files. </param>
         /// <param name="firstLsn"> First log sequence number of the backup file. </param>
@@ -933,32 +714,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static OrphanedUserInfo OrphanedUserInfo(string name = null, string databaseName = null)
         {
             return new OrphanedUserInfo(name, databaseName);
-        }
-
-        /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to MySQL source. </param>
-        /// <param name="targetPlatform"> Target Platform for the migration. </param>
-        /// <param name="checkPermissionsGroup"> Permission group for validations. </param>
-        /// <param name="isOfflineMigration"> Flag for whether or not the migration is offline. </param>
-        /// <returns> A new <see cref="Models.ConnectToSourceMySqlTaskInput"/> instance for mocking. </returns>
-        public static ConnectToSourceMySqlTaskInput ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo = null, MySqlTargetPlatformType? targetPlatform = null, ServerLevelPermissionsGroup? checkPermissionsGroup = null, bool? isOfflineMigration = null)
-        {
-            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, targetPlatform, checkPermissionsGroup, isOfflineMigration);
-        }
-
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
-        /// <param name="checkPermissionsGroup"> Permission group for validations. </param>
-        /// <param name="collectDatabases"> Flag for whether to collect databases from source server. </param>
-        /// <param name="collectLogins"> Flag for whether to collect logins from source server. </param>
-        /// <param name="collectAgentJobs"> Flag for whether to collect agent jobs from source server. </param>
-        /// <param name="collectTdeCertificateInfo"> Flag for whether to collect TDE Certificate names from source server. </param>
-        /// <param name="validateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the source server. </param>
-        /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskInput"/> instance for mocking. </returns>
-        public static ConnectToSourceSqlServerTaskInput ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo = null, ServerLevelPermissionsGroup? checkPermissionsGroup = null, bool? collectDatabases = null, bool? collectLogins = null, bool? collectAgentJobs = null, bool? collectTdeCertificateInfo = null, bool? validateSsisCatalogOnly = null, string encryptedKeyForSecureFields = null)
-        {
-            return new ConnectToSourceSqlServerTaskInput(sourceConnectionInfo, checkPermissionsGroup, collectDatabases, collectLogins, collectAgentJobs, collectTdeCertificateInfo, validateSsisCatalogOnly, encryptedKeyForSecureFields);
         }
 
         /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutput. </summary>
@@ -1072,16 +827,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourcePostgreSqlSyncTaskOutput(id, sourceServerVersion, databases?.ToList(), sourceServerBrandVersion, validationErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Connection information for source MySQL server. </param>
-        /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL server. </param>
-        /// <param name="isOfflineMigration"> Flag for whether or not the migration is offline. </param>
-        /// <returns> A new <see cref="Models.ConnectToTargetAzureDBForMySqlTaskInput"/> instance for mocking. </returns>
-        public static ConnectToTargetAzureDBForMySqlTaskInput ConnectToTargetAzureDBForMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo = null, MySqlConnectionInfo targetConnectionInfo = null, bool? isOfflineMigration = null)
-        {
-            return new ConnectToTargetAzureDBForMySqlTaskInput(sourceConnectionInfo, targetConnectionInfo, isOfflineMigration);
-        }
-
         /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskOutput. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="serverVersion"> Version of the target server. </param>
@@ -1095,15 +840,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             validationErrors ??= new List<ReportableException>();
 
             return new ConnectToTargetAzureDBForMySqlTaskOutput(id, serverVersion, databases?.ToList(), targetServerBrandVersion, validationErrors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskInput. </summary>
-        /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
-        /// <param name="queryObjectCounts"> Boolean flag indicating whether to query object counts for each database on the target server. </param>
-        /// <returns> A new <see cref="Models.ConnectToTargetSqlDBTaskInput"/> instance for mocking. </returns>
-        public static ConnectToTargetSqlDBTaskInput ConnectToTargetSqlDBTaskInput(SqlConnectionInfo targetConnectionInfo = null, bool? queryObjectCounts = null)
-        {
-            return new ConnectToTargetSqlDBTaskInput(targetConnectionInfo, queryObjectCounts);
         }
 
         /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskOutput. </summary>
@@ -1127,17 +863,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             validationErrors ??= new List<ReportableException>();
 
             return new ConnectToTargetSqlMISyncTaskOutput(targetServerVersion, targetServerBrandVersion, validationErrors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskInput. </summary>
-        /// <param name="targetConnectionInfo"> Connection information for target SQL Server. </param>
-        /// <param name="collectLogins"> Flag for whether to collect logins from target SQL MI server. </param>
-        /// <param name="collectAgentJobs"> Flag for whether to collect agent jobs from target SQL MI server. </param>
-        /// <param name="validateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the target SQL MI server. </param>
-        /// <returns> A new <see cref="Models.ConnectToTargetSqlMITaskInput"/> instance for mocking. </returns>
-        public static ConnectToTargetSqlMITaskInput ConnectToTargetSqlMITaskInput(SqlConnectionInfo targetConnectionInfo = null, bool? collectLogins = null, bool? collectAgentJobs = null, bool? validateSsisCatalogOnly = null)
-        {
-            return new ConnectToTargetSqlMITaskInput(targetConnectionInfo, collectLogins, collectAgentJobs, validateSsisCatalogOnly);
         }
 
         /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskOutput. </summary>
@@ -1193,16 +918,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseTable(hasRows, name);
         }
 
-        /// <summary> Initializes a new instance of FileShare. </summary>
-        /// <param name="userName"> User name credential to connect to the share location. </param>
-        /// <param name="password"> Password credential used to connect to the share location. </param>
-        /// <param name="path"> The folder path for this share. </param>
-        /// <returns> A new <see cref="Models.FileShare"/> instance for mocking. </returns>
-        public static FileShare FileShare(string userName = null, string password = null, string path = null)
-        {
-            return new FileShare(userName, password, path);
-        }
-
         /// <summary> Initializes a new instance of GetTdeCertificatesSqlTaskOutput. </summary>
         /// <param name="base64EncodedCertificates"> Mapping from certificate name to base 64 encoded format. </param>
         /// <param name="validationErrors"> Validation errors. </param>
@@ -1225,18 +940,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             validationErrors ??= new List<ReportableException>();
 
             return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables, databasesToTargetTables, tableValidationErrors, validationErrors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of GetUserTablesSqlTaskInput. </summary>
-        /// <param name="connectionInfo"> Connection information for SQL Server. </param>
-        /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
-        /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        /// <returns> A new <see cref="Models.GetUserTablesSqlTaskInput"/> instance for mocking. </returns>
-        public static GetUserTablesSqlTaskInput GetUserTablesSqlTaskInput(SqlConnectionInfo connectionInfo = null, IEnumerable<string> selectedDatabases = null, string encryptedKeyForSecureFields = null)
-        {
-            selectedDatabases ??= new List<string>();
-
-            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases?.ToList(), encryptedKeyForSecureFields);
         }
 
         /// <summary> Initializes a new instance of GetUserTablesSqlTaskOutput. </summary>
@@ -1278,50 +981,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new List<MigrateSchemaSqlServerSqlDBTaskOutput>();
 
             return new MigrateSchemaSqlServerSqlDBTaskProperties(TaskType.MigrateSchemaSqlServerSqlDB, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), createdOn, taskId, isCloneable);
-        }
-
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
-        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        /// <param name="startedOn"> Migration start time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBTaskInput"/> instance for mocking. </returns>
-        public static MigrateSchemaSqlServerSqlDBTaskInput MigrateSchemaSqlServerSqlDBTaskInput(SqlConnectionInfo sourceConnectionInfo = null, SqlConnectionInfo targetConnectionInfo = null, IEnumerable<MigrateSchemaSqlServerSqlDBDatabaseInput> selectedDatabases = null, string encryptedKeyForSecureFields = null, string startedOn = null)
-        {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            selectedDatabases ??= new List<MigrateSchemaSqlServerSqlDBDatabaseInput>();
-
-            return new MigrateSchemaSqlServerSqlDBTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), encryptedKeyForSecureFields, startedOn);
-        }
-
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBDatabaseInput. </summary>
-        /// <param name="name"> Name of source database. </param>
-        /// <param name="id"> Id of the source database. </param>
-        /// <param name="targetDatabaseName"> Name of target database. </param>
-        /// <param name="schemaSetting"> Database schema migration settings. </param>
-        /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBDatabaseInput"/> instance for mocking. </returns>
-        public static MigrateSchemaSqlServerSqlDBDatabaseInput MigrateSchemaSqlServerSqlDBDatabaseInput(string name = null, string id = null, string targetDatabaseName = null, SchemaMigrationSetting schemaSetting = null)
-        {
-            return new MigrateSchemaSqlServerSqlDBDatabaseInput(name, id, targetDatabaseName, schemaSetting);
-        }
-
-        /// <summary> Initializes a new instance of SchemaMigrationSetting. </summary>
-        /// <param name="schemaOption"> Option on how to migrate the schema. </param>
-        /// <param name="fileId"> Resource Identifier of a file resource containing the uploaded schema file. </param>
-        /// <param name="fileName"> Name of the file resource containing the uploaded schema file. </param>
-        /// <returns> A new <see cref="Models.SchemaMigrationSetting"/> instance for mocking. </returns>
-        public static SchemaMigrationSetting SchemaMigrationSetting(SchemaMigrationOption? schemaOption = null, string fileId = null, string fileName = null)
-        {
-            return new SchemaMigrationSetting(schemaOption, fileId, fileName);
         }
 
         /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutput. </summary>
@@ -1383,24 +1042,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MigrateSchemaSqlTaskOutputError MigrateSchemaSqlTaskOutputError(string id = null, ReportableException error = null)
         {
             return new MigrateSchemaSqlTaskOutputError(id, "ErrorOutput", error);
-        }
-
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncDatabaseInput. </summary>
-        /// <param name="name"> Name of the database. </param>
-        /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
-        /// <param name="migrationSetting"> Migration settings which tune the migration behavior. </param>
-        /// <param name="sourceSetting"> Source settings to tune source endpoint migration behavior. </param>
-        /// <param name="targetSetting"> Target settings to tune target endpoint migration behavior. </param>
-        /// <param name="tableMap"> Mapping of source to target tables. </param>
-        /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncDatabaseInput"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlSyncDatabaseInput MigrateMySqlAzureDBForMySqlSyncDatabaseInput(string name = null, string targetDatabaseName = null, IDictionary<string, string> migrationSetting = null, IDictionary<string, string> sourceSetting = null, IDictionary<string, string> targetSetting = null, IDictionary<string, string> tableMap = null)
-        {
-            migrationSetting ??= new Dictionary<string, string>();
-            sourceSetting ??= new Dictionary<string, string>();
-            targetSetting ??= new Dictionary<string, string>();
-            tableMap ??= new Dictionary<string, string>();
-
-            return new MigrateMySqlAzureDBForMySqlSyncDatabaseInput(name, targetDatabaseName, migrationSetting, sourceSetting, targetSetting, tableMap);
         }
 
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutput. </summary>
@@ -1534,14 +1175,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(name, id, targetDatabaseName, migrationSetting, sourceSetting, targetSetting, selectedTables?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput. </summary>
-        /// <param name="name"> Name of the table to migrate. </param>
-        /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(string name = null)
-        {
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(name);
-        }
-
         /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -1637,58 +1270,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(id, "DatabaseLevelErrorOutput", errorMessage, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
-        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="validationOptions"> Validation options. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskInput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBSyncTaskInput MigrateSqlServerSqlDBSyncTaskInput(SqlConnectionInfo sourceConnectionInfo = null, SqlConnectionInfo targetConnectionInfo = null, IEnumerable<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = null, MigrationValidationOptions validationOptions = null)
-        {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            selectedDatabases ??= new List<MigrateSqlServerSqlDBSyncDatabaseInput>();
-
-            return new MigrateSqlServerSqlDBSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), validationOptions);
-        }
-
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncDatabaseInput. </summary>
-        /// <param name="id"> Unique identifier for database. </param>
-        /// <param name="name"> Name of database. </param>
-        /// <param name="targetDatabaseName"> Target database name. </param>
-        /// <param name="schemaName"> Schema name to be migrated. </param>
-        /// <param name="tableMap"> Mapping of source to target tables. </param>
-        /// <param name="migrationSetting"> Migration settings which tune the migration behavior. </param>
-        /// <param name="sourceSetting"> Source settings to tune source endpoint migration behavior. </param>
-        /// <param name="targetSetting"> Target settings to tune target endpoint migration behavior. </param>
-        /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncDatabaseInput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBSyncDatabaseInput MigrateSqlServerSqlDBSyncDatabaseInput(string id = null, string name = null, string targetDatabaseName = null, string schemaName = null, IDictionary<string, string> tableMap = null, IDictionary<string, string> migrationSetting = null, IDictionary<string, string> sourceSetting = null, IDictionary<string, string> targetSetting = null)
-        {
-            tableMap ??= new Dictionary<string, string>();
-            migrationSetting ??= new Dictionary<string, string>();
-            sourceSetting ??= new Dictionary<string, string>();
-            targetSetting ??= new Dictionary<string, string>();
-
-            return new MigrateSqlServerSqlDBSyncDatabaseInput(id, name, targetDatabaseName, schemaName, tableMap, migrationSetting, sourceSetting, targetSetting);
-        }
-
-        /// <summary> Initializes a new instance of MigrationValidationOptions. </summary>
-        /// <param name="enableSchemaValidation"> Allows to compare the schema information between source and target. </param>
-        /// <param name="enableDataIntegrityValidation"> Allows to perform a checksum based data integrity validation between source and target for the selected database / tables . </param>
-        /// <param name="enableQueryAnalysisValidation"> Allows to perform a quick and intelligent query analysis by retrieving queries from the source database and executes them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries. </param>
-        /// <returns> A new <see cref="Models.MigrationValidationOptions"/> instance for mocking. </returns>
-        public static MigrationValidationOptions MigrationValidationOptions(bool? enableSchemaValidation = null, bool? enableDataIntegrityValidation = null, bool? enableQueryAnalysisValidation = null)
-        {
-            return new MigrationValidationOptions(enableSchemaValidation, enableDataIntegrityValidation, enableQueryAnalysisValidation);
-        }
-
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutput. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -1776,49 +1357,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             events ??= new List<SyncMigrationDatabaseErrorEvent>();
 
             return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(id, "DatabaseLevelErrorOutput", errorMessage, events?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
-        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="validationOptions">
-        /// Options for enabling various post migration validations. Available options, 
-        ///  1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data. 
-        ///  2.) Schema Validation: Performs a thorough schema comparison between the source and target tables and provides a list of differences between the source and target database, 3.) Query Analysis: Executes a set of queries picked up automatically either from the Query Plan Cache or Query Store and execute them and compares the execution time between the source and target database.
-        /// </param>
-        /// <param name="startedOn"> Date and time relative to UTC when the migration was started on. </param>
-        /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskInput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskInput MigrateSqlServerSqlDBTaskInput(SqlConnectionInfo sourceConnectionInfo = null, SqlConnectionInfo targetConnectionInfo = null, IEnumerable<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases = null, MigrationValidationOptions validationOptions = null, string startedOn = null, string encryptedKeyForSecureFields = null)
-        {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            selectedDatabases ??= new List<MigrateSqlServerSqlDBDatabaseInput>();
-
-            return new MigrateSqlServerSqlDBTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), validationOptions, startedOn, encryptedKeyForSecureFields);
-        }
-
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBDatabaseInput. </summary>
-        /// <param name="name"> Name of the database. </param>
-        /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
-        /// <param name="makeSourceDBReadOnly"> Whether to set database read only before migration. </param>
-        /// <param name="tableMap"> Mapping of source to target tables. </param>
-        /// <param name="schemaSetting"> Settings selected for DB schema migration. </param>
-        /// <param name="id"> id of the database. </param>
-        /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBDatabaseInput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBDatabaseInput MigrateSqlServerSqlDBDatabaseInput(string name = null, string targetDatabaseName = null, bool? makeSourceDBReadOnly = null, IDictionary<string, string> tableMap = null, BinaryData schemaSetting = null, string id = null)
-        {
-            tableMap ??= new Dictionary<string, string>();
-
-            return new MigrateSqlServerSqlDBDatabaseInput(name, targetDatabaseName, makeSourceDBReadOnly, tableMap, schemaSetting, id);
         }
 
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutput. </summary>
@@ -2061,51 +1599,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new WaitStatistics(waitType, waitTimeMs, waitCount);
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskInput. </summary>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
-        /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>
-        /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
-        /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
-        /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
-        /// <param name="numberOfParallelDatabaseMigrations"> Number of database migrations to start in parallel. </param>
-        /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskInput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMISyncTaskInput MigrateSqlServerSqlMISyncTaskInput(IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = null, FileShare backupFileShare = null, string storageResourceId = null, SqlConnectionInfo sourceConnectionInfo = null, MISqlConnectionInfo targetConnectionInfo = null, AzureActiveDirectoryApp azureApp = null, float? numberOfParallelDatabaseMigrations = null)
-        {
-            selectedDatabases ??= new List<MigrateSqlServerSqlMIDatabaseInput>();
-
-            return new MigrateSqlServerSqlMISyncTaskInput(selectedDatabases?.ToList(), backupFileShare, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp, numberOfParallelDatabaseMigrations);
-        }
-
-        /// <summary> Initializes a new instance of SqlServerSqlMISyncTaskInput. </summary>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
-        /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>
-        /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
-        /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
-        /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
-        /// <returns> A new <see cref="Models.SqlServerSqlMISyncTaskInput"/> instance for mocking. </returns>
-        public static SqlServerSqlMISyncTaskInput SqlServerSqlMISyncTaskInput(IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = null, FileShare backupFileShare = null, string storageResourceId = null, SqlConnectionInfo sourceConnectionInfo = null, MISqlConnectionInfo targetConnectionInfo = null, AzureActiveDirectoryApp azureApp = null)
-        {
-            selectedDatabases ??= new List<MigrateSqlServerSqlMIDatabaseInput>();
-
-            return new SqlServerSqlMISyncTaskInput(selectedDatabases?.ToList(), backupFileShare, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp);
-        }
-
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMIDatabaseInput. </summary>
-        /// <param name="name"> Name of the database. </param>
-        /// <param name="restoreDatabaseName"> Name of the database at destination. </param>
-        /// <param name="backupFileShare"> Backup file share information for backing up this database. </param>
-        /// <param name="backupFilePaths"> The list of backup files to be used in case of existing backups. </param>
-        /// <param name="id"> id of the database. </param>
-        /// <returns> A new <see cref="Models.MigrateSqlServerSqlMIDatabaseInput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMIDatabaseInput MigrateSqlServerSqlMIDatabaseInput(string name = null, string restoreDatabaseName = null, FileShare backupFileShare = null, IEnumerable<string> backupFilePaths = null, string id = null)
-        {
-            backupFilePaths ??= new List<string>();
-
-            return new MigrateSqlServerSqlMIDatabaseInput(name, restoreDatabaseName, backupFileShare, backupFilePaths?.ToList(), id);
-        }
-
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutput. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -2163,45 +1656,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MigrateSqlServerSqlMISyncTaskOutputError MigrateSqlServerSqlMISyncTaskOutputError(string id = null, ReportableException error = null)
         {
             return new MigrateSqlServerSqlMISyncTaskOutputError(id, "ErrorOutput", error);
-        }
-
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
-        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="startedOn"> Date and time relative to UTC when the migration was started on. </param>
-        /// <param name="selectedLogins"> Logins to migrate. </param>
-        /// <param name="selectedAgentJobs"> Agent Jobs to migrate. </param>
-        /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
-        /// <param name="backupBlobShareSasUri"> SAS URI of Azure Storage Account Container to be used for storing backup files. </param>
-        /// <param name="backupMode"> Backup Mode to specify whether to use existing backup or create new backup. If using existing backups, backup file paths are required to be provided in selectedDatabases. </param>
-        /// <param name="aadDomainName"> Azure Active Directory domain name in the format of &apos;contoso.com&apos; for federated Azure AD or &apos;contoso.onmicrosoft.com&apos; for managed domain, required if and only if Windows logins are selected. </param>
-        /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        /// <returns> A new <see cref="Models.MigrateSqlServerSqlMITaskInput"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlMITaskInput MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo = null, SqlConnectionInfo targetConnectionInfo = null, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = null, string startedOn = null, IEnumerable<string> selectedLogins = null, IEnumerable<string> selectedAgentJobs = null, FileShare backupFileShare = null, Uri backupBlobShareSasUri = null, BackupMode? backupMode = null, string aadDomainName = null, string encryptedKeyForSecureFields = null)
-        {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            selectedDatabases ??= new List<MigrateSqlServerSqlMIDatabaseInput>();
-            selectedLogins ??= new List<string>();
-            selectedAgentJobs ??= new List<string>();
-
-            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), startedOn, selectedLogins?.ToList(), selectedAgentJobs?.ToList(), backupFileShare, backupBlobShareSasUri != null ? new BlobShare(backupBlobShareSasUri) : null, backupMode, aadDomainName, encryptedKeyForSecureFields);
-        }
-
-        /// <summary> Initializes a new instance of BlobShare. </summary>
-        /// <param name="sasUri"> SAS URI of Azure Storage Account Container. </param>
-        /// <returns> A new <see cref="Models.BlobShare"/> instance for mocking. </returns>
-        public static BlobShare BlobShare(Uri sasUri = null)
-        {
-            return new BlobShare(sasUri);
         }
 
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutput. </summary>
@@ -2300,16 +1754,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMITaskOutputError(id, "ErrorOutput", error);
         }
 
-        /// <summary> Initializes a new instance of SsisMigrationInfo. </summary>
-        /// <param name="ssisStoreType"> The SSIS store type of source, only SSIS catalog is supported now in DMS. </param>
-        /// <param name="projectOverwriteOption"> The overwrite option for the SSIS project migration. </param>
-        /// <param name="environmentOverwriteOption"> The overwrite option for the SSIS environment migration. </param>
-        /// <returns> A new <see cref="Models.SsisMigrationInfo"/> instance for mocking. </returns>
-        public static SsisMigrationInfo SsisMigrationInfo(SsisStoreType? ssisStoreType = null, SsisMigrationOverwriteOption? projectOverwriteOption = null, SsisMigrationOverwriteOption? environmentOverwriteOption = null)
-        {
-            return new SsisMigrationInfo(ssisStoreType, projectOverwriteOption, environmentOverwriteOption);
-        }
-
         /// <summary> Initializes a new instance of MigrateSsisTaskOutput. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -2367,14 +1811,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             errors ??= new List<ODataError>();
 
             return new MongoDBCancelCommand(CommandType.Cancel, errors?.ToList(), state, inputObjectName != null ? new MongoDBCommandInput(inputObjectName) : null);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBCommandInput. </summary>
-        /// <param name="objectName"> The qualified name of a database or collection to act upon, or null to act upon the entire migration. </param>
-        /// <returns> A new <see cref="Models.MongoDBCommandInput"/> instance for mocking. </returns>
-        public static MongoDBCommandInput MongoDBCommandInput(string objectName = null)
-        {
-            return new MongoDBCommandInput(objectName);
         }
 
         /// <summary> Initializes a new instance of MongoDBClusterInfo. </summary>
@@ -2533,27 +1969,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBError(code, count, message, errorType);
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionSettings. </summary>
-        /// <param name="canDelete"> Whether the migrator is allowed to drop the target collection in the course of performing a migration. The default is true. </param>
-        /// <param name="shardKey"> Describes a MongoDB shard key. </param>
-        /// <param name="targetRUs"> The RUs that should be configured on a CosmosDB target, or null to use the default. This has no effect on non-CosmosDB targets. </param>
-        /// <returns> A new <see cref="Models.MongoDBCollectionSettings"/> instance for mocking. </returns>
-        public static MongoDBCollectionSettings MongoDBCollectionSettings(bool? canDelete = null, MongoDBShardKeySetting shardKey = null, int? targetRUs = null)
-        {
-            return new MongoDBCollectionSettings(canDelete, shardKey, targetRUs);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBShardKeySetting. </summary>
-        /// <param name="fields"> The fields within the shard key. </param>
-        /// <param name="isUnique"> Whether the shard key is unique. </param>
-        /// <returns> A new <see cref="Models.MongoDBShardKeySetting"/> instance for mocking. </returns>
-        public static MongoDBShardKeySetting MongoDBShardKeySetting(IEnumerable<MongoDBShardKeyField> fields = null, bool? isUnique = null)
-        {
-            fields ??= new List<MongoDBShardKeyField>();
-
-            return new MongoDBShardKeySetting(fields?.ToList(), isUnique);
-        }
-
         /// <summary> Initializes a new instance of MongoDBDatabaseProgress. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
@@ -2578,17 +1993,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBDatabaseProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, MongoDBProgressResultType.Database, state, totalBytes, totalDocuments, collections);
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseSettings. </summary>
-        /// <param name="collections"> The collections on the source database to migrate to the target. The keys are the unqualified names of the collections. </param>
-        /// <param name="targetRUs"> The RUs that should be configured on a CosmosDB target, or null to use the default, or 0 if throughput should not be provisioned for the database. This has no effect on non-CosmosDB targets. </param>
-        /// <returns> A new <see cref="Models.MongoDBDatabaseSettings"/> instance for mocking. </returns>
-        public static MongoDBDatabaseSettings MongoDBDatabaseSettings(IDictionary<string, MongoDBCollectionSettings> collections = null, int? targetRUs = null)
-        {
-            collections ??= new Dictionary<string, MongoDBCollectionSettings>();
-
-            return new MongoDBDatabaseSettings(collections, targetRUs);
-        }
-
         /// <summary> Initializes a new instance of MongoDBFinishCommand. </summary>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
@@ -2599,40 +2003,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             errors ??= new List<ODataError>();
 
             return new MongoDBFinishCommand(CommandType.Finish, errors?.ToList(), state, input);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBFinishCommandInput. </summary>
-        /// <param name="objectName"> The qualified name of a database or collection to act upon, or null to act upon the entire migration. </param>
-        /// <param name="immediate"> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </param>
-        /// <returns> A new <see cref="Models.MongoDBFinishCommandInput"/> instance for mocking. </returns>
-        public static MongoDBFinishCommandInput MongoDBFinishCommandInput(string objectName = null, bool immediate = default)
-        {
-            return new MongoDBFinishCommandInput(objectName, immediate);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBMigrationSettings. </summary>
-        /// <param name="boostRUs"> The RU limit on a CosmosDB target that collections will be temporarily increased to (if lower) during the initial copy of a migration, from 10,000 to 1,000,000, or 0 to use the default boost (which is generally the maximum), or null to not boost the RUs. This setting has no effect on non-CosmosDB targets. </param>
-        /// <param name="databases"> The databases on the source cluster to migrate to the target. The keys are the names of the databases. </param>
-        /// <param name="replication"> Describes how changes will be replicated from the source to the target. The default is OneTime. </param>
-        /// <param name="source"> Settings used to connect to the source cluster. </param>
-        /// <param name="target"> Settings used to connect to the target cluster. </param>
-        /// <param name="throttling"> Settings used to limit the resource usage of the migration. </param>
-        /// <returns> A new <see cref="Models.MongoDBMigrationSettings"/> instance for mocking. </returns>
-        public static MongoDBMigrationSettings MongoDBMigrationSettings(int? boostRUs = null, IDictionary<string, MongoDBDatabaseSettings> databases = null, MongoDBReplication? replication = null, MongoDBConnectionInfo source = null, MongoDBConnectionInfo target = null, MongoDBThrottlingSettings throttling = null)
-        {
-            databases ??= new Dictionary<string, MongoDBDatabaseSettings>();
-
-            return new MongoDBMigrationSettings(boostRUs, databases, replication, source, target, throttling);
-        }
-
-        /// <summary> Initializes a new instance of MongoDBThrottlingSettings. </summary>
-        /// <param name="minFreeCpu"> The percentage of CPU time that the migrator will try to avoid using, from 0 to 100. </param>
-        /// <param name="minFreeMemoryMb"> The number of megabytes of RAM that the migrator will try to avoid using. </param>
-        /// <param name="maxParallelism"> The maximum number of work items (e.g. collection copies) that will be processed in parallel. </param>
-        /// <returns> A new <see cref="Models.MongoDBThrottlingSettings"/> instance for mocking. </returns>
-        public static MongoDBThrottlingSettings MongoDBThrottlingSettings(int? minFreeCpu = null, int? minFreeMemoryMb = null, int? maxParallelism = null)
-        {
-            return new MongoDBThrottlingSettings(minFreeCpu, minFreeMemoryMb, maxParallelism);
         }
 
         /// <summary> Initializes a new instance of MongoDBMigrationProgress. </summary>
@@ -2746,26 +2116,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             validationErrors ??= new List<ReportableException>();
 
             return new ValidateOracleAzureDBPostgreSqlSyncTaskOutput(validationErrors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncDatabaseInput. </summary>
-        /// <param name="caseManipulation"> How to handle object name casing: either Preserve or ToLower. </param>
-        /// <param name="name"> Name of the migration pipeline. </param>
-        /// <param name="schemaName"> Name of the source schema. </param>
-        /// <param name="tableMap"> Mapping of source to target tables. </param>
-        /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
-        /// <param name="migrationSetting"> Migration settings which tune the migration behavior. </param>
-        /// <param name="sourceSetting"> Source settings to tune source endpoint migration behavior. </param>
-        /// <param name="targetSetting"> Target settings to tune target endpoint migration behavior. </param>
-        /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncDatabaseInput"/> instance for mocking. </returns>
-        public static MigrateOracleAzureDBPostgreSqlSyncDatabaseInput MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(string caseManipulation = null, string name = null, string schemaName = null, IDictionary<string, string> tableMap = null, string targetDatabaseName = null, IDictionary<string, string> migrationSetting = null, IDictionary<string, string> sourceSetting = null, IDictionary<string, string> targetSetting = null)
-        {
-            tableMap ??= new Dictionary<string, string>();
-            migrationSetting ??= new Dictionary<string, string>();
-            sourceSetting ??= new Dictionary<string, string>();
-            targetSetting ??= new Dictionary<string, string>();
-
-            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(caseManipulation, name, schemaName, tableMap, targetDatabaseName, migrationSetting, sourceSetting, targetSetting);
         }
 
         /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutput. </summary>
@@ -3595,35 +2945,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(TaskType.MigrateMySqlAzureDBForMySql, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList(), isCloneable, taskId);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Connection information for source MySQL. </param>
-        /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="makeSourceServerReadOnly"> Setting to set the source server read only. </param>
-        /// <param name="startedOn"> Parameter to specify when the migration started. </param>
-        /// <param name="optionalAgentSettings"> Optional parameters for fine tuning the data transfer rate during migration. </param>
-        /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskInput"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineTaskInput MigrateMySqlAzureDBForMySqlOfflineTaskInput(MySqlConnectionInfo sourceConnectionInfo = null, MySqlConnectionInfo targetConnectionInfo = null, IEnumerable<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases = null, bool? makeSourceServerReadOnly = null, DateTimeOffset? startedOn = null, IDictionary<string, string> optionalAgentSettings = null, string encryptedKeyForSecureFields = null)
-        {
-            selectedDatabases ??= new List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>();
-            optionalAgentSettings ??= new Dictionary<string, string>();
-
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), makeSourceServerReadOnly, startedOn, optionalAgentSettings, encryptedKeyForSecureFields);
-        }
-
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineDatabaseInput. </summary>
-        /// <param name="name"> Name of the database. </param>
-        /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
-        /// <param name="tableMap"> Mapping of source to target tables. </param>
-        /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineDatabaseInput"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineDatabaseInput MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(string name = null, string targetDatabaseName = null, IDictionary<string, string> tableMap = null)
-        {
-            tableMap ??= new Dictionary<string, string>();
-
-            return new MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(name, targetDatabaseName, tableMap);
-        }
-
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutput. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -3744,23 +3065,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMigrationInputSqlServerSqlMITaskProperties(TaskType.ValidateMigrationInputSqlServerAzureSqlDBMI, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskInput. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
-        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="selectedLogins"> Logins to migrate. </param>
-        /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
-        /// <param name="backupBlobShareSasUri"> SAS URI of Azure Storage Account Container to be used for storing backup files. </param>
-        /// <param name="backupMode"> Backup Mode to specify whether to use existing backup or create new backup. </param>
-        /// <returns> A new <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskInput"/> instance for mocking. </returns>
-        public static ValidateMigrationInputSqlServerSqlMITaskInput ValidateMigrationInputSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo = null, SqlConnectionInfo targetConnectionInfo = null, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = null, IEnumerable<string> selectedLogins = null, FileShare backupFileShare = null, Uri backupBlobShareSasUri = null, BackupMode? backupMode = null)
-        {
-            selectedDatabases ??= new List<MigrateSqlServerSqlMIDatabaseInput>();
-            selectedLogins ??= new List<string>();
-
-            return new ValidateMigrationInputSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), selectedLogins?.ToList(), backupFileShare, backupBlobShareSasUri != null ? new BlobShare(backupBlobShareSasUri) : null, backupMode);
-        }
-
         /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="name"> Name of database. </param>
@@ -3819,21 +3123,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new List<ValidateMigrationInputSqlServerSqlMISyncTaskOutput>();
 
             return new ValidateMigrationInputSqlServerSqlMISyncTaskProperties(TaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS, errors?.ToList(), state, commands?.ToList(), clientData, input, output?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMISyncTaskInput. </summary>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
-        /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>
-        /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
-        /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
-        /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
-        /// <returns> A new <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskInput"/> instance for mocking. </returns>
-        public static ValidateMigrationInputSqlServerSqlMISyncTaskInput ValidateMigrationInputSqlServerSqlMISyncTaskInput(IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = null, FileShare backupFileShare = null, string storageResourceId = null, SqlConnectionInfo sourceConnectionInfo = null, MISqlConnectionInfo targetConnectionInfo = null, AzureActiveDirectoryApp azureApp = null)
-        {
-            selectedDatabases ??= new List<MigrateSqlServerSqlMIDatabaseInput>();
-
-            return new ValidateMigrationInputSqlServerSqlMISyncTaskInput(selectedDatabases?.ToList(), backupFileShare, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp);
         }
 
         /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMISyncTaskOutput. </summary>

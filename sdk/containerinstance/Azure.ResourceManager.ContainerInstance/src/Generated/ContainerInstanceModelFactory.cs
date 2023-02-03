@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="zones"> The zones for the container group. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
         /// <param name="containers"> The containers within the container group. </param>
@@ -46,19 +47,39 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="sku"> The SKU for a container group. </param>
         /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
         /// <param name="initContainers"> The init containers for a container group. </param>
-        /// <param name="zones"> The zones for the container group. </param>
+        /// <param name="extensions"> extensions used by virtual kubelet. </param>
+        /// <param name="confidentialComputeCcePolicy"> The properties for confidential container group. </param>
+        /// <param name="priority"> The priority of the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType osType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<string> zones = null)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType osType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null)
         {
             tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
             containers ??= new List<ContainerInstanceContainer>();
             imageRegistryCredentials ??= new List<ContainerGroupImageRegistryCredential>();
             volumes ??= new List<ContainerVolume>();
             subnetIds ??= new List<ContainerGroupSubnetId>();
             initContainers ??= new List<InitContainerDefinitionContent>();
+            extensions ??= new List<DeploymentExtensionSpec>();
+
+            return new ContainerGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), identity, provisioningState, containers?.ToList(), imageRegistryCredentials?.ToList(), restartPolicy, ipAddress, osType, volumes?.ToList(), instanceView, diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics) : null, subnetIds?.ToList(), dnsConfig, sku, encryptionProperties, initContainers?.ToList(), extensions?.ToList(), confidentialComputeCcePolicy != null ? new ConfidentialComputeProperties(confidentialComputeCcePolicy) : null, priority);
+        }
+
+        /// <summary> Initializes a new instance of ContainerGroupPatch. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="zones"> The zones for the container group. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupPatch"/> instance for mocking. </returns>
+        public static ContainerGroupPatch ContainerGroupPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null)
+        {
+            tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new ContainerGroupData(id, name, resourceType, systemData, tags, location, identity, provisioningState, containers?.ToList(), imageRegistryCredentials?.ToList(), restartPolicy, ipAddress, osType, volumes?.ToList(), instanceView, diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics) : null, subnetIds?.ToList(), dnsConfig, sku, encryptionProperties, initContainers?.ToList(), zones?.ToList());
+            return new ContainerGroupPatch(id, name, resourceType, systemData, tags, location, zones?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
@@ -81,25 +102,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             volumeMounts ??= new List<ContainerVolumeMount>();
 
             return new ContainerInstanceContainer(name, image, command?.ToList(), ports?.ToList(), environmentVariables?.ToList(), instanceView, resources, volumeMounts?.ToList(), livenessProbe, readinessProbe);
-        }
-
-        /// <summary> Initializes a new instance of ContainerPort. </summary>
-        /// <param name="protocol"> The protocol associated with the port. </param>
-        /// <param name="port"> The port number exposed within the container group. </param>
-        /// <returns> A new <see cref="Models.ContainerPort"/> instance for mocking. </returns>
-        public static ContainerPort ContainerPort(ContainerNetworkProtocol? protocol = null, int port = default)
-        {
-            return new ContainerPort(protocol, port);
-        }
-
-        /// <summary> Initializes a new instance of ContainerEnvironmentVariable. </summary>
-        /// <param name="name"> The name of the environment variable. </param>
-        /// <param name="value"> The value of the environment variable. </param>
-        /// <param name="secureValue"> The value of the secure environment variable. </param>
-        /// <returns> A new <see cref="Models.ContainerEnvironmentVariable"/> instance for mocking. </returns>
-        public static ContainerEnvironmentVariable ContainerEnvironmentVariable(string name = null, string value = null, string secureValue = null)
-        {
-            return new ContainerEnvironmentVariable(name, value, secureValue);
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceView. </summary>
@@ -140,152 +142,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerEvent(count, firstTimestamp, lastTimestamp, name, message, eventType);
         }
 
-        /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
-        /// <param name="requests"> The resource requests of this container instance. </param>
-        /// <param name="limits"> The resource limits of this container instance. </param>
-        /// <returns> A new <see cref="Models.ContainerResourceRequirements"/> instance for mocking. </returns>
-        public static ContainerResourceRequirements ContainerResourceRequirements(ContainerResourceRequestsContent requests = null, ContainerResourceLimits limits = null)
-        {
-            return new ContainerResourceRequirements(requests, limits);
-        }
-
-        /// <summary> Initializes a new instance of ContainerResourceRequestsContent. </summary>
-        /// <param name="memoryInGB"> The memory request in GB of this container instance. </param>
-        /// <param name="cpu"> The CPU request of this container instance. </param>
-        /// <param name="gpu"> The GPU request of this container instance. </param>
-        /// <returns> A new <see cref="Models.ContainerResourceRequestsContent"/> instance for mocking. </returns>
-        public static ContainerResourceRequestsContent ContainerResourceRequestsContent(double memoryInGB = default, double cpu = default, ContainerGpuResourceInfo gpu = null)
-        {
-            return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu);
-        }
-
-        /// <summary> Initializes a new instance of ContainerResourceLimits. </summary>
-        /// <param name="memoryInGB"> The memory limit in GB of this container instance. </param>
-        /// <param name="cpu"> The CPU limit of this container instance. </param>
-        /// <param name="gpu"> The GPU limit of this container instance. </param>
-        /// <returns> A new <see cref="Models.ContainerResourceLimits"/> instance for mocking. </returns>
-        public static ContainerResourceLimits ContainerResourceLimits(double? memoryInGB = null, double? cpu = null, ContainerGpuResourceInfo gpu = null)
-        {
-            return new ContainerResourceLimits(memoryInGB, cpu, gpu);
-        }
-
-        /// <summary> Initializes a new instance of ContainerVolumeMount. </summary>
-        /// <param name="name"> The name of the volume mount. </param>
-        /// <param name="mountPath"> The path within the container where the volume should be mounted. Must not contain colon (:). </param>
-        /// <param name="isReadOnly"> The flag indicating whether the volume mount is read-only. </param>
-        /// <returns> A new <see cref="Models.ContainerVolumeMount"/> instance for mocking. </returns>
-        public static ContainerVolumeMount ContainerVolumeMount(string name = null, string mountPath = null, bool? isReadOnly = null)
-        {
-            return new ContainerVolumeMount(name, mountPath, isReadOnly);
-        }
-
-        /// <summary> Initializes a new instance of ContainerProbe. </summary>
-        /// <param name="execCommand"> The execution command to probe. </param>
-        /// <param name="httpGet"> The Http Get settings to probe. </param>
-        /// <param name="initialDelayInSeconds"> The initial delay seconds. </param>
-        /// <param name="periodInSeconds"> The period seconds. </param>
-        /// <param name="failureThreshold"> The failure threshold. </param>
-        /// <param name="successThreshold"> The success threshold. </param>
-        /// <param name="timeoutInSeconds"> The timeout seconds. </param>
-        /// <returns> A new <see cref="Models.ContainerProbe"/> instance for mocking. </returns>
-        public static ContainerProbe ContainerProbe(IEnumerable<string> execCommand = null, ContainerHttpGet httpGet = null, int? initialDelayInSeconds = null, int? periodInSeconds = null, int? failureThreshold = null, int? successThreshold = null, int? timeoutInSeconds = null)
-        {
-            execCommand ??= new List<string>();
-
-            return new ContainerProbe(execCommand != null ? new ContainerExec(execCommand?.ToList()) : null, httpGet, initialDelayInSeconds, periodInSeconds, failureThreshold, successThreshold, timeoutInSeconds);
-        }
-
-        /// <summary> Initializes a new instance of ContainerHttpGet. </summary>
-        /// <param name="path"> The path to probe. </param>
-        /// <param name="port"> The port number to probe. </param>
-        /// <param name="scheme"> The scheme. </param>
-        /// <param name="httpHeaders"> The HTTP headers. </param>
-        /// <returns> A new <see cref="Models.ContainerHttpGet"/> instance for mocking. </returns>
-        public static ContainerHttpGet ContainerHttpGet(string path = null, int port = default, ContainerHttpGetScheme? scheme = null, IEnumerable<ContainerHttpHeader> httpHeaders = null)
-        {
-            httpHeaders ??= new List<ContainerHttpHeader>();
-
-            return new ContainerHttpGet(path, port, scheme, httpHeaders?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ContainerHttpHeader. </summary>
-        /// <param name="name"> The header name. </param>
-        /// <param name="value"> The header value. </param>
-        /// <returns> A new <see cref="Models.ContainerHttpHeader"/> instance for mocking. </returns>
-        public static ContainerHttpHeader ContainerHttpHeader(string name = null, string value = null)
-        {
-            return new ContainerHttpHeader(name, value);
-        }
-
-        /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>
-        /// <param name="server"> The Docker image registry server without a protocol such as &quot;http&quot; and &quot;https&quot;. </param>
-        /// <param name="username"> The username for the private registry. </param>
-        /// <param name="password"> The password for the private registry. </param>
-        /// <param name="identity"> The identity for the private registry. </param>
-        /// <param name="identityUri"> The identity URL for the private registry. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupImageRegistryCredential"/> instance for mocking. </returns>
-        public static ContainerGroupImageRegistryCredential ContainerGroupImageRegistryCredential(string server = null, string username = null, string password = null, string identity = null, Uri identityUri = null)
-        {
-            return new ContainerGroupImageRegistryCredential(server, username, password, identity, identityUri);
-        }
-
         /// <summary> Initializes a new instance of ContainerGroupIPAddress. </summary>
         /// <param name="ports"> The list of ports exposed on the container group. </param>
         /// <param name="addressType"> Specifies if the IP is exposed to the public internet or private VNET. </param>
         /// <param name="ip"> The IP exposed to the public internet. </param>
         /// <param name="dnsNameLabel"> The Dns name label for the IP. </param>
-        /// <param name="dnsNameLabelReusePolicy"> The value representing the security enum. </param>
+        /// <param name="autoGeneratedDomainNameLabelScope"> The value representing the security enum. The &apos;Unsecure&apos; value is the default value if not selected and means the object&apos;s domain name label is not secured against subdomain takeover. The &apos;TenantReuse&apos; value is the default value if selected and means the object&apos;s domain name label can be reused within the same tenant. The &apos;SubscriptionReuse&apos; value means the object&apos;s domain name label can be reused within the same subscription. The &apos;ResourceGroupReuse&apos; value means the object&apos;s domain name label can be reused within the same resource group. The &apos;NoReuse&apos; value means the object&apos;s domain name label cannot be reused within the same resource group, subscription, or tenant. </param>
         /// <param name="fqdn"> The FQDN for the IP. </param>
         /// <returns> A new <see cref="Models.ContainerGroupIPAddress"/> instance for mocking. </returns>
-        public static ContainerGroupIPAddress ContainerGroupIPAddress(IEnumerable<ContainerGroupPort> ports = null, ContainerGroupIPAddressType addressType = default, IPAddress ip = null, string dnsNameLabel = null, AutoGeneratedDomainNameLabelScope? dnsNameLabelReusePolicy = null, string fqdn = null)
+        public static ContainerGroupIPAddress ContainerGroupIPAddress(IEnumerable<ContainerGroupPort> ports = null, ContainerGroupIPAddressType addressType = default, IPAddress ip = null, string dnsNameLabel = null, DnsNameLabelReusePolicy? autoGeneratedDomainNameLabelScope = null, string fqdn = null)
         {
             ports ??= new List<ContainerGroupPort>();
 
-            return new ContainerGroupIPAddress(ports?.ToList(), addressType, ip, dnsNameLabel, dnsNameLabelReusePolicy, fqdn);
-        }
-
-        /// <summary> Initializes a new instance of ContainerGroupPort. </summary>
-        /// <param name="protocol"> The protocol associated with the port. </param>
-        /// <param name="port"> The port number. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupPort"/> instance for mocking. </returns>
-        public static ContainerGroupPort ContainerGroupPort(ContainerGroupNetworkProtocol? protocol = null, int port = default)
-        {
-            return new ContainerGroupPort(protocol, port);
-        }
-
-        /// <summary> Initializes a new instance of ContainerVolume. </summary>
-        /// <param name="name"> The name of the volume. </param>
-        /// <param name="azureFile"> The Azure File volume. </param>
-        /// <param name="emptyDir"> The empty directory volume. </param>
-        /// <param name="secret"> The secret volume. </param>
-        /// <param name="gitRepo"> The git repo volume. </param>
-        /// <returns> A new <see cref="Models.ContainerVolume"/> instance for mocking. </returns>
-        public static ContainerVolume ContainerVolume(string name = null, ContainerInstanceAzureFileVolume azureFile = null, BinaryData emptyDir = null, IDictionary<string, string> secret = null, ContainerInstanceGitRepoVolume gitRepo = null)
-        {
-            secret ??= new Dictionary<string, string>();
-
-            return new ContainerVolume(name, azureFile, emptyDir, secret, gitRepo);
-        }
-
-        /// <summary> Initializes a new instance of ContainerInstanceAzureFileVolume. </summary>
-        /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
-        /// <param name="isReadOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
-        /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
-        /// <param name="storageAccountKey"> The storage account access key used to access the Azure File share. </param>
-        /// <returns> A new <see cref="Models.ContainerInstanceAzureFileVolume"/> instance for mocking. </returns>
-        public static ContainerInstanceAzureFileVolume ContainerInstanceAzureFileVolume(string shareName = null, bool? isReadOnly = null, string storageAccountName = null, string storageAccountKey = null)
-        {
-            return new ContainerInstanceAzureFileVolume(shareName, isReadOnly, storageAccountName, storageAccountKey);
-        }
-
-        /// <summary> Initializes a new instance of ContainerInstanceGitRepoVolume. </summary>
-        /// <param name="directory"> Target directory name. Must not contain or start with &apos;..&apos;.  If &apos;.&apos; is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </param>
-        /// <param name="repository"> Repository URL. </param>
-        /// <param name="revision"> Commit hash for the specified revision. </param>
-        /// <returns> A new <see cref="Models.ContainerInstanceGitRepoVolume"/> instance for mocking. </returns>
-        public static ContainerInstanceGitRepoVolume ContainerInstanceGitRepoVolume(string directory = null, string repository = null, string revision = null)
-        {
-            return new ContainerInstanceGitRepoVolume(directory, repository, revision);
+            return new ContainerGroupIPAddress(ports?.ToList(), addressType, ip, dnsNameLabel, autoGeneratedDomainNameLabelScope, fqdn);
         }
 
         /// <summary> Initializes a new instance of ContainerGroupInstanceView. </summary>
@@ -297,41 +166,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             events ??= new List<ContainerEvent>();
 
             return new ContainerGroupInstanceView(events?.ToList(), state);
-        }
-
-        /// <summary> Initializes a new instance of ContainerGroupLogAnalytics. </summary>
-        /// <param name="workspaceId"> The workspace id for log analytics. </param>
-        /// <param name="workspaceKey"> The workspace key for log analytics. </param>
-        /// <param name="logType"> The log type to be used. </param>
-        /// <param name="metadata"> Metadata for log analytics. </param>
-        /// <param name="workspaceResourceId"> The workspace resource id for log analytics. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupLogAnalytics"/> instance for mocking. </returns>
-        public static ContainerGroupLogAnalytics ContainerGroupLogAnalytics(string workspaceId = null, string workspaceKey = null, ContainerGroupLogAnalyticsLogType? logType = null, IDictionary<string, string> metadata = null, ResourceIdentifier workspaceResourceId = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-
-            return new ContainerGroupLogAnalytics(workspaceId, workspaceKey, logType, metadata, workspaceResourceId);
-        }
-
-        /// <summary> Initializes a new instance of ContainerGroupSubnetId. </summary>
-        /// <param name="id"> Resource ID of virtual network and subnet. </param>
-        /// <param name="name"> Friendly name for the subnet. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupSubnetId"/> instance for mocking. </returns>
-        public static ContainerGroupSubnetId ContainerGroupSubnetId(ResourceIdentifier id = null, string name = null)
-        {
-            return new ContainerGroupSubnetId(id, name);
-        }
-
-        /// <summary> Initializes a new instance of ContainerGroupDnsConfiguration. </summary>
-        /// <param name="nameServers"> The DNS servers for the container group. </param>
-        /// <param name="searchDomains"> The DNS search domains for hostname lookup in the container group. </param>
-        /// <param name="options"> The DNS options for the container group. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupDnsConfiguration"/> instance for mocking. </returns>
-        public static ContainerGroupDnsConfiguration ContainerGroupDnsConfiguration(IEnumerable<string> nameServers = null, string searchDomains = null, string options = null)
-        {
-            nameServers ??= new List<string>();
-
-            return new ContainerGroupDnsConfiguration(nameServers?.ToList(), searchDomains, options);
         }
 
         /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
@@ -364,32 +198,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupPatch. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="zones"> The zones for the container group. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupPatch"/> instance for mocking. </returns>
-        public static ContainerGroupPatch ContainerGroupPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
-
-            return new ContainerGroupPatch(id, name, resourceType, systemData, tags, location, zones?.ToList());
-        }
-
         /// <summary> Initializes a new instance of ContainerInstanceUsage. </summary>
+        /// <param name="id"> Id of the usage result. </param>
         /// <param name="unit"> Unit of the usage result. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name object of the resource. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceUsage"/> instance for mocking. </returns>
-        public static ContainerInstanceUsage ContainerInstanceUsage(string unit = null, int? currentValue = null, int? limit = null, ContainerInstanceUsageName name = null)
+        public static ContainerInstanceUsage ContainerInstanceUsage(string id = null, string unit = null, int? currentValue = null, int? limit = null, ContainerInstanceUsageName name = null)
         {
-            return new ContainerInstanceUsage(unit, currentValue, limit, name);
+            return new ContainerInstanceUsage(id, unit, currentValue, limit, name);
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceUsageName. </summary>

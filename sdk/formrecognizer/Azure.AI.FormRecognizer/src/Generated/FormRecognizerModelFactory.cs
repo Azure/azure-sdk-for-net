@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
 using Azure.AI.FormRecognizer.Training;
 

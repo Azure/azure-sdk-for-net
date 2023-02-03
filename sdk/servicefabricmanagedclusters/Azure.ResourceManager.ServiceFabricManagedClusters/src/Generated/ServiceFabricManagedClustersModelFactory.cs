@@ -79,42 +79,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedApplicationData(id, name, resourceType, systemData, tags, location, identity, provisioningState, version, parameters, upgradePolicy, managedIdentities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ApplicationUpgradePolicy. </summary>
-        /// <param name="applicationHealthPolicy">
-        /// Defines a health policy used to evaluate the health of an application or one of its children entities.
-        /// 
-        /// </param>
-        /// <param name="forceRestart"> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </param>
-        /// <param name="rollingUpgradeMonitoringPolicy"> The policy used for monitoring the application upgrade. </param>
-        /// <param name="instanceCloseDelayDurationInSeconds"> Duration in seconds, to wait before a stateless instance is closed, to allow the active requests to drain gracefully. This would be effective when the instance is closing during the application/cluster upgrade, only for those instances which have a non-zero delay duration configured in the service description. </param>
-        /// <param name="upgradeMode"> The mode used to monitor health during a rolling upgrade. The values are Monitored, and UnmonitoredAuto. </param>
-        /// <param name="upgradeReplicaSetCheckTimeout"> The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues. When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues. The timeout is reset at the start of each upgrade domain. Valid values are between 0 and 42949672925 inclusive. (unsigned 32-bit integer). </param>
-        /// <param name="recreateApplication"> Determines whether the application should be recreated on update. If value=true, the rest of the upgrade policy parameters are not allowed. </param>
-        /// <returns> A new <see cref="Models.ApplicationUpgradePolicy"/> instance for mocking. </returns>
-        public static ApplicationUpgradePolicy ApplicationUpgradePolicy(ApplicationHealthPolicy applicationHealthPolicy = null, bool? forceRestart = null, RollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = null, long? instanceCloseDelayDurationInSeconds = null, RollingUpgradeMode? upgradeMode = null, long? upgradeReplicaSetCheckTimeout = null, bool? recreateApplication = null)
-        {
-            return new ApplicationUpgradePolicy(applicationHealthPolicy, forceRestart, rollingUpgradeMonitoringPolicy, instanceCloseDelayDurationInSeconds, upgradeMode, upgradeReplicaSetCheckTimeout, recreateApplication);
-        }
-
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
-        /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
-        /// <param name="maxPercentUnhealthyDeployedApplications">
-        /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
-        /// The percentage represents the maximum tolerated percentage of deployed applications that can be unhealthy before the application is considered in error.
-        /// This is calculated by dividing the number of unhealthy deployed applications over the number of nodes where the application is currently deployed on in the cluster.
-        /// The computation rounds up to tolerate one failure on small numbers of nodes. Default percentage is zero.
-        /// 
-        /// </param>
-        /// <param name="defaultServiceTypeHealthPolicy"> The health policy used by default to evaluate the health of a service type. </param>
-        /// <param name="serviceTypeHealthPolicyMap"> The map with service type health policy per service type name. The map is empty by default. </param>
-        /// <returns> A new <see cref="Models.ApplicationHealthPolicy"/> instance for mocking. </returns>
-        public static ApplicationHealthPolicy ApplicationHealthPolicy(bool considerWarningAsError = default, int maxPercentUnhealthyDeployedApplications = default, ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = null, IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = null)
-        {
-            serviceTypeHealthPolicyMap ??= new Dictionary<string, ServiceTypeHealthPolicy>();
-
-            return new ApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap);
-        }
-
         /// <summary> Initializes a new instance of ServiceFabricManagedServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -164,72 +128,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             scalingPolicies ??= new List<ManagedServiceScalingPolicy>();
 
             return new ManagedServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode);
-        }
-
-        /// <summary> Initializes a new instance of ManagedServicePartitionScheme. </summary>
-        /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        /// <returns> A new <see cref="Models.ManagedServicePartitionScheme"/> instance for mocking. </returns>
-        public static ManagedServicePartitionScheme ManagedServicePartitionScheme(string partitionScheme = "Unknown")
-        {
-            return new UnknownPartition(partitionScheme);
-        }
-
-        /// <summary> Initializes a new instance of ManagedServiceBaseProperties. </summary>
-        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </param>
-        /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
-        /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
-        /// <param name="servicePlacementPolicies">
-        /// A list that describes the correlation of the service with other services.
-        /// Please note <see cref="ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/> and <see cref="ServicePlacementRequireDomainDistributionPolicy"/>.
-        /// </param>
-        /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
-        /// <param name="scalingPolicies"> Scaling policies for this service. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceBaseProperties"/> instance for mocking. </returns>
-        public static ManagedServiceBaseProperties ManagedServiceBaseProperties(string placementConstraints = null, IEnumerable<ManagedServiceCorrelation> correlationScheme = null, IEnumerable<ManagedServiceLoadMetric> serviceLoadMetrics = null, IEnumerable<ManagedServicePlacementPolicy> servicePlacementPolicies = null, ServiceFabricManagedServiceMoveCost? defaultMoveCost = null, IEnumerable<ManagedServiceScalingPolicy> scalingPolicies = null)
-        {
-            correlationScheme ??= new List<ManagedServiceCorrelation>();
-            serviceLoadMetrics ??= new List<ManagedServiceLoadMetric>();
-            servicePlacementPolicies ??= new List<ManagedServicePlacementPolicy>();
-            scalingPolicies ??= new List<ManagedServiceScalingPolicy>();
-
-            return new ManagedServiceBaseProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedServiceLoadMetric. </summary>
-        /// <param name="name"> The name of the metric. If the service chooses to report load during runtime, the load metric name should match the name that is specified in Name exactly. Note that metric names are case sensitive. </param>
-        /// <param name="weight"> The service load metric relative weight, compared to other metrics configured for this service, as a number. </param>
-        /// <param name="primaryDefaultLoad"> Used only for Stateful services. The default amount of load, as a number, that this service creates for this metric when it is a Primary replica. </param>
-        /// <param name="secondaryDefaultLoad"> Used only for Stateful services. The default amount of load, as a number, that this service creates for this metric when it is a Secondary replica. </param>
-        /// <param name="defaultLoad"> Used only for Stateless services. The default amount of load, as a number, that this service creates for this metric. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceLoadMetric"/> instance for mocking. </returns>
-        public static ManagedServiceLoadMetric ManagedServiceLoadMetric(string name = null, ManagedServiceLoadMetricWeight? weight = null, int? primaryDefaultLoad = null, int? secondaryDefaultLoad = null, int? defaultLoad = null)
-        {
-            return new ManagedServiceLoadMetric(name, weight, primaryDefaultLoad, secondaryDefaultLoad, defaultLoad);
-        }
-
-        /// <summary> Initializes a new instance of ManagedServicePlacementPolicy. </summary>
-        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        /// <returns> A new <see cref="Models.ManagedServicePlacementPolicy"/> instance for mocking. </returns>
-        public static ManagedServicePlacementPolicy ManagedServicePlacementPolicy(string servicePlacementPolicyType = "Unknown")
-        {
-            return new UnknownServicePlacementPolicy(servicePlacementPolicyType);
-        }
-
-        /// <summary> Initializes a new instance of ManagedServiceScalingMechanism. </summary>
-        /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceScalingMechanism"/> instance for mocking. </returns>
-        public static ManagedServiceScalingMechanism ManagedServiceScalingMechanism(string kind = "Unknown")
-        {
-            return new UnknownScalingMechanism(kind);
-        }
-
-        /// <summary> Initializes a new instance of ManagedServiceScalingTrigger. </summary>
-        /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceScalingTrigger"/> instance for mocking. </returns>
-        public static ManagedServiceScalingTrigger ManagedServiceScalingTrigger(string kind = "Unknown")
-        {
-            return new UnknownScalingTrigger(kind);
         }
 
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>
@@ -290,90 +188,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             serviceEndpoints ??= new List<ManagedClusterServiceEndpoint>();
 
             return new ServiceFabricManagedClusterData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new ServiceFabricManagedClustersSku(skuName.Value) : null, dnsName, fqdn, ipv4Address, clusterId, clusterState, clusterCertificateThumbprints?.ToList(), clientConnectionPort, httpGatewayConnectionPort, adminUserName, adminPassword, loadBalancingRules?.ToList(), isRdpAccessAllowed, networkSecurityRules?.ToList(), clients?.ToList(), azureActiveDirectory, fabricSettings?.ToList(), provisioningState, clusterCodeVersion, clusterUpgradeMode, clusterUpgradeCadence, addOnFeatures?.ToList(), isAutoOSUpgradeEnabled, hasZoneResiliency, maxUnusedVersionsToKeep.HasValue ? new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value) : null, isIPv6Enabled, subnetId, ipTags?.ToList(), ipv6Address, isServicePublicIPEnabled, auxiliarySubnets?.ToList(), serviceEndpoints?.ToList(), etag);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancingRule. </summary>
-        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 1 and 65534. </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
-        /// <param name="probePort"> The prob port used by the load balancing rule. Acceptable values are between 1 and 65535. </param>
-        /// <param name="probeProtocol"> the reference to the load balancer probe used by the load balancing rule. </param>
-        /// <param name="probeRequestPath"> The probe request path. Only supported for HTTP/HTTPS probes. </param>
-        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterLoadBalancingRule"/> instance for mocking. </returns>
-        public static ManagedClusterLoadBalancingRule ManagedClusterLoadBalancingRule(int frontendPort = default, int backendPort = default, ManagedClusterLoadBalancingRuleTransportProtocol protocol = default, int? probePort = null, ManagedClusterLoadBalanceProbeProtocol probeProtocol = default, string probeRequestPath = null, string loadDistribution = null)
-        {
-            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, probePort, probeProtocol, probeRequestPath, loadDistribution);
-        }
-
-        /// <summary> Initializes a new instance of ServiceFabricManagedNetworkSecurityRule. </summary>
-        /// <param name="name"> Network security rule name. </param>
-        /// <param name="description"> Network security rule description. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sourceAddressPrefixes"> The CIDR or source IP ranges. </param>
-        /// <param name="destinationAddressPrefixes"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="sourceAddressPrefix"> The CIDR or source IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. If this is an ingress rule, specifies where network traffic originates from. </param>
-        /// <param name="destinationAddressPrefix"> The destination address prefix. CIDR or destination IP range. Asterisk &apos;*&apos; can also be used to match all source IPs. Default tags such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be used. </param>
-        /// <param name="sourcePortRange"> The source port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </param>
-        /// <param name="destinationPortRange"> he destination port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </param>
-        /// <param name="access"> The network traffic is allowed or denied. </param>
-        /// <param name="priority"> The priority of the rule. The value can be in the range 1000 to 3000. Values outside this range are reserved for Service Fabric ManagerCluster Resource Provider. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
-        /// <param name="direction"> Network security rule direction. </param>
-        /// <returns> A new <see cref="Models.ServiceFabricManagedNetworkSecurityRule"/> instance for mocking. </returns>
-        public static ServiceFabricManagedNetworkSecurityRule ServiceFabricManagedNetworkSecurityRule(string name = null, string description = null, ServiceFabricManagedNsgProtocol protocol = default, IEnumerable<string> sourceAddressPrefixes = null, IEnumerable<string> destinationAddressPrefixes = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, string sourceAddressPrefix = null, string destinationAddressPrefix = null, string sourcePortRange = null, string destinationPortRange = null, ServiceFabricManagedNetworkTrafficAccess access = default, int priority = default, ServiceFabricManagedNetworkSecurityRuleDirection direction = default)
-        {
-            sourceAddressPrefixes ??= new List<string>();
-            destinationAddressPrefixes ??= new List<string>();
-            sourcePortRanges ??= new List<string>();
-            destinationPortRanges ??= new List<string>();
-
-            return new ServiceFabricManagedNetworkSecurityRule(name, description, protocol, sourceAddressPrefixes?.ToList(), destinationAddressPrefixes?.ToList(), sourcePortRanges?.ToList(), destinationPortRanges?.ToList(), sourceAddressPrefix, destinationAddressPrefix, sourcePortRange, destinationPortRange, access, priority, direction);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterClientCertificate. </summary>
-        /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="commonName"> Certificate common name. </param>
-        /// <param name="issuerThumbprint"> Issuer thumbprint for the certificate. Only used together with CommonName. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterClientCertificate"/> instance for mocking. </returns>
-        public static ManagedClusterClientCertificate ManagedClusterClientCertificate(bool isAdmin = default, BinaryData thumbprint = null, string commonName = null, BinaryData issuerThumbprint = null)
-        {
-            return new ManagedClusterClientCertificate(isAdmin, thumbprint, commonName, issuerThumbprint);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterAzureActiveDirectory. </summary>
-        /// <param name="tenantId"> Azure active directory tenant id. </param>
-        /// <param name="clusterApplication"> Azure active directory cluster application id. </param>
-        /// <param name="clientApplication"> Azure active directory client application id. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterAzureActiveDirectory"/> instance for mocking. </returns>
-        public static ManagedClusterAzureActiveDirectory ManagedClusterAzureActiveDirectory(Guid? tenantId = null, string clusterApplication = null, string clientApplication = null)
-        {
-            return new ManagedClusterAzureActiveDirectory(tenantId, clusterApplication, clientApplication);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterSubnet. </summary>
-        /// <param name="name"> Subnet name. </param>
-        /// <param name="isIPv6Enabled"> Indicates wether to enable Ipv6 or not. If not provided, it will take the same configuration as the cluster. </param>
-        /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>
-        /// <param name="privateLinkServiceNetworkPolicies"> Enable or Disable apply network policies on private link service in the subnet. </param>
-        /// <param name="networkSecurityGroupId"> Full resource id for the network security group. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterSubnet"/> instance for mocking. </returns>
-        public static ManagedClusterSubnet ManagedClusterSubnet(string name = null, bool? isIPv6Enabled = null, ManagedClusterSubnetPrivateEndpointNetworkPoliciesState? privateEndpointNetworkPolicies = null, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState? privateLinkServiceNetworkPolicies = null, ResourceIdentifier networkSecurityGroupId = null)
-        {
-            return new ManagedClusterSubnet(name, isIPv6Enabled, privateEndpointNetworkPolicies, privateLinkServiceNetworkPolicies, networkSecurityGroupId);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterServiceEndpoint. </summary>
-        /// <param name="service"> The type of the endpoint service. </param>
-        /// <param name="locations"> A list of locations. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterServiceEndpoint"/> instance for mocking. </returns>
-        public static ManagedClusterServiceEndpoint ManagedClusterServiceEndpoint(string service = null, IEnumerable<AzureLocation> locations = null)
-        {
-            locations ??= new List<AzureLocation>();
-
-            return new ManagedClusterServiceEndpoint(service, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterVersion. </summary>
@@ -473,26 +287,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeVmssExtension(name, publisher, vmssExtensionPropertiesType, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings, forceUpdateTag, provisionAfterExtensions?.ToList(), provisioningState, isAutomaticUpgradeEnabled);
         }
 
-        /// <summary> Initializes a new instance of NodeTypeFrontendConfiguration. </summary>
-        /// <param name="ipAddressType"> The IP address type of this frontend configuration. If omitted the default value is IPv4. </param>
-        /// <param name="loadBalancerBackendAddressPoolId"> The resource Id of the Load Balancer backend address pool that the VM instances of the node type are associated with. The format of the resource Id is &apos;/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/backendAddressPools/&lt;backendAddressPoolName&gt;&apos;. </param>
-        /// <param name="loadBalancerInboundNatPoolId"> The resource Id of the Load Balancer inbound NAT pool that the VM instances of the node type are associated with. The format of the resource Id is &apos;/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/inboundNatPools/&lt;inboundNatPoolName&gt;&apos;. </param>
-        /// <returns> A new <see cref="Models.NodeTypeFrontendConfiguration"/> instance for mocking. </returns>
-        public static NodeTypeFrontendConfiguration NodeTypeFrontendConfiguration(NodeTypeFrontendConfigurationIPAddressType? ipAddressType = null, ResourceIdentifier loadBalancerBackendAddressPoolId = null, ResourceIdentifier loadBalancerInboundNatPoolId = null)
-        {
-            return new NodeTypeFrontendConfiguration(ipAddressType, loadBalancerBackendAddressPoolId, loadBalancerInboundNatPoolId);
-        }
-
-        /// <summary> Initializes a new instance of NodeTypeSku. </summary>
-        /// <param name="name"> The sku name. &lt;br /&gt;&lt;br /&gt;Name is internally generated and is used in auto-scale scenarios.&lt;br /&gt; Property does not allow to be changed to other values than generated.&lt;br /&gt; To avoid deployment errors please omit the property. </param>
-        /// <param name="tier"> Specifies the tier of the node type. &lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt; **Standard**. </param>
-        /// <param name="capacity"> The number of nodes in the node type.&lt;br /&gt;&lt;br /&gt;If present in request it will override properties.vmInstanceCount. </param>
-        /// <returns> A new <see cref="Models.NodeTypeSku"/> instance for mocking. </returns>
-        public static NodeTypeSku NodeTypeSku(string name = null, string tier = null, int capacity = default)
-        {
-            return new NodeTypeSku(name, tier, capacity);
-        }
-
         /// <summary> Initializes a new instance of NodeTypeAvailableSku. </summary>
         /// <param name="resourceType"> The type of resource the sku applies to.  &lt;br /&gt;&lt;br /&gt;Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </param>
         /// <param name="sku"> The supported SKU for a for node type. </param>
@@ -521,105 +315,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static NodeTypeSkuCapacity NodeTypeSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, NodeTypeSkuScaleType? scaleType = null)
         {
             return new NodeTypeSkuCapacity(minimum, maximum, @default, scaleType);
-        }
-
-        /// <summary> Initializes a new instance of NamedPartitionAddOrRemoveScalingMechanism. </summary>
-        /// <param name="minPartitionCount"> Minimum number of named partitions of the service. </param>
-        /// <param name="maxPartitionCount"> Maximum number of named partitions of the service. </param>
-        /// <param name="scaleIncrement"> The number of instances to add or remove during a scaling operation. </param>
-        /// <returns> A new <see cref="Models.NamedPartitionAddOrRemoveScalingMechanism"/> instance for mocking. </returns>
-        public static NamedPartitionAddOrRemoveScalingMechanism NamedPartitionAddOrRemoveScalingMechanism(int minPartitionCount = default, int maxPartitionCount = default, int scaleIncrement = default)
-        {
-            return new NamedPartitionAddOrRemoveScalingMechanism(ServiceScalingMechanismKind.AddRemoveIncrementalNamedPartition, minPartitionCount, maxPartitionCount, scaleIncrement);
-        }
-
-        /// <summary> Initializes a new instance of AveragePartitionLoadScalingTrigger. </summary>
-        /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
-        /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>
-        /// <param name="upperLoadThreshold"> The upper limit of the load beyond which a scale out operation should be performed. </param>
-        /// <param name="scaleInterval"> The period in seconds on which a decision is made whether to scale or not. This property should come in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        /// <returns> A new <see cref="Models.AveragePartitionLoadScalingTrigger"/> instance for mocking. </returns>
-        public static AveragePartitionLoadScalingTrigger AveragePartitionLoadScalingTrigger(string metricName = null, double lowerLoadThreshold = default, double upperLoadThreshold = default, string scaleInterval = null)
-        {
-            return new AveragePartitionLoadScalingTrigger(ServiceScalingTriggerKind.AveragePartitionLoadTrigger, metricName, lowerLoadThreshold, upperLoadThreshold, scaleInterval);
-        }
-
-        /// <summary> Initializes a new instance of AverageServiceLoadScalingTrigger. </summary>
-        /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
-        /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>
-        /// <param name="upperLoadThreshold"> The upper limit of the load beyond which a scale out operation should be performed. </param>
-        /// <param name="scaleInterval"> The period in seconds on which a decision is made whether to scale or not. This property should come in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        /// <param name="useOnlyPrimaryLoad"> Flag determines whether only the load of primary replica should be considered for scaling. If set to true, then trigger will only consider the load of primary replicas of stateful service. If set to false, trigger will consider load of all replicas. This parameter cannot be set to true for stateless service. </param>
-        /// <returns> A new <see cref="Models.AverageServiceLoadScalingTrigger"/> instance for mocking. </returns>
-        public static AverageServiceLoadScalingTrigger AverageServiceLoadScalingTrigger(string metricName = null, double lowerLoadThreshold = default, double upperLoadThreshold = default, string scaleInterval = null, bool useOnlyPrimaryLoad = default)
-        {
-            return new AverageServiceLoadScalingTrigger(ServiceScalingTriggerKind.AverageServiceLoadTrigger, metricName, lowerLoadThreshold, upperLoadThreshold, scaleInterval, useOnlyPrimaryLoad);
-        }
-
-        /// <summary> Initializes a new instance of NamedPartitionScheme. </summary>
-        /// <param name="names"> Array for the names of the partitions. </param>
-        /// <returns> A new <see cref="Models.NamedPartitionScheme"/> instance for mocking. </returns>
-        public static NamedPartitionScheme NamedPartitionScheme(IEnumerable<string> names = null)
-        {
-            names ??= new List<string>();
-
-            return new NamedPartitionScheme(PartitionScheme.Named, names?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PartitionInstanceCountScalingMechanism. </summary>
-        /// <param name="minInstanceCount"> Minimum number of instances of the partition. </param>
-        /// <param name="maxInstanceCount"> Maximum number of instances of the partition. </param>
-        /// <param name="scaleIncrement"> The number of instances to add or remove during a scaling operation. </param>
-        /// <returns> A new <see cref="Models.PartitionInstanceCountScalingMechanism"/> instance for mocking. </returns>
-        public static PartitionInstanceCountScalingMechanism PartitionInstanceCountScalingMechanism(int minInstanceCount = default, int maxInstanceCount = default, int scaleIncrement = default)
-        {
-            return new PartitionInstanceCountScalingMechanism(ServiceScalingMechanismKind.ScalePartitionInstanceCount, minInstanceCount, maxInstanceCount, scaleIncrement);
-        }
-
-        /// <summary> Initializes a new instance of ServicePlacementInvalidDomainPolicy. </summary>
-        /// <param name="domainName"> The name of the domain that should not be used for placement. </param>
-        /// <returns> A new <see cref="Models.ServicePlacementInvalidDomainPolicy"/> instance for mocking. </returns>
-        public static ServicePlacementInvalidDomainPolicy ServicePlacementInvalidDomainPolicy(string domainName = null)
-        {
-            return new ServicePlacementInvalidDomainPolicy(ServicePlacementPolicyType.InvalidDomain, domainName);
-        }
-
-        /// <summary> Initializes a new instance of ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
-        /// <returns> A new <see cref="Models.ServicePlacementNonPartiallyPlaceServicePolicy"/> instance for mocking. </returns>
-        public static ServicePlacementNonPartiallyPlaceServicePolicy ServicePlacementNonPartiallyPlaceServicePolicy()
-        {
-            return new ServicePlacementNonPartiallyPlaceServicePolicy(ServicePlacementPolicyType.NonPartiallyPlaceService);
-        }
-
-        /// <summary> Initializes a new instance of ServicePlacementPreferPrimaryDomainPolicy. </summary>
-        /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        /// <returns> A new <see cref="Models.ServicePlacementPreferPrimaryDomainPolicy"/> instance for mocking. </returns>
-        public static ServicePlacementPreferPrimaryDomainPolicy ServicePlacementPreferPrimaryDomainPolicy(string domainName = null)
-        {
-            return new ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType.PreferredPrimaryDomain, domainName);
-        }
-
-        /// <summary> Initializes a new instance of ServicePlacementRequiredDomainPolicy. </summary>
-        /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        /// <returns> A new <see cref="Models.ServicePlacementRequiredDomainPolicy"/> instance for mocking. </returns>
-        public static ServicePlacementRequiredDomainPolicy ServicePlacementRequiredDomainPolicy(string domainName = null)
-        {
-            return new ServicePlacementRequiredDomainPolicy(ServicePlacementPolicyType.RequiredDomain, domainName);
-        }
-
-        /// <summary> Initializes a new instance of ServicePlacementRequireDomainDistributionPolicy. </summary>
-        /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        /// <returns> A new <see cref="Models.ServicePlacementRequireDomainDistributionPolicy"/> instance for mocking. </returns>
-        public static ServicePlacementRequireDomainDistributionPolicy ServicePlacementRequireDomainDistributionPolicy(string domainName = null)
-        {
-            return new ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType.RequiredDomainDistribution, domainName);
-        }
-
-        /// <summary> Initializes a new instance of SingletonPartitionScheme. </summary>
-        /// <returns> A new <see cref="Models.SingletonPartitionScheme"/> instance for mocking. </returns>
-        public static SingletonPartitionScheme SingletonPartitionScheme()
-        {
-            return new SingletonPartitionScheme(PartitionScheme.Singleton);
         }
 
         /// <summary> Initializes a new instance of StatefulServiceProperties. </summary>
@@ -690,24 +385,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             scalingPolicies ??= new List<ManagedServiceScalingPolicy>();
 
             return new StatelessServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), provisioningState, ServiceKind.Stateless, serviceTypeName, partitionDescription, servicePackageActivationMode, instanceCount, minInstanceCount, minInstancePercentage);
-        }
-
-        /// <summary> Initializes a new instance of UniformInt64RangePartitionScheme. </summary>
-        /// <param name="count"> The number of partitions. </param>
-        /// <param name="lowKey">
-        /// The lower bound of the partition key range that
-        /// should be split between the partition ‘Count’
-        /// 
-        /// </param>
-        /// <param name="highKey">
-        /// The upper bound of the partition key range that
-        /// should be split between the partition ‘Count’
-        /// 
-        /// </param>
-        /// <returns> A new <see cref="Models.UniformInt64RangePartitionScheme"/> instance for mocking. </returns>
-        public static UniformInt64RangePartitionScheme UniformInt64RangePartitionScheme(int count = default, long lowKey = default, long highKey = default)
-        {
-            return new UniformInt64RangePartitionScheme(PartitionScheme.UniformInt64Range, count, lowKey, highKey);
         }
     }
 }

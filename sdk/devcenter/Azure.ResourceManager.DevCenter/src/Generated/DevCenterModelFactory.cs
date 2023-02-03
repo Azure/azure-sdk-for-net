@@ -147,17 +147,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new CatalogData(id, name, resourceType, systemData, gitHub, adoGit, provisioningState, lastSyncOn);
         }
 
-        /// <summary> Initializes a new instance of GitCatalog. </summary>
-        /// <param name="uri"> Git URI. </param>
-        /// <param name="branch"> Git branch. </param>
-        /// <param name="secretIdentifier"> A reference to the Key Vault secret containing a security token to authenticate to a Git repository. </param>
-        /// <param name="path"> The folder where the catalog items can be found inside the repository. </param>
-        /// <returns> A new <see cref="Models.GitCatalog"/> instance for mocking. </returns>
-        public static GitCatalog GitCatalog(Uri uri = null, string branch = null, string secretIdentifier = null, string path = null)
-        {
-            return new GitCatalog(uri, branch, secretIdentifier, path);
-        }
-
         /// <summary> Initializes a new instance of EnvironmentTypeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -205,16 +194,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new EnvironmentRole(roleName, description);
         }
 
-        /// <summary> Initializes a new instance of UserRoleAssignmentValue. </summary>
-        /// <param name="roles"> A map of roles to assign to the parent user. </param>
-        /// <returns> A new <see cref="Models.UserRoleAssignmentValue"/> instance for mocking. </returns>
-        public static UserRoleAssignmentValue UserRoleAssignmentValue(IDictionary<string, EnvironmentRole> roles = null)
-        {
-            roles ??= new Dictionary<string, EnvironmentRole>();
-
-            return new UserRoleAssignmentValue(roles);
-        }
-
         /// <summary> Initializes a new instance of DevBoxDefinitionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -256,18 +235,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static ImageReference ImageReference(string id = null, string exactVersion = null, string publisher = null, string offer = null, string sku = null)
         {
             return new ImageReference(id, exactVersion, publisher, offer, sku);
-        }
-
-        /// <summary> Initializes a new instance of DevCenterSku. </summary>
-        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
-        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.DevCenterSku"/> instance for mocking. </returns>
-        public static DevCenterSku DevCenterSku(string name = null, DevCenterSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new DevCenterSku(name, tier, size, family, capacity);
         }
 
         /// <summary> Initializes a new instance of OperationStatus. </summary>

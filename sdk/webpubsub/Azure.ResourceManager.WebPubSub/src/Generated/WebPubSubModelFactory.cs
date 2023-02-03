@@ -139,16 +139,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? new PrivateEndpoint(privateEndpointId) : null, groupIds?.ToList(), connectionState);
         }
 
-        /// <summary> Initializes a new instance of WebPubSubPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.WebPubSubPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static WebPubSubPrivateLinkServiceConnectionState WebPubSubPrivateLinkServiceConnectionState(WebPubSubPrivateLinkServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new WebPubSubPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -165,94 +155,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubSharedPrivateLinkData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status);
         }
 
-        /// <summary> Initializes a new instance of LiveTraceConfiguration. </summary>
-        /// <param name="enabled">
-        /// Indicates whether or not enable live trace.
-        /// When it&apos;s set to true, live trace client can connect to the service.
-        /// Otherwise, live trace client can&apos;t connect to the service, so that you are unable to receive any log, no matter what you configure in &quot;categories&quot;.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </param>
-        /// <param name="categories"> Gets or sets the list of category configurations. </param>
-        /// <returns> A new <see cref="Models.LiveTraceConfiguration"/> instance for mocking. </returns>
-        public static LiveTraceConfiguration LiveTraceConfiguration(string enabled = null, IEnumerable<LiveTraceCategory> categories = null)
-        {
-            categories ??= new List<LiveTraceCategory>();
-
-            return new LiveTraceConfiguration(enabled, categories?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
-        /// <param name="name">
-        /// Gets or sets the live trace category&apos;s name.
-        /// Available values: ConnectivityLogs, MessagingLogs.
-        /// Case insensitive.
-        /// </param>
-        /// <param name="enabled">
-        /// Indicates whether or the live trace category is enabled.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </param>
-        /// <returns> A new <see cref="Models.LiveTraceCategory"/> instance for mocking. </returns>
-        public static LiveTraceCategory LiveTraceCategory(string name = null, string enabled = null)
-        {
-            return new LiveTraceCategory(name, enabled);
-        }
-
-        /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
-        /// <param name="name">
-        /// Gets or sets the resource log category&apos;s name.
-        /// Available values: ConnectivityLogs, MessagingLogs.
-        /// Case insensitive.
-        /// </param>
-        /// <param name="enabled">
-        /// Indicates whether or the resource log category is enabled.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </param>
-        /// <returns> A new <see cref="Models.ResourceLogCategory"/> instance for mocking. </returns>
-        public static ResourceLogCategory ResourceLogCategory(string name = null, string enabled = null)
-        {
-            return new ResourceLogCategory(name, enabled);
-        }
-
-        /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
-        /// <param name="defaultAction"> Azure Networking ACL Action. </param>
-        /// <param name="publicNetwork"> Network ACL. </param>
-        /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
-        /// <returns> A new <see cref="Models.WebPubSubNetworkAcls"/> instance for mocking. </returns>
-        public static WebPubSubNetworkAcls WebPubSubNetworkAcls(AclAction? defaultAction = null, PublicNetworkAcls publicNetwork = null, IEnumerable<PrivateEndpointAcl> privateEndpoints = null)
-        {
-            privateEndpoints ??= new List<PrivateEndpointAcl>();
-
-            return new WebPubSubNetworkAcls(defaultAction, publicNetwork, privateEndpoints?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PublicNetworkAcls. </summary>
-        /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <returns> A new <see cref="Models.PublicNetworkAcls"/> instance for mocking. </returns>
-        public static PublicNetworkAcls PublicNetworkAcls(IEnumerable<WebPubSubRequestType> allow = null, IEnumerable<WebPubSubRequestType> deny = null)
-        {
-            allow ??= new List<WebPubSubRequestType>();
-            deny ??= new List<WebPubSubRequestType>();
-
-            return new PublicNetworkAcls(allow?.ToList(), deny?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PrivateEndpointAcl. </summary>
-        /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <param name="name"> Name of the private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointAcl"/> instance for mocking. </returns>
-        public static PrivateEndpointAcl PrivateEndpointAcl(IEnumerable<WebPubSubRequestType> allow = null, IEnumerable<WebPubSubRequestType> deny = null, string name = null)
-        {
-            allow ??= new List<WebPubSubRequestType>();
-            deny ??= new List<WebPubSubRequestType>();
-
-            return new PrivateEndpointAcl(allow?.ToList(), deny?.ToList(), name);
-        }
-
         /// <summary> Initializes a new instance of WebPubSubHubData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -263,48 +165,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static WebPubSubHubData WebPubSubHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebPubSubHubProperties properties = null)
         {
             return new WebPubSubHubData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of WebPubSubHubProperties. </summary>
-        /// <param name="eventHandlers"> Event handler of a hub. </param>
-        /// <param name="anonymousConnectPolicy"> The settings for configuring if anonymous connections are allowed for this hub: &quot;allow&quot; or &quot;deny&quot;. Default to &quot;deny&quot;. </param>
-        /// <returns> A new <see cref="Models.WebPubSubHubProperties"/> instance for mocking. </returns>
-        public static WebPubSubHubProperties WebPubSubHubProperties(IEnumerable<WebPubSubEventHandler> eventHandlers = null, string anonymousConnectPolicy = null)
-        {
-            eventHandlers ??= new List<WebPubSubEventHandler>();
-
-            return new WebPubSubHubProperties(eventHandlers?.ToList(), anonymousConnectPolicy);
-        }
-
-        /// <summary> Initializes a new instance of WebPubSubEventHandler. </summary>
-        /// <param name="urlTemplate">
-        /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
-        /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can&apos;t contains parameters.
-        /// </param>
-        /// <param name="userEventPattern">
-        /// Gets or sets the matching pattern for event names.
-        /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any event name
-        ///     2. Combine multiple events with &quot;,&quot;, for example &quot;event1,event2&quot;, it matches event &quot;event1&quot; and &quot;event2&quot;
-        ///     3. The single event name, for example, &quot;event1&quot;, it matches &quot;event1&quot;
-        /// </param>
-        /// <param name="systemEvents"> Gets ot sets the list of system events. </param>
-        /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
-        /// <returns> A new <see cref="Models.WebPubSubEventHandler"/> instance for mocking. </returns>
-        public static WebPubSubEventHandler WebPubSubEventHandler(string urlTemplate = null, string userEventPattern = null, IEnumerable<string> systemEvents = null, UpstreamAuthSettings auth = null)
-        {
-            systemEvents ??= new List<string>();
-
-            return new WebPubSubEventHandler(urlTemplate, userEventPattern, systemEvents?.ToList(), auth);
-        }
-
-        /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
-        /// <param name="authType"> Upstream auth type enum. </param>
-        /// <param name="managedIdentityResource"> Managed identity settings for upstream. </param>
-        /// <returns> A new <see cref="Models.UpstreamAuthSettings"/> instance for mocking. </returns>
-        public static UpstreamAuthSettings UpstreamAuthSettings(UpstreamAuthType? authType = null, string managedIdentityResource = null)
-        {
-            return new UpstreamAuthSettings(authType, managedIdentityResource != null ? new ManagedIdentitySettings(managedIdentityResource) : null);
         }
 
         /// <summary> Initializes a new instance of WebPubSubKeys. </summary>
@@ -335,25 +195,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
             shareablePrivateLinkTypes ??= new List<ShareablePrivateLinkType>();
 
             return new WebPubSubPrivateLink(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), shareablePrivateLinkTypes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ShareablePrivateLinkType. </summary>
-        /// <param name="name"> The name of the resource type that has been onboarded to private link service. </param>
-        /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service. </param>
-        /// <returns> A new <see cref="Models.ShareablePrivateLinkType"/> instance for mocking. </returns>
-        public static ShareablePrivateLinkType ShareablePrivateLinkType(string name = null, ShareablePrivateLinkProperties properties = null)
-        {
-            return new ShareablePrivateLinkType(name, properties);
-        }
-
-        /// <summary> Initializes a new instance of ShareablePrivateLinkProperties. </summary>
-        /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
-        /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
-        /// <param name="shareablePrivateLinkPropertiesType"> The resource provider type for the resource that has been onboarded to private link service. </param>
-        /// <returns> A new <see cref="Models.ShareablePrivateLinkProperties"/> instance for mocking. </returns>
-        public static ShareablePrivateLinkProperties ShareablePrivateLinkProperties(string description = null, string groupId = null, string shareablePrivateLinkPropertiesType = null)
-        {
-            return new ShareablePrivateLinkProperties(description, groupId, shareablePrivateLinkPropertiesType);
         }
 
         /// <summary> Initializes a new instance of WebPubSubSku. </summary>

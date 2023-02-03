@@ -60,24 +60,5 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
             return new ConfidentialLedgerProperties(ledgerName, ledgerUri, identityServiceUri, ledgerInternalNamespace, ledgerType, provisioningState, aadBasedSecurityPrincipals?.ToList(), certBasedSecurityPrincipals?.ToList());
         }
-
-        /// <summary> Initializes a new instance of AadBasedSecurityPrincipal. </summary>
-        /// <param name="principalId"> UUID/GUID based Principal Id of the Security Principal. </param>
-        /// <param name="tenantId"> UUID/GUID based Tenant Id of the Security Principal. </param>
-        /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
-        /// <returns> A new <see cref="Models.AadBasedSecurityPrincipal"/> instance for mocking. </returns>
-        public static AadBasedSecurityPrincipal AadBasedSecurityPrincipal(Guid? principalId = null, Guid? tenantId = null, ConfidentialLedgerRoleName? ledgerRoleName = null)
-        {
-            return new AadBasedSecurityPrincipal(principalId, tenantId, ledgerRoleName);
-        }
-
-        /// <summary> Initializes a new instance of CertBasedSecurityPrincipal. </summary>
-        /// <param name="cert"> Public key of the user cert (.pem or .cer). </param>
-        /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
-        /// <returns> A new <see cref="Models.CertBasedSecurityPrincipal"/> instance for mocking. </returns>
-        public static CertBasedSecurityPrincipal CertBasedSecurityPrincipal(string cert = null, ConfidentialLedgerRoleName? ledgerRoleName = null)
-        {
-            return new CertBasedSecurityPrincipal(cert, ledgerRoleName);
-        }
     }
 }

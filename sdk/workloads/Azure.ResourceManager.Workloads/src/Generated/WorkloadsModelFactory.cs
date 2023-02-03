@@ -84,26 +84,6 @@ namespace Azure.ResourceManager.Workloads.Models
             return new NodeProfile(name, nodeSku, osImage, osDisk, dataDisks?.ToList(), nodeResourceIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OSImageProfile. </summary>
-        /// <param name="publisher"> OS image publisher. </param>
-        /// <param name="offer"> OS image offer. </param>
-        /// <param name="sku"> OS image sku. </param>
-        /// <param name="version"> OS image version. </param>
-        /// <returns> A new <see cref="Models.OSImageProfile"/> instance for mocking. </returns>
-        public static OSImageProfile OSImageProfile(OSImagePublisher? publisher = null, OSImageOffer? offer = null, OSImageSku? sku = null, OSImageVersion? version = null)
-        {
-            return new OSImageProfile(publisher, offer, sku, version);
-        }
-
-        /// <summary> Initializes a new instance of DiskInfo. </summary>
-        /// <param name="storageType"> Storage type. </param>
-        /// <param name="sizeInGB"> Disk size in GB. </param>
-        /// <returns> A new <see cref="Models.DiskInfo"/> instance for mocking. </returns>
-        public static DiskInfo DiskInfo(DiskStorageType storageType = default, long? sizeInGB = null)
-        {
-            return new DiskInfo(storageType, sizeInGB);
-        }
-
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         /// <param name="loadBalancerType"> Load balancer type. </param>
         /// <param name="loadBalancerSku"> Load balancer SKU. </param>
@@ -192,51 +172,6 @@ namespace Azure.ResourceManager.Workloads.Models
             return new BackupProfile(backupEnabled, vaultResourceId);
         }
 
-        /// <summary> Initializes a new instance of WorkloadsSku. </summary>
-        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
-        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.WorkloadsSku"/> instance for mocking. </returns>
-        public static WorkloadsSku WorkloadsSku(string name = null, WorkloadsSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new WorkloadsSku(name, tier, size, family, capacity);
-        }
-
-        /// <summary> Initializes a new instance of PhpWorkloadResourceIdentity. </summary>
-        /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
-        /// <param name="userAssignedIdentities"> User assigned identities dictionary. </param>
-        /// <returns> A new <see cref="Models.PhpWorkloadResourceIdentity"/> instance for mocking. </returns>
-        public static PhpWorkloadResourceIdentity PhpWorkloadResourceIdentity(ManagedServiceIdentityType managedServiceIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new PhpWorkloadResourceIdentity(managedServiceIdentityType, userAssignedIdentities);
-        }
-
-        /// <summary> Initializes a new instance of UserAssignedServiceIdentity. </summary>
-        /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
-        /// <param name="userAssignedIdentities"> User assigned identities dictionary. </param>
-        /// <returns> A new <see cref="Models.UserAssignedServiceIdentity"/> instance for mocking. </returns>
-        public static UserAssignedServiceIdentity UserAssignedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new UserAssignedServiceIdentity(managedServiceIdentityType, userAssignedIdentities);
-        }
-
-        /// <summary> Initializes a new instance of PatchResourceRequestBodyIdentity. </summary>
-        /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
-        /// <param name="userAssignedIdentities"> User assigned identities dictionary. </param>
-        /// <returns> A new <see cref="Models.PatchResourceRequestBodyIdentity"/> instance for mocking. </returns>
-        public static PatchResourceRequestBodyIdentity PatchResourceRequestBodyIdentity(ManagedServiceIdentityType managedServiceIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new PatchResourceRequestBodyIdentity(managedServiceIdentityType, userAssignedIdentities);
-        }
-
         /// <summary> Initializes a new instance of WordPressInstanceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -251,14 +186,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public static WordPressInstanceResourceData WordPressInstanceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WordPressVersion? version = null, string databaseName = null, string databaseUser = null, Uri siteUri = null, ApplicationProvisioningState? provisioningState = null)
         {
             return new WordPressInstanceResourceData(id, name, resourceType, systemData, version, databaseName, databaseUser, siteUri, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of SapSizingRecommendationResult. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
-        /// <returns> A new <see cref="Models.SapSizingRecommendationResult"/> instance for mocking. </returns>
-        public static SapSizingRecommendationResult SapSizingRecommendationResult(string deploymentType = "Unknown")
-        {
-            return new UnknownSapSizingRecommendationResult(deploymentType);
         }
 
         /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>
@@ -351,14 +278,6 @@ namespace Azure.ResourceManager.Workloads.Models
             tags ??= new Dictionary<string, string>();
 
             return new SapVirtualInstanceData(id, name, resourceType, systemData, tags, location, identity, environment, sapProduct, configuration, managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName) : null, status, health, state, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
-        }
-
-        /// <summary> Initializes a new instance of SapConfiguration. </summary>
-        /// <param name="configurationType"> The configuration Type. </param>
-        /// <returns> A new <see cref="Models.SapConfiguration"/> instance for mocking. </returns>
-        public static SapConfiguration SapConfiguration(string configurationType = "Unknown")
-        {
-            return new UnknownSapConfiguration(configurationType);
         }
 
         /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
@@ -562,14 +481,6 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapProviderInstanceData(id, name, resourceType, systemData, provisioningState, errors, providerSettings);
         }
 
-        /// <summary> Initializes a new instance of ProviderSpecificProperties. </summary>
-        /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
-        /// <returns> A new <see cref="Models.ProviderSpecificProperties"/> instance for mocking. </returns>
-        public static ProviderSpecificProperties ProviderSpecificProperties(string providerType = null)
-        {
-            return new UnknownProviderSpecificProperties(providerType);
-        }
-
         /// <summary> Initializes a new instance of SkuDefinition. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="resourceType"> Resource type the SKU applicable for. </param>
@@ -680,64 +591,6 @@ namespace Azure.ResourceManager.Workloads.Models
             return new ImageReference(publisher, offer, sku, version, exactVersion, sharedGalleryImageId);
         }
 
-        /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
-        /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
-        public static WindowsConfiguration WindowsConfiguration()
-        {
-            return new WindowsConfiguration(OSType.Windows);
-        }
-
-        /// <summary> Initializes a new instance of OSConfiguration. </summary>
-        /// <param name="osType"> The OS Type. </param>
-        /// <returns> A new <see cref="Models.OSConfiguration"/> instance for mocking. </returns>
-        public static OSConfiguration OSConfiguration(string osType = "Unknown")
-        {
-            return new UnknownOSConfiguration(osType);
-        }
-
-        /// <summary> Initializes a new instance of SshPublicKey. </summary>
-        /// <param name="keyData"> SSH public key certificate used to authenticate with the VM through ssh. The key needs to be at least 2048-bit and in ssh-rsa format. &lt;br&gt;&lt;br&gt; For creating ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in Azure](https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed). </param>
-        /// <returns> A new <see cref="Models.SshPublicKey"/> instance for mocking. </returns>
-        public static SshPublicKey SshPublicKey(string keyData = null)
-        {
-            return new SshPublicKey(keyData);
-        }
-
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
-        /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
-        /// <param name="sshPublicKeys"> Specifies the ssh key configuration for a Linux OS. (This property is deprecated, please use &apos;sshKeyPair&apos; instead). </param>
-        /// <param name="sshKeyPair"> The SSH Key-pair used to authenticate with the VM&apos;s. </param>
-        /// <returns> A new <see cref="Models.LinuxConfiguration"/> instance for mocking. </returns>
-        public static LinuxConfiguration LinuxConfiguration(bool? disablePasswordAuthentication = null, IEnumerable<SshPublicKey> sshPublicKeys = null, SshKeyPair sshKeyPair = null)
-        {
-            sshPublicKeys ??= new List<SshPublicKey>();
-
-            return new LinuxConfiguration(OSType.Linux, disablePasswordAuthentication, sshPublicKeys != null ? new SshConfiguration(sshPublicKeys?.ToList()) : null, sshKeyPair);
-        }
-
-        /// <summary> Initializes a new instance of SshKeyPair. </summary>
-        /// <param name="publicKey"> SSH public key. </param>
-        /// <param name="privateKey"> SSH private key. </param>
-        /// <returns> A new <see cref="Models.SshKeyPair"/> instance for mocking. </returns>
-        public static SshKeyPair SshKeyPair(string publicKey = null, string privateKey = null)
-        {
-            return new SshKeyPair(publicKey, privateKey);
-        }
-
-        /// <summary> Initializes a new instance of OSProfile. </summary>
-        /// <param name="adminUsername"> Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; This property cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; **Windows-only restriction:** Cannot end in &quot;.&quot; &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;administrator&quot;, &quot;admin&quot;, &quot;user&quot;, &quot;user1&quot;, &quot;test&quot;, &quot;user2&quot;, &quot;test1&quot;, &quot;user3&quot;, &quot;admin1&quot;, &quot;1&quot;, &quot;123&quot;, &quot;a&quot;, &quot;actuser&quot;, &quot;adm&quot;, &quot;admin2&quot;, &quot;aspnet&quot;, &quot;backup&quot;, &quot;console&quot;, &quot;david&quot;, &quot;guest&quot;, &quot;john&quot;, &quot;owner&quot;, &quot;root&quot;, &quot;server&quot;, &quot;sql&quot;, &quot;support&quot;, &quot;support_388945a0&quot;, &quot;sys&quot;, &quot;test2&quot;, &quot;test3&quot;, &quot;user4&quot;, &quot;user5&quot;. &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 1  character &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 64 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 20 characters. </param>
-        /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 6 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 123 characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 72 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;abc@123&quot;, &quot;P@$$w0rd&quot;, &quot;P@ssw0rd&quot;, &quot;P@ssword123&quot;, &quot;Pa$$word&quot;, &quot;pass@word1&quot;, &quot;Password!&quot;, &quot;Password1&quot;, &quot;Password22&quot;, &quot;iloveyou!&quot; &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp) &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection). </param>
-        /// <param name="osConfiguration">
-        /// Specifies Windows operating system settings on the virtual machine.
-        /// Please note <see cref="OSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LinuxConfiguration"/> and <see cref="WindowsConfiguration"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.OSProfile"/> instance for mocking. </returns>
-        public static OSProfile OSProfile(string adminUsername = null, string adminPassword = null, OSConfiguration osConfiguration = null)
-        {
-            return new OSProfile(adminUsername, adminPassword, osConfiguration);
-        }
-
         /// <summary> Initializes a new instance of SingleServerRecommendationResult. </summary>
         /// <param name="vmSku"> The recommended VM SKU for single server. </param>
         /// <returns> A new <see cref="Models.SingleServerRecommendationResult"/> instance for mocking. </returns>
@@ -759,83 +612,6 @@ namespace Azure.ResourceManager.Workloads.Models
             return new ThreeTierRecommendationResult(SapDeploymentType.ThreeTier, dbVmSku, databaseInstanceCount, centralServerVmSku, centralServerInstanceCount, applicationServerVmSku, applicationServerInstanceCount);
         }
 
-        /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
-        /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        /// <param name="isSecondaryIPEnabled"> Network configuration for the server. </param>
-        /// <param name="databaseType"> The database type. </param>
-        /// <param name="subnetId"> The subnet id. </param>
-        /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
-        /// <returns> A new <see cref="Models.SingleServerConfiguration"/> instance for mocking. </returns>
-        public static SingleServerConfiguration SingleServerConfiguration(string appResourceGroup = null, bool? isSecondaryIPEnabled = null, SapDatabaseType? databaseType = null, ResourceIdentifier subnetId = null, VirtualMachineConfiguration virtualMachineConfiguration = null)
-        {
-            return new SingleServerConfiguration(SapDeploymentType.SingleServer, appResourceGroup, isSecondaryIPEnabled != null ? new NetworkConfiguration(isSecondaryIPEnabled) : null, databaseType, subnetId, virtualMachineConfiguration);
-        }
-
-        /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
-        /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        /// <returns> A new <see cref="Models.InfrastructureConfiguration"/> instance for mocking. </returns>
-        public static InfrastructureConfiguration InfrastructureConfiguration(string deploymentType = "Unknown", string appResourceGroup = null)
-        {
-            return new UnknownInfrastructureConfiguration(deploymentType, appResourceGroup);
-        }
-
-        /// <summary> Initializes a new instance of DatabaseConfiguration. </summary>
-        /// <param name="databaseType"> The database type. </param>
-        /// <param name="subnetId"> The subnet id. </param>
-        /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
-        /// <param name="instanceCount"> The number of database VMs. </param>
-        /// <returns> A new <see cref="Models.DatabaseConfiguration"/> instance for mocking. </returns>
-        public static DatabaseConfiguration DatabaseConfiguration(SapDatabaseType? databaseType = null, ResourceIdentifier subnetId = null, VirtualMachineConfiguration virtualMachineConfiguration = null, long instanceCount = default)
-        {
-            return new DatabaseConfiguration(databaseType, subnetId, virtualMachineConfiguration, instanceCount);
-        }
-
-        /// <summary> Initializes a new instance of ThreeTierConfiguration. </summary>
-        /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        /// <param name="isSecondaryIPEnabled"> Network configuration common to all servers. </param>
-        /// <param name="centralServer"> The central server configuration. </param>
-        /// <param name="applicationServer"> The application server configuration. </param>
-        /// <param name="databaseServer"> The database configuration. </param>
-        /// <param name="highAvailabilityType"> The high availability configuration. </param>
-        /// <returns> A new <see cref="Models.ThreeTierConfiguration"/> instance for mocking. </returns>
-        public static ThreeTierConfiguration ThreeTierConfiguration(string appResourceGroup = null, bool? isSecondaryIPEnabled = null, CentralServerConfiguration centralServer = null, ApplicationServerConfiguration applicationServer = null, DatabaseConfiguration databaseServer = null, SapHighAvailabilityType? highAvailabilityType = null)
-        {
-            return new ThreeTierConfiguration(SapDeploymentType.ThreeTier, appResourceGroup, isSecondaryIPEnabled != null ? new NetworkConfiguration(isSecondaryIPEnabled) : null, centralServer, applicationServer, databaseServer, highAvailabilityType.HasValue ? new HighAvailabilityConfiguration(highAvailabilityType.Value) : null);
-        }
-
-        /// <summary> Initializes a new instance of SoftwareConfiguration. </summary>
-        /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
-        /// <returns> A new <see cref="Models.SoftwareConfiguration"/> instance for mocking. </returns>
-        public static SoftwareConfiguration SoftwareConfiguration(string softwareInstallationType = "Unknown")
-        {
-            return new UnknownSoftwareConfiguration(softwareInstallationType);
-        }
-
-        /// <summary> Initializes a new instance of ServiceInitiatedSoftwareConfiguration. </summary>
-        /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>
-        /// <param name="softwareVersion"> The software version to install. </param>
-        /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
-        /// <param name="sapFqdn"> The FQDN to set for the SAP system during install. </param>
-        /// <param name="sshPrivateKey"> The SSH private key. </param>
-        /// <param name="highAvailabilitySoftwareConfiguration"> Gets or sets the HA software configuration. </param>
-        /// <returns> A new <see cref="Models.ServiceInitiatedSoftwareConfiguration"/> instance for mocking. </returns>
-        public static ServiceInitiatedSoftwareConfiguration ServiceInitiatedSoftwareConfiguration(Uri bomUri = null, string softwareVersion = null, string sapBitsStorageAccountId = null, string sapFqdn = null, string sshPrivateKey = null, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = null)
-        {
-            return new ServiceInitiatedSoftwareConfiguration(SapSoftwareInstallationType.ServiceInitiated, bomUri, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration);
-        }
-
-        /// <summary> Initializes a new instance of SapInstallWithoutOSConfigSoftwareConfiguration. </summary>
-        /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>
-        /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
-        /// <param name="softwareVersion"> The software version to install. </param>
-        /// <param name="highAvailabilitySoftwareConfiguration"> Gets or sets the HA software configuration. </param>
-        /// <returns> A new <see cref="Models.SapInstallWithoutOSConfigSoftwareConfiguration"/> instance for mocking. </returns>
-        public static SapInstallWithoutOSConfigSoftwareConfiguration SapInstallWithoutOSConfigSoftwareConfiguration(Uri bomUri = null, string sapBitsStorageAccountId = null, string softwareVersion = null, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = null)
-        {
-            return new SapInstallWithoutOSConfigSoftwareConfiguration(SapSoftwareInstallationType.SapInstallWithoutOSConfig, bomUri, sapBitsStorageAccountId, softwareVersion, highAvailabilitySoftwareConfiguration);
-        }
-
         /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>
@@ -843,142 +619,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public static DiscoveryConfiguration DiscoveryConfiguration(string centralServerVmId = null, AzureLocation? appLocation = null)
         {
             return new DiscoveryConfiguration(SapConfigurationType.Discovery, centralServerVmId, appLocation);
-        }
-
-        /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
-        /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
-        /// <param name="infrastructureConfiguration">
-        /// The infrastructure configuration.
-        /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
-        /// </param>
-        /// <param name="softwareConfiguration">
-        /// The software configuration.
-        /// Please note <see cref="SoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.DeploymentConfiguration"/> instance for mocking. </returns>
-        public static DeploymentConfiguration DeploymentConfiguration(AzureLocation? appLocation = null, InfrastructureConfiguration infrastructureConfiguration = null, SoftwareConfiguration softwareConfiguration = null)
-        {
-            return new DeploymentConfiguration(SapConfigurationType.Deployment, appLocation, infrastructureConfiguration, softwareConfiguration);
-        }
-
-        /// <summary> Initializes a new instance of DeploymentWithOSConfiguration. </summary>
-        /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
-        /// <param name="infrastructureConfiguration">
-        /// The infrastructure configuration.
-        /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
-        /// </param>
-        /// <param name="softwareConfiguration">
-        /// The software configuration.
-        /// Please note <see cref="SoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
-        /// </param>
-        /// <param name="osSapConfiguration"> The OS and SAP configuration. </param>
-        /// <returns> A new <see cref="Models.DeploymentWithOSConfiguration"/> instance for mocking. </returns>
-        public static DeploymentWithOSConfiguration DeploymentWithOSConfiguration(AzureLocation? appLocation = null, InfrastructureConfiguration infrastructureConfiguration = null, SoftwareConfiguration softwareConfiguration = null, OSSapConfiguration osSapConfiguration = null)
-        {
-            return new DeploymentWithOSConfiguration(SapConfigurationType.DeploymentWithOSConfig, appLocation, infrastructureConfiguration, softwareConfiguration, osSapConfiguration);
-        }
-
-        /// <summary> Initializes a new instance of OSSapConfiguration. </summary>
-        /// <param name="deployerVmPackages"> The url and storage account ID where deployer VM packages are uploaded. </param>
-        /// <param name="sapFqdn"> The FQDN to set for the SAP system. </param>
-        /// <returns> A new <see cref="Models.OSSapConfiguration"/> instance for mocking. </returns>
-        public static OSSapConfiguration OSSapConfiguration(DeployerVmPackages deployerVmPackages = null, string sapFqdn = null)
-        {
-            return new OSSapConfiguration(deployerVmPackages, sapFqdn);
-        }
-
-        /// <summary> Initializes a new instance of DeployerVmPackages. </summary>
-        /// <param name="uri"> The URL to the deployer VM packages file. </param>
-        /// <param name="storageAccountId"> The deployer VM packages storage account id. </param>
-        /// <returns> A new <see cref="Models.DeployerVmPackages"/> instance for mocking. </returns>
-        public static DeployerVmPackages DeployerVmPackages(Uri uri = null, string storageAccountId = null)
-        {
-            return new DeployerVmPackages(uri, storageAccountId);
-        }
-
-        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
-        /// <param name="hostname"> Gets or sets the target virtual machine size. </param>
-        /// <param name="dbName"> Gets or sets the hana database name. </param>
-        /// <param name="sqlPort"> Gets or sets the database sql port. </param>
-        /// <param name="instanceNumber"> Gets or sets the database instance number. </param>
-        /// <param name="dbUsername"> Gets or sets the database user name. </param>
-        /// <param name="dbPassword"> Gets or sets the database password. </param>
-        /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
-        /// <param name="dbSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB. </param>
-        /// <param name="sslHostNameInCertificate"> Gets or sets the hostname(s) in the SSL certificate. </param>
-        /// <returns> A new <see cref="Models.HanaDBProviderInstanceProperties"/> instance for mocking. </returns>
-        public static HanaDBProviderInstanceProperties HanaDBProviderInstanceProperties(string hostname = null, string dbName = null, string sqlPort = null, string instanceNumber = null, string dbUsername = null, string dbPassword = null, Uri dbPasswordUri = null, Uri dbSslCertificateUri = null, string sslHostNameInCertificate = null)
-        {
-            return new HanaDBProviderInstanceProperties("SapHana", hostname, dbName, sqlPort, instanceNumber, dbUsername, dbPassword, dbPasswordUri, dbSslCertificateUri, sslHostNameInCertificate);
-        }
-
-        /// <summary> Initializes a new instance of SapNetWeaverProviderInstanceProperties. </summary>
-        /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        /// <param name="sapHostname"> Gets or sets the target virtual machine IP Address/FQDN. </param>
-        /// <param name="sapInstanceNr"> Gets or sets the instance number of SAP NetWeaver. </param>
-        /// <param name="sapHostFileEntries"> Gets or sets the list of HostFile Entries. </param>
-        /// <param name="sapUsername"> Gets or sets the SAP user name. </param>
-        /// <param name="sapPassword"> Sets the SAP password. </param>
-        /// <param name="sapPasswordUri"> Gets or sets the key vault URI to secret with the SAP password. </param>
-        /// <param name="sapClientId"> Gets or sets the SAP Client ID. </param>
-        /// <param name="sapPortNumber"> Gets or sets the SAP HTTP port number. </param>
-        /// <param name="sapSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the SAP system. </param>
-        /// <returns> A new <see cref="Models.SapNetWeaverProviderInstanceProperties"/> instance for mocking. </returns>
-        public static SapNetWeaverProviderInstanceProperties SapNetWeaverProviderInstanceProperties(string sapSid = null, string sapHostname = null, string sapInstanceNr = null, IEnumerable<string> sapHostFileEntries = null, string sapUsername = null, string sapPassword = null, Uri sapPasswordUri = null, string sapClientId = null, string sapPortNumber = null, Uri sapSslCertificateUri = null)
-        {
-            sapHostFileEntries ??= new List<string>();
-
-            return new SapNetWeaverProviderInstanceProperties("SapNetWeaver", sapSid, sapHostname, sapInstanceNr, sapHostFileEntries?.ToList(), sapUsername, sapPassword, sapPasswordUri, sapClientId, sapPortNumber, sapSslCertificateUri);
-        }
-
-        /// <summary> Initializes a new instance of PrometheusOSProviderInstanceProperties. </summary>
-        /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
-        /// <returns> A new <see cref="Models.PrometheusOSProviderInstanceProperties"/> instance for mocking. </returns>
-        public static PrometheusOSProviderInstanceProperties PrometheusOSProviderInstanceProperties(Uri prometheusUri = null)
-        {
-            return new PrometheusOSProviderInstanceProperties("PrometheusOS", prometheusUri);
-        }
-
-        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
-        /// <param name="hostname"> Gets or sets the target virtual machine name. </param>
-        /// <param name="dbName"> Gets or sets the db2 database name. </param>
-        /// <param name="dbPort"> Gets or sets the db2 database sql port. </param>
-        /// <param name="dbUsername"> Gets or sets the db2 database user name. </param>
-        /// <param name="dbPassword"> Gets or sets the db2 database password. </param>
-        /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
-        /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        /// <returns> A new <see cref="Models.DB2ProviderInstanceProperties"/> instance for mocking. </returns>
-        public static DB2ProviderInstanceProperties DB2ProviderInstanceProperties(string hostname = null, string dbName = null, string dbPort = null, string dbUsername = null, string dbPassword = null, Uri dbPasswordUri = null, string sapSid = null)
-        {
-            return new DB2ProviderInstanceProperties("Db2", hostname, dbName, dbPort, dbUsername, dbPassword, dbPasswordUri, sapSid);
-        }
-
-        /// <summary> Initializes a new instance of PrometheusHAClusterProviderInstanceProperties. </summary>
-        /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
-        /// <param name="hostname"> Gets or sets the target machine name. </param>
-        /// <param name="sid"> Gets or sets the cluster sid. </param>
-        /// <param name="clusterName"> Gets or sets the clusterName. </param>
-        /// <returns> A new <see cref="Models.PrometheusHAClusterProviderInstanceProperties"/> instance for mocking. </returns>
-        public static PrometheusHAClusterProviderInstanceProperties PrometheusHAClusterProviderInstanceProperties(Uri prometheusUri = null, string hostname = null, string sid = null, string clusterName = null)
-        {
-            return new PrometheusHAClusterProviderInstanceProperties("PrometheusHaCluster", prometheusUri, hostname, sid, clusterName);
-        }
-
-        /// <summary> Initializes a new instance of MsSqlServerProviderInstanceProperties. </summary>
-        /// <param name="hostname"> Gets or sets the SQL server host name. </param>
-        /// <param name="dbPort"> Gets or sets the database sql port. </param>
-        /// <param name="dbUsername"> Gets or sets the database user name. </param>
-        /// <param name="dbPassword"> Gets or sets the database password. </param>
-        /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
-        /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        /// <returns> A new <see cref="Models.MsSqlServerProviderInstanceProperties"/> instance for mocking. </returns>
-        public static MsSqlServerProviderInstanceProperties MsSqlServerProviderInstanceProperties(string hostname = null, string dbPort = null, string dbUsername = null, string dbPassword = null, Uri dbPasswordUri = null, string sapSid = null)
-        {
-            return new MsSqlServerProviderInstanceProperties("MsSqlServer", hostname, dbPort, dbUsername, dbPassword, dbPasswordUri, sapSid);
         }
     }
 }

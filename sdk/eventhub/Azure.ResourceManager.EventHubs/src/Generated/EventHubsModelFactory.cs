@@ -49,15 +49,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsClusterData(id, name, resourceType, systemData, tags, location, sku, createdOn, updatedOn, metricId, status, supportsScaling);
         }
 
-        /// <summary> Initializes a new instance of EventHubsClusterSku. </summary>
-        /// <param name="name"> Name of this SKU. </param>
-        /// <param name="capacity"> The quantity of Event Hubs Cluster Capacity Units contained in this cluster. </param>
-        /// <returns> A new <see cref="Models.EventHubsClusterSku"/> instance for mocking. </returns>
-        public static EventHubsClusterSku EventHubsClusterSku(EventHubsClusterSkuName name = default, int? capacity = null)
-        {
-            return new EventHubsClusterSku(name, capacity);
-        }
-
         /// <summary> Initializes a new instance of EventHubsNamespaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -93,39 +84,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsNamespaceData(id, name, resourceType, systemData, tags, location, sku, identity, minimumTlsVersion, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, clusterArmId, metricId, isAutoInflateEnabled, publicNetworkAccess, maximumThroughputUnits, kafkaEnabled, zoneRedundant, encryption, privateEndpointConnections?.ToList(), disableLocalAuth, alternateName);
         }
 
-        /// <summary> Initializes a new instance of EventHubsSku. </summary>
-        /// <param name="name"> Name of this SKU. </param>
-        /// <param name="tier"> The billing tier of this particular SKU. </param>
-        /// <param name="capacity"> The Event Hubs throughput units for Basic or Standard tiers, where value should be 0 to 20 throughput units. The Event Hubs premium units for Premium tier, where value should be 0 to 10 premium units. </param>
-        /// <returns> A new <see cref="Models.EventHubsSku"/> instance for mocking. </returns>
-        public static EventHubsSku EventHubsSku(EventHubsSkuName name = default, EventHubsSkuTier? tier = null, int? capacity = null)
-        {
-            return new EventHubsSku(name, tier, capacity);
-        }
-
-        /// <summary> Initializes a new instance of EventHubsEncryption. </summary>
-        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
-        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
-        /// <returns> A new <see cref="Models.EventHubsEncryption"/> instance for mocking. </returns>
-        public static EventHubsEncryption EventHubsEncryption(IEnumerable<EventHubsKeyVaultProperties> keyVaultProperties = null, EventHubsKeySource? keySource = null, bool? requireInfrastructureEncryption = null)
-        {
-            keyVaultProperties ??= new List<EventHubsKeyVaultProperties>();
-
-            return new EventHubsEncryption(keyVaultProperties?.ToList(), keySource, requireInfrastructureEncryption);
-        }
-
-        /// <summary> Initializes a new instance of EventHubsKeyVaultProperties. </summary>
-        /// <param name="keyName"> Name of the Key from KeyVault. </param>
-        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
-        /// <param name="keyVersion"> Key Version. </param>
-        /// <param name="userAssignedIdentity"></param>
-        /// <returns> A new <see cref="Models.EventHubsKeyVaultProperties"/> instance for mocking. </returns>
-        public static EventHubsKeyVaultProperties EventHubsKeyVaultProperties(string keyName = null, Uri keyVaultUri = null, string keyVersion = null, string userAssignedIdentity = null)
-        {
-            return new EventHubsKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity != null ? new UserAssignedIdentityProperties(userAssignedIdentity) : null);
-        }
-
         /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -139,15 +97,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, EventHubsPrivateLinkServiceConnectionState connectionState = null, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
             return new EventHubsPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location);
-        }
-
-        /// <summary> Initializes a new instance of EventHubsPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Status of the connection. </param>
-        /// <param name="description"> Description of the connection state. </param>
-        /// <returns> A new <see cref="Models.EventHubsPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static EventHubsPrivateLinkServiceConnectionState EventHubsPrivateLinkServiceConnectionState(EventHubsPrivateLinkConnectionStatus? status = null, string description = null)
-        {
-            return new EventHubsPrivateLinkServiceConnectionState(status, description);
         }
 
         /// <summary> Initializes a new instance of EventHubsPrivateLinkResourceData. </summary>
@@ -266,16 +215,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsNspAccessRuleProperties(direction, addressPrefixes?.ToList(), subscriptions?.ToList(), networkSecurityPerimeters?.ToList(), fullyQualifiedDomainNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>
-        /// <param name="settings"> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </param>
-        /// <returns> A new <see cref="Models.ClusterQuotaConfigurationProperties"/> instance for mocking. </returns>
-        public static ClusterQuotaConfigurationProperties ClusterQuotaConfigurationProperties(IDictionary<string, string> settings = null)
-        {
-            settings ??= new Dictionary<string, string>();
-
-            return new ClusterQuotaConfigurationProperties(settings);
-        }
-
         /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -294,24 +233,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             ipRules ??= new List<EventHubsNetworkRuleSetIPRules>();
 
             return new EventHubsNetworkRuleSetData(id, name, resourceType, systemData, trustedServiceAccessEnabled, defaultAction, virtualNetworkRules?.ToList(), ipRules?.ToList(), publicNetworkAccess, location);
-        }
-
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetVirtualNetworkRules. </summary>
-        /// <param name="subnetId"> Subnet properties. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing Vnet Service Endpoint. </param>
-        /// <returns> A new <see cref="Models.EventHubsNetworkRuleSetVirtualNetworkRules"/> instance for mocking. </returns>
-        public static EventHubsNetworkRuleSetVirtualNetworkRules EventHubsNetworkRuleSetVirtualNetworkRules(ResourceIdentifier subnetId = null, bool? ignoreMissingVnetServiceEndpoint = null)
-        {
-            return new EventHubsNetworkRuleSetVirtualNetworkRules(subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, ignoreMissingVnetServiceEndpoint);
-        }
-
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetIPRules. </summary>
-        /// <param name="ipMask"> IP Mask. </param>
-        /// <param name="action"> The IP Filter Action. </param>
-        /// <returns> A new <see cref="Models.EventHubsNetworkRuleSetIPRules"/> instance for mocking. </returns>
-        public static EventHubsNetworkRuleSetIPRules EventHubsNetworkRuleSetIPRules(string ipMask = null, EventHubsNetworkRuleIPAction? action = null)
-        {
-            return new EventHubsNetworkRuleSetIPRules(ipMask, action);
         }
 
         /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>
@@ -406,33 +327,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubData(id, name, resourceType, systemData, partitionIds?.ToList(), createdOn, updatedOn, messageRetentionInDays, partitionCount, status, captureDescription, location);
         }
 
-        /// <summary> Initializes a new instance of CaptureDescription. </summary>
-        /// <param name="enabled"> A value that indicates whether capture description is enabled. </param>
-        /// <param name="encoding"> Enumerates the possible values for the encoding format of capture description. Note: &apos;AvroDeflate&apos; will be deprecated in New API Version. </param>
-        /// <param name="intervalInSeconds"> The time window allows you to set the frequency with which the capture to Azure Blobs will happen, value should between 60 to 900 seconds. </param>
-        /// <param name="sizeLimitInBytes"> The size window defines the amount of data built up in your Event Hub before an capture operation, value should be between 10485760 to 524288000 bytes. </param>
-        /// <param name="destination"> Properties of Destination where capture will be stored. (Storage Account, Blob Names). </param>
-        /// <param name="skipEmptyArchives"> A value that indicates whether to Skip Empty Archives. </param>
-        /// <returns> A new <see cref="Models.CaptureDescription"/> instance for mocking. </returns>
-        public static CaptureDescription CaptureDescription(bool? enabled = null, EncodingCaptureDescription? encoding = null, int? intervalInSeconds = null, int? sizeLimitInBytes = null, EventHubDestination destination = null, bool? skipEmptyArchives = null)
-        {
-            return new CaptureDescription(enabled, encoding, intervalInSeconds, sizeLimitInBytes, destination, skipEmptyArchives);
-        }
-
-        /// <summary> Initializes a new instance of EventHubDestination. </summary>
-        /// <param name="name"> Name for capture destination. </param>
-        /// <param name="storageAccountResourceId"> Resource id of the storage account to be used to create the blobs. </param>
-        /// <param name="blobContainer"> Blob container Name. </param>
-        /// <param name="archiveNameFormat"> Blob naming convention for archive, e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}. Here all the parameters (Namespace,EventHub .. etc) are mandatory irrespective of order. </param>
-        /// <param name="dataLakeSubscriptionId"> Subscription Id of Azure Data Lake Store. </param>
-        /// <param name="dataLakeAccountName"> The Azure Data Lake Store name for the captured events. </param>
-        /// <param name="dataLakeFolderPath"> The destination folder path for the captured events. </param>
-        /// <returns> A new <see cref="Models.EventHubDestination"/> instance for mocking. </returns>
-        public static EventHubDestination EventHubDestination(string name = null, ResourceIdentifier storageAccountResourceId = null, string blobContainer = null, string archiveNameFormat = null, Guid? dataLakeSubscriptionId = null, string dataLakeAccountName = null, string dataLakeFolderPath = null)
-        {
-            return new EventHubDestination(name, storageAccountResourceId, blobContainer, archiveNameFormat, dataLakeSubscriptionId, dataLakeAccountName, dataLakeFolderPath);
-        }
-
         /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -472,25 +366,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             policies ??= new List<EventHubsApplicationGroupPolicy>();
 
             return new EventHubsApplicationGroupData(id, name, resourceType, systemData, isEnabled, clientAppGroupIdentifier, policies?.ToList(), location);
-        }
-
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupPolicy. </summary>
-        /// <param name="name"> The Name of this policy. </param>
-        /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
-        /// <returns> A new <see cref="Models.EventHubsApplicationGroupPolicy"/> instance for mocking. </returns>
-        public static EventHubsApplicationGroupPolicy EventHubsApplicationGroupPolicy(string name = null, string applicationGroupPolicyType = "Unknown")
-        {
-            return new UnknownEventHubsApplicationGroupPolicy(name, applicationGroupPolicyType);
-        }
-
-        /// <summary> Initializes a new instance of EventHubsThrottlingPolicy. </summary>
-        /// <param name="name"> The Name of this policy. </param>
-        /// <param name="rateLimitThreshold"> The Threshold limit above which the application group will be throttled.Rate limit is always per second. </param>
-        /// <param name="metricId"> Metric Id on which the throttle limit should be set, MetricId can be discovered by hovering over Metric in the Metrics section of Event Hub Namespace inside Azure Portal. </param>
-        /// <returns> A new <see cref="Models.EventHubsThrottlingPolicy"/> instance for mocking. </returns>
-        public static EventHubsThrottlingPolicy EventHubsThrottlingPolicy(string name = null, long rateLimitThreshold = default, EventHubsMetricId metricId = default)
-        {
-            return new EventHubsThrottlingPolicy(name, ApplicationGroupPolicyType.ThrottlingPolicy, rateLimitThreshold, metricId);
         }
     }
 }

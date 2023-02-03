@@ -452,14 +452,5 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
             return new PolicyAttestationData(id, name, resourceType, systemData, policyAssignmentId, policyDefinitionReferenceId, complianceState, expireOn, owner, comments, evidence?.ToList(), provisioningState, lastComplianceStateChangeOn, assessmentOn, metadata);
         }
-
-        /// <summary> Initializes a new instance of AttestationEvidence. </summary>
-        /// <param name="description"> The description for this piece of evidence. </param>
-        /// <param name="sourceUri"> The URI location of the evidence. </param>
-        /// <returns> A new <see cref="Models.AttestationEvidence"/> instance for mocking. </returns>
-        public static AttestationEvidence AttestationEvidence(string description = null, Uri sourceUri = null)
-        {
-            return new AttestationEvidence(description, sourceUri);
-        }
     }
 }

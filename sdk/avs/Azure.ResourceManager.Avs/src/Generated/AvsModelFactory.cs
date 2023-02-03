@@ -123,42 +123,6 @@ namespace Azure.ResourceManager.Avs.Models
             return new CommonClusterProperties(clusterSize, provisioningState, clusterId, hosts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SingleSignOnIdentitySource. </summary>
-        /// <param name="name"> The name of the identity source. </param>
-        /// <param name="alias"> The domain&apos;s NetBIOS name. </param>
-        /// <param name="domain"> The domain&apos;s dns name. </param>
-        /// <param name="baseUserDN"> The base distinguished name for users. </param>
-        /// <param name="baseGroupDN"> The base distinguished name for groups. </param>
-        /// <param name="primaryServer"> Primary server URL. </param>
-        /// <param name="secondaryServer"> Secondary server URL. </param>
-        /// <param name="ssl"> Protect LDAP communication using SSL certificate (LDAPS). </param>
-        /// <param name="username"> The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group. </param>
-        /// <param name="password"> The password of the Active Directory user with a minimum of read-only access to Base DN for users and groups. </param>
-        /// <returns> A new <see cref="Models.SingleSignOnIdentitySource"/> instance for mocking. </returns>
-        public static SingleSignOnIdentitySource SingleSignOnIdentitySource(string name = null, string @alias = null, string domain = null, string baseUserDN = null, string baseGroupDN = null, Uri primaryServer = null, Uri secondaryServer = null, SslCertificateStatus? ssl = null, string username = null, string password = null)
-        {
-            return new SingleSignOnIdentitySource(name, @alias, domain, baseUserDN, baseGroupDN, primaryServer, secondaryServer, ssl, username, password);
-        }
-
-        /// <summary> Initializes a new instance of PrivateCloudAvailabilityProperties. </summary>
-        /// <param name="strategy"> The availability strategy for the private cloud. </param>
-        /// <param name="zone"> The primary availability zone for the private cloud. </param>
-        /// <param name="secondaryZone"> The secondary availability zone for the private cloud. </param>
-        /// <returns> A new <see cref="Models.PrivateCloudAvailabilityProperties"/> instance for mocking. </returns>
-        public static PrivateCloudAvailabilityProperties PrivateCloudAvailabilityProperties(AvailabilityStrategy? strategy = null, int? zone = null, int? secondaryZone = null)
-        {
-            return new PrivateCloudAvailabilityProperties(strategy, zone, secondaryZone);
-        }
-
-        /// <summary> Initializes a new instance of CustomerManagedEncryption. </summary>
-        /// <param name="status"> Status of customer managed encryption key. </param>
-        /// <param name="keyVaultProperties"> The key vault where the encryption key is stored. </param>
-        /// <returns> A new <see cref="Models.CustomerManagedEncryption"/> instance for mocking. </returns>
-        public static CustomerManagedEncryption CustomerManagedEncryption(AvsEncryptionState? status = null, AvsEncryptionKeyVaultProperties keyVaultProperties = null)
-        {
-            return new CustomerManagedEncryption(status, keyVaultProperties);
-        }
-
         /// <summary> Initializes a new instance of AvsEncryptionKeyVaultProperties. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="keyVersion"> The version of the key. </param>
@@ -312,17 +276,6 @@ namespace Azure.ResourceManager.Avs.Models
             portVif ??= new List<WorkloadNetworkSegmentPortVif>();
 
             return new WorkloadNetworkSegmentData(id, name, resourceType, systemData, displayName, connectedGateway, subnet, portVif?.ToList(), status, provisioningState, revision);
-        }
-
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentSubnet. </summary>
-        /// <param name="dhcpRanges"> DHCP Range assigned for subnet. </param>
-        /// <param name="gatewayAddress"> Gateway address. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkSegmentSubnet"/> instance for mocking. </returns>
-        public static WorkloadNetworkSegmentSubnet WorkloadNetworkSegmentSubnet(IEnumerable<string> dhcpRanges = null, string gatewayAddress = null)
-        {
-            dhcpRanges ??= new List<string>();
-
-            return new WorkloadNetworkSegmentSubnet(dhcpRanges?.ToList(), gatewayAddress);
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentPortVif. </summary>
@@ -646,15 +599,6 @@ namespace Azure.ResourceManager.Avs.Models
             return new ScriptExecutionData(id, name, resourceType, systemData, scriptCmdletId, parameters?.ToList(), hiddenParameters?.ToList(), failureReason, timeout, retention, submittedOn, startedOn, finishedOn, provisioningState, output?.ToList(), namedOutputs, information?.ToList(), warnings?.ToList(), errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionParameterDetails. </summary>
-        /// <param name="name"> The parameter name. </param>
-        /// <param name="parameterType"> The type of execution parameter. </param>
-        /// <returns> A new <see cref="Models.ScriptExecutionParameterDetails"/> instance for mocking. </returns>
-        public static ScriptExecutionParameterDetails ScriptExecutionParameterDetails(string name = null, string parameterType = "Unknown")
-        {
-            return new UnknownScriptExecutionParameter(name, parameterType);
-        }
-
         /// <summary> Initializes a new instance of AddonSrmProperties. </summary>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="licenseKey"> The Site Recovery Manager (SRM) license. </param>
@@ -751,34 +695,6 @@ namespace Azure.ResourceManager.Avs.Models
             hostMembers ??= new List<string>();
 
             return new VmHostPlacementPolicyProperties(PlacementPolicyType.VmHost, state, displayName, provisioningState, vmMembers?.ToList(), hostMembers?.ToList(), affinityType, affinityStrength, azureHybridBenefitType);
-        }
-
-        /// <summary> Initializes a new instance of ScriptSecureStringExecutionParameterDetails. </summary>
-        /// <param name="name"> The parameter name. </param>
-        /// <param name="secureValue"> A secure value for the passed parameter, not to be stored in logs. </param>
-        /// <returns> A new <see cref="Models.ScriptSecureStringExecutionParameterDetails"/> instance for mocking. </returns>
-        public static ScriptSecureStringExecutionParameterDetails ScriptSecureStringExecutionParameterDetails(string name = null, string secureValue = null)
-        {
-            return new ScriptSecureStringExecutionParameterDetails(name, ScriptExecutionParameterType.SecureValue, secureValue);
-        }
-
-        /// <summary> Initializes a new instance of ScriptStringExecutionParameterDetails. </summary>
-        /// <param name="name"> The parameter name. </param>
-        /// <param name="value"> The value for the passed parameter. </param>
-        /// <returns> A new <see cref="Models.ScriptStringExecutionParameterDetails"/> instance for mocking. </returns>
-        public static ScriptStringExecutionParameterDetails ScriptStringExecutionParameterDetails(string name = null, string value = null)
-        {
-            return new ScriptStringExecutionParameterDetails(name, ScriptExecutionParameterType.Value, value);
-        }
-
-        /// <summary> Initializes a new instance of PSCredentialExecutionParameterDetails. </summary>
-        /// <param name="name"> The parameter name. </param>
-        /// <param name="username"> username for login. </param>
-        /// <param name="password"> password for login. </param>
-        /// <returns> A new <see cref="Models.PSCredentialExecutionParameterDetails"/> instance for mocking. </returns>
-        public static PSCredentialExecutionParameterDetails PSCredentialExecutionParameterDetails(string name = null, string username = null, string password = null)
-        {
-            return new PSCredentialExecutionParameterDetails(name, ScriptExecutionParameterType.Credential, username, password);
         }
     }
 }

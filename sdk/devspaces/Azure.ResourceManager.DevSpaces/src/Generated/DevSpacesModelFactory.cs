@@ -47,15 +47,6 @@ namespace Azure.ResourceManager.DevSpaces.Models
             return new ControllerData(id, name, resourceType, systemData, tags, location, sku, provisioningState, hostSuffix, dataPlaneFqdn, targetContainerHostApiServerFqdn, targetContainerHostResourceId, targetContainerHostCredentialsBase64);
         }
 
-        /// <summary> Initializes a new instance of DevSpacesSku. </summary>
-        /// <param name="name"> The name of the SKU for Azure Dev Spaces Controller. </param>
-        /// <param name="tier"> The tier of the SKU for Azure Dev Spaces Controller. </param>
-        /// <returns> A new <see cref="Models.DevSpacesSku"/> instance for mocking. </returns>
-        public static DevSpacesSku DevSpacesSku(DevSpacesSkuName name = default, DevSpacesSkuTier? tier = null)
-        {
-            return new DevSpacesSku(name, tier);
-        }
-
         /// <summary> Initializes a new instance of ControllerConnectionDetailsList. </summary>
         /// <param name="connectionDetailsList"> List of Azure Dev Spaces Controller connection details. </param>
         /// <returns> A new <see cref="Models.ControllerConnectionDetailsList"/> instance for mocking. </returns>
@@ -76,14 +67,6 @@ namespace Azure.ResourceManager.DevSpaces.Models
         public static ControllerConnectionDetails ControllerConnectionDetails(OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = null)
         {
             return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails);
-        }
-
-        /// <summary> Initializes a new instance of OrchestratorSpecificConnectionDetails. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <returns> A new <see cref="Models.OrchestratorSpecificConnectionDetails"/> instance for mocking. </returns>
-        public static OrchestratorSpecificConnectionDetails OrchestratorSpecificConnectionDetails(string instanceType = null)
-        {
-            return new UnknownOrchestratorSpecificConnectionDetails(instanceType);
         }
 
         /// <summary> Initializes a new instance of KubernetesConnectionDetails. </summary>

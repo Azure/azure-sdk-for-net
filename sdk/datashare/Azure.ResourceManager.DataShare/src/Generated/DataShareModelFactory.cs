@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
@@ -242,14 +241,6 @@ namespace Azure.ResourceManager.DataShare.Models
         public static ConsumerSourceDataSet ConsumerSourceDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, AzureLocation? dataSetLocation = null, string dataSetName = null, string dataSetPath = null, ShareDataSetType? dataSetType = null)
         {
             return new ConsumerSourceDataSet(id, name, resourceType, systemData, dataSetId, dataSetLocation, dataSetName, dataSetPath, dataSetType);
-        }
-
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
-        /// <param name="kind"> Kind of synchronization setting on share. </param>
-        /// <returns> A new <see cref="Models.SourceShareSynchronizationSetting"/> instance for mocking. </returns>
-        public static SourceShareSynchronizationSetting SourceShareSynchronizationSetting(string kind = "Unknown")
-        {
-            return new UnknownSourceShareSynchronizationSetting(kind);
         }
 
         /// <summary> Initializes a new instance of ShareSubscriptionData. </summary>
@@ -625,26 +616,6 @@ namespace Azure.ResourceManager.DataShare.Models
         public static KustoTableDataSet KustoTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier kustoDatabaseResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null, TableLevelSharingProperties tableLevelSharingProperties = null)
         {
             return new KustoTableDataSet(id, name, resourceType, systemData, DataSetKind.KustoTable, dataSetId, kustoDatabaseResourceId, location, provisioningState, tableLevelSharingProperties);
-        }
-
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
-        /// <param name="externalTablesToExclude"> External tables to be excluded in the data set. </param>
-        /// <param name="externalTablesToInclude"> External tables to be included in the data set. </param>
-        /// <param name="materializedViewsToExclude"> Materialized views to be excluded in the data set. </param>
-        /// <param name="materializedViewsToInclude"> Materialized views to be included in the data set. </param>
-        /// <param name="tablesToExclude"> Tables to be excluded in the data set. </param>
-        /// <param name="tablesToInclude"> Tables to be included in the data set. </param>
-        /// <returns> A new <see cref="Models.TableLevelSharingProperties"/> instance for mocking. </returns>
-        public static TableLevelSharingProperties TableLevelSharingProperties(IEnumerable<string> externalTablesToExclude = null, IEnumerable<string> externalTablesToInclude = null, IEnumerable<string> materializedViewsToExclude = null, IEnumerable<string> materializedViewsToInclude = null, IEnumerable<string> tablesToExclude = null, IEnumerable<string> tablesToInclude = null)
-        {
-            externalTablesToExclude ??= new List<string>();
-            externalTablesToInclude ??= new List<string>();
-            materializedViewsToExclude ??= new List<string>();
-            materializedViewsToInclude ??= new List<string>();
-            tablesToExclude ??= new List<string>();
-            tablesToInclude ??= new List<string>();
-
-            return new TableLevelSharingProperties(externalTablesToExclude?.ToList(), externalTablesToInclude?.ToList(), materializedViewsToExclude?.ToList(), materializedViewsToInclude?.ToList(), tablesToExclude?.ToList(), tablesToInclude?.ToList());
         }
 
         /// <summary> Initializes a new instance of KustoTableDataSetMapping. </summary>

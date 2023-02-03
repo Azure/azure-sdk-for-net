@@ -53,16 +53,6 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AttestationPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.AttestationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static AttestationPrivateLinkServiceConnectionState AttestationPrivateLinkServiceConnectionState(AttestationPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new AttestationPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of AttestationPrivateLinkResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

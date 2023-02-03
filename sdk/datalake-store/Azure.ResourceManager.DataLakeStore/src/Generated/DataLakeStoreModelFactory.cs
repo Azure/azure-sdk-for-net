@@ -39,15 +39,6 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreAccountBasicData(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, location, tags);
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountEncryptionConfig. </summary>
-        /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </param>
-        /// <param name="keyVaultMetaInfo"> The Key Vault information for connecting to user managed encryption keys. </param>
-        /// <returns> A new <see cref="Models.DataLakeStoreAccountEncryptionConfig"/> instance for mocking. </returns>
-        public static DataLakeStoreAccountEncryptionConfig DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType = default, DataLakeStoreAccountKeyVaultMetaInfo keyVaultMetaInfo = null)
-        {
-            return new DataLakeStoreAccountEncryptionConfig(configType, keyVaultMetaInfo);
-        }
-
         /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

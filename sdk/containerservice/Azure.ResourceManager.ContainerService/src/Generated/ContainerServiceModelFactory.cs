@@ -104,15 +104,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ContainerServiceManagedClusterData(id, name, resourceType, systemData, tags, location, sku, extendedLocation, identity, provisioningState, powerStateCode != null ? new ContainerServicePowerState(powerStateCode) : null, maxAgentPools, kubernetesVersion, currentKubernetesVersion, dnsPrefix, fqdnSubdomain, fqdn, privateFqdn, azurePortalFqdn, agentPoolProfiles?.ToList(), linuxProfile, windowsProfile, servicePrincipalProfile, addonProfiles, podIdentityProfile, oidcIssuerProfile, nodeResourceGroup, enableRbac, enablePodSecurityPolicy, networkProfile, aadProfile, upgradeChannel != null ? new ManagedClusterAutoUpgradeProfile(upgradeChannel) : null, autoScalerProfile, apiServerAccessProfile, diskEncryptionSetId, identityProfile, privateLinkResources?.ToList(), disableLocalAccounts, httpProxyConfig, securityProfile, storageProfile, publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSku. </summary>
-        /// <param name="name"> The name of a managed cluster SKU. </param>
-        /// <param name="tier"> If not specified, the default is &apos;Free&apos;. See [uptime SLA](https://docs.microsoft.com/azure/aks/uptime-sla) for more details. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterSku"/> instance for mocking. </returns>
-        public static ManagedClusterSku ManagedClusterSku(ManagedClusterSkuName? name = null, ManagedClusterSkuTier? tier = null)
-        {
-            return new ManagedClusterSku(name, tier);
-        }
-
         /// <summary> Initializes a new instance of ManagedClusterAgentPoolProfile. </summary>
         /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </param>
         /// <param name="vmSize"> VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
@@ -220,103 +211,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterAgentPoolProfileProperties(count, vmSize, osDiskSizeInGB, osDiskType, kubeletDiskType, workloadRuntime, vnetSubnetId, podSubnetId, maxPods, osType, osSku, maxCount, minCount, enableAutoScaling, scaleDownMode, agentPoolType, mode, orchestratorVersion, currentOrchestratorVersion, nodeImageVersion, upgradeMaxSurge != null ? new AgentPoolUpgradeSettings(upgradeMaxSurge) : null, provisioningState, powerStateCode != null ? new ContainerServicePowerState(powerStateCode) : null, availabilityZones?.ToList(), enableNodePublicIP, nodePublicIPPrefixId, scaleSetPriority, scaleSetEvictionPolicy, spotMaxPrice, tags, nodeLabels, nodeTaints?.ToList(), proximityPlacementGroupId, kubeletConfig, linuxOSConfig, enableEncryptionAtHost, enableUltraSsd, enableFips, gpuInstanceProfile, creationDataSourceResourceId != null ? new ContainerServiceCreationData(creationDataSourceResourceId) : null, hostGroupId);
         }
 
-        /// <summary> Initializes a new instance of KubeletConfig. </summary>
-        /// <param name="cpuManagerPolicy"> The default is &apos;none&apos;. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are &apos;none&apos; and &apos;static&apos;. </param>
-        /// <param name="isCpuCfsQuotaEnabled"> The default is true. </param>
-        /// <param name="cpuCfsQuotaPeriod"> The default is &apos;100ms.&apos; Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: &apos;300ms&apos;, &apos;2h45m&apos;. Supported units are &apos;ns&apos;, &apos;us&apos;, &apos;ms&apos;, &apos;s&apos;, &apos;m&apos;, and &apos;h&apos;. </param>
-        /// <param name="imageGcHighThreshold"> To disable image garbage collection, set to 100. The default is 85%. </param>
-        /// <param name="imageGcLowThreshold"> This cannot be set higher than imageGcHighThreshold. The default is 80%. </param>
-        /// <param name="topologyManagerPolicy"> For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is &apos;none&apos;. Allowed values are &apos;none&apos;, &apos;best-effort&apos;, &apos;restricted&apos;, and &apos;single-numa-node&apos;. </param>
-        /// <param name="allowedUnsafeSysctls"> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </param>
-        /// <param name="failStartWithSwapOn"> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </param>
-        /// <param name="containerLogMaxSizeInMB"> The maximum size (e.g. 10Mi) of container log file before it is rotated. </param>
-        /// <param name="containerLogMaxFiles"> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </param>
-        /// <param name="podMaxPids"> The maximum number of processes per pod. </param>
-        /// <returns> A new <see cref="Models.KubeletConfig"/> instance for mocking. </returns>
-        public static KubeletConfig KubeletConfig(string cpuManagerPolicy = null, bool? isCpuCfsQuotaEnabled = null, string cpuCfsQuotaPeriod = null, int? imageGcHighThreshold = null, int? imageGcLowThreshold = null, string topologyManagerPolicy = null, IEnumerable<string> allowedUnsafeSysctls = null, bool? failStartWithSwapOn = null, int? containerLogMaxSizeInMB = null, int? containerLogMaxFiles = null, int? podMaxPids = null)
-        {
-            allowedUnsafeSysctls ??= new List<string>();
-
-            return new KubeletConfig(cpuManagerPolicy, isCpuCfsQuotaEnabled, cpuCfsQuotaPeriod, imageGcHighThreshold, imageGcLowThreshold, topologyManagerPolicy, allowedUnsafeSysctls?.ToList(), failStartWithSwapOn, containerLogMaxSizeInMB, containerLogMaxFiles, podMaxPids);
-        }
-
-        /// <summary> Initializes a new instance of LinuxOSConfig. </summary>
-        /// <param name="sysctls"> Sysctl settings for Linux agent nodes. </param>
-        /// <param name="transparentHugePageEnabled"> Valid values are &apos;always&apos;, &apos;madvise&apos;, and &apos;never&apos;. The default is &apos;always&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
-        /// <param name="transparentHugePageDefrag"> Valid values are &apos;always&apos;, &apos;defer&apos;, &apos;defer+madvise&apos;, &apos;madvise&apos; and &apos;never&apos;. The default is &apos;madvise&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
-        /// <param name="swapFileSizeInMB"> The size in MB of a swap file that will be created on each node. </param>
-        /// <returns> A new <see cref="Models.LinuxOSConfig"/> instance for mocking. </returns>
-        public static LinuxOSConfig LinuxOSConfig(SysctlConfig sysctls = null, string transparentHugePageEnabled = null, string transparentHugePageDefrag = null, int? swapFileSizeInMB = null)
-        {
-            return new LinuxOSConfig(sysctls, transparentHugePageEnabled, transparentHugePageDefrag, swapFileSizeInMB);
-        }
-
-        /// <summary> Initializes a new instance of SysctlConfig. </summary>
-        /// <param name="netCoreSomaxconn"> Sysctl setting net.core.somaxconn. </param>
-        /// <param name="netCoreNetdevMaxBacklog"> Sysctl setting net.core.netdev_max_backlog. </param>
-        /// <param name="netCoreRmemDefault"> Sysctl setting net.core.rmem_default. </param>
-        /// <param name="netCoreRmemMax"> Sysctl setting net.core.rmem_max. </param>
-        /// <param name="netCoreWmemDefault"> Sysctl setting net.core.wmem_default. </param>
-        /// <param name="netCoreWmemMax"> Sysctl setting net.core.wmem_max. </param>
-        /// <param name="netCoreOptmemMax"> Sysctl setting net.core.optmem_max. </param>
-        /// <param name="netIPv4TcpMaxSynBacklog"> Sysctl setting net.ipv4.tcp_max_syn_backlog. </param>
-        /// <param name="netIPv4TcpMaxTwBuckets"> Sysctl setting net.ipv4.tcp_max_tw_buckets. </param>
-        /// <param name="netIPv4TcpFinTimeout"> Sysctl setting net.ipv4.tcp_fin_timeout. </param>
-        /// <param name="netIPv4TcpKeepaliveTime"> Sysctl setting net.ipv4.tcp_keepalive_time. </param>
-        /// <param name="netIPv4TcpKeepaliveProbes"> Sysctl setting net.ipv4.tcp_keepalive_probes. </param>
-        /// <param name="netIPv4TcpKeepaliveIntvl"> Sysctl setting net.ipv4.tcp_keepalive_intvl. </param>
-        /// <param name="netIPv4TcpTwReuse"> Sysctl setting net.ipv4.tcp_tw_reuse. </param>
-        /// <param name="netIPv4IPLocalPortRange"> Sysctl setting net.ipv4.ip_local_port_range. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh1"> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh2"> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh3"> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </param>
-        /// <param name="netNetfilterNfConntrackMax"> Sysctl setting net.netfilter.nf_conntrack_max. </param>
-        /// <param name="netNetfilterNfConntrackBuckets"> Sysctl setting net.netfilter.nf_conntrack_buckets. </param>
-        /// <param name="fsInotifyMaxUserWatches"> Sysctl setting fs.inotify.max_user_watches. </param>
-        /// <param name="fsFileMax"> Sysctl setting fs.file-max. </param>
-        /// <param name="fsAioMaxNr"> Sysctl setting fs.aio-max-nr. </param>
-        /// <param name="fsNrOpen"> Sysctl setting fs.nr_open. </param>
-        /// <param name="kernelThreadsMax"> Sysctl setting kernel.threads-max. </param>
-        /// <param name="vmMaxMapCount"> Sysctl setting vm.max_map_count. </param>
-        /// <param name="vmSwappiness"> Sysctl setting vm.swappiness. </param>
-        /// <param name="vmVfsCachePressure"> Sysctl setting vm.vfs_cache_pressure. </param>
-        /// <returns> A new <see cref="Models.SysctlConfig"/> instance for mocking. </returns>
-        public static SysctlConfig SysctlConfig(int? netCoreSomaxconn = null, int? netCoreNetdevMaxBacklog = null, int? netCoreRmemDefault = null, int? netCoreRmemMax = null, int? netCoreWmemDefault = null, int? netCoreWmemMax = null, int? netCoreOptmemMax = null, int? netIPv4TcpMaxSynBacklog = null, int? netIPv4TcpMaxTwBuckets = null, int? netIPv4TcpFinTimeout = null, int? netIPv4TcpKeepaliveTime = null, int? netIPv4TcpKeepaliveProbes = null, int? netIPv4TcpKeepaliveIntvl = null, bool? netIPv4TcpTwReuse = null, string netIPv4IPLocalPortRange = null, int? netIPv4NeighDefaultGcThresh1 = null, int? netIPv4NeighDefaultGcThresh2 = null, int? netIPv4NeighDefaultGcThresh3 = null, int? netNetfilterNfConntrackMax = null, int? netNetfilterNfConntrackBuckets = null, int? fsInotifyMaxUserWatches = null, int? fsFileMax = null, int? fsAioMaxNr = null, int? fsNrOpen = null, int? kernelThreadsMax = null, int? vmMaxMapCount = null, int? vmSwappiness = null, int? vmVfsCachePressure = null)
-        {
-            return new SysctlConfig(netCoreSomaxconn, netCoreNetdevMaxBacklog, netCoreRmemDefault, netCoreRmemMax, netCoreWmemDefault, netCoreWmemMax, netCoreOptmemMax, netIPv4TcpMaxSynBacklog, netIPv4TcpMaxTwBuckets, netIPv4TcpFinTimeout, netIPv4TcpKeepaliveTime, netIPv4TcpKeepaliveProbes, netIPv4TcpKeepaliveIntvl, netIPv4TcpTwReuse, netIPv4IPLocalPortRange, netIPv4NeighDefaultGcThresh1, netIPv4NeighDefaultGcThresh2, netIPv4NeighDefaultGcThresh3, netNetfilterNfConntrackMax, netNetfilterNfConntrackBuckets, fsInotifyMaxUserWatches, fsFileMax, fsAioMaxNr, fsNrOpen, kernelThreadsMax, vmMaxMapCount, vmSwappiness, vmVfsCachePressure);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterWindowsProfile. </summary>
-        /// <param name="adminUsername"> Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; **Restriction:** Cannot end in &quot;.&quot; &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;administrator&quot;, &quot;admin&quot;, &quot;user&quot;, &quot;user1&quot;, &quot;test&quot;, &quot;user2&quot;, &quot;test1&quot;, &quot;user3&quot;, &quot;admin1&quot;, &quot;1&quot;, &quot;123&quot;, &quot;a&quot;, &quot;actuser&quot;, &quot;adm&quot;, &quot;admin2&quot;, &quot;aspnet&quot;, &quot;backup&quot;, &quot;console&quot;, &quot;david&quot;, &quot;guest&quot;, &quot;john&quot;, &quot;owner&quot;, &quot;root&quot;, &quot;server&quot;, &quot;sql&quot;, &quot;support&quot;, &quot;support_388945a0&quot;, &quot;sys&quot;, &quot;test2&quot;, &quot;test3&quot;, &quot;user4&quot;, &quot;user5&quot;. &lt;br&gt;&lt;br&gt; **Minimum-length:** 1 character &lt;br&gt;&lt;br&gt; **Max-length:** 20 characters. </param>
-        /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length:** 8 characters &lt;br&gt;&lt;br&gt; **Max-length:** 123 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;abc@123&quot;, &quot;P@$$w0rd&quot;, &quot;P@ssw0rd&quot;, &quot;P@ssword123&quot;, &quot;Pa$$word&quot;, &quot;pass@word1&quot;, &quot;Password!&quot;, &quot;Password1&quot;, &quot;Password22&quot;, &quot;iloveyou!&quot;. </param>
-        /// <param name="licenseType"> The license type to use for Windows VMs. See [Azure Hybrid User Benefits](https://azure.microsoft.com/pricing/hybrid-benefit/faq/) for more details. </param>
-        /// <param name="isCsiProxyEnabled"> For more details on CSI proxy, see the [CSI proxy GitHub repo](https://github.com/kubernetes-csi/csi-proxy). </param>
-        /// <param name="gmsaProfile"> The Windows gMSA Profile in the Managed Cluster. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterWindowsProfile"/> instance for mocking. </returns>
-        public static ManagedClusterWindowsProfile ManagedClusterWindowsProfile(string adminUsername = null, string adminPassword = null, WindowsVmLicenseType? licenseType = null, bool? isCsiProxyEnabled = null, WindowsGmsaProfile gmsaProfile = null)
-        {
-            return new ManagedClusterWindowsProfile(adminUsername, adminPassword, licenseType, isCsiProxyEnabled, gmsaProfile);
-        }
-
-        /// <summary> Initializes a new instance of WindowsGmsaProfile. </summary>
-        /// <param name="isEnabled"> Specifies whether to enable Windows gMSA in the managed cluster. </param>
-        /// <param name="dnsServer"> Specifies the DNS server for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </param>
-        /// <param name="rootDomainName"> Specifies the root domain name for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </param>
-        /// <returns> A new <see cref="Models.WindowsGmsaProfile"/> instance for mocking. </returns>
-        public static WindowsGmsaProfile WindowsGmsaProfile(bool? isEnabled = null, string dnsServer = null, string rootDomainName = null)
-        {
-            return new WindowsGmsaProfile(isEnabled, dnsServer, rootDomainName);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterServicePrincipalProfile. </summary>
-        /// <param name="clientId"> The ID for the service principal. </param>
-        /// <param name="secret"> The secret password associated with the service principal in plain text. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterServicePrincipalProfile"/> instance for mocking. </returns>
-        public static ManagedClusterServicePrincipalProfile ManagedClusterServicePrincipalProfile(string clientId = null, string secret = null)
-        {
-            return new ManagedClusterServicePrincipalProfile(clientId, secret);
-        }
-
         /// <summary> Initializes a new instance of ManagedClusterAddonProfile. </summary>
         /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
         /// <param name="config"> Key-value pairs for configuring an add-on. </param>
@@ -327,40 +221,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             config ??= new Dictionary<string, string>();
 
             return new ManagedClusterAddonProfile(isEnabled, config, identity);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterAddonProfileIdentity. </summary>
-        /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
-        /// <param name="clientId"> The client ID of the user assigned identity. </param>
-        /// <param name="objectId"> The object ID of the user assigned identity. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterAddonProfileIdentity"/> instance for mocking. </returns>
-        public static ManagedClusterAddonProfileIdentity ManagedClusterAddonProfileIdentity(ResourceIdentifier resourceId = null, Guid? clientId = null, Guid? objectId = null)
-        {
-            return new ManagedClusterAddonProfileIdentity(resourceId, clientId, objectId);
-        }
-
-        /// <summary> Initializes a new instance of ContainerServiceUserAssignedIdentity. </summary>
-        /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
-        /// <param name="clientId"> The client ID of the user assigned identity. </param>
-        /// <param name="objectId"> The object ID of the user assigned identity. </param>
-        /// <returns> A new <see cref="Models.ContainerServiceUserAssignedIdentity"/> instance for mocking. </returns>
-        public static ContainerServiceUserAssignedIdentity ContainerServiceUserAssignedIdentity(ResourceIdentifier resourceId = null, Guid? clientId = null, Guid? objectId = null)
-        {
-            return new ContainerServiceUserAssignedIdentity(resourceId, clientId, objectId);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProfile. </summary>
-        /// <param name="isEnabled"> Whether the pod identity addon is enabled. </param>
-        /// <param name="allowNetworkPluginKubenet"> Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </param>
-        /// <param name="userAssignedIdentities"> The pod identities to use in the cluster. </param>
-        /// <param name="userAssignedIdentityExceptions"> The pod identity exceptions to allow. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterPodIdentityProfile"/> instance for mocking. </returns>
-        public static ManagedClusterPodIdentityProfile ManagedClusterPodIdentityProfile(bool? isEnabled = null, bool? allowNetworkPluginKubenet = null, IEnumerable<ManagedClusterPodIdentity> userAssignedIdentities = null, IEnumerable<ManagedClusterPodIdentityException> userAssignedIdentityExceptions = null)
-        {
-            userAssignedIdentities ??= new List<ManagedClusterPodIdentity>();
-            userAssignedIdentityExceptions ??= new List<ManagedClusterPodIdentityException>();
-
-            return new ManagedClusterPodIdentityProfile(isEnabled, allowNetworkPluginKubenet, userAssignedIdentities?.ToList(), userAssignedIdentityExceptions?.ToList());
         }
 
         /// <summary> Initializes a new instance of ManagedClusterPodIdentity. </summary>
@@ -385,124 +245,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterOidcIssuerProfile(issuerUriInfo, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceNetworkProfile. </summary>
-        /// <param name="networkPlugin"> Network plugin used for building the Kubernetes network. </param>
-        /// <param name="networkPolicy"> Network policy used for building the Kubernetes network. </param>
-        /// <param name="networkMode"> This cannot be specified if networkPlugin is anything other than &apos;azure&apos;. </param>
-        /// <param name="podCidr"> A CIDR notation IP range from which to assign pod IPs when kubenet is used. </param>
-        /// <param name="serviceCidr"> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </param>
-        /// <param name="dnsServiceIP"> An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </param>
-        /// <param name="dockerBridgeCidr"> A CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the Kubernetes service address range. </param>
-        /// <param name="outboundType"> This can only be set at cluster creation time and cannot be changed later. For more information see [egress outbound type](https://docs.microsoft.com/azure/aks/egress-outboundtype). </param>
-        /// <param name="loadBalancerSku"> The default is &apos;standard&apos;. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </param>
-        /// <param name="loadBalancerProfile"> Profile of the cluster load balancer. </param>
-        /// <param name="natGatewayProfile"> Profile of the cluster NAT gateway. </param>
-        /// <param name="podCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
-        /// <param name="serviceCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
-        /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
-        /// <returns> A new <see cref="Models.ContainerServiceNetworkProfile"/> instance for mocking. </returns>
-        public static ContainerServiceNetworkProfile ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin = null, ContainerServiceNetworkPolicy? networkPolicy = null, ContainerServiceNetworkMode? networkMode = null, string podCidr = null, string serviceCidr = null, string dnsServiceIP = null, string dockerBridgeCidr = null, ContainerServiceOutboundType? outboundType = null, ContainerServiceLoadBalancerSku? loadBalancerSku = null, ManagedClusterLoadBalancerProfile loadBalancerProfile = null, ManagedClusterNatGatewayProfile natGatewayProfile = null, IEnumerable<string> podCidrs = null, IEnumerable<string> serviceCidrs = null, IEnumerable<IPFamily> ipFamilies = null)
-        {
-            podCidrs ??= new List<string>();
-            serviceCidrs ??= new List<string>();
-            ipFamilies ??= new List<IPFamily>();
-
-            return new ContainerServiceNetworkProfile(networkPlugin, networkPolicy, networkMode, podCidr, serviceCidr, dnsServiceIP, dockerBridgeCidr, outboundType, loadBalancerSku, loadBalancerProfile, natGatewayProfile, podCidrs?.ToList(), serviceCidrs?.ToList(), ipFamilies?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfile. </summary>
-        /// <param name="managedOutboundIPs"> Desired managed outbound IPs for the cluster load balancer. </param>
-        /// <param name="outboundPublicIPPrefixes"> Desired outbound IP Prefix resources for the cluster load balancer. </param>
-        /// <param name="outboundPublicIPs"> Desired outbound IP resources for the cluster load balancer. </param>
-        /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster load balancer. </param>
-        /// <param name="allocatedOutboundPorts"> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </param>
-        /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes. </param>
-        /// <param name="enableMultipleStandardLoadBalancers"> Enable multiple standard load balancers per AKS cluster or not. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterLoadBalancerProfile"/> instance for mocking. </returns>
-        public static ManagedClusterLoadBalancerProfile ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = null, IEnumerable<WritableSubResource> outboundPublicIPPrefixes = null, IEnumerable<WritableSubResource> outboundPublicIPs = null, IEnumerable<WritableSubResource> effectiveOutboundIPs = null, int? allocatedOutboundPorts = null, int? idleTimeoutInMinutes = null, bool? enableMultipleStandardLoadBalancers = null)
-        {
-            outboundPublicIPPrefixes ??= new List<WritableSubResource>();
-            outboundPublicIPs ??= new List<WritableSubResource>();
-            effectiveOutboundIPs ??= new List<WritableSubResource>();
-
-            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs, outboundPublicIPPrefixes != null ? new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(outboundPublicIPPrefixes?.ToList()) : null, outboundPublicIPs != null ? new ManagedClusterLoadBalancerProfileOutboundIPs(outboundPublicIPs?.ToList()) : null, effectiveOutboundIPs?.ToList(), allocatedOutboundPorts, idleTimeoutInMinutes, enableMultipleStandardLoadBalancers);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileManagedOutboundIPs. </summary>
-        /// <param name="count"> The desired number of IPv4 outbound IPs created/managed by Azure for the cluster load balancer. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="countIPv6"> The desired number of IPv6 outbound IPs created/managed by Azure for the cluster load balancer. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 0 for single-stack and 1 for dual-stack. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterLoadBalancerProfileManagedOutboundIPs"/> instance for mocking. </returns>
-        public static ManagedClusterLoadBalancerProfileManagedOutboundIPs ManagedClusterLoadBalancerProfileManagedOutboundIPs(int? count = null, int? countIPv6 = null)
-        {
-            return new ManagedClusterLoadBalancerProfileManagedOutboundIPs(count, countIPv6);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterNatGatewayProfile. </summary>
-        /// <param name="managedOutboundIPCount"> Profile of the managed outbound IP resources of the cluster NAT gateway. </param>
-        /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
-        /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterNatGatewayProfile"/> instance for mocking. </returns>
-        public static ManagedClusterNatGatewayProfile ManagedClusterNatGatewayProfile(int? managedOutboundIPCount = null, IEnumerable<WritableSubResource> effectiveOutboundIPs = null, int? idleTimeoutInMinutes = null)
-        {
-            effectiveOutboundIPs ??= new List<WritableSubResource>();
-
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPCount != null ? new ManagedClusterManagedOutboundIPProfile(managedOutboundIPCount) : null, effectiveOutboundIPs?.ToList(), idleTimeoutInMinutes);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
-        /// <param name="isManagedAadEnabled"> Whether to enable managed AAD. </param>
-        /// <param name="isAzureRbacEnabled"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
-        /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
-        /// <param name="clientAppId"> The client AAD application ID. </param>
-        /// <param name="serverAppId"> The server AAD application ID. </param>
-        /// <param name="serverAppSecret"> The server AAD application secret. </param>
-        /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterAadProfile"/> instance for mocking. </returns>
-        public static ManagedClusterAadProfile ManagedClusterAadProfile(bool? isManagedAadEnabled = null, bool? isAzureRbacEnabled = null, IEnumerable<Guid> adminGroupObjectIds = null, Guid? clientAppId = null, Guid? serverAppId = null, string serverAppSecret = null, Guid? tenantId = null)
-        {
-            adminGroupObjectIds ??= new List<Guid>();
-
-            return new ManagedClusterAadProfile(isManagedAadEnabled, isAzureRbacEnabled, adminGroupObjectIds?.ToList(), clientAppId, serverAppId, serverAppSecret, tenantId);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterAutoScalerProfile. </summary>
-        /// <param name="balanceSimilarNodeGroups"> Valid values are &apos;true&apos; and &apos;false&apos;. </param>
-        /// <param name="expander"> If not specified, the default is &apos;random&apos;. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </param>
-        /// <param name="maxEmptyBulkDelete"> The default is 10. </param>
-        /// <param name="maxGracefulTerminationSec"> The default is 600. </param>
-        /// <param name="maxNodeProvisionTime"> The default is &apos;15m&apos;. Values must be an integer followed by an &apos;m&apos;. No unit of time other than minutes (m) is supported. </param>
-        /// <param name="maxTotalUnreadyPercentage"> The default is 45. The maximum is 100 and the minimum is 0. </param>
-        /// <param name="newPodScaleUpDelay"> For scenarios like burst/batch scale where you don&apos;t want CA to act before the kubernetes scheduler could schedule all the pods, you can tell CA to ignore unscheduled pods before they&apos;re a certain age. The default is &apos;0s&apos;. Values must be an integer followed by a unit (&apos;s&apos; for seconds, &apos;m&apos; for minutes, &apos;h&apos; for hours, etc). </param>
-        /// <param name="okTotalUnreadyCount"> This must be an integer. The default is 3. </param>
-        /// <param name="scanIntervalInSeconds"> The default is &apos;10&apos;. Values must be an integer number of seconds. </param>
-        /// <param name="scaleDownDelayAfterAdd"> The default is &apos;10m&apos;. Values must be an integer followed by an &apos;m&apos;. No unit of time other than minutes (m) is supported. </param>
-        /// <param name="scaleDownDelayAfterDelete"> The default is the scan-interval. Values must be an integer followed by an &apos;m&apos;. No unit of time other than minutes (m) is supported. </param>
-        /// <param name="scaleDownDelayAfterFailure"> The default is &apos;3m&apos;. Values must be an integer followed by an &apos;m&apos;. No unit of time other than minutes (m) is supported. </param>
-        /// <param name="scaleDownUnneededTime"> The default is &apos;10m&apos;. Values must be an integer followed by an &apos;m&apos;. No unit of time other than minutes (m) is supported. </param>
-        /// <param name="scaleDownUnreadyTime"> The default is &apos;20m&apos;. Values must be an integer followed by an &apos;m&apos;. No unit of time other than minutes (m) is supported. </param>
-        /// <param name="scaleDownUtilizationThreshold"> The default is &apos;0.5&apos;. </param>
-        /// <param name="skipNodesWithLocalStorage"> The default is true. </param>
-        /// <param name="skipNodesWithSystemPods"> The default is true. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterAutoScalerProfile"/> instance for mocking. </returns>
-        public static ManagedClusterAutoScalerProfile ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups = null, AutoScaleExpander? expander = null, string maxEmptyBulkDelete = null, string maxGracefulTerminationSec = null, string maxNodeProvisionTime = null, string maxTotalUnreadyPercentage = null, string newPodScaleUpDelay = null, string okTotalUnreadyCount = null, string scanIntervalInSeconds = null, string scaleDownDelayAfterAdd = null, string scaleDownDelayAfterDelete = null, string scaleDownDelayAfterFailure = null, string scaleDownUnneededTime = null, string scaleDownUnreadyTime = null, string scaleDownUtilizationThreshold = null, string skipNodesWithLocalStorage = null, string skipNodesWithSystemPods = null)
-        {
-            return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups, expander, maxEmptyBulkDelete, maxGracefulTerminationSec, maxNodeProvisionTime, maxTotalUnreadyPercentage, newPodScaleUpDelay, okTotalUnreadyCount, scanIntervalInSeconds, scaleDownDelayAfterAdd, scaleDownDelayAfterDelete, scaleDownDelayAfterFailure, scaleDownUnneededTime, scaleDownUnreadyTime, scaleDownUtilizationThreshold, skipNodesWithLocalStorage, skipNodesWithSystemPods);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterApiServerAccessProfile. </summary>
-        /// <param name="authorizedIPRanges"> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges). </param>
-        /// <param name="enablePrivateCluster"> For more details, see [Creating a private AKS cluster](https://docs.microsoft.com/azure/aks/private-clusters). </param>
-        /// <param name="privateDnsZone"> The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are &apos;system&apos; and &apos;none&apos;. </param>
-        /// <param name="enablePrivateClusterPublicFqdn"> Whether to create additional public FQDN for private cluster or not. </param>
-        /// <param name="disableRunCommand"> Whether to disable run command for the cluster or not. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterApiServerAccessProfile"/> instance for mocking. </returns>
-        public static ManagedClusterApiServerAccessProfile ManagedClusterApiServerAccessProfile(IEnumerable<string> authorizedIPRanges = null, bool? enablePrivateCluster = null, string privateDnsZone = null, bool? enablePrivateClusterPublicFqdn = null, bool? disableRunCommand = null)
-        {
-            authorizedIPRanges ??= new List<string>();
-
-            return new ManagedClusterApiServerAccessProfile(authorizedIPRanges?.ToList(), enablePrivateCluster, privateDnsZone, enablePrivateClusterPublicFqdn, disableRunCommand);
-        }
-
         /// <summary> Initializes a new instance of ContainerServicePrivateLinkResourceData. </summary>
         /// <param name="id"> The ID of the private link resource. </param>
         /// <param name="name"> The name of the private link resource. </param>
@@ -516,59 +258,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             requiredMembers ??= new List<string>();
 
             return new ContainerServicePrivateLinkResourceData(id, name, resourceType, groupId, requiredMembers?.ToList(), privateLinkServiceId);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterHttpProxyConfig. </summary>
-        /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
-        /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
-        /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
-        /// <param name="trustedCA"> Alternative CA cert to use for connecting to proxy servers. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterHttpProxyConfig"/> instance for mocking. </returns>
-        public static ManagedClusterHttpProxyConfig ManagedClusterHttpProxyConfig(string httpProxy = null, string httpsProxy = null, IEnumerable<string> noProxy = null, string trustedCA = null)
-        {
-            noProxy ??= new List<string>();
-
-            return new ManagedClusterHttpProxyConfig(httpProxy, httpsProxy, noProxy?.ToList(), trustedCA);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>
-        /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
-        /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterSecurityProfile"/> instance for mocking. </returns>
-        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender = null, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = null)
-        {
-            return new ManagedClusterSecurityProfile(defender, azureKeyVaultKms);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefender. </summary>
-        /// <param name="logAnalyticsWorkspaceResourceId"> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </param>
-        /// <param name="isSecurityMonitoringEnabled"> Microsoft Defender threat detection for Cloud settings for the security profile. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterSecurityProfileDefender"/> instance for mocking. </returns>
-        public static ManagedClusterSecurityProfileDefender ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId = null, bool? isSecurityMonitoringEnabled = null)
-        {
-            return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId, isSecurityMonitoringEnabled != null ? new ManagedClusterSecurityProfileDefenderSecurityMonitoring(isSecurityMonitoringEnabled) : null);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileKeyVaultKms. </summary>
-        /// <param name="isEnabled"> Whether to enable Azure Key Vault key management service. The default is false. </param>
-        /// <param name="keyId"> Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty. </param>
-        /// <param name="keyVaultNetworkAccess"> Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`. </param>
-        /// <param name="keyVaultResourceId"> Resource ID of key vault. When keyVaultNetworkAccess is `Private`, this field is required and must be a valid resource ID. When keyVaultNetworkAccess is `Public`, leave the field empty. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterSecurityProfileKeyVaultKms"/> instance for mocking. </returns>
-        public static ManagedClusterSecurityProfileKeyVaultKms ManagedClusterSecurityProfileKeyVaultKms(bool? isEnabled = null, string keyId = null, ManagedClusterKeyVaultNetworkAccessType? keyVaultNetworkAccess = null, ResourceIdentifier keyVaultResourceId = null)
-        {
-            return new ManagedClusterSecurityProfileKeyVaultKms(isEnabled, keyId, keyVaultNetworkAccess, keyVaultResourceId);
-        }
-
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfile. </summary>
-        /// <param name="isEnabled"> AzureDisk CSI Driver settings for the storage profile. </param>
-        /// <param name="isEnabled"> AzureFile CSI Driver settings for the storage profile. </param>
-        /// <param name="isEnabled"> Snapshot Controller settings for the storage profile. </param>
-        /// <param name="isEnabled"> AzureBlob CSI Driver settings for the storage profile. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterStorageProfile"/> instance for mocking. </returns>
-        public static ManagedClusterStorageProfile ManagedClusterStorageProfile(bool? isEnabled = null, bool? isEnabled = null, bool? isEnabled = null, bool? isEnabled = null)
-        {
-            return new ManagedClusterStorageProfile(isEnabled != null ? new ManagedClusterStorageProfileDiskCsiDriver(isEnabled) : null, isEnabled != null ? new ManagedClusterStorageProfileFileCsiDriver(isEnabled) : null, isEnabled != null ? new ManagedClusterStorageProfileSnapshotController(isEnabled) : null, isEnabled != null ? new ManagedClusterStorageProfileBlobCsiDriver(isEnabled) : null);
         }
 
         /// <summary> Initializes a new instance of ManagedClusterUpgradeProfileData. </summary>
@@ -657,26 +346,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             notAllowedTimes ??= new List<ContainerServiceTimeSpan>();
 
             return new ContainerServiceMaintenanceConfigurationData(id, name, resourceType, systemData, timesInWeek?.ToList(), notAllowedTimes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ContainerServiceTimeInWeek. </summary>
-        /// <param name="day"> The day of the week. </param>
-        /// <param name="hourSlots"> Each integer hour represents a time range beginning at 0m after the hour ending at the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23 corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00 UTC time range. </param>
-        /// <returns> A new <see cref="Models.ContainerServiceTimeInWeek"/> instance for mocking. </returns>
-        public static ContainerServiceTimeInWeek ContainerServiceTimeInWeek(ContainerServiceWeekDay? day = null, IEnumerable<int> hourSlots = null)
-        {
-            hourSlots ??= new List<int>();
-
-            return new ContainerServiceTimeInWeek(day, hourSlots?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ContainerServiceTimeSpan. </summary>
-        /// <param name="startOn"> The start of a time span. </param>
-        /// <param name="endOn"> The end of a time span. </param>
-        /// <returns> A new <see cref="Models.ContainerServiceTimeSpan"/> instance for mocking. </returns>
-        public static ContainerServiceTimeSpan ContainerServiceTimeSpan(DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
-        {
-            return new ContainerServiceTimeSpan(startOn, endOn);
         }
 
         /// <summary> Initializes a new instance of ContainerServiceAgentPoolData. </summary>
@@ -798,15 +467,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServicePrivateEndpointConnectionData ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, ContainerServicePrivateLinkServiceConnectionState connectionState = null)
         {
             return new ContainerServicePrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState);
-        }
-
-        /// <summary> Initializes a new instance of ContainerServicePrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> The private link service connection status. </param>
-        /// <param name="description"> The private link service connection description. </param>
-        /// <returns> A new <see cref="Models.ContainerServicePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ContainerServicePrivateLinkServiceConnectionState ContainerServicePrivateLinkServiceConnectionState(ContainerServicePrivateLinkServiceConnectionStatus? status = null, string description = null)
-        {
-            return new ContainerServicePrivateLinkServiceConnectionState(status, description);
         }
 
         /// <summary> Initializes a new instance of ManagedClusterRunCommandResult. </summary>

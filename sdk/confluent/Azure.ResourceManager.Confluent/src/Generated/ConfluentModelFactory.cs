@@ -68,15 +68,5 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, status);
         }
-
-        /// <summary> Initializes a new instance of ConfluentUserDetail. </summary>
-        /// <param name="firstName"> First name. </param>
-        /// <param name="lastName"> Last name. </param>
-        /// <param name="emailAddress"> Email address. </param>
-        /// <returns> A new <see cref="Models.ConfluentUserDetail"/> instance for mocking. </returns>
-        public static ConfluentUserDetail ConfluentUserDetail(string firstName = null, string lastName = null, string emailAddress = null)
-        {
-            return new ConfluentUserDetail(firstName, lastName, emailAddress);
-        }
     }
 }

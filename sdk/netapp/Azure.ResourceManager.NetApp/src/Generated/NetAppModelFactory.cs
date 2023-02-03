@@ -117,26 +117,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppAccountActiveDirectory(activeDirectoryId, username, password, domain, dns, status, statusDetails, smbServerName, organizationalUnit, site, backupOperators?.ToList(), administrators?.ToList(), kdcIP, adName, serverRootCACertificate, isAesEncryptionEnabled, isLdapSigningEnabled, securityOperators?.ToList(), isLdapOverTlsEnabled, allowLocalNfsUsersWithLdap, encryptDCConnections, ldapSearchScope);
         }
 
-        /// <summary> Initializes a new instance of NetAppLdapSearchScopeConfiguration. </summary>
-        /// <param name="userDN"> This specifies the user DN, which overrides the base DN for user lookups. </param>
-        /// <param name="groupDN"> This specifies the group DN, which overrides the base DN for group lookups. </param>
-        /// <param name="groupMembershipFilter"> This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server. </param>
-        /// <returns> A new <see cref="Models.NetAppLdapSearchScopeConfiguration"/> instance for mocking. </returns>
-        public static NetAppLdapSearchScopeConfiguration NetAppLdapSearchScopeConfiguration(string userDN = null, string groupDN = null, string groupMembershipFilter = null)
-        {
-            return new NetAppLdapSearchScopeConfiguration(userDN, groupDN, groupMembershipFilter);
-        }
-
-        /// <summary> Initializes a new instance of NetAppAccountEncryption. </summary>
-        /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
-        /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </param>
-        /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </param>
-        /// <returns> A new <see cref="Models.NetAppAccountEncryption"/> instance for mocking. </returns>
-        public static NetAppAccountEncryption NetAppAccountEncryption(NetAppKeySource? keySource = null, NetAppKeyVaultProperties keyVaultProperties = null, NetAppEncryptionIdentity identity = null)
-        {
-            return new NetAppAccountEncryption(keySource, keyVaultProperties, identity);
-        }
-
         /// <summary> Initializes a new instance of NetAppKeyVaultProperties. </summary>
         /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
@@ -252,28 +232,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeData(id, name, resourceType, systemData, tags, location, etag, zones?.ToList(), fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules != null ? new VolumePropertiesExportPolicy(exportRules?.ToList()) : null, protocolTypes?.ToList(), provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, networkSiblingSetId, storageToNetworkProximity, mountTargets?.ToList(), volumeType, dataProtection, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, unixPermissions, cloneProgress, avsDataStore, isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules?.ToList(), enableSubvolumes);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeExportPolicyRule. </summary>
-        /// <param name="ruleIndex"> Order index. </param>
-        /// <param name="isUnixReadOnly"> Read only access. </param>
-        /// <param name="isUnixReadWrite"> Read and write access. </param>
-        /// <param name="isKerberos5ReadOnly"> Kerberos5 Read only access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="isKerberos5ReadWrite"> Kerberos5 Read and write access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="isKerberos5iReadOnly"> Kerberos5i Read only access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="isKerberos5iReadWrite"> Kerberos5i Read and write access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="isKerberos5pReadOnly"> Kerberos5p Read only access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="isKerberos5pReadWrite"> Kerberos5p Read and write access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="allowCifsProtocol"> Allows CIFS protocol. </param>
-        /// <param name="allowNfsV3Protocol"> Allows NFSv3 protocol. Enable only for NFSv3 type volumes. </param>
-        /// <param name="allowNfsV41Protocol"> Allows NFSv4.1 protocol. Enable only for NFSv4.1 type volumes. </param>
-        /// <param name="allowedClients"> Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names. </param>
-        /// <param name="hasRootAccess"> Has root access to volume. </param>
-        /// <param name="chownMode"> This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeExportPolicyRule"/> instance for mocking. </returns>
-        public static NetAppVolumeExportPolicyRule NetAppVolumeExportPolicyRule(int? ruleIndex = null, bool? isUnixReadOnly = null, bool? isUnixReadWrite = null, bool? isKerberos5ReadOnly = null, bool? isKerberos5ReadWrite = null, bool? isKerberos5iReadOnly = null, bool? isKerberos5iReadWrite = null, bool? isKerberos5pReadOnly = null, bool? isKerberos5pReadWrite = null, bool? allowCifsProtocol = null, bool? allowNfsV3Protocol = null, bool? allowNfsV41Protocol = null, string allowedClients = null, bool? hasRootAccess = null, NetAppChownMode? chownMode = null)
-        {
-            return new NetAppVolumeExportPolicyRule(ruleIndex, isUnixReadOnly, isUnixReadWrite, isKerberos5ReadOnly, isKerberos5ReadWrite, isKerberos5iReadOnly, isKerberos5iReadWrite, isKerberos5pReadOnly, isKerberos5pReadWrite, allowCifsProtocol, allowNfsV3Protocol, allowNfsV41Protocol, allowedClients, hasRootAccess, chownMode);
-        }
-
         /// <summary> Initializes a new instance of NetAppVolumeMountTarget. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
@@ -283,39 +241,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppVolumeMountTarget NetAppVolumeMountTarget(Guid? mountTargetId = null, Guid fileSystemId = default, IPAddress ipAddress = null, string smbServerFqdn = null)
         {
             return new NetAppVolumeMountTarget(mountTargetId, fileSystemId, ipAddress, smbServerFqdn);
-        }
-
-        /// <summary> Initializes a new instance of NetAppVolumeDataProtection. </summary>
-        /// <param name="backup"> Backup Properties. </param>
-        /// <param name="replication"> Replication properties. </param>
-        /// <param name="snapshotPolicyId"> Snapshot properties. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeDataProtection"/> instance for mocking. </returns>
-        public static NetAppVolumeDataProtection NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup = null, NetAppReplicationObject replication = null, ResourceIdentifier snapshotPolicyId = null)
-        {
-            return new NetAppVolumeDataProtection(backup, replication, snapshotPolicyId != null ? new VolumeSnapshotProperties(snapshotPolicyId) : null);
-        }
-
-        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
-        /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
-        /// <param name="isPolicyEnforced"> Policy Enforced. </param>
-        /// <param name="vaultId"> Vault Resource ID. </param>
-        /// <param name="isBackupEnabled"> Backup Enabled. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeBackupConfiguration"/> instance for mocking. </returns>
-        public static NetAppVolumeBackupConfiguration NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId = null, bool? isPolicyEnforced = null, ResourceIdentifier vaultId = null, bool? isBackupEnabled = null)
-        {
-            return new NetAppVolumeBackupConfiguration(backupPolicyId, isPolicyEnforced, vaultId, isBackupEnabled);
-        }
-
-        /// <summary> Initializes a new instance of NetAppReplicationObject. </summary>
-        /// <param name="replicationId"> Id. </param>
-        /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
-        /// <param name="replicationSchedule"> Schedule. </param>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
-        /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        /// <returns> A new <see cref="Models.NetAppReplicationObject"/> instance for mocking. </returns>
-        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = null, NetAppEndpointType? endpointType = null, NetAppReplicationSchedule? replicationSchedule = null, ResourceIdentifier remoteVolumeResourceId = null, string remoteVolumeRegion = null)
-        {
-            return new NetAppReplicationObject(replicationId, endpointType, replicationSchedule, remoteVolumeResourceId, remoteVolumeRegion);
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeReplicationStatus. </summary>
@@ -376,51 +301,6 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
 
             return new SnapshotPolicyData(id, name, resourceType, systemData, tags, location, etag, hourlySchedule, dailySchedule, weeklySchedule, monthlySchedule, isEnabled, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of SnapshotPolicyHourlySchedule. </summary>
-        /// <param name="snapshotsToKeep"> Hourly snapshot count to keep. </param>
-        /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
-        /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        /// <returns> A new <see cref="Models.SnapshotPolicyHourlySchedule"/> instance for mocking. </returns>
-        public static SnapshotPolicyHourlySchedule SnapshotPolicyHourlySchedule(int? snapshotsToKeep = null, int? minute = null, long? usedBytes = null)
-        {
-            return new SnapshotPolicyHourlySchedule(snapshotsToKeep, minute, usedBytes);
-        }
-
-        /// <summary> Initializes a new instance of SnapshotPolicyDailySchedule. </summary>
-        /// <param name="snapshotsToKeep"> Daily snapshot count to keep. </param>
-        /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
-        /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
-        /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        /// <returns> A new <see cref="Models.SnapshotPolicyDailySchedule"/> instance for mocking. </returns>
-        public static SnapshotPolicyDailySchedule SnapshotPolicyDailySchedule(int? snapshotsToKeep = null, int? hour = null, int? minute = null, long? usedBytes = null)
-        {
-            return new SnapshotPolicyDailySchedule(snapshotsToKeep, hour, minute, usedBytes);
-        }
-
-        /// <summary> Initializes a new instance of SnapshotPolicyWeeklySchedule. </summary>
-        /// <param name="snapshotsToKeep"> Weekly snapshot count to keep. </param>
-        /// <param name="day"> Indicates which weekdays snapshot should be taken, accepts a comma separated list of week day names in english. </param>
-        /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
-        /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
-        /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        /// <returns> A new <see cref="Models.SnapshotPolicyWeeklySchedule"/> instance for mocking. </returns>
-        public static SnapshotPolicyWeeklySchedule SnapshotPolicyWeeklySchedule(int? snapshotsToKeep = null, string day = null, int? hour = null, int? minute = null, long? usedBytes = null)
-        {
-            return new SnapshotPolicyWeeklySchedule(snapshotsToKeep, day, hour, minute, usedBytes);
-        }
-
-        /// <summary> Initializes a new instance of SnapshotPolicyMonthlySchedule. </summary>
-        /// <param name="snapshotsToKeep"> Monthly snapshot count to keep. </param>
-        /// <param name="daysOfMonth"> Indicates which days of the month snapshot should be taken. A comma delimited string. </param>
-        /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
-        /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
-        /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        /// <returns> A new <see cref="Models.SnapshotPolicyMonthlySchedule"/> instance for mocking. </returns>
-        public static SnapshotPolicyMonthlySchedule SnapshotPolicyMonthlySchedule(int? snapshotsToKeep = null, string daysOfMonth = null, int? hour = null, int? minute = null, long? usedBytes = null)
-        {
-            return new SnapshotPolicyMonthlySchedule(snapshotsToKeep, daysOfMonth, hour, minute, usedBytes);
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>

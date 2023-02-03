@@ -35,15 +35,6 @@ namespace Azure.ResourceManager.HybridData.Models
             return new HybridDataManagerData(id, name, resourceType, systemData, tags, location, etag, sku);
         }
 
-        /// <summary> Initializes a new instance of HybridDataSku. </summary>
-        /// <param name="name"> The sku name. Required for data manager creation, optional for update. </param>
-        /// <param name="tier"> The sku tier. This is based on the SKU name. </param>
-        /// <returns> A new <see cref="Models.HybridDataSku"/> instance for mocking. </returns>
-        public static HybridDataSku HybridDataSku(string name = null, string tier = null)
-        {
-            return new HybridDataSku(name, tier);
-        }
-
         /// <summary> Initializes a new instance of HybridDataServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -84,17 +75,6 @@ namespace Azure.ResourceManager.HybridData.Models
             return new HybridDataJobDefinitionData(id, name, resourceType, systemData, dataSourceId, dataSinkId, schedules?.ToList(), state, lastModifiedOn, runLocation, userConfirmation, dataServiceInput, customerSecrets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HybridDataJobRunSchedule. </summary>
-        /// <param name="name"> Name of the schedule. </param>
-        /// <param name="policyList"> A list of repetition intervals in ISO 8601 format. </param>
-        /// <returns> A new <see cref="Models.HybridDataJobRunSchedule"/> instance for mocking. </returns>
-        public static HybridDataJobRunSchedule HybridDataJobRunSchedule(string name = null, IEnumerable<string> policyList = null)
-        {
-            policyList ??= new List<string>();
-
-            return new HybridDataJobRunSchedule(name, policyList?.ToList());
-        }
-
         /// <summary> Initializes a new instance of HybridDataJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -116,53 +96,6 @@ namespace Azure.ResourceManager.HybridData.Models
         public static HybridDataJobData HybridDataJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridDataJobStatus status = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = null, HybridDataJobTopLevelError error = null, JobCancellationSetting isCancellable = default, long? bytesProcessed = null, long? itemsProcessed = null, long? totalBytesToProcess = null, long? totalItemsToProcess = null, HybridDataJobDetails details = null, string dataSourceName = null, string dataSinkName = null)
         {
             return new HybridDataJobData(id, name, resourceType, systemData, status, startOn, endOn, error, isCancellable, bytesProcessed, itemsProcessed, totalBytesToProcess, totalItemsToProcess, details, dataSourceName, dataSinkName);
-        }
-
-        /// <summary> Initializes a new instance of HybridDataJobDetails. </summary>
-        /// <param name="jobStages"> List of stages that ran in the job. </param>
-        /// <param name="jobDefinition"> JobDefinition at the time of the run. </param>
-        /// <param name="errorDetails"> Error details for failure. This is optional. </param>
-        /// <param name="itemDetailsLink"> Item Details Link to download files or see details. </param>
-        /// <returns> A new <see cref="Models.HybridDataJobDetails"/> instance for mocking. </returns>
-        public static HybridDataJobDetails HybridDataJobDetails(IEnumerable<HybridDataJobStage> jobStages = null, HybridDataJobDefinitionData jobDefinition = null, IEnumerable<HybridDataJobErrorDetails> errorDetails = null, string itemDetailsLink = null)
-        {
-            jobStages ??= new List<HybridDataJobStage>();
-            errorDetails ??= new List<HybridDataJobErrorDetails>();
-
-            return new HybridDataJobDetails(jobStages?.ToList(), jobDefinition, errorDetails?.ToList(), itemDetailsLink);
-        }
-
-        /// <summary> Initializes a new instance of HybridDataJobStage. </summary>
-        /// <param name="stageName"> Name of the job stage. </param>
-        /// <param name="stageStatus"> Status of the job stage. </param>
-        /// <param name="jobStageDetails"> Job Stage Details. </param>
-        /// <param name="errorDetails"> Error details for the stage. This is optional. </param>
-        /// <returns> A new <see cref="Models.HybridDataJobStage"/> instance for mocking. </returns>
-        public static HybridDataJobStage HybridDataJobStage(string stageName = null, HybridDataJobStatus stageStatus = default, BinaryData jobStageDetails = null, IEnumerable<HybridDataJobErrorDetails> errorDetails = null)
-        {
-            errorDetails ??= new List<HybridDataJobErrorDetails>();
-
-            return new HybridDataJobStage(stageName, stageStatus, jobStageDetails, errorDetails?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of HybridDataJobErrorDetails. </summary>
-        /// <param name="errorMessage"> Error message. </param>
-        /// <param name="errorCode"> Error code. </param>
-        /// <param name="recommendedAction"> Recommended action for the error. </param>
-        /// <param name="exceptionMessage"> Contains the non localized exception message. </param>
-        /// <returns> A new <see cref="Models.HybridDataJobErrorDetails"/> instance for mocking. </returns>
-        public static HybridDataJobErrorDetails HybridDataJobErrorDetails(string errorMessage = null, int? errorCode = null, string recommendedAction = null, string exceptionMessage = null)
-        {
-            return new HybridDataJobErrorDetails(errorMessage, errorCode, recommendedAction, exceptionMessage);
-        }
-
-        /// <summary> Initializes a new instance of HybridDataJobTopLevelError. </summary>
-        /// <param name="code"> Error code that can be used to programmatically identify the error. </param>
-        /// <param name="message"> Describes the error in detail and provides debugging information. </param>
-        /// <returns> A new <see cref="Models.HybridDataJobTopLevelError"/> instance for mocking. </returns>
-        public static HybridDataJobTopLevelError HybridDataJobTopLevelError(string code = null, string message = null)
-        {
-            return new HybridDataJobTopLevelError(code, message);
         }
 
         /// <summary> Initializes a new instance of HybridDataStoreData. </summary>

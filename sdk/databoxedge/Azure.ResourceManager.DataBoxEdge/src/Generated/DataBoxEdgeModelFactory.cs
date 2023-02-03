@@ -117,15 +117,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeDeviceData(id, name, resourceType, systemData, tags, location, sku, etag, identity, kind, dataBoxEdgeDeviceStatus, serialNumber, description, modelDescription, deviceType, friendlyName, culture, deviceModel, deviceSoftwareVersion, deviceLocalCapacity, timeZone, deviceHcsVersion, configuredRoleTypes?.ToList(), nodeCount, resourceMoveDetails, edgeSubscription != null ? new EdgeProfile(edgeSubscription) : null, residencyType != null ? new DataResidency(residencyType) : null);
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSku. </summary>
-        /// <param name="name"> SKU name. </param>
-        /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeSku"/> instance for mocking. </returns>
-        public static DataBoxEdgeSku DataBoxEdgeSku(DataBoxEdgeSkuName? name = null, DataBoxEdgeSkuTier? tier = null)
-        {
-            return new DataBoxEdgeSku(name, tier);
-        }
-
         /// <summary> Initializes a new instance of DataBoxEdgeResourceMoveDetails. </summary>
         /// <param name="operationInProgress"> Denotes whether move operation is in progress. </param>
         /// <param name="operationInProgressLockTimeoutInUtc"> Denotes the timeout of the operation to finish. </param>
@@ -227,98 +218,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeDeviceCapacityInfo(id, name, resourceType, systemData, timeStamp, clusterStorageCapacityInfo, clusterComputeCapacityInfo, nodeCapacityInfos);
         }
 
-        /// <summary> Initializes a new instance of EdgeClusterStorageViewInfo. </summary>
-        /// <param name="clusterTotalStorageInMB"> Total storage on the cluster in MB. </param>
-        /// <param name="clusterFreeStorageInMB"> The available or free storage on the cluster in MB. </param>
-        /// <returns> A new <see cref="Models.EdgeClusterStorageViewInfo"/> instance for mocking. </returns>
-        public static EdgeClusterStorageViewInfo EdgeClusterStorageViewInfo(double? clusterTotalStorageInMB = null, double? clusterFreeStorageInMB = null)
-        {
-            return new EdgeClusterStorageViewInfo(clusterTotalStorageInMB, clusterFreeStorageInMB);
-        }
-
-        /// <summary> Initializes a new instance of EdgeClusterCapacityViewInfo. </summary>
-        /// <param name="fqdn"> The FQDN of the cluster. </param>
-        /// <param name="gpuCapacity"> The cluster&apos;s GPU capacity. </param>
-        /// <param name="memoryCapacity"> The cluster&apos;s memory capacity. </param>
-        /// <param name="lastRefreshedOn"> The last time at which the ClusterCapacityViewData was set. </param>
-        /// <param name="totalProvisionedNonHpnCores"> The total # of vCPUs provisioned by non-HPN VM per appliance. </param>
-        /// <returns> A new <see cref="Models.EdgeClusterCapacityViewInfo"/> instance for mocking. </returns>
-        public static EdgeClusterCapacityViewInfo EdgeClusterCapacityViewInfo(string fqdn = null, EdgeClusterGpuCapacity gpuCapacity = null, EdgeClusterMemoryCapacity memoryCapacity = null, DateTimeOffset? lastRefreshedOn = null, long? totalProvisionedNonHpnCores = null)
-        {
-            return new EdgeClusterCapacityViewInfo(fqdn, gpuCapacity, memoryCapacity, lastRefreshedOn, totalProvisionedNonHpnCores);
-        }
-
-        /// <summary> Initializes a new instance of EdgeClusterGpuCapacity. </summary>
-        /// <param name="gpuType"> The cluster GPU Type. </param>
-        /// <param name="gpuUsedUnitsCount"> The used GPU units count in the cluster. </param>
-        /// <param name="gpuFreeUnitsCount"> The free GPU units count in the cluster. </param>
-        /// <param name="gpuReservedForFailoverUnitsCount"> The GPU units count reserved for failover in the cluster. </param>
-        /// <param name="gpuTotalUnitsCount"> The total GPU units count in the cluster. </param>
-        /// <returns> A new <see cref="Models.EdgeClusterGpuCapacity"/> instance for mocking. </returns>
-        public static EdgeClusterGpuCapacity EdgeClusterGpuCapacity(string gpuType = null, int? gpuUsedUnitsCount = null, int? gpuFreeUnitsCount = null, int? gpuReservedForFailoverUnitsCount = null, int? gpuTotalUnitsCount = null)
-        {
-            return new EdgeClusterGpuCapacity(gpuType, gpuUsedUnitsCount, gpuFreeUnitsCount, gpuReservedForFailoverUnitsCount, gpuTotalUnitsCount);
-        }
-
-        /// <summary> Initializes a new instance of EdgeClusterMemoryCapacity. </summary>
-        /// <param name="clusterFreeMemoryInMB"> The free memory in the cluster in MB. </param>
-        /// <param name="clusterUsedMemoryInMB"> The used memory in the cluster in MB. </param>
-        /// <param name="clusterFailoverMemoryInMB"> The failover memory in the cluster in MB. </param>
-        /// <param name="clusterFragmentationMemoryInMB"> The fragmentation memory in the cluster in MB. </param>
-        /// <param name="clusterHyperVReserveMemoryMb"> The memory reserved for Hyper-V in the cluster in MB. </param>
-        /// <param name="clusterInfraVmMemoryInMB"> The memory of the Infra VM in the cluster in MB. </param>
-        /// <param name="clusterTotalMemoryInMB"> The total memory in the cluster in MB. </param>
-        /// <param name="clusterNonFailoverVmInMB"> The non-failover memory in the cluster in MB. </param>
-        /// <param name="clusterMemoryUsedByVmsInMB"> The memory used by VMs in the cluster in MB. </param>
-        /// <returns> A new <see cref="Models.EdgeClusterMemoryCapacity"/> instance for mocking. </returns>
-        public static EdgeClusterMemoryCapacity EdgeClusterMemoryCapacity(double? clusterFreeMemoryInMB = null, double? clusterUsedMemoryInMB = null, double? clusterFailoverMemoryInMB = null, double? clusterFragmentationMemoryInMB = null, double? clusterHyperVReserveMemoryMb = null, double? clusterInfraVmMemoryInMB = null, double? clusterTotalMemoryInMB = null, double? clusterNonFailoverVmInMB = null, double? clusterMemoryUsedByVmsInMB = null)
-        {
-            return new EdgeClusterMemoryCapacity(clusterFreeMemoryInMB, clusterUsedMemoryInMB, clusterFailoverMemoryInMB, clusterFragmentationMemoryInMB, clusterHyperVReserveMemoryMb, clusterInfraVmMemoryInMB, clusterTotalMemoryInMB, clusterNonFailoverVmInMB, clusterMemoryUsedByVmsInMB);
-        }
-
-        /// <summary> Initializes a new instance of HostCapacity. </summary>
-        /// <param name="hostName"> The name of the host. </param>
-        /// <param name="effectiveAvailableMemoryInMBOnHost"> The available memory on the host accounting for VM placement size and any host VM reservations. </param>
-        /// <param name="availableGpuCount"> The available amount of GPUs on the host to use after accounting for GPUS used by reservations on the host. </param>
-        /// <param name="vmUsedMemory"> The VM used memory per VmId. </param>
-        /// <param name="gpuType"> The GPU type of the VM. </param>
-        /// <param name="numaNodesData"> The numa nodes information for Hpn VMs. </param>
-        /// <returns> A new <see cref="Models.HostCapacity"/> instance for mocking. </returns>
-        public static HostCapacity HostCapacity(string hostName = null, long? effectiveAvailableMemoryInMBOnHost = null, int? availableGpuCount = null, IDictionary<string, DataBoxEdgeVmMemory> vmUsedMemory = null, string gpuType = null, IEnumerable<NumaNodeInfo> numaNodesData = null)
-        {
-            vmUsedMemory ??= new Dictionary<string, DataBoxEdgeVmMemory>();
-            numaNodesData ??= new List<NumaNodeInfo>();
-
-            return new HostCapacity(hostName, effectiveAvailableMemoryInMBOnHost, availableGpuCount, vmUsedMemory, gpuType, numaNodesData?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DataBoxEdgeVmMemory. </summary>
-        /// <param name="startupMemoryInMB"> The total amount of RAM in the virtual machine, as seen by the guest  operating system. For a virtual machine with dynamic memory enabled, this represents the initial memory available at startup. </param>
-        /// <param name="currentMemoryUsageInMB"> The current memory used by the virtual machine. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeVmMemory"/> instance for mocking. </returns>
-        public static DataBoxEdgeVmMemory DataBoxEdgeVmMemory(long? startupMemoryInMB = null, long? currentMemoryUsageInMB = null)
-        {
-            return new DataBoxEdgeVmMemory(startupMemoryInMB, currentMemoryUsageInMB);
-        }
-
-        /// <summary> Initializes a new instance of NumaNodeInfo. </summary>
-        /// <param name="numaNodeIndex"> The NUMA node index. </param>
-        /// <param name="totalMemoryInMB"> The total memory on the NUMA node. </param>
-        /// <param name="logicalCoreCountPerCore"> The logical cores per core count. </param>
-        /// <param name="effectiveAvailableMemoryInMB"> The effective available memory on the NUMA node in MB. </param>
-        /// <param name="freeVCpuIndexesForHpn"> The free VCPU indices for the Hpn VMs. </param>
-        /// <param name="vCpuIndexesForHpn"> The VCPU indices for Hpn VMs. </param>
-        /// <param name="vCpuIndexesForRoot"> The VCPU indices for the root. </param>
-        /// <returns> A new <see cref="Models.NumaNodeInfo"/> instance for mocking. </returns>
-        public static NumaNodeInfo NumaNodeInfo(int? numaNodeIndex = null, long? totalMemoryInMB = null, int? logicalCoreCountPerCore = null, long? effectiveAvailableMemoryInMB = null, IEnumerable<int> freeVCpuIndexesForHpn = null, IEnumerable<int> vCpuIndexesForHpn = null, IEnumerable<int> vCpuIndexesForRoot = null)
-        {
-            freeVCpuIndexesForHpn ??= new List<int>();
-            vCpuIndexesForHpn ??= new List<int>();
-            vCpuIndexesForRoot ??= new List<int>();
-
-            return new NumaNodeInfo(numaNodeIndex, totalMemoryInMB, logicalCoreCountPerCore, effectiveAvailableMemoryInMB, freeVCpuIndexesForHpn?.ToList(), vCpuIndexesForHpn?.ToList(), vCpuIndexesForRoot?.ToList());
-        }
-
         /// <summary> Initializes a new instance of DiagnosticProactiveLogCollectionSettingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -343,16 +242,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             remoteSupportSettingsList ??= new List<EdgeRemoteSupportSettings>();
 
             return new DiagnosticRemoteSupportSettingData(id, name, resourceType, systemData, remoteSupportSettingsList?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of EdgeRemoteSupportSettings. </summary>
-        /// <param name="remoteApplicationType"> Remote application type. </param>
-        /// <param name="accessLevel"> Access level allowed for this remote application type. </param>
-        /// <param name="expireOn"> Expiration time stamp. </param>
-        /// <returns> A new <see cref="Models.EdgeRemoteSupportSettings"/> instance for mocking. </returns>
-        public static EdgeRemoteSupportSettings EdgeRemoteSupportSettings(EdgeRemoteApplicationType? remoteApplicationType = null, EdgeRemoteApplicationAccessLevel? accessLevel = null, DateTimeOffset? expireOn = null)
-        {
-            return new EdgeRemoteSupportSettings(remoteApplicationType, accessLevel, expireOn);
         }
 
         /// <summary> Initializes a new instance of GenerateCertResult. </summary>
@@ -406,16 +295,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeDeviceSecret DataBoxEdgeDeviceSecret(AsymmetricEncryptedSecret encryptedSecret = null, string keyVaultId = null)
         {
             return new DataBoxEdgeDeviceSecret(encryptedSecret, keyVaultId);
-        }
-
-        /// <summary> Initializes a new instance of AsymmetricEncryptedSecret. </summary>
-        /// <param name="value"> The value of the secret. </param>
-        /// <param name="encryptionCertThumbprint"> Thumbprint certificate used to encrypt \&quot;Value\&quot;. If the value is unencrypted, it will be null. </param>
-        /// <param name="encryptionAlgorithm"> The algorithm used to encrypt &quot;Value&quot;. </param>
-        /// <returns> A new <see cref="Models.AsymmetricEncryptedSecret"/> instance for mocking. </returns>
-        public static AsymmetricEncryptedSecret AsymmetricEncryptedSecret(string value = null, string encryptionCertThumbprint = null, DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm = default)
-        {
-            return new AsymmetricEncryptedSecret(value, encryptionCertThumbprint, encryptionAlgorithm);
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeJobData. </summary>
@@ -599,20 +478,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeOrderData(id, name, resourceType, systemData, kind, orderId, contactInformation, shippingAddress, currentStatus, orderHistory?.ToList(), serialNumber, deliveryTrackingInfo?.ToList(), returnTrackingInfo?.ToList(), shipmentType);
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeShippingAddress. </summary>
-        /// <param name="addressLine1"> The address line1. </param>
-        /// <param name="addressLine2"> The address line2. </param>
-        /// <param name="addressLine3"> The address line3. </param>
-        /// <param name="postalCode"> The postal code. </param>
-        /// <param name="city"> The city name. </param>
-        /// <param name="state"> The state name. </param>
-        /// <param name="country"> The country name. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeShippingAddress"/> instance for mocking. </returns>
-        public static DataBoxEdgeShippingAddress DataBoxEdgeShippingAddress(string addressLine1 = null, string addressLine2 = null, string addressLine3 = null, string postalCode = null, string city = null, string state = null, string country = null)
-        {
-            return new DataBoxEdgeShippingAddress(addressLine1, addressLine2, addressLine3, postalCode, city, state, country);
-        }
-
         /// <summary> Initializes a new instance of DataBoxEdgeOrderStatus. </summary>
         /// <param name="status"> Status of the order as per the allowed status types. </param>
         /// <param name="updateOn"> Time of status update. </param>
@@ -687,33 +552,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new MonitoringMetricConfigurationData(id, name, resourceType, systemData, metricConfigurations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricConfiguration. </summary>
-        /// <param name="resourceId"> The Resource ID on which the metrics should be pushed. </param>
-        /// <param name="mdmAccount"> The MDM account to which the counters should be pushed. </param>
-        /// <param name="metricNameSpace"> The MDM namespace to which the counters should be pushed. This is required if MDMAccount is specified. </param>
-        /// <param name="counterSets"> Host name for the IoT hub associated to the device. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeMetricConfiguration"/> instance for mocking. </returns>
-        public static DataBoxEdgeMetricConfiguration DataBoxEdgeMetricConfiguration(ResourceIdentifier resourceId = null, string mdmAccount = null, string metricNameSpace = null, IEnumerable<DataBoxEdgeMetricCounterSet> counterSets = null)
-        {
-            counterSets ??= new List<DataBoxEdgeMetricCounterSet>();
-
-            return new DataBoxEdgeMetricConfiguration(resourceId, mdmAccount, metricNameSpace, counterSets?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounter. </summary>
-        /// <param name="name"> The counter name. </param>
-        /// <param name="instance"> The instance from which counter should be collected. </param>
-        /// <param name="dimensionFilter"> The dimension filter. </param>
-        /// <param name="additionalDimensions"> The additional dimensions to be added to metric. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeMetricCounter"/> instance for mocking. </returns>
-        public static DataBoxEdgeMetricCounter DataBoxEdgeMetricCounter(string name = null, string instance = null, IEnumerable<DataBoxEdgeMetricDimension> dimensionFilter = null, IEnumerable<DataBoxEdgeMetricDimension> additionalDimensions = null)
-        {
-            dimensionFilter ??= new List<DataBoxEdgeMetricDimension>();
-            additionalDimensions ??= new List<DataBoxEdgeMetricDimension>();
-
-            return new DataBoxEdgeMetricCounter(name, instance, dimensionFilter?.ToList(), additionalDimensions?.ToList());
-        }
-
         /// <summary> Initializes a new instance of DataBoxEdgeSecuritySettings. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -749,17 +587,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             shareMappings ??= new List<DataBoxEdgeMountPointMap>();
 
             return new DataBoxEdgeShareData(id, name, resourceType, systemData, description, shareStatus, monitoringStatus, azureContainerInfo, accessProtocol, userAccessRights?.ToList(), clientAccessRights?.ToList(), refreshDetails, shareMappings?.ToList(), dataPolicy);
-        }
-
-        /// <summary> Initializes a new instance of DataBoxEdgeRefreshDetails. </summary>
-        /// <param name="inProgressRefreshJobId"> If a refresh job is currently in progress on this share or container, this field indicates the ARM resource ID of that job. The field is empty if no job is in progress. </param>
-        /// <param name="lastCompletedRefreshJobTimeInUtc"> Indicates the completed time for the last refresh job on this particular share or container, if any.This could be a failed job or a successful job. </param>
-        /// <param name="errorManifestFile"> Indicates the relative path of the error xml for the last refresh job on this particular share or container, if any. This could be a failed job or a successful job. </param>
-        /// <param name="lastJob"> Indicates the id of the last refresh job on this particular share or container,if any. This could be a failed job or a successful job. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeRefreshDetails"/> instance for mocking. </returns>
-        public static DataBoxEdgeRefreshDetails DataBoxEdgeRefreshDetails(ResourceIdentifier inProgressRefreshJobId = null, DateTimeOffset? lastCompletedRefreshJobTimeInUtc = null, string errorManifestFile = null, string lastJob = null)
-        {
-            return new DataBoxEdgeRefreshDetails(inProgressRefreshJobId, lastCompletedRefreshJobTimeInUtc, errorManifestFile, lastJob);
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeMountPointMap. </summary>
@@ -1023,16 +850,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeFileEventTrigger(id, name, resourceType, systemData, TriggerEventType.FileEvent, sourceInfoShareId != null ? new EdgeFileSourceInfo(sourceInfoShareId) : null, sinkInfoRoleId != null ? new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId) : null, customContextTag);
         }
 
-        /// <summary> Initializes a new instance of ImageRepositoryCredential. </summary>
-        /// <param name="imageRepositoryUri"> Image repository url (e.g.: mcr.microsoft.com). </param>
-        /// <param name="userName"> Repository user name. </param>
-        /// <param name="password"> Repository user password. </param>
-        /// <returns> A new <see cref="Models.ImageRepositoryCredential"/> instance for mocking. </returns>
-        public static ImageRepositoryCredential ImageRepositoryCredential(Uri imageRepositoryUri = null, string userName = null, AsymmetricEncryptedSecret password = null)
-        {
-            return new ImageRepositoryCredential(imageRepositoryUri, userName, password);
-        }
-
         /// <summary> Initializes a new instance of EdgeIotAddon. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1048,27 +865,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeIotAddon EdgeIotAddon(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeIotDeviceInfo iotDeviceDetails = null, EdgeIotDeviceInfo iotEdgeDeviceDetails = null, string version = null, DataBoxEdgeOSPlatformType? hostPlatform = null, HostPlatformType? hostPlatformType = null, DataBoxEdgeRoleAddonProvisioningState? provisioningState = null)
         {
             return new EdgeIotAddon(id, name, resourceType, systemData, AddonType.IotEdge, iotDeviceDetails, iotEdgeDeviceDetails, version, hostPlatform, hostPlatformType, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of EdgeIotDeviceInfo. </summary>
-        /// <param name="deviceId"> ID of the IoT device/edge device. </param>
-        /// <param name="iotHostHub"> Host name for the IoT hub associated to the device. </param>
-        /// <param name="iotHostHubId"> Id for the IoT hub associated to the device. </param>
-        /// <param name="symmetricKeyConnectionString"> Encrypted IoT device/IoT edge device connection string. </param>
-        /// <returns> A new <see cref="Models.EdgeIotDeviceInfo"/> instance for mocking. </returns>
-        public static EdgeIotDeviceInfo EdgeIotDeviceInfo(string deviceId = null, string iotHostHub = null, ResourceIdentifier iotHostHubId = null, AsymmetricEncryptedSecret symmetricKeyConnectionString = null)
-        {
-            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, symmetricKeyConnectionString != null ? new Authentication(new DataBoxEdgeSymmetricKey(symmetricKeyConnectionString)) : null);
-        }
-
-        /// <summary> Initializes a new instance of IotEdgeAgentInfo. </summary>
-        /// <param name="imageName"> Name of the IoT edge agent image. </param>
-        /// <param name="tag"> Image Tag. </param>
-        /// <param name="imageRepository"> Image repository details. </param>
-        /// <returns> A new <see cref="Models.IotEdgeAgentInfo"/> instance for mocking. </returns>
-        public static IotEdgeAgentInfo IotEdgeAgentInfo(string imageName = null, string tag = null, ImageRepositoryCredential imageRepository = null)
-        {
-            return new IotEdgeAgentInfo(imageName, tag, imageRepository);
         }
 
         /// <summary> Initializes a new instance of EdgeIotRole. </summary>
@@ -1229,16 +1025,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static PeriodicTimerEventTrigger PeriodicTimerEventTrigger(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PeriodicTimerSourceInfo sourceInfo = null, ResourceIdentifier sinkInfoRoleId = null, string customContextTag = null)
         {
             return new PeriodicTimerEventTrigger(id, name, resourceType, systemData, TriggerEventType.PeriodicTimerEvent, sourceInfo, sinkInfoRoleId != null ? new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId) : null, customContextTag);
-        }
-
-        /// <summary> Initializes a new instance of PeriodicTimerSourceInfo. </summary>
-        /// <param name="startOn"> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </param>
-        /// <param name="schedule"> Periodic frequency at which timer event needs to be raised. Supports daily, hourly, minutes, and seconds. </param>
-        /// <param name="topic"> Topic where periodic events are published to IoT device. </param>
-        /// <returns> A new <see cref="Models.PeriodicTimerSourceInfo"/> instance for mocking. </returns>
-        public static PeriodicTimerSourceInfo PeriodicTimerSourceInfo(DateTimeOffset startOn = default, string schedule = null, string topic = null)
-        {
-            return new PeriodicTimerSourceInfo(startOn, schedule, topic);
         }
     }
 }

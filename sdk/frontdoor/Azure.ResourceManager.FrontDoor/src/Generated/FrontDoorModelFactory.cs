@@ -49,93 +49,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, etag, skuName != null ? new FrontDoorSku(skuName) : null, policySettings, rules != null ? new CustomRuleList(rules?.ToList()) : null, managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList()) : null, frontendEndpointLinks?.ToList(), routingRuleLinks?.ToList(), securityPolicyLinks?.ToList(), provisioningState, resourceState);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicySettings. </summary>
-        /// <param name="enabledState"> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </param>
-        /// <param name="mode"> Describes if it is in detection mode or prevention mode at policy level. </param>
-        /// <param name="redirectUri"> If action type is redirect, this field represents redirect URL for the client. </param>
-        /// <param name="customBlockResponseStatusCode"> If the action type is block, customer can override the response status code. </param>
-        /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
-        /// <param name="requestBodyCheck"> Describes if policy managed rules will inspect the request body content. </param>
-        /// <returns> A new <see cref="Models.FrontDoorWebApplicationFirewallPolicySettings"/> instance for mocking. </returns>
-        public static FrontDoorWebApplicationFirewallPolicySettings FrontDoorWebApplicationFirewallPolicySettings(PolicyEnabledState? enabledState = null, FrontDoorWebApplicationFirewallPolicyMode? mode = null, Uri redirectUri = null, int? customBlockResponseStatusCode = null, string customBlockResponseBody = null, PolicyRequestBodyCheck? requestBodyCheck = null)
-        {
-            return new FrontDoorWebApplicationFirewallPolicySettings(enabledState, mode, redirectUri, customBlockResponseStatusCode, customBlockResponseBody, requestBodyCheck);
-        }
-
-        /// <summary> Initializes a new instance of WebApplicationCustomRule. </summary>
-        /// <param name="name"> Describes the name of the rule. </param>
-        /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
-        /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
-        /// <param name="ruleType"> Describes type of rule. </param>
-        /// <param name="rateLimitDurationInMinutes"> Time window for resetting the rate limit count. Default is 1 minute. </param>
-        /// <param name="rateLimitThreshold"> Number of allowed requests per client within the time window. </param>
-        /// <param name="matchConditions"> List of match conditions. </param>
-        /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        /// <returns> A new <see cref="Models.WebApplicationCustomRule"/> instance for mocking. </returns>
-        public static WebApplicationCustomRule WebApplicationCustomRule(string name = null, int priority = default, CustomRuleEnabledState? enabledState = null, WebApplicationRuleType ruleType = default, int? rateLimitDurationInMinutes = null, int? rateLimitThreshold = null, IEnumerable<WebApplicationRuleMatchCondition> matchConditions = null, RuleMatchActionType action = default)
-        {
-            matchConditions ??= new List<WebApplicationRuleMatchCondition>();
-
-            return new WebApplicationCustomRule(name, priority, enabledState, ruleType, rateLimitDurationInMinutes, rateLimitThreshold, matchConditions?.ToList(), action);
-        }
-
-        /// <summary> Initializes a new instance of WebApplicationRuleMatchCondition. </summary>
-        /// <param name="matchVariable"> Request variable to compare with. </param>
-        /// <param name="selector"> Match against a specific key from the QueryString, PostArgs, RequestHeader or Cookies variables. Default is null. </param>
-        /// <param name="operator"> Comparison type to use for matching with the variable value. </param>
-        /// <param name="isNegateCondition"> Describes if the result of this condition should be negated. </param>
-        /// <param name="matchValue"> List of possible match values. </param>
-        /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.WebApplicationRuleMatchCondition"/> instance for mocking. </returns>
-        public static WebApplicationRuleMatchCondition WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable matchVariable = default, string selector = null, WebApplicationRuleMatchOperator @operator = default, bool? isNegateCondition = null, IEnumerable<string> matchValue = null, IEnumerable<WebApplicationRuleMatchTransformType> transforms = null)
-        {
-            matchValue ??= new List<string>();
-            transforms ??= new List<WebApplicationRuleMatchTransformType>();
-
-            return new WebApplicationRuleMatchCondition(matchVariable, selector, @operator, isNegateCondition, matchValue?.ToList(), transforms?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
-        /// <param name="ruleSetType"> Defines the rule set type to use. </param>
-        /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
-        /// <param name="ruleSetAction"> Defines the rule set action. </param>
-        /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the set. </param>
-        /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleSet"/> instance for mocking. </returns>
-        public static ManagedRuleSet ManagedRuleSet(string ruleSetType = null, string ruleSetVersion = null, ManagedRuleSetActionType? ruleSetAction = null, IEnumerable<ManagedRuleExclusion> exclusions = null, IEnumerable<ManagedRuleGroupOverride> ruleGroupOverrides = null)
-        {
-            exclusions ??= new List<ManagedRuleExclusion>();
-            ruleGroupOverrides ??= new List<ManagedRuleGroupOverride>();
-
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, ruleSetAction, exclusions?.ToList(), ruleGroupOverrides?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedRuleGroupOverride. </summary>
-        /// <param name="ruleGroupName"> Describes the managed rule group to override. </param>
-        /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the group. </param>
-        /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleGroupOverride"/> instance for mocking. </returns>
-        public static ManagedRuleGroupOverride ManagedRuleGroupOverride(string ruleGroupName = null, IEnumerable<ManagedRuleExclusion> exclusions = null, IEnumerable<ManagedRuleOverride> rules = null)
-        {
-            exclusions ??= new List<ManagedRuleExclusion>();
-            rules ??= new List<ManagedRuleOverride>();
-
-            return new ManagedRuleGroupOverride(ruleGroupName, exclusions?.ToList(), rules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
-        /// <param name="ruleId"> Identifier for the managed rule. </param>
-        /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
-        /// <param name="action"> Describes the override action to be applied when rule matches. </param>
-        /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleOverride"/> instance for mocking. </returns>
-        public static ManagedRuleOverride ManagedRuleOverride(string ruleId = null, ManagedRuleEnabledState? enabledState = null, RuleMatchActionType? action = null, IEnumerable<ManagedRuleExclusion> exclusions = null)
-        {
-            exclusions ??= new List<ManagedRuleExclusion>();
-
-            return new ManagedRuleOverride(ruleId, enabledState, action, exclusions?.ToList());
-        }
-
         /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -239,71 +152,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
             rules ??= new List<RulesEngineRule>();
 
             return new FrontDoorRulesEngineData(id, name, resourceType, systemData, rules?.ToList(), resourceState);
-        }
-
-        /// <summary> Initializes a new instance of RulesEngineRule. </summary>
-        /// <param name="name"> A name to refer to this specific rule. </param>
-        /// <param name="priority"> A priority assigned to this rule. </param>
-        /// <param name="action"> Actions to perform on the request and response if all of the match conditions are met. </param>
-        /// <param name="matchConditions"> A list of match conditions that must meet in order for the actions of this rule to run. Having no match conditions means the actions will always run. </param>
-        /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
-        /// <returns> A new <see cref="Models.RulesEngineRule"/> instance for mocking. </returns>
-        public static RulesEngineRule RulesEngineRule(string name = null, int priority = default, RulesEngineAction action = null, IEnumerable<RulesEngineMatchCondition> matchConditions = null, MatchProcessingBehavior? matchProcessingBehavior = null)
-        {
-            matchConditions ??= new List<RulesEngineMatchCondition>();
-
-            return new RulesEngineRule(name, priority, action, matchConditions?.ToList(), matchProcessingBehavior);
-        }
-
-        /// <summary> Initializes a new instance of RulesEngineAction. </summary>
-        /// <param name="requestHeaderActions"> A list of header actions to apply from the request from AFD to the origin. </param>
-        /// <param name="responseHeaderActions"> A list of header actions to apply from the response from AFD to the client. </param>
-        /// <param name="routeConfigurationOverride">
-        /// Override the route configuration.
-        /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.RulesEngineAction"/> instance for mocking. </returns>
-        public static RulesEngineAction RulesEngineAction(IEnumerable<RulesEngineHeaderAction> requestHeaderActions = null, IEnumerable<RulesEngineHeaderAction> responseHeaderActions = null, RouteConfiguration routeConfigurationOverride = null)
-        {
-            requestHeaderActions ??= new List<RulesEngineHeaderAction>();
-            responseHeaderActions ??= new List<RulesEngineHeaderAction>();
-
-            return new RulesEngineAction(requestHeaderActions?.ToList(), responseHeaderActions?.ToList(), routeConfigurationOverride);
-        }
-
-        /// <summary> Initializes a new instance of RulesEngineHeaderAction. </summary>
-        /// <param name="headerActionType"> Which type of manipulation to apply to the header. </param>
-        /// <param name="headerName"> The name of the header this action will apply to. </param>
-        /// <param name="value"> The value to update the given header name with. This value is not used if the actionType is Delete. </param>
-        /// <returns> A new <see cref="Models.RulesEngineHeaderAction"/> instance for mocking. </returns>
-        public static RulesEngineHeaderAction RulesEngineHeaderAction(RulesEngineHeaderActionType headerActionType = default, string headerName = null, string value = null)
-        {
-            return new RulesEngineHeaderAction(headerActionType, headerName, value);
-        }
-
-        /// <summary> Initializes a new instance of RouteConfiguration. </summary>
-        /// <param name="odataType"></param>
-        /// <returns> A new <see cref="Models.RouteConfiguration"/> instance for mocking. </returns>
-        public static RouteConfiguration RouteConfiguration(string odataType = null)
-        {
-            return new UnknownRouteConfiguration(odataType);
-        }
-
-        /// <summary> Initializes a new instance of RulesEngineMatchCondition. </summary>
-        /// <param name="rulesEngineMatchVariable"> Match Variable. </param>
-        /// <param name="selector"> Name of selector in RequestHeader or RequestBody to be matched. </param>
-        /// <param name="rulesEngineOperator"> Describes operator to apply to the match condition. </param>
-        /// <param name="isNegateCondition"> Describes if this is negate condition or not. </param>
-        /// <param name="rulesEngineMatchValue"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
-        /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.RulesEngineMatchCondition"/> instance for mocking. </returns>
-        public static RulesEngineMatchCondition RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable = default, string selector = null, RulesEngineOperator rulesEngineOperator = default, bool? isNegateCondition = null, IEnumerable<string> rulesEngineMatchValue = null, IEnumerable<RulesEngineMatchTransform> transforms = null)
-        {
-            rulesEngineMatchValue ??= new List<string>();
-            transforms ??= new List<RulesEngineMatchTransform>();
-
-            return new RulesEngineMatchCondition(rulesEngineMatchVariable, selector, rulesEngineOperator, isNegateCondition, rulesEngineMatchValue?.ToList(), transforms?.ToList());
         }
 
         /// <summary> Initializes a new instance of RoutingRuleData. </summary>
@@ -425,29 +273,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontendEndpointData(id, name, resourceType, hostName, sessionAffinityEnabledState, sessionAffinityTtlInSeconds, webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null, resourceState, customHttpsProvisioningState, customHttpsProvisioningSubstate, customHttpsConfiguration);
         }
 
-        /// <summary> Initializes a new instance of CustomHttpsConfiguration. </summary>
-        /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
-        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </param>
-        /// <param name="certificateType"> Defines the type of the certificate used for secure connections to a frontendEndpoint. </param>
-        /// <param name="vaultId"> The Key Vault containing the SSL certificate. </param>
-        /// <param name="secretName"> The name of the Key Vault secret representing the full certificate PFX. </param>
-        /// <param name="secretVersion"> The version of the Key Vault secret representing the full certificate PFX. </param>
-        /// <returns> A new <see cref="Models.CustomHttpsConfiguration"/> instance for mocking. </returns>
-        public static CustomHttpsConfiguration CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource = default, FrontDoorTlsProtocolType protocolType = default, FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default, FrontDoorEndpointConnectionCertificateType? certificateType = null, ResourceIdentifier vaultId = null, string secretName = null, string secretVersion = null)
-        {
-            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, certificateType, vaultId != null ? ResourceManagerModelFactory.WritableSubResource(vaultId) : null, secretName, secretVersion);
-        }
-
-        /// <summary> Initializes a new instance of BackendPoolsSettings. </summary>
-        /// <param name="enforceCertificateNameCheck"> Whether to enforce certificate name check on HTTPS requests to all backend pools. No effect on non-HTTPS requests. </param>
-        /// <param name="sendRecvTimeoutInSeconds"> Send and receive timeout on forwarding request to the backend. When timeout is reached, the request fails and returns. </param>
-        /// <returns> A new <see cref="Models.BackendPoolsSettings"/> instance for mocking. </returns>
-        public static BackendPoolsSettings BackendPoolsSettings(EnforceCertificateNameCheckEnabledState? enforceCertificateNameCheck = null, int? sendRecvTimeoutInSeconds = null)
-        {
-            return new BackendPoolsSettings(enforceCertificateNameCheck, sendRecvTimeoutInSeconds);
-        }
-
         /// <summary> Initializes a new instance of FrontDoorValidateCustomDomainResult. </summary>
         /// <param name="isCustomDomainValidated"> Indicates whether the custom domain is valid or not. </param>
         /// <param name="reason"> The reason why the custom domain is not valid. </param>
@@ -517,15 +342,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorExperimentData(id, name, resourceType, systemData, tags, location, description, experimentEndpointA, experimentEndpointB, enabledState, resourceState, status, scriptFileUri);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorExperimentEndpointProperties. </summary>
-        /// <param name="name"> The name of the endpoint. </param>
-        /// <param name="endpoint"> The endpoint URL. </param>
-        /// <returns> A new <see cref="Models.FrontDoorExperimentEndpointProperties"/> instance for mocking. </returns>
-        public static FrontDoorExperimentEndpointProperties FrontDoorExperimentEndpointProperties(string name = null, string endpoint = null)
-        {
-            return new FrontDoorExperimentEndpointProperties(name, endpoint);
-        }
-
         /// <summary> Initializes a new instance of LatencyScorecard. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -589,50 +405,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
             timeSeriesData ??= new List<FrontDoorTimeSeriesDataPoint>();
 
             return new FrontDoorTimeSeriesInfo(id, name, resourceType, systemData, tags, location, endpoint, startOn, endOn, aggregationInterval, timeSeriesType, country, timeSeriesData?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesDataPoint. </summary>
-        /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
-        /// <param name="value"> The Value of the Timeseries data point. </param>
-        /// <returns> A new <see cref="Models.FrontDoorTimeSeriesDataPoint"/> instance for mocking. </returns>
-        public static FrontDoorTimeSeriesDataPoint FrontDoorTimeSeriesDataPoint(DateTimeOffset? dateTimeUtc = null, float? value = null)
-        {
-            return new FrontDoorTimeSeriesDataPoint(dateTimeUtc, value);
-        }
-
-        /// <summary> Initializes a new instance of ForwardingConfiguration. </summary>
-        /// <param name="customForwardingPath"> A custom path used to rewrite resource paths matched by this rule. Leave empty to use incoming path. </param>
-        /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
-        /// <param name="cacheConfiguration"> The caching configuration associated with this rule. </param>
-        /// <param name="backendPoolId"> A reference to the BackendPool which this rule routes to. </param>
-        /// <returns> A new <see cref="Models.ForwardingConfiguration"/> instance for mocking. </returns>
-        public static ForwardingConfiguration ForwardingConfiguration(string customForwardingPath = null, FrontDoorForwardingProtocol? forwardingProtocol = null, FrontDoorCacheConfiguration cacheConfiguration = null, ResourceIdentifier backendPoolId = null)
-        {
-            return new ForwardingConfiguration("#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration", customForwardingPath, forwardingProtocol, cacheConfiguration, backendPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendPoolId) : null);
-        }
-
-        /// <summary> Initializes a new instance of FrontDoorCacheConfiguration. </summary>
-        /// <param name="queryParameterStripDirective"> Treatment of URL query terms when forming the cache key. </param>
-        /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        /// <param name="dynamicCompression"> Whether to use dynamic compression for cached content. </param>
-        /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). HTTP requires the value to be no more than a year. </param>
-        /// <returns> A new <see cref="Models.FrontDoorCacheConfiguration"/> instance for mocking. </returns>
-        public static FrontDoorCacheConfiguration FrontDoorCacheConfiguration(FrontDoorQuery? queryParameterStripDirective = null, string queryParameters = null, DynamicCompressionEnabled? dynamicCompression = null, TimeSpan? cacheDuration = null)
-        {
-            return new FrontDoorCacheConfiguration(queryParameterStripDirective, queryParameters, dynamicCompression, cacheDuration);
-        }
-
-        /// <summary> Initializes a new instance of RedirectConfiguration. </summary>
-        /// <param name="redirectType"> The redirect type the rule will use when redirecting traffic. </param>
-        /// <param name="redirectProtocol"> The protocol of the destination to where the traffic is redirected. </param>
-        /// <param name="customHost"> Host to redirect. Leave empty to use the incoming host as the destination host. </param>
-        /// <param name="customPath"> The full path to redirect. Path cannot be empty and must start with /. Leave empty to use the incoming path as destination path. </param>
-        /// <param name="customFragment"> Fragment to add to the redirect URL. Fragment is the part of the URL that comes after #. Do not include the #. </param>
-        /// <param name="customQueryString"> The set of query strings to be placed in the redirect URL. Setting this value would replace any existing query string; leave empty to preserve the incoming query string. Query string must be in &lt;key&gt;=&lt;value&gt; format. The first ? and &amp; will be added automatically so do not include them in the front, but do separate multiple query strings with &amp;. </param>
-        /// <returns> A new <see cref="Models.RedirectConfiguration"/> instance for mocking. </returns>
-        public static RedirectConfiguration RedirectConfiguration(FrontDoorRedirectType? redirectType = null, FrontDoorRedirectProtocol? redirectProtocol = null, string customHost = null, string customPath = null, string customFragment = null, string customQueryString = null)
-        {
-            return new RedirectConfiguration("#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration", redirectType, redirectProtocol, customHost, customPath, customFragment, customQueryString);
         }
     }
 }

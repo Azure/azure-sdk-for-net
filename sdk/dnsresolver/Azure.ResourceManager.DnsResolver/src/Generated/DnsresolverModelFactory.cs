@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
@@ -58,16 +57,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
             ipConfigurations ??= new List<InboundEndpointIPConfiguration>();
 
             return new DnsResolverInboundEndpointData(id, name, resourceType, systemData, tags, location, etag, ipConfigurations?.ToList(), provisioningState, resourceGuid);
-        }
-
-        /// <summary> Initializes a new instance of InboundEndpointIPConfiguration. </summary>
-        /// <param name="subnetId"> The reference to the subnet bound to the IP configuration. </param>
-        /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> Private IP address allocation method. </param>
-        /// <returns> A new <see cref="Models.InboundEndpointIPConfiguration"/> instance for mocking. </returns>
-        public static InboundEndpointIPConfiguration InboundEndpointIPConfiguration(ResourceIdentifier subnetId = null, IPAddress privateIPAddress = null, InboundEndpointIPAllocationMethod? privateIPAllocationMethod = null)
-        {
-            return new InboundEndpointIPConfiguration(subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, privateIPAddress, privateIPAllocationMethod);
         }
 
         /// <summary> Initializes a new instance of DnsResolverOutboundEndpointData. </summary>
@@ -127,15 +116,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
             metadata ??= new Dictionary<string, string>();
 
             return new DnsForwardingRuleData(id, name, resourceType, systemData, etag, domainName, targetDnsServers?.ToList(), metadata, dnsForwardingRuleState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of TargetDnsServer. </summary>
-        /// <param name="ipAddress"> DNS server IP address. </param>
-        /// <param name="port"> DNS server port. </param>
-        /// <returns> A new <see cref="Models.TargetDnsServer"/> instance for mocking. </returns>
-        public static TargetDnsServer TargetDnsServer(IPAddress ipAddress = null, int? port = null)
-        {
-            return new TargetDnsServer(ipAddress, port);
         }
 
         /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>

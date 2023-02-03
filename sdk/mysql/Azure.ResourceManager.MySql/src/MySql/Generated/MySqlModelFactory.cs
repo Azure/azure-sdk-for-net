@@ -19,29 +19,6 @@ namespace Azure.ResourceManager.MySql.Models
     public static partial class MySqlModelFactory
     {
 
-        /// <summary> Initializes a new instance of MySqlSku. </summary>
-        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
-        /// <param name="tier"> The tier of the particular SKU, e.g. Basic. </param>
-        /// <param name="capacity"> The scale up/out capacity, representing server&apos;s compute units. </param>
-        /// <param name="size"> The size code, to be interpreted by resource as appropriate. </param>
-        /// <param name="family"> The family of hardware. </param>
-        /// <returns> A new <see cref="Models.MySqlSku"/> instance for mocking. </returns>
-        public static MySqlSku MySqlSku(string name = null, MySqlSkuTier? tier = null, int? capacity = null, string size = null, string family = null)
-        {
-            return new MySqlSku(name, tier, capacity, size, family);
-        }
-
-        /// <summary> Initializes a new instance of MySqlStorageProfile. </summary>
-        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
-        /// <param name="storageInMB"> Max storage allowed for a server. </param>
-        /// <param name="storageAutogrow"> Enable Storage Auto Grow. </param>
-        /// <returns> A new <see cref="Models.MySqlStorageProfile"/> instance for mocking. </returns>
-        public static MySqlStorageProfile MySqlStorageProfile(int? backupRetentionDays = null, MySqlGeoRedundantBackup? geoRedundantBackup = null, int? storageInMB = null, MySqlStorageAutogrow? storageAutogrow = null)
-        {
-            return new MySqlStorageProfile(backupRetentionDays, geoRedundantBackup, storageInMB, storageAutogrow);
-        }
-
         /// <summary> Initializes a new instance of MySqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -159,16 +136,6 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlConfigurationData MySqlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, string dataType = null, string allowedValues = null, string source = null)
         {
             return new MySqlConfigurationData(id, name, resourceType, systemData, value, description, defaultValue, dataType, allowedValues, source);
-        }
-
-        /// <summary> Initializes a new instance of MySqlConfigurations. </summary>
-        /// <param name="values"> The list of server configurations. </param>
-        /// <returns> A new <see cref="Models.MySqlConfigurations"/> instance for mocking. </returns>
-        public static MySqlConfigurations MySqlConfigurations(IEnumerable<MySqlConfigurationData> values = null)
-        {
-            values ??= new List<MySqlConfigurationData>();
-
-            return new MySqlConfigurations(values?.ToList());
         }
 
         /// <summary> Initializes a new instance of MySqlLogFile. </summary>

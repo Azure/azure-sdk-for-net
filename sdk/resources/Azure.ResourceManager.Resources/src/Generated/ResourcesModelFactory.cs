@@ -19,27 +19,6 @@ namespace Azure.ResourceManager.Resources.Models
     public static partial class ResourcesModelFactory
     {
 
-        /// <summary> Initializes a new instance of ArmDeploymentTemplateLink. </summary>
-        /// <param name="uri"> The URI of the template to deploy. Use either the uri or id property, but not both. </param>
-        /// <param name="id"> The resource id of a Template Spec. Use either the id or uri property, but not both. </param>
-        /// <param name="relativePath"> The relativePath property can be used to deploy a linked template at a location relative to the parent. If the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs. </param>
-        /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
-        /// <param name="queryString"> The query string (for example, a SAS token) to be used with the templateLink URI. </param>
-        /// <returns> A new <see cref="Models.ArmDeploymentTemplateLink"/> instance for mocking. </returns>
-        public static ArmDeploymentTemplateLink ArmDeploymentTemplateLink(Uri uri = null, string id = null, string relativePath = null, string contentVersion = null, string queryString = null)
-        {
-            return new ArmDeploymentTemplateLink(uri, id, relativePath, contentVersion, queryString);
-        }
-
-        /// <summary> Initializes a new instance of ArmDeploymentParametersLink. </summary>
-        /// <param name="uri"> The URI of the parameters file. </param>
-        /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
-        /// <returns> A new <see cref="Models.ArmDeploymentParametersLink"/> instance for mocking. </returns>
-        public static ArmDeploymentParametersLink ArmDeploymentParametersLink(Uri uri = null, string contentVersion = null)
-        {
-            return new ArmDeploymentParametersLink(uri, contentVersion);
-        }
-
         /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -268,29 +247,6 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationData(id, name, resourceType, systemData, tags, location, managedBy, sku, plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationJitAccessPolicy. </summary>
-        /// <param name="jitAccessEnabled"> Whether the JIT access is enabled. </param>
-        /// <param name="jitApprovalMode"> JIT approval mode. </param>
-        /// <param name="jitApprovers"> The JIT approvers. </param>
-        /// <param name="maximumJitAccessDuration"> The maximum duration JIT access is granted. This is an ISO8601 time period value. </param>
-        /// <returns> A new <see cref="Models.ArmApplicationJitAccessPolicy"/> instance for mocking. </returns>
-        public static ArmApplicationJitAccessPolicy ArmApplicationJitAccessPolicy(bool jitAccessEnabled = default, JitApprovalMode? jitApprovalMode = null, IEnumerable<JitApprover> jitApprovers = null, TimeSpan? maximumJitAccessDuration = null)
-        {
-            jitApprovers ??= new List<JitApprover>();
-
-            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, jitApprovalMode, jitApprovers?.ToList(), maximumJitAccessDuration);
-        }
-
-        /// <summary> Initializes a new instance of JitApprover. </summary>
-        /// <param name="id"> The approver service principal Id. </param>
-        /// <param name="approverType"> The approver type. </param>
-        /// <param name="displayName"> The approver display name. </param>
-        /// <returns> A new <see cref="Models.JitApprover"/> instance for mocking. </returns>
-        public static JitApprover JitApprover(string id = null, JitApproverType? approverType = null, string displayName = null)
-        {
-            return new JitApprover(id, approverType, displayName);
-        }
-
         /// <summary> Initializes a new instance of ArmApplicationPackageContact. </summary>
         /// <param name="contactName"> The contact name. </param>
         /// <param name="email"> The contact email. </param>
@@ -375,19 +331,6 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationResourceData(id, name, resourceType, systemData, tags, location, managedBy, sku);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationSku. </summary>
-        /// <param name="name"> The SKU name. </param>
-        /// <param name="tier"> The SKU tier. </param>
-        /// <param name="size"> The SKU size. </param>
-        /// <param name="family"> The SKU family. </param>
-        /// <param name="model"> The SKU model. </param>
-        /// <param name="capacity"> The SKU capacity. </param>
-        /// <returns> A new <see cref="Models.ArmApplicationSku"/> instance for mocking. </returns>
-        public static ArmApplicationSku ArmApplicationSku(string name = null, string tier = null, string size = null, string family = null, string model = null, int? capacity = null)
-        {
-            return new ArmApplicationSku(name, tier, size, family, model, capacity);
-        }
-
         /// <summary> Initializes a new instance of ArmApplicationPatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -459,16 +402,6 @@ namespace Azure.ResourceManager.Resources.Models
             policies ??= new List<ArmApplicationPolicy>();
 
             return new ArmApplicationDefinitionData(id, name, resourceType, systemData, tags, location, managedBy, sku, lockLevel, displayName, isEnabled, authorizations?.ToList(), artifacts?.ToList(), description, packageFileUri, mainTemplate, createUiDefinition, notificationEndpoints != null ? new ArmApplicationNotificationPolicy(notificationEndpoints?.ToList()) : null, lockingAllowedActions != null ? new ArmApplicationPackageLockingPolicy(lockingAllowedActions?.ToList()) : null, deploymentMode.HasValue ? new ArmApplicationDeploymentPolicy(deploymentMode.Value) : null, managementMode != null ? new ArmApplicationManagementPolicy(managementMode) : null, policies?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ArmApplicationPolicy. </summary>
-        /// <param name="name"> The policy name. </param>
-        /// <param name="policyDefinitionId"> The policy definition Id. </param>
-        /// <param name="parameters"> The policy parameters. </param>
-        /// <returns> A new <see cref="Models.ArmApplicationPolicy"/> instance for mocking. </returns>
-        public static ArmApplicationPolicy ArmApplicationPolicy(string name = null, string policyDefinitionId = null, string parameters = null)
-        {
-            return new ArmApplicationPolicy(name, policyDefinitionId, parameters);
         }
 
         /// <summary> Initializes a new instance of JitRequestData. </summary>
@@ -662,15 +595,6 @@ namespace Azure.ResourceManager.Resources.Models
             return new AzurePowerShellScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzurePowerShell, containerGroupName != null ? new ContainerConfiguration(containerGroupName) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azPowerShellVersion);
         }
 
-        /// <summary> Initializes a new instance of ScriptStorageConfiguration. </summary>
-        /// <param name="storageAccountName"> The storage account name. </param>
-        /// <param name="storageAccountKey"> The storage account access key. </param>
-        /// <returns> A new <see cref="Models.ScriptStorageConfiguration"/> instance for mocking. </returns>
-        public static ScriptStorageConfiguration ScriptStorageConfiguration(string storageAccountName = null, string storageAccountKey = null)
-        {
-            return new ScriptStorageConfiguration(storageAccountName, storageAccountKey);
-        }
-
         /// <summary> Initializes a new instance of ScriptStatus. </summary>
         /// <param name="containerInstanceId"> ACI resource Id. </param>
         /// <param name="storageAccountId"> Storage account resource Id. </param>
@@ -682,16 +606,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static ScriptStatus ScriptStatus(string containerInstanceId = null, string storageAccountId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? expireOn = null, ResponseError error = null)
         {
             return new ScriptStatus(containerInstanceId, storageAccountId, startOn, endOn, expireOn, error);
-        }
-
-        /// <summary> Initializes a new instance of ScriptEnvironmentVariable. </summary>
-        /// <param name="name"> The name of the environment variable. </param>
-        /// <param name="value"> The value of the environment variable. </param>
-        /// <param name="secureValue"> The value of the secure environment variable. </param>
-        /// <returns> A new <see cref="Models.ScriptEnvironmentVariable"/> instance for mocking. </returns>
-        public static ScriptEnvironmentVariable ScriptEnvironmentVariable(string name = null, string value = null, string secureValue = null)
-        {
-            return new ScriptEnvironmentVariable(name, value, secureValue);
         }
 
         /// <summary> Initializes a new instance of AzureCliScript. </summary>

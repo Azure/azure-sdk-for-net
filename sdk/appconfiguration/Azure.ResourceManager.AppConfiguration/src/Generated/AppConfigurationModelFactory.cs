@@ -46,15 +46,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             return new AppConfigurationStoreData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new AppConfigurationSku(skuName) : null, provisioningState, createdOn, endpoint, encryptionKeyVaultProperties != null ? new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, disableLocalAuth, softDeleteRetentionInDays, enablePurgeProtection, createMode);
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationKeyVaultProperties. </summary>
-        /// <param name="keyIdentifier"> The URI of the key vault key used to encrypt data. </param>
-        /// <param name="identityClientId"> The client id of the identity which will be used to access key vault. </param>
-        /// <returns> A new <see cref="Models.AppConfigurationKeyVaultProperties"/> instance for mocking. </returns>
-        public static AppConfigurationKeyVaultProperties AppConfigurationKeyVaultProperties(string keyIdentifier = null, string identityClientId = null)
-        {
-            return new AppConfigurationKeyVaultProperties(keyIdentifier, identityClientId);
-        }
-
         /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionReference. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

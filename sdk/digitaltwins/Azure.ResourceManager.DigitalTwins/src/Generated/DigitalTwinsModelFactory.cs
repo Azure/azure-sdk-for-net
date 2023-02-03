@@ -65,16 +65,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsPrivateEndpointConnectionProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), privateLinkServiceConnectionState);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> The status of a private endpoint connection. </param>
-        /// <param name="description"> The description for the current state of a private endpoint connection. </param>
-        /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.DigitalTwinsPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static DigitalTwinsPrivateLinkServiceConnectionState DigitalTwinsPrivateLinkServiceConnectionState(DigitalTwinsPrivateLinkServiceConnectionStatus status = default, string description = null, string actionsRequired = null)
-        {
-            return new DigitalTwinsPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -103,15 +93,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static DigitalTwinsEndpointResourceProperties DigitalTwinsEndpointResourceProperties(string endpointType = "Unknown", DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null)
         {
             return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity);
-        }
-
-        /// <summary> Initializes a new instance of DigitalTwinsManagedIdentityReference. </summary>
-        /// <param name="identityType"> The type of managed identity used. </param>
-        /// <param name="userAssignedIdentity"> The user identity ARM resource id if the managed identity type is &apos;UserAssigned&apos;. </param>
-        /// <returns> A new <see cref="Models.DigitalTwinsManagedIdentityReference"/> instance for mocking. </returns>
-        public static DigitalTwinsManagedIdentityReference DigitalTwinsManagedIdentityReference(DigitalTwinsManagedIdentityType? identityType = null, string userAssignedIdentity = null)
-        {
-            return new DigitalTwinsManagedIdentityReference(identityType, userAssignedIdentity);
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsNameResult. </summary>

@@ -72,15 +72,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new GuestConfigurationNavigation(kind, name, version, contentUri, contentHash, assignmentType, assignmentSource, contentType, configurationParameters?.ToList(), configurationProtectedParameters?.ToList(), configurationSetting);
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationParameter. </summary>
-        /// <param name="name"> Name of the configuration parameter. </param>
-        /// <param name="value"> Value of the configuration parameter. </param>
-        /// <returns> A new <see cref="Models.GuestConfigurationParameter"/> instance for mocking. </returns>
-        public static GuestConfigurationParameter GuestConfigurationParameter(string name = null, string value = null)
-        {
-            return new GuestConfigurationParameter(name, value);
-        }
-
         /// <summary> Initializes a new instance of LcmConfigurationSetting. </summary>
         /// <param name="configurationMode"> Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect. </param>
         /// <param name="isModuleOverwriteAllowed"> If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false. </param>

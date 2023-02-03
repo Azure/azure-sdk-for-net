@@ -53,19 +53,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiData(id, name, resourceType, systemData, description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet);
         }
 
-        /// <summary> Initializes a new instance of ApiVersionSetContractDetails. </summary>
-        /// <param name="id"> Identifier for existing API Version Set. Omit this value to create a new Version Set. </param>
-        /// <param name="name"> The display Name of the API Version Set. </param>
-        /// <param name="description"> Description of API Version Set. </param>
-        /// <param name="versioningScheme"> An value that determines where the API Version identifier will be located in a HTTP request. </param>
-        /// <param name="versionQueryName"> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </param>
-        /// <param name="versionHeaderName"> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </param>
-        /// <returns> A new <see cref="Models.ApiVersionSetContractDetails"/> instance for mocking. </returns>
-        public static ApiVersionSetContractDetails ApiVersionSetContractDetails(string id = null, string name = null, string description = null, VersioningScheme? versioningScheme = null, string versionQueryName = null, string versionHeaderName = null)
-        {
-            return new ApiVersionSetContractDetails(id, name, description, versioningScheme, versionQueryName, versionHeaderName);
-        }
-
         /// <summary> Initializes a new instance of ApiEntityBaseContract. </summary>
         /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
         /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
@@ -86,94 +73,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiEntityBaseContract ApiEntityBaseContract(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null)
         {
             return new ApiEntityBaseContract(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license);
-        }
-
-        /// <summary> Initializes a new instance of AuthenticationSettingsContract. </summary>
-        /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
-        /// <param name="openId"> OpenID Connect Authentication Settings. </param>
-        /// <returns> A new <see cref="Models.AuthenticationSettingsContract"/> instance for mocking. </returns>
-        public static AuthenticationSettingsContract AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2 = null, OpenIdAuthenticationSettingsContract openId = null)
-        {
-            return new AuthenticationSettingsContract(oAuth2, openId);
-        }
-
-        /// <summary> Initializes a new instance of OAuth2AuthenticationSettingsContract. </summary>
-        /// <param name="authorizationServerId"> OAuth authorization server identifier. </param>
-        /// <param name="scope"> operations scope. </param>
-        /// <returns> A new <see cref="Models.OAuth2AuthenticationSettingsContract"/> instance for mocking. </returns>
-        public static OAuth2AuthenticationSettingsContract OAuth2AuthenticationSettingsContract(string authorizationServerId = null, string scope = null)
-        {
-            return new OAuth2AuthenticationSettingsContract(authorizationServerId, scope);
-        }
-
-        /// <summary> Initializes a new instance of OpenIdAuthenticationSettingsContract. </summary>
-        /// <param name="openIdProviderId"> OAuth authorization server identifier. </param>
-        /// <param name="bearerTokenSendingMethods"> How to send token to the server. </param>
-        /// <returns> A new <see cref="Models.OpenIdAuthenticationSettingsContract"/> instance for mocking. </returns>
-        public static OpenIdAuthenticationSettingsContract OpenIdAuthenticationSettingsContract(string openIdProviderId = null, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = null)
-        {
-            bearerTokenSendingMethods ??= new List<BearerTokenSendingMethod>();
-
-            return new OpenIdAuthenticationSettingsContract(openIdProviderId, bearerTokenSendingMethods?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SubscriptionKeyParameterNamesContract. </summary>
-        /// <param name="header"> Subscription key header name. </param>
-        /// <param name="query"> Subscription key query string parameter name. </param>
-        /// <returns> A new <see cref="Models.SubscriptionKeyParameterNamesContract"/> instance for mocking. </returns>
-        public static SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNamesContract(string header = null, string query = null)
-        {
-            return new SubscriptionKeyParameterNamesContract(header, query);
-        }
-
-        /// <summary> Initializes a new instance of ApiContactInformation. </summary>
-        /// <param name="name"> The identifying name of the contact person/organization. </param>
-        /// <param name="uri"> The URL pointing to the contact information. MUST be in the format of a URL. </param>
-        /// <param name="email"> The email address of the contact person/organization. MUST be in the format of an email address. </param>
-        /// <returns> A new <see cref="Models.ApiContactInformation"/> instance for mocking. </returns>
-        public static ApiContactInformation ApiContactInformation(string name = null, Uri uri = null, string email = null)
-        {
-            return new ApiContactInformation(name, uri, email);
-        }
-
-        /// <summary> Initializes a new instance of ApiLicenseInformation. </summary>
-        /// <param name="name"> The license name used for the API. </param>
-        /// <param name="uri"> A URL to the license used for the API. MUST be in the format of a URL. </param>
-        /// <returns> A new <see cref="Models.ApiLicenseInformation"/> instance for mocking. </returns>
-        public static ApiLicenseInformation ApiLicenseInformation(string name = null, Uri uri = null)
-        {
-            return new ApiLicenseInformation(name, uri);
-        }
-
-        /// <summary> Initializes a new instance of ErrorResponseBody. </summary>
-        /// <param name="code"> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </param>
-        /// <param name="message"> Human-readable representation of the error. </param>
-        /// <param name="details"> The list of invalid fields send in request, in case of validation error. </param>
-        /// <returns> A new <see cref="Models.ErrorResponseBody"/> instance for mocking. </returns>
-        public static ErrorResponseBody ErrorResponseBody(string code = null, string message = null, IEnumerable<ErrorFieldContract> details = null)
-        {
-            details ??= new List<ErrorFieldContract>();
-
-            return new ErrorResponseBody(code, message, details?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ErrorFieldContract. </summary>
-        /// <param name="code"> Property level error code. </param>
-        /// <param name="message"> Human-readable representation of property-level error. </param>
-        /// <param name="target"> Property name. </param>
-        /// <returns> A new <see cref="Models.ErrorFieldContract"/> instance for mocking. </returns>
-        public static ErrorFieldContract ErrorFieldContract(string code = null, string message = null, string target = null)
-        {
-            return new ErrorFieldContract(code, message, target);
-        }
-
-        /// <summary> Initializes a new instance of ApiCreateOrUpdatePropertiesWsdlSelector. </summary>
-        /// <param name="wsdlServiceName"> Name of service to import from WSDL. </param>
-        /// <param name="wsdlEndpointName"> Name of endpoint(port) to import from WSDL. </param>
-        /// <returns> A new <see cref="Models.ApiCreateOrUpdatePropertiesWsdlSelector"/> instance for mocking. </returns>
-        public static ApiCreateOrUpdatePropertiesWsdlSelector ApiCreateOrUpdatePropertiesWsdlSelector(string wsdlServiceName = null, string wsdlEndpointName = null)
-        {
-            return new ApiCreateOrUpdatePropertiesWsdlSelector(wsdlServiceName, wsdlEndpointName);
         }
 
         /// <summary> Initializes a new instance of ApiRevisionContract. </summary>
@@ -226,80 +125,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             responses ??= new List<ResponseContract>();
 
             return new ApiOperationData(id, name, resourceType, systemData, templateParameters?.ToList(), description, request, responses?.ToList(), policies, displayName, method, uriTemplate);
-        }
-
-        /// <summary> Initializes a new instance of ParameterContract. </summary>
-        /// <param name="name"> Parameter name. </param>
-        /// <param name="description"> Parameter description. </param>
-        /// <param name="parameterContractType"> Parameter type. </param>
-        /// <param name="defaultValue"> Default parameter value. </param>
-        /// <param name="isRequired"> Specifies whether parameter is required or not. </param>
-        /// <param name="values"> Parameter values. </param>
-        /// <param name="schemaId"> Schema identifier. </param>
-        /// <param name="typeName"> Type name defined by the schema. </param>
-        /// <param name="examples"> Exampled defined for the parameter. </param>
-        /// <returns> A new <see cref="Models.ParameterContract"/> instance for mocking. </returns>
-        public static ParameterContract ParameterContract(string name = null, string description = null, string parameterContractType = null, string defaultValue = null, bool? isRequired = null, IEnumerable<string> values = null, string schemaId = null, string typeName = null, IDictionary<string, ParameterExampleContract> examples = null)
-        {
-            values ??= new List<string>();
-            examples ??= new Dictionary<string, ParameterExampleContract>();
-
-            return new ParameterContract(name, description, parameterContractType, defaultValue, isRequired, values?.ToList(), schemaId, typeName, examples);
-        }
-
-        /// <summary> Initializes a new instance of ParameterExampleContract. </summary>
-        /// <param name="summary"> Short description for the example. </param>
-        /// <param name="description"> Long description for the example. </param>
-        /// <param name="value"> Example value. May be a primitive value, or an object. </param>
-        /// <param name="externalValue"> A URL that points to the literal example. </param>
-        /// <returns> A new <see cref="Models.ParameterExampleContract"/> instance for mocking. </returns>
-        public static ParameterExampleContract ParameterExampleContract(string summary = null, string description = null, BinaryData value = null, string externalValue = null)
-        {
-            return new ParameterExampleContract(summary, description, value, externalValue);
-        }
-
-        /// <summary> Initializes a new instance of RequestContract. </summary>
-        /// <param name="description"> Operation request description. </param>
-        /// <param name="queryParameters"> Collection of operation request query parameters. </param>
-        /// <param name="headers"> Collection of operation request headers. </param>
-        /// <param name="representations"> Collection of operation request representations. </param>
-        /// <returns> A new <see cref="Models.RequestContract"/> instance for mocking. </returns>
-        public static RequestContract RequestContract(string description = null, IEnumerable<ParameterContract> queryParameters = null, IEnumerable<ParameterContract> headers = null, IEnumerable<RepresentationContract> representations = null)
-        {
-            queryParameters ??= new List<ParameterContract>();
-            headers ??= new List<ParameterContract>();
-            representations ??= new List<RepresentationContract>();
-
-            return new RequestContract(description, queryParameters?.ToList(), headers?.ToList(), representations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RepresentationContract. </summary>
-        /// <param name="contentType"> Specifies a registered or custom content type for this representation, e.g. application/xml. </param>
-        /// <param name="schemaId"> Schema identifier. Applicable only if &apos;contentType&apos; value is neither &apos;application/x-www-form-urlencoded&apos; nor &apos;multipart/form-data&apos;. </param>
-        /// <param name="typeName"> Type name defined by the schema. Applicable only if &apos;contentType&apos; value is neither &apos;application/x-www-form-urlencoded&apos; nor &apos;multipart/form-data&apos;. </param>
-        /// <param name="formParameters"> Collection of form parameters. Required if &apos;contentType&apos; value is either &apos;application/x-www-form-urlencoded&apos; or &apos;multipart/form-data&apos;.. </param>
-        /// <param name="examples"> Exampled defined for the representation. </param>
-        /// <returns> A new <see cref="Models.RepresentationContract"/> instance for mocking. </returns>
-        public static RepresentationContract RepresentationContract(string contentType = null, string schemaId = null, string typeName = null, IEnumerable<ParameterContract> formParameters = null, IDictionary<string, ParameterExampleContract> examples = null)
-        {
-            formParameters ??= new List<ParameterContract>();
-            examples ??= new Dictionary<string, ParameterExampleContract>();
-
-            return new RepresentationContract(contentType, schemaId, typeName, formParameters?.ToList(), examples);
-        }
-
-        /// <summary> Initializes a new instance of ResponseContract. </summary>
-        /// <param name="statusCode"> Operation response HTTP status code. </param>
-        /// <param name="description"> Operation response description. </param>
-        /// <param name="representations"> Collection of operation response representations. </param>
-        /// <param name="headers"> Collection of operation response headers. </param>
-        /// <returns> A new <see cref="Models.ResponseContract"/> instance for mocking. </returns>
-        public static ResponseContract ResponseContract(int statusCode = default, string description = null, IEnumerable<RepresentationContract> representations = null, IEnumerable<ParameterContract> headers = null)
-        {
-            representations ??= new List<RepresentationContract>();
-            headers ??= new List<ParameterContract>();
-
-            return new ResponseContract(statusCode, description, representations?.ToList(), headers?.ToList());
         }
 
         /// <summary> Initializes a new instance of PolicyContractData. </summary>
@@ -392,57 +217,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlwaysLog? alwaysLog = null, string loggerId = null, SamplingSettings sampling = null, PipelineDiagnosticSettings frontend = null, PipelineDiagnosticSettings backend = null, bool? isLogClientIPEnabled = null, HttpCorrelationProtocol? httpCorrelationProtocol = null, TraceVerbosityLevel? verbosity = null, OperationNameFormat? operationNameFormat = null, bool? metrics = null)
         {
             return new DiagnosticContractData(id, name, resourceType, systemData, alwaysLog, loggerId, sampling, frontend, backend, isLogClientIPEnabled, httpCorrelationProtocol, verbosity, operationNameFormat, metrics);
-        }
-
-        /// <summary> Initializes a new instance of SamplingSettings. </summary>
-        /// <param name="samplingType"> Sampling type. </param>
-        /// <param name="percentage"> Rate of sampling for fixed-rate sampling. </param>
-        /// <returns> A new <see cref="Models.SamplingSettings"/> instance for mocking. </returns>
-        public static SamplingSettings SamplingSettings(SamplingType? samplingType = null, double? percentage = null)
-        {
-            return new SamplingSettings(samplingType, percentage);
-        }
-
-        /// <summary> Initializes a new instance of PipelineDiagnosticSettings. </summary>
-        /// <param name="request"> Diagnostic settings for request. </param>
-        /// <param name="response"> Diagnostic settings for response. </param>
-        /// <returns> A new <see cref="Models.PipelineDiagnosticSettings"/> instance for mocking. </returns>
-        public static PipelineDiagnosticSettings PipelineDiagnosticSettings(HttpMessageDiagnostic request = null, HttpMessageDiagnostic response = null)
-        {
-            return new PipelineDiagnosticSettings(request, response);
-        }
-
-        /// <summary> Initializes a new instance of HttpMessageDiagnostic. </summary>
-        /// <param name="headers"> Array of HTTP Headers to log. </param>
-        /// <param name="bodyBytes"> Body logging settings. </param>
-        /// <param name="dataMasking"> Data masking settings. </param>
-        /// <returns> A new <see cref="Models.HttpMessageDiagnostic"/> instance for mocking. </returns>
-        public static HttpMessageDiagnostic HttpMessageDiagnostic(IEnumerable<string> headers = null, int? bodyBytes = null, DataMasking dataMasking = null)
-        {
-            headers ??= new List<string>();
-
-            return new HttpMessageDiagnostic(headers?.ToList(), bodyBytes != null ? new BodyDiagnosticSettings(bodyBytes) : null, dataMasking);
-        }
-
-        /// <summary> Initializes a new instance of DataMasking. </summary>
-        /// <param name="queryParams"> Masking settings for Url query parameters. </param>
-        /// <param name="headers"> Masking settings for headers. </param>
-        /// <returns> A new <see cref="Models.DataMasking"/> instance for mocking. </returns>
-        public static DataMasking DataMasking(IEnumerable<DataMaskingEntity> queryParams = null, IEnumerable<DataMaskingEntity> headers = null)
-        {
-            queryParams ??= new List<DataMaskingEntity>();
-            headers ??= new List<DataMaskingEntity>();
-
-            return new DataMasking(queryParams?.ToList(), headers?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DataMaskingEntity. </summary>
-        /// <param name="value"> The name of an entity to mask (e.g. a name of a header or a query parameter). </param>
-        /// <param name="mode"> Data masking mode. </param>
-        /// <returns> A new <see cref="Models.DataMaskingEntity"/> instance for mocking. </returns>
-        public static DataMaskingEntity DataMaskingEntity(string value = null, DataMaskingMode? mode = null)
-        {
-            return new DataMaskingEntity(value, mode);
         }
 
         /// <summary> Initializes a new instance of IssueContractData. </summary>
@@ -697,68 +471,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementBackendData(id, name, resourceType, systemData, title, description, resourceUri, backendServiceFabricCluster != null ? new BackendProperties(backendServiceFabricCluster) : null, credentials, proxy, tls, uri, protocol);
         }
 
-        /// <summary> Initializes a new instance of BackendServiceFabricClusterProperties. </summary>
-        /// <param name="clientCertificateId"> The client certificate id for the management endpoint. </param>
-        /// <param name="clientCertificatethumbprint"> The client certificate thumbprint for the management endpoint. Will be ignored if certificatesIds are provided. </param>
-        /// <param name="maxPartitionResolutionRetries"> Maximum number of retries while attempting resolve the partition. </param>
-        /// <param name="managementEndpoints"> The cluster management endpoint. </param>
-        /// <param name="serverCertificateThumbprints"> Thumbprints of certificates cluster management service uses for tls communication. </param>
-        /// <param name="serverX509Names"> Server X509 Certificate Names Collection. </param>
-        /// <returns> A new <see cref="Models.BackendServiceFabricClusterProperties"/> instance for mocking. </returns>
-        public static BackendServiceFabricClusterProperties BackendServiceFabricClusterProperties(string clientCertificateId = null, string clientCertificatethumbprint = null, int? maxPartitionResolutionRetries = null, IEnumerable<string> managementEndpoints = null, IEnumerable<string> serverCertificateThumbprints = null, IEnumerable<X509CertificateName> serverX509Names = null)
-        {
-            managementEndpoints ??= new List<string>();
-            serverCertificateThumbprints ??= new List<string>();
-            serverX509Names ??= new List<X509CertificateName>();
-
-            return new BackendServiceFabricClusterProperties(clientCertificateId, clientCertificatethumbprint, maxPartitionResolutionRetries, managementEndpoints?.ToList(), serverCertificateThumbprints?.ToList(), serverX509Names?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of X509CertificateName. </summary>
-        /// <param name="name"> Common Name of the Certificate. </param>
-        /// <param name="issuerCertificateThumbprint"> Thumbprint for the Issuer of the Certificate. </param>
-        /// <returns> A new <see cref="Models.X509CertificateName"/> instance for mocking. </returns>
-        public static X509CertificateName X509CertificateName(string name = null, string issuerCertificateThumbprint = null)
-        {
-            return new X509CertificateName(name, issuerCertificateThumbprint);
-        }
-
-        /// <summary> Initializes a new instance of BackendCredentialsContract. </summary>
-        /// <param name="certificateIds"> List of Client Certificate Ids. </param>
-        /// <param name="certificate"> List of Client Certificate Thumbprints. Will be ignored if certificatesIds are provided. </param>
-        /// <param name="query"> Query Parameter description. </param>
-        /// <param name="header"> Header Parameter description. </param>
-        /// <param name="authorization"> Authorization header authentication. </param>
-        /// <returns> A new <see cref="Models.BackendCredentialsContract"/> instance for mocking. </returns>
-        public static BackendCredentialsContract BackendCredentialsContract(IEnumerable<string> certificateIds = null, IEnumerable<string> certificate = null, IDictionary<string, IList<string>> query = null, IDictionary<string, IList<string>> header = null, BackendAuthorizationHeaderCredentials authorization = null)
-        {
-            certificateIds ??= new List<string>();
-            certificate ??= new List<string>();
-            query ??= new Dictionary<string, IList<string>>();
-            header ??= new Dictionary<string, IList<string>>();
-
-            return new BackendCredentialsContract(certificateIds?.ToList(), certificate?.ToList(), query, header, authorization);
-        }
-
-        /// <summary> Initializes a new instance of BackendProxyContract. </summary>
-        /// <param name="uri"> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </param>
-        /// <param name="username"> Username to connect to the WebProxy server. </param>
-        /// <param name="password"> Password to connect to the WebProxy Server. </param>
-        /// <returns> A new <see cref="Models.BackendProxyContract"/> instance for mocking. </returns>
-        public static BackendProxyContract BackendProxyContract(Uri uri = null, string username = null, string password = null)
-        {
-            return new BackendProxyContract(uri, username, password);
-        }
-
-        /// <summary> Initializes a new instance of BackendTlsProperties. </summary>
-        /// <param name="shouldValidateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
-        /// <param name="shouldValidateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
-        /// <returns> A new <see cref="Models.BackendTlsProperties"/> instance for mocking. </returns>
-        public static BackendTlsProperties BackendTlsProperties(bool? shouldValidateCertificateChain = null, bool? shouldValidateCertificateName = null)
-        {
-            return new BackendTlsProperties(shouldValidateCertificateChain, shouldValidateCertificateName);
-        }
-
         /// <summary> Initializes a new instance of BackendReconnectContract. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -802,38 +514,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementCertificateData ApiManagementCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string subject = null, string thumbprint = null, DateTimeOffset? expireOn = null, KeyVaultContractProperties keyVaultDetails = null)
         {
             return new ApiManagementCertificateData(id, name, resourceType, systemData, subject, thumbprint, expireOn, keyVaultDetails);
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultContractProperties. </summary>
-        /// <param name="secretIdentifier"> Key vault secret identifier for fetching secret. Providing a versioned secret will prevent auto-refresh. This requires API Management service to be configured with aka.ms/apimmsi. </param>
-        /// <param name="identityClientId"> Null for SystemAssignedIdentity or Client Id for UserAssignedIdentity , which will be used to access key vault secret. </param>
-        /// <param name="lastStatus"> Last time sync and refresh status of secret from key vault. </param>
-        /// <returns> A new <see cref="Models.KeyVaultContractProperties"/> instance for mocking. </returns>
-        public static KeyVaultContractProperties KeyVaultContractProperties(string secretIdentifier = null, string identityClientId = null, KeyVaultLastAccessStatusContractProperties lastStatus = null)
-        {
-            return new KeyVaultContractProperties(secretIdentifier, identityClientId, lastStatus);
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultLastAccessStatusContractProperties. </summary>
-        /// <param name="code"> Last status code for sync and refresh of secret from key vault. </param>
-        /// <param name="message"> Details of the error else empty. </param>
-        /// <param name="timeStampUtc">
-        /// Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
-        /// </param>
-        /// <returns> A new <see cref="Models.KeyVaultLastAccessStatusContractProperties"/> instance for mocking. </returns>
-        public static KeyVaultLastAccessStatusContractProperties KeyVaultLastAccessStatusContractProperties(string code = null, string message = null, DateTimeOffset? timeStampUtc = null)
-        {
-            return new KeyVaultLastAccessStatusContractProperties(code, message, timeStampUtc);
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultContractCreateProperties. </summary>
-        /// <param name="secretIdentifier"> Key vault secret identifier for fetching secret. Providing a versioned secret will prevent auto-refresh. This requires API Management service to be configured with aka.ms/apimmsi. </param>
-        /// <param name="identityClientId"> Null for SystemAssignedIdentity or Client Id for UserAssignedIdentity , which will be used to access key vault secret. </param>
-        /// <returns> A new <see cref="Models.KeyVaultContractCreateProperties"/> instance for mocking. </returns>
-        public static KeyVaultContractCreateProperties KeyVaultContractCreateProperties(string secretIdentifier = null, string identityClientId = null)
-        {
-            return new KeyVaultContractCreateProperties(secretIdentifier, identityClientId);
         }
 
         /// <summary> Initializes a new instance of ConnectivityCheckResult. </summary>
@@ -1002,24 +682,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementServiceData(id, name, resourceType, systemData, tags, location, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, minApiVersion != null ? new ApiVersionConstraint(minApiVersion) : null, restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName);
         }
 
-        /// <summary> Initializes a new instance of HostnameConfiguration. </summary>
-        /// <param name="hostnameType"> Hostname type. </param>
-        /// <param name="hostName"> Hostname to configure on the Api Management service. </param>
-        /// <param name="keyVaultSecretUri"> Url to the KeyVault Secret containing the Ssl Certificate. If absolute Url containing version is provided, auto-update of ssl certificate will not work. This requires Api Management service to be configured with aka.ms/apimmsi. The secret should be of type *application/x-pkcs12*. </param>
-        /// <param name="identityClientId"> System or User Assigned Managed identity clientId as generated by Azure AD, which has GET access to the keyVault containing the SSL certificate. </param>
-        /// <param name="encodedCertificate"> Base64 Encoded certificate. </param>
-        /// <param name="certificatePassword"> Certificate Password. </param>
-        /// <param name="isDefaultSslBindingEnabled"> Specify true to setup the certificate associated with this Hostname as the Default SSL Certificate. If a client does not send the SNI header, then this will be the certificate that will be challenged. The property is useful if a service has multiple custom hostname enabled and it needs to decide on the default ssl certificate. The setting only applied to Proxy Hostname Type. </param>
-        /// <param name="isClientCertificateNegotiationEnabled"> Specify true to always negotiate client certificate on the hostname. Default Value is false. </param>
-        /// <param name="certificate"> Certificate information. </param>
-        /// <param name="certificateSource"> Certificate Source. </param>
-        /// <param name="certificateStatus"> Certificate Status. </param>
-        /// <returns> A new <see cref="Models.HostnameConfiguration"/> instance for mocking. </returns>
-        public static HostnameConfiguration HostnameConfiguration(HostnameType hostnameType = default, string hostName = null, Uri keyVaultSecretUri = null, string identityClientId = null, string encodedCertificate = null, string certificatePassword = null, bool? isDefaultSslBindingEnabled = null, bool? isClientCertificateNegotiationEnabled = null, CertificateInformation certificate = null, CertificateSource? certificateSource = null, CertificateStatus? certificateStatus = null)
-        {
-            return new HostnameConfiguration(hostnameType, hostName, keyVaultSecretUri, identityClientId, encodedCertificate, certificatePassword, isDefaultSslBindingEnabled, isClientCertificateNegotiationEnabled, certificate, certificateSource, certificateStatus);
-        }
-
         /// <summary> Initializes a new instance of VirtualNetworkConfiguration. </summary>
         /// <param name="vnetId"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
         /// <param name="subnetname"> The name of the subnet. </param>
@@ -1051,17 +713,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new AdditionalLocation(location, sku, zones?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, virtualNetworkConfiguration, gatewayRegionalUri, disableGateway, platformVersion);
         }
 
-        /// <summary> Initializes a new instance of CertificateConfiguration. </summary>
-        /// <param name="encodedCertificate"> Base64 Encoded certificate. </param>
-        /// <param name="certificatePassword"> Certificate Password. </param>
-        /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>
-        /// <param name="certificate"> Certificate information. </param>
-        /// <returns> A new <see cref="Models.CertificateConfiguration"/> instance for mocking. </returns>
-        public static CertificateConfiguration CertificateConfiguration(string encodedCertificate = null, string certificatePassword = null, CertificateConfigurationStoreName storeName = default, CertificateInformation certificate = null)
-        {
-            return new CertificateConfiguration(encodedCertificate, certificatePassword, storeName, certificate);
-        }
-
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
         /// <param name="id"> Private Endpoint connection resource id. </param>
         /// <param name="name"> Private Endpoint Connection Name. </param>
@@ -1076,16 +727,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             groupIds ??= new List<string>();
 
             return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, groupIds?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApiManagementPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.ApiManagementPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ApiManagementPrivateLinkServiceConnectionState ApiManagementPrivateLinkServiceConnectionState(ApiManagementPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new ApiManagementPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
         /// <summary> Initializes a new instance of ApiManagementServicePatch. </summary>
@@ -1187,16 +828,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementEmailTemplateData(id, name, resourceType, systemData, subject, body, title, description, isDefault, parameters?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EmailTemplateParametersContractProperties. </summary>
-        /// <param name="name"> Template parameter name. </param>
-        /// <param name="title"> Template parameter title. </param>
-        /// <param name="description"> Template parameter description. </param>
-        /// <returns> A new <see cref="Models.EmailTemplateParametersContractProperties"/> instance for mocking. </returns>
-        public static EmailTemplateParametersContractProperties EmailTemplateParametersContractProperties(string name = null, string title = null, string description = null)
-        {
-            return new EmailTemplateParametersContractProperties(name, title, description);
-        }
-
         /// <summary> Initializes a new instance of ApiManagementGatewayData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1208,17 +839,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementGatewayData ApiManagementGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceLocationDataContract locationData = null, string description = null)
         {
             return new ApiManagementGatewayData(id, name, resourceType, systemData, locationData, description);
-        }
-
-        /// <summary> Initializes a new instance of ResourceLocationDataContract. </summary>
-        /// <param name="name"> A canonical name for the geographic or physical location. </param>
-        /// <param name="city"> The city or locality where the resource is located. </param>
-        /// <param name="district"> The district, state, or province where the resource is located. </param>
-        /// <param name="countryOrRegion"> The country or region where the resource is located. </param>
-        /// <returns> A new <see cref="Models.ResourceLocationDataContract"/> instance for mocking. </returns>
-        public static ResourceLocationDataContract ResourceLocationDataContract(string name = null, string city = null, string district = null, string countryOrRegion = null)
-        {
-            return new ResourceLocationDataContract(name, city, district, countryOrRegion);
         }
 
         /// <summary> Initializes a new instance of GatewayKeysContract. </summary>
@@ -1389,15 +1009,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             groups ??= new List<GroupContractProperties>();
 
             return new UserContractData(id, name, resourceType, systemData, state, note, identities?.ToList(), firstName, lastName, email, registriesOn, groups?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of UserIdentityContract. </summary>
-        /// <param name="provider"> Identity provider name. </param>
-        /// <param name="id"> Identifier value within provider. </param>
-        /// <returns> A new <see cref="Models.UserIdentityContract"/> instance for mocking. </returns>
-        public static UserIdentityContract UserIdentityContract(string provider = null, string id = null)
-        {
-            return new UserIdentityContract(provider, id);
         }
 
         /// <summary> Initializes a new instance of ApiManagementIdentityProviderData. </summary>
@@ -1574,18 +1185,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementNotificationData(id, name, resourceType, systemData, title, description, recipients);
         }
 
-        /// <summary> Initializes a new instance of RecipientsContractProperties. </summary>
-        /// <param name="emails"> List of Emails subscribed for the notification. </param>
-        /// <param name="users"> List of Users subscribed for the notification. </param>
-        /// <returns> A new <see cref="Models.RecipientsContractProperties"/> instance for mocking. </returns>
-        public static RecipientsContractProperties RecipientsContractProperties(IEnumerable<string> emails = null, IEnumerable<string> users = null)
-        {
-            emails ??= new List<string>();
-            users ??= new List<string>();
-
-            return new RecipientsContractProperties(emails?.ToList(), users?.ToList());
-        }
-
         /// <summary> Initializes a new instance of RecipientUserContract. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1702,16 +1301,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = null, bool? isUserRegistrationDelegationEnabled = null, bool? isRedirectEnabled = null, TermsOfServiceProperties termsOfService = null)
         {
             return new PortalSettingsContractData(id, name, resourceType, systemData, uri, validationKey, isSubscriptionDelegationEnabled != null ? new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled) : null, isUserRegistrationDelegationEnabled != null ? new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled) : null, isRedirectEnabled, termsOfService);
-        }
-
-        /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
-        /// <param name="text"> A terms of service text. </param>
-        /// <param name="isDisplayEnabled"> Display terms of service during a sign-up process. </param>
-        /// <param name="isConsentRequired"> Ask user for consent to the terms of service. </param>
-        /// <returns> A new <see cref="Models.TermsOfServiceProperties"/> instance for mocking. </returns>
-        public static TermsOfServiceProperties TermsOfServiceProperties(string text = null, bool? isDisplayEnabled = null, bool? isConsentRequired = null)
-        {
-            return new TermsOfServiceProperties(text, isDisplayEnabled, isConsentRequired);
         }
 
         /// <summary> Initializes a new instance of ApiManagementPortalSignInSettingData. </summary>

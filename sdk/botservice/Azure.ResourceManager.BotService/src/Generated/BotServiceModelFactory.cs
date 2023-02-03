@@ -102,16 +102,6 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotServicePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of BotServicePrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.BotServicePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static BotServicePrivateLinkServiceConnectionState BotServicePrivateLinkServiceConnectionState(BotServicePrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new BotServicePrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of BotServiceSku. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> Gets the sku tier. This is based on the SKU name. </param>
@@ -342,15 +332,6 @@ namespace Azure.ResourceManager.BotService.Models
             return new ConnectionSettingProperties(id, name, clientId, settingId, clientSecret, scopes, serviceProviderId, serviceProviderDisplayName, parameters?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ConnectionSettingParameter. </summary>
-        /// <param name="key"> Key for the Connection Setting Parameter. </param>
-        /// <param name="value"> Value associated with the Connection Setting Parameter. </param>
-        /// <returns> A new <see cref="Models.ConnectionSettingParameter"/> instance for mocking. </returns>
-        public static ConnectionSettingParameter ConnectionSettingParameter(string key = null, string value = null)
-        {
-            return new ConnectionSettingParameter(key, value);
-        }
-
         /// <summary> Initializes a new instance of HostSettingsResponse. </summary>
         /// <param name="oAuthUri"> For in-conversation bot user authentication. </param>
         /// <param name="toBotFromChannelOpenIdMetadataUri"> For verifying incoming tokens from the channels. </param>
@@ -442,15 +423,6 @@ namespace Azure.ResourceManager.BotService.Models
             return new FacebookChannelProperties(verifyToken, pages?.ToList(), appId, appSecret, callbackUri, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of FacebookPage. </summary>
-        /// <param name="id"> Page id. </param>
-        /// <param name="accessToken"> Facebook application access token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <returns> A new <see cref="Models.FacebookPage"/> instance for mocking. </returns>
-        public static FacebookPage FacebookPage(string id = null, string accessToken = null)
-        {
-            return new FacebookPage(id, accessToken);
-        }
-
         /// <summary> Initializes a new instance of EmailChannel. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -460,18 +432,6 @@ namespace Azure.ResourceManager.BotService.Models
         public static EmailChannel EmailChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, EmailChannelProperties properties = null)
         {
             return new EmailChannel("EmailChannel", etag, provisioningState, location, properties);
-        }
-
-        /// <summary> Initializes a new instance of EmailChannelProperties. </summary>
-        /// <param name="emailAddress"> The email address. </param>
-        /// <param name="authMethod"> Email channel auth method. 0 Password (Default); 1 Graph. </param>
-        /// <param name="password"> The password for the email address. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="magicCode"> The magic code for setting up the modern authentication. </param>
-        /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <returns> A new <see cref="Models.EmailChannelProperties"/> instance for mocking. </returns>
-        public static EmailChannelProperties EmailChannelProperties(string emailAddress = null, EmailChannelAuthMethod? authMethod = null, string password = null, string magicCode = null, bool isEnabled = default)
-        {
-            return new EmailChannelProperties(emailAddress, authMethod, password, magicCode, isEnabled);
         }
 
         /// <summary> Initializes a new instance of OutlookChannel. </summary>
@@ -495,19 +455,6 @@ namespace Azure.ResourceManager.BotService.Models
             return new MsTeamsChannel("MsTeamsChannel", etag, provisioningState, location, properties);
         }
 
-        /// <summary> Initializes a new instance of MsTeamsChannelProperties. </summary>
-        /// <param name="enableCalling"> Enable calling for Microsoft Teams channel. </param>
-        /// <param name="callingWebhook"> Webhook for Microsoft Teams channel calls. </param>
-        /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <param name="incomingCallRoute"> Webhook for Microsoft Teams channel calls. </param>
-        /// <param name="deploymentEnvironment"> Deployment environment for Microsoft Teams channel calls. </param>
-        /// <param name="acceptedTerms"> Whether this channel accepted terms. </param>
-        /// <returns> A new <see cref="Models.MsTeamsChannelProperties"/> instance for mocking. </returns>
-        public static MsTeamsChannelProperties MsTeamsChannelProperties(bool? enableCalling = null, string callingWebhook = null, bool isEnabled = default, string incomingCallRoute = null, string deploymentEnvironment = null, bool? acceptedTerms = null)
-        {
-            return new MsTeamsChannelProperties(enableCalling, callingWebhook, isEnabled, incomingCallRoute, deploymentEnvironment, acceptedTerms);
-        }
-
         /// <summary> Initializes a new instance of SkypeChannel. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -519,23 +466,6 @@ namespace Azure.ResourceManager.BotService.Models
             return new SkypeChannel("SkypeChannel", etag, provisioningState, location, properties);
         }
 
-        /// <summary> Initializes a new instance of SkypeChannelProperties. </summary>
-        /// <param name="enableMessaging"> Enable messaging for Skype channel. </param>
-        /// <param name="enableMediaCards"> Enable media cards for Skype channel. </param>
-        /// <param name="enableVideo"> Enable video for Skype channel. </param>
-        /// <param name="enableCalling"> Enable calling for Skype channel. </param>
-        /// <param name="enableScreenSharing"> Enable screen sharing for Skype channel. </param>
-        /// <param name="enableGroups"> Enable groups for Skype channel. </param>
-        /// <param name="groupsMode"> Group mode for Skype channel. </param>
-        /// <param name="callingWebHook"> Calling web hook for Skype channel. </param>
-        /// <param name="incomingCallRoute"> Incoming call route for Skype channel. </param>
-        /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <returns> A new <see cref="Models.SkypeChannelProperties"/> instance for mocking. </returns>
-        public static SkypeChannelProperties SkypeChannelProperties(bool? enableMessaging = null, bool? enableMediaCards = null, bool? enableVideo = null, bool? enableCalling = null, bool? enableScreenSharing = null, bool? enableGroups = null, string groupsMode = null, string callingWebHook = null, string incomingCallRoute = null, bool isEnabled = default)
-        {
-            return new SkypeChannelProperties(enableMessaging, enableMediaCards, enableVideo, enableCalling, enableScreenSharing, enableGroups, groupsMode, callingWebHook, incomingCallRoute, isEnabled);
-        }
-
         /// <summary> Initializes a new instance of KikChannel. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -545,17 +475,6 @@ namespace Azure.ResourceManager.BotService.Models
         public static KikChannel KikChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, KikChannelProperties properties = null)
         {
             return new KikChannel("KikChannel", etag, provisioningState, location, properties);
-        }
-
-        /// <summary> Initializes a new instance of KikChannelProperties. </summary>
-        /// <param name="userName"> The Kik user name. </param>
-        /// <param name="apiKey"> Kik API key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
-        /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <returns> A new <see cref="Models.KikChannelProperties"/> instance for mocking. </returns>
-        public static KikChannelProperties KikChannelProperties(string userName = null, string apiKey = null, bool? isValidated = null, bool isEnabled = default)
-        {
-            return new KikChannelProperties(userName, apiKey, isValidated, isEnabled);
         }
 
         /// <summary> Initializes a new instance of WebChatChannel. </summary>
@@ -667,16 +586,6 @@ namespace Azure.ResourceManager.BotService.Models
             return new TelegramChannel("TelegramChannel", etag, provisioningState, location, properties);
         }
 
-        /// <summary> Initializes a new instance of TelegramChannelProperties. </summary>
-        /// <param name="accessToken"> The Telegram access token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
-        /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <returns> A new <see cref="Models.TelegramChannelProperties"/> instance for mocking. </returns>
-        public static TelegramChannelProperties TelegramChannelProperties(string accessToken = null, bool? isValidated = null, bool isEnabled = default)
-        {
-            return new TelegramChannelProperties(accessToken, isValidated, isEnabled);
-        }
-
         /// <summary> Initializes a new instance of SmsChannel. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -686,18 +595,6 @@ namespace Azure.ResourceManager.BotService.Models
         public static SmsChannel SmsChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, SmsChannelProperties properties = null)
         {
             return new SmsChannel("SmsChannel", etag, provisioningState, location, properties);
-        }
-
-        /// <summary> Initializes a new instance of SmsChannelProperties. </summary>
-        /// <param name="phone"> The Sms phone. </param>
-        /// <param name="accountSID"> The Sms account SID. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="authToken"> The Sms auth token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
-        /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <returns> A new <see cref="Models.SmsChannelProperties"/> instance for mocking. </returns>
-        public static SmsChannelProperties SmsChannelProperties(string phone = null, string accountSID = null, string authToken = null, bool? isValidated = null, bool isEnabled = default)
-        {
-            return new SmsChannelProperties(phone, accountSID, authToken, isValidated, isEnabled);
         }
 
         /// <summary> Initializes a new instance of SlackChannel. </summary>
@@ -771,20 +668,6 @@ namespace Azure.ResourceManager.BotService.Models
         public static DirectLineSpeechChannel DirectLineSpeechChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, DirectLineSpeechChannelProperties properties = null)
         {
             return new DirectLineSpeechChannel("DirectLineSpeechChannel", etag, provisioningState, location, properties);
-        }
-
-        /// <summary> Initializes a new instance of DirectLineSpeechChannelProperties. </summary>
-        /// <param name="cognitiveServiceResourceId"> The cognitive service id with this channel registration. </param>
-        /// <param name="cognitiveServiceRegion"> The cognitive service region with this channel registration. </param>
-        /// <param name="cognitiveServiceSubscriptionKey"> The cognitive service subscription key to use with this channel registration. </param>
-        /// <param name="isEnabled"> Whether this channel is enabled or not. </param>
-        /// <param name="customVoiceDeploymentId"> Custom speech model id (optional). </param>
-        /// <param name="customSpeechModelId"> Custom voice deployment id (optional). </param>
-        /// <param name="isDefaultBotForCogSvcAccount"> Make this a default bot for chosen cognitive service account. </param>
-        /// <returns> A new <see cref="Models.DirectLineSpeechChannelProperties"/> instance for mocking. </returns>
-        public static DirectLineSpeechChannelProperties DirectLineSpeechChannelProperties(string cognitiveServiceResourceId = null, string cognitiveServiceRegion = null, string cognitiveServiceSubscriptionKey = null, bool? isEnabled = null, string customVoiceDeploymentId = null, string customSpeechModelId = null, bool? isDefaultBotForCogSvcAccount = null)
-        {
-            return new DirectLineSpeechChannelProperties(cognitiveServiceResourceId, cognitiveServiceRegion, cognitiveServiceSubscriptionKey, isEnabled, customVoiceDeploymentId, customSpeechModelId, isDefaultBotForCogSvcAccount);
         }
     }
 }

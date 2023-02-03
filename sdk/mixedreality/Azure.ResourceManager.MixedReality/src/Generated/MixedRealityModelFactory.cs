@@ -48,18 +48,6 @@ namespace Azure.ResourceManager.MixedReality.Models
             return new SpatialAnchorsAccountData(id, name, resourceType, systemData, tags, location, identity, plan, sku, kind, storageAccountName, accountId, accountDomain);
         }
 
-        /// <summary> Initializes a new instance of MixedRealitySku. </summary>
-        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
-        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.MixedRealitySku"/> instance for mocking. </returns>
-        public static MixedRealitySku MixedRealitySku(string name = null, MixedRealitySkuTier? tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new MixedRealitySku(name, tier, size, family, capacity);
-        }
-
         /// <summary> Initializes a new instance of MixedRealityAccountKeys. </summary>
         /// <param name="primaryKey"> value of primary key. </param>
         /// <param name="secondaryKey"> value of secondary key. </param>

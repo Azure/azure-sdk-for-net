@@ -39,19 +39,6 @@ namespace Azure.ResourceManager.Quantum.Models
             return new QuantumWorkspaceData(id, name, resourceType, systemData, tags, location, identity, providers?.ToList(), usable, provisioningState, storageAccount, endpointUri);
         }
 
-        /// <summary> Initializes a new instance of Provider. </summary>
-        /// <param name="providerId"> Unique id of this provider. </param>
-        /// <param name="providerSku"> The sku associated with pricing information for this provider. </param>
-        /// <param name="instanceUri"> A Uri identifying the specific instance of this provider. </param>
-        /// <param name="applicationName"> The provider&apos;s marketplace application display name. </param>
-        /// <param name="provisioningState"> Provisioning status field. </param>
-        /// <param name="resourceUsageId"> Id to track resource usage for the provider. </param>
-        /// <returns> A new <see cref="Models.Provider"/> instance for mocking. </returns>
-        public static Provider Provider(string providerId = null, string providerSku = null, Uri instanceUri = null, string applicationName = null, Status? provisioningState = null, string resourceUsageId = null)
-        {
-            return new Provider(providerId, providerSku, instanceUri, applicationName, provisioningState, resourceUsageId);
-        }
-
         /// <summary> Initializes a new instance of ProviderDescription. </summary>
         /// <param name="id"> Unique provider&apos;s id. </param>
         /// <param name="name"> Provider&apos;s display name. </param>

@@ -142,15 +142,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="moveDetails"> The details of the latest move operation performed on the Azure Resource. </param>
         /// <param name="moveState"> The State of the Resource after the move operation. </param>
         /// <param name="backupStorageVersion"> Backup storage version. </param>
+        /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
         /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="immutabilityState"> Security Settings of the vault. </param>
         /// <returns> A new <see cref="Models.VaultProperties"/> instance for mocking. </returns>
-        public static VaultProperties VaultProperties(string provisioningState = null, UpgradeDetails upgradeDetails = null, IEnumerable<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = null, VaultPrivateEndpointState? privateEndpointStateForBackup = null, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = null, VaultPropertiesEncryption encryption = null, VaultPropertiesMoveDetails moveDetails = null, ResourceMoveState? moveState = null, BackupStorageVersion? backupStorageVersion = null, MonitoringSettings monitoringSettings = null, VaultPropertiesRedundancySettings redundancySettings = null, ImmutabilityState? immutabilityState = null)
+        public static VaultProperties VaultProperties(string provisioningState = null, UpgradeDetails upgradeDetails = null, IEnumerable<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = null, VaultPrivateEndpointState? privateEndpointStateForBackup = null, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = null, VaultPropertiesEncryption encryption = null, VaultPropertiesMoveDetails moveDetails = null, ResourceMoveState? moveState = null, BackupStorageVersion? backupStorageVersion = null, PublicNetworkAccess? publicNetworkAccess = null, MonitoringSettings monitoringSettings = null, VaultPropertiesRedundancySettings redundancySettings = null, ImmutabilityState? immutabilityState = null)
         {
             privateEndpointConnections ??= new List<PrivateEndpointConnectionVaultProperties>();
 
-            return new VaultProperties(provisioningState, upgradeDetails, privateEndpointConnections?.ToList(), privateEndpointStateForBackup, privateEndpointStateForSiteRecovery, encryption, moveDetails, moveState, backupStorageVersion, monitoringSettings, redundancySettings, immutabilityState != null ? new SecuritySettings(new ImmutabilitySettings(immutabilityState)) : null);
+            return new VaultProperties(provisioningState, upgradeDetails, privateEndpointConnections?.ToList(), privateEndpointStateForBackup, privateEndpointStateForSiteRecovery, encryption, moveDetails, moveState, backupStorageVersion, publicNetworkAccess, monitoringSettings, redundancySettings, immutabilityState != null ? new SecuritySettings(new ImmutabilitySettings(immutabilityState)) : null);
         }
 
         /// <summary> Initializes a new instance of UpgradeDetails. </summary>
@@ -186,10 +187,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> The Private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
+        /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RecoveryServicesPrivateEndpointConnection RecoveryServicesPrivateEndpointConnection(ProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null)
+        public static RecoveryServicesPrivateEndpointConnection RecoveryServicesPrivateEndpointConnection(ProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, IEnumerable<VaultSubResourceType> groupIds = null)
         {
-            return new RecoveryServicesPrivateEndpointConnection(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState);
+            groupIds ??= new List<VaultSubResourceType>();
+
+            return new RecoveryServicesPrivateEndpointConnection(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, groupIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkServiceConnectionState. </summary>
@@ -200,25 +204,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static RecoveryServicesPrivateLinkServiceConnectionState RecoveryServicesPrivateLinkServiceConnectionState(PrivateEndpointConnectionStatus? status = null, string description = null, string actionsRequired = null)
         {
             return new RecoveryServicesPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
-        /// <summary> Initializes a new instance of VaultPropertiesEncryption. </summary>
-        /// <param name="keyUri"> The properties of the Key Vault which hosts CMK. </param>
-        /// <param name="kekIdentity"> The details of the identity used for CMK. </param>
-        /// <param name="infrastructureEncryption"> Enabling/Disabling the Double Encryption state. </param>
-        /// <returns> A new <see cref="Models.VaultPropertiesEncryption"/> instance for mocking. </returns>
-        public static VaultPropertiesEncryption VaultPropertiesEncryption(Uri keyUri = null, CmkKekIdentity kekIdentity = null, InfrastructureEncryptionState? infrastructureEncryption = null)
-        {
-            return new VaultPropertiesEncryption(keyUri != null ? new CmkKeyVaultProperties(keyUri) : null, kekIdentity, infrastructureEncryption);
-        }
-
-        /// <summary> Initializes a new instance of CmkKekIdentity. </summary>
-        /// <param name="useSystemAssignedIdentity"> Indicate that system assigned identity should be used. Mutually exclusive with &apos;userAssignedIdentity&apos; field. </param>
-        /// <param name="userAssignedIdentity"> The user assigned identity to be used to grant permissions in case the type of identity used is UserAssigned. </param>
-        /// <returns> A new <see cref="Models.CmkKekIdentity"/> instance for mocking. </returns>
-        public static CmkKekIdentity CmkKekIdentity(bool? useSystemAssignedIdentity = null, string userAssignedIdentity = null)
-        {
-            return new CmkKekIdentity(useSystemAssignedIdentity, userAssignedIdentity);
         }
 
         /// <summary> Initializes a new instance of VaultPropertiesMoveDetails. </summary>
@@ -233,15 +218,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultPropertiesMoveDetails(operationId, startTimeUtc, completionTimeUtc, sourceResourceId, targetResourceId);
         }
 
-        /// <summary> Initializes a new instance of MonitoringSettings. </summary>
-        /// <param name="azureMonitorAlertAlertsForAllJobFailures"> Settings for Azure Monitor based alerts. </param>
-        /// <param name="classicAlertAlertsForCriticalOperations"> Settings for classic alerts. </param>
-        /// <returns> A new <see cref="Models.MonitoringSettings"/> instance for mocking. </returns>
-        public static MonitoringSettings MonitoringSettings(AlertsState? azureMonitorAlertAlertsForAllJobFailures = null, AlertsState? classicAlertAlertsForCriticalOperations = null)
-        {
-            return new MonitoringSettings(azureMonitorAlertAlertsForAllJobFailures != null ? new AzureMonitorAlertSettings(azureMonitorAlertAlertsForAllJobFailures) : null, classicAlertAlertsForCriticalOperations != null ? new ClassicAlertSettings(classicAlertAlertsForCriticalOperations) : null);
-        }
-
         /// <summary> Initializes a new instance of VaultPropertiesRedundancySettings. </summary>
         /// <param name="standardTierStorageRedundancy"> The storage redundancy setting of a vault. </param>
         /// <param name="crossRegionRestore"> Flag to show if Cross Region Restore is enabled on the Vault or not. </param>
@@ -249,18 +225,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultPropertiesRedundancySettings VaultPropertiesRedundancySettings(StandardTierStorageRedundancy? standardTierStorageRedundancy = null, CrossRegionRestore? crossRegionRestore = null)
         {
             return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore);
-        }
-
-        /// <summary> Initializes a new instance of RecoveryServicesSku. </summary>
-        /// <param name="name"> Name of SKU is RS0 (Recovery Services 0th version) and the tier is standard tier. They do not have affect on backend storage redundancy or any other vault settings. To manage storage redundancy, use the backupstorageconfig. </param>
-        /// <param name="tier"> The Sku tier. </param>
-        /// <param name="family"> The sku family. </param>
-        /// <param name="size"> The sku size. </param>
-        /// <param name="capacity"> The sku capacity. </param>
-        /// <returns> A new <see cref="Models.RecoveryServicesSku"/> instance for mocking. </returns>
-        public static RecoveryServicesSku RecoveryServicesSku(RecoveryServicesSkuName name = default, string tier = null, string family = null, string size = null, string capacity = null)
-        {
-            return new RecoveryServicesSku(name, tier, family, size, capacity);
         }
 
         /// <summary> Initializes a new instance of VaultPatch. </summary>

@@ -68,62 +68,6 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoClusterData(id, name, resourceType, systemData, tags, location, sku, zones?.ToList(), identity, etag, state, provisioningState, clusterUri, dataIngestionUri, stateReason, trustedExternalTenants?.ToList(), optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, languageExtensionsValue != null ? new KustoLanguageExtensionList(languageExtensionsValue?.ToList()) : null, isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList?.ToList(), engineType, acceptedAudiences?.ToList(), isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), publicIPType, virtualClusterGraduationProperties, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KustoSku. </summary>
-        /// <param name="name"> SKU name. </param>
-        /// <param name="capacity"> The number of instances of the cluster. </param>
-        /// <param name="tier"> SKU tier. </param>
-        /// <returns> A new <see cref="Models.KustoSku"/> instance for mocking. </returns>
-        public static KustoSku KustoSku(KustoSkuName name = default, int? capacity = null, KustoSkuTier tier = default)
-        {
-            return new KustoSku(name, capacity, tier);
-        }
-
-        /// <summary> Initializes a new instance of KustoClusterTrustedExternalTenant. </summary>
-        /// <param name="value"> GUID representing an external tenant. </param>
-        /// <returns> A new <see cref="Models.KustoClusterTrustedExternalTenant"/> instance for mocking. </returns>
-        public static KustoClusterTrustedExternalTenant KustoClusterTrustedExternalTenant(string value = null)
-        {
-            return new KustoClusterTrustedExternalTenant(value);
-        }
-
-        /// <summary> Initializes a new instance of KustoKeyVaultProperties. </summary>
-        /// <param name="keyName"> The name of the key vault key. </param>
-        /// <param name="keyVersion"> The version of the key vault key. </param>
-        /// <param name="keyVaultUri"> The Uri of the key vault. </param>
-        /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. </param>
-        /// <returns> A new <see cref="Models.KustoKeyVaultProperties"/> instance for mocking. </returns>
-        public static KustoKeyVaultProperties KustoKeyVaultProperties(string keyName = null, string keyVersion = null, Uri keyVaultUri = null, string userIdentity = null)
-        {
-            return new KustoKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity);
-        }
-
-        /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>
-        /// <param name="value"> The list of language extensions. </param>
-        /// <returns> A new <see cref="Models.KustoLanguageExtensionList"/> instance for mocking. </returns>
-        public static KustoLanguageExtensionList KustoLanguageExtensionList(IEnumerable<KustoLanguageExtension> value = null)
-        {
-            value ??= new List<KustoLanguageExtension>();
-
-            return new KustoLanguageExtensionList(value?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
-        /// <param name="languageExtensionName"> The language extension name. </param>
-        /// <param name="languageExtensionImageName"> The language extension image name. </param>
-        /// <returns> A new <see cref="Models.KustoLanguageExtension"/> instance for mocking. </returns>
-        public static KustoLanguageExtension KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName = null, KustoLanguageExtensionImageName? languageExtensionImageName = null)
-        {
-            return new KustoLanguageExtension(languageExtensionName, languageExtensionImageName);
-        }
-
-        /// <summary> Initializes a new instance of AcceptedAudience. </summary>
-        /// <param name="value"> GUID or valid URL representing an accepted audience. </param>
-        /// <returns> A new <see cref="Models.AcceptedAudience"/> instance for mocking. </returns>
-        public static AcceptedAudience AcceptedAudience(string value = null)
-        {
-            return new AcceptedAudience(value);
-        }
-
         /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -236,26 +180,6 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoFollowerDatabaseDefinition KustoFollowerDatabaseDefinition(ResourceIdentifier clusterResourceId = null, string attachedDatabaseConfigurationName = null, string databaseName = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, KustoDatabaseShareOrigin? databaseShareOrigin = null)
         {
             return new KustoFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName, tableLevelSharingProperties, databaseShareOrigin);
-        }
-
-        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
-        /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
-        /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
-        /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>
-        /// <param name="externalTablesToExclude"> List of external tables exclude from the follower database. </param>
-        /// <param name="materializedViewsToInclude"> List of materialized views to include in the follower database. </param>
-        /// <param name="materializedViewsToExclude"> List of materialized views exclude from the follower database. </param>
-        /// <returns> A new <see cref="Models.KustoDatabaseTableLevelSharingProperties"/> instance for mocking. </returns>
-        public static KustoDatabaseTableLevelSharingProperties KustoDatabaseTableLevelSharingProperties(IEnumerable<string> tablesToInclude = null, IEnumerable<string> tablesToExclude = null, IEnumerable<string> externalTablesToInclude = null, IEnumerable<string> externalTablesToExclude = null, IEnumerable<string> materializedViewsToInclude = null, IEnumerable<string> materializedViewsToExclude = null)
-        {
-            tablesToInclude ??= new List<string>();
-            tablesToExclude ??= new List<string>();
-            externalTablesToInclude ??= new List<string>();
-            externalTablesToExclude ??= new List<string>();
-            materializedViewsToInclude ??= new List<string>();
-            materializedViewsToExclude ??= new List<string>();
-
-            return new KustoDatabaseTableLevelSharingProperties(tablesToInclude?.ToList(), tablesToExclude?.ToList(), externalTablesToInclude?.ToList(), externalTablesToExclude?.ToList(), materializedViewsToInclude?.ToList(), materializedViewsToExclude?.ToList());
         }
 
         /// <summary> Initializes a new instance of DiagnoseVirtualNetworkResult. </summary>
@@ -451,25 +375,6 @@ namespace Azure.ResourceManager.Kusto.Models
             endpoints ??= new List<EndpointDependency>();
 
             return new OutboundNetworkDependenciesEndpoint(id, name, resourceType, systemData, etag, category, endpoints?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
-        /// <param name="domainName"> The domain name of the dependency. </param>
-        /// <param name="endpointDetails"> The ports used when connecting to DomainName. </param>
-        /// <returns> A new <see cref="Models.EndpointDependency"/> instance for mocking. </returns>
-        public static EndpointDependency EndpointDependency(string domainName = null, IEnumerable<EndpointDetail> endpointDetails = null)
-        {
-            endpointDetails ??= new List<EndpointDetail>();
-
-            return new EndpointDependency(domainName, endpointDetails?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
-        /// <param name="port"> The port an endpoint is connected to. </param>
-        /// <returns> A new <see cref="Models.EndpointDetail"/> instance for mocking. </returns>
-        public static EndpointDetail EndpointDetail(int? port = null)
-        {
-            return new EndpointDetail(port);
         }
 
         /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationData. </summary>

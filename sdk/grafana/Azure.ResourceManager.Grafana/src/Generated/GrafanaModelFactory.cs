@@ -74,24 +74,6 @@ namespace Azure.ResourceManager.Grafana.Models
             return new GrafanaPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of GrafanaPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.GrafanaPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static GrafanaPrivateLinkServiceConnectionState GrafanaPrivateLinkServiceConnectionState(GrafanaPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new GrafanaPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
-        /// <summary> Initializes a new instance of MonitorWorkspaceIntegration. </summary>
-        /// <param name="monitorWorkspaceResourceId"> The resource Id of the connected Azure Monitor Workspace. </param>
-        /// <returns> A new <see cref="Models.MonitorWorkspaceIntegration"/> instance for mocking. </returns>
-        public static MonitorWorkspaceIntegration MonitorWorkspaceIntegration(ResourceIdentifier monitorWorkspaceResourceId = null)
-        {
-            return new MonitorWorkspaceIntegration(monitorWorkspaceResourceId);
-        }
-
         /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

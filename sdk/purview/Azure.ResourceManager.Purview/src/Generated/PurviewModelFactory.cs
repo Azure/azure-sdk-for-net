@@ -83,16 +83,6 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateLinkServiceConnectionState. </summary>
-        /// <param name="actionsRequired"> The required actions. </param>
-        /// <param name="description"> The description. </param>
-        /// <param name="status"> The status. </param>
-        /// <returns> A new <see cref="Models.PurviewPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static PurviewPrivateLinkServiceConnectionState PurviewPrivateLinkServiceConnectionState(string actionsRequired = null, string description = null, PurviewPrivateLinkServiceStatus? status = null)
-        {
-            return new PurviewPrivateLinkServiceConnectionState(actionsRequired, description, status);
-        }
-
         /// <summary> Initializes a new instance of PurviewAccountSku. </summary>
         /// <param name="capacity"> Gets or sets the sku capacity. </param>
         /// <param name="name"> Gets or sets the sku name. </param>
@@ -109,19 +99,6 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewAccountAccessKey PurviewAccountAccessKey(string atlasKafkaPrimaryEndpoint = null, string atlasKafkaSecondaryEndpoint = null)
         {
             return new PurviewAccountAccessKey(atlasKafkaPrimaryEndpoint, atlasKafkaSecondaryEndpoint);
-        }
-
-        /// <summary> Initializes a new instance of DefaultPurviewAccountPayload. </summary>
-        /// <param name="accountName"> The name of the account that is set as the default. </param>
-        /// <param name="resourceGroupName"> The resource group name of the account that is set as the default. </param>
-        /// <param name="scope"> The scope object ID. For example, sub ID or tenant ID. </param>
-        /// <param name="scopeTenantId"> The scope tenant in which the default account is set. </param>
-        /// <param name="scopeType"> The scope where the default account is set. </param>
-        /// <param name="subscriptionId"> The subscription ID of the account that is set as the default. </param>
-        /// <returns> A new <see cref="Models.DefaultPurviewAccountPayload"/> instance for mocking. </returns>
-        public static DefaultPurviewAccountPayload DefaultPurviewAccountPayload(string accountName = null, string resourceGroupName = null, string scope = null, Guid? scopeTenantId = null, PurviewAccountScopeType? scopeType = null, string subscriptionId = null)
-        {
-            return new DefaultPurviewAccountPayload(accountName, resourceGroupName, scope, scopeTenantId, scopeType, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of PurviewPrivateLinkResourceData. </summary>

@@ -43,16 +43,5 @@ namespace Azure.ResourceManager.HealthBot.Models
         {
             return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties);
         }
-
-        /// <summary> Initializes a new instance of HealthBotKeyVaultProperties. </summary>
-        /// <param name="keyName"> The name of the key vault key. </param>
-        /// <param name="keyVersion"> The version of the key vault key. </param>
-        /// <param name="keyVaultUri"> The Uri of the key vault. </param>
-        /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. </param>
-        /// <returns> A new <see cref="Models.HealthBotKeyVaultProperties"/> instance for mocking. </returns>
-        public static HealthBotKeyVaultProperties HealthBotKeyVaultProperties(string keyName = null, string keyVersion = null, Uri keyVaultUri = null, string userIdentity = null)
-        {
-            return new HealthBotKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity);
-        }
     }
 }

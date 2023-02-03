@@ -60,231 +60,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClustersResponseProperties(aadProfile, windowsProfile, httpProxyConfig, enableRbac, linuxProfile, featuresArcAgentProfile != null ? new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile) : null, addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithoutSecrets. </summary>
-        /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
-        /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
-        /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>
-        /// <returns> A new <see cref="Models.ProvisionedClustersPropertiesWithoutSecrets"/> instance for mocking. </returns>
-        public static ProvisionedClustersPropertiesWithoutSecrets ProvisionedClustersPropertiesWithoutSecrets(AADProfileResponse aadProfile = null, WindowsProfileResponse windowsProfile = null, HttpProxyConfigResponse httpProxyConfig = null)
-        {
-            return new ProvisionedClustersPropertiesWithoutSecrets(aadProfile, windowsProfile, httpProxyConfig);
-        }
-
-        /// <summary> Initializes a new instance of AADProfileResponse. </summary>
-        /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
-        /// <param name="clientAppId"> The client AAD application ID. </param>
-        /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
-        /// <param name="managed"> Whether to enable managed AAD. </param>
-        /// <param name="serverAppId"> The server AAD application ID. </param>
-        /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        /// <returns> A new <see cref="Models.AADProfileResponse"/> instance for mocking. </returns>
-        public static AADProfileResponse AADProfileResponse(IEnumerable<string> adminGroupObjectIds = null, string clientAppId = null, bool? enableAzureRbac = null, bool? managed = null, string serverAppId = null, Guid? tenantId = null)
-        {
-            adminGroupObjectIds ??= new List<string>();
-
-            return new AADProfileResponse(adminGroupObjectIds?.ToList(), clientAppId, enableAzureRbac, managed, serverAppId, tenantId);
-        }
-
-        /// <summary> Initializes a new instance of WindowsProfileResponse. </summary>
-        /// <param name="adminUsername"> AdminUsername - Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; **restriction:** Cannot end in &quot;.&quot; &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;administrator&quot;, &quot;admin&quot;, &quot;user&quot;, &quot;user1&quot;, &quot;test&quot;, &quot;user2&quot;, &quot;test1&quot;, &quot;user3&quot;, &quot;admin1&quot;, &quot;1&quot;, &quot;123&quot;, &quot;a&quot;, &quot;actuser&quot;, &quot;adm&quot;, &quot;admin2&quot;, &quot;aspnet&quot;, &quot;backup&quot;, &quot;console&quot;, &quot;david&quot;, &quot;guest&quot;, &quot;john&quot;, &quot;owner&quot;, &quot;root&quot;, &quot;server&quot;, &quot;sql&quot;, &quot;support&quot;, &quot;support_388945a0&quot;, &quot;sys&quot;, &quot;test2&quot;, &quot;test3&quot;, &quot;user4&quot;, &quot;user5&quot;. &lt;br&gt;&lt;br&gt; **Minimum-length:** 1 character &lt;br&gt;&lt;br&gt; **Max-length:** 20 characters. </param>
-        /// <param name="enableCsiProxy"> EnableCSIProxy - Whether to enable CSI proxy. </param>
-        /// <param name="licenseType"> LicenseType - The licenseType to use for Windows VMs. Windows_Server is used to enable Azure Hybrid User Benefits for Windows VMs. Possible values include: &apos;None&apos;, &apos;Windows_Server&apos;. </param>
-        /// <returns> A new <see cref="Models.WindowsProfileResponse"/> instance for mocking. </returns>
-        public static WindowsProfileResponse WindowsProfileResponse(string adminUsername = null, bool? enableCsiProxy = null, LicenseType? licenseType = null)
-        {
-            return new WindowsProfileResponse(adminUsername, enableCsiProxy, licenseType);
-        }
-
-        /// <summary> Initializes a new instance of HttpProxyConfigResponse. </summary>
-        /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
-        /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
-        /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
-        /// <param name="trustedCa"> Alternative CA cert to use for connecting to proxy servers. </param>
-        /// <param name="username"> Username to use for connecting to proxy server. </param>
-        /// <returns> A new <see cref="Models.HttpProxyConfigResponse"/> instance for mocking. </returns>
-        public static HttpProxyConfigResponse HttpProxyConfigResponse(string httpProxy = null, string httpsProxy = null, IEnumerable<string> noProxy = null, string trustedCa = null, string username = null)
-        {
-            noProxy ??= new List<string>();
-
-            return new HttpProxyConfigResponse(httpProxy, httpsProxy, noProxy?.ToList(), trustedCa, username);
-        }
-
-        /// <summary> Initializes a new instance of LinuxProfileProperties. </summary>
-        /// <param name="adminUsername"> AdminUsername - The administrator username to use for Linux VMs. </param>
-        /// <param name="sshPublicKeys"> SSH - SSH configuration for Linux-based VMs running on Azure. </param>
-        /// <returns> A new <see cref="Models.LinuxProfileProperties"/> instance for mocking. </returns>
-        public static LinuxProfileProperties LinuxProfileProperties(string adminUsername = null, IEnumerable<LinuxProfilePropertiesSshPublicKeysItem> sshPublicKeys = null)
-        {
-            sshPublicKeys ??= new List<LinuxProfilePropertiesSshPublicKeysItem>();
-
-            return new LinuxProfileProperties(adminUsername, sshPublicKeys != null ? new LinuxProfilePropertiesSsh(sshPublicKeys?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of LinuxProfilePropertiesSshPublicKeysItem. </summary>
-        /// <param name="keyData"> KeyData - Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
-        /// <returns> A new <see cref="Models.LinuxProfilePropertiesSshPublicKeysItem"/> instance for mocking. </returns>
-        public static LinuxProfilePropertiesSshPublicKeysItem LinuxProfilePropertiesSshPublicKeysItem(string keyData = null)
-        {
-            return new LinuxProfilePropertiesSshPublicKeysItem(keyData);
-        }
-
-        /// <summary> Initializes a new instance of ArcAgentProfile. </summary>
-        /// <param name="agentVersion"> Version of the Arc agents to be installed on the provisioned Provisioned cluster resource. </param>
-        /// <param name="agentAutoUpgrade"> Indicates whether the Arc agents on the provisioned clusters be upgraded automatically to the latest version. Defaults to Enabled. </param>
-        /// <returns> A new <see cref="Models.ArcAgentProfile"/> instance for mocking. </returns>
-        public static ArcAgentProfile ArcAgentProfile(string agentVersion = null, AutoUpgradeOption? agentAutoUpgrade = null)
-        {
-            return new ArcAgentProfile(agentVersion, agentAutoUpgrade);
-        }
-
-        /// <summary> Initializes a new instance of AddonProfiles. </summary>
-        /// <param name="config"> Config - Key-value pairs for configuring an add-on. </param>
-        /// <param name="enabled"> Enabled - Whether the add-on is enabled or not. </param>
-        /// <returns> A new <see cref="Models.AddonProfiles"/> instance for mocking. </returns>
-        public static AddonProfiles AddonProfiles(IDictionary<string, string> config = null, bool? enabled = null)
-        {
-            config ??= new Dictionary<string, string>();
-
-            return new AddonProfiles(config, enabled);
-        }
-
-        /// <summary> Initializes a new instance of ControlPlaneProfile. </summary>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
-        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
-        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
-        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="mode"> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: &apos;System&apos;, &apos;LB&apos;, &apos;User&apos;. Default is &apos;User&apos;. </param>
-        /// <param name="nodeLabels"> NodeLabels - Agent pool node labels to be persisted across all nodes in agent pool. </param>
-        /// <param name="nodeTaints"> NodeTaints - Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
-        /// <param name="name"> Unique name of the agent pool profile in the context of the subscription and resource group. </param>
-        /// <param name="controlPlaneEndpoint"> API server endpoint for the control plane. </param>
-        /// <param name="linuxProfile"> Profile for Linux VMs in the container service cluster. </param>
-        /// <returns> A new <see cref="Models.ControlPlaneProfile"/> instance for mocking. </returns>
-        public static ControlPlaneProfile ControlPlaneProfile(int? count = null, IEnumerable<string> availabilityZones = null, int? maxCount = null, int? maxPods = null, int? minCount = null, Mode? mode = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, OSType? osType = null, string nodeImageVersion = null, string vmSize = null, CloudProviderProfile cloudProviderProfile = null, string name = null, ControlPlaneEndpointProfileControlPlaneEndpoint controlPlaneEndpoint = null, LinuxProfileProperties linuxProfile = null)
-        {
-            availabilityZones ??= new List<string>();
-            nodeLabels ??= new Dictionary<string, string>();
-            nodeTaints ??= new List<string>();
-
-            return new ControlPlaneProfile(count, availabilityZones?.ToList(), maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints?.ToList(), osType, nodeImageVersion, vmSize, cloudProviderProfile, name, controlPlaneEndpoint, linuxProfile);
-        }
-
-        /// <summary> Initializes a new instance of NamedAgentPoolProfile. </summary>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
-        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
-        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
-        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="mode"> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: &apos;System&apos;, &apos;LB&apos;, &apos;User&apos;. Default is &apos;User&apos;. </param>
-        /// <param name="nodeLabels"> NodeLabels - Agent pool node labels to be persisted across all nodes in agent pool. </param>
-        /// <param name="nodeTaints"> NodeTaints - Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
-        /// <param name="name"> Unique name of the agent pool profile in the context of the subscription and resource group. </param>
-        /// <returns> A new <see cref="Models.NamedAgentPoolProfile"/> instance for mocking. </returns>
-        public static NamedAgentPoolProfile NamedAgentPoolProfile(int? count = null, IEnumerable<string> availabilityZones = null, int? maxCount = null, int? maxPods = null, int? minCount = null, Mode? mode = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, OSType? osType = null, string nodeImageVersion = null, string vmSize = null, CloudProviderProfile cloudProviderProfile = null, string name = null)
-        {
-            availabilityZones ??= new List<string>();
-            nodeLabels ??= new Dictionary<string, string>();
-            nodeTaints ??= new List<string>();
-
-            return new NamedAgentPoolProfile(count, availabilityZones?.ToList(), maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints?.ToList(), osType, nodeImageVersion, vmSize, cloudProviderProfile, name);
-        }
-
-        /// <summary> Initializes a new instance of AgentPoolProfile. </summary>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
-        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
-        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
-        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="mode"> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: &apos;System&apos;, &apos;LB&apos;, &apos;User&apos;. Default is &apos;User&apos;. </param>
-        /// <param name="nodeLabels"> NodeLabels - Agent pool node labels to be persisted across all nodes in agent pool. </param>
-        /// <param name="nodeTaints"> NodeTaints - Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
-        /// <returns> A new <see cref="Models.AgentPoolProfile"/> instance for mocking. </returns>
-        public static AgentPoolProfile AgentPoolProfile(int? count = null, IEnumerable<string> availabilityZones = null, int? maxCount = null, int? maxPods = null, int? minCount = null, Mode? mode = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, OSType? osType = null, string nodeImageVersion = null, string vmSize = null, CloudProviderProfile cloudProviderProfile = null)
-        {
-            availabilityZones ??= new List<string>();
-            nodeLabels ??= new Dictionary<string, string>();
-            nodeTaints ??= new List<string>();
-
-            return new AgentPoolProfile(count, availabilityZones?.ToList(), maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints?.ToList(), osType, nodeImageVersion, vmSize, cloudProviderProfile);
-        }
-
-        /// <summary> Initializes a new instance of CloudProviderProfile. </summary>
-        /// <param name="infraNetworkVnetSubnetIds"> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </param>
-        /// <param name="storageSpaceIds"> InfraStorageProfile - List of infra storage profiles for the provisioned cluster. </param>
-        /// <returns> A new <see cref="Models.CloudProviderProfile"/> instance for mocking. </returns>
-        public static CloudProviderProfile CloudProviderProfile(IEnumerable<string> infraNetworkVnetSubnetIds = null, IEnumerable<string> storageSpaceIds = null)
-        {
-            infraNetworkVnetSubnetIds ??= new List<string>();
-            storageSpaceIds ??= new List<string>();
-
-            return new CloudProviderProfile(infraNetworkVnetSubnetIds != null ? new CloudProviderProfileInfraNetworkProfile(infraNetworkVnetSubnetIds?.ToList()) : null, storageSpaceIds != null ? new CloudProviderProfileInfraStorageProfile(storageSpaceIds?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of ControlPlaneEndpointProfileControlPlaneEndpoint. </summary>
-        /// <param name="hostIP"> Host IP address for API server. </param>
-        /// <param name="port"> Port for the API server. </param>
-        /// <returns> A new <see cref="Models.ControlPlaneEndpointProfileControlPlaneEndpoint"/> instance for mocking. </returns>
-        public static ControlPlaneEndpointProfileControlPlaneEndpoint ControlPlaneEndpointProfileControlPlaneEndpoint(string hostIP = null, string port = null)
-        {
-            return new ControlPlaneEndpointProfileControlPlaneEndpoint(hostIP, port);
-        }
-
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
-        /// <param name="loadBalancerProfile"> LoadBalancerProfile - Profile of the cluster load balancer. </param>
-        /// <param name="loadBalancerSku"> LoadBalancerSku - The load balancer sku for the provisioned cluster. Possible values: &apos;unstacked-haproxy&apos;, &apos;stacked-kube-vip&apos;, &apos;stacked-metallb&apos;, &apos;unmanaged&apos;. The default is &apos;unmanaged&apos;. </param>
-        /// <param name="dnsServiceIP"> DNSServiceIP - An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </param>
-        /// <param name="networkPolicy"> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: &apos;calico&apos;, &apos;flannel&apos;. Default is &apos;calico&apos;. </param>
-        /// <param name="podCidr"> PodCidr - A CIDR notation IP range from which to assign pod IPs when kubenet is used. </param>
-        /// <param name="podCidrs"> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
-        /// <param name="serviceCidr"> ServiceCidr - A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </param>
-        /// <param name="serviceCidrs"> The CIDR notation IP ranges from which to assign service cluster IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
-        /// <returns> A new <see cref="Models.NetworkProfile"/> instance for mocking. </returns>
-        public static NetworkProfile NetworkProfile(LoadBalancerProfile loadBalancerProfile = null, LoadBalancerSku? loadBalancerSku = null, string dnsServiceIP = null, NetworkPolicy? networkPolicy = null, string podCidr = null, IEnumerable<string> podCidrs = null, string serviceCidr = null, IEnumerable<string> serviceCidrs = null)
-        {
-            podCidrs ??= new List<string>();
-            serviceCidrs ??= new List<string>();
-
-            return new NetworkProfile(loadBalancerProfile, loadBalancerSku, dnsServiceIP, networkPolicy, podCidr, podCidrs?.ToList(), serviceCidr, serviceCidrs?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of LoadBalancerProfile. </summary>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
-        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
-        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
-        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="mode"> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: &apos;System&apos;, &apos;LB&apos;, &apos;User&apos;. Default is &apos;User&apos;. </param>
-        /// <param name="nodeLabels"> NodeLabels - Agent pool node labels to be persisted across all nodes in agent pool. </param>
-        /// <param name="nodeTaints"> NodeTaints - Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="osType"> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
-        /// <param name="name"> Unique name of the agent pool profile in the context of the subscription and resource group. </param>
-        /// <param name="linuxProfile"> Profile for Linux VMs in the container service cluster. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerProfile"/> instance for mocking. </returns>
-        public static LoadBalancerProfile LoadBalancerProfile(int? count = null, IEnumerable<string> availabilityZones = null, int? maxCount = null, int? maxPods = null, int? minCount = null, Mode? mode = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, OSType? osType = null, string nodeImageVersion = null, string vmSize = null, CloudProviderProfile cloudProviderProfile = null, string name = null, LinuxProfileProperties linuxProfile = null)
-        {
-            availabilityZones ??= new List<string>();
-            nodeLabels ??= new Dictionary<string, string>();
-            nodeTaints ??= new List<string>();
-
-            return new LoadBalancerProfile(count, availabilityZones?.ToList(), maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints?.ToList(), osType, nodeImageVersion, vmSize, cloudProviderProfile, name, linuxProfile);
-        }
-
         /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatus. </summary>
         /// <param name="arcAgentStatus"> Additional features status like Arc Agent Onboarding. </param>
         /// <param name="addonStatus"> AddonStatus - Status of Addons. </param>
@@ -342,15 +117,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClustersCommonPropertiesStatusProvisioningStatusError(code, message);
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseExtendedLocation. </summary>
-        /// <param name="provisionedClustersResponseExtendedLocationType"> The extended location type. </param>
-        /// <param name="name"> The extended location name. </param>
-        /// <returns> A new <see cref="Models.ProvisionedClustersResponseExtendedLocation"/> instance for mocking. </returns>
-        public static ProvisionedClustersResponseExtendedLocation ProvisionedClustersResponseExtendedLocation(string provisionedClustersResponseExtendedLocationType = null, string name = null)
-        {
-            return new ProvisionedClustersResponseExtendedLocation(provisionedClustersResponseExtendedLocationType, name);
-        }
-
         /// <summary> Initializes a new instance of ProvisionedClusterCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -392,75 +158,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             agentPoolProfiles ??= new List<NamedAgentPoolProfile>();
 
             return new ProvisionedClustersAllProperties(aadProfile, windowsProfile, httpProxyConfig, enableRbac, linuxProfile, featuresArcAgentProfile != null ? new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile) : null, addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
-        }
-
-        /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithSecrets. </summary>
-        /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
-        /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
-        /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>
-        /// <returns> A new <see cref="Models.ProvisionedClustersPropertiesWithSecrets"/> instance for mocking. </returns>
-        public static ProvisionedClustersPropertiesWithSecrets ProvisionedClustersPropertiesWithSecrets(AADProfile aadProfile = null, WindowsProfile windowsProfile = null, HttpProxyConfig httpProxyConfig = null)
-        {
-            return new ProvisionedClustersPropertiesWithSecrets(aadProfile, windowsProfile, httpProxyConfig);
-        }
-
-        /// <summary> Initializes a new instance of AADProfile. </summary>
-        /// <param name="serverAppSecret"> The server AAD application secret. </param>
-        /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
-        /// <param name="clientAppId"> The client AAD application ID. </param>
-        /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
-        /// <param name="managed"> Whether to enable managed AAD. </param>
-        /// <param name="serverAppId"> The server AAD application ID. </param>
-        /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        /// <returns> A new <see cref="Models.AADProfile"/> instance for mocking. </returns>
-        public static AADProfile AADProfile(string serverAppSecret = null, IEnumerable<string> adminGroupObjectIds = null, string clientAppId = null, bool? enableAzureRbac = null, bool? managed = null, string serverAppId = null, Guid? tenantId = null)
-        {
-            adminGroupObjectIds ??= new List<string>();
-
-            return new AADProfile(serverAppSecret, adminGroupObjectIds?.ToList(), clientAppId, enableAzureRbac, managed, serverAppId, tenantId);
-        }
-
-        /// <summary> Initializes a new instance of AADProfileSecret. </summary>
-        /// <param name="serverAppSecret"> The server AAD application secret. </param>
-        /// <returns> A new <see cref="Models.AADProfileSecret"/> instance for mocking. </returns>
-        public static AADProfileSecret AADProfileSecret(string serverAppSecret = null)
-        {
-            return new AADProfileSecret(serverAppSecret);
-        }
-
-        /// <summary> Initializes a new instance of WindowsProfile. </summary>
-        /// <param name="adminUsername"> AdminUsername - Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; **restriction:** Cannot end in &quot;.&quot; &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;administrator&quot;, &quot;admin&quot;, &quot;user&quot;, &quot;user1&quot;, &quot;test&quot;, &quot;user2&quot;, &quot;test1&quot;, &quot;user3&quot;, &quot;admin1&quot;, &quot;1&quot;, &quot;123&quot;, &quot;a&quot;, &quot;actuser&quot;, &quot;adm&quot;, &quot;admin2&quot;, &quot;aspnet&quot;, &quot;backup&quot;, &quot;console&quot;, &quot;david&quot;, &quot;guest&quot;, &quot;john&quot;, &quot;owner&quot;, &quot;root&quot;, &quot;server&quot;, &quot;sql&quot;, &quot;support&quot;, &quot;support_388945a0&quot;, &quot;sys&quot;, &quot;test2&quot;, &quot;test3&quot;, &quot;user4&quot;, &quot;user5&quot;. &lt;br&gt;&lt;br&gt; **Minimum-length:** 1 character &lt;br&gt;&lt;br&gt; **Max-length:** 20 characters. </param>
-        /// <param name="enableCsiProxy"> EnableCSIProxy - Whether to enable CSI proxy. </param>
-        /// <param name="licenseType"> LicenseType - The licenseType to use for Windows VMs. Windows_Server is used to enable Azure Hybrid User Benefits for Windows VMs. Possible values include: &apos;None&apos;, &apos;Windows_Server&apos;. </param>
-        /// <param name="adminPassword"> AdminPassword - Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length:** 8 characters &lt;br&gt;&lt;br&gt; **Max-length:** 123 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;abc@123&quot;, &quot;P@$$w0rd&quot;, &quot;P@ssw0rd&quot;, &quot;P@ssword123&quot;, &quot;Pa$$word&quot;, &quot;pass@word1&quot;, &quot;Password!&quot;, &quot;Password1&quot;, &quot;Password22&quot;, &quot;iloveyou!&quot;. </param>
-        /// <returns> A new <see cref="Models.WindowsProfile"/> instance for mocking. </returns>
-        public static WindowsProfile WindowsProfile(string adminUsername = null, bool? enableCsiProxy = null, LicenseType? licenseType = null, string adminPassword = null)
-        {
-            return new WindowsProfile(adminUsername, enableCsiProxy, licenseType, adminPassword);
-        }
-
-        /// <summary> Initializes a new instance of HttpProxyConfig. </summary>
-        /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
-        /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
-        /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
-        /// <param name="trustedCa"> Alternative CA cert to use for connecting to proxy servers. </param>
-        /// <param name="username"> Username to use for connecting to proxy server. </param>
-        /// <param name="password"> Password to use for connecting to proxy server. </param>
-        /// <returns> A new <see cref="Models.HttpProxyConfig"/> instance for mocking. </returns>
-        public static HttpProxyConfig HttpProxyConfig(string httpProxy = null, string httpsProxy = null, IEnumerable<string> noProxy = null, string trustedCa = null, string username = null, string password = null)
-        {
-            noProxy ??= new List<string>();
-
-            return new HttpProxyConfig(httpProxy, httpsProxy, noProxy?.ToList(), trustedCa, username, password);
-        }
-
-        /// <summary> Initializes a new instance of ProvisionedClustersExtendedLocation. </summary>
-        /// <param name="provisionedClustersExtendedLocationType"> The extended location type. </param>
-        /// <param name="name"> The extended location name. </param>
-        /// <returns> A new <see cref="Models.ProvisionedClustersExtendedLocation"/> instance for mocking. </returns>
-        public static ProvisionedClustersExtendedLocation ProvisionedClustersExtendedLocation(string provisionedClustersExtendedLocationType = null, string name = null)
-        {
-            return new ProvisionedClustersExtendedLocation(provisionedClustersExtendedLocationType, name);
         }
 
         /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
@@ -511,46 +208,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceAgentPoolData(id, name, resourceType, systemData, tags, location, extendedLocation, count, availabilityZones?.ToList(), maxCount, maxPods, minCount, mode, nodeLabels, nodeTaints?.ToList(), osType, nodeImageVersion, vmSize, cloudProviderProfile, provisioningState, status);
         }
 
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatus. </summary>
-        /// <param name="errorMessage"> ErrorMessage - Error messages during creation of cluster. </param>
-        /// <param name="provisioningStatus"> Contains Provisioning errors. </param>
-        /// <param name="readyReplicas"> Total number of ready machines targeted by this deployment. </param>
-        /// <param name="replicas"> Total number of non-terminated machines targeted by this deployment. </param>
-        /// <returns> A new <see cref="Models.AgentPoolProvisioningStatusStatus"/> instance for mocking. </returns>
-        public static AgentPoolProvisioningStatusStatus AgentPoolProvisioningStatusStatus(string errorMessage = null, AgentPoolProvisioningStatusStatusProvisioningStatus provisioningStatus = null, int? readyReplicas = null, int? replicas = null)
-        {
-            return new AgentPoolProvisioningStatusStatus(errorMessage, provisioningStatus, readyReplicas, replicas);
-        }
-
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatusProvisioningStatus. </summary>
-        /// <param name="error"></param>
-        /// <param name="operationId"></param>
-        /// <param name="phase"> Phase represents the current phase of cluster actuation. E.g. Pending, Running, Terminating, Failed etc. </param>
-        /// <param name="status"></param>
-        /// <returns> A new <see cref="Models.AgentPoolProvisioningStatusStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static AgentPoolProvisioningStatusStatusProvisioningStatus AgentPoolProvisioningStatusStatusProvisioningStatus(AgentPoolProvisioningStatusError error = null, string operationId = null, string phase = null, string status = null)
-        {
-            return new AgentPoolProvisioningStatusStatusProvisioningStatus(error, operationId, phase, status);
-        }
-
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusError. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.AgentPoolProvisioningStatusError"/> instance for mocking. </returns>
-        public static AgentPoolProvisioningStatusError AgentPoolProvisioningStatusError(string code = null, string message = null)
-        {
-            return new AgentPoolProvisioningStatusError(code, message);
-        }
-
-        /// <summary> Initializes a new instance of AgentPoolExtendedLocation. </summary>
-        /// <param name="agentPoolExtendedLocationType"> The extended location type. </param>
-        /// <param name="name"> The extended location name. </param>
-        /// <returns> A new <see cref="Models.AgentPoolExtendedLocation"/> instance for mocking. </returns>
-        public static AgentPoolExtendedLocation AgentPoolExtendedLocation(string agentPoolExtendedLocationType = null, string name = null)
-        {
-            return new AgentPoolExtendedLocation(agentPoolExtendedLocationType, name);
-        }
-
         /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -590,44 +247,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VirtualNetworksProperties(infraVnetProfile, vipPool?.ToList(), vmipPool?.ToList(), dhcpServers?.ToList(), dnsServers?.ToList(), gateway, ipAddressPrefix, vlanId, provisioningState, provisioningStatus != null ? new VirtualNetworksPropertiesStatus(provisioningStatus) : null);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfile. </summary>
-        /// <param name="hci"> Infra network profile for HCI platform. </param>
-        /// <param name="kubevirtVnetName"> Infra network profile for KubeVirt platform. </param>
-        /// <param name="vmwareSegmentName"> Infra network profile for VMware platform. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworksPropertiesInfraVnetProfile"/> instance for mocking. </returns>
-        public static VirtualNetworksPropertiesInfraVnetProfile VirtualNetworksPropertiesInfraVnetProfile(VirtualNetworksPropertiesInfraVnetProfileHci hci = null, string kubevirtVnetName = null, string vmwareSegmentName = null)
-        {
-            return new VirtualNetworksPropertiesInfraVnetProfile(hci, kubevirtVnetName != null ? new VirtualNetworksPropertiesInfraVnetProfileKubevirt(kubevirtVnetName) : null, vmwareSegmentName != null ? new VirtualNetworksPropertiesInfraVnetProfileVmware(vmwareSegmentName) : null);
-        }
-
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileHci. </summary>
-        /// <param name="mocGroup"> Resource group in MOC(Microsoft On-premises Cloud). </param>
-        /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
-        /// <param name="mocVnetName"> Virtual Network name in MOC(Microsoft On-premises Cloud). </param>
-        /// <returns> A new <see cref="Models.VirtualNetworksPropertiesInfraVnetProfileHci"/> instance for mocking. </returns>
-        public static VirtualNetworksPropertiesInfraVnetProfileHci VirtualNetworksPropertiesInfraVnetProfileHci(string mocGroup = null, string mocLocation = null, string mocVnetName = null)
-        {
-            return new VirtualNetworksPropertiesInfraVnetProfileHci(mocGroup, mocLocation, mocVnetName);
-        }
-
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesVipPoolItem. </summary>
-        /// <param name="endIP"> Ending IP address for the IP Pool. </param>
-        /// <param name="startIP"> Starting IP address for the IP Pool. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworksPropertiesVipPoolItem"/> instance for mocking. </returns>
-        public static VirtualNetworksPropertiesVipPoolItem VirtualNetworksPropertiesVipPoolItem(string endIP = null, string startIP = null)
-        {
-            return new VirtualNetworksPropertiesVipPoolItem(endIP, startIP);
-        }
-
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesVmipPoolItem. </summary>
-        /// <param name="endIP"> Ending IP address for the IP Pool. </param>
-        /// <param name="startIP"> Starting IP address for the IP Pool. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworksPropertiesVmipPoolItem"/> instance for mocking. </returns>
-        public static VirtualNetworksPropertiesVmipPoolItem VirtualNetworksPropertiesVmipPoolItem(string endIP = null, string startIP = null)
-        {
-            return new VirtualNetworksPropertiesVmipPoolItem(endIP, startIP);
-        }
-
         /// <summary> Initializes a new instance of VirtualNetworksPropertiesStatusProvisioningStatus. </summary>
         /// <param name="error"></param>
         /// <param name="operationId"></param>
@@ -646,15 +265,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static VirtualNetworksPropertiesStatusProvisioningStatusError VirtualNetworksPropertiesStatusProvisioningStatusError(string code = null, string message = null)
         {
             return new VirtualNetworksPropertiesStatusProvisioningStatusError(code, message);
-        }
-
-        /// <summary> Initializes a new instance of VirtualNetworksExtendedLocation. </summary>
-        /// <param name="virtualNetworksExtendedLocationType"> The extended location type. </param>
-        /// <param name="name"> The extended location name. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworksExtendedLocation"/> instance for mocking. </returns>
-        public static VirtualNetworksExtendedLocation VirtualNetworksExtendedLocation(string virtualNetworksExtendedLocationType = null, string name = null)
-        {
-            return new VirtualNetworksExtendedLocation(virtualNetworksExtendedLocationType, name);
         }
 
         /// <summary> Initializes a new instance of StorageSpaceData. </summary>
@@ -683,56 +293,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static StorageSpacesProperties StorageSpacesProperties(StorageSpacesPropertiesHciStorageProfile hciStorageProfile = null, StorageSpacesPropertiesVmwareStorageProfile vmwareStorageProfile = null, ProvisioningState? provisioningState = null, StorageSpacesPropertiesStatusProvisioningStatus provisioningStatus = null)
         {
             return new StorageSpacesProperties(hciStorageProfile, vmwareStorageProfile, provisioningState, provisioningStatus != null ? new StorageSpacesPropertiesStatus(provisioningStatus) : null);
-        }
-
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesHciStorageProfile. </summary>
-        /// <param name="mocGroup"> Resource group in MOC(Microsoft On-premises Cloud). </param>
-        /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
-        /// <param name="mocStorageContainer"> Name of the storage container in MOC(Microsoft On-premises Cloud). </param>
-        /// <returns> A new <see cref="Models.StorageSpacesPropertiesHciStorageProfile"/> instance for mocking. </returns>
-        public static StorageSpacesPropertiesHciStorageProfile StorageSpacesPropertiesHciStorageProfile(string mocGroup = null, string mocLocation = null, string mocStorageContainer = null)
-        {
-            return new StorageSpacesPropertiesHciStorageProfile(mocGroup, mocLocation, mocStorageContainer);
-        }
-
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesVmwareStorageProfile. </summary>
-        /// <param name="datacenter"> Name of the datacenter in VSphere. </param>
-        /// <param name="datastore"> Name of the datastore in VSphere. </param>
-        /// <param name="folder"> Name of the folder in VSphere. </param>
-        /// <param name="resourcePool"> Name of the resource pool in VSphere. </param>
-        /// <returns> A new <see cref="Models.StorageSpacesPropertiesVmwareStorageProfile"/> instance for mocking. </returns>
-        public static StorageSpacesPropertiesVmwareStorageProfile StorageSpacesPropertiesVmwareStorageProfile(string datacenter = null, string datastore = null, string folder = null, string resourcePool = null)
-        {
-            return new StorageSpacesPropertiesVmwareStorageProfile(datacenter, datastore, folder, resourcePool);
-        }
-
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatusProvisioningStatus. </summary>
-        /// <param name="error"></param>
-        /// <param name="operationId"></param>
-        /// <param name="phase"> Phase represents the current phase of cluster actuation. E.g. Pending, Running, Terminating, Failed etc. </param>
-        /// <param name="status"></param>
-        /// <returns> A new <see cref="Models.StorageSpacesPropertiesStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static StorageSpacesPropertiesStatusProvisioningStatus StorageSpacesPropertiesStatusProvisioningStatus(StorageSpacesPropertiesStatusProvisioningStatusError error = null, string operationId = null, string phase = null, string status = null)
-        {
-            return new StorageSpacesPropertiesStatusProvisioningStatus(error, operationId, phase, status);
-        }
-
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatusProvisioningStatusError. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.StorageSpacesPropertiesStatusProvisioningStatusError"/> instance for mocking. </returns>
-        public static StorageSpacesPropertiesStatusProvisioningStatusError StorageSpacesPropertiesStatusProvisioningStatusError(string code = null, string message = null)
-        {
-            return new StorageSpacesPropertiesStatusProvisioningStatusError(code, message);
-        }
-
-        /// <summary> Initializes a new instance of StorageSpacesExtendedLocation. </summary>
-        /// <param name="storageSpacesExtendedLocationType"> The extended location type. </param>
-        /// <param name="name"> The extended location name. </param>
-        /// <returns> A new <see cref="Models.StorageSpacesExtendedLocation"/> instance for mocking. </returns>
-        public static StorageSpacesExtendedLocation StorageSpacesExtendedLocation(string storageSpacesExtendedLocationType = null, string name = null)
-        {
-            return new StorageSpacesExtendedLocation(storageSpacesExtendedLocationType, name);
         }
     }
 }

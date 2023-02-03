@@ -39,16 +39,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new DedicatedCapacityData(id, name, resourceType, location, tags, systemData, sku, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList()) : null, mode, tenantId, friendlyName, state, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CapacitySku. </summary>
-        /// <param name="name"> Name of the SKU level. </param>
-        /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
-        /// <param name="capacity"> The capacity of the SKU. </param>
-        /// <returns> A new <see cref="Models.CapacitySku"/> instance for mocking. </returns>
-        public static CapacitySku CapacitySku(string name = null, CapacitySkuTier? tier = null, int? capacity = null)
-        {
-            return new CapacitySku(name, tier, capacity);
-        }
-
         /// <summary> Initializes a new instance of PowerBIDedicatedResourceData. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
@@ -62,19 +52,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             tags ??= new Dictionary<string, string>();
 
             return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData);
-        }
-
-        /// <summary> Initializes a new instance of SystemData. </summary>
-        /// <param name="createdBy"> An identifier for the identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> An identifier for the identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        /// <returns> A new <see cref="Models.SystemData"/> instance for mocking. </returns>
-        public static SystemData SystemData(string createdBy = null, IdentityType? createdByType = null, DateTimeOffset? createdOn = null, string lastModifiedBy = null, IdentityType? lastModifiedByType = null, DateTimeOffset? lastModifiedOn = null)
-        {
-            return new SystemData(createdBy, createdByType, createdOn, lastModifiedBy, lastModifiedByType, lastModifiedOn);
         }
 
         /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
@@ -113,16 +90,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             tags ??= new Dictionary<string, string>();
 
             return new AutoScaleVCoreData(id, name, resourceType, location, tags, systemData, sku, capacityLimit, capacityObjectId, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of AutoScaleVCoreSku. </summary>
-        /// <param name="name"> Name of the SKU level. </param>
-        /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
-        /// <param name="capacity"> The capacity of an auto scale v-core resource. </param>
-        /// <returns> A new <see cref="Models.AutoScaleVCoreSku"/> instance for mocking. </returns>
-        public static AutoScaleVCoreSku AutoScaleVCoreSku(string name = null, VCoreSkuTier? tier = null, int? capacity = null)
-        {
-            return new AutoScaleVCoreSku(name, tier, capacity);
         }
     }
 }

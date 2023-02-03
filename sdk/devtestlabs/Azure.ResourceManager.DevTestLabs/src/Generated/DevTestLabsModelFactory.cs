@@ -73,15 +73,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabAnnouncement(title, markdown, enabled, expireOn, isExpired, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabSupport. </summary>
-        /// <param name="enabled"> Is the lab support banner active/enabled at this time?. </param>
-        /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
-        /// <returns> A new <see cref="Models.DevTestLabSupport"/> instance for mocking. </returns>
-        public static DevTestLabSupport DevTestLabSupport(DevTestLabEnableStatus? enabled = null, string markdown = null)
-        {
-            return new DevTestLabSupport(enabled, markdown);
-        }
-
         /// <summary> Initializes a new instance of DevTestLabScheduleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -106,29 +97,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new Dictionary<string, string>();
 
             return new DevTestLabScheduleData(id, name, resourceType, systemData, tags, location, status, taskType, weeklyRecurrence, dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime) : null, hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute) : null, timeZoneId, notificationSettings, createdOn, targetResourceId, provisioningState, uniqueIdentifier);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
-        /// <param name="weekdays"> The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.). </param>
-        /// <param name="time"> The time of the day the schedule will occur. </param>
-        /// <returns> A new <see cref="Models.DevTestLabWeekDetails"/> instance for mocking. </returns>
-        public static DevTestLabWeekDetails DevTestLabWeekDetails(IEnumerable<string> weekdays = null, string time = null)
-        {
-            weekdays ??= new List<string>();
-
-            return new DevTestLabWeekDetails(weekdays?.ToList(), time);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabNotificationSettings. </summary>
-        /// <param name="status"> If notifications are enabled for this schedule (i.e. Enabled, Disabled). </param>
-        /// <param name="timeInMinutes"> Time in minutes before event at which notification will be sent. </param>
-        /// <param name="webhookUri"> The webhook URL to which the notification will be sent. </param>
-        /// <param name="emailRecipient"> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </param>
-        /// <param name="notificationLocale"> The locale to use when sending a notification (fallback for unsupported languages is EN). </param>
-        /// <returns> A new <see cref="Models.DevTestLabNotificationSettings"/> instance for mocking. </returns>
-        public static DevTestLabNotificationSettings DevTestLabNotificationSettings(DevTestLabEnableStatus? status = null, int? timeInMinutes = null, Uri webhookUri = null, string emailRecipient = null, string notificationLocale = null)
-        {
-            return new DevTestLabNotificationSettings(status, timeInMinutes, webhookUri, emailRecipient, notificationLocale);
         }
 
         /// <summary> Initializes a new instance of DevTestLabArtifactSourceData. </summary>
@@ -249,33 +217,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCostData(id, name, resourceType, systemData, tags, location, targetCost, estimatedLabCost != null ? new LabCostSummaryProperties(estimatedLabCost) : null, labCostDetails?.ToList(), resourceCosts?.ToList(), currencyCode, startOn, endOn, createdOn, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
-        /// <param name="status"> Target cost status. </param>
-        /// <param name="target"> Lab target cost. </param>
-        /// <param name="costThresholds"> Cost thresholds. </param>
-        /// <param name="cycleStartOn"> Reporting cycle start date. </param>
-        /// <param name="cycleEndOn"> Reporting cycle end date. </param>
-        /// <param name="cycleType"> Reporting cycle type. </param>
-        /// <returns> A new <see cref="Models.DevTestLabTargetCost"/> instance for mocking. </returns>
-        public static DevTestLabTargetCost DevTestLabTargetCost(DevTestLabTargetCostStatus? status = null, int? target = null, IEnumerable<DevTestLabCostThreshold> costThresholds = null, DateTimeOffset? cycleStartOn = null, DateTimeOffset? cycleEndOn = null, DevTestLabReportingCycleType? cycleType = null)
-        {
-            costThresholds ??= new List<DevTestLabCostThreshold>();
-
-            return new DevTestLabTargetCost(status, target, costThresholds?.ToList(), cycleStartOn, cycleEndOn, cycleType);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabCostThreshold. </summary>
-        /// <param name="thresholdId"> The ID of the cost threshold item. </param>
-        /// <param name="thresholdValue"> The value of the percentage cost threshold. </param>
-        /// <param name="displayOnChart"> Indicates whether this threshold will be displayed on cost charts. </param>
-        /// <param name="sendNotificationWhenExceeded"> Indicates whether notifications will be sent when this threshold is exceeded. </param>
-        /// <param name="notificationSent"> Indicates the datetime when notifications were last sent for this threshold. </param>
-        /// <returns> A new <see cref="Models.DevTestLabCostThreshold"/> instance for mocking. </returns>
-        public static DevTestLabCostThreshold DevTestLabCostThreshold(string thresholdId = null, double? thresholdValue = null, DevTestLabCostThresholdStatus? displayOnChart = null, DevTestLabCostThresholdStatus? sendNotificationWhenExceeded = null, string notificationSent = null)
-        {
-            return new DevTestLabCostThreshold(thresholdId, thresholdValue != null ? new PercentageCostThresholdProperties(thresholdValue) : null, displayOnChart, sendNotificationWhenExceeded, notificationSent);
-        }
-
         /// <summary> Initializes a new instance of DevTestLabCostDetails. </summary>
         /// <param name="on"> The date of the cost item. </param>
         /// <param name="cost"> The cost component of the cost item. </param>
@@ -330,45 +271,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCustomImageData(id, name, resourceType, systemData, tags, location, vm, vhd, description, author, createdOn, managedImageId, managedSnapshotId, dataDiskStorageInfo?.ToList(), customImagePlan, isPlanAuthorized, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVm. </summary>
-        /// <param name="sourceVmId"> The source vm identifier. </param>
-        /// <param name="windowsOSState"> The Windows OS information of the VM. </param>
-        /// <param name="linuxOSState"> The Linux OS information of the VM. </param>
-        /// <returns> A new <see cref="Models.DevTestLabCustomImageVm"/> instance for mocking. </returns>
-        public static DevTestLabCustomImageVm DevTestLabCustomImageVm(string sourceVmId = null, WindowsOSState? windowsOSState = null, DevTestLabLinuxOSState? linuxOSState = null)
-        {
-            return new DevTestLabCustomImageVm(sourceVmId, windowsOSState != null ? new WindowsOSInfo(windowsOSState) : null, linuxOSState != null ? new LinuxOSInfo(linuxOSState) : null);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
-        /// <param name="imageName"> The image name. </param>
-        /// <param name="isSysPrepEnabled"> Indicates whether sysprep has been run on the VHD. </param>
-        /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
-        /// <returns> A new <see cref="Models.DevTestLabCustomImageVhd"/> instance for mocking. </returns>
-        public static DevTestLabCustomImageVhd DevTestLabCustomImageVhd(string imageName = null, bool? isSysPrepEnabled = null, DevTestLabCustomImageOSType osType = default)
-        {
-            return new DevTestLabCustomImageVhd(imageName, isSysPrepEnabled, osType);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabDataDiskStorageTypeInfo. </summary>
-        /// <param name="lun"> Disk Lun. </param>
-        /// <param name="storageType"> Disk Storage Type. </param>
-        /// <returns> A new <see cref="Models.DevTestLabDataDiskStorageTypeInfo"/> instance for mocking. </returns>
-        public static DevTestLabDataDiskStorageTypeInfo DevTestLabDataDiskStorageTypeInfo(string lun = null, DevTestLabStorageType? storageType = null)
-        {
-            return new DevTestLabDataDiskStorageTypeInfo(lun, storageType);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabCustomImagePlan. </summary>
-        /// <param name="id"> The id of the plan, equivalent to name of the plan. </param>
-        /// <param name="publisher"> The publisher for the plan from the marketplace image the custom image is derived from. </param>
-        /// <param name="offer"> The offer for the plan from the marketplace image the custom image is derived from. </param>
-        /// <returns> A new <see cref="Models.DevTestLabCustomImagePlan"/> instance for mocking. </returns>
-        public static DevTestLabCustomImagePlan DevTestLabCustomImagePlan(string id = null, string publisher = null, string offer = null)
-        {
-            return new DevTestLabCustomImagePlan(id, publisher, offer);
-        }
-
         /// <summary> Initializes a new instance of DevTestLabFormulaData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -390,130 +292,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new Dictionary<string, string>();
 
             return new DevTestLabFormulaData(id, name, resourceType, systemData, tags, location, description, author, osType, createdOn, formulaContent, labVmId != null ? new FormulaPropertiesFromVm(labVmId) : null, provisioningState, uniqueIdentifier);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabVmCreationContent. </summary>
-        /// <param name="name"> The name of the virtual machine or environment. </param>
-        /// <param name="location"> The location of the new virtual machine or environment. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="bulkCreationParametersInstanceCount"> The number of virtual machine instances to create. </param>
-        /// <param name="notes"> The notes of the virtual machine. </param>
-        /// <param name="ownerObjectId"> The object identifier of the owner of the virtual machine. </param>
-        /// <param name="ownerUserPrincipalName"> The user principal name of the virtual machine owner. </param>
-        /// <param name="createdOn"> The creation date of the virtual machine. </param>
-        /// <param name="customImageId"> The custom image identifier of the virtual machine. </param>
-        /// <param name="size"> The size of the virtual machine. </param>
-        /// <param name="userName"> The user name of the virtual machine. </param>
-        /// <param name="password"> The password of the virtual machine administrator. </param>
-        /// <param name="sshKey"> The SSH key of the virtual machine administrator. </param>
-        /// <param name="isAuthenticationWithSshKey"> Indicates whether this virtual machine uses an SSH key for authentication. </param>
-        /// <param name="labSubnetName"> The lab subnet name of the virtual machine. </param>
-        /// <param name="labVirtualNetworkId"> The lab virtual network identifier of the virtual machine. </param>
-        /// <param name="disallowPublicIPAddress"> Indicates whether the virtual machine is to be created without a public IP address. </param>
-        /// <param name="artifacts"> The artifacts to be installed on the virtual machine. </param>
-        /// <param name="galleryImageReference"> The Microsoft Azure Marketplace image reference of the virtual machine. </param>
-        /// <param name="planId"> The id of the plan associated with the virtual machine image. </param>
-        /// <param name="networkInterface"> The network interface properties. </param>
-        /// <param name="expireOn"> The expiration date for VM. </param>
-        /// <param name="allowClaim"> Indicates whether another user can take ownership of the virtual machine. </param>
-        /// <param name="storageType"> Storage type to use for virtual machine (i.e. Standard, Premium). </param>
-        /// <param name="environmentId"> The resource ID of the environment that contains this virtual machine, if any. </param>
-        /// <param name="dataDiskParameters"> New or existing data disks to attach to the virtual machine after creation. </param>
-        /// <param name="scheduleParameters"> Virtual Machine schedules to be created. </param>
-        /// <returns> A new <see cref="Models.DevTestLabVmCreationContent"/> instance for mocking. </returns>
-        public static DevTestLabVmCreationContent DevTestLabVmCreationContent(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, int? bulkCreationParametersInstanceCount = null, string notes = null, string ownerObjectId = null, string ownerUserPrincipalName = null, DateTimeOffset? createdOn = null, string customImageId = null, string size = null, string userName = null, string password = null, string sshKey = null, bool? isAuthenticationWithSshKey = null, string labSubnetName = null, ResourceIdentifier labVirtualNetworkId = null, bool? disallowPublicIPAddress = null, IEnumerable<DevTestLabArtifactInstallInfo> artifacts = null, DevTestLabGalleryImageReference galleryImageReference = null, string planId = null, DevTestLabNetworkInterface networkInterface = null, DateTimeOffset? expireOn = null, bool? allowClaim = null, string storageType = null, string environmentId = null, IEnumerable<DevTestLabDataDiskProperties> dataDiskParameters = null, IEnumerable<DevTestLabScheduleCreationParameter> scheduleParameters = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            artifacts ??= new List<DevTestLabArtifactInstallInfo>();
-            dataDiskParameters ??= new List<DevTestLabDataDiskProperties>();
-            scheduleParameters ??= new List<DevTestLabScheduleCreationParameter>();
-
-            return new DevTestLabVmCreationContent(name, location, tags, bulkCreationParametersInstanceCount != null ? new BulkCreationParameters(bulkCreationParametersInstanceCount) : null, notes, ownerObjectId, ownerUserPrincipalName, createdOn, customImageId, size, userName, password, sshKey, isAuthenticationWithSshKey, labSubnetName, labVirtualNetworkId, disallowPublicIPAddress, artifacts?.ToList(), galleryImageReference, planId, networkInterface, expireOn, allowClaim, storageType, environmentId, dataDiskParameters?.ToList(), scheduleParameters?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
-        /// <param name="artifactId"> The artifact&apos;s identifier. </param>
-        /// <param name="artifactTitle"> The artifact&apos;s title. </param>
-        /// <param name="parameters"> The parameters of the artifact. </param>
-        /// <param name="status"> The status of the artifact. </param>
-        /// <param name="deploymentStatusMessage"> The status message from the deployment. </param>
-        /// <param name="vmExtensionStatusMessage"> The status message from the virtual machine extension. </param>
-        /// <param name="installOn"> The time that the artifact starts to install on the virtual machine. </param>
-        /// <returns> A new <see cref="Models.DevTestLabArtifactInstallInfo"/> instance for mocking. </returns>
-        public static DevTestLabArtifactInstallInfo DevTestLabArtifactInstallInfo(string artifactId = null, string artifactTitle = null, IEnumerable<DevTestLabArtifactParameter> parameters = null, string status = null, string deploymentStatusMessage = null, string vmExtensionStatusMessage = null, DateTimeOffset? installOn = null)
-        {
-            parameters ??= new List<DevTestLabArtifactParameter>();
-
-            return new DevTestLabArtifactInstallInfo(artifactId, artifactTitle, parameters?.ToList(), status, deploymentStatusMessage, vmExtensionStatusMessage, installOn);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabArtifactParameter. </summary>
-        /// <param name="name"> The name of the artifact parameter. </param>
-        /// <param name="value"> The value of the artifact parameter. </param>
-        /// <returns> A new <see cref="Models.DevTestLabArtifactParameter"/> instance for mocking. </returns>
-        public static DevTestLabArtifactParameter DevTestLabArtifactParameter(string name = null, string value = null)
-        {
-            return new DevTestLabArtifactParameter(name, value);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabGalleryImageReference. </summary>
-        /// <param name="offer"> The offer of the gallery image. </param>
-        /// <param name="publisher"> The publisher of the gallery image. </param>
-        /// <param name="sku"> The SKU of the gallery image. </param>
-        /// <param name="osType"> The OS type of the gallery image. </param>
-        /// <param name="version"> The version of the gallery image. </param>
-        /// <returns> A new <see cref="Models.DevTestLabGalleryImageReference"/> instance for mocking. </returns>
-        public static DevTestLabGalleryImageReference DevTestLabGalleryImageReference(string offer = null, string publisher = null, string sku = null, string osType = null, string version = null)
-        {
-            return new DevTestLabGalleryImageReference(offer, publisher, sku, osType, version);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabNetworkInterface. </summary>
-        /// <param name="virtualNetworkId"> The resource ID of the virtual network. </param>
-        /// <param name="subnetId"> The resource ID of the sub net. </param>
-        /// <param name="publicIPAddressId"> The resource ID of the public IP address. </param>
-        /// <param name="publicIPAddress"> The public IP address. </param>
-        /// <param name="privateIPAddress"> The private IP address. </param>
-        /// <param name="dnsName"> The DNS name. </param>
-        /// <param name="rdpAuthority"> The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol). </param>
-        /// <param name="sshAuthority"> The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH. </param>
-        /// <param name="sharedPublicIPAddressInboundNatRules"> The configuration for sharing a public IP address across multiple virtual machines. </param>
-        /// <returns> A new <see cref="Models.DevTestLabNetworkInterface"/> instance for mocking. </returns>
-        public static DevTestLabNetworkInterface DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId = null, ResourceIdentifier subnetId = null, ResourceIdentifier publicIPAddressId = null, string publicIPAddress = null, string privateIPAddress = null, string dnsName = null, string rdpAuthority = null, string sshAuthority = null, IEnumerable<DevTestLabInboundNatRule> sharedPublicIPAddressInboundNatRules = null)
-        {
-            sharedPublicIPAddressInboundNatRules ??= new List<DevTestLabInboundNatRule>();
-
-            return new DevTestLabNetworkInterface(virtualNetworkId, subnetId, publicIPAddressId, publicIPAddress, privateIPAddress, dnsName, rdpAuthority, sshAuthority, sharedPublicIPAddressInboundNatRules != null ? new SharedPublicIPAddressConfiguration(sharedPublicIPAddressInboundNatRules?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabInboundNatRule. </summary>
-        /// <param name="transportProtocol"> The transport protocol for the endpoint. </param>
-        /// <param name="frontendPort"> The external endpoint port of the inbound connection. Possible values range between 1 and 65535, inclusive. If unspecified, a value will be allocated automatically. </param>
-        /// <param name="backendPort"> The port to which the external traffic will be redirected. </param>
-        /// <returns> A new <see cref="Models.DevTestLabInboundNatRule"/> instance for mocking. </returns>
-        public static DevTestLabInboundNatRule DevTestLabInboundNatRule(DevTestLabTransportProtocol? transportProtocol = null, int? frontendPort = null, int? backendPort = null)
-        {
-            return new DevTestLabInboundNatRule(transportProtocol, frontendPort, backendPort);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabDataDiskProperties. </summary>
-        /// <param name="attachNewDataDiskOptions"> Specifies options to attach a new disk to the virtual machine. </param>
-        /// <param name="existingLabDiskId"> Specifies the existing lab disk id to attach to virtual machine. </param>
-        /// <param name="hostCaching"> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </param>
-        /// <returns> A new <see cref="Models.DevTestLabDataDiskProperties"/> instance for mocking. </returns>
-        public static DevTestLabDataDiskProperties DevTestLabDataDiskProperties(AttachNewDataDiskDetails attachNewDataDiskOptions = null, ResourceIdentifier existingLabDiskId = null, DevTestLabHostCachingOption? hostCaching = null)
-        {
-            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions, existingLabDiskId, hostCaching);
-        }
-
-        /// <summary> Initializes a new instance of AttachNewDataDiskDetails. </summary>
-        /// <param name="diskSizeGiB"> Size of the disk to be attached in Gibibytes. </param>
-        /// <param name="diskName"> The name of the disk to be attached. </param>
-        /// <param name="diskType"> The storage type for the disk (i.e. Standard, Premium). </param>
-        /// <returns> A new <see cref="Models.AttachNewDataDiskDetails"/> instance for mocking. </returns>
-        public static AttachNewDataDiskDetails AttachNewDataDiskDetails(int? diskSizeGiB = null, string diskName = null, DevTestLabStorageType? diskType = null)
-        {
-            return new AttachNewDataDiskDetails(diskSizeGiB, diskName, diskType);
         }
 
         /// <summary> Initializes a new instance of DevTestLabScheduleCreationParameter. </summary>
@@ -581,14 +359,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             events ??= new List<DevTestLabNotificationChannelEvent>();
 
             return new DevTestLabNotificationChannelData(id, name, resourceType, systemData, tags, location, webHookUri, emailRecipient, notificationLocale, description, events?.ToList(), createdOn, provisioningState, uniqueIdentifier);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabNotificationChannelEvent. </summary>
-        /// <param name="eventName"> The event type for which this notification is enabled (i.e. AutoShutdown, Cost). </param>
-        /// <returns> A new <see cref="Models.DevTestLabNotificationChannelEvent"/> instance for mocking. </returns>
-        public static DevTestLabNotificationChannelEvent DevTestLabNotificationChannelEvent(DevTestLabNotificationChannelEventType? eventName = null)
-        {
-            return new DevTestLabNotificationChannelEvent(eventName);
         }
 
         /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
@@ -661,17 +431,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabServiceRunnerData(id, name, resourceType, systemData, tags, location, identity);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabManagedIdentity. </summary>
-        /// <param name="managedIdentityType"> Managed identity. </param>
-        /// <param name="principalId"> The principal id of resource identity. </param>
-        /// <param name="tenantId"> The tenant identifier of resource. </param>
-        /// <param name="clientSecretUri"> The client secret URL of the identity. </param>
-        /// <returns> A new <see cref="Models.DevTestLabManagedIdentity"/> instance for mocking. </returns>
-        public static DevTestLabManagedIdentity DevTestLabManagedIdentity(ManagedServiceIdentityType managedIdentityType = default, Guid? principalId = null, Guid? tenantId = null, Uri clientSecretUri = null)
-        {
-            return new DevTestLabManagedIdentity(managedIdentityType, principalId, tenantId, clientSecretUri);
-        }
-
         /// <summary> Initializes a new instance of DevTestLabUserData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -690,27 +449,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new Dictionary<string, string>();
 
             return new DevTestLabUserData(id, name, resourceType, systemData, tags, location, identity, secretStore, createdOn, provisioningState, uniqueIdentifier);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabUserIdentity. </summary>
-        /// <param name="principalName"> Set to the principal name / UPN of the client JWT making the request. </param>
-        /// <param name="principalId"> Set to the principal Id of the client JWT making the request. Service principal will not have the principal Id. </param>
-        /// <param name="tenantId"> Set to the tenant ID of the client JWT making the request. </param>
-        /// <param name="objectId"> Set to the object Id of the client JWT making the request. Not all users have object Id. For CSP (reseller) scenarios for example, object Id is not available. </param>
-        /// <param name="appId"> Set to the app Id of the client JWT making the request. </param>
-        /// <returns> A new <see cref="Models.DevTestLabUserIdentity"/> instance for mocking. </returns>
-        public static DevTestLabUserIdentity DevTestLabUserIdentity(string principalName = null, string principalId = null, Guid? tenantId = null, string objectId = null, string appId = null)
-        {
-            return new DevTestLabUserIdentity(principalName, principalId, tenantId, objectId, appId);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabUserSecretStore. </summary>
-        /// <param name="keyVaultUri"> The URI of the user&apos;s Key vault. </param>
-        /// <param name="keyVaultId"> The ID of the user&apos;s Key vault. </param>
-        /// <returns> A new <see cref="Models.DevTestLabUserSecretStore"/> instance for mocking. </returns>
-        public static DevTestLabUserSecretStore DevTestLabUserSecretStore(Uri keyVaultUri = null, ResourceIdentifier keyVaultId = null)
-        {
-            return new DevTestLabUserSecretStore(keyVaultUri, keyVaultId);
         }
 
         /// <summary> Initializes a new instance of DevTestLabDiskData. </summary>
@@ -758,26 +496,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new Dictionary<string, string>();
 
             return new DevTestLabEnvironmentData(id, name, resourceType, systemData, tags, location, deploymentProperties, armTemplateDisplayName, resourceGroupId, createdByUser, provisioningState, uniqueIdentifier);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
-        /// <param name="armTemplateId"> The Azure Resource Manager template&apos;s identifier. </param>
-        /// <param name="parameters"> The parameters of the Azure Resource Manager template. </param>
-        /// <returns> A new <see cref="Models.DevTestLabEnvironmentDeployment"/> instance for mocking. </returns>
-        public static DevTestLabEnvironmentDeployment DevTestLabEnvironmentDeployment(ResourceIdentifier armTemplateId = null, IEnumerable<DevTestLabArmTemplateParameter> parameters = null)
-        {
-            parameters ??= new List<DevTestLabArmTemplateParameter>();
-
-            return new DevTestLabEnvironmentDeployment(armTemplateId, parameters?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateParameter. </summary>
-        /// <param name="name"> The name of the template parameter. </param>
-        /// <param name="value"> The value of the template parameter. </param>
-        /// <returns> A new <see cref="Models.DevTestLabArmTemplateParameter"/> instance for mocking. </returns>
-        public static DevTestLabArmTemplateParameter DevTestLabArmTemplateParameter(string name = null, string value = null)
-        {
-            return new DevTestLabArmTemplateParameter(name, value);
         }
 
         /// <summary> Initializes a new instance of DevTestLabSecretData. </summary>
@@ -971,16 +689,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabVirtualNetworkData(id, name, resourceType, systemData, tags, location, allowedSubnets?.ToList(), description, externalProviderResourceId, externalSubnets?.ToList(), subnetOverrides?.ToList(), createdOn, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabSubnet. </summary>
-        /// <param name="resourceId"> The resource ID of the subnet. </param>
-        /// <param name="labSubnetName"> The name of the subnet as seen in the lab. </param>
-        /// <param name="allowPublicIP"> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </param>
-        /// <returns> A new <see cref="Models.DevTestLabSubnet"/> instance for mocking. </returns>
-        public static DevTestLabSubnet DevTestLabSubnet(ResourceIdentifier resourceId = null, string labSubnetName = null, DevTestLabUsagePermissionType? allowPublicIP = null)
-        {
-            return new DevTestLabSubnet(resourceId, labSubnetName, allowPublicIP);
-        }
-
         /// <summary> Initializes a new instance of DevTestLabExternalSubnet. </summary>
         /// <param name="id"> Gets or sets the identifier. </param>
         /// <param name="name"> Gets or sets the name. </param>
@@ -988,30 +696,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabExternalSubnet DevTestLabExternalSubnet(ResourceIdentifier id = null, string name = null)
         {
             return new DevTestLabExternalSubnet(id, name);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabSubnetOverride. </summary>
-        /// <param name="resourceId"> The resource ID of the subnet. </param>
-        /// <param name="labSubnetName"> The name given to the subnet within the lab. </param>
-        /// <param name="useInVmCreationPermission"> Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny). </param>
-        /// <param name="usePublicIPAddressPermission"> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </param>
-        /// <param name="sharedPublicIPAddressAllowedPorts"> Properties that virtual machines on this subnet will share. </param>
-        /// <param name="virtualNetworkPoolName"> The virtual network pool associated with this subnet. </param>
-        /// <returns> A new <see cref="Models.DevTestLabSubnetOverride"/> instance for mocking. </returns>
-        public static DevTestLabSubnetOverride DevTestLabSubnetOverride(ResourceIdentifier resourceId = null, string labSubnetName = null, DevTestLabUsagePermissionType? useInVmCreationPermission = null, DevTestLabUsagePermissionType? usePublicIPAddressPermission = null, IEnumerable<DevTestLabPort> sharedPublicIPAddressAllowedPorts = null, string virtualNetworkPoolName = null)
-        {
-            sharedPublicIPAddressAllowedPorts ??= new List<DevTestLabPort>();
-
-            return new DevTestLabSubnetOverride(resourceId, labSubnetName, useInVmCreationPermission, usePublicIPAddressPermission, sharedPublicIPAddressAllowedPorts != null ? new SubnetSharedPublicIPAddressConfiguration(sharedPublicIPAddressAllowedPorts?.ToList()) : null, virtualNetworkPoolName);
-        }
-
-        /// <summary> Initializes a new instance of DevTestLabPort. </summary>
-        /// <param name="transportProtocol"> Protocol type of the port. </param>
-        /// <param name="backendPort"> Backend port of the target virtual machine. </param>
-        /// <returns> A new <see cref="Models.DevTestLabPort"/> instance for mocking. </returns>
-        public static DevTestLabPort DevTestLabPort(DevTestLabTransportProtocol? transportProtocol = null, int? backendPort = null)
-        {
-            return new DevTestLabPort(transportProtocol, backendPort);
         }
 
         /// <summary> Initializes a new instance of DevTestLabGenerateUploadUriResult. </summary>

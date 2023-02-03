@@ -61,21 +61,6 @@ namespace Azure.ResourceManager.Advisor.Models
             return new ConfigData(id, name, resourceType, systemData, exclude, lowCpuThreshold, digests?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DigestConfig. </summary>
-        /// <param name="name"> Name of digest configuration. Value is case-insensitive and must be unique within a subscription. </param>
-        /// <param name="actionGroupResourceId"> Action group resource id used by digest. </param>
-        /// <param name="frequency"> Frequency that digest will be triggered, in days. Value must be between 7 and 30 days inclusive. </param>
-        /// <param name="categories"> Categories to send digest for. If categories are not provided, then digest will be sent for all categories. </param>
-        /// <param name="language"> Language for digest content body. Value must be ISO 639-1 code for one of Azure portal supported languages. Otherwise, it will be converted into one. Default value is English (en). </param>
-        /// <param name="state"> State of digest configuration. </param>
-        /// <returns> A new <see cref="Models.DigestConfig"/> instance for mocking. </returns>
-        public static DigestConfig DigestConfig(string name = null, string actionGroupResourceId = null, int? frequency = null, IEnumerable<Category> categories = null, string language = null, DigestConfigState? state = null)
-        {
-            categories ??= new List<Category>();
-
-            return new DigestConfig(name, actionGroupResourceId, frequency, categories?.ToList(), language, state);
-        }
-
         /// <summary> Initializes a new instance of ResourceRecommendationBaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -111,29 +96,6 @@ namespace Azure.ResourceManager.Advisor.Models
             exposedMetadataProperties ??= new Dictionary<string, BinaryData>();
 
             return new ResourceRecommendationBaseData(id, name, resourceType, systemData, category, impact, impactedField, impactedValue, lastUpdated, metadata, recommendationTypeId, risk, shortDescription, suppressionIds?.ToList(), extendedProperties, resourceMetadata, description, label, learnMoreLink, potentialBenefits, actions?.ToList(), remediation, exposedMetadataProperties);
-        }
-
-        /// <summary> Initializes a new instance of ShortDescription. </summary>
-        /// <param name="problem"> The issue or opportunity identified by the recommendation. </param>
-        /// <param name="solution"> The remediation action suggested by the recommendation. </param>
-        /// <returns> A new <see cref="Models.ShortDescription"/> instance for mocking. </returns>
-        public static ShortDescription ShortDescription(string problem = null, string solution = null)
-        {
-            return new ShortDescription(problem, solution);
-        }
-
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
-        /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
-        /// <param name="source"> Source from which recommendation is generated. </param>
-        /// <param name="action"> The action to view resource. </param>
-        /// <param name="singular"> The singular user friendly name of resource type. eg: virtual machine. </param>
-        /// <param name="plural"> The plural user friendly name of resource type. eg: virtual machines. </param>
-        /// <returns> A new <see cref="Models.ResourceMetadata"/> instance for mocking. </returns>
-        public static ResourceMetadata ResourceMetadata(string resourceId = null, string source = null, IDictionary<string, BinaryData> action = null, string singular = null, string plural = null)
-        {
-            action ??= new Dictionary<string, BinaryData>();
-
-            return new ResourceMetadata(resourceId, source, action, singular, plural);
         }
 
         /// <summary> Initializes a new instance of SuppressionContractData. </summary>

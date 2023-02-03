@@ -123,233 +123,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetData(id, name, resourceType, systemData, tags, location, sku, plan, identity, zones?.ToList(), extendedLocation, upgradePolicy, automaticRepairsPolicy, virtualMachineProfile, provisioningState, overprovision, doNotRunExtensionsOnOverprovisionedVms, uniqueId, singlePlacementGroup, zoneBalance, platformFaultDomainCount, proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, hostGroupId != null ? ResourceManagerModelFactory.WritableSubResource(hostGroupId) : null, additionalCapabilities, scaleInPolicy, orchestrationMode, spotRestorePolicy, priorityMixPolicy, timeCreated);
         }
 
-        /// <summary> Initializes a new instance of ComputeSku. </summary>
-        /// <param name="name"> The sku name. </param>
-        /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>
-        /// <param name="capacity"> Specifies the number of virtual machines in the scale set. </param>
-        /// <returns> A new <see cref="Models.ComputeSku"/> instance for mocking. </returns>
-        public static ComputeSku ComputeSku(string name = null, string tier = null, long? capacity = null)
-        {
-            return new ComputeSku(name, tier, capacity);
-        }
-
-        /// <summary> Initializes a new instance of ComputePlan. </summary>
-        /// <param name="name"> The plan ID. </param>
-        /// <param name="publisher"> The publisher ID. </param>
-        /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
-        /// <param name="promotionCode"> The promotion code. </param>
-        /// <returns> A new <see cref="Models.ComputePlan"/> instance for mocking. </returns>
-        public static ComputePlan ComputePlan(string name = null, string publisher = null, string product = null, string promotionCode = null)
-        {
-            return new ComputePlan(name, publisher, product, promotionCode);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpgradePolicy. </summary>
-        /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; **Automatic** - All virtual machines in the scale set are  automatically updated at the same time. </param>
-        /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. </param>
-        /// <param name="automaticOSUpgradePolicy"> Configuration parameters used for performing automatic OS Upgrade. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpgradePolicy"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpgradePolicy VirtualMachineScaleSetUpgradePolicy(VirtualMachineScaleSetUpgradeMode? mode = null, RollingUpgradePolicy rollingUpgradePolicy = null, AutomaticOSUpgradePolicy automaticOSUpgradePolicy = null)
-        {
-            return new VirtualMachineScaleSetUpgradePolicy(mode, rollingUpgradePolicy, automaticOSUpgradePolicy);
-        }
-
-        /// <summary> Initializes a new instance of RollingUpgradePolicy. </summary>
-        /// <param name="maxBatchInstancePercent"> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The default value for this parameter is 20%. </param>
-        /// <param name="maxUnhealthyInstancePercent"> The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either as a result of being upgraded, or by being found in an unhealthy state by the virtual machine health checks before the rolling upgrade aborts. This constraint will be checked prior to starting any batch. The default value for this parameter is 20%. </param>
-        /// <param name="maxUnhealthyUpgradedInstancePercent"> The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. This check will happen after each batch is upgraded. If this percentage is ever exceeded, the rolling update aborts. The default value for this parameter is 20%. </param>
-        /// <param name="pauseTimeBetweenBatches"> The wait time between completing the update for all virtual machines in one batch and starting the next batch. The time duration should be specified in ISO 8601 format. The default value is 0 seconds (PT0S). </param>
-        /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. </param>
-        /// <param name="prioritizeUnhealthyInstances"> Upgrade all unhealthy instances in a scale set before any healthy instances. </param>
-        /// <returns> A new <see cref="Models.RollingUpgradePolicy"/> instance for mocking. </returns>
-        public static RollingUpgradePolicy RollingUpgradePolicy(int? maxBatchInstancePercent = null, int? maxUnhealthyInstancePercent = null, int? maxUnhealthyUpgradedInstancePercent = null, string pauseTimeBetweenBatches = null, bool? enableCrossZoneUpgrade = null, bool? prioritizeUnhealthyInstances = null)
-        {
-            return new RollingUpgradePolicy(maxBatchInstancePercent, maxUnhealthyInstancePercent, maxUnhealthyUpgradedInstancePercent, pauseTimeBetweenBatches, enableCrossZoneUpgrade, prioritizeUnhealthyInstances);
-        }
-
-        /// <summary> Initializes a new instance of AutomaticOSUpgradePolicy. </summary>
-        /// <param name="enableAutomaticOSUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. Default value is false. &lt;br&gt;&lt;br&gt; If this is set to true for Windows based scale sets, [enableAutomaticUpdates](https://docs.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.windowsconfiguration.enableautomaticupdates?view=azure-dotnet) is automatically set to false and cannot be set to true. </param>
-        /// <param name="disableAutomaticRollback"> Whether OS image rollback feature should be disabled. Default value is false. </param>
-        /// <param name="useRollingUpgradePolicy"> Indicates whether rolling upgrade policy should be used during Auto OS Upgrade. Default value is false. Auto OS Upgrade will fallback to the default policy if no policy is defined on the VMSS. </param>
-        /// <returns> A new <see cref="Models.AutomaticOSUpgradePolicy"/> instance for mocking. </returns>
-        public static AutomaticOSUpgradePolicy AutomaticOSUpgradePolicy(bool? enableAutomaticOSUpgrade = null, bool? disableAutomaticRollback = null, bool? useRollingUpgradePolicy = null)
-        {
-            return new AutomaticOSUpgradePolicy(enableAutomaticOSUpgrade, disableAutomaticRollback, useRollingUpgradePolicy);
-        }
-
-        /// <summary> Initializes a new instance of AutomaticRepairsPolicy. </summary>
-        /// <param name="enabled"> Specifies whether automatic repairs should be enabled on the virtual machine scale set. The default value is false. </param>
-        /// <param name="gracePeriod"> The amount of time for which automatic repairs are suspended due to a state change on VM. The grace time starts after the state change has completed. This helps avoid premature or accidental repairs. The time duration should be specified in ISO 8601 format. The minimum allowed grace period is 10 minutes (PT10M), which is also the default value. The maximum allowed grace period is 90 minutes (PT90M). </param>
-        /// <param name="repairAction"> Type of repair action (replace, restart, reimage) that will be used for repairing unhealthy virtual machines in the scale set. Default value is replace. </param>
-        /// <returns> A new <see cref="Models.AutomaticRepairsPolicy"/> instance for mocking. </returns>
-        public static AutomaticRepairsPolicy AutomaticRepairsPolicy(bool? enabled = null, string gracePeriod = null, RepairAction? repairAction = null)
-        {
-            return new AutomaticRepairsPolicy(enabled, gracePeriod, repairAction);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmProfile. </summary>
-        /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="networkProfile"> Specifies properties of the network interfaces of the virtual machines in the scale set. </param>
-        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machines in the scale set. </param>
-        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15. </param>
-        /// <param name="extensionProfile"> Specifies a collection of settings for extensions installed on virtual machines in the scale set. </param>
-        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
-        /// <param name="priority"> Specifies the priority for the virtual machines in the scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2017-10-30-preview. </param>
-        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2017-10-30-preview. </param>
-        /// <param name="billingMaxPrice"> Specifies the billing related details of a Azure Spot VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
-        /// <param name="scheduledEventsTerminateNotificationProfile"> Specifies Scheduled Event related configurations. </param>
-        /// <param name="userData"> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
-        /// <param name="capacityReservationGroupId"> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </param>
-        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        /// <param name="hardwareVmSizeProperties"> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile = null, VirtualMachineScaleSetStorageProfile storageProfile = null, VirtualMachineScaleSetNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, VirtualMachineScaleSetExtensionProfile extensionProfile = null, string licenseType = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, TerminateNotificationProfile scheduledEventsTerminateNotificationProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, VirtualMachineSizeProperties hardwareVmSizeProperties = null)
-        {
-            galleryApplications ??= new List<VirtualMachineGalleryApplication>();
-
-            return new VirtualMachineScaleSetVmProfile(osProfile, storageProfile, networkProfile, securityProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics) : null, extensionProfile, licenseType, priority, evictionPolicy, billingMaxPrice != null ? new BillingProfile(billingMaxPrice) : null, scheduledEventsTerminateNotificationProfile != null ? new ScheduledEventsProfile(scheduledEventsTerminateNotificationProfile) : null, userData, capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId)) : null, galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList()) : null, hardwareVmSizeProperties != null ? new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties) : null);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetOSProfile. </summary>
-        /// <param name="computerNamePrefix"> Specifies the computer name prefix for all of the virtual machines in the scale set. Computer name prefixes must be 1 to 15 characters long. </param>
-        /// <param name="adminUsername"> Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; **Windows-only restriction:** Cannot end in &quot;.&quot; &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;administrator&quot;, &quot;admin&quot;, &quot;user&quot;, &quot;user1&quot;, &quot;test&quot;, &quot;user2&quot;, &quot;test1&quot;, &quot;user3&quot;, &quot;admin1&quot;, &quot;1&quot;, &quot;123&quot;, &quot;a&quot;, &quot;actuser&quot;, &quot;adm&quot;, &quot;admin2&quot;, &quot;aspnet&quot;, &quot;backup&quot;, &quot;console&quot;, &quot;david&quot;, &quot;guest&quot;, &quot;john&quot;, &quot;owner&quot;, &quot;root&quot;, &quot;server&quot;, &quot;sql&quot;, &quot;support&quot;, &quot;support_388945a0&quot;, &quot;sys&quot;, &quot;test2&quot;, &quot;test3&quot;, &quot;user4&quot;, &quot;user5&quot;. &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 1  character &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 64 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 20 characters. </param>
-        /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 6 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 123 characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 72 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;abc@123&quot;, &quot;P@$$w0rd&quot;, &quot;P@ssw0rd&quot;, &quot;P@ssword123&quot;, &quot;Pa$$word&quot;, &quot;pass@word1&quot;, &quot;Password!&quot;, &quot;Password1&quot;, &quot;Password22&quot;, &quot;iloveyou!&quot; &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp) &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection). </param>
-        /// <param name="customData"> Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved as a file on the Virtual Machine. The maximum length of the binary array is 65535 bytes. &lt;br&gt;&lt;br&gt; For using cloud-init for your VM, see [Using cloud-init to customize a Linux VM during creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init). </param>
-        /// <param name="windowsConfiguration"> Specifies Windows operating system settings on the virtual machine. </param>
-        /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
-        /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machines in the scale set. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
-        /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine scale set. &lt;br&gt;&lt;br&gt;This may only be set to False when no extensions are present on the virtual machine scale set. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetOSProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetOSProfile VirtualMachineScaleSetOSProfile(string computerNamePrefix = null, string adminUsername = null, string adminPassword = null, string customData = null, WindowsConfiguration windowsConfiguration = null, LinuxConfiguration linuxConfiguration = null, IEnumerable<VaultSecretGroup> secrets = null, bool? allowExtensionOperations = null)
-        {
-            secrets ??= new List<VaultSecretGroup>();
-
-            return new VirtualMachineScaleSetOSProfile(computerNamePrefix, adminUsername, adminPassword, customData, windowsConfiguration, linuxConfiguration, secrets?.ToList(), allowExtensionOperations);
-        }
-
-        /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
-        /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body, default behavior is to set it to true.  This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
-        /// <param name="isAutomaticUpdatesEnabled"> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. &lt;br&gt;&lt;br&gt; For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </param>
-        /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. &quot;Pacific Standard Time&quot;. &lt;br&gt;&lt;br&gt; Possible values can be [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id) value from time zones returned by [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones). </param>
-        /// <param name="additionalUnattendContent"> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </param>
-        /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
-        /// <param name="winRMListeners"> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </param>
-        /// <param name="isVmAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Windows virtual machine. Default value is false. </param>
-        /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
-        public static WindowsConfiguration WindowsConfiguration(bool? provisionVmAgent = null, bool? isAutomaticUpdatesEnabled = null, string timeZone = null, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = null, PatchSettings patchSettings = null, IEnumerable<WinRMListener> winRMListeners = null, bool? isVmAgentPlatformUpdatesEnabled = null)
-        {
-            additionalUnattendContent ??= new List<AdditionalUnattendContent>();
-            winRMListeners ??= new List<WinRMListener>();
-
-            return new WindowsConfiguration(provisionVmAgent, isAutomaticUpdatesEnabled, timeZone, additionalUnattendContent?.ToList(), patchSettings, winRMListeners != null ? new WinRMConfiguration(winRMListeners?.ToList()) : null, isVmAgentPlatformUpdatesEnabled);
-        }
-
-        /// <summary> Initializes a new instance of AdditionalUnattendContent. </summary>
-        /// <param name="passName"> The pass name. Currently, the only allowable value is OobeSystem. </param>
-        /// <param name="componentName"> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </param>
-        /// <param name="settingName"> Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon. </param>
-        /// <param name="content"> Specifies the XML formatted content that is added to the unattend.xml file for the specified path and component. The XML must be less than 4KB and must include the root element for the setting or feature that is being inserted. </param>
-        /// <returns> A new <see cref="Models.AdditionalUnattendContent"/> instance for mocking. </returns>
-        public static AdditionalUnattendContent AdditionalUnattendContent(PassName? passName = null, ComponentName? componentName = null, SettingName? settingName = null, string content = null)
-        {
-            return new AdditionalUnattendContent(passName, componentName, settingName, content);
-        }
-
-        /// <summary> Initializes a new instance of PatchSettings. </summary>
-        /// <param name="patchMode"> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the property WindowsConfiguration.enableAutomaticUpdates must be false&lt;br /&gt;&lt;br /&gt; **AutomaticByOS** - The virtual machine will automatically be updated by the OS. The property WindowsConfiguration.enableAutomaticUpdates must be true. &lt;br /&gt;&lt;br /&gt; **AutomaticByPlatform** - the virtual machine will automatically updated by the platform. The properties provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true. </param>
-        /// <param name="enableHotpatching"> Enables customers to patch their Azure VMs without requiring a reboot. For enableHotpatching, the &apos;provisionVMAgent&apos; must be set to true and &apos;patchMode&apos; must be set to &apos;AutomaticByPlatform&apos;. </param>
-        /// <param name="assessmentMode"> Specifies the mode of VM Guest patch assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - You control the timing of patch assessments on a virtual machine.&lt;br /&gt;&lt;br /&gt; **AutomaticByPlatform** - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </param>
-        /// <param name="automaticByPlatformRebootSetting"> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Windows. </param>
-        /// <returns> A new <see cref="Models.PatchSettings"/> instance for mocking. </returns>
-        public static PatchSettings PatchSettings(WindowsVmGuestPatchMode? patchMode = null, bool? enableHotpatching = null, WindowsPatchAssessmentMode? assessmentMode = null, WindowsVmGuestPatchAutomaticByPlatformRebootSetting? automaticByPlatformRebootSetting = null)
-        {
-            return new PatchSettings(patchMode, enableHotpatching, assessmentMode, automaticByPlatformRebootSetting != null ? new WindowsVmGuestPatchAutomaticByPlatformSettings(automaticByPlatformRebootSetting) : null);
-        }
-
-        /// <summary> Initializes a new instance of WinRMListener. </summary>
-        /// <param name="protocol"> Specifies the protocol of WinRM listener. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;**http** &lt;br&gt;&lt;br&gt; **https**. </param>
-        /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this case, your certificate needs to be It is the Base64 encoding of the following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;  &quot;data&quot;:&quot;&lt;Base64-encoded-certificate&gt;&quot;,&lt;br&gt;  &quot;dataType&quot;:&quot;pfx&quot;,&lt;br&gt;  &quot;password&quot;:&quot;&lt;pfx-file-password&gt;&quot;&lt;br&gt;} &lt;br&gt; To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
-        /// <returns> A new <see cref="Models.WinRMListener"/> instance for mocking. </returns>
-        public static WinRMListener WinRMListener(WinRMListenerProtocolType? protocol = null, Uri certificateUri = null)
-        {
-            return new WinRMListener(protocol, certificateUri);
-        }
-
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
-        /// <param name="isPasswordAuthenticationDisabled"> Specifies whether password authentication should be disabled. </param>
-        /// <param name="sshPublicKeys"> Specifies the ssh key configuration for a Linux OS. </param>
-        /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body, default behavior is to set it to true.  This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
-        /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
-        /// <param name="isVmAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
-        /// <returns> A new <see cref="Models.LinuxConfiguration"/> instance for mocking. </returns>
-        public static LinuxConfiguration LinuxConfiguration(bool? isPasswordAuthenticationDisabled = null, IEnumerable<SshPublicKeyConfiguration> sshPublicKeys = null, bool? provisionVmAgent = null, LinuxPatchSettings patchSettings = null, bool? isVmAgentPlatformUpdatesEnabled = null)
-        {
-            sshPublicKeys ??= new List<SshPublicKeyConfiguration>();
-
-            return new LinuxConfiguration(isPasswordAuthenticationDisabled, sshPublicKeys != null ? new SshConfiguration(sshPublicKeys?.ToList()) : null, provisionVmAgent, patchSettings, isVmAgentPlatformUpdatesEnabled);
-        }
-
-        /// <summary> Initializes a new instance of SshPublicKeyConfiguration. </summary>
-        /// <param name="path"> Specifies the full path on the created VM where ssh public key is stored. If the file already exists, the specified key is appended to the file. Example: /home/user/.ssh/authorized_keys. </param>
-        /// <param name="keyData"> SSH public key certificate used to authenticate with the VM through ssh. The key needs to be at least 2048-bit and in ssh-rsa format. &lt;br&gt;&lt;br&gt; For creating ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in Azure]https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed). </param>
-        /// <returns> A new <see cref="Models.SshPublicKeyConfiguration"/> instance for mocking. </returns>
-        public static SshPublicKeyConfiguration SshPublicKeyConfiguration(string path = null, string keyData = null)
-        {
-            return new SshPublicKeyConfiguration(path, keyData);
-        }
-
-        /// <summary> Initializes a new instance of LinuxPatchSettings. </summary>
-        /// <param name="patchMode"> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - The virtual machine&apos;s default patching configuration is used. &lt;br /&gt;&lt;br /&gt; **AutomaticByPlatform** - The virtual machine will be automatically updated by the platform. The property provisionVMAgent must be true. </param>
-        /// <param name="assessmentMode"> Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - You control the timing of patch assessments on a virtual machine. &lt;br /&gt;&lt;br /&gt; **AutomaticByPlatform** - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </param>
-        /// <param name="automaticByPlatformRebootSetting"> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Linux. </param>
-        /// <returns> A new <see cref="Models.LinuxPatchSettings"/> instance for mocking. </returns>
-        public static LinuxPatchSettings LinuxPatchSettings(LinuxVmGuestPatchMode? patchMode = null, LinuxPatchAssessmentMode? assessmentMode = null, LinuxVmGuestPatchAutomaticByPlatformRebootSetting? automaticByPlatformRebootSetting = null)
-        {
-            return new LinuxPatchSettings(patchMode, assessmentMode, automaticByPlatformRebootSetting != null ? new LinuxVmGuestPatchAutomaticByPlatformSettings(automaticByPlatformRebootSetting) : null);
-        }
-
-        /// <summary> Initializes a new instance of VaultSecretGroup. </summary>
-        /// <param name="sourceVaultId"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
-        /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
-        /// <returns> A new <see cref="Models.VaultSecretGroup"/> instance for mocking. </returns>
-        public static VaultSecretGroup VaultSecretGroup(ResourceIdentifier sourceVaultId = null, IEnumerable<VaultCertificate> vaultCertificates = null)
-        {
-            vaultCertificates ??= new List<VaultCertificate>();
-
-            return new VaultSecretGroup(sourceVaultId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVaultId) : null, vaultCertificates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ComputeWriteableSubResourceData. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.ComputeWriteableSubResourceData"/> instance for mocking. </returns>
-        public static ComputeWriteableSubResourceData ComputeWriteableSubResourceData(ResourceIdentifier id = null)
-        {
-            return new ComputeWriteableSubResourceData(id);
-        }
-
-        /// <summary> Initializes a new instance of VaultCertificate. </summary>
-        /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this case, your certificate needs to be It is the Base64 encoding of the following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;  &quot;data&quot;:&quot;&lt;Base64-encoded-certificate&gt;&quot;,&lt;br&gt;  &quot;dataType&quot;:&quot;pfx&quot;,&lt;br&gt;  &quot;password&quot;:&quot;&lt;pfx-file-password&gt;&quot;&lt;br&gt;} &lt;br&gt; To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
-        /// <param name="certificateStore"> For Windows VMs, specifies the certificate store on the Virtual Machine to which the certificate should be added. The specified certificate store is implicitly in the LocalMachine account. &lt;br&gt;&lt;br&gt;For Linux VMs, the certificate file is placed under the /var/lib/waagent directory, with the file name &amp;lt;UppercaseThumbprint&amp;gt;.crt for the X509 certificate file and &amp;lt;UppercaseThumbprint&amp;gt;.prv for private key. Both of these files are .pem formatted. </param>
-        /// <returns> A new <see cref="Models.VaultCertificate"/> instance for mocking. </returns>
-        public static VaultCertificate VaultCertificate(Uri certificateUri = null, string certificateStore = null)
-        {
-            return new VaultCertificate(certificateUri, certificateStore);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetStorageProfile. </summary>
-        /// <param name="imageReference"> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. </param>
-        /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machines in the scale set. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
-        /// <param name="dataDisks"> Specifies the parameters that are used to add data disks to the virtual machines in the scale set. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
-        /// <param name="diskControllerType"></param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetStorageProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetStorageProfile VirtualMachineScaleSetStorageProfile(ImageReference imageReference = null, VirtualMachineScaleSetOSDisk osDisk = null, IEnumerable<VirtualMachineScaleSetDataDisk> dataDisks = null, string diskControllerType = null)
-        {
-            dataDisks ??= new List<VirtualMachineScaleSetDataDisk>();
-
-            return new VirtualMachineScaleSetStorageProfile(imageReference, osDisk, dataDisks?.ToList(), diskControllerType);
-        }
-
         /// <summary> Initializes a new instance of ImageReference. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="publisher"> The image publisher. </param>
@@ -363,200 +136,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static ImageReference ImageReference(ResourceIdentifier id = null, string publisher = null, string offer = null, string sku = null, string version = null, string exactVersion = null, string sharedGalleryImageUniqueId = null, string communityGalleryImageId = null)
         {
             return new ImageReference(id, publisher, offer, sku, version, exactVersion, sharedGalleryImageUniqueId, communityGalleryImageId);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetOSDisk. </summary>
-        /// <param name="name"> The disk name. </param>
-        /// <param name="caching"> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard storage. ReadOnly for Premium storage**. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        /// <param name="createOption"> Specifies how the virtual machines in the scale set should be created.&lt;br&gt;&lt;br&gt; The only allowed value is: **FromImage** \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </param>
-        /// <param name="diffDiskSettings"> Specifies the ephemeral disk Settings for the operating system disk used by the virtual machine scale set. </param>
-        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; diskSizeGB is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
-        /// <param name="imageUri"> Specifies information about the unmanaged user image to base the scale set on. </param>
-        /// <param name="vhdContainers"> Specifies the container urls that are used to store operating system disks for the scale set. </param>
-        /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **Delete**. For an Ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for Ephemeral OS Disk. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetOSDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetOSDisk VirtualMachineScaleSetOSDisk(string name = null, CachingType? caching = null, bool? writeAcceleratorEnabled = null, DiskCreateOptionType createOption = default, DiffDiskSettings diffDiskSettings = null, int? diskSizeGB = null, SupportedOperatingSystemType? osType = null, Uri imageUri = null, IEnumerable<string> vhdContainers = null, VirtualMachineScaleSetManagedDisk managedDisk = null, DiskDeleteOptionType? deleteOption = null)
-        {
-            vhdContainers ??= new List<string>();
-
-            return new VirtualMachineScaleSetOSDisk(name, caching, writeAcceleratorEnabled, createOption, diffDiskSettings, diskSizeGB, osType, imageUri != null ? new VirtualHardDisk(imageUri) : null, vhdContainers?.ToList(), managedDisk, deleteOption);
-        }
-
-        /// <summary> Initializes a new instance of DiffDiskSettings. </summary>
-        /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
-        /// <param name="placement"> Specifies the ephemeral disk placement for operating system disk.&lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **CacheDisk** &lt;br&gt;&lt;br&gt; **ResourceDisk** &lt;br&gt;&lt;br&gt; Default: **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk** is used.&lt;br&gt;&lt;br&gt; Refer to VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. </param>
-        /// <returns> A new <see cref="Models.DiffDiskSettings"/> instance for mocking. </returns>
-        public static DiffDiskSettings DiffDiskSettings(DiffDiskOption? option = null, DiffDiskPlacement? placement = null)
-        {
-            return new DiffDiskSettings(option, placement);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetManagedDisk. </summary>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
-        /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetManagedDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetManagedDisk VirtualMachineScaleSetManagedDisk(StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null, VirtualMachineDiskSecurityProfile securityProfile = null)
-        {
-            return new VirtualMachineScaleSetManagedDisk(storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null, securityProfile);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineDiskSecurityProfile. </summary>
-        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. &lt;br&gt; It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, and VMGuestStateOnly for encryption of just the VMGuestState blob. &lt;br&gt;&lt;br&gt; NOTE: It can be set for only Confidential VMs. </param>
-        /// <param name="diskEncryptionSetId"> Specifies the customer managed disk encryption set resource id for the managed disk that is used for Customer Managed Key encrypted ConfidentialVM OS Disk and VMGuest blob. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineDiskSecurityProfile"/> instance for mocking. </returns>
-        public static VirtualMachineDiskSecurityProfile VirtualMachineDiskSecurityProfile(SecurityEncryptionType? securityEncryptionType = null, ResourceIdentifier diskEncryptionSetId = null)
-        {
-            return new VirtualMachineDiskSecurityProfile(securityEncryptionType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetDataDisk. </summary>
-        /// <param name="name"> The disk name. </param>
-        /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
-        /// <param name="caching"> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard storage. ReadOnly for Premium storage**. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        /// <param name="createOption"> The create option. </param>
-        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; diskSizeGB is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
-        /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="diskIopsReadWrite"> Specifies the Read-Write IOPS for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB. </param>
-        /// <param name="diskMBpsReadWrite"> Specifies the bandwidth in MB per second for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB. </param>
-        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the data disk is retained after VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; The default value is set to **Delete**. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetDataDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetDataDisk VirtualMachineScaleSetDataDisk(string name = null, int lun = default, CachingType? caching = null, bool? writeAcceleratorEnabled = null, DiskCreateOptionType createOption = default, int? diskSizeGB = null, VirtualMachineScaleSetManagedDisk managedDisk = null, long? diskIopsReadWrite = null, long? diskMBpsReadWrite = null, DiskDeleteOptionType? deleteOption = null)
-        {
-            return new VirtualMachineScaleSetDataDisk(name, lun, caching, writeAcceleratorEnabled, createOption, diskSizeGB, managedDisk, diskIopsReadWrite, diskMBpsReadWrite, deleteOption);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkProfile. </summary>
-        /// <param name="healthProbeId"> A reference to a load balancer probe used to determine the health of an instance in the virtual machine scale set. The reference will be in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}&apos;. </param>
-        /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
-        /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode &apos;Flexible&apos;. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetNetworkProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetNetworkProfile VirtualMachineScaleSetNetworkProfile(ResourceIdentifier healthProbeId = null, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, NetworkApiVersion? networkApiVersion = null)
-        {
-            networkInterfaceConfigurations ??= new List<VirtualMachineScaleSetNetworkConfiguration>();
-
-            return new VirtualMachineScaleSetNetworkProfile(healthProbeId != null ? ResourceManagerModelFactory.WritableSubResource(healthProbeId) : null, networkInterfaceConfigurations?.ToList(), networkApiVersion);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The network configuration name. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
-        /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
-        /// <param name="networkSecurityGroupId"> The network security group. </param>
-        /// <param name="dnsServers"> The dns settings to be applied on the network interfaces. </param>
-        /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
-        /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
-        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetNetworkConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetNetworkConfiguration VirtualMachineScaleSetNetworkConfiguration(ResourceIdentifier id = null, string name = null, bool? primary = null, bool? enableAcceleratedNetworking = null, bool? isTcpStateTrackingDisabled = null, bool? enableFpga = null, ResourceIdentifier networkSecurityGroupId = null, IEnumerable<string> dnsServers = null, IEnumerable<VirtualMachineScaleSetIPConfiguration> ipConfigurations = null, bool? enableIPForwarding = null, ComputeDeleteOption? deleteOption = null)
-        {
-            dnsServers ??= new List<string>();
-            ipConfigurations ??= new List<VirtualMachineScaleSetIPConfiguration>();
-
-            return new VirtualMachineScaleSetNetworkConfiguration(id, name, primary, enableAcceleratedNetworking, isTcpStateTrackingDisabled, enableFpga, networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, dnsServers != null ? new VirtualMachineScaleSetNetworkConfigurationDnsSettings(dnsServers?.ToList()) : null, ipConfigurations?.ToList(), enableIPForwarding, deleteOption);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetIPConfiguration. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The IP configuration name. </param>
-        /// <param name="subnetId"> Specifies the identifier of the subnet. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
-        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
-        /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </param>
-        /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
-        /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
-        /// <param name="loadBalancerInboundNatPools"> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetIPConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetIPConfiguration VirtualMachineScaleSetIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceIdentifier subnetId = null, bool? primary = null, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = null, IPVersion? privateIPAddressVersion = null, IEnumerable<WritableSubResource> applicationGatewayBackendAddressPools = null, IEnumerable<WritableSubResource> applicationSecurityGroups = null, IEnumerable<WritableSubResource> loadBalancerBackendAddressPools = null, IEnumerable<WritableSubResource> loadBalancerInboundNatPools = null)
-        {
-            applicationGatewayBackendAddressPools ??= new List<WritableSubResource>();
-            applicationSecurityGroups ??= new List<WritableSubResource>();
-            loadBalancerBackendAddressPools ??= new List<WritableSubResource>();
-            loadBalancerInboundNatPools ??= new List<WritableSubResource>();
-
-            return new VirtualMachineScaleSetIPConfiguration(id, name, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationGatewayBackendAddressPools?.ToList(), applicationSecurityGroups?.ToList(), loadBalancerBackendAddressPools?.ToList(), loadBalancerInboundNatPools?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
-        /// <param name="name"> The publicIP address configuration name. </param>
-        /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
-        /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
-        /// <param name="dnsDomainNameLabel"> The dns settings to be applied on the publicIP addresses . </param>
-        /// <param name="ipTags"> The list of IP tags associated with the public IP address. </param>
-        /// <param name="publicIPPrefixId"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
-        /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
-        /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetPublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetPublicIPAddressConfiguration VirtualMachineScaleSetPublicIPAddressConfiguration(string name = null, ComputePublicIPAddressSku sku = null, int? idleTimeoutInMinutes = null, string dnsDomainNameLabel = null, IEnumerable<VirtualMachineScaleSetIPTag> ipTags = null, ResourceIdentifier publicIPPrefixId = null, IPVersion? publicIPAddressVersion = null, ComputeDeleteOption? deleteOption = null)
-        {
-            ipTags ??= new List<VirtualMachineScaleSetIPTag>();
-
-            return new VirtualMachineScaleSetPublicIPAddressConfiguration(name, sku, idleTimeoutInMinutes, dnsDomainNameLabel != null ? new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(dnsDomainNameLabel) : null, ipTags?.ToList(), publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, publicIPAddressVersion, deleteOption);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetIPTag. </summary>
-        /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
-        /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetIPTag"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetIPTag VirtualMachineScaleSetIPTag(string ipTagType = null, string tag = null)
-        {
-            return new VirtualMachineScaleSetIPTag(ipTagType, tag);
-        }
-
-        /// <summary> Initializes a new instance of ComputePublicIPAddressSku. </summary>
-        /// <param name="name"> Specify public IP sku name. </param>
-        /// <param name="tier"> Specify public IP sku tier. </param>
-        /// <returns> A new <see cref="Models.ComputePublicIPAddressSku"/> instance for mocking. </returns>
-        public static ComputePublicIPAddressSku ComputePublicIPAddressSku(ComputePublicIPAddressSkuName? name = null, ComputePublicIPAddressSkuTier? tier = null)
-        {
-            return new ComputePublicIPAddressSku(name, tier);
-        }
-
-        /// <summary> Initializes a new instance of SecurityProfile. </summary>
-        /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
-        /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. &lt;br&gt;&lt;br&gt; Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
-        /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. &lt;br&gt;&lt;br&gt; Default: UefiSettings will not be enabled unless this property is set. </param>
-        /// <returns> A new <see cref="Models.SecurityProfile"/> instance for mocking. </returns>
-        public static SecurityProfile SecurityProfile(UefiSettings uefiSettings = null, bool? encryptionAtHost = null, SecurityType? securityType = null)
-        {
-            return new SecurityProfile(uefiSettings, encryptionAtHost, securityType);
-        }
-
-        /// <summary> Initializes a new instance of UefiSettings. </summary>
-        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
-        /// <param name="isVirtualTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
-        /// <returns> A new <see cref="Models.UefiSettings"/> instance for mocking. </returns>
-        public static UefiSettings UefiSettings(bool? isSecureBootEnabled = null, bool? isVirtualTpmEnabled = null)
-        {
-            return new UefiSettings(isSecureBootEnabled, isVirtualTpmEnabled);
-        }
-
-        /// <summary> Initializes a new instance of BootDiagnostics. </summary>
-        /// <param name="enabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
-        /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. &lt;br&gt;&lt;br&gt;If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
-        /// <returns> A new <see cref="Models.BootDiagnostics"/> instance for mocking. </returns>
-        public static BootDiagnostics BootDiagnostics(bool? enabled = null, Uri storageUri = null)
-        {
-            return new BootDiagnostics(enabled, storageUri);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionProfile. </summary>
-        /// <param name="extensions"> The virtual machine scale set child extension resources. </param>
-        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). &lt;br&gt;&lt;br&gt; Minimum api-version: 2020-06-01. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetExtensionProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetExtensionProfile VirtualMachineScaleSetExtensionProfile(IEnumerable<VirtualMachineScaleSetExtensionData> extensions = null, string extensionsTimeBudget = null)
-        {
-            extensions ??= new List<VirtualMachineScaleSetExtensionData>();
-
-            return new VirtualMachineScaleSetExtensionProfile(extensions?.ToList(), extensionsTimeBudget);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionData. </summary>
@@ -582,130 +161,6 @@ namespace Azure.ResourceManager.Compute.Models
             provisionAfterExtensions ??= new List<string>();
 
             return new VirtualMachineScaleSetExtensionData(id, name, resourceType, systemData, forceUpdateTag, publisher, extensionType, typeHandlerVersion, autoUpgradeMinorVersion, enableAutomaticUpgrade, settings, protectedSettings, provisioningState, provisionAfterExtensions?.ToList(), suppressFailures, keyVaultProtectedSettings);
-        }
-
-        /// <summary> Initializes a new instance of TerminateNotificationProfile. </summary>
-        /// <param name="notBeforeTimeout"> Configurable length of time a Virtual Machine being deleted will have to potentially approve the Terminate Scheduled Event before the event is auto approved (timed out). The configuration must be specified in ISO 8601 format, the default value is 5 minutes (PT5M). </param>
-        /// <param name="enable"> Specifies whether the Terminate Scheduled event is enabled or disabled. </param>
-        /// <returns> A new <see cref="Models.TerminateNotificationProfile"/> instance for mocking. </returns>
-        public static TerminateNotificationProfile TerminateNotificationProfile(string notBeforeTimeout = null, bool? enable = null)
-        {
-            return new TerminateNotificationProfile(notBeforeTimeout, enable);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineGalleryApplication. </summary>
-        /// <param name="tags"> Optional, Specifies a passthrough value for more generic context. </param>
-        /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
-        /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
-        /// <param name="configurationReference"> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </param>
-        /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
-        /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineGalleryApplication"/> instance for mocking. </returns>
-        public static VirtualMachineGalleryApplication VirtualMachineGalleryApplication(string tags = null, int? order = null, string packageReferenceId = null, string configurationReference = null, bool? treatFailureAsDeploymentFailure = null, bool? enableAutomaticUpgrade = null)
-        {
-            return new VirtualMachineGalleryApplication(tags, order, packageReferenceId, configurationReference, treatFailureAsDeploymentFailure, enableAutomaticUpgrade);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineSizeProperties. </summary>
-        /// <param name="vCpusAvailable"> Specifies the number of vCPUs available for the VM. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list) . </param>
-        /// <param name="vCpusPerCore"> Specifies the vCPU to physical core ratio. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list) &lt;br&gt;&lt;br&gt; Setting this property to 1 also means that hyper-threading is disabled. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineSizeProperties"/> instance for mocking. </returns>
-        public static VirtualMachineSizeProperties VirtualMachineSizeProperties(int? vCpusAvailable = null, int? vCpusPerCore = null)
-        {
-            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore);
-        }
-
-        /// <summary> Initializes a new instance of AdditionalCapabilities. </summary>
-        /// <param name="ultraSsdEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
-        /// <param name="hibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
-        /// <returns> A new <see cref="Models.AdditionalCapabilities"/> instance for mocking. </returns>
-        public static AdditionalCapabilities AdditionalCapabilities(bool? ultraSsdEnabled = null, bool? hibernationEnabled = null)
-        {
-            return new AdditionalCapabilities(ultraSsdEnabled, hibernationEnabled);
-        }
-
-        /// <summary> Initializes a new instance of ScaleInPolicy. </summary>
-        /// <param name="rules"> The rules to be followed when scaling-in a virtual machine scale set. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Default** When a virtual machine scale set is scaled in, the scale set will first be balanced across zones if it is a zonal scale set. Then, it will be balanced across Fault Domains as far as possible. Within each Fault Domain, the virtual machines chosen for removal will be the newest ones that are not protected from scale-in. &lt;br&gt;&lt;br&gt; **OldestVM** When a virtual machine scale set is being scaled-in, the oldest virtual machines that are not protected from scale-in will be chosen for removal. For zonal virtual machine scale sets, the scale set will first be balanced across zones. Within each zone, the oldest virtual machines that are not protected will be chosen for removal. &lt;br&gt;&lt;br&gt; **NewestVM** When a virtual machine scale set is being scaled-in, the newest virtual machines that are not protected from scale-in will be chosen for removal. For zonal virtual machine scale sets, the scale set will first be balanced across zones. Within each zone, the newest virtual machines that are not protected will be chosen for removal. &lt;br&gt;&lt;br&gt;. </param>
-        /// <param name="forceDeletion"> This property allows you to specify if virtual machines chosen for removal have to be force deleted when a virtual machine scale set is being scaled-in.(Feature in Preview). </param>
-        /// <returns> A new <see cref="Models.ScaleInPolicy"/> instance for mocking. </returns>
-        public static ScaleInPolicy ScaleInPolicy(IEnumerable<VirtualMachineScaleSetScaleInRule> rules = null, bool? forceDeletion = null)
-        {
-            rules ??= new List<VirtualMachineScaleSetScaleInRule>();
-
-            return new ScaleInPolicy(rules?.ToList(), forceDeletion);
-        }
-
-        /// <summary> Initializes a new instance of SpotRestorePolicy. </summary>
-        /// <param name="enabled"> Enables the Spot-Try-Restore feature where evicted VMSS SPOT instances will be tried to be restored opportunistically based on capacity availability and pricing constraints. </param>
-        /// <param name="restoreTimeout"> Timeout value expressed as an ISO 8601 time duration after which the platform will not try to restore the VMSS SPOT instances. </param>
-        /// <returns> A new <see cref="Models.SpotRestorePolicy"/> instance for mocking. </returns>
-        public static SpotRestorePolicy SpotRestorePolicy(bool? enabled = null, string restoreTimeout = null)
-        {
-            return new SpotRestorePolicy(enabled, restoreTimeout);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetPriorityMixPolicy. </summary>
-        /// <param name="baseRegularPriorityCount"> The base number of regular priority VMs that will be created in this scale set as it scales out. </param>
-        /// <param name="regularPriorityPercentageAboveBase"> The percentage of VM instances, after the base regular priority count has been reached, that are expected to use regular priority. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetPriorityMixPolicy"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetPriorityMixPolicy VirtualMachineScaleSetPriorityMixPolicy(int? baseRegularPriorityCount = null, int? regularPriorityPercentageAboveBase = null)
-        {
-            return new VirtualMachineScaleSetPriorityMixPolicy(baseRegularPriorityCount, regularPriorityPercentageAboveBase);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The network configuration name. </param>
-        /// <param name="primary"> Whether this is a primary NIC on a virtual machine. </param>
-        /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
-        /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
-        /// <param name="networkSecurityGroupId"> The network security group. </param>
-        /// <param name="dnsServers"> The dns settings to be applied on the network interfaces. </param>
-        /// <param name="ipConfigurations"> The virtual machine scale set IP Configuration. </param>
-        /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
-        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateNetworkConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateNetworkConfiguration VirtualMachineScaleSetUpdateNetworkConfiguration(ResourceIdentifier id = null, string name = null, bool? primary = null, bool? enableAcceleratedNetworking = null, bool? isTcpStateTrackingDisabled = null, bool? enableFpga = null, ResourceIdentifier networkSecurityGroupId = null, IEnumerable<string> dnsServers = null, IEnumerable<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = null, bool? enableIPForwarding = null, ComputeDeleteOption? deleteOption = null)
-        {
-            dnsServers ??= new List<string>();
-            ipConfigurations ??= new List<VirtualMachineScaleSetUpdateIPConfiguration>();
-
-            return new VirtualMachineScaleSetUpdateNetworkConfiguration(id, name, primary, enableAcceleratedNetworking, isTcpStateTrackingDisabled, enableFpga, networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, dnsServers != null ? new VirtualMachineScaleSetNetworkConfigurationDnsSettings(dnsServers?.ToList()) : null, ipConfigurations?.ToList(), enableIPForwarding, deleteOption);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The IP configuration name. </param>
-        /// <param name="subnetId"> The subnet. </param>
-        /// <param name="primary"> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </param>
-        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
-        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
-        /// <param name="applicationGatewayBackendAddressPools"> The application gateway backend address pools. </param>
-        /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
-        /// <param name="loadBalancerBackendAddressPools"> The load balancer backend address pools. </param>
-        /// <param name="loadBalancerInboundNatPools"> The load balancer inbound nat pools. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateIPConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateIPConfiguration VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceIdentifier subnetId = null, bool? primary = null, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = null, IPVersion? privateIPAddressVersion = null, IEnumerable<WritableSubResource> applicationGatewayBackendAddressPools = null, IEnumerable<WritableSubResource> applicationSecurityGroups = null, IEnumerable<WritableSubResource> loadBalancerBackendAddressPools = null, IEnumerable<WritableSubResource> loadBalancerInboundNatPools = null)
-        {
-            applicationGatewayBackendAddressPools ??= new List<WritableSubResource>();
-            applicationSecurityGroups ??= new List<WritableSubResource>();
-            loadBalancerBackendAddressPools ??= new List<WritableSubResource>();
-            loadBalancerInboundNatPools ??= new List<WritableSubResource>();
-
-            return new VirtualMachineScaleSetUpdateIPConfiguration(id, name, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationGatewayBackendAddressPools?.ToList(), applicationSecurityGroups?.ToList(), loadBalancerBackendAddressPools?.ToList(), loadBalancerInboundNatPools?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdatePublicIPAddressConfiguration. </summary>
-        /// <param name="name"> The publicIP address configuration name. </param>
-        /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
-        /// <param name="dnsDomainNameLabel"> The dns settings to be applied on the publicIP addresses . </param>
-        /// <param name="publicIPPrefixId"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
-        /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdatePublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdatePublicIPAddressConfiguration VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name = null, int? idleTimeoutInMinutes = null, string dnsDomainNameLabel = null, ResourceIdentifier publicIPPrefixId = null, ComputeDeleteOption? deleteOption = null)
-        {
-            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name, idleTimeoutInMinutes, dnsDomainNameLabel != null ? new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(dnsDomainNameLabel) : null, publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, deleteOption);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetInstanceView. </summary>
@@ -742,18 +197,6 @@ namespace Azure.ResourceManager.Compute.Models
             statusesSummary ??= new List<VirtualMachineStatusCodeCount>();
 
             return new VirtualMachineScaleSetVmExtensionsSummary(name, statusesSummary?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of InstanceViewStatus. </summary>
-        /// <param name="code"> The status code. </param>
-        /// <param name="level"> The level code. </param>
-        /// <param name="displayStatus"> The short localizable label for the status. </param>
-        /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
-        /// <returns> A new <see cref="Models.InstanceViewStatus"/> instance for mocking. </returns>
-        public static InstanceViewStatus InstanceViewStatus(string code = null, ComputeStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
-        {
-            return new InstanceViewStatus(code, level, displayStatus, message, time);
         }
 
         /// <summary> Initializes a new instance of OrchestrationServiceSummary. </summary>
@@ -927,21 +370,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetVmExtensionData(id, name, resourceType, systemData, forceUpdateTag, publisher, extensionType, typeHandlerVersion, autoUpgradeMinorVersion, enableAutomaticUpgrade, settings, protectedSettings, provisioningState, instanceView, suppressFailures, keyVaultProtectedSettings);
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineExtensionInstanceView. </summary>
-        /// <param name="name"> The virtual machine extension name. </param>
-        /// <param name="virtualMachineExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="substatuses"> The resource status information. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineExtensionInstanceView"/> instance for mocking. </returns>
-        public static VirtualMachineExtensionInstanceView VirtualMachineExtensionInstanceView(string name = null, string virtualMachineExtensionInstanceViewType = null, string typeHandlerVersion = null, IEnumerable<InstanceViewStatus> substatuses = null, IEnumerable<InstanceViewStatus> statuses = null)
-        {
-            substatuses ??= new List<InstanceViewStatus>();
-            statuses ??= new List<InstanceViewStatus>();
-
-            return new VirtualMachineExtensionInstanceView(name, virtualMachineExtensionInstanceViewType, typeHandlerVersion, substatuses?.ToList(), statuses?.ToList());
-        }
-
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionPatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1077,16 +505,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiskInstanceView(name, encryptionSettings?.ToList(), statuses?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DiskEncryptionSettings. </summary>
-        /// <param name="diskEncryptionKey"> Specifies the location of the disk encryption key, which is a Key Vault Secret. </param>
-        /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in Key Vault. </param>
-        /// <param name="enabled"> Specifies whether disk encryption should be enabled on the virtual machine. </param>
-        /// <returns> A new <see cref="Models.DiskEncryptionSettings"/> instance for mocking. </returns>
-        public static DiskEncryptionSettings DiskEncryptionSettings(KeyVaultSecretReference diskEncryptionKey = null, KeyVaultKeyReference keyEncryptionKey = null, bool? enabled = null)
-        {
-            return new DiskEncryptionSettings(diskEncryptionKey, keyEncryptionKey, enabled);
-        }
-
         /// <summary> Initializes a new instance of BootDiagnosticsInstanceView. </summary>
         /// <param name="consoleScreenshotBlobUri"> The console screenshot blob URI. &lt;br&gt;&lt;br&gt;NOTE: This will **not** be set if boot diagnostics is currently enabled with managed storage. </param>
         /// <param name="serialConsoleLogBlobUri"> The serial console log blob Uri. &lt;br&gt;&lt;br&gt;NOTE: This will **not** be set if boot diagnostics is currently enabled with managed storage. </param>
@@ -1095,58 +513,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static BootDiagnosticsInstanceView BootDiagnosticsInstanceView(Uri consoleScreenshotBlobUri = null, Uri serialConsoleLogBlobUri = null, InstanceViewStatus status = null)
         {
             return new BootDiagnosticsInstanceView(consoleScreenshotBlobUri, serialConsoleLogBlobUri, status);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineHardwareProfile. </summary>
-        /// <param name="vmSize"> Specifies the size of the virtual machine. &lt;br&gt;&lt;br&gt; The enum data type is currently deprecated and will be removed by December 23rd 2023. &lt;br&gt;&lt;br&gt; Recommended way to get the list of available sizes is using these APIs: &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in an availability set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes) &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in a region]( https://docs.microsoft.com/rest/api/compute/resourceskus/list) &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). For more information about virtual machine sizes, see [Sizes for virtual machines](https://docs.microsoft.com/azure/virtual-machines/sizes). &lt;br&gt;&lt;br&gt; The available VM sizes depend on region and availability set. </param>
-        /// <param name="vmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-07-01. &lt;br&gt;&lt;br&gt; This feature is still in preview mode and is not supported for VirtualMachineScaleSet. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineHardwareProfile"/> instance for mocking. </returns>
-        public static VirtualMachineHardwareProfile VirtualMachineHardwareProfile(VirtualMachineSizeType? vmSize = null, VirtualMachineSizeProperties vmSizeProperties = null)
-        {
-            return new VirtualMachineHardwareProfile(vmSize, vmSizeProperties);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineStorageProfile. </summary>
-        /// <param name="imageReference"> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. </param>
-        /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
-        /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
-        /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. &lt;br&gt;&lt;br&gt;NOTE: This property will be set to the default disk controller type if not specified provided virtual machine is being created as a hyperVGeneration: V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. &lt;br&gt;You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. &lt;br&gt;&lt;br&gt; Minimum api-version: 2022-08-01. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineStorageProfile"/> instance for mocking. </returns>
-        public static VirtualMachineStorageProfile VirtualMachineStorageProfile(ImageReference imageReference = null, VirtualMachineOSDisk osDisk = null, IEnumerable<VirtualMachineDataDisk> dataDisks = null, DiskControllerType? diskControllerType = null)
-        {
-            dataDisks ??= new List<VirtualMachineDataDisk>();
-
-            return new VirtualMachineStorageProfile(imageReference, osDisk, dataDisks?.ToList(), diskControllerType);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineOSDisk. </summary>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
-        /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
-        /// <param name="name"> The disk name. </param>
-        /// <param name="vhdUri"> The virtual hard disk. </param>
-        /// <param name="imageUri"> The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided, the destination virtual hard drive must not exist. </param>
-        /// <param name="caching"> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None** for Standard storage. **ReadOnly** for Premium storage. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        /// <param name="diffDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
-        /// <param name="createOption"> Specifies how the virtual machine should be created.&lt;br&gt;&lt;br&gt; Possible values are:&lt;br&gt;&lt;br&gt; **Attach** \u2013 This value is used when you are using a specialized disk to create the virtual machine.&lt;br&gt;&lt;br&gt; **FromImage** \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </param>
-        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; diskSizeGB is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
-        /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the os disk is retained after VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **detach**. For an ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for ephemeral OS Disk. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineOSDisk"/> instance for mocking. </returns>
-        public static VirtualMachineOSDisk VirtualMachineOSDisk(SupportedOperatingSystemType? osType = null, DiskEncryptionSettings encryptionSettings = null, string name = null, Uri vhdUri = null, Uri imageUri = null, CachingType? caching = null, bool? writeAcceleratorEnabled = null, DiffDiskSettings diffDiskSettings = null, DiskCreateOptionType createOption = default, int? diskSizeGB = null, VirtualMachineManagedDisk managedDisk = null, DiskDeleteOptionType? deleteOption = null)
-        {
-            return new VirtualMachineOSDisk(osType, encryptionSettings, name, vhdUri != null ? new VirtualHardDisk(vhdUri) : null, imageUri != null ? new VirtualHardDisk(imageUri) : null, caching, writeAcceleratorEnabled, diffDiskSettings, createOption, diskSizeGB, managedDisk, deleteOption);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineManagedDisk. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
-        /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineManagedDisk"/> instance for mocking. </returns>
-        public static VirtualMachineManagedDisk VirtualMachineManagedDisk(ResourceIdentifier id = null, StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null, VirtualMachineDiskSecurityProfile securityProfile = null)
-        {
-            return new VirtualMachineManagedDisk(id, storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null, securityProfile);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineDataDisk. </summary>
@@ -1168,123 +534,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static VirtualMachineDataDisk VirtualMachineDataDisk(int lun = default, string name = null, Uri vhdUri = null, Uri imageUri = null, CachingType? caching = null, bool? writeAcceleratorEnabled = null, DiskCreateOptionType createOption = default, int? diskSizeGB = null, VirtualMachineManagedDisk managedDisk = null, bool? toBeDetached = null, long? diskIopsReadWrite = null, long? diskMBpsReadWrite = null, DiskDetachOptionType? detachOption = null, DiskDeleteOptionType? deleteOption = null)
         {
             return new VirtualMachineDataDisk(lun, name, vhdUri != null ? new VirtualHardDisk(vhdUri) : null, imageUri != null ? new VirtualHardDisk(imageUri) : null, caching, writeAcceleratorEnabled, createOption, diskSizeGB, managedDisk, toBeDetached, diskIopsReadWrite, diskMBpsReadWrite, detachOption, deleteOption);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineOSProfile. </summary>
-        /// <param name="computerName"> Specifies the host OS name of the virtual machine. &lt;br&gt;&lt;br&gt; This name cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 15 characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 64 characters. &lt;br&gt;&lt;br&gt; For naming conventions and restrictions see [Azure infrastructure services implementation guidelines](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules). </param>
-        /// <param name="adminUsername"> Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; This property cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; **Windows-only restriction:** Cannot end in &quot;.&quot; &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;administrator&quot;, &quot;admin&quot;, &quot;user&quot;, &quot;user1&quot;, &quot;test&quot;, &quot;user2&quot;, &quot;test1&quot;, &quot;user3&quot;, &quot;admin1&quot;, &quot;1&quot;, &quot;123&quot;, &quot;a&quot;, &quot;actuser&quot;, &quot;adm&quot;, &quot;admin2&quot;, &quot;aspnet&quot;, &quot;backup&quot;, &quot;console&quot;, &quot;david&quot;, &quot;guest&quot;, &quot;john&quot;, &quot;owner&quot;, &quot;root&quot;, &quot;server&quot;, &quot;sql&quot;, &quot;support&quot;, &quot;support_388945a0&quot;, &quot;sys&quot;, &quot;test2&quot;, &quot;test3&quot;, &quot;user4&quot;, &quot;user5&quot;. &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 1  character &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 64 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 20 characters. </param>
-        /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 6 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 123 characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 72 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; **Disallowed values:** &quot;abc@123&quot;, &quot;P@$$w0rd&quot;, &quot;P@ssw0rd&quot;, &quot;P@ssword123&quot;, &quot;Pa$$word&quot;, &quot;pass@word1&quot;, &quot;Password!&quot;, &quot;Password1&quot;, &quot;Password22&quot;, &quot;iloveyou!&quot; &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp) &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection). </param>
-        /// <param name="customData"> Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved as a file on the Virtual Machine. The maximum length of the binary array is 65535 bytes. &lt;br&gt;&lt;br&gt; **Note: Do not pass any secrets or passwords in customData property** &lt;br&gt;&lt;br&gt; This property cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; customData is passed to the VM to be saved as a file, for more information see [Custom Data on Azure VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/) &lt;br&gt;&lt;br&gt; For using cloud-init for your Linux VM, see [Using cloud-init to customize a Linux VM during creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init). </param>
-        /// <param name="windowsConfiguration"> Specifies Windows operating system settings on the virtual machine. </param>
-        /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
-        /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
-        /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine. &lt;br&gt;&lt;br&gt;This may only be set to False when no extensions are present on the virtual machine. </param>
-        /// <param name="requireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineOSProfile"/> instance for mocking. </returns>
-        public static VirtualMachineOSProfile VirtualMachineOSProfile(string computerName = null, string adminUsername = null, string adminPassword = null, string customData = null, WindowsConfiguration windowsConfiguration = null, LinuxConfiguration linuxConfiguration = null, IEnumerable<VaultSecretGroup> secrets = null, bool? allowExtensionOperations = null, bool? requireGuestProvisionSignal = null)
-        {
-            secrets ??= new List<VaultSecretGroup>();
-
-            return new VirtualMachineOSProfile(computerName, adminUsername, adminPassword, customData, windowsConfiguration, linuxConfiguration, secrets?.ToList(), allowExtensionOperations, requireGuestProvisionSignal);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineNetworkProfile. </summary>
-        /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
-        /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
-        /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineNetworkProfile"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkProfile VirtualMachineNetworkProfile(IEnumerable<VirtualMachineNetworkInterfaceReference> networkInterfaces = null, NetworkApiVersion? networkApiVersion = null, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = null)
-        {
-            networkInterfaces ??= new List<VirtualMachineNetworkInterfaceReference>();
-            networkInterfaceConfigurations ??= new List<VirtualMachineNetworkInterfaceConfiguration>();
-
-            return new VirtualMachineNetworkProfile(networkInterfaces?.ToList(), networkApiVersion, networkInterfaceConfigurations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceReference. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceReference"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceReference VirtualMachineNetworkInterfaceReference(ResourceIdentifier id = null, bool? primary = null, ComputeDeleteOption? deleteOption = null)
-        {
-            return new VirtualMachineNetworkInterfaceReference(id, primary, deleteOption);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceConfiguration. </summary>
-        /// <param name="name"> The network interface configuration name. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
-        /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
-        /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
-        /// <param name="networkSecurityGroupId"> The network security group. </param>
-        /// <param name="dnsServers"> The dns settings to be applied on the network interfaces. </param>
-        /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
-        /// <param name="dscpConfigurationId"> Gets or sets the dscp configuration. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = null, bool? primary = null, ComputeDeleteOption? deleteOption = null, bool? enableAcceleratedNetworking = null, bool? isTcpStateTrackingDisabled = null, bool? enableFpga = null, bool? enableIPForwarding = null, ResourceIdentifier networkSecurityGroupId = null, IEnumerable<string> dnsServers = null, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = null, ResourceIdentifier dscpConfigurationId = null)
-        {
-            dnsServers ??= new List<string>();
-            ipConfigurations ??= new List<VirtualMachineNetworkInterfaceIPConfiguration>();
-
-            return new VirtualMachineNetworkInterfaceConfiguration(name, primary, deleteOption, enableAcceleratedNetworking, isTcpStateTrackingDisabled, enableFpga, enableIPForwarding, networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, dnsServers != null ? new VirtualMachineNetworkInterfaceDnsSettingsConfiguration(dnsServers?.ToList()) : null, ipConfigurations?.ToList(), dscpConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(dscpConfigurationId) : null);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceIPConfiguration. </summary>
-        /// <param name="name"> The IP configuration name. </param>
-        /// <param name="subnetId"> Specifies the identifier of the subnet. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
-        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
-        /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
-        /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
-        /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceIPConfiguration VirtualMachineNetworkInterfaceIPConfiguration(string name = null, ResourceIdentifier subnetId = null, bool? primary = null, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = null, IPVersion? privateIPAddressVersion = null, IEnumerable<WritableSubResource> applicationSecurityGroups = null, IEnumerable<WritableSubResource> applicationGatewayBackendAddressPools = null, IEnumerable<WritableSubResource> loadBalancerBackendAddressPools = null)
-        {
-            applicationSecurityGroups ??= new List<WritableSubResource>();
-            applicationGatewayBackendAddressPools ??= new List<WritableSubResource>();
-            loadBalancerBackendAddressPools ??= new List<WritableSubResource>();
-
-            return new VirtualMachineNetworkInterfaceIPConfiguration(name, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationSecurityGroups?.ToList(), applicationGatewayBackendAddressPools?.ToList(), loadBalancerBackendAddressPools?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressConfiguration. </summary>
-        /// <param name="name"> The publicIP address configuration name. </param>
-        /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
-        /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
-        /// <param name="deleteOption"> Specify what happens to the public IP address when the VM is deleted. </param>
-        /// <param name="dnsDomainNameLabel"> The dns settings to be applied on the publicIP addresses . </param>
-        /// <param name="ipTags"> The list of IP tags associated with the public IP address. </param>
-        /// <param name="publicIPPrefixId"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
-        /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
-        /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
-        /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfiguration VirtualMachinePublicIPAddressConfiguration(string name = null, ComputePublicIPAddressSku sku = null, int? idleTimeoutInMinutes = null, ComputeDeleteOption? deleteOption = null, string dnsDomainNameLabel = null, IEnumerable<VirtualMachineIPTag> ipTags = null, ResourceIdentifier publicIPPrefixId = null, IPVersion? publicIPAddressVersion = null, PublicIPAllocationMethod? publicIPAllocationMethod = null)
-        {
-            ipTags ??= new List<VirtualMachineIPTag>();
-
-            return new VirtualMachinePublicIPAddressConfiguration(name, sku, idleTimeoutInMinutes, deleteOption, dnsDomainNameLabel != null ? new VirtualMachinePublicIPAddressDnsSettingsConfiguration(dnsDomainNameLabel) : null, ipTags?.ToList(), publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, publicIPAddressVersion, publicIPAllocationMethod);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineIPTag. </summary>
-        /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
-        /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineIPTag"/> instance for mocking. </returns>
-        public static VirtualMachineIPTag VirtualMachineIPTag(string ipTagType = null, string tag = null)
-        {
-            return new VirtualMachineIPTag(ipTagType, tag);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmProtectionPolicy. </summary>
-        /// <param name="protectFromScaleIn"> Indicates that the virtual machine scale set VM shouldn&apos;t be considered for deletion during a scale-in operation. </param>
-        /// <param name="protectFromScaleSetActions"> Indicates that model updates or actions (including scale-in) initiated on the virtual machine scale set should not be applied to the virtual machine scale set VM. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProtectionPolicy"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmProtectionPolicy VirtualMachineScaleSetVmProtectionPolicy(bool? protectFromScaleIn = null, bool? protectFromScaleSetActions = null)
-        {
-            return new VirtualMachineScaleSetVmProtectionPolicy(protectFromScaleIn, protectFromScaleSetActions);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionData. </summary>
@@ -1530,59 +779,12 @@ namespace Azure.ResourceManager.Compute.Models
             return new PatchInstallationDetail(patchId, name, version, kbId, classifications?.ToList(), installationState);
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="location"> The supported Azure location of the resource. </param>
-        /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
-        /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        /// <param name="plan"> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </param>
-        /// <param name="osDiskImageOperatingSystem"> Contains the os disk image information. </param>
-        /// <param name="dataDiskImages"> The list of data disk images information. </param>
-        /// <param name="automaticOSUpgradeSupported"> Describes automatic OS upgrade properties on the image. </param>
-        /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
-        /// <param name="disallowedVmDiskType"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
-        /// <param name="features"></param>
-        /// <param name="architecture"> Specifies the Architecture Type. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineImage"/> instance for mocking. </returns>
-        public static VirtualMachineImage VirtualMachineImage(ResourceIdentifier id = null, string name = null, AzureLocation location = default, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, PurchasePlan plan = null, SupportedOperatingSystemType? osDiskImageOperatingSystem = null, IEnumerable<DataDiskImage> dataDiskImages = null, bool? automaticOSUpgradeSupported = null, HyperVGeneration? hyperVGeneration = null, VirtualMachineDiskType? disallowedVmDiskType = null, IEnumerable<VirtualMachineImageFeature> features = null, ArchitectureType? architecture = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            dataDiskImages ??= new List<DataDiskImage>();
-            features ??= new List<VirtualMachineImageFeature>();
-
-            return new VirtualMachineImage(id, name, location, tags, extendedLocation, plan, osDiskImageOperatingSystem.HasValue ? new OSDiskImage(osDiskImageOperatingSystem.Value) : null, dataDiskImages?.ToList(), automaticOSUpgradeSupported.HasValue ? new AutomaticOSUpgradeProperties(automaticOSUpgradeSupported.Value) : null, hyperVGeneration, disallowedVmDiskType != null ? new DisallowedConfiguration(disallowedVmDiskType) : null, features?.ToList(), architecture);
-        }
-
         /// <summary> Initializes a new instance of DataDiskImage. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <returns> A new <see cref="Models.DataDiskImage"/> instance for mocking. </returns>
         public static DataDiskImage DataDiskImage(int? lun = null)
         {
             return new DataDiskImage(lun);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineImageFeature. </summary>
-        /// <param name="name"> The name of the feature. </param>
-        /// <param name="value"> The corresponding value for the feature. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineImageFeature"/> instance for mocking. </returns>
-        public static VirtualMachineImageFeature VirtualMachineImageFeature(string name = null, string value = null)
-        {
-            return new VirtualMachineImageFeature(name, value);
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineImageBase. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="location"> The supported Azure location of the resource. </param>
-        /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
-        /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineImageBase"/> instance for mocking. </returns>
-        public static VirtualMachineImageBase VirtualMachineImageBase(ResourceIdentifier id = null, string name = null, AzureLocation location = default, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new VirtualMachineImageBase(id, name, location, tags, extendedLocation);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionImageData. </summary>
@@ -1653,15 +855,6 @@ namespace Azure.ResourceManager.Compute.Models
             intentVmSizes ??= new List<string>();
 
             return new ProximityPlacementGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), proximityPlacementGroupType, virtualMachines?.ToList(), virtualMachineScaleSets?.ToList(), availabilitySets?.ToList(), colocationStatus, intentVmSizes != null ? new ProximityPlacementGroupPropertiesIntent(intentVmSizes?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of ComputeSubResourceDataWithColocationStatus. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="colocationStatus"> Describes colocation status of a resource in the Proximity Placement Group. </param>
-        /// <returns> A new <see cref="Models.ComputeSubResourceDataWithColocationStatus"/> instance for mocking. </returns>
-        public static ComputeSubResourceDataWithColocationStatus ComputeSubResourceDataWithColocationStatus(ResourceIdentifier id = null, InstanceViewStatus colocationStatus = null)
-        {
-            return new ComputeSubResourceDataWithColocationStatus(id, colocationStatus);
         }
 
         /// <summary> Initializes a new instance of DedicatedHostGroupData. </summary>
@@ -1808,63 +1001,6 @@ namespace Azure.ResourceManager.Compute.Models
             tags ??= new Dictionary<string, string>();
 
             return new DiskImageData(id, name, resourceType, systemData, tags, location, extendedLocation, sourceVirtualMachineId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVirtualMachineId) : null, storageProfile, provisioningState, hyperVGeneration);
-        }
-
-        /// <summary> Initializes a new instance of ImageStorageProfile. </summary>
-        /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
-        /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
-        /// <param name="zoneResilient"> Specifies whether an image is zone resilient or not. Default is false. Zone resilient images can be created only in regions that provide Zone Redundant Storage (ZRS). </param>
-        /// <returns> A new <see cref="Models.ImageStorageProfile"/> instance for mocking. </returns>
-        public static ImageStorageProfile ImageStorageProfile(ImageOSDisk osDisk = null, IEnumerable<ImageDataDisk> dataDisks = null, bool? zoneResilient = null)
-        {
-            dataDisks ??= new List<ImageDataDisk>();
-
-            return new ImageStorageProfile(osDisk, dataDisks?.ToList(), zoneResilient);
-        }
-
-        /// <summary> Initializes a new instance of ImageOSDisk. </summary>
-        /// <param name="snapshotId"> The snapshot. </param>
-        /// <param name="managedDiskId"> The managedDisk. </param>
-        /// <param name="blobUri"> The Virtual Hard Disk. </param>
-        /// <param name="caching"> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard storage. ReadOnly for Premium storage**. </param>
-        /// <param name="diskSizeGB"> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
-        /// <param name="osState"> The OS State. For managed images, use Generalized. </param>
-        /// <returns> A new <see cref="Models.ImageOSDisk"/> instance for mocking. </returns>
-        public static ImageOSDisk ImageOSDisk(ResourceIdentifier snapshotId = null, ResourceIdentifier managedDiskId = null, Uri blobUri = null, CachingType? caching = null, int? diskSizeGB = null, StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null, SupportedOperatingSystemType osType = default, OperatingSystemStateType osState = default)
-        {
-            return new ImageOSDisk(snapshotId != null ? ResourceManagerModelFactory.WritableSubResource(snapshotId) : null, managedDiskId != null ? ResourceManagerModelFactory.WritableSubResource(managedDiskId) : null, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null, osType, osState);
-        }
-
-        /// <summary> Initializes a new instance of ImageDisk. </summary>
-        /// <param name="snapshotId"> The snapshot. </param>
-        /// <param name="managedDiskId"> The managedDisk. </param>
-        /// <param name="blobUri"> The Virtual Hard Disk. </param>
-        /// <param name="caching"> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard storage. ReadOnly for Premium storage**. </param>
-        /// <param name="diskSizeGB"> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
-        /// <returns> A new <see cref="Models.ImageDisk"/> instance for mocking. </returns>
-        public static ImageDisk ImageDisk(ResourceIdentifier snapshotId = null, ResourceIdentifier managedDiskId = null, Uri blobUri = null, CachingType? caching = null, int? diskSizeGB = null, StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null)
-        {
-            return new ImageDisk(snapshotId != null ? ResourceManagerModelFactory.WritableSubResource(snapshotId) : null, managedDiskId != null ? ResourceManagerModelFactory.WritableSubResource(managedDiskId) : null, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null);
-        }
-
-        /// <summary> Initializes a new instance of ImageDataDisk. </summary>
-        /// <param name="snapshotId"> The snapshot. </param>
-        /// <param name="managedDiskId"> The managedDisk. </param>
-        /// <param name="blobUri"> The Virtual Hard Disk. </param>
-        /// <param name="caching"> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard storage. ReadOnly for Premium storage**. </param>
-        /// <param name="diskSizeGB"> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
-        /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
-        /// <returns> A new <see cref="Models.ImageDataDisk"/> instance for mocking. </returns>
-        public static ImageDataDisk ImageDataDisk(ResourceIdentifier snapshotId = null, ResourceIdentifier managedDiskId = null, Uri blobUri = null, CachingType? caching = null, int? diskSizeGB = null, StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null, int lun = default)
-        {
-            return new ImageDataDisk(snapshotId != null ? ResourceManagerModelFactory.WritableSubResource(snapshotId) : null, managedDiskId != null ? ResourceManagerModelFactory.WritableSubResource(managedDiskId) : null, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null, lun);
         }
 
         /// <summary> Initializes a new instance of RestorePointGroupData. </summary>
@@ -2203,16 +1339,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineRunCommandData(id, name, resourceType, systemData, tags, location, source, parameters?.ToList(), protectedParameters?.ToList(), asyncExecution, runAsUser, runAsPassword, timeoutInSeconds, outputBlobUri, errorBlobUri, provisioningState, instanceView);
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandScriptSource. </summary>
-        /// <param name="script"> Specifies the script content to be executed on the VM. </param>
-        /// <param name="scriptUri"> Specifies the script download location. </param>
-        /// <param name="commandId"> Specifies a commandId of predefined built-in script. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineRunCommandScriptSource"/> instance for mocking. </returns>
-        public static VirtualMachineRunCommandScriptSource VirtualMachineRunCommandScriptSource(string script = null, Uri scriptUri = null, string commandId = null)
-        {
-            return new VirtualMachineRunCommandScriptSource(script, scriptUri, commandId);
-        }
-
         /// <summary> Initializes a new instance of VirtualMachineRunCommandInstanceView. </summary>
         /// <param name="executionState"> Script execution status. </param>
         /// <param name="executionMessage"> Communicate script configuration errors or execution messages. </param>
@@ -2293,27 +1419,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiskSku(name, tier);
         }
 
-        /// <summary> Initializes a new instance of DiskPurchasePlan. </summary>
-        /// <param name="name"> The plan ID. </param>
-        /// <param name="publisher"> The publisher ID. </param>
-        /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
-        /// <param name="promotionCode"> The Offer Promotion Code. </param>
-        /// <returns> A new <see cref="Models.DiskPurchasePlan"/> instance for mocking. </returns>
-        public static DiskPurchasePlan DiskPurchasePlan(string name = null, string publisher = null, string product = null, string promotionCode = null)
-        {
-            return new DiskPurchasePlan(name, publisher, product, promotionCode);
-        }
-
-        /// <summary> Initializes a new instance of SupportedCapabilities. </summary>
-        /// <param name="diskControllerTypes"> The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. </param>
-        /// <param name="acceleratedNetwork"> True if the image from which the OS disk is created supports accelerated networking. </param>
-        /// <param name="architecture"> CPU architecture supported by an OS disk. </param>
-        /// <returns> A new <see cref="Models.SupportedCapabilities"/> instance for mocking. </returns>
-        public static SupportedCapabilities SupportedCapabilities(string diskControllerTypes = null, bool? acceleratedNetwork = null, ArchitectureType? architecture = null)
-        {
-            return new SupportedCapabilities(diskControllerTypes, acceleratedNetwork, architecture);
-        }
-
         /// <summary> Initializes a new instance of DiskCreationData. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk&apos;s creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
@@ -2332,62 +1437,12 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiskCreationData(createOption, storageAccountId, imageReference, galleryImageReference, sourceUri, sourceResourceId, sourceUniqueId, uploadSizeBytes, logicalSectorSize, securityDataUri, isPerformancePlusEnabled);
         }
 
-        /// <summary> Initializes a new instance of ImageDiskReference. </summary>
-        /// <param name="id"> A relative uri containing either a Platform Image Repository, user image, or Azure Compute Gallery image reference. </param>
-        /// <param name="sharedGalleryImageId"> A relative uri containing a direct shared Azure Compute Gallery image reference. </param>
-        /// <param name="communityGalleryImageId"> A relative uri containing a community Azure Compute Gallery image reference. </param>
-        /// <param name="lun"> If the disk is created from an image&apos;s data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null. </param>
-        /// <returns> A new <see cref="Models.ImageDiskReference"/> instance for mocking. </returns>
-        public static ImageDiskReference ImageDiskReference(ResourceIdentifier id = null, string sharedGalleryImageId = null, string communityGalleryImageId = null, int? lun = null)
-        {
-            return new ImageDiskReference(id, sharedGalleryImageId, communityGalleryImageId, lun);
-        }
-
-        /// <summary> Initializes a new instance of EncryptionSettingsGroup. </summary>
-        /// <param name="enabled"> Set this flag to true and provide DiskEncryptionKey and optional KeyEncryptionKey to enable encryption. Set this flag to false and remove DiskEncryptionKey and KeyEncryptionKey to disable encryption. If EncryptionSettings is null in the request object, the existing settings remain unchanged. </param>
-        /// <param name="encryptionSettings"> A collection of encryption settings, one for each disk volume. </param>
-        /// <param name="encryptionSettingsVersion"> Describes what type of encryption is used for the disks. Once this field is set, it cannot be overwritten. &apos;1.0&apos; corresponds to Azure Disk Encryption with AAD app.&apos;1.1&apos; corresponds to Azure Disk Encryption. </param>
-        /// <returns> A new <see cref="Models.EncryptionSettingsGroup"/> instance for mocking. </returns>
-        public static EncryptionSettingsGroup EncryptionSettingsGroup(bool enabled = default, IEnumerable<EncryptionSettingsElement> encryptionSettings = null, string encryptionSettingsVersion = null)
-        {
-            encryptionSettings ??= new List<EncryptionSettingsElement>();
-
-            return new EncryptionSettingsGroup(enabled, encryptionSettings?.ToList(), encryptionSettingsVersion);
-        }
-
-        /// <summary> Initializes a new instance of EncryptionSettingsElement. </summary>
-        /// <param name="diskEncryptionKey"> Key Vault Secret Url and vault id of the disk encryption key. </param>
-        /// <param name="keyEncryptionKey"> Key Vault Key Url and vault id of the key encryption key. KeyEncryptionKey is optional and when provided is used to unwrap the disk encryption key. </param>
-        /// <returns> A new <see cref="Models.EncryptionSettingsElement"/> instance for mocking. </returns>
-        public static EncryptionSettingsElement EncryptionSettingsElement(KeyVaultAndSecretReference diskEncryptionKey = null, KeyVaultAndKeyReference keyEncryptionKey = null)
-        {
-            return new EncryptionSettingsElement(diskEncryptionKey, keyEncryptionKey);
-        }
-
-        /// <summary> Initializes a new instance of DiskEncryption. </summary>
-        /// <param name="diskEncryptionSetId"> ResourceId of the disk encryption set to use for enabling encryption at rest. </param>
-        /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
-        /// <returns> A new <see cref="Models.DiskEncryption"/> instance for mocking. </returns>
-        public static DiskEncryption DiskEncryption(ResourceIdentifier diskEncryptionSetId = null, ComputeEncryptionType? encryptionType = null)
-        {
-            return new DiskEncryption(diskEncryptionSetId, encryptionType);
-        }
-
         /// <summary> Initializes a new instance of ShareInfoElement. </summary>
         /// <param name="vmUri"> A relative URI containing the ID of the VM that has the disk attached. </param>
         /// <returns> A new <see cref="Models.ShareInfoElement"/> instance for mocking. </returns>
         public static ShareInfoElement ShareInfoElement(Uri vmUri = null)
         {
             return new ShareInfoElement(vmUri);
-        }
-
-        /// <summary> Initializes a new instance of DiskSecurityProfile. </summary>
-        /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
-        /// <param name="secureVmDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
-        /// <returns> A new <see cref="Models.DiskSecurityProfile"/> instance for mocking. </returns>
-        public static DiskSecurityProfile DiskSecurityProfile(DiskSecurityType? securityType = null, ResourceIdentifier secureVmDiskEncryptionSetId = null)
-        {
-            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId);
         }
 
         /// <summary> Initializes a new instance of AccessUri. </summary>
@@ -2433,16 +1488,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new ComputePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ComputePrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.ComputePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ComputePrivateLinkServiceConnectionState ComputePrivateLinkServiceConnectionState(ComputePrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new ComputePrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of ComputePrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2483,15 +1528,6 @@ namespace Azure.ResourceManager.Compute.Models
             previousKeys ??= new List<KeyForDiskEncryptionSet>();
 
             return new DiskEncryptionSetData(id, name, resourceType, systemData, tags, location, identity, encryptionType, activeKey, previousKeys?.ToList(), provisioningState, rotationToLatestKeyVersionEnabled, lastKeyRotationTimestamp, autoKeyRotationError, federatedClientId);
-        }
-
-        /// <summary> Initializes a new instance of KeyForDiskEncryptionSet. </summary>
-        /// <param name="sourceVaultId"> Resource id of the KeyVault containing the key or secret. This property is optional and cannot be used if the KeyVault subscription is not the same as the Disk Encryption Set subscription. </param>
-        /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
-        /// <returns> A new <see cref="Models.KeyForDiskEncryptionSet"/> instance for mocking. </returns>
-        public static KeyForDiskEncryptionSet KeyForDiskEncryptionSet(ResourceIdentifier sourceVaultId = null, Uri keyUri = null)
-        {
-            return new KeyForDiskEncryptionSet(sourceVaultId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVaultId) : null, keyUri);
         }
 
         /// <summary> Initializes a new instance of DiskRestorePointData. </summary>
@@ -2715,17 +1751,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new SharingProfile(permission, groups?.ToList(), communityGalleryInfo);
         }
 
-        /// <summary> Initializes a new instance of SharingProfileGroup. </summary>
-        /// <param name="groupType"> This property allows you to specify the type of sharing group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Subscriptions** &lt;br&gt;&lt;br&gt; **AADTenants**. </param>
-        /// <param name="ids"> A list of subscription/tenant ids the gallery is aimed to be shared to. </param>
-        /// <returns> A new <see cref="Models.SharingProfileGroup"/> instance for mocking. </returns>
-        public static SharingProfileGroup SharingProfileGroup(SharingProfileGroupType? groupType = null, IEnumerable<string> ids = null)
-        {
-            ids ??= new List<string>();
-
-            return new SharingProfileGroup(groupType, ids?.ToList());
-        }
-
         /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>
         /// <param name="publisherUri"> The link to the publisher website. Visible to all users. </param>
         /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
@@ -2794,43 +1819,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryImageData(id, name, resourceType, systemData, tags, location, description, eula, privacyStatementUri, releaseNoteUri, osType, osState, hyperVGeneration, endOfLifeOn, identifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList()) : null, purchasePlan, provisioningState, features?.ToList(), architecture);
         }
 
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
-        /// <param name="vCpus"> Describes the resource range. </param>
-        /// <param name="memory"> Describes the resource range. </param>
-        /// <returns> A new <see cref="Models.RecommendedMachineConfiguration"/> instance for mocking. </returns>
-        public static RecommendedMachineConfiguration RecommendedMachineConfiguration(ResourceRange vCpus = null, ResourceRange memory = null)
-        {
-            return new RecommendedMachineConfiguration(vCpus, memory);
-        }
-
-        /// <summary> Initializes a new instance of ResourceRange. </summary>
-        /// <param name="min"> The minimum number of the resource. </param>
-        /// <param name="max"> The maximum number of the resource. </param>
-        /// <returns> A new <see cref="Models.ResourceRange"/> instance for mocking. </returns>
-        public static ResourceRange ResourceRange(int? min = null, int? max = null)
-        {
-            return new ResourceRange(min, max);
-        }
-
-        /// <summary> Initializes a new instance of ImagePurchasePlan. </summary>
-        /// <param name="name"> The plan ID. </param>
-        /// <param name="publisher"> The publisher ID. </param>
-        /// <param name="product"> The product ID. </param>
-        /// <returns> A new <see cref="Models.ImagePurchasePlan"/> instance for mocking. </returns>
-        public static ImagePurchasePlan ImagePurchasePlan(string name = null, string publisher = null, string product = null)
-        {
-            return new ImagePurchasePlan(name, publisher, product);
-        }
-
-        /// <summary> Initializes a new instance of GalleryImageFeature. </summary>
-        /// <param name="name"> The name of the gallery image feature. </param>
-        /// <param name="value"> The value of the gallery image feature. </param>
-        /// <returns> A new <see cref="Models.GalleryImageFeature"/> instance for mocking. </returns>
-        public static GalleryImageFeature GalleryImageFeature(string name = null, string value = null)
-        {
-            return new GalleryImageFeature(name, value);
-        }
-
         /// <summary> Initializes a new instance of GalleryImageVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2887,114 +1875,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryArtifactPublishingProfileBase(targetRegions?.ToList(), replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TargetRegion. </summary>
-        /// <param name="name"> The name of the region. </param>
-        /// <param name="regionalReplicaCount"> The number of replicas of the Image Version to be created per region. This property is updatable. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
-        /// <param name="encryption"> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </param>
-        /// <param name="isExcludedFromLatest"> Contains the flag setting to hide an image when users specify version=&apos;latest&apos;. </param>
-        /// <returns> A new <see cref="Models.TargetRegion"/> instance for mocking. </returns>
-        public static TargetRegion TargetRegion(string name = null, int? regionalReplicaCount = null, ImageStorageAccountType? storageAccountType = null, EncryptionImages encryption = null, bool? isExcludedFromLatest = null)
-        {
-            return new TargetRegion(name, regionalReplicaCount, storageAccountType, encryption, isExcludedFromLatest);
-        }
-
-        /// <summary> Initializes a new instance of EncryptionImages. </summary>
-        /// <param name="osDiskImage"> Contains encryption settings for an OS disk image. </param>
-        /// <param name="dataDiskImages"> A list of encryption specifications for data disk images. </param>
-        /// <returns> A new <see cref="Models.EncryptionImages"/> instance for mocking. </returns>
-        public static EncryptionImages EncryptionImages(OSDiskImageEncryption osDiskImage = null, IEnumerable<DataDiskImageEncryption> dataDiskImages = null)
-        {
-            dataDiskImages ??= new List<DataDiskImageEncryption>();
-
-            return new EncryptionImages(osDiskImage, dataDiskImages?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of OSDiskImageEncryption. </summary>
-        /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
-        /// <param name="securityProfile"> This property specifies the security profile of an OS disk image. </param>
-        /// <returns> A new <see cref="Models.OSDiskImageEncryption"/> instance for mocking. </returns>
-        public static OSDiskImageEncryption OSDiskImageEncryption(ResourceIdentifier diskEncryptionSetId = null, OSDiskImageSecurityProfile securityProfile = null)
-        {
-            return new OSDiskImageEncryption(diskEncryptionSetId, securityProfile);
-        }
-
-        /// <summary> Initializes a new instance of OSDiskImageSecurityProfile. </summary>
-        /// <param name="confidentialVmEncryptionType"> confidential VM encryption types. </param>
-        /// <param name="secureVmDiskEncryptionSetId"> secure VM disk encryption set id. </param>
-        /// <returns> A new <see cref="Models.OSDiskImageSecurityProfile"/> instance for mocking. </returns>
-        public static OSDiskImageSecurityProfile OSDiskImageSecurityProfile(ConfidentialVmEncryptionType? confidentialVmEncryptionType = null, string secureVmDiskEncryptionSetId = null)
-        {
-            return new OSDiskImageSecurityProfile(confidentialVmEncryptionType, secureVmDiskEncryptionSetId);
-        }
-
-        /// <summary> Initializes a new instance of DiskImageEncryption. </summary>
-        /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
-        /// <returns> A new <see cref="Models.DiskImageEncryption"/> instance for mocking. </returns>
-        public static DiskImageEncryption DiskImageEncryption(ResourceIdentifier diskEncryptionSetId = null)
-        {
-            return new DiskImageEncryption(diskEncryptionSetId);
-        }
-
-        /// <summary> Initializes a new instance of DataDiskImageEncryption. </summary>
-        /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
-        /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
-        /// <returns> A new <see cref="Models.DataDiskImageEncryption"/> instance for mocking. </returns>
-        public static DataDiskImageEncryption DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId = null, int lun = default)
-        {
-            return new DataDiskImageEncryption(diskEncryptionSetId, lun);
-        }
-
-        /// <summary> Initializes a new instance of GalleryTargetExtendedLocation. </summary>
-        /// <param name="name"> The name of the region. </param>
-        /// <param name="extendedLocation"> The name of the extended location. </param>
-        /// <param name="extendedLocationReplicaCount"> The number of replicas of the Image Version to be created per extended location. This property is updatable. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
-        /// <param name="encryption"> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </param>
-        /// <returns> A new <see cref="Models.GalleryTargetExtendedLocation"/> instance for mocking. </returns>
-        public static GalleryTargetExtendedLocation GalleryTargetExtendedLocation(string name = null, GalleryExtendedLocation extendedLocation = null, int? extendedLocationReplicaCount = null, ImageStorageAccountType? storageAccountType = null, EncryptionImages encryption = null)
-        {
-            return new GalleryTargetExtendedLocation(name, extendedLocation, extendedLocationReplicaCount, storageAccountType, encryption);
-        }
-
-        /// <summary> Initializes a new instance of GalleryExtendedLocation. </summary>
-        /// <param name="name"></param>
-        /// <param name="extendedLocationType"> It is type of the extended location. </param>
-        /// <returns> A new <see cref="Models.GalleryExtendedLocation"/> instance for mocking. </returns>
-        public static GalleryExtendedLocation GalleryExtendedLocation(string name = null, GalleryExtendedLocationType? extendedLocationType = null)
-        {
-            return new GalleryExtendedLocation(name, extendedLocationType);
-        }
-
-        /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
-        /// <param name="gallerySource"> The source of the gallery artifact version. </param>
-        /// <param name="osDiskImage"> This is the OS disk image. </param>
-        /// <param name="dataDiskImages"> A list of data disk images. </param>
-        /// <returns> A new <see cref="Models.GalleryImageVersionStorageProfile"/> instance for mocking. </returns>
-        public static GalleryImageVersionStorageProfile GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource gallerySource = null, GalleryOSDiskImage osDiskImage = null, IEnumerable<GalleryDataDiskImage> dataDiskImages = null)
-        {
-            dataDiskImages ??= new List<GalleryDataDiskImage>();
-
-            return new GalleryImageVersionStorageProfile(gallerySource, osDiskImage, dataDiskImages?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of GalleryArtifactVersionFullSource. </summary>
-        /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
-        /// <param name="communityGalleryImageId"> The resource Id of the source Community Gallery Image.  Only required when using Community Gallery Image as a source. </param>
-        /// <returns> A new <see cref="Models.GalleryArtifactVersionFullSource"/> instance for mocking. </returns>
-        public static GalleryArtifactVersionFullSource GalleryArtifactVersionFullSource(ResourceIdentifier id = null, string communityGalleryImageId = null)
-        {
-            return new GalleryArtifactVersionFullSource(id, communityGalleryImageId);
-        }
-
-        /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
-        /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
-        /// <returns> A new <see cref="Models.GalleryArtifactVersionSource"/> instance for mocking. </returns>
-        public static GalleryArtifactVersionSource GalleryArtifactVersionSource(ResourceIdentifier id = null)
-        {
-            return new GalleryArtifactVersionSource(id);
-        }
-
         /// <summary> Initializes a new instance of GalleryOSDiskImage. </summary>
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are &apos;None&apos;, &apos;ReadOnly&apos;, and &apos;ReadWrite&apos;. </param>
@@ -3013,16 +1893,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static GalleryDiskImage GalleryDiskImage(int? sizeInGB = null, HostCaching? hostCaching = null, GalleryDiskImageSource gallerySource = null)
         {
             return new GalleryDiskImage(sizeInGB, hostCaching, gallerySource);
-        }
-
-        /// <summary> Initializes a new instance of GalleryDiskImageSource. </summary>
-        /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
-        /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
-        /// <param name="storageAccountId"> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </param>
-        /// <returns> A new <see cref="Models.GalleryDiskImageSource"/> instance for mocking. </returns>
-        public static GalleryDiskImageSource GalleryDiskImageSource(ResourceIdentifier id = null, Uri uri = null, ResourceIdentifier storageAccountId = null)
-        {
-            return new GalleryDiskImageSource(id, uri, storageAccountId);
         }
 
         /// <summary> Initializes a new instance of GalleryDataDiskImage. </summary>
@@ -3055,14 +1925,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static GalleryImageVersionPolicyViolation GalleryImageVersionPolicyViolation(GalleryImageVersionPolicyViolationCategory? category = null, string details = null)
         {
             return new GalleryImageVersionPolicyViolation(category, details);
-        }
-
-        /// <summary> Initializes a new instance of GalleryArtifactSafetyProfileBase. </summary>
-        /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
-        /// <returns> A new <see cref="Models.GalleryArtifactSafetyProfileBase"/> instance for mocking. </returns>
-        public static GalleryArtifactSafetyProfileBase GalleryArtifactSafetyProfileBase(bool? allowDeletionOfReplicatedLocations = null)
-        {
-            return new GalleryArtifactSafetyProfileBase(allowDeletionOfReplicatedLocations);
         }
 
         /// <summary> Initializes a new instance of ReplicationStatus. </summary>
@@ -3110,31 +1972,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryApplicationData(id, name, resourceType, systemData, tags, location, description, eula, privacyStatementUri, releaseNoteUri, endOfLifeOn, supportedOSType, customActions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationCustomAction. </summary>
-        /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
-        /// <param name="script"> The script to run when executing this custom action. </param>
-        /// <param name="description"> Description to help the users understand what this custom action does. </param>
-        /// <param name="parameters"> The parameters that this custom action uses. </param>
-        /// <returns> A new <see cref="Models.GalleryApplicationCustomAction"/> instance for mocking. </returns>
-        public static GalleryApplicationCustomAction GalleryApplicationCustomAction(string name = null, string script = null, string description = null, IEnumerable<GalleryApplicationCustomActionParameter> parameters = null)
-        {
-            parameters ??= new List<GalleryApplicationCustomActionParameter>();
-
-            return new GalleryApplicationCustomAction(name, script, description, parameters?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of GalleryApplicationCustomActionParameter. </summary>
-        /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
-        /// <param name="isRequired"> Indicates whether this parameter must be passed when running the custom action. </param>
-        /// <param name="parameterType"> Specifies the type of the custom action parameter. Possible values are: String, ConfigurationDataBlob or LogOutputBlob. </param>
-        /// <param name="defaultValue"> The default value of the parameter.  Only applies to string types. </param>
-        /// <param name="description"> A description to help users understand what this parameter means. </param>
-        /// <returns> A new <see cref="Models.GalleryApplicationCustomActionParameter"/> instance for mocking. </returns>
-        public static GalleryApplicationCustomActionParameter GalleryApplicationCustomActionParameter(string name = null, bool? isRequired = null, GalleryApplicationCustomActionParameterType? parameterType = null, string defaultValue = null, string description = null)
-        {
-            return new GalleryApplicationCustomActionParameter(name, isRequired, parameterType, defaultValue, description);
-        }
-
         /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3178,45 +2015,6 @@ namespace Azure.ResourceManager.Compute.Models
             customActions ??= new List<GalleryApplicationCustomAction>();
 
             return new GalleryApplicationVersionPublishingProfile(targetRegions?.ToList(), replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations?.ToList(), source, manageActions, settings, advancedSettings, enableHealthCheck, customActions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of UserArtifactSource. </summary>
-        /// <param name="mediaLink"> Required. The mediaLink of the artifact, must be a readable storage page blob. </param>
-        /// <param name="defaultConfigurationLink"> Optional. The defaultConfigurationLink of the artifact, must be a readable storage page blob. </param>
-        /// <returns> A new <see cref="Models.UserArtifactSource"/> instance for mocking. </returns>
-        public static UserArtifactSource UserArtifactSource(string mediaLink = null, string defaultConfigurationLink = null)
-        {
-            return new UserArtifactSource(mediaLink, defaultConfigurationLink);
-        }
-
-        /// <summary> Initializes a new instance of UserArtifactManagement. </summary>
-        /// <param name="install"> Required. The path and arguments to install the gallery application. This is limited to 4096 characters. </param>
-        /// <param name="remove"> Required. The path and arguments to remove the gallery application. This is limited to 4096 characters. </param>
-        /// <param name="update"> Optional. The path and arguments to update the gallery application. If not present, then update operation will invoke remove command on the previous version and install command on the current version of the gallery application. This is limited to 4096 characters. </param>
-        /// <returns> A new <see cref="Models.UserArtifactManagement"/> instance for mocking. </returns>
-        public static UserArtifactManagement UserArtifactManagement(string install = null, string @remove = null, string update = null)
-        {
-            return new UserArtifactManagement(install, @remove, update);
-        }
-
-        /// <summary> Initializes a new instance of UserArtifactSettings. </summary>
-        /// <param name="packageFileName"> Optional. The name to assign the downloaded package file on the VM. This is limited to 4096 characters. If not specified, the package file will be named the same as the Gallery Application name. </param>
-        /// <param name="configFileName"> Optional. The name to assign the downloaded config file on the VM. This is limited to 4096 characters. If not specified, the config file will be named the Gallery Application name appended with &quot;_config&quot;. </param>
-        /// <returns> A new <see cref="Models.UserArtifactSettings"/> instance for mocking. </returns>
-        public static UserArtifactSettings UserArtifactSettings(string packageFileName = null, string configFileName = null)
-        {
-            return new UserArtifactSettings(packageFileName, configFileName);
-        }
-
-        /// <summary> Initializes a new instance of SharingUpdate. </summary>
-        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Add** &lt;br&gt;&lt;br&gt; **Remove** &lt;br&gt;&lt;br&gt; **Reset**. </param>
-        /// <param name="groups"> A list of sharing profile groups. </param>
-        /// <returns> A new <see cref="Models.SharingUpdate"/> instance for mocking. </returns>
-        public static SharingUpdate SharingUpdate(SharingUpdateOperationType operationType = default, IEnumerable<SharingProfileGroup> groups = null)
-        {
-            groups ??= new List<SharingProfileGroup>();
-
-            return new SharingUpdate(operationType, groups?.ToList());
         }
 
         /// <summary> Initializes a new instance of SharedGalleryData. </summary>
@@ -3456,16 +2254,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new CloudServiceRoleData(id, name, resourceType, systemData, location, sku, uniqueId);
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleSku. </summary>
-        /// <param name="name"> The sku name. NOTE: If the new SKU is not supported on the hardware the cloud service is currently on, you need to delete and recreate the cloud service or move back to the old sku. </param>
-        /// <param name="tier"> Specifies the tier of the cloud service. Possible Values are &lt;br /&gt;&lt;br /&gt; **Standard** &lt;br /&gt;&lt;br /&gt; **Basic**. </param>
-        /// <param name="capacity"> Specifies the number of role instances in the cloud service. </param>
-        /// <returns> A new <see cref="Models.CloudServiceRoleSku"/> instance for mocking. </returns>
-        public static CloudServiceRoleSku CloudServiceRoleSku(string name = null, string tier = null, long? capacity = null)
-        {
-            return new CloudServiceRoleSku(name, tier, capacity);
-        }
-
         /// <summary> Initializes a new instance of CloudServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3512,73 +2300,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new CloudServiceData(id, name, resourceType, systemData, tags, location, packageUri, configuration, configurationUri, startCloudService, allowModelOverride, upgradeMode, roles != null ? new CloudServiceRoleProfile(roles?.ToList()) : null, osSecrets != null ? new CloudServiceOSProfile(osSecrets?.ToList()) : null, networkProfile, extensions != null ? new CloudServiceExtensionProfile(extensions?.ToList()) : null, provisioningState, uniqueId);
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleProfileProperties. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="sku"> Describes the cloud service role sku. </param>
-        /// <returns> A new <see cref="Models.CloudServiceRoleProfileProperties"/> instance for mocking. </returns>
-        public static CloudServiceRoleProfileProperties CloudServiceRoleProfileProperties(string name = null, CloudServiceRoleSku sku = null)
-        {
-            return new CloudServiceRoleProfileProperties(name, sku);
-        }
-
-        /// <summary> Initializes a new instance of CloudServiceVaultSecretGroup. </summary>
-        /// <param name="sourceVaultId"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
-        /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
-        /// <returns> A new <see cref="Models.CloudServiceVaultSecretGroup"/> instance for mocking. </returns>
-        public static CloudServiceVaultSecretGroup CloudServiceVaultSecretGroup(ResourceIdentifier sourceVaultId = null, IEnumerable<CloudServiceVaultCertificate> vaultCertificates = null)
-        {
-            vaultCertificates ??= new List<CloudServiceVaultCertificate>();
-
-            return new CloudServiceVaultSecretGroup(sourceVaultId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVaultId) : null, vaultCertificates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CloudServiceVaultCertificate. </summary>
-        /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. </param>
-        /// <returns> A new <see cref="Models.CloudServiceVaultCertificate"/> instance for mocking. </returns>
-        public static CloudServiceVaultCertificate CloudServiceVaultCertificate(Uri certificateUri = null)
-        {
-            return new CloudServiceVaultCertificate(certificateUri);
-        }
-
-        /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>
-        /// <param name="loadBalancerConfigurations"> List of Load balancer configurations. Cloud service can have up to two load balancer configurations, corresponding to a Public Load Balancer and an Internal Load Balancer. </param>
-        /// <param name="slotType">
-        /// Slot type for the cloud service.
-        /// Possible values are &lt;br /&gt;&lt;br /&gt;**Production**&lt;br /&gt;&lt;br /&gt;**Staging**&lt;br /&gt;&lt;br /&gt;
-        /// If not specified, the default value is Production.
-        /// </param>
-        /// <param name="swappableCloudServiceId"> The id reference of the cloud service containing the target IP with which the subject cloud service can perform a swap. This property cannot be updated once it is set. The swappable cloud service referred by this id must be present otherwise an error will be thrown. </param>
-        /// <returns> A new <see cref="Models.CloudServiceNetworkProfile"/> instance for mocking. </returns>
-        public static CloudServiceNetworkProfile CloudServiceNetworkProfile(IEnumerable<CloudServiceLoadBalancerConfiguration> loadBalancerConfigurations = null, CloudServiceSlotType? slotType = null, ResourceIdentifier swappableCloudServiceId = null)
-        {
-            loadBalancerConfigurations ??= new List<CloudServiceLoadBalancerConfiguration>();
-
-            return new CloudServiceNetworkProfile(loadBalancerConfigurations?.ToList(), slotType, swappableCloudServiceId != null ? ResourceManagerModelFactory.WritableSubResource(swappableCloudServiceId) : null);
-        }
-
-        /// <summary> Initializes a new instance of CloudServiceLoadBalancerConfiguration. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The name of the Load balancer. </param>
-        /// <param name="frontendIPConfigurations"> Specifies the frontend IP to be used for the load balancer. Only IPv4 frontend IP address is supported. Each load balancer configuration must have exactly one frontend IP configuration. </param>
-        /// <returns> A new <see cref="Models.CloudServiceLoadBalancerConfiguration"/> instance for mocking. </returns>
-        public static CloudServiceLoadBalancerConfiguration CloudServiceLoadBalancerConfiguration(ResourceIdentifier id = null, string name = null, IEnumerable<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations = null)
-        {
-            frontendIPConfigurations ??= new List<LoadBalancerFrontendIPConfiguration>();
-
-            return new CloudServiceLoadBalancerConfiguration(id, name, frontendIPConfigurations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfiguration. </summary>
-        /// <param name="name"> The name of the resource that is unique within the set of frontend IP configurations used by the load balancer. This name can be used to access the resource. </param>
-        /// <param name="publicIPAddressId"> The reference to the public ip address resource. </param>
-        /// <param name="subnetId"> The reference to the virtual network subnet resource. </param>
-        /// <param name="privateIPAddress"> The virtual network private IP address of the IP configuration. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerFrontendIPConfiguration"/> instance for mocking. </returns>
-        public static LoadBalancerFrontendIPConfiguration LoadBalancerFrontendIPConfiguration(string name = null, ResourceIdentifier publicIPAddressId = null, ResourceIdentifier subnetId = null, string privateIPAddress = null)
-        {
-            return new LoadBalancerFrontendIPConfiguration(name, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, privateIPAddress);
-        }
-
         /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
@@ -3603,15 +2324,6 @@ namespace Azure.ResourceManager.Compute.Models
             rolesAppliedTo ??= new List<string>();
 
             return new CloudServiceExtension(name, publisher, cloudServiceExtensionPropertiesType, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings, protectedSettingsFromKeyVault, forceUpdateTag, provisioningState, rolesAppliedTo?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
-        /// <param name="sourceVaultId"> The ARM Resource ID of the Key Vault. </param>
-        /// <param name="secretUri"> Secret URL which contains the protected settings of the extension. </param>
-        /// <returns> A new <see cref="Models.CloudServiceVaultAndSecretReference"/> instance for mocking. </returns>
-        public static CloudServiceVaultAndSecretReference CloudServiceVaultAndSecretReference(ResourceIdentifier sourceVaultId = null, Uri secretUri = null)
-        {
-            return new CloudServiceVaultAndSecretReference(sourceVaultId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVaultId) : null, secretUri);
         }
 
         /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>

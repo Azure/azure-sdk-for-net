@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearningCompute;
 using Azure.ResourceManager.Models;
@@ -108,43 +107,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static SystemService SystemService(SystemServiceType systemServiceType = default, string publicIPAddress = null, string version = null)
         {
             return new SystemService(systemServiceType, publicIPAddress, version);
-        }
-
-        /// <summary> Initializes a new instance of GlobalServiceConfiguration. </summary>
-        /// <param name="etag"> The configuration ETag for updates. </param>
-        /// <param name="ssl"> The SSL configuration properties. </param>
-        /// <param name="serviceAuth"> Optional global authorization keys for all user services deployed in cluster. These are used if the service does not have auth keys. </param>
-        /// <param name="autoScale"> The auto-scale configuration. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.GlobalServiceConfiguration"/> instance for mocking. </returns>
-        public static GlobalServiceConfiguration GlobalServiceConfiguration(ETag? etag = null, SslConfiguration ssl = null, ServiceAuthConfiguration serviceAuth = null, AutoScaleConfiguration autoScale = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new GlobalServiceConfiguration(etag, ssl, serviceAuth, autoScale, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
-        /// <param name="status"> SSL status. Allowed values are Enabled and Disabled. </param>
-        /// <param name="cert"> The SSL cert data in PEM format. </param>
-        /// <param name="key"> The SSL key data in PEM format. This is not returned in response of GET/PUT on the resource. To see this please call listKeys API. </param>
-        /// <param name="cname"> The CName of the certificate. </param>
-        /// <returns> A new <see cref="Models.SslConfiguration"/> instance for mocking. </returns>
-        public static SslConfiguration SslConfiguration(Status? status = null, string cert = null, string key = null, string cname = null)
-        {
-            return new SslConfiguration(status, cert, key, cname);
-        }
-
-        /// <summary> Initializes a new instance of AutoScaleConfiguration. </summary>
-        /// <param name="status"> If auto-scale is enabled for all services. Each service can turn it off individually. </param>
-        /// <param name="minReplicas"> The minimum number of replicas for each service. </param>
-        /// <param name="maxReplicas"> The maximum number of replicas for each service. </param>
-        /// <param name="targetUtilization"> The target utilization. </param>
-        /// <param name="refreshPeriodInSeconds"> Refresh period in seconds. </param>
-        /// <returns> A new <see cref="Models.AutoScaleConfiguration"/> instance for mocking. </returns>
-        public static AutoScaleConfiguration AutoScaleConfiguration(Status? status = null, int? minReplicas = null, int? maxReplicas = null, float? targetUtilization = null, int? refreshPeriodInSeconds = null)
-        {
-            return new AutoScaleConfiguration(status, minReplicas, maxReplicas, targetUtilization, refreshPeriodInSeconds);
         }
 
         /// <summary> Initializes a new instance of OperationalizationClusterCredentials. </summary>

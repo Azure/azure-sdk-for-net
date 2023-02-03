@@ -72,37 +72,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitorData(id, name, resourceType, systemData, tags, location, identity, monitoringStatus, marketplaceSubscriptionStatus, dynatraceEnvironmentProperties, userInfo, planData, liftrResourceCategory, liftrResourcePreference, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DynatraceEnvironmentProperties. </summary>
-        /// <param name="userId"> User id. </param>
-        /// <param name="accountInfo"> Dynatrace Account Information. </param>
-        /// <param name="environmentInfo"> Dynatrace Environment Information. </param>
-        /// <param name="singleSignOnProperties"> The details of a Dynatrace single sign-on. </param>
-        /// <returns> A new <see cref="Models.DynatraceEnvironmentProperties"/> instance for mocking. </returns>
-        public static DynatraceEnvironmentProperties DynatraceEnvironmentProperties(string userId = null, DynatraceAccountInfo accountInfo = null, DynatraceEnvironmentInfo environmentInfo = null, DynatraceSingleSignOnProperties singleSignOnProperties = null)
-        {
-            return new DynatraceEnvironmentProperties(userId, accountInfo, environmentInfo, singleSignOnProperties);
-        }
-
-        /// <summary> Initializes a new instance of DynatraceAccountInfo. </summary>
-        /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
-        /// <param name="regionId"> Region in which the account is created. </param>
-        /// <returns> A new <see cref="Models.DynatraceAccountInfo"/> instance for mocking. </returns>
-        public static DynatraceAccountInfo DynatraceAccountInfo(string accountId = null, string regionId = null)
-        {
-            return new DynatraceAccountInfo(accountId, regionId);
-        }
-
-        /// <summary> Initializes a new instance of DynatraceEnvironmentInfo. </summary>
-        /// <param name="environmentId"> Id of the environment created. </param>
-        /// <param name="ingestionKey"> Ingestion key of the environment. </param>
-        /// <param name="logsIngestionEndpoint"> Ingestion endpoint used for sending logs. </param>
-        /// <param name="landingUri"> Landing URL for Dynatrace environment. </param>
-        /// <returns> A new <see cref="Models.DynatraceEnvironmentInfo"/> instance for mocking. </returns>
-        public static DynatraceEnvironmentInfo DynatraceEnvironmentInfo(string environmentId = null, string ingestionKey = null, Uri logsIngestionEndpoint = null, Uri landingUri = null)
-        {
-            return new DynatraceEnvironmentInfo(environmentId, ingestionKey, logsIngestionEndpoint, landingUri);
-        }
-
         /// <summary> Initializes a new instance of DynatraceSingleSignOnProperties. </summary>
         /// <param name="singleSignOnState"> State of Single Sign On. </param>
         /// <param name="enterpriseAppId"> Version of the Dynatrace agent installed on the VM. </param>
@@ -115,29 +84,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
             aadDomains ??= new List<string>();
 
             return new DynatraceSingleSignOnProperties(singleSignOnState, enterpriseAppId, singleSignOnUri, aadDomains?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of DynatraceMonitorUserInfo. </summary>
-        /// <param name="firstName"> First Name of the user. </param>
-        /// <param name="lastName"> Last Name of the user. </param>
-        /// <param name="emailAddress"> Email of the user used by Dynatrace for contacting them if needed. </param>
-        /// <param name="phoneNumber"> Phone number of the user used by Dynatrace for contacting them if needed. </param>
-        /// <param name="country"> Country of the user. </param>
-        /// <returns> A new <see cref="Models.DynatraceMonitorUserInfo"/> instance for mocking. </returns>
-        public static DynatraceMonitorUserInfo DynatraceMonitorUserInfo(string firstName = null, string lastName = null, string emailAddress = null, string phoneNumber = null, string country = null)
-        {
-            return new DynatraceMonitorUserInfo(firstName, lastName, emailAddress, phoneNumber, country);
-        }
-
-        /// <summary> Initializes a new instance of DynatraceBillingPlanInfo. </summary>
-        /// <param name="usageType"> different usage type like PAYG/COMMITTED. this could be enum. </param>
-        /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
-        /// <param name="planDetails"> plan id as published by Dynatrace. </param>
-        /// <param name="effectiveOn"> date when plan was applied. </param>
-        /// <returns> A new <see cref="Models.DynatraceBillingPlanInfo"/> instance for mocking. </returns>
-        public static DynatraceBillingPlanInfo DynatraceBillingPlanInfo(string usageType = null, string billingCycle = null, string planDetails = null, DateTimeOffset? effectiveOn = null)
-        {
-            return new DynatraceBillingPlanInfo(usageType, billingCycle, planDetails, effectiveOn);
         }
 
         /// <summary> Initializes a new instance of DynatraceTagRuleData. </summary>
@@ -154,32 +100,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
             metricRulesFilteringTags ??= new List<DynatraceMonitorResourceFilteringTag>();
 
             return new DynatraceTagRuleData(id, name, resourceType, systemData, logRules, metricRulesFilteringTags != null ? new DynatraceMonitorResourceMetricRules(metricRulesFilteringTags?.ToList()) : null, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of DynatraceMonitorResourceLogRules. </summary>
-        /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
-        /// <param name="sendSubscriptionLogs"> Flag specifying if subscription logs should be sent for the Monitor resource. </param>
-        /// <param name="sendActivityLogs"> Flag specifying if activity logs from Azure resources should be sent for the Monitor resource. </param>
-        /// <param name="filteringTags">
-        /// List of filtering tags to be used for capturing logs. This only takes effect if SendActivityLogs flag is enabled. If empty, all resources will be captured.
-        /// If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags.
-        /// </param>
-        /// <returns> A new <see cref="Models.DynatraceMonitorResourceLogRules"/> instance for mocking. </returns>
-        public static DynatraceMonitorResourceLogRules DynatraceMonitorResourceLogRules(AadLogsSendingStatus? sendAadLogs = null, SubscriptionLogsSendingStatus? sendSubscriptionLogs = null, ActivityLogsSendingStatus? sendActivityLogs = null, IEnumerable<DynatraceMonitorResourceFilteringTag> filteringTags = null)
-        {
-            filteringTags ??= new List<DynatraceMonitorResourceFilteringTag>();
-
-            return new DynatraceMonitorResourceLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DynatraceMonitorResourceFilteringTag. </summary>
-        /// <param name="name"> The name (also known as the key) of the tag. </param>
-        /// <param name="value"> The value of the tag. </param>
-        /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
-        /// <returns> A new <see cref="Models.DynatraceMonitorResourceFilteringTag"/> instance for mocking. </returns>
-        public static DynatraceMonitorResourceFilteringTag DynatraceMonitorResourceFilteringTag(string name = null, string value = null, DynatraceMonitorResourceTagAction? action = null)
-        {
-            return new DynatraceMonitorResourceFilteringTag(name, value, action);
         }
 
         /// <summary> Initializes a new instance of DynatraceSingleSignOnData. </summary>

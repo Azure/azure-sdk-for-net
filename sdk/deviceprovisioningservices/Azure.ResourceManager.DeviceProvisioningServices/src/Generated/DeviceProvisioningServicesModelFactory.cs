@@ -90,17 +90,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServiceProperties(state, publicNetworkAccess, ipFilterRules?.ToList(), privateEndpointConnections?.ToList(), provisioningState, iotHubs?.ToList(), allocationPolicy, serviceOperationsHostName, deviceProvisioningHostName, idScope, authorizationPolicies?.ToList(), isDataResidencyEnabled);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesIPFilterRule. </summary>
-        /// <param name="filterName"> The name of the IP filter rule. </param>
-        /// <param name="action"> The desired action for requests captured by this rule. </param>
-        /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
-        /// <param name="target"> Target for requests captured by this rule. </param>
-        /// <returns> A new <see cref="Models.DeviceProvisioningServicesIPFilterRule"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesIPFilterRule DeviceProvisioningServicesIPFilterRule(string filterName = null, DeviceProvisioningServicesIPFilterActionType action = default, string ipMask = null, DeviceProvisioningServicesIPFilterTargetType? target = null)
-        {
-            return new DeviceProvisioningServicesIPFilterRule(filterName, action, ipMask, target);
-        }
-
         /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -113,25 +102,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionProperties. </summary>
-        /// <param name="privateEndpointId"> The private endpoint property of a private endpoint connection. </param>
-        /// <param name="connectionState"> The current state of a private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.DeviceProvisioningServicesPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesPrivateEndpointConnectionProperties DeviceProvisioningServicesPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, DeviceProvisioningServicesPrivateLinkServiceConnectionState connectionState = null)
-        {
-            return new DeviceProvisioningServicesPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState);
-        }
-
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> The status of a private endpoint connection. </param>
-        /// <param name="description"> The description for the current state of a private endpoint connection. </param>
-        /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.DeviceProvisioningServicesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesPrivateLinkServiceConnectionState DeviceProvisioningServicesPrivateLinkServiceConnectionState(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status = default, string description = null, string actionsRequired = null)
-        {
-            return new DeviceProvisioningServicesPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of IotHubDefinitionDescription. </summary>
         /// <param name="applyAllocationPolicy"> flag for applying allocationPolicy or not for a given iot hub. </param>
         /// <param name="allocationWeight"> weight to apply for a given iot h. </param>
@@ -142,17 +112,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy = null, int? allocationWeight = null, string name = null, string connectionString = null, AzureLocation location = default)
         {
             return new IotHubDefinitionDescription(applyAllocationPolicy, allocationWeight, name, connectionString, location);
-        }
-
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSharedAccessKey. </summary>
-        /// <param name="keyName"> Name of the key. </param>
-        /// <param name="primaryKey"> Primary SAS key value. </param>
-        /// <param name="secondaryKey"> Secondary SAS key value. </param>
-        /// <param name="rights"> Rights that this key has. </param>
-        /// <returns> A new <see cref="Models.DeviceProvisioningServicesSharedAccessKey"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesSharedAccessKey DeviceProvisioningServicesSharedAccessKey(string keyName = null, string primaryKey = null, string secondaryKey = null, DeviceProvisioningServicesAccessKeyRight rights = default)
-        {
-            return new DeviceProvisioningServicesSharedAccessKey(keyName, primaryKey, secondaryKey, rights);
         }
 
         /// <summary> Initializes a new instance of DeviceProvisioningServicesSkuInfo. </summary>

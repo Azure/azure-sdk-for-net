@@ -203,16 +203,6 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseSqlPoolData(id, name, resourceType, systemData, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, createdOn, storageAccountType, sourceDatabaseDeletionOn);
         }
 
-        /// <summary> Initializes a new instance of SynapseSku. </summary>
-        /// <param name="tier"> The service tier. </param>
-        /// <param name="name"> The SKU name. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.SynapseSku"/> instance for mocking. </returns>
-        public static SynapseSku SynapseSku(string tier = null, string name = null, int? capacity = null)
-        {
-            return new SynapseSku(tier, name, capacity);
-        }
-
         /// <summary> Initializes a new instance of SynapseMetadataSyncConfigurationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -303,16 +293,6 @@ namespace Azure.ResourceManager.Synapse.Models
             timeRanges ??= new List<SynapseMaintenanceWindowTimeRange>();
 
             return new SynapseMaintenanceWindowData(id, name, resourceType, systemData, timeRanges?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowTimeRange. </summary>
-        /// <param name="dayOfWeek"> Day of maintenance window. </param>
-        /// <param name="startOn"> Start time minutes offset from 12am. </param>
-        /// <param name="duration"> Duration of maintenance window in minutes. </param>
-        /// <returns> A new <see cref="Models.SynapseMaintenanceWindowTimeRange"/> instance for mocking. </returns>
-        public static SynapseMaintenanceWindowTimeRange SynapseMaintenanceWindowTimeRange(SynapseDayOfWeek? dayOfWeek = null, TimeSpan? startOn = null, TimeSpan? duration = null)
-        {
-            return new SynapseMaintenanceWindowTimeRange(dayOfWeek, startOn, duration);
         }
 
         /// <summary> Initializes a new instance of SynapseMaintenanceWindowOptionData. </summary>
@@ -575,18 +555,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseSqlPoolVulnerabilityAssessmentData SynapseSqlPoolVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, SynapseVulnerabilityAssessmentRecurringScansProperties recurringScans = null)
         {
             return new SynapseSqlPoolVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans);
-        }
-
-        /// <summary> Initializes a new instance of SynapseVulnerabilityAssessmentRecurringScansProperties. </summary>
-        /// <param name="isEnabled"> Recurring scans state. </param>
-        /// <param name="enableEmailToAccountAdmins"> Specifies that the schedule scan notification will be is sent to the subscription administrators. </param>
-        /// <param name="emails"> Specifies an array of e-mail addresses to which the scan notification is sent. </param>
-        /// <returns> A new <see cref="Models.SynapseVulnerabilityAssessmentRecurringScansProperties"/> instance for mocking. </returns>
-        public static SynapseVulnerabilityAssessmentRecurringScansProperties SynapseVulnerabilityAssessmentRecurringScansProperties(bool? isEnabled = null, bool? enableEmailToAccountAdmins = null, IEnumerable<string> emails = null)
-        {
-            emails ??= new List<string>();
-
-            return new SynapseVulnerabilityAssessmentRecurringScansProperties(isEnabled, enableEmailToAccountAdmins, emails?.ToList());
         }
 
         /// <summary> Initializes a new instance of SynapseVulnerabilityAssessmentScanRecordData. </summary>
@@ -1219,17 +1187,6 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseWorkspaceData(id, name, resourceType, systemData, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkComputeSubnetId != null ? new VirtualNetworkProfile(virtualNetworkComputeSubnetId) : null, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUid, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewResourceId != null ? new PurviewConfiguration(purviewResourceId) : null, adlaResourceId, publicNetworkAccess, initialWorkspaceAdminObjectId != null ? new CspWorkspaceAdminProperties(initialWorkspaceAdminObjectId) : null, settings, isAadOnlyAuthenticationEnabled, isTrustedServiceBypassEnabled);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataLakeStorageAccountDetails. </summary>
-        /// <param name="accountUri"> Account URL. </param>
-        /// <param name="filesystem"> Filesystem name. </param>
-        /// <param name="resourceId"> ARM resource Id of this storage account. </param>
-        /// <param name="createManagedPrivateEndpoint"> Create managed private endpoint to this storage account or not. </param>
-        /// <returns> A new <see cref="Models.SynapseDataLakeStorageAccountDetails"/> instance for mocking. </returns>
-        public static SynapseDataLakeStorageAccountDetails SynapseDataLakeStorageAccountDetails(Uri accountUri = null, string filesystem = null, ResourceIdentifier resourceId = null, bool? createManagedPrivateEndpoint = null)
-        {
-            return new SynapseDataLakeStorageAccountDetails(accountUri, filesystem, resourceId, createManagedPrivateEndpoint);
-        }
-
         /// <summary> Initializes a new instance of SynapseEncryptionDetails. </summary>
         /// <param name="isDoubleEncryptionEnabled"> Double Encryption enabled. </param>
         /// <param name="cmk"> Customer Managed Key Details. </param>
@@ -1247,52 +1204,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public static WorkspaceCustomerManagedKeyDetails WorkspaceCustomerManagedKeyDetails(string status = null, SynapseWorkspaceKeyDetails key = null, KekIdentityProperties kekIdentity = null)
         {
             return new WorkspaceCustomerManagedKeyDetails(status, key, kekIdentity);
-        }
-
-        /// <summary> Initializes a new instance of SynapseWorkspaceKeyDetails. </summary>
-        /// <param name="name"> Workspace Key sub-resource name. </param>
-        /// <param name="keyVaultUri"> Workspace Key sub-resource key vault url. </param>
-        /// <returns> A new <see cref="Models.SynapseWorkspaceKeyDetails"/> instance for mocking. </returns>
-        public static SynapseWorkspaceKeyDetails SynapseWorkspaceKeyDetails(string name = null, Uri keyVaultUri = null)
-        {
-            return new SynapseWorkspaceKeyDetails(name, keyVaultUri);
-        }
-
-        /// <summary> Initializes a new instance of KekIdentityProperties. </summary>
-        /// <param name="userAssignedIdentityId"> User assigned identity resource Id. </param>
-        /// <param name="useSystemAssignedIdentity"> Boolean specifying whether to use system assigned identity or not. </param>
-        /// <returns> A new <see cref="Models.KekIdentityProperties"/> instance for mocking. </returns>
-        public static KekIdentityProperties KekIdentityProperties(ResourceIdentifier userAssignedIdentityId = null, BinaryData useSystemAssignedIdentity = null)
-        {
-            return new KekIdentityProperties(userAssignedIdentityId, useSystemAssignedIdentity);
-        }
-
-        /// <summary> Initializes a new instance of SynapseManagedVirtualNetworkSettings. </summary>
-        /// <param name="preventDataExfiltration"> Prevent Data Exfiltration. </param>
-        /// <param name="enableLinkedAccessCheckOnTargetResource"> Linked Access Check On Target Resource. </param>
-        /// <param name="allowedAadTenantIdsForLinking"> Allowed Aad Tenant Ids For Linking. </param>
-        /// <returns> A new <see cref="Models.SynapseManagedVirtualNetworkSettings"/> instance for mocking. </returns>
-        public static SynapseManagedVirtualNetworkSettings SynapseManagedVirtualNetworkSettings(bool? preventDataExfiltration = null, bool? enableLinkedAccessCheckOnTargetResource = null, IEnumerable<string> allowedAadTenantIdsForLinking = null)
-        {
-            allowedAadTenantIdsForLinking ??= new List<string>();
-
-            return new SynapseManagedVirtualNetworkSettings(preventDataExfiltration, enableLinkedAccessCheckOnTargetResource, allowedAadTenantIdsForLinking?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SynapseWorkspaceRepositoryConfiguration. </summary>
-        /// <param name="workspaceRepositoryConfigurationType"> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </param>
-        /// <param name="hostName"> GitHub Enterprise host name. For example: https://github.mydomain.com. </param>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="projectName"> VSTS project name. </param>
-        /// <param name="repositoryName"> Repository name. </param>
-        /// <param name="collaborationBranch"> Collaboration branch. </param>
-        /// <param name="rootFolder"> Root folder to use in the repository. </param>
-        /// <param name="lastCommitId"> The last commit ID. </param>
-        /// <param name="tenantId"> The VSTS tenant ID. </param>
-        /// <returns> A new <see cref="Models.SynapseWorkspaceRepositoryConfiguration"/> instance for mocking. </returns>
-        public static SynapseWorkspaceRepositoryConfiguration SynapseWorkspaceRepositoryConfiguration(string workspaceRepositoryConfigurationType = null, string hostName = null, string accountName = null, string projectName = null, string repositoryName = null, string collaborationBranch = null, string rootFolder = null, string lastCommitId = null, Guid? tenantId = null)
-        {
-            return new SynapseWorkspaceRepositoryConfiguration(workspaceRepositoryConfigurationType, hostName, accountName, projectName, repositoryName, collaborationBranch, rootFolder, lastCommitId, tenantId);
         }
 
         /// <summary> Initializes a new instance of SynapseWorkspaceAadAdminInfoData. </summary>
@@ -1386,35 +1297,6 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseBigDataPoolInfoData(id, name, resourceType, systemData, tags, location, provisioningState, autoScale, createdOn, autoPause, isComputeIsolationEnabled, isAutotuneEnabled, isSessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededOn);
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolAutoScaleProperties. </summary>
-        /// <param name="minNodeCount"> The minimum number of nodes the Big Data pool can support. </param>
-        /// <param name="isEnabled"> Whether automatic scaling is enabled for the Big Data pool. </param>
-        /// <param name="maxNodeCount"> The maximum number of nodes the Big Data pool can support. </param>
-        /// <returns> A new <see cref="Models.BigDataPoolAutoScaleProperties"/> instance for mocking. </returns>
-        public static BigDataPoolAutoScaleProperties BigDataPoolAutoScaleProperties(int? minNodeCount = null, bool? isEnabled = null, int? maxNodeCount = null)
-        {
-            return new BigDataPoolAutoScaleProperties(minNodeCount, isEnabled, maxNodeCount);
-        }
-
-        /// <summary> Initializes a new instance of BigDataPoolAutoPauseProperties. </summary>
-        /// <param name="delayInMinutes"> Number of minutes of idle time before the Big Data pool is automatically paused. </param>
-        /// <param name="isEnabled"> Whether auto-pausing is enabled for the Big Data pool. </param>
-        /// <returns> A new <see cref="Models.BigDataPoolAutoPauseProperties"/> instance for mocking. </returns>
-        public static BigDataPoolAutoPauseProperties BigDataPoolAutoPauseProperties(int? delayInMinutes = null, bool? isEnabled = null)
-        {
-            return new BigDataPoolAutoPauseProperties(delayInMinutes, isEnabled);
-        }
-
-        /// <summary> Initializes a new instance of SynapseDynamicExecutorAllocation. </summary>
-        /// <param name="isEnabled"> Indicates whether Dynamic Executor Allocation is enabled or not. </param>
-        /// <param name="minExecutors"> The minimum number of executors alloted. </param>
-        /// <param name="maxExecutors"> The maximum number of executors alloted. </param>
-        /// <returns> A new <see cref="Models.SynapseDynamicExecutorAllocation"/> instance for mocking. </returns>
-        public static SynapseDynamicExecutorAllocation SynapseDynamicExecutorAllocation(bool? isEnabled = null, int? minExecutors = null, int? maxExecutors = null)
-        {
-            return new SynapseDynamicExecutorAllocation(isEnabled, minExecutors, maxExecutors);
-        }
-
         /// <summary> Initializes a new instance of BigDataPoolLibraryRequirements. </summary>
         /// <param name="updatedOn"> The last update time of the library requirements file. </param>
         /// <param name="content"> The library requirements. </param>
@@ -1484,18 +1366,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeData SynapseIntegrationRuntimeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapseIntegrationRuntimeProperties properties = null, ETag? etag = null)
         {
             return new SynapseIntegrationRuntimeData(id, name, resourceType, systemData, properties, etag);
-        }
-
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeProperties. </summary>
-        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
-        /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeProperties"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeProperties SynapseIntegrationRuntimeProperties(string integrationRuntimeType = "Unknown", string description = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new SynapseIntegrationRuntimeProperties(integrationRuntimeType, description, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
@@ -1757,34 +1627,6 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseKustoPoolData(id, name, resourceType, systemData, tags, location, sku, etag, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, languageExtensionsValue != null ? new SynapseLanguageExtensionsList(languageExtensionsValue?.ToList()) : null, workspaceUid);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceSku. </summary>
-        /// <param name="name"> SKU name. </param>
-        /// <param name="capacity"> The number of instances of the cluster. </param>
-        /// <param name="size"> SKU size. </param>
-        /// <returns> A new <see cref="Models.SynapseDataSourceSku"/> instance for mocking. </returns>
-        public static SynapseDataSourceSku SynapseDataSourceSku(SynapseSkuName name = default, int? capacity = null, KustoPoolSkuSize size = default)
-        {
-            return new SynapseDataSourceSku(name, capacity, size);
-        }
-
-        /// <summary> Initializes a new instance of SynapseLanguageExtensionsList. </summary>
-        /// <param name="value"> The list of language extensions. </param>
-        /// <returns> A new <see cref="Models.SynapseLanguageExtensionsList"/> instance for mocking. </returns>
-        public static SynapseLanguageExtensionsList SynapseLanguageExtensionsList(IEnumerable<SynapseLanguageExtension> value = null)
-        {
-            value ??= new List<SynapseLanguageExtension>();
-
-            return new SynapseLanguageExtensionsList(value?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SynapseLanguageExtension. </summary>
-        /// <param name="languageExtensionName"> The language extension name. </param>
-        /// <returns> A new <see cref="Models.SynapseLanguageExtension"/> instance for mocking. </returns>
-        public static SynapseLanguageExtension SynapseLanguageExtension(SynapseLanguageExtensionName? languageExtensionName = null)
-        {
-            return new SynapseLanguageExtension(languageExtensionName);
-        }
-
         /// <summary> Initializes a new instance of SynapseKustoPoolPatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1860,26 +1702,6 @@ namespace Azure.ResourceManager.Synapse.Models
             attachedDatabaseNames ??= new List<string>();
 
             return new SynapseAttachedDatabaseConfigurationData(id, name, resourceType, systemData, location, provisioningState, databaseName, kustoPoolResourceId, attachedDatabaseNames?.ToList(), defaultPrincipalsModificationKind, tableLevelSharingProperties);
-        }
-
-        /// <summary> Initializes a new instance of SynapseTableLevelSharingProperties. </summary>
-        /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
-        /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
-        /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>
-        /// <param name="externalTablesToExclude"> List of external tables exclude from the follower database. </param>
-        /// <param name="materializedViewsToInclude"> List of materialized views to include in the follower database. </param>
-        /// <param name="materializedViewsToExclude"> List of materialized views exclude from the follower database. </param>
-        /// <returns> A new <see cref="Models.SynapseTableLevelSharingProperties"/> instance for mocking. </returns>
-        public static SynapseTableLevelSharingProperties SynapseTableLevelSharingProperties(IEnumerable<string> tablesToInclude = null, IEnumerable<string> tablesToExclude = null, IEnumerable<string> externalTablesToInclude = null, IEnumerable<string> externalTablesToExclude = null, IEnumerable<string> materializedViewsToInclude = null, IEnumerable<string> materializedViewsToExclude = null)
-        {
-            tablesToInclude ??= new List<string>();
-            tablesToExclude ??= new List<string>();
-            externalTablesToInclude ??= new List<string>();
-            externalTablesToExclude ??= new List<string>();
-            materializedViewsToInclude ??= new List<string>();
-            materializedViewsToExclude ??= new List<string>();
-
-            return new SynapseTableLevelSharingProperties(tablesToInclude?.ToList(), tablesToExclude?.ToList(), externalTablesToInclude?.ToList(), externalTablesToExclude?.ToList(), materializedViewsToInclude?.ToList(), materializedViewsToExclude?.ToList());
         }
 
         /// <summary> Initializes a new instance of SynapseDatabaseData. </summary>
@@ -1997,214 +1819,6 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new SynapseManagedIntegrationRuntime(IntegrationRuntimeType.Managed, description, additionalProperties, state, referenceName, typeManagedVirtualNetworkType, id, computeProperties, ssisProperties);
-        }
-
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeComputeProperties. </summary>
-        /// <param name="location"> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </param>
-        /// <param name="nodeSize"> The node size requirement to managed integration runtime. </param>
-        /// <param name="numberOfNodes"> The required number of nodes for managed integration runtime. </param>
-        /// <param name="maxParallelExecutionsPerNode"> Maximum parallel executions count per node for managed integration runtime. </param>
-        /// <param name="dataFlowProperties"> Data flow properties for managed integration runtime. </param>
-        /// <param name="vnetProperties"> VNet properties for managed integration runtime. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeComputeProperties"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeComputeProperties SynapseIntegrationRuntimeComputeProperties(AzureLocation? location = null, string nodeSize = null, int? numberOfNodes = null, int? maxParallelExecutionsPerNode = null, SynapseIntegrationRuntimeDataFlowProperties dataFlowProperties = null, SynapseIntegrationRuntimeVnetProperties vnetProperties = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new SynapseIntegrationRuntimeComputeProperties(location, nodeSize, numberOfNodes, maxParallelExecutionsPerNode, dataFlowProperties, vnetProperties, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataFlowProperties. </summary>
-        /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
-        /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
-        /// <param name="timeToLive"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
-        /// <param name="cleanup"> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeDataFlowProperties"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeDataFlowProperties SynapseIntegrationRuntimeDataFlowProperties(SynapseDataFlowComputeType? computeType = null, int? coreCount = null, int? timeToLive = null, bool? cleanup = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new SynapseIntegrationRuntimeDataFlowProperties(computeType, coreCount, timeToLive, cleanup, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeVnetProperties. </summary>
-        /// <param name="vnetId"> The ID of the VNet that this integration runtime will join. </param>
-        /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
-        /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
-        /// <param name="subnetId"> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeVnetProperties"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeVnetProperties SynapseIntegrationRuntimeVnetProperties(Guid? vnetId = null, string subnet = null, IEnumerable<string> publicIPs = null, ResourceIdentifier subnetId = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            publicIPs ??= new List<string>();
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new SynapseIntegrationRuntimeVnetProperties(vnetId, subnet, publicIPs?.ToList(), subnetId, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisProperties. </summary>
-        /// <param name="catalogInfo"> Catalog information for managed dedicated integration runtime. </param>
-        /// <param name="licenseType"> License type for bringing your own license scenario. </param>
-        /// <param name="customSetupScriptProperties"> Custom setup script properties for a managed dedicated integration runtime. </param>
-        /// <param name="dataProxyProperties"> Data proxy properties for a managed dedicated integration runtime. </param>
-        /// <param name="edition"> The edition for the SSIS Integration Runtime. </param>
-        /// <param name="expressCustomSetupProperties">
-        /// Custom setup without script properties for a SSIS integration runtime.
-        /// Please note <see cref="SynapseCustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseComponentSetup"/> and <see cref="SynapseEnvironmentVariableSetup"/>.
-        /// </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeSsisProperties"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeSsisProperties SynapseIntegrationRuntimeSsisProperties(SynapseIntegrationRuntimeSsisCatalogInfo catalogInfo = null, SynapseIntegrationRuntimeLicenseType? licenseType = null, SynapseIntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = null, SynapseIntegrationRuntimeDataProxyProperties dataProxyProperties = null, SynapseIntegrationRuntimeEdition? edition = null, IEnumerable<SynapseCustomSetupBase> expressCustomSetupProperties = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            expressCustomSetupProperties ??= new List<SynapseCustomSetupBase>();
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new SynapseIntegrationRuntimeSsisProperties(catalogInfo, licenseType, customSetupScriptProperties, dataProxyProperties, edition, expressCustomSetupProperties?.ToList(), additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisCatalogInfo. </summary>
-        /// <param name="catalogServerEndpoint"> The catalog database server URL. </param>
-        /// <param name="catalogAdminUserName"> The administrator user name of catalog database. </param>
-        /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>
-        /// <param name="catalogPricingTier"> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeSsisCatalogInfo"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeSsisCatalogInfo SynapseIntegrationRuntimeSsisCatalogInfo(Uri catalogServerEndpoint = null, string catalogAdminUserName = null, SynapseSecureString catalogAdminPassword = null, SynapseIntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new SynapseIntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint, catalogAdminUserName, catalogAdminPassword, catalogPricingTier, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of SynapseSecureString. </summary>
-        /// <param name="value"> Value of secure string. </param>
-        /// <returns> A new <see cref="Models.SynapseSecureString"/> instance for mocking. </returns>
-        public static SynapseSecureString SynapseSecureString(string value = null)
-        {
-            return new SynapseSecureString("SecureString", value);
-        }
-
-        /// <summary> Initializes a new instance of SynapseSecretBase. </summary>
-        /// <param name="secretBaseType"> Type of the secret. </param>
-        /// <returns> A new <see cref="Models.SynapseSecretBase"/> instance for mocking. </returns>
-        public static SynapseSecretBase SynapseSecretBase(string secretBaseType = null)
-        {
-            return new UnknownSecretBase(secretBaseType);
-        }
-
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeCustomSetupScriptProperties. </summary>
-        /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
-        /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
-        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeCustomSetupScriptProperties"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeCustomSetupScriptProperties SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri = null, SynapseSecureString sasToken = null)
-        {
-            return new SynapseIntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, sasToken);
-        }
-
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataProxyProperties. </summary>
-        /// <param name="connectVia"> The self-hosted integration runtime reference. </param>
-        /// <param name="stagingLinkedService"> The staging linked service reference. </param>
-        /// <param name="path"> The path to contain the staged data in the Blob storage. </param>
-        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeDataProxyProperties"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeDataProxyProperties SynapseIntegrationRuntimeDataProxyProperties(SynapseEntityReference connectVia = null, SynapseEntityReference stagingLinkedService = null, string path = null)
-        {
-            return new SynapseIntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path);
-        }
-
-        /// <summary> Initializes a new instance of SynapseEntityReference. </summary>
-        /// <param name="integrationRuntimeEntityReferenceType"> The type of this referenced entity. </param>
-        /// <param name="referenceName"> The name of this referenced entity. </param>
-        /// <returns> A new <see cref="Models.SynapseEntityReference"/> instance for mocking. </returns>
-        public static SynapseEntityReference SynapseEntityReference(SynapseIntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType = null, string referenceName = null)
-        {
-            return new SynapseEntityReference(integrationRuntimeEntityReferenceType, referenceName);
-        }
-
-        /// <summary> Initializes a new instance of SynapseCustomSetupBase. </summary>
-        /// <param name="customSetupBaseType"> The type of custom setup. </param>
-        /// <returns> A new <see cref="Models.SynapseCustomSetupBase"/> instance for mocking. </returns>
-        public static SynapseCustomSetupBase SynapseCustomSetupBase(string customSetupBaseType = null)
-        {
-            return new UnknownCustomSetupBase(customSetupBaseType);
-        }
-
-        /// <summary> Initializes a new instance of SynapseCmdkeySetup. </summary>
-        /// <param name="targetName"> The server name of data source access. </param>
-        /// <param name="userName"> The user name of data source access. </param>
-        /// <param name="password">
-        /// The password of data source access.
-        /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseSecureString"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.SynapseCmdkeySetup"/> instance for mocking. </returns>
-        public static SynapseCmdkeySetup SynapseCmdkeySetup(BinaryData targetName = null, BinaryData userName = null, SynapseSecretBase password = null)
-        {
-            return new SynapseCmdkeySetup("CmdkeySetup", targetName, userName, password);
-        }
-
-        /// <summary> Initializes a new instance of SynapseEnvironmentVariableSetup. </summary>
-        /// <param name="variableName"> The name of the environment variable. </param>
-        /// <param name="variableValue"> The value of the environment variable. </param>
-        /// <returns> A new <see cref="Models.SynapseEnvironmentVariableSetup"/> instance for mocking. </returns>
-        public static SynapseEnvironmentVariableSetup SynapseEnvironmentVariableSetup(string variableName = null, string variableValue = null)
-        {
-            return new SynapseEnvironmentVariableSetup("EnvironmentVariableSetup", variableName, variableValue);
-        }
-
-        /// <summary> Initializes a new instance of SynapseComponentSetup. </summary>
-        /// <param name="componentName"> The name of the 3rd party component. </param>
-        /// <param name="licenseKey">
-        /// The license key to activate the component.
-        /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseSecureString"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.SynapseComponentSetup"/> instance for mocking. </returns>
-        public static SynapseComponentSetup SynapseComponentSetup(string componentName = null, SynapseSecretBase licenseKey = null)
-        {
-            return new SynapseComponentSetup("ComponentSetup", componentName, licenseKey);
-        }
-
-        /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntime. </summary>
-        /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedInfo">
-        /// Linked integration runtime type from data factory
-        /// Please note <see cref="SynapseLinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseLinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="SynapseLinkedIntegrationRuntimeRbacAuthorization"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.SynapseSelfHostedIntegrationRuntime"/> instance for mocking. </returns>
-        public static SynapseSelfHostedIntegrationRuntime SynapseSelfHostedIntegrationRuntime(string description = null, IDictionary<string, BinaryData> additionalProperties = null, SynapseLinkedIntegrationRuntimeType linkedInfo = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new SynapseSelfHostedIntegrationRuntime(IntegrationRuntimeType.SelfHosted, description, additionalProperties, linkedInfo);
-        }
-
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeType. </summary>
-        /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
-        /// <returns> A new <see cref="Models.SynapseLinkedIntegrationRuntimeType"/> instance for mocking. </returns>
-        public static SynapseLinkedIntegrationRuntimeType SynapseLinkedIntegrationRuntimeType(string authorizationType = null)
-        {
-            return new UnknownLinkedIntegrationRuntimeType(authorizationType);
-        }
-
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeKeyAuthorization. </summary>
-        /// <param name="key"> The key used for authorization. </param>
-        /// <returns> A new <see cref="Models.SynapseLinkedIntegrationRuntimeKeyAuthorization"/> instance for mocking. </returns>
-        public static SynapseLinkedIntegrationRuntimeKeyAuthorization SynapseLinkedIntegrationRuntimeKeyAuthorization(SynapseSecureString key = null)
-        {
-            return new SynapseLinkedIntegrationRuntimeKeyAuthorization("Key", key);
-        }
-
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeRbacAuthorization. </summary>
-        /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
-        /// <returns> A new <see cref="Models.SynapseLinkedIntegrationRuntimeRbacAuthorization"/> instance for mocking. </returns>
-        public static SynapseLinkedIntegrationRuntimeRbacAuthorization SynapseLinkedIntegrationRuntimeRbacAuthorization(ResourceIdentifier resourceId = null)
-        {
-            return new SynapseLinkedIntegrationRuntimeRbacAuthorization("RBAC", resourceId);
         }
 
         /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeStatus. </summary>

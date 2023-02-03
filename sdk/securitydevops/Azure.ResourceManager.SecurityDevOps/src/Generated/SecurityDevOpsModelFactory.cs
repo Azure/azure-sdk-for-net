@@ -33,42 +33,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new AzureDevOpsConnectorData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="authorizationCode"></param>
-        /// <param name="orgs"> Gets or sets org onboarding information. </param>
-        /// <returns> A new <see cref="Models.AzureDevOpsConnectorProperties"/> instance for mocking. </returns>
-        public static AzureDevOpsConnectorProperties AzureDevOpsConnectorProperties(ProvisioningState? provisioningState = null, string authorizationCode = null, IEnumerable<AzureDevOpsOrgMetadata> orgs = null)
-        {
-            orgs ??= new List<AzureDevOpsOrgMetadata>();
-
-            return new AzureDevOpsConnectorProperties(provisioningState, authorizationCode != null ? new AuthorizationInfo(authorizationCode) : null, orgs?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AzureDevOpsOrgMetadata. </summary>
-        /// <param name="name"> Gets or sets name of the AzureDevOps Org. </param>
-        /// <param name="autoDiscovery"></param>
-        /// <param name="projects"></param>
-        /// <returns> A new <see cref="Models.AzureDevOpsOrgMetadata"/> instance for mocking. </returns>
-        public static AzureDevOpsOrgMetadata AzureDevOpsOrgMetadata(string name = null, AutoDiscovery? autoDiscovery = null, IEnumerable<AzureDevOpsProjectMetadata> projects = null)
-        {
-            projects ??= new List<AzureDevOpsProjectMetadata>();
-
-            return new AzureDevOpsOrgMetadata(name, autoDiscovery, projects?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AzureDevOpsProjectMetadata. </summary>
-        /// <param name="name"> Gets or sets name of the AzureDevOps Project. </param>
-        /// <param name="autoDiscovery"></param>
-        /// <param name="repos"> Gets or sets repositories. </param>
-        /// <returns> A new <see cref="Models.AzureDevOpsProjectMetadata"/> instance for mocking. </returns>
-        public static AzureDevOpsProjectMetadata AzureDevOpsProjectMetadata(string name = null, AutoDiscovery? autoDiscovery = null, IEnumerable<string> repos = null)
-        {
-            repos ??= new List<string>();
-
-            return new AzureDevOpsProjectMetadata(name, autoDiscovery, repos?.ToList());
-        }
-
         /// <summary> Initializes a new instance of AzureDevOpsRepoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -79,35 +43,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static AzureDevOpsRepoData AzureDevOpsRepoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsRepoProperties properties = null)
         {
             return new AzureDevOpsRepoData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of AzureDevOpsRepoProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="repoId"> Gets or sets Azure DevOps repo id. </param>
-        /// <param name="repoUri"> Gets or sets AzureDevOps repo url. </param>
-        /// <param name="orgName"> Gets or sets AzureDevOps Org Name. </param>
-        /// <param name="projectName"> Gets or sets AzureDevOps Project Name. </param>
-        /// <param name="visibility"> Gets or sets AzureDevOps repo visibility, whether it is public or private etc. </param>
-        /// <param name="actionableRemediation"></param>
-        /// <returns> A new <see cref="Models.AzureDevOpsRepoProperties"/> instance for mocking. </returns>
-        public static AzureDevOpsRepoProperties AzureDevOpsRepoProperties(ProvisioningState? provisioningState = null, string repoId = null, Uri repoUri = null, string orgName = null, string projectName = null, string visibility = null, ActionableRemediation actionableRemediation = null)
-        {
-            return new AzureDevOpsRepoProperties(provisioningState, repoId, repoUri, orgName, projectName, visibility, actionableRemediation);
-        }
-
-        /// <summary> Initializes a new instance of ActionableRemediation. </summary>
-        /// <param name="state"></param>
-        /// <param name="severityLevels"></param>
-        /// <param name="categories"></param>
-        /// <param name="branchNames"> Branch onboarding info. </param>
-        /// <returns> A new <see cref="Models.ActionableRemediation"/> instance for mocking. </returns>
-        public static ActionableRemediation ActionableRemediation(ActionableRemediationState? state = null, IEnumerable<string> severityLevels = null, IEnumerable<ActionableRemediationRuleCategory> categories = null, IEnumerable<string> branchNames = null)
-        {
-            severityLevels ??= new List<string>();
-            categories ??= new List<ActionableRemediationRuleCategory>();
-            branchNames ??= new List<string>();
-
-            return new ActionableRemediation(state, severityLevels?.ToList(), categories?.ToList(), branchNames != null ? new TargetBranchConfiguration(branchNames?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsConnectorStats. </summary>
@@ -122,17 +57,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new AzureDevOpsConnectorStats(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStatsProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="orgsCount"> Gets or sets orgs count. </param>
-        /// <param name="projectsCount"> Gets or sets projects count. </param>
-        /// <param name="reposCount"> Gets or sets repos count. </param>
-        /// <returns> A new <see cref="Models.AzureDevOpsConnectorStatsProperties"/> instance for mocking. </returns>
-        public static AzureDevOpsConnectorStatsProperties AzureDevOpsConnectorStatsProperties(ProvisioningState? provisioningState = null, long? orgsCount = null, long? projectsCount = null, long? reposCount = null)
-        {
-            return new AzureDevOpsConnectorStatsProperties(provisioningState, orgsCount, projectsCount, reposCount);
-        }
-
         /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -145,15 +69,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new AzureDevOpsOrgData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="autoDiscovery"></param>
-        /// <returns> A new <see cref="Models.AzureDevOpsOrgProperties"/> instance for mocking. </returns>
-        public static AzureDevOpsOrgProperties AzureDevOpsOrgProperties(ProvisioningState? provisioningState = null, AutoDiscovery? autoDiscovery = null)
-        {
-            return new AzureDevOpsOrgProperties(provisioningState, autoDiscovery);
-        }
-
         /// <summary> Initializes a new instance of AzureDevOpsProjectData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -164,17 +79,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static AzureDevOpsProjectData AzureDevOpsProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsProjectProperties properties = null)
         {
             return new AzureDevOpsProjectData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of AzureDevOpsProjectProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="projectId"> Gets or sets AzureDevOps Project Id. </param>
-        /// <param name="orgName"> Gets or sets AzureDevOps Org Name. </param>
-        /// <param name="autoDiscovery"></param>
-        /// <returns> A new <see cref="Models.AzureDevOpsProjectProperties"/> instance for mocking. </returns>
-        public static AzureDevOpsProjectProperties AzureDevOpsProjectProperties(ProvisioningState? provisioningState = null, string projectId = null, string orgName = null, AutoDiscovery? autoDiscovery = null)
-        {
-            return new AzureDevOpsProjectProperties(provisioningState, projectId, orgName, autoDiscovery);
         }
 
         /// <summary> Initializes a new instance of GitHubConnectorData. </summary>
@@ -193,15 +97,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new GitHubConnectorData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="code"> Gets or sets one-time OAuth code to exchange for refresh and access tokens. </param>
-        /// <returns> A new <see cref="Models.GitHubConnectorProperties"/> instance for mocking. </returns>
-        public static GitHubConnectorProperties GitHubConnectorProperties(ProvisioningState? provisioningState = null, string code = null)
-        {
-            return new GitHubConnectorProperties(provisioningState, code);
-        }
-
         /// <summary> Initializes a new instance of GitHubRepoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -212,17 +107,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static GitHubRepoData GitHubRepoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitHubRepoProperties properties = null)
         {
             return new GitHubRepoData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of GitHubRepoProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="accountId"> Gets or sets gitHub repo account id. </param>
-        /// <param name="repoUri"> Gets or sets gitHub repo url. </param>
-        /// <param name="ownerName"> Gets or sets GitHub Owner Name. </param>
-        /// <returns> A new <see cref="Models.GitHubRepoProperties"/> instance for mocking. </returns>
-        public static GitHubRepoProperties GitHubRepoProperties(ProvisioningState? provisioningState = null, long? accountId = null, Uri repoUri = null, string ownerName = null)
-        {
-            return new GitHubRepoProperties(provisioningState, accountId, repoUri, ownerName);
         }
 
         /// <summary> Initializes a new instance of GitHubConnectorStats. </summary>
@@ -237,16 +121,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             return new GitHubConnectorStats(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorStatsProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="ownersCount"> Gets or sets owners count. </param>
-        /// <param name="reposCount"> Gets or sets repos count. </param>
-        /// <returns> A new <see cref="Models.GitHubConnectorStatsProperties"/> instance for mocking. </returns>
-        public static GitHubConnectorStatsProperties GitHubConnectorStatsProperties(ProvisioningState? provisioningState = null, long? ownersCount = null, long? reposCount = null)
-        {
-            return new GitHubConnectorStatsProperties(provisioningState, ownersCount, reposCount);
-        }
-
         /// <summary> Initializes a new instance of GitHubOwnerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -257,15 +131,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static GitHubOwnerData GitHubOwnerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitHubOwnerProperties properties = null)
         {
             return new GitHubOwnerData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of GitHubOwnerProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="ownerUri"> Gets or sets gitHub owner url. </param>
-        /// <returns> A new <see cref="Models.GitHubOwnerProperties"/> instance for mocking. </returns>
-        public static GitHubOwnerProperties GitHubOwnerProperties(ProvisioningState? provisioningState = null, Uri ownerUri = null)
-        {
-            return new GitHubOwnerProperties(provisioningState, ownerUri);
         }
     }
 }

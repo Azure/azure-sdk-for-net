@@ -17,18 +17,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class NotificationHubsModelFactory
     {
-        /// <summary> Initializes a new instance of NotificationHubSku. </summary>
-        /// <param name="name"> Name of the notification hub sku. </param>
-        /// <param name="tier"> The tier of particular sku. </param>
-        /// <param name="size"> The Sku size. </param>
-        /// <param name="family"> The Sku Family. </param>
-        /// <param name="capacity"> The capacity of the resource. </param>
-        /// <returns> A new <see cref="Models.NotificationHubSku"/> instance for mocking. </returns>
-        public static NotificationHubSku NotificationHubSku(NotificationHubSkuName name = default, string tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new NotificationHubSku(name, tier, size, family, capacity);
-        }
-
         /// <summary> Initializes a new instance of NotificationHubAvailabilityResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -186,70 +174,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             authorizationRules ??= new List<SharedAccessAuthorizationRuleProperties>();
 
             return new NotificationHubCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku);
-        }
-
-        /// <summary> Initializes a new instance of NotificationHubApnsCredential. </summary>
-        /// <param name="apnsCertificate"> The APNS certificate. Specify if using Certificate Authentication Mode. </param>
-        /// <param name="certificateKey"> The APNS certificate password if it exists. </param>
-        /// <param name="endpoint"> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify &apos;gateway.sandbox.push.apple.com&apos;. If using Certificate Authentication Mode and Production specify &apos;gateway.push.apple.com&apos;. If using Token Authentication Mode and Sandbox specify &apos;https://api.development.push.apple.com:443/3/device&apos;. If using Token Authentication Mode and Production specify &apos;https://api.push.apple.com:443/3/device&apos;. </param>
-        /// <param name="thumbprint"> The APNS certificate thumbprint. Specify if using Certificate Authentication Mode. </param>
-        /// <param name="keyId"> A 10-character key identifier (kid) key, obtained from your developer account. Specify if using Token Authentication Mode. </param>
-        /// <param name="appName"> The name of the application or BundleId. Specify if using Token Authentication Mode. </param>
-        /// <param name="appId"> The issuer (iss) registered claim key. The value is a 10-character TeamId, obtained from your developer account. Specify if using Token Authentication Mode. </param>
-        /// <param name="token"> Provider Authentication Token, obtained through your developer account. Specify if using Token Authentication Mode. </param>
-        /// <returns> A new <see cref="Models.NotificationHubApnsCredential"/> instance for mocking. </returns>
-        public static NotificationHubApnsCredential NotificationHubApnsCredential(string apnsCertificate = null, string certificateKey = null, Uri endpoint = null, BinaryData thumbprint = null, string keyId = null, string appName = null, string appId = null, string token = null)
-        {
-            return new NotificationHubApnsCredential(apnsCertificate, certificateKey, endpoint, thumbprint, keyId, appName, appId, token);
-        }
-
-        /// <summary> Initializes a new instance of NotificationHubWnsCredential. </summary>
-        /// <param name="packageSid"> The package ID for this credential. </param>
-        /// <param name="secretKey"> The secret key. </param>
-        /// <param name="windowsLiveEndpoint"> The Windows Live endpoint. </param>
-        /// <returns> A new <see cref="Models.NotificationHubWnsCredential"/> instance for mocking. </returns>
-        public static NotificationHubWnsCredential NotificationHubWnsCredential(string packageSid = null, string secretKey = null, Uri windowsLiveEndpoint = null)
-        {
-            return new NotificationHubWnsCredential(packageSid, secretKey, windowsLiveEndpoint);
-        }
-
-        /// <summary> Initializes a new instance of NotificationHubGcmCredential. </summary>
-        /// <param name="gcmEndpoint"> The FCM legacy endpoint. Default value is &apos;https://fcm.googleapis.com/fcm/send&apos;. </param>
-        /// <param name="gcmApiKey"> The Google API key. </param>
-        /// <returns> A new <see cref="Models.NotificationHubGcmCredential"/> instance for mocking. </returns>
-        public static NotificationHubGcmCredential NotificationHubGcmCredential(Uri gcmEndpoint = null, string gcmApiKey = null)
-        {
-            return new NotificationHubGcmCredential(gcmEndpoint, gcmApiKey);
-        }
-
-        /// <summary> Initializes a new instance of NotificationHubMpnsCredential. </summary>
-        /// <param name="mpnsCertificate"> The MPNS certificate. </param>
-        /// <param name="certificateKey"> The certificate key for this credential. </param>
-        /// <param name="thumbprint"> The MPNS certificate Thumbprint. </param>
-        /// <returns> A new <see cref="Models.NotificationHubMpnsCredential"/> instance for mocking. </returns>
-        public static NotificationHubMpnsCredential NotificationHubMpnsCredential(string mpnsCertificate = null, string certificateKey = null, BinaryData thumbprint = null)
-        {
-            return new NotificationHubMpnsCredential(mpnsCertificate, certificateKey, thumbprint);
-        }
-
-        /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
-        /// <param name="clientId"> The client identifier. </param>
-        /// <param name="clientSecret"> The credential secret access key. </param>
-        /// <param name="authTokenUri"> The URL of the authorization token. </param>
-        /// <returns> A new <see cref="Models.NotificationHubAdmCredential"/> instance for mocking. </returns>
-        public static NotificationHubAdmCredential NotificationHubAdmCredential(string clientId = null, string clientSecret = null, Uri authTokenUri = null)
-        {
-            return new NotificationHubAdmCredential(clientId, clientSecret, authTokenUri);
-        }
-
-        /// <summary> Initializes a new instance of NotificationHubBaiduCredential. </summary>
-        /// <param name="baiduApiKey"> Baidu Api Key. </param>
-        /// <param name="baiduEndpoint"> Baidu Endpoint. </param>
-        /// <param name="baiduSecretKey"> Baidu Secret Key. </param>
-        /// <returns> A new <see cref="Models.NotificationHubBaiduCredential"/> instance for mocking. </returns>
-        public static NotificationHubBaiduCredential NotificationHubBaiduCredential(string baiduApiKey = null, Uri baiduEndpoint = null, string baiduSecretKey = null)
-        {
-            return new NotificationHubBaiduCredential(baiduApiKey, baiduEndpoint, baiduSecretKey);
         }
 
         /// <summary> Initializes a new instance of NotificationHubData. </summary>

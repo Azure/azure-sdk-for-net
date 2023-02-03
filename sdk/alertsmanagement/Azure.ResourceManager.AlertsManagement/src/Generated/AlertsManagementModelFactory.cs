@@ -33,74 +33,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new AlertProcessingRuleData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleProperties. </summary>
-        /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
-        /// <param name="conditions"> Conditions on which alerts will be filtered. </param>
-        /// <param name="schedule"> Scheduling for alert processing rule. </param>
-        /// <param name="actions">
-        /// Actions to be applied.
-        /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
-        /// </param>
-        /// <param name="description"> Description of alert processing rule. </param>
-        /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleProperties"/> instance for mocking. </returns>
-        public static AlertProcessingRuleProperties AlertProcessingRuleProperties(IEnumerable<string> scopes = null, IEnumerable<AlertProcessingRuleCondition> conditions = null, AlertProcessingRuleSchedule schedule = null, IEnumerable<AlertProcessingRuleAction> actions = null, string description = null, bool? isEnabled = null)
-        {
-            scopes ??= new List<string>();
-            conditions ??= new List<AlertProcessingRuleCondition>();
-            actions ??= new List<AlertProcessingRuleAction>();
-
-            return new AlertProcessingRuleProperties(scopes?.ToList(), conditions?.ToList(), schedule, actions?.ToList(), description, isEnabled);
-        }
-
-        /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
-        /// <param name="field"> Field for a given condition. </param>
-        /// <param name="operator"> Operator for a given condition. </param>
-        /// <param name="values"> List of values to match for a given condition. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleCondition"/> instance for mocking. </returns>
-        public static AlertProcessingRuleCondition AlertProcessingRuleCondition(AlertProcessingRuleField? field = null, AlertProcessingRuleOperator? @operator = null, IEnumerable<string> values = null)
-        {
-            values ??= new List<string>();
-
-            return new AlertProcessingRuleCondition(field, @operator, values?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AlertProcessingRuleSchedule. </summary>
-        /// <param name="effectiveFrom"> Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix. </param>
-        /// <param name="effectiveUntil"> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </param>
-        /// <param name="timeZone"> Scheduling time zone. </param>
-        /// <param name="recurrences">
-        /// List of recurrences.
-        /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleSchedule"/> instance for mocking. </returns>
-        public static AlertProcessingRuleSchedule AlertProcessingRuleSchedule(DateTimeOffset? effectiveFrom = null, DateTimeOffset? effectiveUntil = null, string timeZone = null, IEnumerable<AlertProcessingRuleRecurrence> recurrences = null)
-        {
-            recurrences ??= new List<AlertProcessingRuleRecurrence>();
-
-            return new AlertProcessingRuleSchedule(effectiveFrom, effectiveUntil, timeZone, recurrences?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AlertProcessingRuleRecurrence. </summary>
-        /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startOn"> Start time for recurrence. </param>
-        /// <param name="endOn"> End time for recurrence. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleRecurrence"/> instance for mocking. </returns>
-        public static AlertProcessingRuleRecurrence AlertProcessingRuleRecurrence(string recurrenceType = "Unknown", TimeSpan? startOn = null, TimeSpan? endOn = null)
-        {
-            return new UnknownRecurrence(recurrenceType, startOn, endOn);
-        }
-
-        /// <summary> Initializes a new instance of AlertProcessingRuleAction. </summary>
-        /// <param name="actionType"> Action that should be applied. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleAction"/> instance for mocking. </returns>
-        public static AlertProcessingRuleAction AlertProcessingRuleAction(string actionType = "Unknown")
-        {
-            return new UnknownAction(actionType);
-        }
-
         /// <summary> Initializes a new instance of ServiceAlertMetadata. </summary>
         /// <param name="properties">
         /// alert meta data property bag
@@ -111,14 +43,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static ServiceAlertMetadata ServiceAlertMetadata(ServiceAlertMetadataProperties properties = null)
         {
             return new ServiceAlertMetadata(properties);
-        }
-
-        /// <summary> Initializes a new instance of ServiceAlertMetadataProperties. </summary>
-        /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
-        /// <returns> A new <see cref="Models.ServiceAlertMetadataProperties"/> instance for mocking. </returns>
-        public static ServiceAlertMetadataProperties ServiceAlertMetadataProperties(string metadataIdentifier = "Unknown")
-        {
-            return new UnknownAlertsMetaDataProperties(metadataIdentifier);
         }
 
         /// <summary> Initializes a new instance of ServiceAlertData. </summary>
@@ -192,20 +116,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertModificationProperties(alertId, modifications?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModificationItemInfo. </summary>
-        /// <param name="modificationEvent"> Reason for the modification. </param>
-        /// <param name="oldValue"> Old value. </param>
-        /// <param name="newValue"> New value. </param>
-        /// <param name="modifiedAt"> Modified date and time. </param>
-        /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
-        /// <param name="comments"> Modification comments. </param>
-        /// <param name="description"> Description of the modification. </param>
-        /// <returns> A new <see cref="Models.ServiceAlertModificationItemInfo"/> instance for mocking. </returns>
-        public static ServiceAlertModificationItemInfo ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent = null, string oldValue = null, string newValue = null, string modifiedAt = null, string modifiedBy = null, string comments = null, string description = null)
-        {
-            return new ServiceAlertModificationItemInfo(modificationEvent, oldValue, newValue, modifiedAt, modifiedBy, comments, description);
-        }
-
         /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -216,32 +126,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static ServiceAlertSummary ServiceAlertSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceAlertSummaryGroup properties = null)
         {
             return new ServiceAlertSummary(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroup. </summary>
-        /// <param name="total"> Total count of the result set. </param>
-        /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
-        /// <param name="groupedBy"> Name of the field aggregated. </param>
-        /// <param name="values"> List of the items. </param>
-        /// <returns> A new <see cref="Models.ServiceAlertSummaryGroup"/> instance for mocking. </returns>
-        public static ServiceAlertSummaryGroup ServiceAlertSummaryGroup(long? total = null, long? smartGroupsCount = null, string groupedBy = null, IEnumerable<ServiceAlertSummaryGroupItemInfo> values = null)
-        {
-            values ??= new List<ServiceAlertSummaryGroupItemInfo>();
-
-            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedBy, values?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
-        /// <param name="name"> Value of the aggregated field. </param>
-        /// <param name="count"> Count of the aggregated field. </param>
-        /// <param name="groupedBy"> Name of the field aggregated. </param>
-        /// <param name="values"> List of the items. </param>
-        /// <returns> A new <see cref="Models.ServiceAlertSummaryGroupItemInfo"/> instance for mocking. </returns>
-        public static ServiceAlertSummaryGroupItemInfo ServiceAlertSummaryGroupItemInfo(string name = null, long? count = null, string groupedBy = null, IEnumerable<ServiceAlertSummaryGroupItemInfo> values = null)
-        {
-            values ??= new List<ServiceAlertSummaryGroupItemInfo>();
-
-            return new ServiceAlertSummaryGroupItemInfo(name, count, groupedBy, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of SmartGroupData. </summary>
@@ -277,15 +161,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new SmartGroupData(id, name, resourceType, systemData, alertsCount, smartGroupState, severity, startOn, lastModifiedOn, lastModifiedBy, resources?.ToList(), resourceTypes?.ToList(), resourceGroups?.ToList(), monitorServices?.ToList(), monitorConditions?.ToList(), alertStates?.ToList(), alertSeverities?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of SmartGroupAggregatedProperty. </summary>
-        /// <param name="name"> Name of the type. </param>
-        /// <param name="count"> Total number of items of type. </param>
-        /// <returns> A new <see cref="Models.SmartGroupAggregatedProperty"/> instance for mocking. </returns>
-        public static SmartGroupAggregatedProperty SmartGroupAggregatedProperty(string name = null, long? count = null)
-        {
-            return new SmartGroupAggregatedProperty(name, count);
-        }
-
         /// <summary> Initializes a new instance of SmartGroupModification. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -308,70 +183,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             modifications ??= new List<SmartGroupModificationItemInfo>();
 
             return new SmartGroupModificationProperties(smartGroupId, modifications?.ToList(), nextLink);
-        }
-
-        /// <summary> Initializes a new instance of SmartGroupModificationItemInfo. </summary>
-        /// <param name="modificationEvent"> Reason for the modification. </param>
-        /// <param name="oldValue"> Old value. </param>
-        /// <param name="newValue"> New value. </param>
-        /// <param name="modifiedOn"> Modified date and time. </param>
-        /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
-        /// <param name="comments"> Modification comments. </param>
-        /// <param name="description"> Description of the modification. </param>
-        /// <returns> A new <see cref="Models.SmartGroupModificationItemInfo"/> instance for mocking. </returns>
-        public static SmartGroupModificationItemInfo SmartGroupModificationItemInfo(SmartGroupModificationEvent? modificationEvent = null, string oldValue = null, string newValue = null, DateTimeOffset? modifiedOn = null, string modifiedBy = null, string comments = null, string description = null)
-        {
-            return new SmartGroupModificationItemInfo(modificationEvent, oldValue, newValue, modifiedOn, modifiedBy, comments, description);
-        }
-
-        /// <summary> Initializes a new instance of DailyRecurrence. </summary>
-        /// <param name="startOn"> Start time for recurrence. </param>
-        /// <param name="endOn"> End time for recurrence. </param>
-        /// <returns> A new <see cref="Models.DailyRecurrence"/> instance for mocking. </returns>
-        public static DailyRecurrence DailyRecurrence(TimeSpan? startOn = null, TimeSpan? endOn = null)
-        {
-            return new DailyRecurrence(RecurrenceType.Daily, startOn, endOn);
-        }
-
-        /// <summary> Initializes a new instance of AlertProcessingRuleWeeklyRecurrence. </summary>
-        /// <param name="startOn"> Start time for recurrence. </param>
-        /// <param name="endOn"> End time for recurrence. </param>
-        /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleWeeklyRecurrence"/> instance for mocking. </returns>
-        public static AlertProcessingRuleWeeklyRecurrence AlertProcessingRuleWeeklyRecurrence(TimeSpan? startOn = null, TimeSpan? endOn = null, IEnumerable<AlertsManagementDayOfWeek> daysOfWeek = null)
-        {
-            daysOfWeek ??= new List<AlertsManagementDayOfWeek>();
-
-            return new AlertProcessingRuleWeeklyRecurrence(RecurrenceType.Weekly, startOn, endOn, daysOfWeek?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AlertProcessingRuleMonthlyRecurrence. </summary>
-        /// <param name="startOn"> Start time for recurrence. </param>
-        /// <param name="endOn"> End time for recurrence. </param>
-        /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleMonthlyRecurrence"/> instance for mocking. </returns>
-        public static AlertProcessingRuleMonthlyRecurrence AlertProcessingRuleMonthlyRecurrence(TimeSpan? startOn = null, TimeSpan? endOn = null, IEnumerable<int> daysOfMonth = null)
-        {
-            daysOfMonth ??= new List<int>();
-
-            return new AlertProcessingRuleMonthlyRecurrence(RecurrenceType.Monthly, startOn, endOn, daysOfMonth?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AlertProcessingRuleAddGroupsAction. </summary>
-        /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleAddGroupsAction"/> instance for mocking. </returns>
-        public static AlertProcessingRuleAddGroupsAction AlertProcessingRuleAddGroupsAction(IEnumerable<ResourceIdentifier> actionGroupIds = null)
-        {
-            actionGroupIds ??= new List<ResourceIdentifier>();
-
-            return new AlertProcessingRuleAddGroupsAction(AlertProcessingRuleActionType.AddActionGroups, actionGroupIds?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AlertProcessingRuleRemoveAllGroupsAction. </summary>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleRemoveAllGroupsAction"/> instance for mocking. </returns>
-        public static AlertProcessingRuleRemoveAllGroupsAction AlertProcessingRuleRemoveAllGroupsAction()
-        {
-            return new AlertProcessingRuleRemoveAllGroupsAction(AlertProcessingRuleActionType.RemoveAllActionGroups);
         }
 
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>

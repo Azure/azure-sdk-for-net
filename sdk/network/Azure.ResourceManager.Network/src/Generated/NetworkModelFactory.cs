@@ -86,31 +86,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayData(id, name, resourceType, location, tags, etag, availabilityZones?.ToList(), identity, sku, sslPolicy, operationalState, gatewayIPConfigurations?.ToList(), authenticationCertificates?.ToList(), trustedRootCertificates?.ToList(), trustedClientCertificates?.ToList(), sslCertificates?.ToList(), frontendIPConfigurations?.ToList(), frontendPorts?.ToList(), probes?.ToList(), backendAddressPools?.ToList(), backendHttpSettingsCollection?.ToList(), httpListeners?.ToList(), sslProfiles?.ToList(), urlPathMaps?.ToList(), requestRoutingRules?.ToList(), rewriteRuleSets?.ToList(), redirectConfigurations?.ToList(), webApplicationFirewallConfiguration, firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null, enableHttp2, enableFips, autoscaleConfiguration, privateLinkConfigurations?.ToList(), privateEndpointConnections?.ToList(), resourceGuid, provisioningState, customErrorConfigurations?.ToList(), forceFirewallPolicyAssociation);
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySku. </summary>
-        /// <param name="name"> Name of an application gateway SKU. </param>
-        /// <param name="tier"> Tier of an application gateway. </param>
-        /// <param name="capacity"> Capacity (instance count) of an application gateway. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewaySku"/> instance for mocking. </returns>
-        public static ApplicationGatewaySku ApplicationGatewaySku(ApplicationGatewaySkuName? name = null, ApplicationGatewayTier? tier = null, int? capacity = null)
-        {
-            return new ApplicationGatewaySku(name, tier, capacity);
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewaySslPolicy. </summary>
-        /// <param name="disabledSslProtocols"> Ssl protocols to be disabled on application gateway. </param>
-        /// <param name="policyType"> Type of Ssl Policy. </param>
-        /// <param name="policyName"> Name of Ssl predefined policy. </param>
-        /// <param name="cipherSuites"> Ssl cipher suites to be enabled in the specified order to application gateway. </param>
-        /// <param name="minProtocolVersion"> Minimum version of Ssl protocol to be supported on application gateway. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewaySslPolicy"/> instance for mocking. </returns>
-        public static ApplicationGatewaySslPolicy ApplicationGatewaySslPolicy(IEnumerable<ApplicationGatewaySslProtocol> disabledSslProtocols = null, ApplicationGatewaySslPolicyType? policyType = null, ApplicationGatewaySslPolicyName? policyName = null, IEnumerable<ApplicationGatewaySslCipherSuite> cipherSuites = null, ApplicationGatewaySslProtocol? minProtocolVersion = null)
-        {
-            disabledSslProtocols ??= new List<ApplicationGatewaySslProtocol>();
-            cipherSuites ??= new List<ApplicationGatewaySslCipherSuite>();
-
-            return new ApplicationGatewaySslPolicy(disabledSslProtocols?.ToList(), policyType, policyName, cipherSuites?.ToList(), minProtocolVersion);
-        }
-
         /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -122,14 +97,6 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayIPConfiguration ApplicationGatewayIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier subnetId = null, NetworkProvisioningState? provisioningState = null)
         {
             return new ApplicationGatewayIPConfiguration(id, name, resourceType, etag, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of NetworkSubResource. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <returns> A new <see cref="Models.NetworkSubResource"/> instance for mocking. </returns>
-        public static NetworkSubResource NetworkSubResource(ResourceIdentifier id = null)
-        {
-            return new NetworkSubResource(id);
         }
 
         /// <summary> Initializes a new instance of NetworkResourceData. </summary>
@@ -250,17 +217,6 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayProbe ApplicationGatewayProbe(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayProtocol? protocol = null, string host = null, string path = null, int? intervalInSeconds = null, int? timeoutInSeconds = null, int? unhealthyThreshold = null, bool? pickHostNameFromBackendHttpSettings = null, int? minServers = null, ApplicationGatewayProbeHealthResponseMatch match = null, NetworkProvisioningState? provisioningState = null, int? port = null)
         {
             return new ApplicationGatewayProbe(id, name, resourceType, etag, protocol, host, path, intervalInSeconds, timeoutInSeconds, unhealthyThreshold, pickHostNameFromBackendHttpSettings, minServers, match, provisioningState, port);
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>
-        /// <param name="body"> Body that must be contained in the health response. Default value is empty. </param>
-        /// <param name="statusCodes"> Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayProbeHealthResponseMatch"/> instance for mocking. </returns>
-        public static ApplicationGatewayProbeHealthResponseMatch ApplicationGatewayProbeHealthResponseMatch(BinaryData body = null, IEnumerable<string> statusCodes = null)
-        {
-            statusCodes ??= new List<string>();
-
-            return new ApplicationGatewayProbeHealthResponseMatch(body, statusCodes?.ToList());
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
@@ -510,16 +466,6 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkTrackedResourceData(id, name, resourceType, location, tags);
         }
 
-        /// <summary> Initializes a new instance of NetworkWritableResourceData. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <returns> A new <see cref="Models.NetworkWritableResourceData"/> instance for mocking. </returns>
-        public static NetworkWritableResourceData NetworkWritableResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
-        {
-            return new NetworkWritableResourceData(id, name, resourceType);
-        }
-
         /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -599,27 +545,6 @@ namespace Azure.ResourceManager.Network.Models
             groupIds ??= new List<string>();
 
             return new NetworkPrivateLinkServiceConnection(id, name, resourceType, etag, provisioningState, privateLinkServiceId, groupIds?.ToList(), requestMessage, connectionState);
-        }
-
-        /// <summary> Initializes a new instance of NetworkPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.NetworkPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static NetworkPrivateLinkServiceConnectionState NetworkPrivateLinkServiceConnectionState(string status = null, string description = null, string actionsRequired = null)
-        {
-            return new NetworkPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
-        /// <summary> Initializes a new instance of CustomDnsConfigProperties. </summary>
-        /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>
-        /// <param name="ipAddresses"> A list of private ip addresses of the private endpoint. </param>
-        /// <returns> A new <see cref="Models.CustomDnsConfigProperties"/> instance for mocking. </returns>
-        public static CustomDnsConfigProperties CustomDnsConfigProperties(string fqdn = null, IEnumerable<string> ipAddresses = null)
-        {
-            ipAddresses ??= new List<string>();
-
-            return new CustomDnsConfigProperties(fqdn, ipAddresses?.ToList());
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceDnsSettings. </summary>
@@ -723,36 +648,6 @@ namespace Azure.ResourceManager.Network.Models
             tags ??= new Dictionary<string, string>();
 
             return new FlowLogData(id, name, resourceType, location, tags, etag, targetResourceId, targetResourceGuid, storageId, enabled, retentionPolicy, format, trafficAnalyticsConfiguration != null ? new TrafficAnalyticsProperties(trafficAnalyticsConfiguration) : null, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of RetentionPolicyParameters. </summary>
-        /// <param name="days"> Number of days to retain flow log records. </param>
-        /// <param name="enabled"> Flag to enable/disable retention. </param>
-        /// <returns> A new <see cref="Models.RetentionPolicyParameters"/> instance for mocking. </returns>
-        public static RetentionPolicyParameters RetentionPolicyParameters(int? days = null, bool? enabled = null)
-        {
-            return new RetentionPolicyParameters(days, enabled);
-        }
-
-        /// <summary> Initializes a new instance of FlowLogProperties. </summary>
-        /// <param name="formatType"> The file type of flow log. </param>
-        /// <param name="version"> The version (revision) of the flow log. </param>
-        /// <returns> A new <see cref="Models.FlowLogProperties"/> instance for mocking. </returns>
-        public static FlowLogProperties FlowLogProperties(FlowLogFormatType? formatType = null, int? version = null)
-        {
-            return new FlowLogProperties(formatType, version);
-        }
-
-        /// <summary> Initializes a new instance of TrafficAnalyticsConfigurationProperties. </summary>
-        /// <param name="enabled"> Flag to enable/disable traffic analytics. </param>
-        /// <param name="workspaceId"> The resource guid of the attached workspace. </param>
-        /// <param name="workspaceRegion"> The location of the attached workspace. </param>
-        /// <param name="workspaceResourceId"> Resource Id of the attached workspace. </param>
-        /// <param name="trafficAnalyticsIntervalInMinutes"> The interval in minutes which would decide how frequently TA service should do flow analytics. </param>
-        /// <returns> A new <see cref="Models.TrafficAnalyticsConfigurationProperties"/> instance for mocking. </returns>
-        public static TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfigurationProperties(bool? enabled = null, string workspaceId = null, string workspaceRegion = null, ResourceIdentifier workspaceResourceId = null, int? trafficAnalyticsIntervalInMinutes = null)
-        {
-            return new TrafficAnalyticsConfigurationProperties(enabled, workspaceId, workspaceRegion, workspaceResourceId, trafficAnalyticsIntervalInMinutes);
         }
 
         /// <summary> Initializes a new instance of RouteTableData. </summary>
@@ -896,44 +791,6 @@ namespace Azure.ResourceManager.Network.Models
             return new PublicIPAddressData(id, name, resourceType, location, tags, extendedLocation, sku, etag, zones?.ToList(), publicIPAllocationMethod, publicIPAddressVersion, ipConfiguration, dnsSettings, ddosSettings, ipTags?.ToList(), ipAddress, publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, idleTimeoutInMinutes, resourceGuid, provisioningState, servicePublicIPAddress, natGateway, migrationPhase, linkedPublicIPAddress, deleteOption);
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressSku. </summary>
-        /// <param name="name"> Name of a public IP address SKU. </param>
-        /// <param name="tier"> Tier of a public IP address SKU. </param>
-        /// <returns> A new <see cref="Models.PublicIPAddressSku"/> instance for mocking. </returns>
-        public static PublicIPAddressSku PublicIPAddressSku(PublicIPAddressSkuName? name = null, PublicIPAddressSkuTier? tier = null)
-        {
-            return new PublicIPAddressSku(name, tier);
-        }
-
-        /// <summary> Initializes a new instance of PublicIPAddressDnsSettings. </summary>
-        /// <param name="domainNameLabel"> The domain name label. The concatenation of the domain name label and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address. If a domain name label is specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system. </param>
-        /// <param name="fqdn"> The Fully Qualified Domain Name of the A DNS record associated with the public IP. This is the concatenation of the domainNameLabel and the regionalized DNS zone. </param>
-        /// <param name="reverseFqdn"> The reverse FQDN. A user-visible, fully qualified domain name that resolves to this public IP address. If the reverseFqdn is specified, then a PTR DNS record is created pointing from the IP address in the in-addr.arpa domain to the reverse FQDN. </param>
-        /// <returns> A new <see cref="Models.PublicIPAddressDnsSettings"/> instance for mocking. </returns>
-        public static PublicIPAddressDnsSettings PublicIPAddressDnsSettings(string domainNameLabel = null, string fqdn = null, string reverseFqdn = null)
-        {
-            return new PublicIPAddressDnsSettings(domainNameLabel, fqdn, reverseFqdn);
-        }
-
-        /// <summary> Initializes a new instance of DdosSettings. </summary>
-        /// <param name="ddosCustomPolicyId"> The DDoS custom policy associated with the public IP. </param>
-        /// <param name="protectionCoverage"> The DDoS protection policy customizability of the public IP. Only standard coverage will have the ability to be customized. </param>
-        /// <param name="protectedIP"> Enables DDoS protection on the public IP. </param>
-        /// <returns> A new <see cref="Models.DdosSettings"/> instance for mocking. </returns>
-        public static DdosSettings DdosSettings(ResourceIdentifier ddosCustomPolicyId = null, DdosSettingsProtectionCoverage? protectionCoverage = null, bool? protectedIP = null)
-        {
-            return new DdosSettings(ddosCustomPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(ddosCustomPolicyId) : null, protectionCoverage, protectedIP);
-        }
-
-        /// <summary> Initializes a new instance of IPTag. </summary>
-        /// <param name="ipTagType"> The IP tag type. Example: FirstPartyUsage. </param>
-        /// <param name="tag"> The value of the IP tag associated with the public IP. Example: SQL. </param>
-        /// <returns> A new <see cref="Models.IPTag"/> instance for mocking. </returns>
-        public static IPTag IPTag(string ipTagType = null, string tag = null)
-        {
-            return new IPTag(ipTagType, tag);
-        }
-
         /// <summary> Initializes a new instance of NatGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1047,17 +904,6 @@ namespace Azure.ResourceManager.Network.Models
             return new BackendAddressPoolData(id, name, resourceType, etag, location, tunnelInterfaces?.ToList(), loadBalancerBackendAddresses?.ToList(), backendIPConfigurations?.ToList(), loadBalancingRules?.ToList(), outboundRuleId != null ? ResourceManagerModelFactory.WritableSubResource(outboundRuleId) : null, outboundRules?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of GatewayLoadBalancerTunnelInterface. </summary>
-        /// <param name="port"> Port of gateway load balancer tunnel interface. </param>
-        /// <param name="identifier"> Identifier of gateway load balancer tunnel interface. </param>
-        /// <param name="protocol"> Protocol of gateway load balancer tunnel interface. </param>
-        /// <param name="interfaceType"> Traffic type of gateway load balancer tunnel interface. </param>
-        /// <returns> A new <see cref="Models.GatewayLoadBalancerTunnelInterface"/> instance for mocking. </returns>
-        public static GatewayLoadBalancerTunnelInterface GatewayLoadBalancerTunnelInterface(int? port = null, int? identifier = null, GatewayLoadBalancerTunnelProtocol? protocol = null, GatewayLoadBalancerTunnelInterfaceType? interfaceType = null)
-        {
-            return new GatewayLoadBalancerTunnelInterface(port, identifier, protocol, interfaceType);
-        }
-
         /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
         /// <param name="name"> Name of the backend address. </param>
         /// <param name="virtualNetworkId"> Reference to an existing virtual network. </param>
@@ -1101,15 +947,6 @@ namespace Azure.ResourceManager.Network.Models
             fqdns ??= new List<string>();
 
             return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId, requiredMemberName, fqdns?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendAddress. </summary>
-        /// <param name="fqdn"> Fully qualified domain name (FQDN). </param>
-        /// <param name="ipAddress"> IP address. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayBackendAddress"/> instance for mocking. </returns>
-        public static ApplicationGatewayBackendAddress ApplicationGatewayBackendAddress(string fqdn = null, string ipAddress = null)
-        {
-            return new ApplicationGatewayBackendAddress(fqdn, ipAddress);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHttpSettings. </summary>
@@ -1163,15 +1000,6 @@ namespace Azure.ResourceManager.Network.Models
             hostNames ??= new List<string>();
 
             return new ApplicationGatewayHttpListener(id, name, resourceType, etag, frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null, frontendPortId != null ? ResourceManagerModelFactory.WritableSubResource(frontendPortId) : null, protocol, hostName, sslCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(sslCertificateId) : null, sslProfileId != null ? ResourceManagerModelFactory.WritableSubResource(sslProfileId) : null, requireServerNameIndication, provisioningState, customErrorConfigurations?.ToList(), firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null, hostNames?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayCustomError. </summary>
-        /// <param name="statusCode"> Status code of the application gateway customer error. </param>
-        /// <param name="customErrorPageUri"> Error page URL of the application gateway customer error. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayCustomError"/> instance for mocking. </returns>
-        public static ApplicationGatewayCustomError ApplicationGatewayCustomError(ApplicationGatewayCustomErrorStatusCode? statusCode = null, Uri customErrorPageUri = null)
-        {
-            return new ApplicationGatewayCustomError(statusCode, customErrorPageUri);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
@@ -1265,62 +1093,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayRewriteRuleSet(id, name, resourceType, etag, rewriteRules?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRule. </summary>
-        /// <param name="name"> Name of the rewrite rule that is unique within an Application Gateway. </param>
-        /// <param name="ruleSequence"> Rule Sequence of the rewrite rule that determines the order of execution of a particular rule in a RewriteRuleSet. </param>
-        /// <param name="conditions"> Conditions based on which the action set execution will be evaluated. </param>
-        /// <param name="actionSet"> Set of actions to be done as part of the rewrite Rule. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayRewriteRule"/> instance for mocking. </returns>
-        public static ApplicationGatewayRewriteRule ApplicationGatewayRewriteRule(string name = null, int? ruleSequence = null, IEnumerable<ApplicationGatewayRewriteRuleCondition> conditions = null, ApplicationGatewayRewriteRuleActionSet actionSet = null)
-        {
-            conditions ??= new List<ApplicationGatewayRewriteRuleCondition>();
-
-            return new ApplicationGatewayRewriteRule(name, ruleSequence, conditions?.ToList(), actionSet);
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleCondition. </summary>
-        /// <param name="variable"> The condition parameter of the RewriteRuleCondition. </param>
-        /// <param name="pattern"> The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition. </param>
-        /// <param name="ignoreCase"> Setting this parameter to truth value with force the pattern to do a case in-sensitive comparison. </param>
-        /// <param name="negate"> Setting this value as truth will force to check the negation of the condition given by the user. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayRewriteRuleCondition"/> instance for mocking. </returns>
-        public static ApplicationGatewayRewriteRuleCondition ApplicationGatewayRewriteRuleCondition(string variable = null, string pattern = null, bool? ignoreCase = null, bool? negate = null)
-        {
-            return new ApplicationGatewayRewriteRuleCondition(variable, pattern, ignoreCase, negate);
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleActionSet. </summary>
-        /// <param name="requestHeaderConfigurations"> Request Header Actions in the Action Set. </param>
-        /// <param name="responseHeaderConfigurations"> Response Header Actions in the Action Set. </param>
-        /// <param name="urlConfiguration"> Url Configuration Action in the Action Set. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayRewriteRuleActionSet"/> instance for mocking. </returns>
-        public static ApplicationGatewayRewriteRuleActionSet ApplicationGatewayRewriteRuleActionSet(IEnumerable<ApplicationGatewayHeaderConfiguration> requestHeaderConfigurations = null, IEnumerable<ApplicationGatewayHeaderConfiguration> responseHeaderConfigurations = null, ApplicationGatewayUrlConfiguration urlConfiguration = null)
-        {
-            requestHeaderConfigurations ??= new List<ApplicationGatewayHeaderConfiguration>();
-            responseHeaderConfigurations ??= new List<ApplicationGatewayHeaderConfiguration>();
-
-            return new ApplicationGatewayRewriteRuleActionSet(requestHeaderConfigurations?.ToList(), responseHeaderConfigurations?.ToList(), urlConfiguration);
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayHeaderConfiguration. </summary>
-        /// <param name="headerName"> Header name of the header configuration. </param>
-        /// <param name="headerValue"> Header value of the header configuration. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayHeaderConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayHeaderConfiguration ApplicationGatewayHeaderConfiguration(string headerName = null, string headerValue = null)
-        {
-            return new ApplicationGatewayHeaderConfiguration(headerName, headerValue);
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayUrlConfiguration. </summary>
-        /// <param name="modifiedPath"> Url path which user has provided for url rewrite. Null means no path will be updated. Default value is null. </param>
-        /// <param name="modifiedQueryString"> Query string which user has provided for url rewrite. Null means no query string will be updated. Default value is null. </param>
-        /// <param name="reroute"> If set as true, it will re-evaluate the url path map provided in path based request routing rules using modified path. Default value is false. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayUrlConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayUrlConfiguration ApplicationGatewayUrlConfiguration(string modifiedPath = null, string modifiedQueryString = null, bool? reroute = null)
-        {
-            return new ApplicationGatewayUrlConfiguration(modifiedPath, modifiedQueryString, reroute);
-        }
-
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1342,46 +1114,6 @@ namespace Azure.ResourceManager.Network.Models
             pathRules ??= new List<WritableSubResource>();
 
             return new ApplicationGatewayRedirectConfiguration(id, name, resourceType, etag, redirectType, targetListenerId != null ? ResourceManagerModelFactory.WritableSubResource(targetListenerId) : null, targetUri, includePath, includeQueryString, requestRoutingRules?.ToList(), urlPathMaps?.ToList(), pathRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
-        /// <param name="enabled"> Whether the web application firewall is enabled or not. </param>
-        /// <param name="firewallMode"> Web application firewall mode. </param>
-        /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: &apos;OWASP&apos;. </param>
-        /// <param name="ruleSetVersion"> The version of the rule set type. </param>
-        /// <param name="disabledRuleGroups"> The disabled rule groups. </param>
-        /// <param name="requestBodyCheck"> Whether allow WAF to check request Body. </param>
-        /// <param name="maxRequestBodySize"> Maximum request body size for WAF. </param>
-        /// <param name="maxRequestBodySizeInKb"> Maximum request body size in Kb for WAF. </param>
-        /// <param name="fileUploadLimitInMb"> Maximum file upload size in Mb for WAF. </param>
-        /// <param name="exclusions"> The exclusion list. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayWebApplicationFirewallConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayWebApplicationFirewallConfiguration ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled = default, ApplicationGatewayFirewallMode firewallMode = default, string ruleSetType = null, string ruleSetVersion = null, IEnumerable<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = null, bool? requestBodyCheck = null, int? maxRequestBodySize = null, int? maxRequestBodySizeInKb = null, int? fileUploadLimitInMb = null, IEnumerable<ApplicationGatewayFirewallExclusion> exclusions = null)
-        {
-            disabledRuleGroups ??= new List<ApplicationGatewayFirewallDisabledRuleGroup>();
-            exclusions ??= new List<ApplicationGatewayFirewallExclusion>();
-
-            return new ApplicationGatewayWebApplicationFirewallConfiguration(enabled, firewallMode, ruleSetType, ruleSetVersion, disabledRuleGroups?.ToList(), requestBodyCheck, maxRequestBodySize, maxRequestBodySizeInKb, fileUploadLimitInMb, exclusions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallDisabledRuleGroup. </summary>
-        /// <param name="ruleGroupName"> The name of the rule group that will be disabled. </param>
-        /// <param name="rules"> The list of rules that will be disabled. If null, all rules of the rule group will be disabled. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayFirewallDisabledRuleGroup"/> instance for mocking. </returns>
-        public static ApplicationGatewayFirewallDisabledRuleGroup ApplicationGatewayFirewallDisabledRuleGroup(string ruleGroupName = null, IEnumerable<int> rules = null)
-        {
-            rules ??= new List<int>();
-
-            return new ApplicationGatewayFirewallDisabledRuleGroup(ruleGroupName, rules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayAutoscaleConfiguration. </summary>
-        /// <param name="minCapacity"> Lower bound on number of Application Gateway capacity. </param>
-        /// <param name="maxCapacity"> Upper bound on number of Application Gateway capacity. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayAutoscaleConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayAutoscaleConfiguration ApplicationGatewayAutoscaleConfiguration(int minCapacity = default, int? maxCapacity = null)
-        {
-            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, maxCapacity);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkConfiguration. </summary>
@@ -1518,27 +1250,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayFirewallRuleSet(id, name, resourceType, location, tags, provisioningState, ruleSetType, ruleSetVersion, ruleGroups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleGroup. </summary>
-        /// <param name="ruleGroupName"> The name of the web application firewall rule group. </param>
-        /// <param name="description"> The description of the web application firewall rule group. </param>
-        /// <param name="rules"> The rules of the web application firewall rule group. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayFirewallRuleGroup"/> instance for mocking. </returns>
-        public static ApplicationGatewayFirewallRuleGroup ApplicationGatewayFirewallRuleGroup(string ruleGroupName = null, string description = null, IEnumerable<ApplicationGatewayFirewallRule> rules = null)
-        {
-            rules ??= new List<ApplicationGatewayFirewallRule>();
-
-            return new ApplicationGatewayFirewallRuleGroup(ruleGroupName, description, rules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRule. </summary>
-        /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
-        /// <param name="description"> The description of the web application firewall rule. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayFirewallRule"/> instance for mocking. </returns>
-        public static ApplicationGatewayFirewallRule ApplicationGatewayFirewallRule(int ruleId = default, string description = null)
-        {
-            return new ApplicationGatewayFirewallRule(ruleId, description);
-        }
-
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptionsInfo. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1654,35 +1365,6 @@ namespace Azure.ResourceManager.Network.Models
             return new AzureFirewallApplicationRuleCollectionData(id, name, resourceType, etag, priority, actionType != null ? new AzureFirewallRCAction(actionType) : null, rules?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRule. </summary>
-        /// <param name="name"> Name of the application rule. </param>
-        /// <param name="description"> Description of the rule. </param>
-        /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
-        /// <param name="protocols"> Array of ApplicationRuleProtocols. </param>
-        /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
-        /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <returns> A new <see cref="Models.AzureFirewallApplicationRule"/> instance for mocking. </returns>
-        public static AzureFirewallApplicationRule AzureFirewallApplicationRule(string name = null, string description = null, IEnumerable<string> sourceAddresses = null, IEnumerable<AzureFirewallApplicationRuleProtocol> protocols = null, IEnumerable<string> targetFqdns = null, IEnumerable<string> fqdnTags = null, IEnumerable<string> sourceIPGroups = null)
-        {
-            sourceAddresses ??= new List<string>();
-            protocols ??= new List<AzureFirewallApplicationRuleProtocol>();
-            targetFqdns ??= new List<string>();
-            fqdnTags ??= new List<string>();
-            sourceIPGroups ??= new List<string>();
-
-            return new AzureFirewallApplicationRule(name, description, sourceAddresses?.ToList(), protocols?.ToList(), targetFqdns?.ToList(), fqdnTags?.ToList(), sourceIPGroups?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRuleProtocol. </summary>
-        /// <param name="protocolType"> Protocol type. </param>
-        /// <param name="port"> Port number for the protocol, cannot be greater than 64000. This field is optional. </param>
-        /// <returns> A new <see cref="Models.AzureFirewallApplicationRuleProtocol"/> instance for mocking. </returns>
-        public static AzureFirewallApplicationRuleProtocol AzureFirewallApplicationRuleProtocol(AzureFirewallApplicationRuleProtocolType? protocolType = null, int? port = null)
-        {
-            return new AzureFirewallApplicationRuleProtocol(protocolType, port);
-        }
-
         /// <summary> Initializes a new instance of AzureFirewallNatRuleCollectionData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1698,29 +1380,6 @@ namespace Azure.ResourceManager.Network.Models
             rules ??= new List<AzureFirewallNatRule>();
 
             return new AzureFirewallNatRuleCollectionData(id, name, resourceType, etag, priority, actionType != null ? new AzureFirewallNatRCAction(actionType) : null, rules?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of AzureFirewallNatRule. </summary>
-        /// <param name="name"> Name of the NAT rule. </param>
-        /// <param name="description"> Description of the rule. </param>
-        /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
-        /// <param name="destinationAddresses"> List of destination IP addresses for this rule. Supports IP ranges, prefixes, and service tags. </param>
-        /// <param name="destinationPorts"> List of destination ports. </param>
-        /// <param name="protocols"> Array of AzureFirewallNetworkRuleProtocols applicable to this NAT rule. </param>
-        /// <param name="translatedAddress"> The translated address for this NAT rule. </param>
-        /// <param name="translatedPort"> The translated port for this NAT rule. </param>
-        /// <param name="translatedFqdn"> The translated FQDN for this NAT rule. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <returns> A new <see cref="Models.AzureFirewallNatRule"/> instance for mocking. </returns>
-        public static AzureFirewallNatRule AzureFirewallNatRule(string name = null, string description = null, IEnumerable<string> sourceAddresses = null, IEnumerable<string> destinationAddresses = null, IEnumerable<string> destinationPorts = null, IEnumerable<AzureFirewallNetworkRuleProtocol> protocols = null, string translatedAddress = null, string translatedPort = null, string translatedFqdn = null, IEnumerable<string> sourceIPGroups = null)
-        {
-            sourceAddresses ??= new List<string>();
-            destinationAddresses ??= new List<string>();
-            destinationPorts ??= new List<string>();
-            protocols ??= new List<AzureFirewallNetworkRuleProtocol>();
-            sourceIPGroups ??= new List<string>();
-
-            return new AzureFirewallNatRule(name, description, sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), protocols?.ToList(), translatedAddress, translatedPort, translatedFqdn, sourceIPGroups?.ToList());
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNetworkRuleCollectionData. </summary>
@@ -1740,30 +1399,6 @@ namespace Azure.ResourceManager.Network.Models
             return new AzureFirewallNetworkRuleCollectionData(id, name, resourceType, etag, priority, actionType != null ? new AzureFirewallRCAction(actionType) : null, rules?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
-        /// <param name="name"> Name of the network rule. </param>
-        /// <param name="description"> Description of the rule. </param>
-        /// <param name="protocols"> Array of AzureFirewallNetworkRuleProtocols. </param>
-        /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
-        /// <param name="destinationAddresses"> List of destination IP addresses. </param>
-        /// <param name="destinationPorts"> List of destination ports. </param>
-        /// <param name="destinationFqdns"> List of destination FQDNs. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
-        /// <returns> A new <see cref="Models.AzureFirewallNetworkRule"/> instance for mocking. </returns>
-        public static AzureFirewallNetworkRule AzureFirewallNetworkRule(string name = null, string description = null, IEnumerable<AzureFirewallNetworkRuleProtocol> protocols = null, IEnumerable<string> sourceAddresses = null, IEnumerable<string> destinationAddresses = null, IEnumerable<string> destinationPorts = null, IEnumerable<string> destinationFqdns = null, IEnumerable<string> sourceIPGroups = null, IEnumerable<string> destinationIPGroups = null)
-        {
-            protocols ??= new List<AzureFirewallNetworkRuleProtocol>();
-            sourceAddresses ??= new List<string>();
-            destinationAddresses ??= new List<string>();
-            destinationPorts ??= new List<string>();
-            destinationFqdns ??= new List<string>();
-            sourceIPGroups ??= new List<string>();
-            destinationIPGroups ??= new List<string>();
-
-            return new AzureFirewallNetworkRule(name, description, protocols?.ToList(), sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), destinationFqdns?.ToList(), sourceIPGroups?.ToList(), destinationIPGroups?.ToList());
-        }
-
         /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1779,34 +1414,6 @@ namespace Azure.ResourceManager.Network.Models
             return new AzureFirewallIPConfiguration(id, name, resourceType, etag, privateIPAddress, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of HubIPAddresses. </summary>
-        /// <param name="publicIPs"> Public IP addresses associated with azure firewall. </param>
-        /// <param name="privateIPAddress"> Private IP Address associated with azure firewall. </param>
-        /// <returns> A new <see cref="Models.HubIPAddresses"/> instance for mocking. </returns>
-        public static HubIPAddresses HubIPAddresses(HubPublicIPAddresses publicIPs = null, string privateIPAddress = null)
-        {
-            return new HubIPAddresses(publicIPs, privateIPAddress);
-        }
-
-        /// <summary> Initializes a new instance of HubPublicIPAddresses. </summary>
-        /// <param name="addresses"> The list of Public IP addresses associated with azure firewall or IP addresses to be retained. </param>
-        /// <param name="count"> The number of Public IP addresses associated with azure firewall. </param>
-        /// <returns> A new <see cref="Models.HubPublicIPAddresses"/> instance for mocking. </returns>
-        public static HubPublicIPAddresses HubPublicIPAddresses(IEnumerable<AzureFirewallPublicIPAddress> addresses = null, int? count = null)
-        {
-            addresses ??= new List<AzureFirewallPublicIPAddress>();
-
-            return new HubPublicIPAddresses(addresses?.ToList(), count);
-        }
-
-        /// <summary> Initializes a new instance of AzureFirewallPublicIPAddress. </summary>
-        /// <param name="address"> Public IP Address value. </param>
-        /// <returns> A new <see cref="Models.AzureFirewallPublicIPAddress"/> instance for mocking. </returns>
-        public static AzureFirewallPublicIPAddress AzureFirewallPublicIPAddress(string address = null)
-        {
-            return new AzureFirewallPublicIPAddress(address);
-        }
-
         /// <summary> Initializes a new instance of AzureFirewallIPGroups. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="changeNumber"> The iteration number. </param>
@@ -1814,15 +1421,6 @@ namespace Azure.ResourceManager.Network.Models
         public static AzureFirewallIPGroups AzureFirewallIPGroups(ResourceIdentifier id = null, string changeNumber = null)
         {
             return new AzureFirewallIPGroups(id, changeNumber);
-        }
-
-        /// <summary> Initializes a new instance of AzureFirewallSku. </summary>
-        /// <param name="name"> Name of an Azure Firewall SKU. </param>
-        /// <param name="tier"> Tier of an Azure Firewall. </param>
-        /// <returns> A new <see cref="Models.AzureFirewallSku"/> instance for mocking. </returns>
-        public static AzureFirewallSku AzureFirewallSku(AzureFirewallSkuName? name = null, AzureFirewallSkuTier? tier = null)
-        {
-            return new AzureFirewallSku(name, tier);
         }
 
         /// <summary> Initializes a new instance of AzureFirewallFqdnTag. </summary>
@@ -1949,17 +1547,6 @@ namespace Azure.ResourceManager.Network.Models
             return new DdosCustomPolicyData(id, name, resourceType, location, tags, etag, resourceGuid, provisioningState, publicIPAddresses?.ToList(), protocolCustomSettings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProtocolCustomSettings. </summary>
-        /// <param name="protocol"> The protocol for which the DDoS protection policy is being customized. </param>
-        /// <param name="triggerRateOverride"> The customized DDoS protection trigger rate. </param>
-        /// <param name="sourceRateOverride"> The customized DDoS protection source rate. </param>
-        /// <param name="triggerSensitivityOverride"> The customized DDoS protection trigger rate sensitivity degrees. High: Trigger rate set with most sensitivity w.r.t. normal traffic. Default: Trigger rate set with moderate sensitivity w.r.t. normal traffic. Low: Trigger rate set with less sensitivity w.r.t. normal traffic. Relaxed: Trigger rate set with least sensitivity w.r.t. normal traffic. </param>
-        /// <returns> A new <see cref="Models.ProtocolCustomSettings"/> instance for mocking. </returns>
-        public static ProtocolCustomSettings ProtocolCustomSettings(DdosCustomPolicyProtocol? protocol = null, string triggerRateOverride = null, string sourceRateOverride = null, DdosCustomPolicyTriggerSensitivityOverride? triggerSensitivityOverride = null)
-        {
-            return new ProtocolCustomSettings(protocol, triggerRateOverride, sourceRateOverride, triggerSensitivityOverride);
-        }
-
         /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2009,24 +1596,6 @@ namespace Azure.ResourceManager.Network.Models
             associatedNetworkInterfaces ??= new List<NetworkInterfaceData>();
 
             return new DscpConfigurationData(id, name, resourceType, location, tags, etag, markings?.ToList(), sourceIPRanges?.ToList(), destinationIPRanges?.ToList(), sourcePortRanges?.ToList(), destinationPortRanges?.ToList(), protocol, qosCollectionId, associatedNetworkInterfaces?.ToList(), resourceGuid, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of QosIPRange. </summary>
-        /// <param name="startIP"> Start IP Address. </param>
-        /// <param name="endIP"> End IP Address. </param>
-        /// <returns> A new <see cref="Models.QosIPRange"/> instance for mocking. </returns>
-        public static QosIPRange QosIPRange(string startIP = null, string endIP = null)
-        {
-            return new QosIPRange(startIP, endIP);
-        }
-
-        /// <summary> Initializes a new instance of QosPortRange. </summary>
-        /// <param name="start"> Qos Port Range start. </param>
-        /// <param name="end"> Qos Port Range end. </param>
-        /// <returns> A new <see cref="Models.QosPortRange"/> instance for mocking. </returns>
-        public static QosPortRange QosPortRange(int? start = null, int? end = null)
-        {
-            return new QosPortRange(start, end);
         }
 
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
@@ -2101,29 +1670,6 @@ namespace Azure.ResourceManager.Network.Models
             advertisedCommunities ??= new List<string>();
 
             return new ExpressRouteCircuitPeeringConfig(advertisedPublicPrefixes?.ToList(), advertisedCommunities?.ToList(), advertisedPublicPrefixesState, legacyMode, customerASN, routingRegistryName);
-        }
-
-        /// <summary> Initializes a new instance of ExpressRouteCircuitStats. </summary>
-        /// <param name="primarybytesIn"> The Primary BytesIn of the peering. </param>
-        /// <param name="primarybytesOut"> The primary BytesOut of the peering. </param>
-        /// <param name="secondarybytesIn"> The secondary BytesIn of the peering. </param>
-        /// <param name="secondarybytesOut"> The secondary BytesOut of the peering. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteCircuitStats"/> instance for mocking. </returns>
-        public static ExpressRouteCircuitStats ExpressRouteCircuitStats(long? primarybytesIn = null, long? primarybytesOut = null, long? secondarybytesIn = null, long? secondarybytesOut = null)
-        {
-            return new ExpressRouteCircuitStats(primarybytesIn, primarybytesOut, secondarybytesIn, secondarybytesOut);
-        }
-
-        /// <summary> Initializes a new instance of IPv6ExpressRouteCircuitPeeringConfig. </summary>
-        /// <param name="primaryPeerAddressPrefix"> The primary address prefix. </param>
-        /// <param name="secondaryPeerAddressPrefix"> The secondary address prefix. </param>
-        /// <param name="microsoftPeeringConfig"> The Microsoft peering configuration. </param>
-        /// <param name="routeFilterId"> The reference to the RouteFilter resource. </param>
-        /// <param name="state"> The state of peering. </param>
-        /// <returns> A new <see cref="Models.IPv6ExpressRouteCircuitPeeringConfig"/> instance for mocking. </returns>
-        public static IPv6ExpressRouteCircuitPeeringConfig IPv6ExpressRouteCircuitPeeringConfig(string primaryPeerAddressPrefix = null, string secondaryPeerAddressPrefix = null, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = null, ResourceIdentifier routeFilterId = null, ExpressRouteCircuitPeeringState? state = null)
-        {
-            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix, secondaryPeerAddressPrefix, microsoftPeeringConfig, routeFilterId != null ? ResourceManagerModelFactory.WritableSubResource(routeFilterId) : null, state);
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionData. </summary>
@@ -2201,26 +1747,6 @@ namespace Azure.ResourceManager.Network.Models
             peerings ??= new List<ExpressRouteCircuitPeeringData>();
 
             return new ExpressRouteCircuitData(id, name, resourceType, location, tags, sku, etag, allowClassicOperations, circuitProvisioningState, serviceProviderProvisioningState, authorizations?.ToList(), peerings?.ToList(), serviceKey, serviceProviderNotes, serviceProviderProperties, expressRoutePortId != null ? ResourceManagerModelFactory.WritableSubResource(expressRoutePortId) : null, bandwidthInGbps, stag, provisioningState, gatewayManagerETag, globalReachEnabled);
-        }
-
-        /// <summary> Initializes a new instance of ExpressRouteCircuitSku. </summary>
-        /// <param name="name"> The name of the SKU. </param>
-        /// <param name="tier"> The tier of the SKU. </param>
-        /// <param name="family"> The family of the SKU. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteCircuitSku"/> instance for mocking. </returns>
-        public static ExpressRouteCircuitSku ExpressRouteCircuitSku(string name = null, ExpressRouteCircuitSkuTier? tier = null, ExpressRouteCircuitSkuFamily? family = null)
-        {
-            return new ExpressRouteCircuitSku(name, tier, family);
-        }
-
-        /// <summary> Initializes a new instance of ExpressRouteCircuitServiceProviderProperties. </summary>
-        /// <param name="serviceProviderName"> The serviceProviderName. </param>
-        /// <param name="peeringLocation"> The peering location. </param>
-        /// <param name="bandwidthInMbps"> The BandwidthInMbps. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteCircuitServiceProviderProperties"/> instance for mocking. </returns>
-        public static ExpressRouteCircuitServiceProviderProperties ExpressRouteCircuitServiceProviderProperties(string serviceProviderName = null, string peeringLocation = null, int? bandwidthInMbps = null)
-        {
-            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName, peeringLocation, bandwidthInMbps);
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitsArpTableListResult. </summary>
@@ -2308,15 +1834,6 @@ namespace Azure.ResourceManager.Network.Models
             bandwidthsOffered ??= new List<ExpressRouteServiceProviderBandwidthsOffered>();
 
             return new ExpressRouteServiceProvider(id, name, resourceType, location, tags, peeringLocations?.ToList(), bandwidthsOffered?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of ExpressRouteServiceProviderBandwidthsOffered. </summary>
-        /// <param name="offerName"> The OfferName. </param>
-        /// <param name="valueInMbps"> The ValueInMbps. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteServiceProviderBandwidthsOffered"/> instance for mocking. </returns>
-        public static ExpressRouteServiceProviderBandwidthsOffered ExpressRouteServiceProviderBandwidthsOffered(string offerName = null, int? valueInMbps = null)
-        {
-            return new ExpressRouteServiceProviderBandwidthsOffered(offerName, valueInMbps);
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
@@ -2469,17 +1986,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteLinkData(id, name, resourceType, etag, routerName, interfaceName, patchPanelId, rackId, connectorType, adminState, provisioningState, macSecConfig);
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteLinkMacSecConfig. </summary>
-        /// <param name="cknSecretIdentifier"> Keyvault Secret Identifier URL containing Mac security CKN key. </param>
-        /// <param name="cakSecretIdentifier"> Keyvault Secret Identifier URL containing Mac security CAK key. </param>
-        /// <param name="cipher"> Mac security cipher. </param>
-        /// <param name="sciState"> Sci mode enabled/disabled. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteLinkMacSecConfig"/> instance for mocking. </returns>
-        public static ExpressRouteLinkMacSecConfig ExpressRouteLinkMacSecConfig(string cknSecretIdentifier = null, string cakSecretIdentifier = null, ExpressRouteLinkMacSecCipher? cipher = null, ExpressRouteLinkMacSecSciState? sciState = null)
-        {
-            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier, cakSecretIdentifier, cipher, sciState);
-        }
-
         /// <summary> Initializes a new instance of GenerateExpressRoutePortsLoaResult. </summary>
         /// <param name="encodedContent"> The content as a base64 encoded string. </param>
         /// <returns> A new <see cref="Models.GenerateExpressRoutePortsLoaResult"/> instance for mocking. </returns>
@@ -2521,120 +2027,6 @@ namespace Azure.ResourceManager.Network.Models
             return new FirewallPolicyData(id, name, resourceType, location, tags, etag, identity, ruleCollectionGroups?.ToList(), provisioningState, basePolicyId != null ? ResourceManagerModelFactory.WritableSubResource(basePolicyId) : null, firewalls?.ToList(), childPolicies?.ToList(), threatIntelMode, threatIntelWhitelist, insights, snatPrivateRanges != null ? new FirewallPolicySnat(snatPrivateRanges?.ToList()) : null, dnsSettings, intrusionDetection, transportSecurityCertificateAuthority != null ? new FirewallPolicyTransportSecurity(transportSecurityCertificateAuthority) : null, skuTier != null ? new FirewallPolicySku(skuTier) : null);
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>
-        /// <param name="ipAddresses"> List of IP addresses for the ThreatIntel Whitelist. </param>
-        /// <param name="fqdns"> List of FQDNs for the ThreatIntel Whitelist. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyThreatIntelWhitelist"/> instance for mocking. </returns>
-        public static FirewallPolicyThreatIntelWhitelist FirewallPolicyThreatIntelWhitelist(IEnumerable<string> ipAddresses = null, IEnumerable<string> fqdns = null)
-        {
-            ipAddresses ??= new List<string>();
-            fqdns ??= new List<string>();
-
-            return new FirewallPolicyThreatIntelWhitelist(ipAddresses?.ToList(), fqdns?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyInsights. </summary>
-        /// <param name="isEnabled"> A flag to indicate if the insights are enabled on the policy. </param>
-        /// <param name="retentionDays"> Number of days the insights should be enabled on the policy. </param>
-        /// <param name="logAnalyticsResources"> Workspaces needed to configure the Firewall Policy Insights. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyInsights"/> instance for mocking. </returns>
-        public static FirewallPolicyInsights FirewallPolicyInsights(bool? isEnabled = null, int? retentionDays = null, FirewallPolicyLogAnalyticsResources logAnalyticsResources = null)
-        {
-            return new FirewallPolicyInsights(isEnabled, retentionDays, logAnalyticsResources);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsResources. </summary>
-        /// <param name="workspaces"> List of workspaces for Firewall Policy Insights. </param>
-        /// <param name="defaultWorkspaceIdId"> The default workspace Id for Firewall Policy Insights. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyLogAnalyticsResources"/> instance for mocking. </returns>
-        public static FirewallPolicyLogAnalyticsResources FirewallPolicyLogAnalyticsResources(IEnumerable<FirewallPolicyLogAnalyticsWorkspace> workspaces = null, ResourceIdentifier defaultWorkspaceIdId = null)
-        {
-            workspaces ??= new List<FirewallPolicyLogAnalyticsWorkspace>();
-
-            return new FirewallPolicyLogAnalyticsResources(workspaces?.ToList(), defaultWorkspaceIdId != null ? ResourceManagerModelFactory.WritableSubResource(defaultWorkspaceIdId) : null);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsWorkspace. </summary>
-        /// <param name="region"> Region to configure the Workspace. </param>
-        /// <param name="workspaceIdId"> The workspace Id for Firewall Policy Insights. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyLogAnalyticsWorkspace"/> instance for mocking. </returns>
-        public static FirewallPolicyLogAnalyticsWorkspace FirewallPolicyLogAnalyticsWorkspace(string region = null, ResourceIdentifier workspaceIdId = null)
-        {
-            return new FirewallPolicyLogAnalyticsWorkspace(region, workspaceIdId != null ? ResourceManagerModelFactory.WritableSubResource(workspaceIdId) : null);
-        }
-
-        /// <summary> Initializes a new instance of DnsSettings. </summary>
-        /// <param name="servers"> List of Custom DNS Servers. </param>
-        /// <param name="enableProxy"> Enable DNS Proxy on Firewalls attached to the Firewall Policy. </param>
-        /// <param name="requireProxyForNetworkRules"> FQDNs in Network Rules are supported when set to true. </param>
-        /// <returns> A new <see cref="Models.DnsSettings"/> instance for mocking. </returns>
-        public static DnsSettings DnsSettings(IEnumerable<string> servers = null, bool? enableProxy = null, bool? requireProxyForNetworkRules = null)
-        {
-            servers ??= new List<string>();
-
-            return new DnsSettings(servers?.ToList(), enableProxy, requireProxyForNetworkRules);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetection. </summary>
-        /// <param name="mode"> Intrusion detection general state. </param>
-        /// <param name="configuration"> Intrusion detection configuration properties. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyIntrusionDetection"/> instance for mocking. </returns>
-        public static FirewallPolicyIntrusionDetection FirewallPolicyIntrusionDetection(FirewallPolicyIntrusionDetectionStateType? mode = null, FirewallPolicyIntrusionDetectionConfiguration configuration = null)
-        {
-            return new FirewallPolicyIntrusionDetection(mode, configuration);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionConfiguration. </summary>
-        /// <param name="signatureOverrides"> List of specific signatures states. </param>
-        /// <param name="bypassTrafficSettings"> List of rules for traffic to bypass. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyIntrusionDetectionConfiguration"/> instance for mocking. </returns>
-        public static FirewallPolicyIntrusionDetectionConfiguration FirewallPolicyIntrusionDetectionConfiguration(IEnumerable<FirewallPolicyIntrusionDetectionSignatureSpecification> signatureOverrides = null, IEnumerable<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> bypassTrafficSettings = null)
-        {
-            signatureOverrides ??= new List<FirewallPolicyIntrusionDetectionSignatureSpecification>();
-            bypassTrafficSettings ??= new List<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>();
-
-            return new FirewallPolicyIntrusionDetectionConfiguration(signatureOverrides?.ToList(), bypassTrafficSettings?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionSignatureSpecification. </summary>
-        /// <param name="id"> Signature id. </param>
-        /// <param name="mode"> The signature state. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyIntrusionDetectionSignatureSpecification"/> instance for mocking. </returns>
-        public static FirewallPolicyIntrusionDetectionSignatureSpecification FirewallPolicyIntrusionDetectionSignatureSpecification(string id = null, FirewallPolicyIntrusionDetectionStateType? mode = null)
-        {
-            return new FirewallPolicyIntrusionDetectionSignatureSpecification(id, mode);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionBypassTrafficSpecifications. </summary>
-        /// <param name="name"> Name of the bypass traffic rule. </param>
-        /// <param name="description"> Description of the bypass traffic rule. </param>
-        /// <param name="protocol"> The rule bypass protocol. </param>
-        /// <param name="sourceAddresses"> List of source IP addresses or ranges for this rule. </param>
-        /// <param name="destinationAddresses"> List of destination IP addresses or ranges for this rule. </param>
-        /// <param name="destinationPorts"> List of destination ports or ranges. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"/> instance for mocking. </returns>
-        public static FirewallPolicyIntrusionDetectionBypassTrafficSpecifications FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(string name = null, string description = null, FirewallPolicyIntrusionDetectionProtocol? protocol = null, IEnumerable<string> sourceAddresses = null, IEnumerable<string> destinationAddresses = null, IEnumerable<string> destinationPorts = null, IEnumerable<string> sourceIPGroups = null, IEnumerable<string> destinationIPGroups = null)
-        {
-            sourceAddresses ??= new List<string>();
-            destinationAddresses ??= new List<string>();
-            destinationPorts ??= new List<string>();
-            sourceIPGroups ??= new List<string>();
-            destinationIPGroups ??= new List<string>();
-
-            return new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(name, description, protocol, sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), sourceIPGroups?.ToList(), destinationIPGroups?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyCertificateAuthority. </summary>
-        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
-        /// <param name="name"> Name of the CA certificate. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyCertificateAuthority"/> instance for mocking. </returns>
-        public static FirewallPolicyCertificateAuthority FirewallPolicyCertificateAuthority(string keyVaultSecretId = null, string name = null)
-        {
-            return new FirewallPolicyCertificateAuthority(keyVaultSecretId, name);
-        }
-
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -2653,16 +2045,6 @@ namespace Azure.ResourceManager.Network.Models
             ruleCollections ??= new List<FirewallPolicyRuleCollectionInfo>();
 
             return new FirewallPolicyRuleCollectionGroupData(id, name, resourceType, etag, priority, ruleCollections?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionInfo. </summary>
-        /// <param name="ruleCollectionType"> The type of the rule collection. </param>
-        /// <param name="name"> The name of the rule collection. </param>
-        /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyRuleCollectionInfo"/> instance for mocking. </returns>
-        public static FirewallPolicyRuleCollectionInfo FirewallPolicyRuleCollectionInfo(string ruleCollectionType = "Unknown", string name = null, int? priority = null)
-        {
-            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name, priority);
         }
 
         /// <summary> Initializes a new instance of IPAllocationData. </summary>
@@ -2742,15 +2124,6 @@ namespace Azure.ResourceManager.Network.Models
             outboundRules ??= new List<OutboundRuleData>();
 
             return new LoadBalancerData(id, name, resourceType, location, tags, extendedLocation, sku, etag, frontendIPConfigurations?.ToList(), backendAddressPools?.ToList(), loadBalancingRules?.ToList(), probes?.ToList(), inboundNatRules?.ToList(), inboundNatPools?.ToList(), outboundRules?.ToList(), resourceGuid, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of LoadBalancerSku. </summary>
-        /// <param name="name"> Name of a load balancer SKU. </param>
-        /// <param name="tier"> Tier of a load balancer SKU. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerSku"/> instance for mocking. </returns>
-        public static LoadBalancerSku LoadBalancerSku(LoadBalancerSkuName? name = null, LoadBalancerSkuTier? tier = null)
-        {
-            return new LoadBalancerSku(name, tier);
         }
 
         /// <summary> Initializes a new instance of LoadBalancingRuleData. </summary>
@@ -3028,16 +2401,6 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkVirtualApplianceData(id, name, resourceType, location, tags, identity, etag, nvaSku, addressPrefix, bootStrapConfigurationBlobs?.ToList(), virtualHubId != null ? ResourceManagerModelFactory.WritableSubResource(virtualHubId) : null, cloudInitConfigurationBlobs?.ToList(), cloudInitConfiguration, virtualApplianceAsn, virtualApplianceNics?.ToList(), virtualApplianceSites?.ToList(), inboundSecurityRules?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceSkuProperties. </summary>
-        /// <param name="vendor"> Virtual Appliance Vendor. </param>
-        /// <param name="bundledScaleUnit"> Virtual Appliance Scale Unit. </param>
-        /// <param name="marketPlaceVersion"> Virtual Appliance Version. </param>
-        /// <returns> A new <see cref="Models.VirtualApplianceSkuProperties"/> instance for mocking. </returns>
-        public static VirtualApplianceSkuProperties VirtualApplianceSkuProperties(string vendor = null, string bundledScaleUnit = null, string marketPlaceVersion = null)
-        {
-            return new VirtualApplianceSkuProperties(vendor, bundledScaleUnit, marketPlaceVersion);
-        }
-
         /// <summary> Initializes a new instance of VirtualApplianceNicProperties. </summary>
         /// <param name="name"> NIC name. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
@@ -3060,16 +2423,6 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualApplianceSiteData VirtualApplianceSiteData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string addressPrefix = null, BreakOutCategoryPolicies o365BreakOutCategories = null, NetworkProvisioningState? provisioningState = null)
         {
             return new VirtualApplianceSiteData(id, name, resourceType, etag, addressPrefix, o365BreakOutCategories != null ? new Office365PolicyProperties(o365BreakOutCategories) : null, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of BreakOutCategoryPolicies. </summary>
-        /// <param name="allow"> Flag to control breakout of o365 allow category. </param>
-        /// <param name="optimize"> Flag to control breakout of o365 optimize category. </param>
-        /// <param name="default"> Flag to control breakout of o365 default category. </param>
-        /// <returns> A new <see cref="Models.BreakOutCategoryPolicies"/> instance for mocking. </returns>
-        public static BreakOutCategoryPolicies BreakOutCategoryPolicies(bool? allow = null, bool? optimize = null, bool? @default = null)
-        {
-            return new BreakOutCategoryPolicies(allow, optimize, @default);
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
@@ -3114,16 +2467,6 @@ namespace Azure.ResourceManager.Network.Models
             rules ??= new List<InboundSecurityRules>();
 
             return new InboundSecurityRule(id, name, resourceType, etag, rules?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of InboundSecurityRules. </summary>
-        /// <param name="protocol"> Protocol. This should be either TCP or UDP. </param>
-        /// <param name="sourceAddressPrefix"> The CIDR or source IP range. Only /30, /31 and /32 Ip ranges are allowed. </param>
-        /// <param name="destinationPortRange"> NVA port ranges to be opened up. One needs to provide specific ports. </param>
-        /// <returns> A new <see cref="Models.InboundSecurityRules"/> instance for mocking. </returns>
-        public static InboundSecurityRules InboundSecurityRules(InboundSecurityRulesProtocol? protocol = null, string sourceAddressPrefix = null, int? destinationPortRange = null)
-        {
-            return new InboundSecurityRules(protocol, sourceAddressPrefix, destinationPortRange);
         }
 
         /// <summary> Initializes a new instance of NetworkWatcherData. </summary>
@@ -3252,28 +2595,6 @@ namespace Azure.ResourceManager.Network.Models
             return new SubnetAssociation(id, securityRules?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PacketCaptureStorageLocation. </summary>
-        /// <param name="storageId"> The ID of the storage account to save the packet capture session. Required if no local file path is provided. </param>
-        /// <param name="storagePath"> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </param>
-        /// <param name="filePath"> A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </param>
-        /// <returns> A new <see cref="Models.PacketCaptureStorageLocation"/> instance for mocking. </returns>
-        public static PacketCaptureStorageLocation PacketCaptureStorageLocation(ResourceIdentifier storageId = null, string storagePath = null, string filePath = null)
-        {
-            return new PacketCaptureStorageLocation(storageId, storagePath, filePath);
-        }
-
-        /// <summary> Initializes a new instance of PacketCaptureFilter. </summary>
-        /// <param name="protocol"> Protocol to be filtered on. </param>
-        /// <param name="localIPAddress"> Local IP Address to be filtered on. Notation: &quot;127.0.0.1&quot; for single address entry. &quot;127.0.0.1-127.0.0.255&quot; for range. &quot;127.0.0.1;127.0.0.5&quot;? for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
-        /// <param name="remoteIPAddress"> Local IP Address to be filtered on. Notation: &quot;127.0.0.1&quot; for single address entry. &quot;127.0.0.1-127.0.0.255&quot; for range. &quot;127.0.0.1;127.0.0.5;&quot; for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
-        /// <param name="localPort"> Local port to be filtered on. Notation: &quot;80&quot; for single port entry.&quot;80-85&quot; for range. &quot;80;443;&quot; for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
-        /// <param name="remotePort"> Remote port to be filtered on. Notation: &quot;80&quot; for single port entry.&quot;80-85&quot; for range. &quot;80;443;&quot; for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
-        /// <returns> A new <see cref="Models.PacketCaptureFilter"/> instance for mocking. </returns>
-        public static PacketCaptureFilter PacketCaptureFilter(PcProtocol? protocol = null, string localIPAddress = null, string remoteIPAddress = null, string localPort = null, string remotePort = null)
-        {
-            return new PacketCaptureFilter(protocol, localIPAddress, remoteIPAddress, localPort, remotePort);
-        }
-
         /// <summary> Initializes a new instance of PacketCaptureData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3348,28 +2669,6 @@ namespace Azure.ResourceManager.Network.Models
             return new TroubleshootingRecommendedActions(actionId, actionText, actionUri, actionUriText);
         }
 
-        /// <summary> Initializes a new instance of FlowLogInformation. </summary>
-        /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
-        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
-        /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
-        /// <param name="enabled"> Flag to enable/disable flow logging. </param>
-        /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
-        /// <param name="format"> Parameters that define the flow log format. </param>
-        /// <returns> A new <see cref="Models.FlowLogInformation"/> instance for mocking. </returns>
-        public static FlowLogInformation FlowLogInformation(ResourceIdentifier targetResourceId = null, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, ResourceIdentifier storageId = null, bool enabled = default, RetentionPolicyParameters retentionPolicy = null, FlowLogProperties format = null)
-        {
-            return new FlowLogInformation(targetResourceId, trafficAnalyticsConfiguration != null ? new TrafficAnalyticsProperties(trafficAnalyticsConfiguration) : null, storageId, enabled, retentionPolicy, format);
-        }
-
-        /// <summary> Initializes a new instance of NetworkWatcherHttpHeader. </summary>
-        /// <param name="name"> The name in HTTP header. </param>
-        /// <param name="value"> The value in HTTP header. </param>
-        /// <returns> A new <see cref="Models.NetworkWatcherHttpHeader"/> instance for mocking. </returns>
-        public static NetworkWatcherHttpHeader NetworkWatcherHttpHeader(string name = null, string value = null)
-        {
-            return new NetworkWatcherHttpHeader(name, value);
-        }
-
         /// <summary> Initializes a new instance of ConnectivityInformation. </summary>
         /// <param name="hops"> List of hops between the source and the destination. </param>
         /// <param name="networkConnectionStatus"> The connection status. </param>
@@ -3437,16 +2736,6 @@ namespace Azure.ResourceManager.Network.Models
             contexts ??= new List<IDictionary<string, string>>();
 
             return new ConnectivityIssueInfo(origin, severity, connectivityIssueType, contexts?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AzureReachabilityReportLocation. </summary>
-        /// <param name="country"> The name of the country. </param>
-        /// <param name="state"> The name of the state. </param>
-        /// <param name="city"> The name of the city or town. </param>
-        /// <returns> A new <see cref="Models.AzureReachabilityReportLocation"/> instance for mocking. </returns>
-        public static AzureReachabilityReportLocation AzureReachabilityReportLocation(string country = null, string state = null, string city = null)
-        {
-            return new AzureReachabilityReportLocation(country, state, city);
         }
 
         /// <summary> Initializes a new instance of AzureReachabilityReport. </summary>
@@ -3592,154 +2881,6 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkSecurityRulesEvaluationResult NetworkSecurityRulesEvaluationResult(string name = null, bool? protocolMatched = null, bool? sourceMatched = null, bool? sourcePortMatched = null, bool? destinationMatched = null, bool? destinationPortMatched = null)
         {
             return new NetworkSecurityRulesEvaluationResult(name, protocolMatched, sourceMatched, sourcePortMatched, destinationMatched, destinationPortMatched);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorSource. </summary>
-        /// <param name="resourceId"> The ID of the resource used as the source by connection monitor. </param>
-        /// <param name="port"> The source port used by connection monitor. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorSource"/> instance for mocking. </returns>
-        public static ConnectionMonitorSource ConnectionMonitorSource(ResourceIdentifier resourceId = null, int? port = null)
-        {
-            return new ConnectionMonitorSource(resourceId, port);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorDestination. </summary>
-        /// <param name="resourceId"> The ID of the resource used as the destination by connection monitor. </param>
-        /// <param name="address"> Address of the connection monitor destination (IP or domain name). </param>
-        /// <param name="port"> The destination port used by connection monitor. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorDestination"/> instance for mocking. </returns>
-        public static ConnectionMonitorDestination ConnectionMonitorDestination(ResourceIdentifier resourceId = null, string address = null, int? port = null)
-        {
-            return new ConnectionMonitorDestination(resourceId, address, port);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpoint. </summary>
-        /// <param name="name"> The name of the connection monitor endpoint. </param>
-        /// <param name="endpointType"> The endpoint type. </param>
-        /// <param name="resourceId"> Resource ID of the connection monitor endpoint. </param>
-        /// <param name="address"> Address of the connection monitor endpoint (IP or domain name). </param>
-        /// <param name="filter"> Filter for sub-items within the endpoint. </param>
-        /// <param name="scope"> Endpoint scope. </param>
-        /// <param name="coverageLevel"> Test coverage for the endpoint. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorEndpoint"/> instance for mocking. </returns>
-        public static ConnectionMonitorEndpoint ConnectionMonitorEndpoint(string name = null, ConnectionMonitorEndpointType? endpointType = null, ResourceIdentifier resourceId = null, string address = null, ConnectionMonitorEndpointFilter filter = null, ConnectionMonitorEndpointScope scope = null, CoverageLevel? coverageLevel = null)
-        {
-            return new ConnectionMonitorEndpoint(name, endpointType, resourceId, address, filter, scope, coverageLevel);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
-        /// <param name="filterType"> The behavior of the endpoint filter. Currently only &apos;Include&apos; is supported. </param>
-        /// <param name="items"> List of items in the filter. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorEndpointFilter"/> instance for mocking. </returns>
-        public static ConnectionMonitorEndpointFilter ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? filterType = null, IEnumerable<ConnectionMonitorEndpointFilterItem> items = null)
-        {
-            items ??= new List<ConnectionMonitorEndpointFilterItem>();
-
-            return new ConnectionMonitorEndpointFilter(filterType, items?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilterItem. </summary>
-        /// <param name="itemType"> The type of item included in the filter. Currently only &apos;AgentAddress&apos; is supported. </param>
-        /// <param name="address"> The address of the filter item. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorEndpointFilterItem"/> instance for mocking. </returns>
-        public static ConnectionMonitorEndpointFilterItem ConnectionMonitorEndpointFilterItem(ConnectionMonitorEndpointFilterItemType? itemType = null, string address = null)
-        {
-            return new ConnectionMonitorEndpointFilterItem(itemType, address);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointScope. </summary>
-        /// <param name="include"> List of items which needs to be included to the endpoint scope. </param>
-        /// <param name="exclude"> List of items which needs to be excluded from the endpoint scope. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorEndpointScope"/> instance for mocking. </returns>
-        public static ConnectionMonitorEndpointScope ConnectionMonitorEndpointScope(IEnumerable<ConnectionMonitorEndpointScopeItem> include = null, IEnumerable<ConnectionMonitorEndpointScopeItem> exclude = null)
-        {
-            include ??= new List<ConnectionMonitorEndpointScopeItem>();
-            exclude ??= new List<ConnectionMonitorEndpointScopeItem>();
-
-            return new ConnectionMonitorEndpointScope(include?.ToList(), exclude?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointScopeItem. </summary>
-        /// <param name="address"> The address of the endpoint item. Supported types are IPv4/IPv6 subnet mask or IPv4/IPv6 IP address. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorEndpointScopeItem"/> instance for mocking. </returns>
-        public static ConnectionMonitorEndpointScopeItem ConnectionMonitorEndpointScopeItem(string address = null)
-        {
-            return new ConnectionMonitorEndpointScopeItem(address);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorTestConfiguration. </summary>
-        /// <param name="name"> The name of the connection monitor test configuration. </param>
-        /// <param name="testFrequencySec"> The frequency of test evaluation, in seconds. </param>
-        /// <param name="protocol"> The protocol to use in test evaluation. </param>
-        /// <param name="preferredIPVersion"> The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters. </param>
-        /// <param name="httpConfiguration"> The parameters used to perform test evaluation over HTTP. </param>
-        /// <param name="tcpConfiguration"> The parameters used to perform test evaluation over TCP. </param>
-        /// <param name="disableTraceRoute"> The parameters used to perform test evaluation over ICMP. </param>
-        /// <param name="successThreshold"> The threshold for declaring a test successful. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorTestConfiguration"/> instance for mocking. </returns>
-        public static ConnectionMonitorTestConfiguration ConnectionMonitorTestConfiguration(string name = null, int? testFrequencySec = null, ConnectionMonitorTestConfigurationProtocol protocol = default, TestEvalPreferredIPVersion? preferredIPVersion = null, ConnectionMonitorHttpConfiguration httpConfiguration = null, ConnectionMonitorTcpConfiguration tcpConfiguration = null, bool? disableTraceRoute = null, ConnectionMonitorSuccessThreshold successThreshold = null)
-        {
-            return new ConnectionMonitorTestConfiguration(name, testFrequencySec, protocol, preferredIPVersion, httpConfiguration, tcpConfiguration, disableTraceRoute != null ? new ConnectionMonitorIcmpConfiguration(disableTraceRoute) : null, successThreshold);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
-        /// <param name="port"> The port to connect to. </param>
-        /// <param name="method"> The HTTP method to use. </param>
-        /// <param name="path"> The path component of the URI. For instance, &quot;/dir1/dir2&quot;. </param>
-        /// <param name="requestHeaders"> The HTTP headers to transmit with the request. </param>
-        /// <param name="validStatusCodeRanges"> HTTP status codes to consider successful. For instance, &quot;2xx,301-304,418&quot;. </param>
-        /// <param name="preferHttps"> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorHttpConfiguration"/> instance for mocking. </returns>
-        public static ConnectionMonitorHttpConfiguration ConnectionMonitorHttpConfiguration(int? port = null, NetworkHttpConfigurationMethod? method = null, string path = null, IEnumerable<NetworkWatcherHttpHeader> requestHeaders = null, IEnumerable<string> validStatusCodeRanges = null, bool? preferHttps = null)
-        {
-            requestHeaders ??= new List<NetworkWatcherHttpHeader>();
-            validStatusCodeRanges ??= new List<string>();
-
-            return new ConnectionMonitorHttpConfiguration(port, method, path, requestHeaders?.ToList(), validStatusCodeRanges?.ToList(), preferHttps);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorTcpConfiguration. </summary>
-        /// <param name="port"> The port to connect to. </param>
-        /// <param name="disableTraceRoute"> Value indicating whether path evaluation with trace route should be disabled. </param>
-        /// <param name="destinationPortBehavior"> Destination port behavior. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorTcpConfiguration"/> instance for mocking. </returns>
-        public static ConnectionMonitorTcpConfiguration ConnectionMonitorTcpConfiguration(int? port = null, bool? disableTraceRoute = null, DestinationPortBehavior? destinationPortBehavior = null)
-        {
-            return new ConnectionMonitorTcpConfiguration(port, disableTraceRoute, destinationPortBehavior);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorSuccessThreshold. </summary>
-        /// <param name="checksFailedPercent"> The maximum percentage of failed checks permitted for a test to evaluate as successful. </param>
-        /// <param name="roundTripTimeMs"> The maximum round-trip time in milliseconds permitted for a test to evaluate as successful. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorSuccessThreshold"/> instance for mocking. </returns>
-        public static ConnectionMonitorSuccessThreshold ConnectionMonitorSuccessThreshold(int? checksFailedPercent = null, float? roundTripTimeMs = null)
-        {
-            return new ConnectionMonitorSuccessThreshold(checksFailedPercent, roundTripTimeMs);
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorTestGroup. </summary>
-        /// <param name="name"> The name of the connection monitor test group. </param>
-        /// <param name="disable"> Value indicating whether test group is disabled. </param>
-        /// <param name="testConfigurations"> List of test configuration names. </param>
-        /// <param name="sources"> List of source endpoint names. </param>
-        /// <param name="destinations"> List of destination endpoint names. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorTestGroup"/> instance for mocking. </returns>
-        public static ConnectionMonitorTestGroup ConnectionMonitorTestGroup(string name = null, bool? disable = null, IEnumerable<string> testConfigurations = null, IEnumerable<string> sources = null, IEnumerable<string> destinations = null)
-        {
-            testConfigurations ??= new List<string>();
-            sources ??= new List<string>();
-            destinations ??= new List<string>();
-
-            return new ConnectionMonitorTestGroup(name, disable, testConfigurations?.ToList(), sources?.ToList(), destinations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ConnectionMonitorOutput. </summary>
-        /// <param name="outputType"> Connection monitor output destination type. Currently, only &quot;Workspace&quot; is supported. </param>
-        /// <param name="workspaceResourceId"> Describes the settings for producing output into a log analytics workspace. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorOutput"/> instance for mocking. </returns>
-        public static ConnectionMonitorOutput ConnectionMonitorOutput(OutputType? outputType = null, ResourceIdentifier workspaceResourceId = null)
-        {
-            return new ConnectionMonitorOutput(outputType, workspaceResourceId != null ? new ConnectionMonitorWorkspaceSettings(workspaceResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorData. </summary>
@@ -3907,15 +3048,6 @@ namespace Azure.ResourceManager.Network.Models
             return new PublicIPPrefixData(id, name, resourceType, location, tags, extendedLocation, sku, etag, zones?.ToList(), publicIPAddressVersion, ipTags?.ToList(), prefixLength, ipPrefix, publicIPAddresses?.ToList(), loadBalancerFrontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(loadBalancerFrontendIPConfigurationId) : null, customIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(customIPPrefixId) : null, resourceGuid, provisioningState, natGateway);
         }
 
-        /// <summary> Initializes a new instance of PublicIPPrefixSku. </summary>
-        /// <param name="name"> Name of a public IP prefix SKU. </param>
-        /// <param name="tier"> Tier of a public IP prefix SKU. </param>
-        /// <returns> A new <see cref="Models.PublicIPPrefixSku"/> instance for mocking. </returns>
-        public static PublicIPPrefixSku PublicIPPrefixSku(PublicIPPrefixSkuName? name = null, PublicIPPrefixSkuTier? tier = null)
-        {
-            return new PublicIPPrefixSku(name, tier);
-        }
-
         /// <summary> Initializes a new instance of RouteFilterData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -3990,21 +3122,6 @@ namespace Azure.ResourceManager.Network.Models
             bgpCommunities ??= new List<BgpCommunity>();
 
             return new BgpServiceCommunity(id, name, resourceType, location, tags, serviceName, bgpCommunities?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of BgpCommunity. </summary>
-        /// <param name="serviceSupportedRegion"> The region which the service support. e.g. For O365, region is Global. </param>
-        /// <param name="communityName"> The name of the bgp community. e.g. Skype. </param>
-        /// <param name="communityValue"> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </param>
-        /// <param name="communityPrefixes"> The prefixes that the bgp community contains. </param>
-        /// <param name="isAuthorizedToUse"> Customer is authorized to use bgp community or not. </param>
-        /// <param name="serviceGroup"> The service group of the bgp community contains. </param>
-        /// <returns> A new <see cref="Models.BgpCommunity"/> instance for mocking. </returns>
-        public static BgpCommunity BgpCommunity(string serviceSupportedRegion = null, string communityName = null, string communityValue = null, IEnumerable<string> communityPrefixes = null, bool? isAuthorizedToUse = null, string serviceGroup = null)
-        {
-            communityPrefixes ??= new List<string>();
-
-            return new BgpCommunity(serviceSupportedRegion, communityName, communityValue, communityPrefixes?.ToList(), isAuthorizedToUse, serviceGroup);
         }
 
         /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
@@ -4250,33 +3367,6 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualNetworkGatewaySku(name, tier, capacity);
         }
 
-        /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
-        /// <param name="vpnClientAddressPrefixes"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
-        /// <param name="vpnClientRootCertificates"> VpnClientRootCertificate for virtual network gateway. </param>
-        /// <param name="vpnClientRevokedCertificates"> VpnClientRevokedCertificate for Virtual network gateway. </param>
-        /// <param name="vpnClientProtocols"> VpnClientProtocols for Virtual network gateway. </param>
-        /// <param name="vpnAuthenticationTypes"> VPN authentication types for the virtual network gateway.. </param>
-        /// <param name="vpnClientIPsecPolicies"> VpnClientIpsecPolicies for virtual network gateway P2S client. </param>
-        /// <param name="radiusServerAddress"> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </param>
-        /// <param name="radiusServerSecret"> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. </param>
-        /// <param name="radiusServers"> The radiusServers property for multiple radius server configuration. </param>
-        /// <param name="aadTenant"> The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
-        /// <param name="aadAudience"> The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
-        /// <param name="aadIssuer"> The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
-        /// <returns> A new <see cref="Models.VpnClientConfiguration"/> instance for mocking. </returns>
-        public static VpnClientConfiguration VpnClientConfiguration(IEnumerable<string> vpnClientAddressPrefixes = null, IEnumerable<VpnClientRootCertificate> vpnClientRootCertificates = null, IEnumerable<VpnClientRevokedCertificate> vpnClientRevokedCertificates = null, IEnumerable<VpnClientProtocol> vpnClientProtocols = null, IEnumerable<VpnAuthenticationType> vpnAuthenticationTypes = null, IEnumerable<IPsecPolicy> vpnClientIPsecPolicies = null, string radiusServerAddress = null, string radiusServerSecret = null, IEnumerable<RadiusServer> radiusServers = null, string aadTenant = null, string aadAudience = null, string aadIssuer = null)
-        {
-            vpnClientAddressPrefixes ??= new List<string>();
-            vpnClientRootCertificates ??= new List<VpnClientRootCertificate>();
-            vpnClientRevokedCertificates ??= new List<VpnClientRevokedCertificate>();
-            vpnClientProtocols ??= new List<VpnClientProtocol>();
-            vpnAuthenticationTypes ??= new List<VpnAuthenticationType>();
-            vpnClientIPsecPolicies ??= new List<IPsecPolicy>();
-            radiusServers ??= new List<RadiusServer>();
-
-            return new VpnClientConfiguration(vpnClientAddressPrefixes != null ? new AddressSpace(vpnClientAddressPrefixes?.ToList()) : null, vpnClientRootCertificates?.ToList(), vpnClientRevokedCertificates?.ToList(), vpnClientProtocols?.ToList(), vpnAuthenticationTypes?.ToList(), vpnClientIPsecPolicies?.ToList(), radiusServerAddress, radiusServerSecret, radiusServers?.ToList(), aadTenant, aadAudience, aadIssuer);
-        }
-
         /// <summary> Initializes a new instance of VpnClientRootCertificate. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -4301,29 +3391,6 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnClientRevokedCertificate VpnClientRevokedCertificate(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string thumbprint = null, NetworkProvisioningState? provisioningState = null)
         {
             return new VpnClientRevokedCertificate(id, name, resourceType, etag, thumbprint, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of RadiusServer. </summary>
-        /// <param name="radiusServerAddress"> The address of this radius server. </param>
-        /// <param name="radiusServerScore"> The initial score assigned to this radius server. </param>
-        /// <param name="radiusServerSecret"> The secret used for this radius server. </param>
-        /// <returns> A new <see cref="Models.RadiusServer"/> instance for mocking. </returns>
-        public static RadiusServer RadiusServer(string radiusServerAddress = null, long? radiusServerScore = null, string radiusServerSecret = null)
-        {
-            return new RadiusServer(radiusServerAddress, radiusServerScore, radiusServerSecret);
-        }
-
-        /// <summary> Initializes a new instance of BgpSettings. </summary>
-        /// <param name="asn"> The BGP speaker&apos;s ASN. </param>
-        /// <param name="bgpPeeringAddress"> The BGP peering address and BGP identifier of this BGP speaker. </param>
-        /// <param name="peerWeight"> The weight added to routes learned from this BGP speaker. </param>
-        /// <param name="bgpPeeringAddresses"> BGP peering address with IP configuration ID for virtual network gateway. </param>
-        /// <returns> A new <see cref="Models.BgpSettings"/> instance for mocking. </returns>
-        public static BgpSettings BgpSettings(long? asn = null, string bgpPeeringAddress = null, int? peerWeight = null, IEnumerable<NetworkIPConfigurationBgpPeeringAddress> bgpPeeringAddresses = null)
-        {
-            bgpPeeringAddresses ??= new List<NetworkIPConfigurationBgpPeeringAddress>();
-
-            return new BgpSettings(asn, bgpPeeringAddress, peerWeight, bgpPeeringAddresses?.ToList());
         }
 
         /// <summary> Initializes a new instance of NetworkIPConfigurationBgpPeeringAddress. </summary>
@@ -4359,14 +3426,6 @@ namespace Azure.ResourceManager.Network.Models
             externalMappings ??= new List<VpnNatRuleMapping>();
 
             return new VirtualNetworkGatewayNatRuleData(id, name, resourceType, etag, provisioningState, vpnNatRuleType, mode, internalMappings?.ToList(), externalMappings?.ToList(), ipConfigurationId);
-        }
-
-        /// <summary> Initializes a new instance of VpnNatRuleMapping. </summary>
-        /// <param name="addressSpace"> Address space for Vpn NatRule mapping. </param>
-        /// <returns> A new <see cref="Models.VpnNatRuleMapping"/> instance for mocking. </returns>
-        public static VpnNatRuleMapping VpnNatRuleMapping(string addressSpace = null)
-        {
-            return new VpnNatRuleMapping(addressSpace);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>
@@ -4536,15 +3595,6 @@ namespace Azure.ResourceManager.Network.Models
             return new LocalNetworkGatewayData(id, name, resourceType, location, tags, etag, localNetworkAddressPrefixes != null ? new AddressSpace(localNetworkAddressPrefixes?.ToList()) : null, gatewayIPAddress, fqdn, bgpSettings, resourceGuid, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="value"> The virtual network connection shared key value. </param>
-        /// <returns> A new <see cref="Models.ConnectionSharedKey"/> instance for mocking. </returns>
-        public static ConnectionSharedKey ConnectionSharedKey(ResourceIdentifier id = null, string value = null)
-        {
-            return new ConnectionSharedKey(id, value);
-        }
-
         /// <summary> Initializes a new instance of VpnClientConnectionHealthDetailListResult. </summary>
         /// <param name="value"> List of vpn client connection health. </param>
         /// <returns> A new <see cref="Models.VpnClientConnectionHealthDetailListResult"/> instance for mocking. </returns>
@@ -4663,16 +3713,6 @@ namespace Azure.ResourceManager.Network.Models
             return new VpnSiteData(id, name, resourceType, location, tags, etag, virtualWanId != null ? ResourceManagerModelFactory.WritableSubResource(virtualWanId) : null, deviceProperties, ipAddress, siteKey, addressPrefixes != null ? new AddressSpace(addressPrefixes?.ToList()) : null, bgpProperties, provisioningState, isSecuritySite, vpnSiteLinks?.ToList(), o365BreakOutCategories != null ? new O365PolicyProperties(o365BreakOutCategories) : null);
         }
 
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
-        /// <param name="deviceVendor"> Name of the device Vendor. </param>
-        /// <param name="deviceModel"> Model of the device. </param>
-        /// <param name="linkSpeedInMbps"> Link speed. </param>
-        /// <returns> A new <see cref="Models.DeviceProperties"/> instance for mocking. </returns>
-        public static DeviceProperties DeviceProperties(string deviceVendor = null, string deviceModel = null, int? linkSpeedInMbps = null)
-        {
-            return new DeviceProperties(deviceVendor, deviceModel, linkSpeedInMbps);
-        }
-
         /// <summary> Initializes a new instance of VpnSiteLinkData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -4687,34 +3727,6 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnSiteLinkData VpnSiteLinkData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, VpnLinkProviderProperties linkProperties = null, string ipAddress = null, string fqdn = null, VpnLinkBgpSettings bgpProperties = null, NetworkProvisioningState? provisioningState = null)
         {
             return new VpnSiteLinkData(id, name, resourceType, etag, linkProperties, ipAddress, fqdn, bgpProperties, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of VpnLinkProviderProperties. </summary>
-        /// <param name="linkProviderName"> Name of the link provider. </param>
-        /// <param name="linkSpeedInMbps"> Link speed. </param>
-        /// <returns> A new <see cref="Models.VpnLinkProviderProperties"/> instance for mocking. </returns>
-        public static VpnLinkProviderProperties VpnLinkProviderProperties(string linkProviderName = null, int? linkSpeedInMbps = null)
-        {
-            return new VpnLinkProviderProperties(linkProviderName, linkSpeedInMbps);
-        }
-
-        /// <summary> Initializes a new instance of VpnLinkBgpSettings. </summary>
-        /// <param name="asn"> The BGP speaker&apos;s ASN. </param>
-        /// <param name="bgpPeeringAddress"> The BGP peering address and BGP identifier of this BGP speaker. </param>
-        /// <returns> A new <see cref="Models.VpnLinkBgpSettings"/> instance for mocking. </returns>
-        public static VpnLinkBgpSettings VpnLinkBgpSettings(long? asn = null, string bgpPeeringAddress = null)
-        {
-            return new VpnLinkBgpSettings(asn, bgpPeeringAddress);
-        }
-
-        /// <summary> Initializes a new instance of O365BreakOutCategoryPolicies. </summary>
-        /// <param name="allow"> Flag to control allow category. </param>
-        /// <param name="optimize"> Flag to control optimize category. </param>
-        /// <param name="default"> Flag to control default category. </param>
-        /// <returns> A new <see cref="Models.O365BreakOutCategoryPolicies"/> instance for mocking. </returns>
-        public static O365BreakOutCategoryPolicies O365BreakOutCategoryPolicies(bool? allow = null, bool? optimize = null, bool? @default = null)
-        {
-            return new O365BreakOutCategoryPolicies(allow, optimize, @default);
         }
 
         /// <summary> Initializes a new instance of VirtualWanSecurityProviders. </summary>
@@ -4774,52 +3786,6 @@ namespace Azure.ResourceManager.Network.Models
             return new VpnServerConfigurationData(id, name, resourceType, location, tags, etag, vpnProtocols?.ToList(), vpnAuthenticationTypes?.ToList(), vpnClientRootCertificates?.ToList(), vpnClientRevokedCertificates?.ToList(), radiusServerRootCertificates?.ToList(), radiusClientRootCertificates?.ToList(), vpnClientIPsecPolicies?.ToList(), radiusServerAddress, radiusServerSecret, radiusServers?.ToList(), aadAuthenticationParameters, provisioningState, p2sVpnGateways?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRootCertificate. </summary>
-        /// <param name="name"> The certificate name. </param>
-        /// <param name="publicCertData"> The certificate public data. </param>
-        /// <returns> A new <see cref="Models.VpnServerConfigVpnClientRootCertificate"/> instance for mocking. </returns>
-        public static VpnServerConfigVpnClientRootCertificate VpnServerConfigVpnClientRootCertificate(string name = null, BinaryData publicCertData = null)
-        {
-            return new VpnServerConfigVpnClientRootCertificate(name, publicCertData);
-        }
-
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRevokedCertificate. </summary>
-        /// <param name="name"> The certificate name. </param>
-        /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
-        /// <returns> A new <see cref="Models.VpnServerConfigVpnClientRevokedCertificate"/> instance for mocking. </returns>
-        public static VpnServerConfigVpnClientRevokedCertificate VpnServerConfigVpnClientRevokedCertificate(string name = null, string thumbprint = null)
-        {
-            return new VpnServerConfigVpnClientRevokedCertificate(name, thumbprint);
-        }
-
-        /// <summary> Initializes a new instance of VpnServerConfigRadiusServerRootCertificate. </summary>
-        /// <param name="name"> The certificate name. </param>
-        /// <param name="publicCertData"> The certificate public data. </param>
-        /// <returns> A new <see cref="Models.VpnServerConfigRadiusServerRootCertificate"/> instance for mocking. </returns>
-        public static VpnServerConfigRadiusServerRootCertificate VpnServerConfigRadiusServerRootCertificate(string name = null, BinaryData publicCertData = null)
-        {
-            return new VpnServerConfigRadiusServerRootCertificate(name, publicCertData);
-        }
-
-        /// <summary> Initializes a new instance of VpnServerConfigRadiusClientRootCertificate. </summary>
-        /// <param name="name"> The certificate name. </param>
-        /// <param name="thumbprint"> The Radius client root certificate thumbprint. </param>
-        /// <returns> A new <see cref="Models.VpnServerConfigRadiusClientRootCertificate"/> instance for mocking. </returns>
-        public static VpnServerConfigRadiusClientRootCertificate VpnServerConfigRadiusClientRootCertificate(string name = null, string thumbprint = null)
-        {
-            return new VpnServerConfigRadiusClientRootCertificate(name, thumbprint);
-        }
-
-        /// <summary> Initializes a new instance of AadAuthenticationParameters. </summary>
-        /// <param name="aadTenant"> AAD Vpn authentication parameter AAD tenant. </param>
-        /// <param name="aadAudience"> AAD Vpn authentication parameter AAD audience. </param>
-        /// <param name="aadIssuer"> AAD Vpn authentication parameter AAD issuer. </param>
-        /// <returns> A new <see cref="Models.AadAuthenticationParameters"/> instance for mocking. </returns>
-        public static AadAuthenticationParameters AadAuthenticationParameters(string aadTenant = null, string aadAudience = null, string aadIssuer = null)
-        {
-            return new AadAuthenticationParameters(aadTenant, aadAudience, aadIssuer);
-        }
-
         /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -4860,42 +3826,6 @@ namespace Azure.ResourceManager.Network.Models
             vpnClientAddressPrefixes ??= new List<string>();
 
             return new P2SConnectionConfiguration(id, name, resourceType, etag, vpnClientAddressPrefixes != null ? new AddressSpace(vpnClientAddressPrefixes?.ToList()) : null, routingConfiguration, enableInternetSecurity, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of RoutingConfiguration. </summary>
-        /// <param name="associatedRouteTableId"> The resource id RouteTable associated with this RoutingConfiguration. </param>
-        /// <param name="propagatedRouteTables"> The list of RouteTables to advertise the routes to. </param>
-        /// <param name="staticRoutes"> List of routes that control routing from VirtualHub into a virtual network connection. </param>
-        /// <returns> A new <see cref="Models.RoutingConfiguration"/> instance for mocking. </returns>
-        public static RoutingConfiguration RoutingConfiguration(ResourceIdentifier associatedRouteTableId = null, PropagatedRouteTable propagatedRouteTables = null, IEnumerable<StaticRoute> staticRoutes = null)
-        {
-            staticRoutes ??= new List<StaticRoute>();
-
-            return new RoutingConfiguration(associatedRouteTableId != null ? ResourceManagerModelFactory.WritableSubResource(associatedRouteTableId) : null, propagatedRouteTables, staticRoutes != null ? new VnetRoute(staticRoutes?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>
-        /// <param name="labels"> The list of labels. </param>
-        /// <param name="ids"> The list of resource ids of all the RouteTables. </param>
-        /// <returns> A new <see cref="Models.PropagatedRouteTable"/> instance for mocking. </returns>
-        public static PropagatedRouteTable PropagatedRouteTable(IEnumerable<string> labels = null, IEnumerable<WritableSubResource> ids = null)
-        {
-            labels ??= new List<string>();
-            ids ??= new List<WritableSubResource>();
-
-            return new PropagatedRouteTable(labels?.ToList(), ids?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of StaticRoute. </summary>
-        /// <param name="name"> The name of the StaticRoute that is unique within a VnetRoute. </param>
-        /// <param name="addressPrefixes"> List of all address prefixes. </param>
-        /// <param name="nextHopIPAddress"> The ip address of the next hop. </param>
-        /// <returns> A new <see cref="Models.StaticRoute"/> instance for mocking. </returns>
-        public static StaticRoute StaticRoute(string name = null, IEnumerable<string> addressPrefixes = null, string nextHopIPAddress = null)
-        {
-            addressPrefixes ??= new List<string>();
-
-            return new StaticRoute(name, addressPrefixes?.ToList(), nextHopIPAddress);
         }
 
         /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
@@ -4950,17 +3880,6 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualHubData(id, name, resourceType, location, tags, etag, virtualWanId != null ? ResourceManagerModelFactory.WritableSubResource(virtualWanId) : null, vpnGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(vpnGatewayId) : null, p2sVpnGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(p2sVpnGatewayId) : null, expressRouteGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(expressRouteGatewayId) : null, azureFirewallId != null ? ResourceManagerModelFactory.WritableSubResource(azureFirewallId) : null, securityPartnerProviderId != null ? ResourceManagerModelFactory.WritableSubResource(securityPartnerProviderId) : null, addressPrefix, routes != null ? new VirtualHubRouteTable(routes?.ToList()) : null, provisioningState, securityProviderName, virtualHubRouteTableV2S?.ToList(), sku, routingState, bgpConnections?.ToList(), ipConfigurations?.ToList(), virtualRouterAsn, virtualRouterIPs?.ToList(), allowBranchToBranchTraffic, preferredRoutingGateway);
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRoute. </summary>
-        /// <param name="addressPrefixes"> List of all addressPrefixes. </param>
-        /// <param name="nextHopIPAddress"> NextHop ip address. </param>
-        /// <returns> A new <see cref="Models.VirtualHubRoute"/> instance for mocking. </returns>
-        public static VirtualHubRoute VirtualHubRoute(IEnumerable<string> addressPrefixes = null, string nextHopIPAddress = null)
-        {
-            addressPrefixes ??= new List<string>();
-
-            return new VirtualHubRoute(addressPrefixes?.ToList(), nextHopIPAddress);
-        }
-
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -4976,20 +3895,6 @@ namespace Azure.ResourceManager.Network.Models
             attachedConnections ??= new List<string>();
 
             return new VirtualHubRouteTableV2Data(id, name, resourceType, etag, routes?.ToList(), attachedConnections?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of VirtualHubRouteV2. </summary>
-        /// <param name="destinationType"> The type of destinations. </param>
-        /// <param name="destinations"> List of all destinations. </param>
-        /// <param name="nextHopType"> The type of next hops. </param>
-        /// <param name="nextHops"> NextHops ip address. </param>
-        /// <returns> A new <see cref="Models.VirtualHubRouteV2"/> instance for mocking. </returns>
-        public static VirtualHubRouteV2 VirtualHubRouteV2(string destinationType = null, IEnumerable<string> destinations = null, string nextHopType = null, IEnumerable<string> nextHops = null)
-        {
-            destinations ??= new List<string>();
-            nextHops ??= new List<string>();
-
-            return new VirtualHubRouteV2(destinationType, destinations?.ToList(), nextHopType, nextHops?.ToList());
         }
 
         /// <summary> Initializes a new instance of HubVirtualNetworkConnectionData. </summary>
@@ -5181,15 +4086,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteGatewayData(id, name, resourceType, location, tags, etag, autoScaleBounds != null ? new ExpressRouteGatewayPropertiesAutoScaleConfiguration(autoScaleBounds) : null, expressRouteConnections?.ToList(), provisioningState, virtualHubId != null ? ResourceManagerModelFactory.WritableSubResource(virtualHubId) : null);
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds. </summary>
-        /// <param name="min"> Minimum number of scale units deployed for ExpressRoute gateway. </param>
-        /// <param name="max"> Maximum number of scale units deployed for ExpressRoute gateway. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds"/> instance for mocking. </returns>
-        public static ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(int? min = null, int? max = null)
-        {
-            return new ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(min, max);
-        }
-
         /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -5310,18 +4206,6 @@ namespace Azure.ResourceManager.Network.Models
             return new WebApplicationFirewallPolicyData(id, name, resourceType, location, tags, etag, policySettings, customRules?.ToList(), applicationGateways?.ToList(), provisioningState, resourceState, managedRules, httpListeners?.ToList(), pathBasedRules?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PolicySettings. </summary>
-        /// <param name="state"> The state of the policy. </param>
-        /// <param name="mode"> The mode of the policy. </param>
-        /// <param name="requestBodyCheck"> Whether to allow WAF to check request Body. </param>
-        /// <param name="maxRequestBodySizeInKb"> Maximum request body size in Kb for WAF. </param>
-        /// <param name="fileUploadLimitInMb"> Maximum file upload size in Mb for WAF. </param>
-        /// <returns> A new <see cref="Models.PolicySettings"/> instance for mocking. </returns>
-        public static PolicySettings PolicySettings(WebApplicationFirewallEnabledState? state = null, WebApplicationFirewallMode? mode = null, bool? requestBodyCheck = null, int? maxRequestBodySizeInKb = null, int? fileUploadLimitInMb = null)
-        {
-            return new PolicySettings(state, mode, requestBodyCheck, maxRequestBodySizeInKb, fileUploadLimitInMb);
-        }
-
         /// <summary> Initializes a new instance of WebApplicationFirewallCustomRule. </summary>
         /// <param name="name"> The name of the resource that is unique within a policy. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -5335,202 +4219,6 @@ namespace Azure.ResourceManager.Network.Models
             matchConditions ??= new List<MatchCondition>();
 
             return new WebApplicationFirewallCustomRule(name, etag, priority, ruleType, matchConditions?.ToList(), action);
-        }
-
-        /// <summary> Initializes a new instance of MatchCondition. </summary>
-        /// <param name="matchVariables"> List of match variables. </param>
-        /// <param name="operator"> The operator to be matched. </param>
-        /// <param name="negationConditon"> Whether this is negate condition or not. </param>
-        /// <param name="matchValues"> Match value. </param>
-        /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.MatchCondition"/> instance for mocking. </returns>
-        public static MatchCondition MatchCondition(IEnumerable<MatchVariable> matchVariables = null, WebApplicationFirewallOperator @operator = default, bool? negationConditon = null, IEnumerable<string> matchValues = null, IEnumerable<WebApplicationFirewallTransform> transforms = null)
-        {
-            matchVariables ??= new List<MatchVariable>();
-            matchValues ??= new List<string>();
-            transforms ??= new List<WebApplicationFirewallTransform>();
-
-            return new MatchCondition(matchVariables?.ToList(), @operator, negationConditon, matchValues?.ToList(), transforms?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MatchVariable. </summary>
-        /// <param name="variableName"> Match Variable. </param>
-        /// <param name="selector"> The selector of match variable. </param>
-        /// <returns> A new <see cref="Models.MatchVariable"/> instance for mocking. </returns>
-        public static MatchVariable MatchVariable(WebApplicationFirewallMatchVariable variableName = default, string selector = null)
-        {
-            return new MatchVariable(variableName, selector);
-        }
-
-        /// <summary> Initializes a new instance of ManagedRulesDefinition. </summary>
-        /// <param name="exclusions"> The Exclusions that are applied on the policy. </param>
-        /// <param name="managedRuleSets"> The managed rule sets that are associated with the policy. </param>
-        /// <returns> A new <see cref="Models.ManagedRulesDefinition"/> instance for mocking. </returns>
-        public static ManagedRulesDefinition ManagedRulesDefinition(IEnumerable<OwaspCrsExclusionEntry> exclusions = null, IEnumerable<ManagedRuleSet> managedRuleSets = null)
-        {
-            exclusions ??= new List<OwaspCrsExclusionEntry>();
-            managedRuleSets ??= new List<ManagedRuleSet>();
-
-            return new ManagedRulesDefinition(exclusions?.ToList(), managedRuleSets?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
-        /// <param name="ruleSetType"> Defines the rule set type to use. </param>
-        /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
-        /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleSet"/> instance for mocking. </returns>
-        public static ManagedRuleSet ManagedRuleSet(string ruleSetType = null, string ruleSetVersion = null, IEnumerable<ManagedRuleGroupOverride> ruleGroupOverrides = null)
-        {
-            ruleGroupOverrides ??= new List<ManagedRuleGroupOverride>();
-
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, ruleGroupOverrides?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedRuleGroupOverride. </summary>
-        /// <param name="ruleGroupName"> The managed rule group to override. </param>
-        /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleGroupOverride"/> instance for mocking. </returns>
-        public static ManagedRuleGroupOverride ManagedRuleGroupOverride(string ruleGroupName = null, IEnumerable<ManagedRuleOverride> rules = null)
-        {
-            rules ??= new List<ManagedRuleOverride>();
-
-            return new ManagedRuleGroupOverride(ruleGroupName, rules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
-        /// <param name="ruleId"> Identifier for the managed rule. </param>
-        /// <param name="state"> The state of the managed rule. Defaults to Disabled if not specified. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleOverride"/> instance for mocking. </returns>
-        public static ManagedRuleOverride ManagedRuleOverride(string ruleId = null, ManagedRuleEnabledState? state = null)
-        {
-            return new ManagedRuleOverride(ruleId, state);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollectionInfo. </summary>
-        /// <param name="name"> The name of the rule collection. </param>
-        /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
-        /// <param name="actionType"> The action type of a Nat rule collection. </param>
-        /// <param name="rules">
-        /// List of rules included in a rule collection.
-        /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyNatRuleCollectionInfo"/> instance for mocking. </returns>
-        public static FirewallPolicyNatRuleCollectionInfo FirewallPolicyNatRuleCollectionInfo(string name = null, int? priority = null, FirewallPolicyNatRuleCollectionActionType? actionType = null, IEnumerable<FirewallPolicyRule> rules = null)
-        {
-            rules ??= new List<FirewallPolicyRule>();
-
-            return new FirewallPolicyNatRuleCollectionInfo(FirewallPolicyRuleCollectionType.FirewallPolicyNatRuleCollection, name, priority, actionType != null ? new FirewallPolicyNatRuleCollectionAction(actionType) : null, rules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
-        /// <param name="name"> Name of the rule. </param>
-        /// <param name="description"> Description of the rule. </param>
-        /// <param name="ruleType"> Rule Type. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyRule"/> instance for mocking. </returns>
-        public static FirewallPolicyRule FirewallPolicyRule(string name = null, string description = null, string ruleType = "Unknown")
-        {
-            return new UnknownFirewallPolicyRule(name, description, ruleType);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionInfo. </summary>
-        /// <param name="name"> The name of the rule collection. </param>
-        /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
-        /// <param name="actionType"> The action type of a Filter rule collection. </param>
-        /// <param name="rules">
-        /// List of rules included in a rule collection.
-        /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyFilterRuleCollectionInfo"/> instance for mocking. </returns>
-        public static FirewallPolicyFilterRuleCollectionInfo FirewallPolicyFilterRuleCollectionInfo(string name = null, int? priority = null, FirewallPolicyFilterRuleCollectionActionType? actionType = null, IEnumerable<FirewallPolicyRule> rules = null)
-        {
-            rules ??= new List<FirewallPolicyRule>();
-
-            return new FirewallPolicyFilterRuleCollectionInfo(FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection, name, priority, actionType != null ? new FirewallPolicyFilterRuleCollectionAction(actionType) : null, rules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApplicationRule. </summary>
-        /// <param name="name"> Name of the rule. </param>
-        /// <param name="description"> Description of the rule. </param>
-        /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
-        /// <param name="destinationAddresses"> List of destination IP addresses or Service Tags. </param>
-        /// <param name="protocols"> Array of Application Protocols. </param>
-        /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
-        /// <param name="targetUrls"> List of Urls for this rule condition. </param>
-        /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="terminateTLS"> Terminate TLS connections for this rule. </param>
-        /// <param name="webCategories"> List of destination azure web categories. </param>
-        /// <returns> A new <see cref="Models.ApplicationRule"/> instance for mocking. </returns>
-        public static ApplicationRule ApplicationRule(string name = null, string description = null, IEnumerable<string> sourceAddresses = null, IEnumerable<string> destinationAddresses = null, IEnumerable<FirewallPolicyRuleApplicationProtocol> protocols = null, IEnumerable<string> targetFqdns = null, IEnumerable<string> targetUrls = null, IEnumerable<string> fqdnTags = null, IEnumerable<string> sourceIPGroups = null, bool? terminateTLS = null, IEnumerable<string> webCategories = null)
-        {
-            sourceAddresses ??= new List<string>();
-            destinationAddresses ??= new List<string>();
-            protocols ??= new List<FirewallPolicyRuleApplicationProtocol>();
-            targetFqdns ??= new List<string>();
-            targetUrls ??= new List<string>();
-            fqdnTags ??= new List<string>();
-            sourceIPGroups ??= new List<string>();
-            webCategories ??= new List<string>();
-
-            return new ApplicationRule(name, description, FirewallPolicyRuleType.ApplicationRule, sourceAddresses?.ToList(), destinationAddresses?.ToList(), protocols?.ToList(), targetFqdns?.ToList(), targetUrls?.ToList(), fqdnTags?.ToList(), sourceIPGroups?.ToList(), terminateTLS, webCategories?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyRuleApplicationProtocol. </summary>
-        /// <param name="protocolType"> Protocol type. </param>
-        /// <param name="port"> Port number for the protocol, cannot be greater than 64000. </param>
-        /// <returns> A new <see cref="Models.FirewallPolicyRuleApplicationProtocol"/> instance for mocking. </returns>
-        public static FirewallPolicyRuleApplicationProtocol FirewallPolicyRuleApplicationProtocol(FirewallPolicyRuleApplicationProtocolType? protocolType = null, int? port = null)
-        {
-            return new FirewallPolicyRuleApplicationProtocol(protocolType, port);
-        }
-
-        /// <summary> Initializes a new instance of NatRule. </summary>
-        /// <param name="name"> Name of the rule. </param>
-        /// <param name="description"> Description of the rule. </param>
-        /// <param name="ipProtocols"> Array of FirewallPolicyRuleNetworkProtocols. </param>
-        /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
-        /// <param name="destinationAddresses"> List of destination IP addresses or Service Tags. </param>
-        /// <param name="destinationPorts"> List of destination ports. </param>
-        /// <param name="translatedAddress"> The translated address for this NAT rule. </param>
-        /// <param name="translatedPort"> The translated port for this NAT rule. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="translatedFqdn"> The translated FQDN for this NAT rule. </param>
-        /// <returns> A new <see cref="Models.NatRule"/> instance for mocking. </returns>
-        public static NatRule NatRule(string name = null, string description = null, IEnumerable<FirewallPolicyRuleNetworkProtocol> ipProtocols = null, IEnumerable<string> sourceAddresses = null, IEnumerable<string> destinationAddresses = null, IEnumerable<string> destinationPorts = null, string translatedAddress = null, string translatedPort = null, IEnumerable<string> sourceIPGroups = null, string translatedFqdn = null)
-        {
-            ipProtocols ??= new List<FirewallPolicyRuleNetworkProtocol>();
-            sourceAddresses ??= new List<string>();
-            destinationAddresses ??= new List<string>();
-            destinationPorts ??= new List<string>();
-            sourceIPGroups ??= new List<string>();
-
-            return new NatRule(name, description, FirewallPolicyRuleType.NatRule, ipProtocols?.ToList(), sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), translatedAddress, translatedPort, sourceIPGroups?.ToList(), translatedFqdn);
-        }
-
-        /// <summary> Initializes a new instance of NetworkRule. </summary>
-        /// <param name="name"> Name of the rule. </param>
-        /// <param name="description"> Description of the rule. </param>
-        /// <param name="ipProtocols"> Array of FirewallPolicyRuleNetworkProtocols. </param>
-        /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
-        /// <param name="destinationAddresses"> List of destination IP addresses or Service Tags. </param>
-        /// <param name="destinationPorts"> List of destination ports. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
-        /// <param name="destinationFqdns"> List of destination FQDNs. </param>
-        /// <returns> A new <see cref="Models.NetworkRule"/> instance for mocking. </returns>
-        public static NetworkRule NetworkRule(string name = null, string description = null, IEnumerable<FirewallPolicyRuleNetworkProtocol> ipProtocols = null, IEnumerable<string> sourceAddresses = null, IEnumerable<string> destinationAddresses = null, IEnumerable<string> destinationPorts = null, IEnumerable<string> sourceIPGroups = null, IEnumerable<string> destinationIPGroups = null, IEnumerable<string> destinationFqdns = null)
-        {
-            ipProtocols ??= new List<FirewallPolicyRuleNetworkProtocol>();
-            sourceAddresses ??= new List<string>();
-            destinationAddresses ??= new List<string>();
-            destinationPorts ??= new List<string>();
-            sourceIPGroups ??= new List<string>();
-            destinationIPGroups ??= new List<string>();
-            destinationFqdns ??= new List<string>();
-
-            return new NetworkRule(name, description, FirewallPolicyRuleType.NetworkRule, ipProtocols?.ToList(), sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), sourceIPGroups?.ToList(), destinationIPGroups?.ToList(), destinationFqdns?.ToList());
         }
     }
 }

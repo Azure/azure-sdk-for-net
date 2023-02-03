@@ -98,17 +98,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             return new ServiceUnitProperties(targetResourceGroup, deploymentMode, artifacts);
         }
 
-        /// <summary> Initializes a new instance of ServiceUnitArtifacts. </summary>
-        /// <param name="templateUri"> The full URI of the ARM template file with the SAS token. </param>
-        /// <param name="parametersUri"> The full URI of the ARM parameters file with the SAS token. </param>
-        /// <param name="templateArtifactSourceRelativePath"> The path to the ARM template file relative to the artifact source. </param>
-        /// <param name="parametersArtifactSourceRelativePath"> The path to the ARM parameters file relative to the artifact source. </param>
-        /// <returns> A new <see cref="Models.ServiceUnitArtifacts"/> instance for mocking. </returns>
-        public static ServiceUnitArtifacts ServiceUnitArtifacts(Uri templateUri = null, Uri parametersUri = null, string templateArtifactSourceRelativePath = null, string parametersArtifactSourceRelativePath = null)
-        {
-            return new ServiceUnitArtifacts(templateUri, parametersUri, templateArtifactSourceRelativePath, parametersArtifactSourceRelativePath);
-        }
-
         /// <summary> Initializes a new instance of StepResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -127,14 +116,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             tags ??= new Dictionary<string, string>();
 
             return new StepResourceData(id, name, resourceType, systemData, tags, location, properties);
-        }
-
-        /// <summary> Initializes a new instance of StepProperties. </summary>
-        /// <param name="stepType"> The type of step. </param>
-        /// <returns> A new <see cref="Models.StepProperties"/> instance for mocking. </returns>
-        public static StepProperties StepProperties(string stepType = "Unknown")
-        {
-            return new UnknownStepProperties(stepType);
         }
 
         /// <summary> Initializes a new instance of RolloutCreateOrUpdateContent. </summary>
@@ -156,22 +137,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             stepGroups ??= new List<StepGroup>();
 
             return new RolloutCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, identity, buildVersion, artifactSourceId, targetServiceTopologyId, stepGroups?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of StepGroup. </summary>
-        /// <param name="name"> The name of the step group. </param>
-        /// <param name="dependsOnStepGroups"> The list of step group names on which this step group depends on. </param>
-        /// <param name="preDeploymentSteps"> The list of steps to be run before deploying the target. </param>
-        /// <param name="deploymentTargetId"> The resource Id of service unit to be deployed. The service unit should be from the service topology referenced in targetServiceTopologyId. </param>
-        /// <param name="postDeploymentSteps"> The list of steps to be run after deploying the target. </param>
-        /// <returns> A new <see cref="Models.StepGroup"/> instance for mocking. </returns>
-        public static StepGroup StepGroup(string name = null, IEnumerable<string> dependsOnStepGroups = null, IEnumerable<PrePostStep> preDeploymentSteps = null, string deploymentTargetId = null, IEnumerable<PrePostStep> postDeploymentSteps = null)
-        {
-            dependsOnStepGroups ??= new List<string>();
-            preDeploymentSteps ??= new List<PrePostStep>();
-            postDeploymentSteps ??= new List<PrePostStep>();
-
-            return new StepGroup(name, dependsOnStepGroups?.ToList(), preDeploymentSteps?.ToList(), deploymentTargetId, postDeploymentSteps?.ToList());
         }
 
         /// <summary> Initializes a new instance of RolloutData. </summary>
@@ -319,123 +284,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             tags ??= new Dictionary<string, string>();
 
             return new ArtifactSourceData(id, name, resourceType, systemData, tags, location, sourceType, artifactRoot, authentication);
-        }
-
-        /// <summary> Initializes a new instance of Authentication. </summary>
-        /// <param name="authenticationType"> The authentication type. </param>
-        /// <returns> A new <see cref="Models.Authentication"/> instance for mocking. </returns>
-        public static Authentication Authentication(string authenticationType = null)
-        {
-            return new UnknownAuthentication(authenticationType);
-        }
-
-        /// <summary> Initializes a new instance of SasAuthentication. </summary>
-        /// <param name="sasUri"> The SAS URI to the Azure Storage blob container. Any offset from the root of the container to where the artifacts are located can be defined in the artifactRoot. </param>
-        /// <returns> A new <see cref="Models.SasAuthentication"/> instance for mocking. </returns>
-        public static SasAuthentication SasAuthentication(Uri sasUri = null)
-        {
-            return new SasAuthentication("Sas", sasUri);
-        }
-
-        /// <summary> Initializes a new instance of HealthCheckStepProperties. </summary>
-        /// <param name="attributes">
-        /// The health check step attributes
-        /// Please note <see cref="HealthCheckStepAttributes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RestHealthCheckStepAttributes"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.HealthCheckStepProperties"/> instance for mocking. </returns>
-        public static HealthCheckStepProperties HealthCheckStepProperties(HealthCheckStepAttributes attributes = null)
-        {
-            return new HealthCheckStepProperties(StepType.HealthCheck, attributes);
-        }
-
-        /// <summary> Initializes a new instance of HealthCheckStepAttributes. </summary>
-        /// <param name="healthCheckStepAttributesType"> The type of health check. </param>
-        /// <param name="waitDuration"> The duration in ISO 8601 format for which health check waits idly without any checks. </param>
-        /// <param name="maxElasticDuration"> The duration in ISO 8601 format for which the health check waits for the resource to become healthy. Health check fails if it doesn&apos;t. Health check starts to enforce healthyStateDuration once resource becomes healthy. </param>
-        /// <param name="healthyStateDuration"> The duration in ISO 8601 format for which the resource is expected to be continuously healthy. If maxElasticDuration is specified, healthy state duration is enforced after the detection of first healthy signal. </param>
-        /// <returns> A new <see cref="Models.HealthCheckStepAttributes"/> instance for mocking. </returns>
-        public static HealthCheckStepAttributes HealthCheckStepAttributes(string healthCheckStepAttributesType = null, TimeSpan? waitDuration = null, TimeSpan? maxElasticDuration = null, TimeSpan healthyStateDuration = default)
-        {
-            return new UnknownHealthCheckStepAttributes(healthCheckStepAttributesType, waitDuration, maxElasticDuration, healthyStateDuration);
-        }
-
-        /// <summary> Initializes a new instance of RestHealthCheckStepAttributes. </summary>
-        /// <param name="waitDuration"> The duration in ISO 8601 format for which health check waits idly without any checks. </param>
-        /// <param name="maxElasticDuration"> The duration in ISO 8601 format for which the health check waits for the resource to become healthy. Health check fails if it doesn&apos;t. Health check starts to enforce healthyStateDuration once resource becomes healthy. </param>
-        /// <param name="healthyStateDuration"> The duration in ISO 8601 format for which the resource is expected to be continuously healthy. If maxElasticDuration is specified, healthy state duration is enforced after the detection of first healthy signal. </param>
-        /// <param name="healthChecks"> The list of checks that form the health check step. </param>
-        /// <returns> A new <see cref="Models.RestHealthCheckStepAttributes"/> instance for mocking. </returns>
-        public static RestHealthCheckStepAttributes RestHealthCheckStepAttributes(TimeSpan? waitDuration = null, TimeSpan? maxElasticDuration = null, TimeSpan healthyStateDuration = default, IEnumerable<RestHealthCheck> healthChecks = null)
-        {
-            healthChecks ??= new List<RestHealthCheck>();
-
-            return new RestHealthCheckStepAttributes("REST", waitDuration, maxElasticDuration, healthyStateDuration, healthChecks?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RestHealthCheck. </summary>
-        /// <param name="name"> A unique name for this check. </param>
-        /// <param name="request"> The request to the health provider. </param>
-        /// <param name="response"> The expected response from the health provider. If no expected response is provided, the default is to expect the received response to have an HTTP status code of 200 OK. </param>
-        /// <returns> A new <see cref="Models.RestHealthCheck"/> instance for mocking. </returns>
-        public static RestHealthCheck RestHealthCheck(string name = null, RestRequest request = null, RestResponse response = null)
-        {
-            return new RestHealthCheck(name, request, response);
-        }
-
-        /// <summary> Initializes a new instance of RestRequestAuthentication. </summary>
-        /// <param name="authType"> The authentication type. </param>
-        /// <returns> A new <see cref="Models.RestRequestAuthentication"/> instance for mocking. </returns>
-        public static RestRequestAuthentication RestRequestAuthentication(string authType = "Unknown")
-        {
-            return new UnknownRestRequestAuthentication(authType);
-        }
-
-        /// <summary> Initializes a new instance of RestResponse. </summary>
-        /// <param name="successStatusCodes"> The HTTP status codes expected in a successful health check response. The response is expected to match one of the given status codes. If no expected status codes are provided, default expected status code is 200 OK. </param>
-        /// <param name="regex"> The regular expressions to match the response content with. </param>
-        /// <returns> A new <see cref="Models.RestResponse"/> instance for mocking. </returns>
-        public static RestResponse RestResponse(IEnumerable<string> successStatusCodes = null, RestResponseRegex regex = null)
-        {
-            successStatusCodes ??= new List<string>();
-
-            return new RestResponse(successStatusCodes?.ToList(), regex);
-        }
-
-        /// <summary> Initializes a new instance of RestResponseRegex. </summary>
-        /// <param name="matches"> The list of regular expressions. </param>
-        /// <param name="matchQuantifier"> Indicates whether any or all of the expressions should match with the response content. </param>
-        /// <returns> A new <see cref="Models.RestResponseRegex"/> instance for mocking. </returns>
-        public static RestResponseRegex RestResponseRegex(IEnumerable<string> matches = null, RestMatchQuantifier? matchQuantifier = null)
-        {
-            matches ??= new List<string>();
-
-            return new RestResponseRegex(matches?.ToList(), matchQuantifier);
-        }
-
-        /// <summary> Initializes a new instance of RolloutIdentityAuthentication. </summary>
-        /// <returns> A new <see cref="Models.RolloutIdentityAuthentication"/> instance for mocking. </returns>
-        public static RolloutIdentityAuthentication RolloutIdentityAuthentication()
-        {
-            return new RolloutIdentityAuthentication(RestAuthType.RolloutIdentity);
-        }
-
-        /// <summary> Initializes a new instance of ApiKeyAuthentication. </summary>
-        /// <param name="name"> The key name of the authentication key/value pair. </param>
-        /// <param name="in"> The location of the authentication key/value pair in the request. </param>
-        /// <param name="value"> The value of the authentication key/value pair. </param>
-        /// <returns> A new <see cref="Models.ApiKeyAuthentication"/> instance for mocking. </returns>
-        public static ApiKeyAuthentication ApiKeyAuthentication(string name = null, RestAuthLocation @in = default, string value = null)
-        {
-            return new ApiKeyAuthentication(RestAuthType.ApiKey, name, @in, value);
-        }
-
-        /// <summary> Initializes a new instance of WaitStepProperties. </summary>
-        /// <param name="attributesDuration"> The Wait attributes. </param>
-        /// <returns> A new <see cref="Models.WaitStepProperties"/> instance for mocking. </returns>
-        public static WaitStepProperties WaitStepProperties(TimeSpan? attributesDuration = null)
-        {
-            return new WaitStepProperties(StepType.Wait, attributesDuration.HasValue ? new WaitStepAttributes(attributesDuration.Value) : null);
         }
     }
 }

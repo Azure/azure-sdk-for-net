@@ -55,61 +55,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new AttachedDataNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneDataInterface, dnsAddresses?.ToList(), naptConfiguration, userEquipmentAddressPoolPrefix?.ToList(), userEquipmentStaticAddressPoolPrefix?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InterfaceProperties. </summary>
-        /// <param name="name"> The logical name for this interface. This should match one of the interfaces configured on your Azure Stack Edge device. </param>
-        /// <param name="ipv4Address"> The IPv4 address. </param>
-        /// <param name="ipv4Subnet"> The IPv4 subnet. </param>
-        /// <param name="ipv4Gateway"> The default IPv4 gateway (router). </param>
-        /// <returns> A new <see cref="Models.InterfaceProperties"/> instance for mocking. </returns>
-        public static InterfaceProperties InterfaceProperties(string name = null, string ipv4Address = null, string ipv4Subnet = null, string ipv4Gateway = null)
-        {
-            return new InterfaceProperties(name, ipv4Address, ipv4Subnet, ipv4Gateway);
-        }
-
-        /// <summary> Initializes a new instance of NaptConfiguration. </summary>
-        /// <param name="enabled"> Whether NAPT is enabled for connections to this attached data network. </param>
-        /// <param name="portRange">
-        /// Range of port numbers to use as translated ports on each translated address.
-        /// If not specified and NAPT is enabled, this range defaults to 1,024 - 49,999.
-        /// (Ports under 1,024 should not be used because these are special purpose ports reserved by IANA. Ports 50,000 and above are reserved for non-NAPT use.)
-        /// </param>
-        /// <param name="portReuseHoldTime"> The minimum time (in seconds) that will pass before a port that was used by a closed pinhole can be recycled for use by another pinhole. All hold times must be at least 1 second. </param>
-        /// <param name="pinholeLimits"> Maximum number of UDP and TCP pinholes that can be open simultaneously on the core interface. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
-        /// <param name="pinholeTimeouts"> Expiry times of inactive NAPT pinholes, in seconds. All timers must be at least 1 second. </param>
-        /// <returns> A new <see cref="Models.NaptConfiguration"/> instance for mocking. </returns>
-        public static NaptConfiguration NaptConfiguration(NaptEnabled? enabled = null, PortRange portRange = null, PortReuseHoldTimes portReuseHoldTime = null, int? pinholeLimits = null, PinholeTimeouts pinholeTimeouts = null)
-        {
-            return new NaptConfiguration(enabled, portRange, portReuseHoldTime, pinholeLimits, pinholeTimeouts);
-        }
-
-        /// <summary> Initializes a new instance of PortRange. </summary>
-        /// <param name="minPort"> The minimum port number. </param>
-        /// <param name="maxPort"> The maximum port number. </param>
-        /// <returns> A new <see cref="Models.PortRange"/> instance for mocking. </returns>
-        public static PortRange PortRange(int? minPort = null, int? maxPort = null)
-        {
-            return new PortRange(minPort, maxPort);
-        }
-
-        /// <summary> Initializes a new instance of PortReuseHoldTimes. </summary>
-        /// <param name="tcp"> Minimum time in seconds that will pass before a TCP port that was used by a closed pinhole can be reused. Default for TCP is 2 minutes. </param>
-        /// <param name="udp"> Minimum time in seconds that will pass before a UDP port that was used by a closed pinhole can be reused. Default for UDP is 1 minute. </param>
-        /// <returns> A new <see cref="Models.PortReuseHoldTimes"/> instance for mocking. </returns>
-        public static PortReuseHoldTimes PortReuseHoldTimes(int? tcp = null, int? udp = null)
-        {
-            return new PortReuseHoldTimes(tcp, udp);
-        }
-
-        /// <summary> Initializes a new instance of PinholeTimeouts. </summary>
-        /// <param name="tcp"> Pinhole timeout for TCP pinholes in seconds. Default for TCP is 3 minutes. </param>
-        /// <param name="udp"> Pinhole timeout for UDP pinholes in seconds. Default for UDP is 30 seconds. </param>
-        /// <param name="icmp"> Pinhole timeout for ICMP pinholes in seconds. Default for ICMP Echo is 30 seconds. </param>
-        /// <returns> A new <see cref="Models.PinholeTimeouts"/> instance for mocking. </returns>
-        public static PinholeTimeouts PinholeTimeouts(int? tcp = null, int? udp = null, int? icmp = null)
-        {
-            return new PinholeTimeouts(tcp, udp, icmp);
-        }
-
         /// <summary> Initializes a new instance of DataNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -198,15 +143,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PlatformConfiguration(platformType, azureStackEdgeDeviceId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackEdgeDeviceId) : null, azureStackEdgeDevices?.ToList(), azureStackHciClusterId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackHciClusterId) : null, connectedClusterId != null ? ResourceManagerModelFactory.WritableSubResource(connectedClusterId) : null, customLocationId != null ? ResourceManagerModelFactory.WritableSubResource(customLocationId) : null);
         }
 
-        /// <summary> Initializes a new instance of LocalDiagnosticsAccessConfiguration. </summary>
-        /// <param name="authenticationType"> How to authenticate users who access local diagnostics APIs. </param>
-        /// <param name="httpsServerCertificate"> The HTTPS server TLS certificate used to secure local access to diagnostics. </param>
-        /// <returns> A new <see cref="Models.LocalDiagnosticsAccessConfiguration"/> instance for mocking. </returns>
-        public static LocalDiagnosticsAccessConfiguration LocalDiagnosticsAccessConfiguration(AuthenticationType authenticationType = default, HttpsServerCertificate httpsServerCertificate = null)
-        {
-            return new LocalDiagnosticsAccessConfiguration(authenticationType, httpsServerCertificate);
-        }
-
         /// <summary> Initializes a new instance of HttpsServerCertificate. </summary>
         /// <param name="certificateUri"> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </param>
         /// <param name="provisioning"> The provisioning state of the certificate. </param>
@@ -256,19 +192,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PacketCoreControlPlaneVersionData(id, name, resourceType, systemData, provisioningState, platforms?.ToList());
         }
 
-        /// <summary> Initializes a new instance of Platform. </summary>
-        /// <param name="platformType"> The platform type where this version can be deployed. </param>
-        /// <param name="versionState"> The state of this packet core control plane version on this platform. </param>
-        /// <param name="minimumPlatformSoftwareVersion"> The minimum software version of the platform where this packet core version can be deployed. </param>
-        /// <param name="maximumPlatformSoftwareVersion"> The maximum software version of the platform where this packet core version can be deployed. </param>
-        /// <param name="recommendedVersion"> Indicates whether this is the recommended version for this platform. </param>
-        /// <param name="obsoleteVersion"> Indicates whether this version is obsoleted for this platform. </param>
-        /// <returns> A new <see cref="Models.Platform"/> instance for mocking. </returns>
-        public static Platform Platform(PlatformType? platformType = null, VersionState? versionState = null, string minimumPlatformSoftwareVersion = null, string maximumPlatformSoftwareVersion = null, RecommendedVersion? recommendedVersion = null, ObsoleteVersion? obsoleteVersion = null)
-        {
-            return new Platform(platformType, versionState, minimumPlatformSoftwareVersion, maximumPlatformSoftwareVersion, recommendedVersion, obsoleteVersion);
-        }
-
         /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -306,61 +229,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new ServiceData(id, name, resourceType, systemData, tags, location, provisioningState, servicePrecedence, serviceQosPolicy, pccRules?.ToList());
         }
 
-        /// <summary> Initializes a new instance of QosPolicy. </summary>
-        /// <param name="fiveQi"> QoS Flow 5G QoS Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. This must not be a standardized 5QI value corresponding to a GBR (guaranteed bit rate) QoS Flow. The illegal GBR 5QI values are: 1, 2, 3, 4, 65, 66, 67, 71, 72, 73, 74, 75, 76, 82, 83, 84, and 85. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition of which are the GBR 5QI values. </param>
-        /// <param name="allocationAndRetentionPriorityLevel"> QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="preemptionCapability"> QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="preemptionVulnerability"> QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="maximumBitRate"> The maximum bit rate (MBR) for all service data flows that use this data flow policy rule or service. </param>
-        /// <returns> A new <see cref="Models.QosPolicy"/> instance for mocking. </returns>
-        public static QosPolicy QosPolicy(int? fiveQi = null, int? allocationAndRetentionPriorityLevel = null, PreemptionCapability? preemptionCapability = null, PreemptionVulnerability? preemptionVulnerability = null, Ambr maximumBitRate = null)
-        {
-            return new QosPolicy(fiveQi, allocationAndRetentionPriorityLevel, preemptionCapability, preemptionVulnerability, maximumBitRate);
-        }
-
-        /// <summary> Initializes a new instance of PccRuleConfiguration. </summary>
-        /// <param name="ruleName"> The name of the rule. This must be unique within the parent service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="rulePrecedence"> A precedence value that is used to decide between data flow policy rules when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all data flow policy rules configured in the mobile network. </param>
-        /// <param name="ruleQosPolicy"> The QoS policy to use for packets matching this rule. If this field is null then the parent service will define the QoS settings. </param>
-        /// <param name="trafficControl"> Determines whether flows that match this data flow policy rule are permitted. </param>
-        /// <param name="serviceDataFlowTemplates"> The set of data flow templates to use for this data flow policy rule. </param>
-        /// <returns> A new <see cref="Models.PccRuleConfiguration"/> instance for mocking. </returns>
-        public static PccRuleConfiguration PccRuleConfiguration(string ruleName = null, int rulePrecedence = default, PccRuleQosPolicy ruleQosPolicy = null, TrafficControlPermission? trafficControl = null, IEnumerable<ServiceDataFlowTemplate> serviceDataFlowTemplates = null)
-        {
-            serviceDataFlowTemplates ??= new List<ServiceDataFlowTemplate>();
-
-            return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy, trafficControl, serviceDataFlowTemplates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PccRuleQosPolicy. </summary>
-        /// <param name="fiveQi"> QoS Flow 5G QoS Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. This must not be a standardized 5QI value corresponding to a GBR (guaranteed bit rate) QoS Flow. The illegal GBR 5QI values are: 1, 2, 3, 4, 65, 66, 67, 71, 72, 73, 74, 75, 76, 82, 83, 84, and 85. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition of which are the GBR 5QI values. </param>
-        /// <param name="allocationAndRetentionPriorityLevel"> QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="preemptionCapability"> QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="preemptionVulnerability"> QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="maximumBitRate"> The maximum bit rate (MBR) for all service data flows that use this data flow policy rule or service. </param>
-        /// <param name="guaranteedBitRate"> The guaranteed bit rate (GBR) for all service data flows that use this data flow policy rule. This is an optional setting. If you do not provide a value, there will be no GBR set for the data flow policy rule that uses this QoS definition. </param>
-        /// <returns> A new <see cref="Models.PccRuleQosPolicy"/> instance for mocking. </returns>
-        public static PccRuleQosPolicy PccRuleQosPolicy(int? fiveQi = null, int? allocationAndRetentionPriorityLevel = null, PreemptionCapability? preemptionCapability = null, PreemptionVulnerability? preemptionVulnerability = null, Ambr maximumBitRate = null, Ambr guaranteedBitRate = null)
-        {
-            return new PccRuleQosPolicy(fiveQi, allocationAndRetentionPriorityLevel, preemptionCapability, preemptionVulnerability, maximumBitRate, guaranteedBitRate);
-        }
-
-        /// <summary> Initializes a new instance of ServiceDataFlowTemplate. </summary>
-        /// <param name="templateName"> The name of the data flow template. This must be unique within the parent data flow policy rule. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="direction"> The direction of this flow. </param>
-        /// <param name="protocol"> A list of the allowed protocol(s) for this flow. If you want this flow to be able to use any protocol within the internet protocol suite, use the value `ip`. If you only want to allow a selection of protocols, you must use the corresponding IANA Assigned Internet Protocol Number for each protocol, as described in https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml. For example, for UDP, you must use 17. If you use the value `ip` then you must leave the field `port` unspecified. </param>
-        /// <param name="remoteIPList"> The remote IP address(es) to which UEs will connect for this flow. If you want to allow connections on any IP address, use the value `any`. Otherwise, you must provide each of the remote IP addresses to which the packet core instance will connect for this flow. You must provide each IP address in CIDR notation, including the netmask (for example, 192.0.2.54/24). </param>
-        /// <param name="ports"> The port(s) to which UEs will connect for this flow. You can specify zero or more ports or port ranges. If you specify one or more ports or port ranges then you must specify a value other than `ip` in the `protocol` field. This is an optional setting. If you do not specify it then connections will be allowed on all ports. Port ranges must be specified as &lt;FirstPort&gt;-&lt;LastPort&gt;. For example: [`8080`, `8082-8085`]. </param>
-        /// <returns> A new <see cref="Models.ServiceDataFlowTemplate"/> instance for mocking. </returns>
-        public static ServiceDataFlowTemplate ServiceDataFlowTemplate(string templateName = null, SdfDirection direction = default, IEnumerable<string> protocol = null, IEnumerable<string> remoteIPList = null, IEnumerable<string> ports = null)
-        {
-            protocol ??= new List<string>();
-            remoteIPList ??= new List<string>();
-            ports ??= new List<string>();
-
-            return new ServiceDataFlowTemplate(templateName, direction, protocol?.ToList(), remoteIPList?.ToList(), ports?.ToList());
-        }
-
         /// <summary> Initializes a new instance of SimData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -385,16 +253,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             staticIPConfiguration ??= new List<SimStaticIPProperties>();
 
             return new SimData(id, name, resourceType, systemData, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode);
-        }
-
-        /// <summary> Initializes a new instance of SimStaticIPProperties. </summary>
-        /// <param name="attachedDataNetworkId"> The attached data network on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The attached data network must be in the same location as the SIM. </param>
-        /// <param name="sliceId"> The network slice on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The slice must be in the same location as the SIM. </param>
-        /// <param name="staticIPIPv4Address"> The static IP configuration for the SIM to use at the defined network scope. </param>
-        /// <returns> A new <see cref="Models.SimStaticIPProperties"/> instance for mocking. </returns>
-        public static SimStaticIPProperties SimStaticIPProperties(ResourceIdentifier attachedDataNetworkId = null, ResourceIdentifier sliceId = null, string staticIPIPv4Address = null)
-        {
-            return new SimStaticIPProperties(attachedDataNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(attachedDataNetworkId) : null, sliceId != null ? ResourceManagerModelFactory.WritableSubResource(sliceId) : null, staticIPIPv4Address != null ? new SimStaticIPPropertiesStaticIP(staticIPIPv4Address) : null);
         }
 
         /// <summary> Initializes a new instance of SimGroupData. </summary>
@@ -440,26 +298,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new SimPolicyData(id, name, resourceType, systemData, tags, location, provisioningState, siteProvisioningState, ueAmbr, defaultSliceId != null ? ResourceManagerModelFactory.WritableSubResource(defaultSliceId) : null, rfspIndex, registrationTimer, sliceConfigurations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataNetworkConfiguration. </summary>
-        /// <param name="dataNetworkId"> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </param>
-        /// <param name="sessionAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </param>
-        /// <param name="fiveQi"> Default QoS Flow 5G QoS Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. This must not be a standardized 5QI value corresponding to a GBR (guaranteed bit rate) QoS Flow. The illegal GBR 5QI values are: 1, 2, 3, 4, 65, 66, 67, 71, 72, 73, 74, 75, 76, 82, 83, 84, and 85. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition of which are the GBR 5QI values. </param>
-        /// <param name="allocationAndRetentionPriorityLevel"> Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="preemptionCapability"> Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="preemptionVulnerability"> Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
-        /// <param name="defaultSessionType"> The default PDU session type, which is used if the UE does not request a specific session type. </param>
-        /// <param name="additionalAllowedSessionTypes"> Allowed session types in addition to the default session type. Must not duplicate the default session type. </param>
-        /// <param name="allowedServices"> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </param>
-        /// <param name="maximumNumberOfBufferedPackets"> The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions. </param>
-        /// <returns> A new <see cref="Models.DataNetworkConfiguration"/> instance for mocking. </returns>
-        public static DataNetworkConfiguration DataNetworkConfiguration(ResourceIdentifier dataNetworkId = null, Ambr sessionAmbr = null, int? fiveQi = null, int? allocationAndRetentionPriorityLevel = null, PreemptionCapability? preemptionCapability = null, PreemptionVulnerability? preemptionVulnerability = null, PduSessionType? defaultSessionType = null, IEnumerable<PduSessionType> additionalAllowedSessionTypes = null, IEnumerable<WritableSubResource> allowedServices = null, int? maximumNumberOfBufferedPackets = null)
-        {
-            additionalAllowedSessionTypes ??= new List<PduSessionType>();
-            allowedServices ??= new List<WritableSubResource>();
-
-            return new DataNetworkConfiguration(dataNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(dataNetworkId) : null, sessionAmbr, fiveQi, allocationAndRetentionPriorityLevel, preemptionCapability, preemptionVulnerability, defaultSessionType, additionalAllowedSessionTypes?.ToList(), allowedServices?.ToList(), maximumNumberOfBufferedPackets);
-        }
-
         /// <summary> Initializes a new instance of SiteData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -494,15 +332,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             tags ??= new Dictionary<string, string>();
 
             return new SliceData(id, name, resourceType, systemData, tags, location, provisioningState, snssai, description);
-        }
-
-        /// <summary> Initializes a new instance of Snssai. </summary>
-        /// <param name="sst"> Slice/service type (SST). </param>
-        /// <param name="sd"> Slice differentiator (SD). </param>
-        /// <returns> A new <see cref="Models.Snssai"/> instance for mocking. </returns>
-        public static Snssai Snssai(int sst = default, string sd = null)
-        {
-            return new Snssai(sst, sd);
         }
     }
 }

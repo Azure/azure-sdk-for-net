@@ -51,27 +51,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             return new KubernetesClusterExtensionData(id, name, resourceType, systemData, identity, plan, extensionType, autoUpgradeMinorVersion, releaseTrain, version, scope, configurationSettings, configurationProtectedSettings, currentVersion, provisioningState, statuses?.ToList(), errorInfo, customLocationSettings, packageUri, aksAssignedIdentity, isSystemExtension);
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>
-        /// <param name="clusterReleaseNamespace"> Specifies that the scope of the extension is Cluster. </param>
-        /// <param name="targetNamespace"> Specifies that the scope of the extension is Namespace. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterExtensionScope"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionScope KubernetesClusterExtensionScope(string clusterReleaseNamespace = null, string targetNamespace = null)
-        {
-            return new KubernetesClusterExtensionScope(clusterReleaseNamespace != null ? new ScopeCluster(clusterReleaseNamespace) : null, targetNamespace != null ? new ScopeNamespace(targetNamespace) : null);
-        }
-
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionStatus. </summary>
-        /// <param name="code"> Status code provided by the Extension. </param>
-        /// <param name="displayStatus"> Short description of status of the extension. </param>
-        /// <param name="level"> Level of the status. </param>
-        /// <param name="message"> Detailed message of the status from the Extension. </param>
-        /// <param name="time"> DateLiteral (per ISO8601) noting the time of installation status. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterExtensionStatus"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionStatus KubernetesClusterExtensionStatus(string code = null, string displayStatus = null, KubernetesClusterExtensionStatusLevel? level = null, string message = null, string time = null)
-        {
-            return new KubernetesClusterExtensionStatus(code, displayStatus, level, message, time);
-        }
-
         /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -102,75 +81,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             statuses ??= new List<KubernetesObjectStatus>();
 
             return new KubernetesFluxConfigurationData(id, name, resourceType, systemData, scope, @namespace, sourceKind, isReconciliationSuspended, gitRepository, bucket, azureBlob, kustomizations, configurationProtectedSettings, statuses?.ToList(), repositoryPublicKey, sourceSyncedCommitId, sourceUpdatedOn, statusUpdatedOn, complianceState, provisioningState, errorMessage);
-        }
-
-        /// <summary> Initializes a new instance of KubernetesGitRepository. </summary>
-        /// <param name="uri"> The URL to sync for the flux configuration git repository. </param>
-        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster git repository source with the remote. </param>
-        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster git repository source with the remote. </param>
-        /// <param name="repositoryRef"> The source reference for the GitRepository object. </param>
-        /// <param name="sshKnownHosts"> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </param>
-        /// <param name="httpsUser"> Plaintext HTTPS username used to access private git repositories over HTTPS. </param>
-        /// <param name="httpsCACert"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
-        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.KubernetesGitRepository"/> instance for mocking. </returns>
-        public static KubernetesGitRepository KubernetesGitRepository(Uri uri = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, KubernetesGitRepositoryRef repositoryRef = null, string sshKnownHosts = null, string httpsUser = null, string httpsCACert = null, string localAuthRef = null)
-        {
-            return new KubernetesGitRepository(uri, timeoutInSeconds, syncIntervalInSeconds, repositoryRef, sshKnownHosts, httpsUser, httpsCACert, localAuthRef);
-        }
-
-        /// <summary> Initializes a new instance of KubernetesGitRepositoryRef. </summary>
-        /// <param name="branch"> The git repository branch name to checkout. </param>
-        /// <param name="tag"> The git repository tag name to checkout. This takes precedence over branch. </param>
-        /// <param name="semver"> The semver range used to match against git repository tags. This takes precedence over tag. </param>
-        /// <param name="commit"> The commit SHA to checkout. This value must be combined with the branch name to be valid. This takes precedence over semver. </param>
-        /// <returns> A new <see cref="Models.KubernetesGitRepositoryRef"/> instance for mocking. </returns>
-        public static KubernetesGitRepositoryRef KubernetesGitRepositoryRef(string branch = null, string tag = null, string semver = null, string commit = null)
-        {
-            return new KubernetesGitRepositoryRef(branch, tag, semver, commit);
-        }
-
-        /// <summary> Initializes a new instance of KubernetesBucket. </summary>
-        /// <param name="uri"> The URL to sync for the flux configuration S3 bucket. </param>
-        /// <param name="bucketName"> The bucket name to sync from the url endpoint for the flux configuration. </param>
-        /// <param name="useInsecureCommunication"> Specify whether to use insecure communication when puling data from the S3 bucket. </param>
-        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster bucket source with the remote. </param>
-        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster bucket source with the remote. </param>
-        /// <param name="accessKey"> Plaintext access key used to securely access the S3 bucket. </param>
-        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.KubernetesBucket"/> instance for mocking. </returns>
-        public static KubernetesBucket KubernetesBucket(Uri uri = null, string bucketName = null, bool? useInsecureCommunication = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, string accessKey = null, string localAuthRef = null)
-        {
-            return new KubernetesBucket(uri, bucketName, useInsecureCommunication, timeoutInSeconds, syncIntervalInSeconds, accessKey, localAuthRef);
-        }
-
-        /// <summary> Initializes a new instance of KubernetesAzureBlob. </summary>
-        /// <param name="uri"> The URL to sync for the flux configuration Azure Blob storage account. </param>
-        /// <param name="containerName"> The Azure Blob container name to sync from the url endpoint for the flux configuration. </param>
-        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster Azure Blob source with the remote. </param>
-        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster Azure Blob source with the remote. </param>
-        /// <param name="servicePrincipal"> Parameters to authenticate using Service Principal. </param>
-        /// <param name="accountKey"> The account key (shared key) to access the storage account. </param>
-        /// <param name="sasToken"> The Shared Access token to access the storage container. </param>
-        /// <param name="managedIdentityClientId"> Parameters to authenticate using a Managed Identity. </param>
-        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.KubernetesAzureBlob"/> instance for mocking. </returns>
-        public static KubernetesAzureBlob KubernetesAzureBlob(Uri uri = null, string containerName = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, KubernetesServicePrincipal servicePrincipal = null, string accountKey = null, string sasToken = null, Guid? managedIdentityClientId = null, string localAuthRef = null)
-        {
-            return new KubernetesAzureBlob(uri, containerName, timeoutInSeconds, syncIntervalInSeconds, servicePrincipal, accountKey, sasToken, managedIdentityClientId != null ? new KubernetesAzureBlobManagedIdentity(managedIdentityClientId) : null, localAuthRef);
-        }
-
-        /// <summary> Initializes a new instance of KubernetesServicePrincipal. </summary>
-        /// <param name="clientId"> The client Id for authenticating a Service Principal. </param>
-        /// <param name="tenantId"> The tenant Id for authenticating a Service Principal. </param>
-        /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
-        /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
-        /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
-        /// <param name="clientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
-        /// <returns> A new <see cref="Models.KubernetesServicePrincipal"/> instance for mocking. </returns>
-        public static KubernetesServicePrincipal KubernetesServicePrincipal(Guid? clientId = null, Guid? tenantId = null, string clientSecret = null, string clientCertificate = null, string clientCertificatePassword = null, bool? clientCertificateSendChain = null)
-        {
-            return new KubernetesServicePrincipal(clientId, tenantId, clientSecret, clientCertificate, clientCertificatePassword, clientCertificateSendChain);
         }
 
         /// <summary> Initializes a new instance of Kustomization. </summary>
@@ -263,15 +173,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             configurationProtectedSettings ??= new Dictionary<string, string>();
 
             return new KubernetesSourceControlConfigurationData(id, name, resourceType, systemData, repositoryUri, operatorNamespace, operatorInstanceName, operatorType, operatorParams, configurationProtectedSettings, operatorScope, repositoryPublicKey, sshKnownHostsContents, isHelmOperatorEnabled, helmOperatorProperties, provisioningState, complianceStatus);
-        }
-
-        /// <summary> Initializes a new instance of HelmOperatorProperties. </summary>
-        /// <param name="chartVersion"> Version of the operator Helm chart. </param>
-        /// <param name="chartValues"> Values override for the operator Helm chart. </param>
-        /// <returns> A new <see cref="Models.HelmOperatorProperties"/> instance for mocking. </returns>
-        public static HelmOperatorProperties HelmOperatorProperties(string chartVersion = null, string chartValues = null)
-        {
-            return new HelmOperatorProperties(chartVersion, chartValues);
         }
 
         /// <summary> Initializes a new instance of KubernetesConfigurationComplianceStatus. </summary>

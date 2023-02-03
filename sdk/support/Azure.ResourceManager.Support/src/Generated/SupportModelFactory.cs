@@ -85,24 +85,6 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, contactDetails, serviceLevelAgreement, supportEngineerEmailAddress != null ? new SupportEngineer(supportEngineerEmailAddress) : null, supportPlanType, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId) : null, quotaTicketDetails);
         }
 
-        /// <summary> Initializes a new instance of SupportContactProfile. </summary>
-        /// <param name="firstName"> First name. </param>
-        /// <param name="lastName"> Last name. </param>
-        /// <param name="preferredContactMethod"> Preferred contact method. </param>
-        /// <param name="primaryEmailAddress"> Primary email address. </param>
-        /// <param name="additionalEmailAddresses"> Additional email addresses listed will be copied on any correspondence about the support ticket. </param>
-        /// <param name="phoneNumber"> Phone number. This is required if preferred contact method is phone. </param>
-        /// <param name="preferredTimeZone"> Time zone of the user. This is the name of the time zone from [Microsoft Time Zone Index Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values). </param>
-        /// <param name="country"> Country of the user. This is the ISO 3166-1 alpha-3 code. </param>
-        /// <param name="preferredSupportLanguage"> Preferred language of support from Azure. Support languages vary based on the severity you choose for your support ticket. Learn more at [Azure Severity and responsiveness](https://azure.microsoft.com/support/plans/response). Use the standard language-country code. Valid values are &apos;en-us&apos; for English, &apos;zh-hans&apos; for Chinese, &apos;es-es&apos; for Spanish, &apos;fr-fr&apos; for French, &apos;ja-jp&apos; for Japanese, &apos;ko-kr&apos; for Korean, &apos;ru-ru&apos; for Russian, &apos;pt-br&apos; for Portuguese, &apos;it-it&apos; for Italian, &apos;zh-tw&apos; for Chinese and &apos;de-de&apos; for German. </param>
-        /// <returns> A new <see cref="Models.SupportContactProfile"/> instance for mocking. </returns>
-        public static SupportContactProfile SupportContactProfile(string firstName = null, string lastName = null, PreferredContactMethod preferredContactMethod = default, string primaryEmailAddress = null, IEnumerable<string> additionalEmailAddresses = null, string phoneNumber = null, string preferredTimeZone = null, string country = null, string preferredSupportLanguage = null)
-        {
-            additionalEmailAddresses ??= new List<string>();
-
-            return new SupportContactProfile(firstName, lastName, preferredContactMethod, primaryEmailAddress, additionalEmailAddresses?.ToList(), phoneNumber, preferredTimeZone, country, preferredSupportLanguage);
-        }
-
         /// <summary> Initializes a new instance of SupportServiceLevelAgreement. </summary>
         /// <param name="startOn"> Time in UTC (ISO 8601 format) when the service level agreement starts. </param>
         /// <param name="expireOn"> Time in UTC (ISO 8601 format) when the service level agreement expires. </param>
@@ -111,27 +93,6 @@ namespace Azure.ResourceManager.Support.Models
         public static SupportServiceLevelAgreement SupportServiceLevelAgreement(DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, int? slaInMinutes = null)
         {
             return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes);
-        }
-
-        /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>
-        /// <param name="quotaChangeRequestSubType"> Required for certain quota types when there is a sub type, such as Batch, for which you are requesting a quota increase. </param>
-        /// <param name="quotaChangeRequestVersion"> Quota change request version. </param>
-        /// <param name="quotaChangeRequests"> This property is required for providing the region and new quota limits. </param>
-        /// <returns> A new <see cref="Models.QuotaTicketDetails"/> instance for mocking. </returns>
-        public static QuotaTicketDetails QuotaTicketDetails(string quotaChangeRequestSubType = null, string quotaChangeRequestVersion = null, IEnumerable<SupportQuotaChangeContent> quotaChangeRequests = null)
-        {
-            quotaChangeRequests ??= new List<SupportQuotaChangeContent>();
-
-            return new QuotaTicketDetails(quotaChangeRequestSubType, quotaChangeRequestVersion, quotaChangeRequests?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SupportQuotaChangeContent. </summary>
-        /// <param name="region"> Region for which the quota increase request is being made. </param>
-        /// <param name="payload"> Payload of the quota increase request. </param>
-        /// <returns> A new <see cref="Models.SupportQuotaChangeContent"/> instance for mocking. </returns>
-        public static SupportQuotaChangeContent SupportQuotaChangeContent(string region = null, string payload = null)
-        {
-            return new SupportQuotaChangeContent(region, payload);
         }
 
         /// <summary> Initializes a new instance of SupportTicketCommunicationData. </summary>

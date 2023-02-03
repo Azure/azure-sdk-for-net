@@ -72,41 +72,6 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabPlanData(id, name, resourceType, systemData, tags, location, identity, defaultConnectionProfile, defaultAutoShutdownProfile, defaultNetworkSubnetId != null ? new LabPlanNetworkProfile(defaultNetworkSubnetId) : null, allowedRegions?.ToList(), sharedGalleryId, supportInfo, linkedLmsInstance, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of LabConnectionProfile. </summary>
-        /// <param name="webSshAccess"> The enabled access level for Web Access over SSH. </param>
-        /// <param name="webRdpAccess"> The enabled access level for Web Access over RDP. </param>
-        /// <param name="clientSshAccess"> The enabled access level for Client Access over SSH. </param>
-        /// <param name="clientRdpAccess"> The enabled access level for Client Access over RDP. </param>
-        /// <returns> A new <see cref="Models.LabConnectionProfile"/> instance for mocking. </returns>
-        public static LabConnectionProfile LabConnectionProfile(LabVirtualMachineConnectionType? webSshAccess = null, LabVirtualMachineConnectionType? webRdpAccess = null, LabVirtualMachineConnectionType? clientSshAccess = null, LabVirtualMachineConnectionType? clientRdpAccess = null)
-        {
-            return new LabConnectionProfile(webSshAccess, webRdpAccess, clientSshAccess, clientRdpAccess);
-        }
-
-        /// <summary> Initializes a new instance of LabAutoShutdownProfile. </summary>
-        /// <param name="shutdownOnDisconnect"> Whether shutdown on disconnect is enabled. </param>
-        /// <param name="shutdownWhenNotConnected"> Whether a VM will get shutdown when it hasn&apos;t been connected to after a period of time. </param>
-        /// <param name="shutdownOnIdle"> Whether a VM will get shutdown when it has idled for a period of time. </param>
-        /// <param name="disconnectDelay"> The amount of time a VM will stay running after a user disconnects if this behavior is enabled. </param>
-        /// <param name="noConnectDelay"> The amount of time a VM will stay running before it is shutdown if no connection is made and this behavior is enabled. </param>
-        /// <param name="idleDelay"> The amount of time a VM will idle before it is shutdown if this behavior is enabled. </param>
-        /// <returns> A new <see cref="Models.LabAutoShutdownProfile"/> instance for mocking. </returns>
-        public static LabAutoShutdownProfile LabAutoShutdownProfile(LabServicesEnableState? shutdownOnDisconnect = null, LabServicesEnableState? shutdownWhenNotConnected = null, LabVirtualMachineShutdownOnIdleMode? shutdownOnIdle = null, TimeSpan? disconnectDelay = null, TimeSpan? noConnectDelay = null, TimeSpan? idleDelay = null)
-        {
-            return new LabAutoShutdownProfile(shutdownOnDisconnect, shutdownWhenNotConnected, shutdownOnIdle, disconnectDelay, noConnectDelay, idleDelay);
-        }
-
-        /// <summary> Initializes a new instance of LabPlanSupportInfo. </summary>
-        /// <param name="uri"> Support web address. </param>
-        /// <param name="email"> Support contact email address. </param>
-        /// <param name="phone"> Support contact phone number. </param>
-        /// <param name="instructions"> Support instructions. </param>
-        /// <returns> A new <see cref="Models.LabPlanSupportInfo"/> instance for mocking. </returns>
-        public static LabPlanSupportInfo LabPlanSupportInfo(Uri uri = null, string email = null, string phone = null, string instructions = null)
-        {
-            return new LabPlanSupportInfo(uri, email, phone, instructions);
-        }
-
         /// <summary> Initializes a new instance of LabData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -131,16 +96,6 @@ namespace Azure.ResourceManager.LabServices.Models
             tags ??= new Dictionary<string, string>();
 
             return new LabData(id, name, resourceType, systemData, tags, location, autoShutdownProfile, connectionProfile, virtualMachineProfile, securityProfile, rosterProfile, labPlanId, title, description, provisioningState, networkProfile, state);
-        }
-
-        /// <summary> Initializes a new instance of LabNetworkProfile. </summary>
-        /// <param name="subnetId"> The external subnet resource id. </param>
-        /// <param name="loadBalancerId"> The external load balancer resource id. </param>
-        /// <param name="publicIPId"> The external public IP resource id. </param>
-        /// <returns> A new <see cref="Models.LabNetworkProfile"/> instance for mocking. </returns>
-        public static LabNetworkProfile LabNetworkProfile(ResourceIdentifier subnetId = null, ResourceIdentifier loadBalancerId = null, ResourceIdentifier publicIPId = null)
-        {
-            return new LabNetworkProfile(subnetId, loadBalancerId, publicIPId);
         }
 
         /// <summary> Initializes a new instance of LabVirtualMachineProfile. </summary>
@@ -172,27 +127,6 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabVirtualMachineImageReference(id, offer, publisher, sku, version, exactVersion);
         }
 
-        /// <summary> Initializes a new instance of LabServicesSku. </summary>
-        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
-        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.LabServicesSku"/> instance for mocking. </returns>
-        public static LabServicesSku LabServicesSku(string name = null, LabServicesSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new LabServicesSku(name, tier, size, family, capacity);
-        }
-
-        /// <summary> Initializes a new instance of LabVirtualMachineCredential. </summary>
-        /// <param name="username"> The username to use when signing in to lab VMs. </param>
-        /// <param name="password"> The password for the user. This is required for the TemplateVM createOption. </param>
-        /// <returns> A new <see cref="Models.LabVirtualMachineCredential"/> instance for mocking. </returns>
-        public static LabVirtualMachineCredential LabVirtualMachineCredential(string username = null, string password = null)
-        {
-            return new LabVirtualMachineCredential(username, password);
-        }
-
         /// <summary> Initializes a new instance of LabSecurityProfile. </summary>
         /// <param name="registrationCode"> The registration code for the lab. </param>
         /// <param name="openAccess"> Whether any user or only specified users can register to a lab. </param>
@@ -200,18 +134,6 @@ namespace Azure.ResourceManager.LabServices.Models
         public static LabSecurityProfile LabSecurityProfile(string registrationCode = null, LabServicesEnableState? openAccess = null)
         {
             return new LabSecurityProfile(registrationCode, openAccess);
-        }
-
-        /// <summary> Initializes a new instance of LabRosterProfile. </summary>
-        /// <param name="activeDirectoryGroupId"> The AAD group ID which this lab roster is populated from. Having this set enables AAD sync mode. </param>
-        /// <param name="ltiContextId"> The unique context identifier for the lab in the lms. </param>
-        /// <param name="lmsInstance"> The base URI identifying the lms instance. </param>
-        /// <param name="ltiClientId"> The unique id of the azure lab services tool in the lms. </param>
-        /// <param name="ltiRosterEndpoint"> The uri of the names and roles service endpoint on the lms for the class attached to this lab. </param>
-        /// <returns> A new <see cref="Models.LabRosterProfile"/> instance for mocking. </returns>
-        public static LabRosterProfile LabRosterProfile(string activeDirectoryGroupId = null, string ltiContextId = null, Uri lmsInstance = null, string ltiClientId = null, Uri ltiRosterEndpoint = null)
-        {
-            return new LabRosterProfile(activeDirectoryGroupId, ltiContextId, lmsInstance, ltiClientId, ltiRosterEndpoint);
         }
 
         /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>
@@ -229,19 +151,6 @@ namespace Azure.ResourceManager.LabServices.Models
         public static LabServicesScheduleData LabServicesScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? stopOn = null, LabServicesRecurrencePattern recurrencePattern = null, string timeZoneId = null, BinaryData notes = null, LabServicesProvisioningState? provisioningState = null)
         {
             return new LabServicesScheduleData(id, name, resourceType, systemData, startOn, stopOn, recurrencePattern, timeZoneId, notes, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of LabServicesRecurrencePattern. </summary>
-        /// <param name="frequency"> The frequency of the recurrence. </param>
-        /// <param name="weekDays"> The week days the schedule runs. Used for when the Frequency is set to Weekly. </param>
-        /// <param name="interval"> The interval to invoke the schedule on. For example, interval = 2 and RecurrenceFrequency.Daily will run every 2 days. When no interval is supplied, an interval of 1 is used. </param>
-        /// <param name="expireOn"> When the recurrence will expire. This date is inclusive. </param>
-        /// <returns> A new <see cref="Models.LabServicesRecurrencePattern"/> instance for mocking. </returns>
-        public static LabServicesRecurrencePattern LabServicesRecurrencePattern(LabServicesRecurrenceFrequency frequency = default, IEnumerable<LabServicesDayOfWeek> weekDays = null, int? interval = null, DateTimeOffset expireOn = default)
-        {
-            weekDays ??= new List<LabServicesDayOfWeek>();
-
-            return new LabServicesRecurrencePattern(frequency, weekDays?.ToList(), interval, expireOn);
         }
 
         /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>

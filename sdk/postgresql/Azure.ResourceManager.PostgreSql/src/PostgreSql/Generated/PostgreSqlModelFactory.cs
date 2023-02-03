@@ -19,29 +19,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
     public static partial class PostgreSqlModelFactory
     {
 
-        /// <summary> Initializes a new instance of PostgreSqlSku. </summary>
-        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
-        /// <param name="tier"> The tier of the particular SKU, e.g. Basic. </param>
-        /// <param name="capacity"> The scale up/out capacity, representing server&apos;s compute units. </param>
-        /// <param name="size"> The size code, to be interpreted by resource as appropriate. </param>
-        /// <param name="family"> The family of hardware. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlSku"/> instance for mocking. </returns>
-        public static PostgreSqlSku PostgreSqlSku(string name = null, PostgreSqlSkuTier? tier = null, int? capacity = null, string size = null, string family = null)
-        {
-            return new PostgreSqlSku(name, tier, capacity, size, family);
-        }
-
-        /// <summary> Initializes a new instance of PostgreSqlStorageProfile. </summary>
-        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
-        /// <param name="storageInMB"> Max storage allowed for a server. </param>
-        /// <param name="storageAutogrow"> Enable Storage Auto Grow. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlStorageProfile"/> instance for mocking. </returns>
-        public static PostgreSqlStorageProfile PostgreSqlStorageProfile(int? backupRetentionDays = null, PostgreSqlGeoRedundantBackup? geoRedundantBackup = null, int? storageInMB = null, PostgreSqlStorageAutogrow? storageAutogrow = null)
-        {
-            return new PostgreSqlStorageProfile(backupRetentionDays, geoRedundantBackup, storageInMB, storageAutogrow);
-        }
-
         /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -159,16 +136,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlConfigurationData PostgreSqlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, string dataType = null, string allowedValues = null, string source = null)
         {
             return new PostgreSqlConfigurationData(id, name, resourceType, systemData, value, description, defaultValue, dataType, allowedValues, source);
-        }
-
-        /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>
-        /// <param name="value"> The list of server configurations. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlConfigurationList"/> instance for mocking. </returns>
-        public static PostgreSqlConfigurationList PostgreSqlConfigurationList(IEnumerable<PostgreSqlConfigurationData> value = null)
-        {
-            value ??= new List<PostgreSqlConfigurationData>();
-
-            return new PostgreSqlConfigurationList(value?.ToList());
         }
 
         /// <summary> Initializes a new instance of PostgreSqlLogFile. </summary>

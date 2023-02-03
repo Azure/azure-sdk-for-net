@@ -29,32 +29,6 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogAgreementResource(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DatadogAgreementProperties. </summary>
-        /// <param name="publisher"> Publisher identifier string. </param>
-        /// <param name="product"> Product identifier string. </param>
-        /// <param name="plan"> Plan identifier string. </param>
-        /// <param name="licenseTextLink"> Link to HTML with Microsoft and Publisher terms. </param>
-        /// <param name="privacyPolicyLink"> Link to the privacy policy of the publisher. </param>
-        /// <param name="retrieveDatetime"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
-        /// <param name="signature"> Terms signature. </param>
-        /// <param name="accepted"> If any version of the terms have been accepted, otherwise false. </param>
-        /// <returns> A new <see cref="Models.DatadogAgreementProperties"/> instance for mocking. </returns>
-        public static DatadogAgreementProperties DatadogAgreementProperties(string publisher = null, string product = null, string plan = null, string licenseTextLink = null, string privacyPolicyLink = null, DateTimeOffset? retrieveDatetime = null, string signature = null, bool? accepted = null)
-        {
-            return new DatadogAgreementProperties(publisher, product, plan, licenseTextLink, privacyPolicyLink, retrieveDatetime, signature, accepted);
-        }
-
-        /// <summary> Initializes a new instance of DatadogApiKey. </summary>
-        /// <param name="createdBy"> The user that created the API key. </param>
-        /// <param name="name"> The name of the API key. </param>
-        /// <param name="key"> The value of the API key. </param>
-        /// <param name="created"> The time of creation of the API key. </param>
-        /// <returns> A new <see cref="Models.DatadogApiKey"/> instance for mocking. </returns>
-        public static DatadogApiKey DatadogApiKey(string createdBy = null, string name = null, string key = null, string created = null)
-        {
-            return new DatadogApiKey(createdBy, name, key, created);
-        }
-
         /// <summary> Initializes a new instance of DatadogHost. </summary>
         /// <param name="name"> The name of the host. </param>
         /// <param name="aliases"> The aliases for the host. </param>
@@ -148,16 +122,6 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogOrganizationProperties(name, id, linkingAuthCode, linkingClientId, redirectUri, apiKey, applicationKey, enterpriseAppId);
         }
 
-        /// <summary> Initializes a new instance of UserInfo. </summary>
-        /// <param name="name"> Name of the user. </param>
-        /// <param name="emailAddress"> Email of the user used by Datadog for contacting them if needed. </param>
-        /// <param name="phoneNumber"> Phone number of the user used by Datadog for contacting them if needed. </param>
-        /// <returns> A new <see cref="Models.UserInfo"/> instance for mocking. </returns>
-        public static UserInfo UserInfo(string name = null, string emailAddress = null, string phoneNumber = null)
-        {
-            return new UserInfo(name, emailAddress, phoneNumber);
-        }
-
         /// <summary> Initializes a new instance of DatadogSetPasswordLink. </summary>
         /// <param name="setPasswordLink"></param>
         /// <returns> A new <see cref="Models.DatadogSetPasswordLink"/> instance for mocking. </returns>
@@ -188,29 +152,6 @@ namespace Azure.ResourceManager.Datadog.Models
             metricRulesFilteringTags ??= new List<FilteringTag>();
 
             return new MonitoringTagRulesProperties(provisioningState, logRules, metricRulesFilteringTags != null ? new MetricRules(metricRulesFilteringTags?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of LogRules. </summary>
-        /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
-        /// <param name="sendSubscriptionLogs"> Flag specifying if Azure subscription logs should be sent for the Monitor resource. </param>
-        /// <param name="sendResourceLogs"> Flag specifying if Azure resource logs should be sent for the Monitor resource. </param>
-        /// <param name="filteringTags"> List of filtering tags to be used for capturing logs. This only takes effect if SendResourceLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
-        /// <returns> A new <see cref="Models.LogRules"/> instance for mocking. </returns>
-        public static LogRules LogRules(bool? sendAadLogs = null, bool? sendSubscriptionLogs = null, bool? sendResourceLogs = null, IEnumerable<FilteringTag> filteringTags = null)
-        {
-            filteringTags ??= new List<FilteringTag>();
-
-            return new LogRules(sendAadLogs, sendSubscriptionLogs, sendResourceLogs, filteringTags?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FilteringTag. </summary>
-        /// <param name="name"> The name (also known as the key) of the tag. </param>
-        /// <param name="value"> The value of the tag. </param>
-        /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
-        /// <returns> A new <see cref="Models.FilteringTag"/> instance for mocking. </returns>
-        public static FilteringTag FilteringTag(string name = null, string value = null, TagAction? action = null)
-        {
-            return new FilteringTag(name, value, action);
         }
 
         /// <summary> Initializes a new instance of DatadogSingleSignOnResourceData. </summary>

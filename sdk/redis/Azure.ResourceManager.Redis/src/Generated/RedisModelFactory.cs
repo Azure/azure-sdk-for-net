@@ -137,16 +137,6 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, redisPrivateLinkServiceConnectionState, redisProvisioningState);
         }
 
-        /// <summary> Initializes a new instance of RedisPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.RedisPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static RedisPrivateLinkServiceConnectionState RedisPrivateLinkServiceConnectionState(RedisPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new RedisPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of RedisForceRebootResult. </summary>
         /// <param name="message"> Status message. </param>
         /// <returns> A new <see cref="Models.RedisForceRebootResult"/> instance for mocking. </returns>
@@ -181,16 +171,6 @@ namespace Azure.ResourceManager.Redis.Models
             scheduleEntries ??= new List<RedisPatchScheduleSetting>();
 
             return new RedisPatchScheduleData(id, name, resourceType, systemData, location, scheduleEntries?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RedisPatchScheduleSetting. </summary>
-        /// <param name="dayOfWeek"> Day of the week when a cache can be patched. </param>
-        /// <param name="startHourUtc"> Start hour after which cache patching can start. </param>
-        /// <param name="maintenanceWindow"> ISO8601 timespan specifying how much time cache patching can take. </param>
-        /// <returns> A new <see cref="Models.RedisPatchScheduleSetting"/> instance for mocking. </returns>
-        public static RedisPatchScheduleSetting RedisPatchScheduleSetting(RedisDayOfWeek dayOfWeek = default, int startHourUtc = default, TimeSpan? maintenanceWindow = null)
-        {
-            return new RedisPatchScheduleSetting(dayOfWeek, startHourUtc, maintenanceWindow);
         }
 
         /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyData. </summary>

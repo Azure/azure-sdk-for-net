@@ -60,20 +60,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new LogAnalyticsQueryData(id, name, resourceType, systemData, applicationId, displayName, createdOn, modifiedOn, author, description, body, related, tags, properties);
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsQueryRelatedMetadata. </summary>
-        /// <param name="categories"> The related categories for the function. </param>
-        /// <param name="resourceTypes"> The related resource types for the function. </param>
-        /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
-        /// <returns> A new <see cref="Models.LogAnalyticsQueryRelatedMetadata"/> instance for mocking. </returns>
-        public static LogAnalyticsQueryRelatedMetadata LogAnalyticsQueryRelatedMetadata(IEnumerable<string> categories = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> solutions = null)
-        {
-            categories ??= new List<string>();
-            resourceTypes ??= new List<string>();
-            solutions ??= new List<string>();
-
-            return new LogAnalyticsQueryRelatedMetadata(categories?.ToList(), resourceTypes?.ToList(), solutions?.ToList());
-        }
-
         /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -325,26 +311,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsClusterData(id, name, resourceType, systemData, tags, location, identity, sku, clusterId, provisioningState, isDoubleEncryptionEnabled, isAvailabilityZonesEnabled, billingType, keyVaultProperties, lastModifiedOn, createdOn, associatedWorkspaces?.ToList(), capacityReservationProperties);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsClusterSku. </summary>
-        /// <param name="capacity"> The capacity value. </param>
-        /// <param name="name"> The name of the SKU. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsClusterSku"/> instance for mocking. </returns>
-        public static OperationalInsightsClusterSku OperationalInsightsClusterSku(OperationalInsightsClusterCapacity? capacity = null, OperationalInsightsClusterSkuName? name = null)
-        {
-            return new OperationalInsightsClusterSku(capacity, name);
-        }
-
-        /// <summary> Initializes a new instance of OperationalInsightsKeyVaultProperties. </summary>
-        /// <param name="keyVaultUri"> The Key Vault uri which holds they key associated with the Log Analytics cluster. </param>
-        /// <param name="keyName"> The name of the key associated with the Log Analytics cluster. </param>
-        /// <param name="keyVersion"> The version of the key associated with the Log Analytics cluster. </param>
-        /// <param name="keyRsaSize"> Selected key minimum required size. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsKeyVaultProperties"/> instance for mocking. </returns>
-        public static OperationalInsightsKeyVaultProperties OperationalInsightsKeyVaultProperties(Uri keyVaultUri = null, string keyName = null, string keyVersion = null, int? keyRsaSize = null)
-        {
-            return new OperationalInsightsKeyVaultProperties(keyVaultUri, keyName, keyVersion, keyRsaSize);
-        }
-
         /// <summary> Initializes a new instance of OperationalInsightsClusterAssociatedWorkspace. </summary>
         /// <param name="workspaceId"> The id of the assigned workspace. </param>
         /// <param name="workspaceName"> The name id the assigned workspace. </param>
@@ -423,21 +389,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsPrivateLinkScopedResourceInfo OperationalInsightsPrivateLinkScopedResourceInfo(ResourceIdentifier resourceId = null, string scopeId = null)
         {
             return new OperationalInsightsPrivateLinkScopedResourceInfo(resourceId, scopeId);
-        }
-
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceFeatures. </summary>
-        /// <param name="isDataExportEnabled"> Flag that indicate if data should be exported. </param>
-        /// <param name="immediatePurgeDataOn30Days"> Flag that describes if we want to remove the data after 30 days. </param>
-        /// <param name="isLogAccessUsingOnlyResourcePermissionsEnabled"> Flag that indicate which permission to use - resource or workspace or both. </param>
-        /// <param name="clusterResourceId"> Dedicated LA cluster resourceId that is linked to the workspaces. </param>
-        /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = null, bool? immediatePurgeDataOn30Days = null, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = null, ResourceIdentifier clusterResourceId = null, bool? isLocalAuthDisabled = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new OperationalInsightsWorkspaceFeatures(isDataExportEnabled, immediatePurgeDataOn30Days, isLogAccessUsingOnlyResourcePermissionsEnabled, clusterResourceId, isLocalAuthDisabled, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsWorkspacePatch. </summary>

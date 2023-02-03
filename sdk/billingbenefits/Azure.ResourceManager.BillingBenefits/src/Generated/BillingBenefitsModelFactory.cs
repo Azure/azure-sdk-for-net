@@ -39,45 +39,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsSavingsPlanOrderAliasData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName) : null, kind, displayName, savingsPlanOrderId, provisioningState, billingScopeId, term, billingPlan, appliedScopeType, appliedScopeProperties, commitment);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSku. </summary>
-        /// <param name="name"> Name of the SKU to be applied. </param>
-        /// <returns> A new <see cref="Models.BillingBenefitsSku"/> instance for mocking. </returns>
-        public static BillingBenefitsSku BillingBenefitsSku(string name = null)
-        {
-            return new BillingBenefitsSku(name);
-        }
-
-        /// <summary> Initializes a new instance of BillingBenefitsAppliedScopeProperties. </summary>
-        /// <param name="tenantId"> Tenant ID where the benefit is applied. </param>
-        /// <param name="managementGroupId"> Fully-qualified identifier of the management group where the benefit must be applied. </param>
-        /// <param name="subscriptionId"> Fully-qualified identifier of the subscription. </param>
-        /// <param name="resourceGroupId"> Fully-qualified identifier of the resource group. </param>
-        /// <param name="displayName"> Display name. </param>
-        /// <returns> A new <see cref="Models.BillingBenefitsAppliedScopeProperties"/> instance for mocking. </returns>
-        public static BillingBenefitsAppliedScopeProperties BillingBenefitsAppliedScopeProperties(Guid? tenantId = null, ResourceIdentifier managementGroupId = null, ResourceIdentifier subscriptionId = null, ResourceIdentifier resourceGroupId = null, string displayName = null)
-        {
-            return new BillingBenefitsAppliedScopeProperties(tenantId, managementGroupId, subscriptionId, resourceGroupId, displayName);
-        }
-
-        /// <summary> Initializes a new instance of BillingBenefitsCommitment. </summary>
-        /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
-        /// <param name="amount"></param>
-        /// <param name="grain"> Commitment grain. </param>
-        /// <returns> A new <see cref="Models.BillingBenefitsCommitment"/> instance for mocking. </returns>
-        public static BillingBenefitsCommitment BillingBenefitsCommitment(string currencyCode = null, double? amount = null, BillingBenefitsCommitmentGrain? grain = null)
-        {
-            return new BillingBenefitsCommitment(currencyCode, amount, grain);
-        }
-
-        /// <summary> Initializes a new instance of BillingBenefitsPrice. </summary>
-        /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
-        /// <param name="amount"></param>
-        /// <returns> A new <see cref="Models.BillingBenefitsPrice"/> instance for mocking. </returns>
-        public static BillingBenefitsPrice BillingBenefitsPrice(string currencyCode = null, double? amount = null)
-        {
-            return new BillingBenefitsPrice(currencyCode, amount);
-        }
-
         /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -103,19 +64,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             savingsPlans ??= new List<string>();
 
             return new BillingBenefitsSavingsPlanOrderData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName) : null, displayName, provisioningState, billingScopeId, billingProfileId, customerId, billingAccountId, term, billingPlan, expireOn, benefitStartOn, planInformation, savingsPlans?.ToList(), extendedStatusInfo);
-        }
-
-        /// <summary> Initializes a new instance of BillingPlanInformation. </summary>
-        /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
-        /// <param name="startOn"> Date when the billing plan has started. </param>
-        /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
-        /// <param name="transactions"></param>
-        /// <returns> A new <see cref="Models.BillingPlanInformation"/> instance for mocking. </returns>
-        public static BillingPlanInformation BillingPlanInformation(BillingBenefitsPrice pricingCurrencyTotal = null, DateTimeOffset? startOn = null, DateTimeOffset? nextPaymentDueOn = null, IEnumerable<SavingsPlanOrderPaymentDetail> transactions = null)
-        {
-            transactions ??= new List<SavingsPlanOrderPaymentDetail>();
-
-            return new BillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, transactions?.ToList());
         }
 
         /// <summary> Initializes a new instance of SavingsPlanOrderPaymentDetail. </summary>

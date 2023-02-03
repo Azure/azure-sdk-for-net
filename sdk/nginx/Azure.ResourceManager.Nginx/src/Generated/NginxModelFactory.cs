@@ -11,7 +11,6 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Nginx;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -76,15 +75,6 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), packageData != null ? new NginxConfigurationPackage(packageData) : null, rootFile);
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationFile. </summary>
-        /// <param name="content"></param>
-        /// <param name="virtualPath"></param>
-        /// <returns> A new <see cref="Models.NginxConfigurationFile"/> instance for mocking. </returns>
-        public static NginxConfigurationFile NginxConfigurationFile(string content = null, string virtualPath = null)
-        {
-            return new NginxConfigurationFile(content, virtualPath);
-        }
-
         /// <summary> Initializes a new instance of NginxDeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -115,46 +105,6 @@ namespace Azure.ResourceManager.Nginx.Models
         public static NginxDeploymentProperties NginxDeploymentProperties(ProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null)
         {
             return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount) : null);
-        }
-
-        /// <summary> Initializes a new instance of NginxNetworkProfile. </summary>
-        /// <param name="frontEndIPConfiguration"></param>
-        /// <param name="networkInterfaceSubnetId"></param>
-        /// <returns> A new <see cref="Models.NginxNetworkProfile"/> instance for mocking. </returns>
-        public static NginxNetworkProfile NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration = null, string networkInterfaceSubnetId = null)
-        {
-            return new NginxNetworkProfile(frontEndIPConfiguration, networkInterfaceSubnetId != null ? new NginxNetworkInterfaceConfiguration(networkInterfaceSubnetId) : null);
-        }
-
-        /// <summary> Initializes a new instance of NginxFrontendIPConfiguration. </summary>
-        /// <param name="publicIPAddresses"></param>
-        /// <param name="privateIPAddresses"></param>
-        /// <returns> A new <see cref="Models.NginxFrontendIPConfiguration"/> instance for mocking. </returns>
-        public static NginxFrontendIPConfiguration NginxFrontendIPConfiguration(IEnumerable<WritableSubResource> publicIPAddresses = null, IEnumerable<NginxPrivateIPAddress> privateIPAddresses = null)
-        {
-            publicIPAddresses ??= new List<WritableSubResource>();
-            privateIPAddresses ??= new List<NginxPrivateIPAddress>();
-
-            return new NginxFrontendIPConfiguration(publicIPAddresses?.ToList(), privateIPAddresses?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of NginxPrivateIPAddress. </summary>
-        /// <param name="privateIPAddress"></param>
-        /// <param name="privateIPAllocationMethod"></param>
-        /// <param name="subnetId"></param>
-        /// <returns> A new <see cref="Models.NginxPrivateIPAddress"/> instance for mocking. </returns>
-        public static NginxPrivateIPAddress NginxPrivateIPAddress(string privateIPAddress = null, NginxPrivateIPAllocationMethod? privateIPAllocationMethod = null, string subnetId = null)
-        {
-            return new NginxPrivateIPAddress(privateIPAddress, privateIPAllocationMethod, subnetId);
-        }
-
-        /// <summary> Initializes a new instance of NginxStorageAccount. </summary>
-        /// <param name="accountName"></param>
-        /// <param name="containerName"></param>
-        /// <returns> A new <see cref="Models.NginxStorageAccount"/> instance for mocking. </returns>
-        public static NginxStorageAccount NginxStorageAccount(string accountName = null, string containerName = null)
-        {
-            return new NginxStorageAccount(accountName, containerName);
         }
     }
 }

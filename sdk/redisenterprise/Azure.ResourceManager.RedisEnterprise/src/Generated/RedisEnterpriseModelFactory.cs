@@ -57,15 +57,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseClusterData(id, name, resourceType, systemData, tags, location, sku, zones?.ToList(), minimumTlsVersion, hostName, provisioningState, resourceState, redisVersion, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseSku. </summary>
-        /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
-        /// <param name="capacity"> The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseSku"/> instance for mocking. </returns>
-        public static RedisEnterpriseSku RedisEnterpriseSku(RedisEnterpriseSkuName name = default, int? capacity = null)
-        {
-            return new RedisEnterpriseSku(name, capacity);
-        }
-
         /// <summary> Initializes a new instance of RedisEnterprisePrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -78,16 +69,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RedisEnterprisePrivateLinkServiceConnectionState connectionState = null, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             return new RedisEnterprisePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.RedisEnterprisePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static RedisEnterprisePrivateLinkServiceConnectionState RedisEnterprisePrivateLinkServiceConnectionState(RedisEnterprisePrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new RedisEnterprisePrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseDatabaseData. </summary>
@@ -112,17 +93,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseDatabaseData(id, name, resourceType, systemData, clientProtocol, port, provisioningState, resourceState, clusteringPolicy, evictionPolicy, persistence, modules?.ToList(), geoReplication);
         }
 
-        /// <summary> Initializes a new instance of RedisPersistenceSettings. </summary>
-        /// <param name="isAofEnabled"> Sets whether AOF is enabled. </param>
-        /// <param name="isRdbEnabled"> Sets whether RDB is enabled. </param>
-        /// <param name="aofFrequency"> Sets the frequency at which data is written to disk. </param>
-        /// <param name="rdbFrequency"> Sets the frequency at which a snapshot of the database is created. </param>
-        /// <returns> A new <see cref="Models.RedisPersistenceSettings"/> instance for mocking. </returns>
-        public static RedisPersistenceSettings RedisPersistenceSettings(bool? isAofEnabled = null, bool? isRdbEnabled = null, PersistenceSettingAofFrequency? aofFrequency = null, PersistenceSettingRdbFrequency? rdbFrequency = null)
-        {
-            return new RedisPersistenceSettings(isAofEnabled, isRdbEnabled, aofFrequency, rdbFrequency);
-        }
-
         /// <summary> Initializes a new instance of RedisEnterpriseModule. </summary>
         /// <param name="name"> The name of the module, e.g. &apos;RedisBloom&apos;, &apos;RediSearch&apos;, &apos;RedisTimeSeries&apos;. </param>
         /// <param name="args"> Configuration options for the module, e.g. &apos;ERROR_RATE 0.01 INITIAL_SIZE 400&apos;. </param>
@@ -131,17 +101,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseModule RedisEnterpriseModule(string name = null, string args = null, string version = null)
         {
             return new RedisEnterpriseModule(name, args, version);
-        }
-
-        /// <summary> Initializes a new instance of RedisEnterpriseDatabaseGeoReplication. </summary>
-        /// <param name="groupNickname"> Name for the group of linked database resources. </param>
-        /// <param name="linkedDatabases"> List of database resources to link with this database. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseDatabaseGeoReplication"/> instance for mocking. </returns>
-        public static RedisEnterpriseDatabaseGeoReplication RedisEnterpriseDatabaseGeoReplication(string groupNickname = null, IEnumerable<RedisEnterpriseLinkedDatabase> linkedDatabases = null)
-        {
-            linkedDatabases ??= new List<RedisEnterpriseLinkedDatabase>();
-
-            return new RedisEnterpriseDatabaseGeoReplication(groupNickname, linkedDatabases?.ToList());
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseLinkedDatabase. </summary>

@@ -65,14 +65,6 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceData(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList()) : null, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SearchServiceIPRule. </summary>
-        /// <param name="value"> Value corresponding to a single IPv4 address (eg., 123.1.2.3) or an IP range in CIDR format (eg., 123.1.2.3/24) to be allowed. </param>
-        /// <returns> A new <see cref="Models.SearchServiceIPRule"/> instance for mocking. </returns>
-        public static SearchServiceIPRule SearchServiceIPRule(string value = null)
-        {
-            return new SearchServiceIPRule(value);
-        }
-
         /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -85,25 +77,6 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchPrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SearchServicePrivateEndpointConnectionProperties. </summary>
-        /// <param name="privateEndpointId"> The private endpoint resource from Microsoft.Network provider. </param>
-        /// <param name="connectionState"> Describes the current state of an existing Private Link Service connection to the Azure Private Endpoint. </param>
-        /// <returns> A new <see cref="Models.SearchServicePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static SearchServicePrivateEndpointConnectionProperties SearchServicePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, SearchServicePrivateLinkServiceConnectionState connectionState = null)
-        {
-            return new SearchServicePrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState);
-        }
-
-        /// <summary> Initializes a new instance of SearchServicePrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Status of the the private link service connection. Can be Pending, Approved, Rejected, or Disconnected. </param>
-        /// <param name="description"> The description for the private link service connection state. </param>
-        /// <param name="actionsRequired"> A description of any extra actions that may be required. </param>
-        /// <returns> A new <see cref="Models.SearchServicePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static SearchServicePrivateLinkServiceConnectionState SearchServicePrivateLinkServiceConnectionState(SearchServicePrivateLinkServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new SearchServicePrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of SharedSearchServicePrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -114,19 +87,6 @@ namespace Azure.ResourceManager.Search.Models
         public static SharedSearchServicePrivateLinkResourceData SharedSearchServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SharedSearchServicePrivateLinkResourceProperties properties = null)
         {
             return new SharedSearchServicePrivateLinkResourceData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of SharedSearchServicePrivateLinkResourceProperties. </summary>
-        /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
-        /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
-        /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
-        /// <param name="resourceRegion"> Optional. Can be used to specify the Azure Resource Manager location of the resource to which a shared private link is to be created. This is only required for those resources whose DNS configuration are regional (such as Azure Kubernetes Service). </param>
-        /// <param name="status"> Status of the shared private link resource. Can be Pending, Approved, Rejected or Disconnected. </param>
-        /// <param name="provisioningState"> The provisioning state of the shared private link resource. Can be Updating, Deleting, Failed, Succeeded or Incomplete. </param>
-        /// <returns> A new <see cref="Models.SharedSearchServicePrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static SharedSearchServicePrivateLinkResourceProperties SharedSearchServicePrivateLinkResourceProperties(ResourceIdentifier privateLinkResourceId = null, string groupId = null, string requestMessage = null, AzureLocation? resourceRegion = null, SharedSearchServicePrivateLinkResourceStatus? status = null, SharedSearchServicePrivateLinkResourceProvisioningState? provisioningState = null)
-        {
-            return new SharedSearchServicePrivateLinkResourceProperties(privateLinkResourceId, groupId, requestMessage, resourceRegion, status, provisioningState);
         }
 
         /// <summary> Initializes a new instance of SearchServicePatch. </summary>

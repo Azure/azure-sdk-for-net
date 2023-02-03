@@ -41,36 +41,6 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionBudgetData(id, name, resourceType, systemData, category, amount, timeGrain, timePeriod, filter, currentSpend, notifications, forecastSpend, etag);
         }
 
-        /// <summary> Initializes a new instance of BudgetTimePeriod. </summary>
-        /// <param name="startOn"> The start date for the budget. </param>
-        /// <param name="endOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
-        /// <returns> A new <see cref="Models.BudgetTimePeriod"/> instance for mocking. </returns>
-        public static BudgetTimePeriod BudgetTimePeriod(DateTimeOffset startOn = default, DateTimeOffset? endOn = null)
-        {
-            return new BudgetTimePeriod(startOn, endOn);
-        }
-
-        /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>
-        /// <param name="and"> The logical &quot;AND&quot; expression. Must have at least 2 items. </param>
-        /// <param name="dimensions"> Has comparison expression for a dimension. </param>
-        /// <param name="tags"> Has comparison expression for a tag. </param>
-        /// <returns> A new <see cref="Models.ConsumptionBudgetFilter"/> instance for mocking. </returns>
-        public static ConsumptionBudgetFilter ConsumptionBudgetFilter(IEnumerable<BudgetFilterProperties> and = null, BudgetComparisonExpression dimensions = null, BudgetComparisonExpression tags = null)
-        {
-            and ??= new List<BudgetFilterProperties>();
-
-            return new ConsumptionBudgetFilter(and?.ToList(), dimensions, tags);
-        }
-
-        /// <summary> Initializes a new instance of BudgetFilterProperties. </summary>
-        /// <param name="dimensions"> Has comparison expression for a dimension. </param>
-        /// <param name="tags"> Has comparison expression for a tag. </param>
-        /// <returns> A new <see cref="Models.BudgetFilterProperties"/> instance for mocking. </returns>
-        public static BudgetFilterProperties BudgetFilterProperties(BudgetComparisonExpression dimensions = null, BudgetComparisonExpression tags = null)
-        {
-            return new BudgetFilterProperties(dimensions, tags);
-        }
-
         /// <summary> Initializes a new instance of BudgetCurrentSpend. </summary>
         /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
@@ -78,25 +48,6 @@ namespace Azure.ResourceManager.Consumption.Models
         public static BudgetCurrentSpend BudgetCurrentSpend(decimal? amount = null, string unit = null)
         {
             return new BudgetCurrentSpend(amount, unit);
-        }
-
-        /// <summary> Initializes a new instance of BudgetAssociatedNotification. </summary>
-        /// <param name="isEnabled"> The notification is enabled or not. </param>
-        /// <param name="operator"> The comparison operator. </param>
-        /// <param name="threshold"> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </param>
-        /// <param name="contactEmails"> Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified at the Subscription or Resource Group scopes. All other scopes must have at least one contact email specified. </param>
-        /// <param name="contactRoles"> Contact roles to send the budget notification to when the threshold is exceeded. </param>
-        /// <param name="contactGroups"> Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified Azure resource id. Only supported at Subscription or Resource Group scopes. </param>
-        /// <param name="thresholdType"> The type of threshold. </param>
-        /// <param name="locale"> Language in which the recipient will receive the notification. </param>
-        /// <returns> A new <see cref="Models.BudgetAssociatedNotification"/> instance for mocking. </returns>
-        public static BudgetAssociatedNotification BudgetAssociatedNotification(bool isEnabled = default, NotificationAlertTriggerType @operator = default, decimal threshold = default, IEnumerable<string> contactEmails = null, IEnumerable<string> contactRoles = null, IEnumerable<string> contactGroups = null, NotificationThresholdType? thresholdType = null, RecipientNotificationLanguageCode? locale = null)
-        {
-            contactEmails ??= new List<string>();
-            contactRoles ??= new List<string>();
-            contactGroups ??= new List<string>();
-
-            return new BudgetAssociatedNotification(isEnabled, @operator, threshold, contactEmails?.ToList(), contactRoles?.ToList(), contactGroups?.ToList(), thresholdType, locale);
         }
 
         /// <summary> Initializes a new instance of BudgetForecastSpend. </summary>

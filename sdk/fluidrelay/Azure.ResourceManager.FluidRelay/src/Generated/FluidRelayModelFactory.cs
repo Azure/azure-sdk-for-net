@@ -52,24 +52,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
             return new FluidRelayEndpoints(ordererEndpoints?.ToList(), storageEndpoints?.ToList(), serviceEndpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CmkEncryptionProperties. </summary>
-        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
-        /// <param name="keyEncryptionKeyUri"> key encryption key Url, with or without a version. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. Key auto rotation is enabled by providing a key uri without version. Otherwise, customer is responsible for rotating the key. The keyEncryptionKeyIdentity(either SystemAssigned or UserAssigned) should have permission to access this key url. </param>
-        /// <returns> A new <see cref="Models.CmkEncryptionProperties"/> instance for mocking. </returns>
-        public static CmkEncryptionProperties CmkEncryptionProperties(CmkIdentity keyEncryptionKeyIdentity = null, Uri keyEncryptionKeyUri = null)
-        {
-            return new CmkEncryptionProperties(keyEncryptionKeyIdentity, keyEncryptionKeyUri);
-        }
-
-        /// <summary> Initializes a new instance of CmkIdentity. </summary>
-        /// <param name="identityType"> Values can be SystemAssigned or UserAssigned. </param>
-        /// <param name="userAssignedIdentityResourceId"> user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
-        /// <returns> A new <see cref="Models.CmkIdentity"/> instance for mocking. </returns>
-        public static CmkIdentity CmkIdentity(CmkIdentityType? identityType = null, ResourceIdentifier userAssignedIdentityResourceId = null)
-        {
-            return new CmkIdentity(identityType, userAssignedIdentityResourceId);
-        }
-
         /// <summary> Initializes a new instance of FluidRelayServerKeys. </summary>
         /// <param name="primaryKey"> The primary key for this server. </param>
         /// <param name="secondaryKey"> The secondary key for this server. </param>

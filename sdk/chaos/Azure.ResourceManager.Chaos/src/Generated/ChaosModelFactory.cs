@@ -74,49 +74,6 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ExperimentData(id, name, resourceType, systemData, tags, location, identity, steps?.ToList(), selectors?.ToList(), startOnCreation);
         }
 
-        /// <summary> Initializes a new instance of Action. </summary>
-        /// <param name="actionType"> Enum that discriminates between action models. </param>
-        /// <param name="name"> String that represents a Capability URN. </param>
-        /// <returns> A new <see cref="Models.Action"/> instance for mocking. </returns>
-        public static Action Action(string actionType = null, string name = null)
-        {
-            return new UnknownAction(actionType, name);
-        }
-
-        /// <summary> Initializes a new instance of Selector. </summary>
-        /// <param name="selectorType"> Enum of the selector type. </param>
-        /// <param name="id"> String of the selector ID. </param>
-        /// <param name="targets"> List of Target references. </param>
-        /// <param name="filter">
-        /// Model that represents available filter types that can be applied to a targets list.
-        /// Please note <see cref="Filter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SimpleFilter"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.Selector"/> instance for mocking. </returns>
-        public static Selector Selector(SelectorType selectorType = default, string id = null, IEnumerable<TargetReference> targets = null, Filter filter = null)
-        {
-            targets ??= new List<TargetReference>();
-
-            return new Selector(selectorType, id, targets?.ToList(), filter);
-        }
-
-        /// <summary> Initializes a new instance of TargetReference. </summary>
-        /// <param name="referenceType"> Enum of the Target reference type. </param>
-        /// <param name="id"> String of the resource ID of a Target resource. </param>
-        /// <returns> A new <see cref="Models.TargetReference"/> instance for mocking. </returns>
-        public static TargetReference TargetReference(TargetReferenceType referenceType = default, string id = null)
-        {
-            return new TargetReference(referenceType, id);
-        }
-
-        /// <summary> Initializes a new instance of Filter. </summary>
-        /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
-        /// <returns> A new <see cref="Models.Filter"/> instance for mocking. </returns>
-        public static Filter Filter(string filterType = "Unknown")
-        {
-            return new UnknownFilter(filterType);
-        }
-
         /// <summary> Initializes a new instance of ExperimentCancelOperationResult. </summary>
         /// <param name="name"> String of the Experiment name. </param>
         /// <param name="statusUri"> URL to retrieve the Experiment status. </param>
@@ -263,50 +220,6 @@ namespace Azure.ResourceManager.Chaos.Models
             properties ??= new Dictionary<string, BinaryData>();
 
             return new TargetData(id, name, resourceType, systemData, location, properties);
-        }
-
-        /// <summary> Initializes a new instance of DelayAction. </summary>
-        /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
-        /// <returns> A new <see cref="Models.DelayAction"/> instance for mocking. </returns>
-        public static DelayAction DelayAction(string name = null, TimeSpan duration = default)
-        {
-            return new DelayAction("delay", name, duration);
-        }
-
-        /// <summary> Initializes a new instance of DiscreteAction. </summary>
-        /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="parameters"> List of key value pairs. </param>
-        /// <param name="selectorId"> String that represents a selector. </param>
-        /// <returns> A new <see cref="Models.DiscreteAction"/> instance for mocking. </returns>
-        public static DiscreteAction DiscreteAction(string name = null, IEnumerable<KeyValuePair> parameters = null, string selectorId = null)
-        {
-            parameters ??= new List<KeyValuePair>();
-
-            return new DiscreteAction("discrete", name, parameters?.ToList(), selectorId);
-        }
-
-        /// <summary> Initializes a new instance of ContinuousAction. </summary>
-        /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
-        /// <param name="parameters"> List of key value pairs. </param>
-        /// <param name="selectorId"> String that represents a selector. </param>
-        /// <returns> A new <see cref="Models.ContinuousAction"/> instance for mocking. </returns>
-        public static ContinuousAction ContinuousAction(string name = null, TimeSpan duration = default, IEnumerable<KeyValuePair> parameters = null, string selectorId = null)
-        {
-            parameters ??= new List<KeyValuePair>();
-
-            return new ContinuousAction("continuous", name, duration, parameters?.ToList(), selectorId);
-        }
-
-        /// <summary> Initializes a new instance of SimpleFilter. </summary>
-        /// <param name="parametersZones"> Model that represents the Simple filter parameters. </param>
-        /// <returns> A new <see cref="Models.SimpleFilter"/> instance for mocking. </returns>
-        public static SimpleFilter SimpleFilter(IEnumerable<string> parametersZones = null)
-        {
-            parametersZones ??= new List<string>();
-
-            return new SimpleFilter(FilterType.Simple, parametersZones != null ? new SimpleFilterParameters(parametersZones?.ToList()) : null);
         }
     }
 }

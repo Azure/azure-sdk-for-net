@@ -192,15 +192,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VCenterData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, fqdn, port, version, instanceUuid, connectionStatus, customResourceName, credentials, statuses?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VICredential. </summary>
-        /// <param name="username"> Gets or sets username to connect with the vCenter. </param>
-        /// <param name="password"> Gets or sets the password to connect with the vCenter. </param>
-        /// <returns> A new <see cref="Models.VICredential"/> instance for mocking. </returns>
-        public static VICredential VICredential(string username = null, string password = null)
-        {
-            return new VICredential(username, password);
-        }
-
         /// <summary> Initializes a new instance of VirtualMachineData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -244,17 +235,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             statuses ??= new List<ResourceStatus>();
 
             return new VirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, identity, resourcePoolId, templateId, vCenterId, placementProfile, osProfile, hardwareProfile, networkInterfaces != null ? new NetworkProfile(networkInterfaces?.ToList()) : null, storageProfile, guestAgentProfile, moRefId, inventoryItemId, moName, folderPath, instanceUuid, smbiosUuid, firmwareType, powerState, customResourceName, uuid, statuses?.ToList(), provisioningState, vmId);
-        }
-
-        /// <summary> Initializes a new instance of PlacementProfile. </summary>
-        /// <param name="resourcePoolId"> Gets or sets the ARM Id of the resourcePool resource on which this virtual machine will deploy. </param>
-        /// <param name="clusterId"> Gets or sets the ARM Id of the cluster resource on which this virtual machine will deploy. </param>
-        /// <param name="hostId"> Gets or sets the ARM Id of the host resource on which this virtual machine will deploy. </param>
-        /// <param name="datastoreId"> Gets or sets the ARM Id of the datastore resource on which the data for the virtual machine will be kept. </param>
-        /// <returns> A new <see cref="Models.PlacementProfile"/> instance for mocking. </returns>
-        public static PlacementProfile PlacementProfile(string resourcePoolId = null, string clusterId = null, string hostId = null, string datastoreId = null)
-        {
-            return new PlacementProfile(resourcePoolId, clusterId, hostId, datastoreId);
         }
 
         /// <summary> Initializes a new instance of OSProfile. </summary>
@@ -572,15 +552,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             statuses ??= new List<ResourceStatus>();
 
             return new GuestAgentData(id, name, resourceType, systemData, uuid, credentials, httpsProxy != null ? new HttpProxyConfiguration(httpsProxy) : null, provisioningAction, status, customResourceName, statuses?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of GuestCredential. </summary>
-        /// <param name="username"> Gets or sets username to connect with the guest. </param>
-        /// <param name="password"> Gets or sets the password to connect with the guest. </param>
-        /// <returns> A new <see cref="Models.GuestCredential"/> instance for mocking. </returns>
-        public static GuestCredential GuestCredential(string username = null, string password = null)
-        {
-            return new GuestCredential(username, password);
         }
     }
 }

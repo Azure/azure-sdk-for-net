@@ -49,51 +49,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, managedByTenantId, provisioningState, manageeTenantId, manageeTenantName, managedByTenantName);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesAuthorization. </summary>
-        /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
-        /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
-        /// <param name="roleDefinitionId"> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </param>
-        /// <param name="delegatedRoleDefinitionIds"> The delegatedRoleDefinitionIds field is required when the roleDefinitionId refers to the User Access Administrator Role. It is the list of role definition ids which define all the permissions that the user in the authorization can assign to other principals. </param>
-        /// <returns> A new <see cref="Models.ManagedServicesAuthorization"/> instance for mocking. </returns>
-        public static ManagedServicesAuthorization ManagedServicesAuthorization(Guid principalId = default, string principalIdDisplayName = null, string roleDefinitionId = null, IEnumerable<Guid> delegatedRoleDefinitionIds = null)
-        {
-            delegatedRoleDefinitionIds ??= new List<Guid>();
-
-            return new ManagedServicesAuthorization(principalId, principalIdDisplayName, roleDefinitionId, delegatedRoleDefinitionIds?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedServicesEligibleAuthorization. </summary>
-        /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
-        /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
-        /// <param name="roleDefinitionId"> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </param>
-        /// <param name="justInTimeAccessPolicy"> The just-in-time access policy setting. </param>
-        /// <returns> A new <see cref="Models.ManagedServicesEligibleAuthorization"/> instance for mocking. </returns>
-        public static ManagedServicesEligibleAuthorization ManagedServicesEligibleAuthorization(Guid principalId = default, string principalIdDisplayName = null, string roleDefinitionId = null, ManagedServicesJustInTimeAccessPolicy justInTimeAccessPolicy = null)
-        {
-            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName, roleDefinitionId, justInTimeAccessPolicy);
-        }
-
-        /// <summary> Initializes a new instance of ManagedServicesJustInTimeAccessPolicy. </summary>
-        /// <param name="multiFactorAuthProvider"> The multi-factor authorization provider to be used for just-in-time access requests. </param>
-        /// <param name="maximumActivationDuration"> The maximum access duration in ISO 8601 format for just-in-time access requests. </param>
-        /// <param name="managedByTenantApprovers"> The list of managedByTenant approvers for the eligible authorization. </param>
-        /// <returns> A new <see cref="Models.ManagedServicesJustInTimeAccessPolicy"/> instance for mocking. </returns>
-        public static ManagedServicesJustInTimeAccessPolicy ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider multiFactorAuthProvider = default, TimeSpan? maximumActivationDuration = null, IEnumerable<ManagedServicesEligibleApprover> managedByTenantApprovers = null)
-        {
-            managedByTenantApprovers ??= new List<ManagedServicesEligibleApprover>();
-
-            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, maximumActivationDuration, managedByTenantApprovers?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagedServicesEligibleApprover. </summary>
-        /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
-        /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
-        /// <returns> A new <see cref="Models.ManagedServicesEligibleApprover"/> instance for mocking. </returns>
-        public static ManagedServicesEligibleApprover ManagedServicesEligibleApprover(Guid principalId = default, string principalIdDisplayName = null)
-        {
-            return new ManagedServicesEligibleApprover(principalId, principalIdDisplayName);
-        }
-
         /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

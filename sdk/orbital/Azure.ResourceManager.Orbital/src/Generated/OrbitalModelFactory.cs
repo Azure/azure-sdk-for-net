@@ -158,36 +158,6 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalContactProfileData(id, name, resourceType, systemData, tags, location, etag, provisioningState, minimumViableContactDuration, minimumElevationDegrees, autoTrackingConfiguration, eventHubUri, networkSubnetId != null ? new ContactProfilesPropertiesNetworkConfiguration(networkSubnetId) : null, links?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactProfileLink. </summary>
-        /// <param name="name"> Link name. </param>
-        /// <param name="polarization"> Polarization. e.g. (RHCP, LHCP). </param>
-        /// <param name="direction"> Direction (uplink or downlink). </param>
-        /// <param name="gainOverTemperature"> Gain To Noise Temperature in db/K. It is the required G/T by the customer. Not used yet. </param>
-        /// <param name="eirpdBW"> Effective Isotropic Radiated Power (EIRP) in dBW. It is the required EIRP by the customer. Not used yet. </param>
-        /// <param name="channels"> Contact Profile Link Channel. </param>
-        /// <returns> A new <see cref="Models.OrbitalContactProfileLink"/> instance for mocking. </returns>
-        public static OrbitalContactProfileLink OrbitalContactProfileLink(string name = null, OrbitalLinkPolarization polarization = default, OrbitalLinkDirection direction = default, float? gainOverTemperature = null, float? eirpdBW = null, IEnumerable<OrbitalContactProfileLinkChannel> channels = null)
-        {
-            channels ??= new List<OrbitalContactProfileLinkChannel>();
-
-            return new OrbitalContactProfileLink(name, polarization, direction, gainOverTemperature, eirpdBW, channels?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of OrbitalContactProfileLinkChannel. </summary>
-        /// <param name="name"> Channel name. </param>
-        /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
-        /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
-        /// <param name="endPoint"> Customer End point to store/retrieve data during a contact. </param>
-        /// <param name="modulationConfiguration"> Copy of the modem configuration file such as Kratos QRadio. Only valid for uplink directions. If provided, the modem connects to the customer endpoint and accepts commands from the customer instead of a VITA.49 stream. </param>
-        /// <param name="demodulationConfiguration"> Copy of the modem configuration file such as Kratos QRadio or Kratos QuantumRx. Only valid for downlink directions. If provided, the modem connects to the customer endpoint and sends demodulated data instead of a VITA.49 stream. </param>
-        /// <param name="encodingConfiguration"> Currently unused. </param>
-        /// <param name="decodingConfiguration"> Currently unused. </param>
-        /// <returns> A new <see cref="Models.OrbitalContactProfileLinkChannel"/> instance for mocking. </returns>
-        public static OrbitalContactProfileLinkChannel OrbitalContactProfileLinkChannel(string name = null, float centerFrequencyMHz = default, float bandwidthMHz = default, OrbitalContactEndpoint endPoint = null, string modulationConfiguration = null, string demodulationConfiguration = null, string encodingConfiguration = null, string decodingConfiguration = null)
-        {
-            return new OrbitalContactProfileLinkChannel(name, centerFrequencyMHz, bandwidthMHz, endPoint, modulationConfiguration, demodulationConfiguration, encodingConfiguration, decodingConfiguration);
-        }
-
         /// <summary> Initializes a new instance of AvailableGroundStationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

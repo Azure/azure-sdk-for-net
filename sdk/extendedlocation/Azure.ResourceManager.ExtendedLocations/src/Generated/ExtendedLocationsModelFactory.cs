@@ -41,15 +41,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             return new CustomLocationData(id, name, resourceType, systemData, tags, location, identity, authentication, clusterExtensionIds?.ToList(), displayName, hostResourceId, hostType, @namespace, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CustomLocationAuthentication. </summary>
-        /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
-        /// <param name="value"> The kubeconfig value. </param>
-        /// <returns> A new <see cref="Models.CustomLocationAuthentication"/> instance for mocking. </returns>
-        public static CustomLocationAuthentication CustomLocationAuthentication(string customLocationPropertiesAuthenticationType = null, string value = null)
-        {
-            return new CustomLocationAuthentication(customLocationPropertiesAuthenticationType, value);
-        }
-
         /// <summary> Initializes a new instance of CustomLocationEnabledResourceType. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -64,16 +55,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             typesMetadata ??= new List<CustomLocationEnabledResourceTypeMetadata>();
 
             return new CustomLocationEnabledResourceType(id, name, resourceType, systemData, clusterExtensionId, extensionType, typesMetadata?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypeMetadata. </summary>
-        /// <param name="apiVersion"> Api Version of Resource Type. </param>
-        /// <param name="resourceProviderNamespace"> Resource Provider Namespace of Resource Type. </param>
-        /// <param name="resourceType"> Resource Type. </param>
-        /// <returns> A new <see cref="Models.CustomLocationEnabledResourceTypeMetadata"/> instance for mocking. </returns>
-        public static CustomLocationEnabledResourceTypeMetadata CustomLocationEnabledResourceTypeMetadata(string apiVersion = null, string resourceProviderNamespace = null, string resourceType = null)
-        {
-            return new CustomLocationEnabledResourceTypeMetadata(apiVersion, resourceProviderNamespace, resourceType);
         }
     }
 }

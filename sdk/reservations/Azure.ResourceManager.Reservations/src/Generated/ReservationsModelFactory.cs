@@ -123,27 +123,6 @@ namespace Azure.ResourceManager.Reservations.Models
             return new AppliedReservationList(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of ReservationPurchaseContent. </summary>
-        /// <param name="skuName"></param>
-        /// <param name="location"> The Azure Region where the reserved resource lives. </param>
-        /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing Reservation. </param>
-        /// <param name="term"> Represent the term of Reservation. </param>
-        /// <param name="billingPlan"> Represent the billing plans. </param>
-        /// <param name="quantity"> Quantity of the SKUs that are part of the Reservation. </param>
-        /// <param name="displayName"> Friendly name of the Reservation. </param>
-        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </param>
-        /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
-        /// <param name="reservedResourceInstanceFlexibility"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        /// <returns> A new <see cref="Models.ReservationPurchaseContent"/> instance for mocking. </returns>
-        public static ReservationPurchaseContent ReservationPurchaseContent(string skuName = null, AzureLocation? location = null, ReservedResourceType? reservedResourceType = null, ResourceIdentifier billingScopeId = null, ReservationTerm? term = null, ReservationBillingPlan? billingPlan = null, int? quantity = null, string displayName = null, AppliedScopeType? appliedScopeType = null, IEnumerable<string> appliedScopes = null, bool? isRenewEnabled = null, InstanceFlexibility? reservedResourceInstanceFlexibility = null)
-        {
-            appliedScopes ??= new List<string>();
-
-            return new ReservationPurchaseContent(skuName != null ? new ReservationsSkuName(skuName) : null, location, reservedResourceType, billingScopeId, term, billingPlan, quantity, displayName, appliedScopeType, appliedScopes?.ToList(), isRenewEnabled, reservedResourceInstanceFlexibility != null ? new PurchaseRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility) : null);
-        }
-
         /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.CalculatePriceResult"/> instance for mocking. </returns>

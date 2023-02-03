@@ -49,39 +49,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNamespaceData(id, name, resourceType, systemData, tags, location, sku, identity, minimumTlsVersion, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, metricId, isZoneRedundant, encryption, privateEndpointConnections?.ToList(), disableLocalAuth, alternateName, publicNetworkAccess, premiumMessagingPartitions);
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSku. </summary>
-        /// <param name="name"> Name of this SKU. </param>
-        /// <param name="tier"> The billing tier of this particular SKU. </param>
-        /// <param name="capacity"> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </param>
-        /// <returns> A new <see cref="Models.ServiceBusSku"/> instance for mocking. </returns>
-        public static ServiceBusSku ServiceBusSku(ServiceBusSkuName name = default, ServiceBusSkuTier? tier = null, int? capacity = null)
-        {
-            return new ServiceBusSku(name, tier, capacity);
-        }
-
-        /// <summary> Initializes a new instance of ServiceBusEncryption. </summary>
-        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
-        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
-        /// <returns> A new <see cref="Models.ServiceBusEncryption"/> instance for mocking. </returns>
-        public static ServiceBusEncryption ServiceBusEncryption(IEnumerable<ServiceBusKeyVaultProperties> keyVaultProperties = null, ServiceBusEncryptionKeySource? keySource = null, bool? requireInfrastructureEncryption = null)
-        {
-            keyVaultProperties ??= new List<ServiceBusKeyVaultProperties>();
-
-            return new ServiceBusEncryption(keyVaultProperties?.ToList(), keySource, requireInfrastructureEncryption);
-        }
-
-        /// <summary> Initializes a new instance of ServiceBusKeyVaultProperties. </summary>
-        /// <param name="keyName"> Name of the Key from KeyVault. </param>
-        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
-        /// <param name="keyVersion"> Version of KeyVault. </param>
-        /// <param name="userAssignedIdentity"></param>
-        /// <returns> A new <see cref="Models.ServiceBusKeyVaultProperties"/> instance for mocking. </returns>
-        public static ServiceBusKeyVaultProperties ServiceBusKeyVaultProperties(string keyName = null, Uri keyVaultUri = null, string keyVersion = null, string userAssignedIdentity = null)
-        {
-            return new ServiceBusKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity != null ? new UserAssignedIdentityProperties(userAssignedIdentity) : null);
-        }
-
         /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -95,15 +62,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ServiceBusPrivateLinkServiceConnectionState connectionState = null, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
             return new ServiceBusPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location);
-        }
-
-        /// <summary> Initializes a new instance of ServiceBusPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Status of the connection. </param>
-        /// <param name="description"> Description of the connection state. </param>
-        /// <returns> A new <see cref="Models.ServiceBusPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ServiceBusPrivateLinkServiceConnectionState ServiceBusPrivateLinkServiceConnectionState(ServiceBusPrivateLinkConnectionStatus? status = null, string description = null)
-        {
-            return new ServiceBusPrivateLinkServiceConnectionState(status, description);
         }
 
         /// <summary> Initializes a new instance of ServiceBusNamespacePatch. </summary>
@@ -203,24 +161,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
             ipRules ??= new List<ServiceBusNetworkRuleSetIPRules>();
 
             return new ServiceBusNetworkRuleSetData(id, name, resourceType, systemData, isTrustedServiceAccessEnabled, defaultAction, virtualNetworkRules?.ToList(), ipRules?.ToList(), publicNetworkAccess, location);
-        }
-
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetVirtualNetworkRules. </summary>
-        /// <param name="subnetId"> Subnet properties. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing VNet Service Endpoint. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNetworkRuleSetVirtualNetworkRules"/> instance for mocking. </returns>
-        public static ServiceBusNetworkRuleSetVirtualNetworkRules ServiceBusNetworkRuleSetVirtualNetworkRules(ResourceIdentifier subnetId = null, bool? ignoreMissingVnetServiceEndpoint = null)
-        {
-            return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, ignoreMissingVnetServiceEndpoint);
-        }
-
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetIPRules. </summary>
-        /// <param name="ipMask"> IP Mask. </param>
-        /// <param name="action"> The IP Filter Action. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNetworkRuleSetIPRules"/> instance for mocking. </returns>
-        public static ServiceBusNetworkRuleSetIPRules ServiceBusNetworkRuleSetIPRules(string ipMask = null, ServiceBusNetworkRuleIPAction? action = null)
-        {
-            return new ServiceBusNetworkRuleSetIPRules(ipMask, action);
         }
 
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
@@ -343,45 +283,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusRuleData(id, name, resourceType, systemData, action, filterType, sqlFilter, correlationFilter, location);
         }
 
-        /// <summary> Initializes a new instance of ServiceBusFilterAction. </summary>
-        /// <param name="sqlExpression"> SQL expression. e.g. MyProperty=&apos;ABC&apos;. </param>
-        /// <param name="compatibilityLevel"> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </param>
-        /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        /// <returns> A new <see cref="Models.ServiceBusFilterAction"/> instance for mocking. </returns>
-        public static ServiceBusFilterAction ServiceBusFilterAction(string sqlExpression = null, int? compatibilityLevel = null, bool? requiresPreprocessing = null)
-        {
-            return new ServiceBusFilterAction(sqlExpression, compatibilityLevel, requiresPreprocessing);
-        }
-
-        /// <summary> Initializes a new instance of ServiceBusSqlFilter. </summary>
-        /// <param name="sqlExpression"> The SQL expression. e.g. MyProperty=&apos;ABC&apos;. </param>
-        /// <param name="compatibilityLevel"> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </param>
-        /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        /// <returns> A new <see cref="Models.ServiceBusSqlFilter"/> instance for mocking. </returns>
-        public static ServiceBusSqlFilter ServiceBusSqlFilter(string sqlExpression = null, int? compatibilityLevel = null, bool? requiresPreprocessing = null)
-        {
-            return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing);
-        }
-
-        /// <summary> Initializes a new instance of ServiceBusCorrelationFilter. </summary>
-        /// <param name="applicationProperties"> dictionary object for custom filters. </param>
-        /// <param name="correlationId"> Identifier of the correlation. </param>
-        /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="sendTo"> Address to send to. </param>
-        /// <param name="replyTo"> Address of the queue to reply to. </param>
-        /// <param name="subject"> Application specific label. </param>
-        /// <param name="sessionId"> Session identifier. </param>
-        /// <param name="replyToSessionId"> Session identifier to reply to. </param>
-        /// <param name="contentType"> Content type of the message. </param>
-        /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        /// <returns> A new <see cref="Models.ServiceBusCorrelationFilter"/> instance for mocking. </returns>
-        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties = null, string correlationId = null, string messageId = null, string sendTo = null, string replyTo = null, string subject = null, string sessionId = null, string replyToSessionId = null, string contentType = null, bool? requiresPreprocessing = null)
-        {
-            applicationProperties ??= new Dictionary<string, object>();
-
-            return new ServiceBusCorrelationFilter(applicationProperties, correlationId, messageId, sendTo, replyTo, subject, sessionId, replyToSessionId, contentType, requiresPreprocessing);
-        }
-
         /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -411,16 +312,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusSubscriptionData ServiceBusSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? messageCount = null, DateTimeOffset? createdOn = null, DateTimeOffset? accessedOn = null, DateTimeOffset? updatedOn = null, MessageCountDetails countDetails = null, TimeSpan? lockDuration = null, bool? requiresSession = null, TimeSpan? defaultMessageTimeToLive = null, bool? deadLetteringOnFilterEvaluationExceptions = null, bool? deadLetteringOnMessageExpiration = null, TimeSpan? duplicateDetectionHistoryTimeWindow = null, int? maxDeliveryCount = null, ServiceBusMessagingEntityStatus? status = null, bool? enableBatchedOperations = null, TimeSpan? autoDeleteOnIdle = null, string forwardTo = null, string forwardDeadLetteredMessagesTo = null, bool? isClientAffine = null, ServiceBusClientAffineProperties clientAffineProperties = null, AzureLocation? location = null)
         {
             return new ServiceBusSubscriptionData(id, name, resourceType, systemData, messageCount, createdOn, accessedOn, updatedOn, countDetails, lockDuration, requiresSession, defaultMessageTimeToLive, deadLetteringOnFilterEvaluationExceptions, deadLetteringOnMessageExpiration, duplicateDetectionHistoryTimeWindow, maxDeliveryCount, status, enableBatchedOperations, autoDeleteOnIdle, forwardTo, forwardDeadLetteredMessagesTo, isClientAffine, clientAffineProperties, location);
-        }
-
-        /// <summary> Initializes a new instance of ServiceBusClientAffineProperties. </summary>
-        /// <param name="clientId"> Indicates the Client ID of the application that created the client-affine subscription. </param>
-        /// <param name="isDurable"> For client-affine subscriptions, this value indicates whether the subscription is durable or not. </param>
-        /// <param name="isShared"> For client-affine subscriptions, this value indicates whether the subscription is shared or not. </param>
-        /// <returns> A new <see cref="Models.ServiceBusClientAffineProperties"/> instance for mocking. </returns>
-        public static ServiceBusClientAffineProperties ServiceBusClientAffineProperties(string clientId = null, bool? isDurable = null, bool? isShared = null)
-        {
-            return new ServiceBusClientAffineProperties(clientId, isDurable, isShared);
         }
 
         /// <summary> Initializes a new instance of ServiceBusNameAvailabilityResult. </summary>

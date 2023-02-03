@@ -147,22 +147,6 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleAssignmentData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, description, condition, conditionVersion, createdOn, updatedOn, createdBy, updatedBy, delegatedManagedIdentityResourceId);
         }
 
-        /// <summary> Initializes a new instance of RoleDefinitionPermission. </summary>
-        /// <param name="actions"> Allowed actions. </param>
-        /// <param name="notActions"> Denied actions. </param>
-        /// <param name="dataActions"> Allowed Data actions. </param>
-        /// <param name="notDataActions"> Denied Data actions. </param>
-        /// <returns> A new <see cref="Models.RoleDefinitionPermission"/> instance for mocking. </returns>
-        public static RoleDefinitionPermission RoleDefinitionPermission(IEnumerable<string> actions = null, IEnumerable<string> notActions = null, IEnumerable<string> dataActions = null, IEnumerable<string> notDataActions = null)
-        {
-            actions ??= new List<string>();
-            notActions ??= new List<string>();
-            dataActions ??= new List<string>();
-            notDataActions ??= new List<string>();
-
-            return new RoleDefinitionPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList());
-        }
-
         /// <summary> Initializes a new instance of AuthorizationRoleDefinitionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -286,15 +270,6 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleAssignmentScheduleRequestData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, requestType, status, approvalId, targetRoleAssignmentScheduleId, targetRoleAssignmentScheduleInstanceId, linkedRoleEligibilityScheduleId, justification, ticketInfo, condition, conditionVersion, createdOn, requestorId, expandedProperties, startOn, expirationType, endOn, duration);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleTicketInfo. </summary>
-        /// <param name="ticketNumber"> Ticket number for the role assignment. </param>
-        /// <param name="ticketSystem"> Ticket system name for the role assignment. </param>
-        /// <returns> A new <see cref="Models.RoleAssignmentScheduleTicketInfo"/> instance for mocking. </returns>
-        public static RoleAssignmentScheduleTicketInfo RoleAssignmentScheduleTicketInfo(string ticketNumber = null, string ticketSystem = null)
-        {
-            return new RoleAssignmentScheduleTicketInfo(ticketNumber, ticketSystem);
-        }
-
         /// <summary> Initializes a new instance of RoleEligibilityScheduleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -375,15 +350,6 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleEligibilityScheduleRequestData(id, name, resourceType, systemData, scope, roleDefinitionId, principalId, principalType, requestType, status, approvalId, targetRoleEligibilityScheduleId, targetRoleEligibilityScheduleInstanceId, justification, ticketInfo, condition, conditionVersion, createdOn, requestorId, expandedProperties, startOn, expirationType, endOn, duration);
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesTicketInfo. </summary>
-        /// <param name="ticketNumber"> Ticket number for the role eligibility. </param>
-        /// <param name="ticketSystem"> Ticket system name for the role eligibility. </param>
-        /// <returns> A new <see cref="Models.RoleEligibilityScheduleRequestPropertiesTicketInfo"/> instance for mocking. </returns>
-        public static RoleEligibilityScheduleRequestPropertiesTicketInfo RoleEligibilityScheduleRequestPropertiesTicketInfo(string ticketNumber = null, string ticketSystem = null)
-        {
-            return new RoleEligibilityScheduleRequestPropertiesTicketInfo(ticketNumber, ticketSystem);
-        }
-
         /// <summary> Initializes a new instance of RoleManagementPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -413,34 +379,6 @@ namespace Azure.ResourceManager.Authorization.Models
             effectiveRules ??= new List<RoleManagementPolicyRule>();
 
             return new RoleManagementPolicyData(id, name, resourceType, systemData, scope, displayName, description, isOrganizationDefault, lastModifiedBy, lastModifiedOn, rules?.ToList(), effectiveRules?.ToList(), policyProperties);
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementPolicyRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="ruleType"> The type of rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPolicyRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyRule RoleManagementPolicyRule(string id = null, string ruleType = "Unknown", RoleManagementPolicyRuleTarget target = null)
-        {
-            return new UnknownRoleManagementPolicyRule(id, ruleType, target);
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementPolicyRuleTarget. </summary>
-        /// <param name="caller"> The caller of the setting. </param>
-        /// <param name="operations"> The type of operation. </param>
-        /// <param name="level"> The assignment level to which rule is applied. </param>
-        /// <param name="targetObjects"> The list of target objects. </param>
-        /// <param name="inheritableSettings"> The list of inheritable settings. </param>
-        /// <param name="enforcedSettings"> The list of enforced settings. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPolicyRuleTarget"/> instance for mocking. </returns>
-        public static RoleManagementPolicyRuleTarget RoleManagementPolicyRuleTarget(string caller = null, IEnumerable<string> operations = null, RoleManagementAssignmentLevel? level = null, IEnumerable<string> targetObjects = null, IEnumerable<string> inheritableSettings = null, IEnumerable<string> enforcedSettings = null)
-        {
-            operations ??= new List<string>();
-            targetObjects ??= new List<string>();
-            inheritableSettings ??= new List<string>();
-            enforcedSettings ??= new List<string>();
-
-            return new RoleManagementPolicyRuleTarget(caller, operations?.ToList(), level, targetObjects?.ToList(), inheritableSettings?.ToList(), enforcedSettings?.ToList());
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyProperties. </summary>
@@ -493,107 +431,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier policyId = null, RoleManagementPrincipal lastModifiedBy = null, DateTimeOffset? lastModifiedOn = null, ResourceIdentifier roleDefinitionId = null, string roleDefinitionDisplayName = null, AuthorizationRoleType? roleType = null, ResourceIdentifier scopeId = null, string scopeDisplayName = null, RoleManagementScopeType? scopeType = null)
         {
             return new PolicyAssignmentProperties(id, name, resourceType, systemData, policyId, lastModifiedBy, lastModifiedOn, roleDefinitionId, roleDefinitionDisplayName, roleType, scopeId, scopeDisplayName, scopeType);
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementPolicyApprovalRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <param name="settings"> The approval setting. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPolicyApprovalRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyApprovalRule RoleManagementPolicyApprovalRule(string id = null, RoleManagementPolicyRuleTarget target = null, RoleManagementApprovalSettings settings = null)
-        {
-            return new RoleManagementPolicyApprovalRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyApprovalRule, target, settings);
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementApprovalSettings. </summary>
-        /// <param name="isApprovalRequired"> Determines whether approval is required or not. </param>
-        /// <param name="isApprovalRequiredForExtension"> Determines whether approval is required for assignment extension. </param>
-        /// <param name="isRequestorJustificationRequired"> Determine whether requestor justification is required. </param>
-        /// <param name="approvalMode"> The type of rule. </param>
-        /// <param name="approvalStages"> The approval stages of the request. </param>
-        /// <returns> A new <see cref="Models.RoleManagementApprovalSettings"/> instance for mocking. </returns>
-        public static RoleManagementApprovalSettings RoleManagementApprovalSettings(bool? isApprovalRequired = null, bool? isApprovalRequiredForExtension = null, bool? isRequestorJustificationRequired = null, RoleManagementApprovalMode? approvalMode = null, IEnumerable<RoleManagementApprovalStage> approvalStages = null)
-        {
-            approvalStages ??= new List<RoleManagementApprovalStage>();
-
-            return new RoleManagementApprovalSettings(isApprovalRequired, isApprovalRequiredForExtension, isRequestorJustificationRequired, approvalMode, approvalStages?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementApprovalStage. </summary>
-        /// <param name="approvalStageTimeOutInDays"> The time in days when approval request would be timed out. </param>
-        /// <param name="isApproverJustificationRequired"> Determines whether approver need to provide justification for his decision. </param>
-        /// <param name="escalationTimeInMinutes"> The time in minutes when the approval request would be escalated if the primary approver does not approve. </param>
-        /// <param name="primaryApprovers"> The primary approver of the request. </param>
-        /// <param name="isEscalationEnabled"> The value determine whether escalation feature is enabled. </param>
-        /// <param name="escalationApprovers"> The escalation approver of the request. </param>
-        /// <returns> A new <see cref="Models.RoleManagementApprovalStage"/> instance for mocking. </returns>
-        public static RoleManagementApprovalStage RoleManagementApprovalStage(int? approvalStageTimeOutInDays = null, bool? isApproverJustificationRequired = null, int? escalationTimeInMinutes = null, IEnumerable<RoleManagementUserInfo> primaryApprovers = null, bool? isEscalationEnabled = null, IEnumerable<RoleManagementUserInfo> escalationApprovers = null)
-        {
-            primaryApprovers ??= new List<RoleManagementUserInfo>();
-            escalationApprovers ??= new List<RoleManagementUserInfo>();
-
-            return new RoleManagementApprovalStage(approvalStageTimeOutInDays, isApproverJustificationRequired, escalationTimeInMinutes, primaryApprovers?.ToList(), isEscalationEnabled, escalationApprovers?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementUserInfo. </summary>
-        /// <param name="userType"> The type of user. </param>
-        /// <param name="isBackup"> The value indicating whether the user is a backup fallback approver. </param>
-        /// <param name="id"> The object id of the user. </param>
-        /// <param name="description"> The description of the user. </param>
-        /// <returns> A new <see cref="Models.RoleManagementUserInfo"/> instance for mocking. </returns>
-        public static RoleManagementUserInfo RoleManagementUserInfo(RoleManagementUserType? userType = null, bool? isBackup = null, string id = null, string description = null)
-        {
-            return new RoleManagementUserInfo(userType, isBackup, id, description);
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementPolicyAuthenticationContextRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <param name="isEnabled"> The value indicating if rule is enabled. </param>
-        /// <param name="claimValue"> The claim value. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPolicyAuthenticationContextRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyAuthenticationContextRule RoleManagementPolicyAuthenticationContextRule(string id = null, RoleManagementPolicyRuleTarget target = null, bool? isEnabled = null, string claimValue = null)
-        {
-            return new RoleManagementPolicyAuthenticationContextRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyAuthenticationContextRule, target, isEnabled, claimValue);
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <param name="enablementRules"> The list of enabled rules. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPolicyEnablementRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyEnablementRule RoleManagementPolicyEnablementRule(string id = null, RoleManagementPolicyRuleTarget target = null, IEnumerable<RoleAssignmentEnablementRuleType> enablementRules = null)
-        {
-            enablementRules ??= new List<RoleAssignmentEnablementRuleType>();
-
-            return new RoleManagementPolicyEnablementRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule, target, enablementRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementPolicyExpirationRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <param name="isExpirationRequired"> The value indicating whether expiration is required. </param>
-        /// <param name="maximumDuration"> The maximum duration of expiration in timespan. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPolicyExpirationRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyExpirationRule RoleManagementPolicyExpirationRule(string id = null, RoleManagementPolicyRuleTarget target = null, bool? isExpirationRequired = null, TimeSpan? maximumDuration = null)
-        {
-            return new RoleManagementPolicyExpirationRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule, target, isExpirationRequired, maximumDuration);
-        }
-
-        /// <summary> Initializes a new instance of RoleManagementPolicyNotificationRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <param name="notificationDeliveryType"> The type of notification. </param>
-        /// <param name="notificationLevel"> The notification level. </param>
-        /// <param name="recipientType"> The recipient type. </param>
-        /// <param name="notificationRecipients"> The list of notification recipients. </param>
-        /// <param name="areDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPolicyNotificationRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyNotificationRule RoleManagementPolicyNotificationRule(string id = null, RoleManagementPolicyRuleTarget target = null, NotificationDeliveryType? notificationDeliveryType = null, RoleManagementPolicyNotificationLevel? notificationLevel = null, RoleManagementPolicyRecipientType? recipientType = null, IEnumerable<string> notificationRecipients = null, bool? areDefaultRecipientsEnabled = null)
-        {
-            notificationRecipients ??= new List<string>();
-
-            return new RoleManagementPolicyNotificationRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule, target, notificationDeliveryType, notificationLevel, recipientType, notificationRecipients?.ToList(), areDefaultRecipientsEnabled);
         }
     }
 }

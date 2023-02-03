@@ -46,37 +46,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemAddressProperties(shippingAddress, contactDetails, addressValidationStatus);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderShippingAddress. </summary>
-        /// <param name="streetAddress1"> Street Address line 1. </param>
-        /// <param name="streetAddress2"> Street Address line 2. </param>
-        /// <param name="streetAddress3"> Street Address line 3. </param>
-        /// <param name="city"> Name of the City. </param>
-        /// <param name="stateOrProvince"> Name of the State or Province. </param>
-        /// <param name="country"> Name of the Country. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <param name="zipExtendedCode"> Extended Zip Code. </param>
-        /// <param name="companyName"> Name of the company. </param>
-        /// <param name="addressType"> Type of address. </param>
-        /// <returns> A new <see cref="Models.EdgeOrderShippingAddress"/> instance for mocking. </returns>
-        public static EdgeOrderShippingAddress EdgeOrderShippingAddress(string streetAddress1 = null, string streetAddress2 = null, string streetAddress3 = null, string city = null, string stateOrProvince = null, string country = null, string postalCode = null, string zipExtendedCode = null, string companyName = null, EdgeOrderAddressType? addressType = null)
-        {
-            return new EdgeOrderShippingAddress(streetAddress1, streetAddress2, streetAddress3, city, stateOrProvince, country, postalCode, zipExtendedCode, companyName, addressType);
-        }
-
-        /// <summary> Initializes a new instance of EdgeOrderAddressContactDetails. </summary>
-        /// <param name="contactName"> Contact name of the person. </param>
-        /// <param name="phone"> Phone number of the contact person. </param>
-        /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
-        /// <param name="mobile"> Mobile number of the contact person. </param>
-        /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
-        /// <returns> A new <see cref="Models.EdgeOrderAddressContactDetails"/> instance for mocking. </returns>
-        public static EdgeOrderAddressContactDetails EdgeOrderAddressContactDetails(string contactName = null, string phone = null, string phoneExtension = null, string mobile = null, IEnumerable<string> emailList = null)
-        {
-            emailList ??= new List<string>();
-
-            return new EdgeOrderAddressContactDetails(contactName, phone, phoneExtension, mobile, emailList?.ToList());
-        }
-
         /// <summary> Initializes a new instance of ProductFamily. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
@@ -260,17 +229,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductAvailabilityInformation(availabilityStage, disabledReason, disabledReasonMessage);
         }
 
-        /// <summary> Initializes a new instance of HierarchyInformation. </summary>
-        /// <param name="productFamilyName"> Represents product family name that uniquely identifies product family. </param>
-        /// <param name="productLineName"> Represents product line name that uniquely identifies product line. </param>
-        /// <param name="productName"> Represents product name that uniquely identifies product. </param>
-        /// <param name="configurationName"> Represents configuration name that uniquely identifies configuration. </param>
-        /// <returns> A new <see cref="Models.HierarchyInformation"/> instance for mocking. </returns>
-        public static HierarchyInformation HierarchyInformation(string productFamilyName = null, string productLineName = null, string productName = null, string configurationName = null)
-        {
-            return new HierarchyInformation(productFamilyName, productLineName, productName, configurationName);
-        }
-
         /// <summary> Initializes a new instance of ResourceProviderDetails. </summary>
         /// <param name="resourceProviderNamespace"> Resource provider namespace. </param>
         /// <returns> A new <see cref="Models.ResourceProviderDetails"/> instance for mocking. </returns>
@@ -405,19 +363,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderProductDeviceDetails EdgeOrderProductDeviceDetails(string serialNumber = null, string managementResourceId = null, string managementResourceTenantId = null)
         {
             return new EdgeOrderProductDeviceDetails(serialNumber, managementResourceId, managementResourceTenantId);
-        }
-
-        /// <summary> Initializes a new instance of OrderItemPreferences. </summary>
-        /// <param name="notificationPreferences"> Notification preferences. </param>
-        /// <param name="transportPreferencesPreferredShipmentType"> Preferences related to the shipment logistics of the order. </param>
-        /// <param name="doubleEncryptionStatus"> Preferences related to the Encryption. </param>
-        /// <param name="preferredManagementResourceId"> Preferences related to the Management resource. </param>
-        /// <returns> A new <see cref="Models.OrderItemPreferences"/> instance for mocking. </returns>
-        public static OrderItemPreferences OrderItemPreferences(IEnumerable<NotificationPreference> notificationPreferences = null, TransportShipmentType? transportPreferencesPreferredShipmentType = null, DoubleEncryptionStatus? doubleEncryptionStatus = null, string preferredManagementResourceId = null)
-        {
-            notificationPreferences ??= new List<NotificationPreference>();
-
-            return new OrderItemPreferences(notificationPreferences?.ToList(), transportPreferencesPreferredShipmentType.HasValue ? new TransportPreferences(transportPreferencesPreferredShipmentType.Value) : null, doubleEncryptionStatus != null ? new EncryptionPreferences(doubleEncryptionStatus) : null, preferredManagementResourceId != null ? new ManagementResourcePreferences(preferredManagementResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of ForwardShippingDetails. </summary>

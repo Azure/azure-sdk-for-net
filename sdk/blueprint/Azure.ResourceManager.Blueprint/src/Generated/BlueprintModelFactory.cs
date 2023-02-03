@@ -57,38 +57,6 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new BlueprintResourceStatusBase(timeCreated, lastModified);
         }
 
-        /// <summary> Initializes a new instance of ParameterDefinition. </summary>
-        /// <param name="templateParameterType"> Allowed data types for Resource Manager template parameters. </param>
-        /// <param name="defaultValue"> Default Value for this parameter. </param>
-        /// <param name="allowedValues"> Array of allowed values for this parameter. </param>
-        /// <param name="displayName"> DisplayName of this parameter/resourceGroup. </param>
-        /// <param name="description"> Description of this parameter/resourceGroup. </param>
-        /// <param name="strongType"> StrongType for UI to render rich experience during blueprint assignment. Supported strong types are resourceType, principalId and location. </param>
-        /// <returns> A new <see cref="Models.ParameterDefinition"/> instance for mocking. </returns>
-        public static ParameterDefinition ParameterDefinition(TemplateParameterType templateParameterType = default, BinaryData defaultValue = null, IEnumerable<BinaryData> allowedValues = null, string displayName = null, string description = null, string strongType = null)
-        {
-            allowedValues ??= new List<BinaryData>();
-
-            return new ParameterDefinition(templateParameterType, defaultValue, allowedValues?.ToList(), displayName, description, strongType);
-        }
-
-        /// <summary> Initializes a new instance of ResourceGroupDefinition. </summary>
-        /// <param name="name"> Name of this resourceGroup. Leave empty if the resource group name will be specified during the blueprint assignment. </param>
-        /// <param name="location"> Location of this resourceGroup. Leave empty if the resource group location will be specified during the blueprint assignment. </param>
-        /// <param name="dependsOn"> Artifacts which need to be deployed before this resource group. </param>
-        /// <param name="tags"> Tags to be assigned to this resource group. </param>
-        /// <param name="displayName"> DisplayName of this parameter/resourceGroup. </param>
-        /// <param name="description"> Description of this parameter/resourceGroup. </param>
-        /// <param name="strongType"> StrongType for UI to render rich experience during blueprint assignment. Supported strong types are resourceType, principalId and location. </param>
-        /// <returns> A new <see cref="Models.ResourceGroupDefinition"/> instance for mocking. </returns>
-        public static ResourceGroupDefinition ResourceGroupDefinition(string name = null, AzureLocation? location = null, IEnumerable<string> dependsOn = null, IDictionary<string, string> tags = null, string displayName = null, string description = null, string strongType = null)
-        {
-            dependsOn ??= new List<string>();
-            tags ??= new Dictionary<string, string>();
-
-            return new ResourceGroupDefinition(name, location, dependsOn?.ToList(), tags, displayName, description, strongType);
-        }
-
         /// <summary> Initializes a new instance of ArtifactData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -148,47 +116,6 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new AssignmentData(id, name, resourceType, systemData, identity, displayName, description, blueprintId, scope, parameters, resourceGroups, status, locks, provisioningState, location);
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
-        /// <param name="identityType"> Type of the managed identity. </param>
-        /// <param name="principalId"> Azure Active Directory principal ID associated with this Identity. </param>
-        /// <param name="tenantId"> ID of the Azure Active Directory. </param>
-        /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
-        public static ManagedServiceIdentity ManagedServiceIdentity(ManagedServiceIdentityType identityType = default, string principalId = null, Guid? tenantId = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new ManagedServiceIdentity(identityType, principalId, tenantId, userAssignedIdentities);
-        }
-
-        /// <summary> Initializes a new instance of ParameterValue. </summary>
-        /// <param name="value"> Parameter value. Any valid JSON value is allowed including objects, arrays, strings, numbers and booleans. </param>
-        /// <param name="reference"> Parameter value as reference type. </param>
-        /// <returns> A new <see cref="Models.ParameterValue"/> instance for mocking. </returns>
-        public static ParameterValue ParameterValue(BinaryData value = null, SecretValueReference reference = null)
-        {
-            return new ParameterValue(value, reference);
-        }
-
-        /// <summary> Initializes a new instance of SecretValueReference. </summary>
-        /// <param name="keyVaultId"> Specifies the reference to a given Azure Key Vault. </param>
-        /// <param name="secretName"> Name of the secret. </param>
-        /// <param name="secretVersion"> The version of the secret to use. If left blank, the latest version of the secret is used. </param>
-        /// <returns> A new <see cref="Models.SecretValueReference"/> instance for mocking. </returns>
-        public static SecretValueReference SecretValueReference(ResourceIdentifier keyVaultId = null, string secretName = null, string secretVersion = null)
-        {
-            return new SecretValueReference(keyVaultId != null ? ResourceManagerModelFactory.WritableSubResource(keyVaultId) : null, secretName, secretVersion);
-        }
-
-        /// <summary> Initializes a new instance of ResourceGroupValue. </summary>
-        /// <param name="name"> Name of the resource group. </param>
-        /// <param name="location"> Location of the resource group. </param>
-        /// <returns> A new <see cref="Models.ResourceGroupValue"/> instance for mocking. </returns>
-        public static ResourceGroupValue ResourceGroupValue(string name = null, AzureLocation? location = null)
-        {
-            return new ResourceGroupValue(name, location);
-        }
-
         /// <summary> Initializes a new instance of AssignmentStatus. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
@@ -199,19 +126,6 @@ namespace Azure.ResourceManager.Blueprint.Models
             managedResources ??= new List<string>();
 
             return new AssignmentStatus(timeCreated, lastModified, managedResources?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AssignmentLockSettings. </summary>
-        /// <param name="mode"> Lock mode. </param>
-        /// <param name="excludedPrincipals"> List of AAD principals excluded from blueprint locks. Up to 5 principals are permitted. </param>
-        /// <param name="excludedActions"> List of management operations that are excluded from blueprint locks. Up to 200 actions are permitted. If the lock mode is set to &apos;AllResourcesReadOnly&apos;, then the following actions are automatically appended to &apos;excludedActions&apos;: &apos;*/read&apos;, &apos;Microsoft.Network/virtualNetworks/subnets/join/action&apos; and &apos;Microsoft.Authorization/locks/delete&apos;. If the lock mode is set to &apos;AllResourcesDoNotDelete&apos;, then the following actions are automatically appended to &apos;excludedActions&apos;: &apos;Microsoft.Authorization/locks/delete&apos;. Duplicate actions will get removed. </param>
-        /// <returns> A new <see cref="Models.AssignmentLockSettings"/> instance for mocking. </returns>
-        public static AssignmentLockSettings AssignmentLockSettings(AssignmentLockMode? mode = null, IEnumerable<string> excludedPrincipals = null, IEnumerable<string> excludedActions = null)
-        {
-            excludedPrincipals ??= new List<string>();
-            excludedActions ??= new List<string>();
-
-            return new AssignmentLockSettings(mode, excludedPrincipals?.ToList(), excludedActions?.ToList());
         }
 
         /// <summary> Initializes a new instance of WhoIsBlueprintContract. </summary>
@@ -239,42 +153,6 @@ namespace Azure.ResourceManager.Blueprint.Models
             deployments ??= new List<AssignmentDeploymentJob>();
 
             return new AssignmentOperationData(id, name, resourceType, systemData, blueprintVersion, assignmentState, timeCreated, timeStarted, timeFinished, deployments?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AssignmentDeploymentJob. </summary>
-        /// <param name="kind"> Kind of job. </param>
-        /// <param name="action"> Name of the action performed in this job. </param>
-        /// <param name="jobId"> Id of this job. </param>
-        /// <param name="jobState"> State of this job. </param>
-        /// <param name="result"> Deployment job result. </param>
-        /// <param name="history"> Result of this deployment job for each retry. </param>
-        /// <param name="requestUri"> Reference to deployment job resource id. </param>
-        /// <returns> A new <see cref="Models.AssignmentDeploymentJob"/> instance for mocking. </returns>
-        public static AssignmentDeploymentJob AssignmentDeploymentJob(string kind = null, string action = null, string jobId = null, string jobState = null, AssignmentDeploymentJobResult result = null, IEnumerable<AssignmentDeploymentJobResult> history = null, Uri requestUri = null)
-        {
-            history ??= new List<AssignmentDeploymentJobResult>();
-
-            return new AssignmentDeploymentJob(kind, action, jobId, jobState, result, history?.ToList(), requestUri);
-        }
-
-        /// <summary> Initializes a new instance of AssignmentDeploymentJobResult. </summary>
-        /// <param name="error"> Contains error details if deployment job failed. </param>
-        /// <param name="resources"> Resources created as result of the deployment job. </param>
-        /// <returns> A new <see cref="Models.AssignmentDeploymentJobResult"/> instance for mocking. </returns>
-        public static AssignmentDeploymentJobResult AssignmentDeploymentJobResult(AzureResourceManagerError error = null, IEnumerable<AssignmentJobCreatedResource> resources = null)
-        {
-            resources ??= new List<AssignmentJobCreatedResource>();
-
-            return new AssignmentDeploymentJobResult(error, resources?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AzureResourceManagerError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <returns> A new <see cref="Models.AzureResourceManagerError"/> instance for mocking. </returns>
-        public static AzureResourceManagerError AzureResourceManagerError(string code = null, string message = null)
-        {
-            return new AzureResourceManagerError(code, message);
         }
 
         /// <summary> Initializes a new instance of AssignmentJobCreatedResource. </summary>

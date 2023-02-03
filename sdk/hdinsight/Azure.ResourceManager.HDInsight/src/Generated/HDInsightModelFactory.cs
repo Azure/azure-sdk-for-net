@@ -19,158 +19,6 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class HDInsightModelFactory
     {
-        /// <summary> Initializes a new instance of HDInsightClusterDefinition. </summary>
-        /// <param name="blueprint"> The link to the blueprint. </param>
-        /// <param name="kind"> The type of cluster. </param>
-        /// <param name="componentVersion"> The versions of different services in the cluster. </param>
-        /// <param name="configurations"> The cluster configurations. </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterDefinition"/> instance for mocking. </returns>
-        public static HDInsightClusterDefinition HDInsightClusterDefinition(string blueprint = null, string kind = null, IDictionary<string, string> componentVersion = null, BinaryData configurations = null)
-        {
-            componentVersion ??= new Dictionary<string, string>();
-
-            return new HDInsightClusterDefinition(blueprint, kind, componentVersion, configurations);
-        }
-
-        /// <summary> Initializes a new instance of KafkaRestProperties. </summary>
-        /// <param name="clientGroupInfo"> The information of AAD security group. </param>
-        /// <param name="configurationOverride"> The configurations that need to be overriden. </param>
-        /// <returns> A new <see cref="Models.KafkaRestProperties"/> instance for mocking. </returns>
-        public static KafkaRestProperties KafkaRestProperties(ClientGroupInfo clientGroupInfo = null, IDictionary<string, string> configurationOverride = null)
-        {
-            configurationOverride ??= new Dictionary<string, string>();
-
-            return new KafkaRestProperties(clientGroupInfo, configurationOverride);
-        }
-
-        /// <summary> Initializes a new instance of ClientGroupInfo. </summary>
-        /// <param name="groupName"> The AAD security group name. </param>
-        /// <param name="groupId"> The AAD security group id. </param>
-        /// <returns> A new <see cref="Models.ClientGroupInfo"/> instance for mocking. </returns>
-        public static ClientGroupInfo ClientGroupInfo(string groupName = null, string groupId = null)
-        {
-            return new ClientGroupInfo(groupName, groupId);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
-        /// <param name="directoryType"> The directory type. </param>
-        /// <param name="domain"> The organization&apos;s active directory domain. </param>
-        /// <param name="organizationalUnitDN"> The organizational unit within the Active Directory to place the cluster and service accounts. </param>
-        /// <param name="ldapUris"> The LDAPS protocol URLs to communicate with the Active Directory. </param>
-        /// <param name="domainUsername"> The domain user account that will have admin privileges on the cluster. </param>
-        /// <param name="domainUserPassword"> The domain admin password. </param>
-        /// <param name="clusterUsersGroupDNs"> Optional. The Distinguished Names for cluster user groups. </param>
-        /// <param name="aaddsResourceId"> The resource ID of the user&apos;s Azure Active Directory Domain Service. </param>
-        /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS. </param>
-        /// <returns> A new <see cref="Models.HDInsightSecurityProfile"/> instance for mocking. </returns>
-        public static HDInsightSecurityProfile HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType = null, string domain = null, string organizationalUnitDN = null, IEnumerable<Uri> ldapUris = null, string domainUsername = null, string domainUserPassword = null, IEnumerable<string> clusterUsersGroupDNs = null, ResourceIdentifier aaddsResourceId = null, ResourceIdentifier msiResourceId = null)
-        {
-            ldapUris ??= new List<Uri>();
-            clusterUsersGroupDNs ??= new List<string>();
-
-            return new HDInsightSecurityProfile(directoryType, domain, organizationalUnitDN, ldapUris?.ToList(), domainUsername, domainUserPassword, clusterUsersGroupDNs?.ToList(), aaddsResourceId, msiResourceId);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightClusterRole. </summary>
-        /// <param name="name"> The name of the role. </param>
-        /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
-        /// <param name="targetInstanceCount"> The instance count of the cluster. </param>
-        /// <param name="vmGroupName"> The name of the virtual machine group. </param>
-        /// <param name="autoScaleConfiguration"> The autoscale configurations. </param>
-        /// <param name="hardwareVmSize"> The hardware profile. </param>
-        /// <param name="osLinuxProfile"> The operating system profile. </param>
-        /// <param name="virtualNetworkProfile"> The virtual network profile. </param>
-        /// <param name="dataDisksGroups"> The data disks groups for the role. </param>
-        /// <param name="scriptActions"> The list of script actions on the role. </param>
-        /// <param name="encryptDataDisks"> Indicates whether encrypt the data disks. </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterRole"/> instance for mocking. </returns>
-        public static HDInsightClusterRole HDInsightClusterRole(string name = null, int? minInstanceCount = null, int? targetInstanceCount = null, string vmGroupName = null, HDInsightAutoScaleConfiguration autoScaleConfiguration = null, string hardwareVmSize = null, HDInsightLinuxOSProfile osLinuxProfile = null, HDInsightVirtualNetworkProfile virtualNetworkProfile = null, IEnumerable<HDInsightClusterDataDiskGroup> dataDisksGroups = null, IEnumerable<ScriptAction> scriptActions = null, bool? encryptDataDisks = null)
-        {
-            dataDisksGroups ??= new List<HDInsightClusterDataDiskGroup>();
-            scriptActions ??= new List<ScriptAction>();
-
-            return new HDInsightClusterRole(name, minInstanceCount, targetInstanceCount, vmGroupName, autoScaleConfiguration, hardwareVmSize != null ? new HardwareProfile(hardwareVmSize) : null, osLinuxProfile != null ? new OSProfile(osLinuxProfile) : null, virtualNetworkProfile, dataDisksGroups?.ToList(), scriptActions?.ToList(), encryptDataDisks);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightAutoScaleConfiguration. </summary>
-        /// <param name="capacity"> Parameters for load-based autoscale. </param>
-        /// <param name="recurrence"> Parameters for schedule-based autoscale. </param>
-        /// <returns> A new <see cref="Models.HDInsightAutoScaleConfiguration"/> instance for mocking. </returns>
-        public static HDInsightAutoScaleConfiguration HDInsightAutoScaleConfiguration(HDInsightAutoScaleCapacity capacity = null, HDInsightAutoScaleRecurrence recurrence = null)
-        {
-            return new HDInsightAutoScaleConfiguration(capacity, recurrence);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightAutoScaleCapacity. </summary>
-        /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
-        /// <param name="maxInstanceCount"> The maximum instance count of the cluster. </param>
-        /// <returns> A new <see cref="Models.HDInsightAutoScaleCapacity"/> instance for mocking. </returns>
-        public static HDInsightAutoScaleCapacity HDInsightAutoScaleCapacity(int? minInstanceCount = null, int? maxInstanceCount = null)
-        {
-            return new HDInsightAutoScaleCapacity(minInstanceCount, maxInstanceCount);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
-        /// <param name="timeZone"> The time zone for the autoscale schedule times. </param>
-        /// <param name="schedule"> Array of schedule-based autoscale rules. </param>
-        /// <returns> A new <see cref="Models.HDInsightAutoScaleRecurrence"/> instance for mocking. </returns>
-        public static HDInsightAutoScaleRecurrence HDInsightAutoScaleRecurrence(string timeZone = null, IEnumerable<HDInsightAutoScaleSchedule> schedule = null)
-        {
-            schedule ??= new List<HDInsightAutoScaleSchedule>();
-
-            return new HDInsightAutoScaleRecurrence(timeZone, schedule?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>
-        /// <param name="days"> Days of the week for a schedule-based autoscale rule. </param>
-        /// <param name="timeAndCapacity"> Time and capacity for a schedule-based autoscale rule. </param>
-        /// <returns> A new <see cref="Models.HDInsightAutoScaleSchedule"/> instance for mocking. </returns>
-        public static HDInsightAutoScaleSchedule HDInsightAutoScaleSchedule(IEnumerable<HDInsightDayOfWeek> days = null, HDInsightAutoScaleTimeAndCapacity timeAndCapacity = null)
-        {
-            days ??= new List<HDInsightDayOfWeek>();
-
-            return new HDInsightAutoScaleSchedule(days?.ToList(), timeAndCapacity);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightAutoScaleTimeAndCapacity. </summary>
-        /// <param name="time"> 24-hour time in the form xx:xx. </param>
-        /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
-        /// <param name="maxInstanceCount"> The maximum instance count of the cluster. </param>
-        /// <returns> A new <see cref="Models.HDInsightAutoScaleTimeAndCapacity"/> instance for mocking. </returns>
-        public static HDInsightAutoScaleTimeAndCapacity HDInsightAutoScaleTimeAndCapacity(string time = null, int? minInstanceCount = null, int? maxInstanceCount = null)
-        {
-            return new HDInsightAutoScaleTimeAndCapacity(time, minInstanceCount, maxInstanceCount);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightLinuxOSProfile. </summary>
-        /// <param name="username"> The username. </param>
-        /// <param name="password"> The password. </param>
-        /// <param name="sshPublicKeys"> The SSH profile. </param>
-        /// <returns> A new <see cref="Models.HDInsightLinuxOSProfile"/> instance for mocking. </returns>
-        public static HDInsightLinuxOSProfile HDInsightLinuxOSProfile(string username = null, string password = null, IEnumerable<HDInsightSshPublicKey> sshPublicKeys = null)
-        {
-            sshPublicKeys ??= new List<HDInsightSshPublicKey>();
-
-            return new HDInsightLinuxOSProfile(username, password, sshPublicKeys != null ? new SshProfile(sshPublicKeys?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightSshPublicKey. </summary>
-        /// <param name="certificateData"> The certificate for SSH. </param>
-        /// <returns> A new <see cref="Models.HDInsightSshPublicKey"/> instance for mocking. </returns>
-        public static HDInsightSshPublicKey HDInsightSshPublicKey(string certificateData = null)
-        {
-            return new HDInsightSshPublicKey(certificateData);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightVirtualNetworkProfile. </summary>
-        /// <param name="id"> The ID of the virtual network. </param>
-        /// <param name="subnet"> The name of the subnet. </param>
-        /// <returns> A new <see cref="Models.HDInsightVirtualNetworkProfile"/> instance for mocking. </returns>
-        public static HDInsightVirtualNetworkProfile HDInsightVirtualNetworkProfile(ResourceIdentifier id = null, string subnet = null)
-        {
-            return new HDInsightVirtualNetworkProfile(id, subnet);
-        }
-
         /// <summary> Initializes a new instance of HDInsightClusterDataDiskGroup. </summary>
         /// <param name="disksPerNode"> The number of disks per node. </param>
         /// <param name="storageAccountType"> ReadOnly. The storage account type. Do not set this value. </param>
@@ -179,53 +27,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightClusterDataDiskGroup HDInsightClusterDataDiskGroup(int? disksPerNode = null, string storageAccountType = null, int? diskSizeInGB = null)
         {
             return new HDInsightClusterDataDiskGroup(disksPerNode, storageAccountType, diskSizeInGB);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightStorageAccountInfo. </summary>
-        /// <param name="name"> The name of the storage account. </param>
-        /// <param name="isDefault"> Whether or not the storage account is the default storage account. </param>
-        /// <param name="container"> The container in the storage account, only to be specified for WASB storage accounts. </param>
-        /// <param name="fileSystem"> The filesystem, only to be specified for Azure Data Lake Storage Gen 2. </param>
-        /// <param name="key"> The storage account access key. </param>
-        /// <param name="resourceId"> The resource ID of storage account, only to be specified for Azure Data Lake Storage Gen 2. </param>
-        /// <param name="msiResourceId"> The managed identity (MSI) that is allowed to access the storage account, only to be specified for Azure Data Lake Storage Gen 2. </param>
-        /// <param name="sasKey"> The shared access signature key. </param>
-        /// <param name="fileshare"> The file share name. </param>
-        /// <returns> A new <see cref="Models.HDInsightStorageAccountInfo"/> instance for mocking. </returns>
-        public static HDInsightStorageAccountInfo HDInsightStorageAccountInfo(string name = null, bool? isDefault = null, string container = null, string fileSystem = null, string key = null, ResourceIdentifier resourceId = null, ResourceIdentifier msiResourceId = null, string sasKey = null, string fileshare = null)
-        {
-            return new HDInsightStorageAccountInfo(name, isDefault, container, fileSystem, key, resourceId, msiResourceId, sasKey, fileshare);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightDiskEncryptionProperties. </summary>
-        /// <param name="vaultUri"> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </param>
-        /// <param name="keyName"> Key name that is used for enabling disk encryption. </param>
-        /// <param name="keyVersion"> Specific key version that is used for enabling disk encryption. </param>
-        /// <param name="encryptionAlgorithm"> Algorithm identifier for encryption, default RSA-OAEP. </param>
-        /// <param name="msiResourceId"> Resource ID of Managed Identity that is used to access the key vault. </param>
-        /// <param name="isEncryptionAtHostEnabled"> Indicates whether or not resource disk encryption is enabled. </param>
-        /// <returns> A new <see cref="Models.HDInsightDiskEncryptionProperties"/> instance for mocking. </returns>
-        public static HDInsightDiskEncryptionProperties HDInsightDiskEncryptionProperties(Uri vaultUri = null, string keyName = null, string keyVersion = null, JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm = null, ResourceIdentifier msiResourceId = null, bool? isEncryptionAtHostEnabled = null)
-        {
-            return new HDInsightDiskEncryptionProperties(vaultUri, keyName, keyVersion, encryptionAlgorithm, msiResourceId, isEncryptionAtHostEnabled);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
-        /// <param name="resourceProviderConnection"> The direction for the resource provider connection. </param>
-        /// <param name="privateLink"> Indicates whether or not private link is enabled. </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterNetworkProperties"/> instance for mocking. </returns>
-        public static HDInsightClusterNetworkProperties HDInsightClusterNetworkProperties(HDInsightResourceProviderConnection? resourceProviderConnection = null, HDInsightPrivateLinkState? privateLink = null)
-        {
-            return new HDInsightClusterNetworkProperties(resourceProviderConnection, privateLink);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightComputeIsolationProperties. </summary>
-        /// <param name="enableComputeIsolation"> The flag indicates whether enable compute isolation or not. </param>
-        /// <param name="hostSku"> The host sku. </param>
-        /// <returns> A new <see cref="Models.HDInsightComputeIsolationProperties"/> instance for mocking. </returns>
-        public static HDInsightComputeIsolationProperties HDInsightComputeIsolationProperties(bool? enableComputeIsolation = null, string hostSku = null)
-        {
-            return new HDInsightComputeIsolationProperties(enableComputeIsolation, hostSku);
         }
 
         /// <summary> Initializes a new instance of HDInsightPrivateLinkConfiguration. </summary>
@@ -316,27 +117,6 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightClusterProperties(clusterVersion, clusterHdpVersion, osType, tier, clusterId, clusterDefinition, kafkaRestProperties, securityProfile, computeRoles != null ? new ComputeProfile(computeRoles?.ToList()) : null, provisioningState, createdOn, clusterState, quotaInfoCoresUsed != null ? new QuotaInfo(quotaInfoCoresUsed) : null, errors?.ToList(), connectivityEndpoints?.ToList(), diskEncryptionProperties, isEncryptionInTransitEnabled != null ? new EncryptionInTransitProperties(isEncryptionInTransitEnabled) : null, storageAccounts != null ? new StorageProfile(storageAccounts?.ToList()) : null, minSupportedTlsVersion, excludedServicesConfig, networkProperties, computeIsolationProperties, privateLinkConfigurations?.ToList(), privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
-        /// <param name="name"> The name of the endpoint. </param>
-        /// <param name="protocol"> The protocol of the endpoint. </param>
-        /// <param name="endpointLocation"> The location of the endpoint. </param>
-        /// <param name="port"> The port to connect to. </param>
-        /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
-        /// <returns> A new <see cref="Models.ConnectivityEndpoint"/> instance for mocking. </returns>
-        public static ConnectivityEndpoint ConnectivityEndpoint(string name = null, string protocol = null, string endpointLocation = null, int? port = null, IPAddress privateIPAddress = null)
-        {
-            return new ConnectivityEndpoint(name, protocol, endpointLocation, port, privateIPAddress);
-        }
-
-        /// <summary> Initializes a new instance of ExcludedServicesConfig. </summary>
-        /// <param name="excludedServicesConfigId"> The config id of excluded services. </param>
-        /// <param name="excludedServicesList"> The list of excluded services. </param>
-        /// <returns> A new <see cref="Models.ExcludedServicesConfig"/> instance for mocking. </returns>
-        public static ExcludedServicesConfig ExcludedServicesConfig(string excludedServicesConfigId = null, string excludedServicesList = null)
-        {
-            return new ExcludedServicesConfig(excludedServicesConfigId, excludedServicesList);
-        }
-
         /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -350,16 +130,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, HDInsightPrivateLinkServiceConnectionState connectionState = null, string linkIdentifier = null, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             return new HDInsightPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, linkIdentifier, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> The concrete private link service connection. </param>
-        /// <param name="description"> The optional description of the status. </param>
-        /// <param name="actionsRequired"> Whether there is further actions. </param>
-        /// <returns> A new <see cref="Models.HDInsightPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static HDInsightPrivateLinkServiceConnectionState HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status = default, string description = null, string actionsRequired = null)
-        {
-            return new HDInsightPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterGatewaySettings. </summary>
@@ -452,17 +222,6 @@ namespace Azure.ResourceManager.HDInsight.Models
             accessModes ??= new List<string>();
 
             return new HDInsightApplicationHttpsEndpoint(accessModes?.ToList(), endpointLocation, destinationPort, publicPort, privateIPAddress, subDomainSuffix, disableGatewayAuth);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightApplicationEndpoint. </summary>
-        /// <param name="endpointLocation"> The location of the endpoint. </param>
-        /// <param name="destinationPort"> The destination port to connect to. </param>
-        /// <param name="publicPort"> The public port to connect to. </param>
-        /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
-        /// <returns> A new <see cref="Models.HDInsightApplicationEndpoint"/> instance for mocking. </returns>
-        public static HDInsightApplicationEndpoint HDInsightApplicationEndpoint(string endpointLocation = null, int? destinationPort = null, int? publicPort = null, IPAddress privateIPAddress = null)
-        {
-            return new HDInsightApplicationEndpoint(endpointLocation, destinationPort, publicPort, privateIPAddress);
         }
 
         /// <summary> Initializes a new instance of HDInsightCapabilitiesResult. </summary>
@@ -715,27 +474,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightClusterExtensionStatus HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled = null, string workspaceId = null)
         {
             return new HDInsightClusterExtensionStatus(isClusterMonitoringEnabled, workspaceId);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorSelectedConfigurations. </summary>
-        /// <param name="configurationVersion"> The configuration version. </param>
-        /// <param name="globalConfigurations"> The global configurations of selected configurations. </param>
-        /// <param name="tableList"> The table list. </param>
-        /// <returns> A new <see cref="Models.HDInsightAzureMonitorSelectedConfigurations"/> instance for mocking. </returns>
-        public static HDInsightAzureMonitorSelectedConfigurations HDInsightAzureMonitorSelectedConfigurations(string configurationVersion = null, IDictionary<string, string> globalConfigurations = null, IEnumerable<HDInsightAzureMonitorTableConfiguration> tableList = null)
-        {
-            globalConfigurations ??= new Dictionary<string, string>();
-            tableList ??= new List<HDInsightAzureMonitorTableConfiguration>();
-
-            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion, globalConfigurations, tableList?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorTableConfiguration. </summary>
-        /// <param name="name"> The name. </param>
-        /// <returns> A new <see cref="Models.HDInsightAzureMonitorTableConfiguration"/> instance for mocking. </returns>
-        public static HDInsightAzureMonitorTableConfiguration HDInsightAzureMonitorTableConfiguration(string name = null)
-        {
-            return new HDInsightAzureMonitorTableConfiguration(name);
         }
 
         /// <summary> Initializes a new instance of HDInsightAzureMonitorExtensionStatus. </summary>

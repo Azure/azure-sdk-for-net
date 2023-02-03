@@ -38,18 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountData(id, name, resourceType, systemData, tags, location, kind, sku, identity, properties, etag);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSku. </summary>
-        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
-        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesSku"/> instance for mocking. </returns>
-        public static CognitiveServicesSku CognitiveServicesSku(string name = null, CognitiveServicesSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new CognitiveServicesSku(name, tier, size, family, capacity);
-        }
-
         /// <summary> Initializes a new instance of CognitiveServicesAccountProperties. </summary>
         /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
         /// <param name="endpoint"> Endpoint of the created account. </param>
@@ -109,50 +97,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangedOn);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesNetworkRuleSet. </summary>
-        /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
-        /// <param name="ipRules"> The list of IP address rules. </param>
-        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesNetworkRuleSet"/> instance for mocking. </returns>
-        public static CognitiveServicesNetworkRuleSet CognitiveServicesNetworkRuleSet(CognitiveServicesNetworkRuleAction? defaultAction = null, IEnumerable<CognitiveServicesIPRule> ipRules = null, IEnumerable<CognitiveServicesVirtualNetworkRule> virtualNetworkRules = null)
-        {
-            ipRules ??= new List<CognitiveServicesIPRule>();
-            virtualNetworkRules ??= new List<CognitiveServicesVirtualNetworkRule>();
-
-            return new CognitiveServicesNetworkRuleSet(defaultAction, ipRules?.ToList(), virtualNetworkRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CognitiveServicesVirtualNetworkRule. </summary>
-        /// <param name="id"> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </param>
-        /// <param name="state"> Gets the state of virtual network rule. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Ignore missing vnet service endpoint or not. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesVirtualNetworkRule"/> instance for mocking. </returns>
-        public static CognitiveServicesVirtualNetworkRule CognitiveServicesVirtualNetworkRule(ResourceIdentifier id = null, string state = null, bool? ignoreMissingVnetServiceEndpoint = null)
-        {
-            return new CognitiveServicesVirtualNetworkRule(id, state, ignoreMissingVnetServiceEndpoint);
-        }
-
-        /// <summary> Initializes a new instance of ServiceAccountEncryptionProperties. </summary>
-        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="keyName"> Name of the Key from KeyVault. </param>
-        /// <param name="keyVersion"> Version of the Key from KeyVault. </param>
-        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
-        /// <param name="identityClientId"></param>
-        /// <returns> A new <see cref="Models.ServiceAccountEncryptionProperties"/> instance for mocking. </returns>
-        public static ServiceAccountEncryptionProperties ServiceAccountEncryptionProperties(ServiceAccountEncryptionKeySource? keySource = null, string keyName = null, string keyVersion = null, Uri keyVaultUri = null, Guid? identityClientId = null)
-        {
-            return new ServiceAccountEncryptionProperties(keySource, keyName, keyVersion, keyVaultUri, identityClientId);
-        }
-
-        /// <summary> Initializes a new instance of ServiceAccountUserOwnedStorage. </summary>
-        /// <param name="resourceId"> Full resource id of a Microsoft.Storage resource. </param>
-        /// <param name="identityClientId"></param>
-        /// <returns> A new <see cref="Models.ServiceAccountUserOwnedStorage"/> instance for mocking. </returns>
-        public static ServiceAccountUserOwnedStorage ServiceAccountUserOwnedStorage(ResourceIdentifier resourceId = null, Guid? identityClientId = null)
-        {
-            return new ServiceAccountUserOwnedStorage(resourceId, identityClientId);
-        }
-
         /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -170,36 +114,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             groupIds ??= new List<string>();
 
             return new CognitiveServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, location, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList(), etag);
-        }
-
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static CognitiveServicesPrivateLinkServiceConnectionState CognitiveServicesPrivateLinkServiceConnectionState(CognitiveServicesPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new CognitiveServicesPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
-        /// <summary> Initializes a new instance of ServiceAccountApiProperties. </summary>
-        /// <param name="qnaRuntimeEndpoint"> (QnAMaker Only) The runtime endpoint of QnAMaker. </param>
-        /// <param name="qnaAzureSearchEndpointKey"> (QnAMaker Only) The Azure Search endpoint key of QnAMaker. </param>
-        /// <param name="qnaAzureSearchEndpointId"> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </param>
-        /// <param name="enableStatistics"> (Bing Search Only) The flag to enable statistics of Bing Search. </param>
-        /// <param name="eventHubConnectionString"> (Personalization Only) The flag to enable statistics of Bing Search. </param>
-        /// <param name="storageAccountConnectionString"> (Personalization Only) The storage account connection string. </param>
-        /// <param name="aadClientId"> (Metrics Advisor Only) The Azure AD Client Id (Application Id). </param>
-        /// <param name="aadTenantId"> (Metrics Advisor Only) The Azure AD Tenant Id. </param>
-        /// <param name="superUser"> (Metrics Advisor Only) The super user of Metrics Advisor. </param>
-        /// <param name="websiteName"> (Metrics Advisor Only) The website name of Metrics Advisor. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.ServiceAccountApiProperties"/> instance for mocking. </returns>
-        public static ServiceAccountApiProperties ServiceAccountApiProperties(string qnaRuntimeEndpoint = null, string qnaAzureSearchEndpointKey = null, ResourceIdentifier qnaAzureSearchEndpointId = null, bool? enableStatistics = null, string eventHubConnectionString = null, string storageAccountConnectionString = null, Guid? aadClientId = null, Guid? aadTenantId = null, string superUser = null, string websiteName = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new ServiceAccountApiProperties(qnaRuntimeEndpoint, qnaAzureSearchEndpointKey, qnaAzureSearchEndpointId, enableStatistics, eventHubConnectionString, storageAccountConnectionString, aadClientId, aadTenantId, superUser, websiteName, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of ServiceAccountCallRateLimit. </summary>
@@ -248,27 +162,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             rules ??= new List<ServiceAccountThrottlingRule>();
 
             return new ServiceAccountQuotaLimit(count, renewalPeriod, rules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CognitiveServicesMultiRegionSettings. </summary>
-        /// <param name="routingMethod"> Multiregion routing methods. </param>
-        /// <param name="regions"></param>
-        /// <returns> A new <see cref="Models.CognitiveServicesMultiRegionSettings"/> instance for mocking. </returns>
-        public static CognitiveServicesMultiRegionSettings CognitiveServicesMultiRegionSettings(CognitiveServicesRoutingMethod? routingMethod = null, IEnumerable<CognitiveServicesRegionSetting> regions = null)
-        {
-            regions ??= new List<CognitiveServicesRegionSetting>();
-
-            return new CognitiveServicesMultiRegionSettings(routingMethod, regions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of CognitiveServicesRegionSetting. </summary>
-        /// <param name="name"> Name of the region. </param>
-        /// <param name="value"> A value for priority or weighted routing methods. </param>
-        /// <param name="customsubdomain"> Maps the region to the regional custom subdomain. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesRegionSetting"/> instance for mocking. </returns>
-        public static CognitiveServicesRegionSetting CognitiveServicesRegionSetting(string name = null, float? value = null, string customsubdomain = null)
-        {
-            return new CognitiveServicesRegionSetting(name, value, customsubdomain);
         }
 
         /// <summary> Initializes a new instance of CommitmentPlanAssociation. </summary>
@@ -392,15 +285,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string format = null, string name = null, string version = null, ServiceAccountCallRateLimit callRateLimit = null)
         {
             return new CognitiveServicesAccountDeploymentModel(format, name, version, callRateLimit);
-        }
-
-        /// <summary> Initializes a new instance of ServiceAccountModelDeprecationInfo. </summary>
-        /// <param name="fineTuneOn"> The datetime of deprecation of the fineTune Model. </param>
-        /// <param name="inferenceOn"> The datetime of deprecation of the inference Model. </param>
-        /// <returns> A new <see cref="Models.ServiceAccountModelDeprecationInfo"/> instance for mocking. </returns>
-        public static ServiceAccountModelDeprecationInfo ServiceAccountModelDeprecationInfo(DateTimeOffset? fineTuneOn = null, DateTimeOffset? inferenceOn = null)
-        {
-            return new ServiceAccountModelDeprecationInfo(fineTuneOn, inferenceOn);
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityList. </summary>

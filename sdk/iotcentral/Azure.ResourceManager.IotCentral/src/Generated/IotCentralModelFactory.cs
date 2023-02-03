@@ -44,28 +44,6 @@ namespace Azure.ResourceManager.IotCentral.Models
             return new IotCentralAppData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new IotCentralAppSkuInfo(skuName.Value) : null, identity, provisioningState, applicationId, displayName, subdomain, template, state, publicNetworkAccess, networkRuleSets, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
-        /// <param name="applyToDevices"> Whether these rules apply for device connectivity to IoT Hub and Device Provisioning service associated with this application. </param>
-        /// <param name="applyToIotCentral"> Whether these rules apply for connectivity via IoT Central web portal and APIs. </param>
-        /// <param name="defaultAction"> The default network action to apply. </param>
-        /// <param name="ipRules"> List of IP rules. </param>
-        /// <returns> A new <see cref="Models.IotCentralNetworkRuleSets"/> instance for mocking. </returns>
-        public static IotCentralNetworkRuleSets IotCentralNetworkRuleSets(bool? applyToDevices = null, bool? applyToIotCentral = null, IotCentralNetworkAction? defaultAction = null, IEnumerable<IotCentralNetworkRuleSetIPRule> ipRules = null)
-        {
-            ipRules ??= new List<IotCentralNetworkRuleSetIPRule>();
-
-            return new IotCentralNetworkRuleSets(applyToDevices, applyToIotCentral, defaultAction, ipRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSetIPRule. </summary>
-        /// <param name="filterName"> The readable name of the IP rule. </param>
-        /// <param name="ipMask"> The CIDR block defining the IP range. </param>
-        /// <returns> A new <see cref="Models.IotCentralNetworkRuleSetIPRule"/> instance for mocking. </returns>
-        public static IotCentralNetworkRuleSetIPRule IotCentralNetworkRuleSetIPRule(string filterName = null, string ipMask = null)
-        {
-            return new IotCentralNetworkRuleSetIPRule(filterName, ipMask);
-        }
-
         /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -81,16 +59,6 @@ namespace Azure.ResourceManager.IotCentral.Models
             groupIds ??= new List<string>();
 
             return new IotCentralPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of IotCentralPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.IotCentralPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static IotCentralPrivateLinkServiceConnectionState IotCentralPrivateLinkServiceConnectionState(IotCentralPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new IotCentralPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
         /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceData. </summary>

@@ -73,17 +73,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineProperties(locationData, agentConfiguration, serviceStatuses, cloudMetadataProvider != null ? new CloudMetadata(cloudMetadataProvider) : null, osProfile, provisioningState, status, lastStatusChange, errorDetails?.ToList(), agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, osSku, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, mssqlDiscovered, detectedProperties);
         }
 
-        /// <summary> Initializes a new instance of LocationData. </summary>
-        /// <param name="name"> A canonical name for the geographic or physical location. </param>
-        /// <param name="city"> The city or locality where the resource is located. </param>
-        /// <param name="district"> The district, state, or province where the resource is located. </param>
-        /// <param name="countryOrRegion"> The country or region where the resource is located. </param>
-        /// <returns> A new <see cref="Models.LocationData"/> instance for mocking. </returns>
-        public static LocationData LocationData(string name = null, string city = null, string district = null, string countryOrRegion = null)
-        {
-            return new LocationData(name, city, district, countryOrRegion);
-        }
-
         /// <summary> Initializes a new instance of AgentConfiguration. </summary>
         /// <param name="proxyUri"> Specifies the URL of the proxy to be used. </param>
         /// <param name="incomingConnectionsPorts"> Specifies the list of ports that the agent will be able to listen on. </param>
@@ -113,24 +102,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new ConfigurationExtension(publisher, configurationExtensionType);
         }
 
-        /// <summary> Initializes a new instance of HybridComputeServiceStatuses. </summary>
-        /// <param name="extensionService"> The state of the extension service on the Arc-enabled machine. </param>
-        /// <param name="guestConfigurationService"> The state of the guest configuration service on the Arc-enabled machine. </param>
-        /// <returns> A new <see cref="Models.HybridComputeServiceStatuses"/> instance for mocking. </returns>
-        public static HybridComputeServiceStatuses HybridComputeServiceStatuses(HybridComputeServiceStatus extensionService = null, HybridComputeServiceStatus guestConfigurationService = null)
-        {
-            return new HybridComputeServiceStatuses(extensionService, guestConfigurationService);
-        }
-
-        /// <summary> Initializes a new instance of HybridComputeServiceStatus. </summary>
-        /// <param name="status"> The current status of the service. </param>
-        /// <param name="startupType"> The behavior of the service when the Arc-enabled machine starts up. </param>
-        /// <returns> A new <see cref="Models.HybridComputeServiceStatus"/> instance for mocking. </returns>
-        public static HybridComputeServiceStatus HybridComputeServiceStatus(string status = null, string startupType = null)
-        {
-            return new HybridComputeServiceStatus(status, startupType);
-        }
-
         /// <summary> Initializes a new instance of OSProfile. </summary>
         /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
         /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
@@ -139,24 +110,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static OSProfile OSProfile(string computerName = null, OSProfileWindowsConfiguration windowsConfiguration = null, OSProfileLinuxConfiguration linuxConfiguration = null)
         {
             return new OSProfile(computerName, windowsConfiguration, linuxConfiguration);
-        }
-
-        /// <summary> Initializes a new instance of OSProfileWindowsConfiguration. </summary>
-        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
-        /// <param name="patchMode"> Specifies the patch mode. </param>
-        /// <returns> A new <see cref="Models.OSProfileWindowsConfiguration"/> instance for mocking. </returns>
-        public static OSProfileWindowsConfiguration OSProfileWindowsConfiguration(AssessmentModeType? assessmentMode = null, PatchModeType? patchMode = null)
-        {
-            return new OSProfileWindowsConfiguration(assessmentMode, patchMode);
-        }
-
-        /// <summary> Initializes a new instance of OSProfileLinuxConfiguration. </summary>
-        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
-        /// <param name="patchMode"> Specifies the patch mode. </param>
-        /// <returns> A new <see cref="Models.OSProfileLinuxConfiguration"/> instance for mocking. </returns>
-        public static OSProfileLinuxConfiguration OSProfileLinuxConfiguration(AssessmentModeType? assessmentMode = null, PatchModeType? patchMode = null)
-        {
-            return new OSProfileLinuxConfiguration(assessmentMode, patchMode);
         }
 
         /// <summary> Initializes a new instance of HybridComputeMachineExtensionData. </summary>
@@ -193,29 +146,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             protectedSettings ??= new Dictionary<string, BinaryData>();
 
             return new MachineExtensionProperties(forceUpdateTag, publisher, machineExtensionPropertiesType, typeHandlerVersion, enableAutomaticUpgrade, autoUpgradeMinorVersion, settings, protectedSettings, provisioningState, instanceView);
-        }
-
-        /// <summary> Initializes a new instance of MachineExtensionInstanceView. </summary>
-        /// <param name="name"> The machine extension name. </param>
-        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="status"> Instance view status. </param>
-        /// <returns> A new <see cref="Models.MachineExtensionInstanceView"/> instance for mocking. </returns>
-        public static MachineExtensionInstanceView MachineExtensionInstanceView(string name = null, string machineExtensionInstanceViewType = null, string typeHandlerVersion = null, MachineExtensionInstanceViewStatus status = null)
-        {
-            return new MachineExtensionInstanceView(name, machineExtensionInstanceViewType, typeHandlerVersion, status);
-        }
-
-        /// <summary> Initializes a new instance of MachineExtensionInstanceViewStatus. </summary>
-        /// <param name="code"> The status code. </param>
-        /// <param name="level"> The level code. </param>
-        /// <param name="displayStatus"> The short localizable label for the status. </param>
-        /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
-        /// <returns> A new <see cref="Models.MachineExtensionInstanceViewStatus"/> instance for mocking. </returns>
-        public static MachineExtensionInstanceViewStatus MachineExtensionInstanceViewStatus(string code = null, HybridComputeStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
-        {
-            return new MachineExtensionInstanceViewStatus(code, level, displayStatus, message, time);
         }
 
         /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeData. </summary>

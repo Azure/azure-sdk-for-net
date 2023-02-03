@@ -44,23 +44,6 @@ namespace Azure.ResourceManager.Resources.Models
             return new PolicyAssignmentData(id, name, resourceType, systemData, location, managedIdentity, displayName, policyDefinitionId, scope, excludedScopes?.ToList(), parameters, description, metadata, enforcementMode, nonComplianceMessages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
-        /// <param name="value"> The value of the parameter. </param>
-        /// <returns> A new <see cref="Models.ArmPolicyParameterValue"/> instance for mocking. </returns>
-        public static ArmPolicyParameterValue ArmPolicyParameterValue(BinaryData value = null)
-        {
-            return new ArmPolicyParameterValue(value);
-        }
-
-        /// <summary> Initializes a new instance of NonComplianceMessage. </summary>
-        /// <param name="message"> A message that describes why a resource is non-compliant with the policy. This is shown in &apos;deny&apos; error messages and on resource&apos;s non-compliant compliance results. </param>
-        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID within a policy set definition the message is intended for. This is only applicable if the policy assignment assigns a policy set definition. If this is not provided the message applies to all policies assigned by this policy assignment. </param>
-        /// <returns> A new <see cref="Models.NonComplianceMessage"/> instance for mocking. </returns>
-        public static NonComplianceMessage NonComplianceMessage(string message = null, string policyDefinitionReferenceId = null)
-        {
-            return new NonComplianceMessage(message, policyDefinitionReferenceId);
-        }
-
         /// <summary> Initializes a new instance of ResourceProviderData. </summary>
         /// <param name="id"> The provider ID. </param>
         /// <param name="namespace"> The namespace of the resource provider. </param>
@@ -245,19 +228,6 @@ namespace Azure.ResourceManager.Resources.Models
             return new GenericResourceData(id, name, resourceType, systemData, tags, location, extendedLocation, plan, properties, kind, managedBy, sku, identity, createdOn, changedOn, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ResourcesSku. </summary>
-        /// <param name="name"> The SKU name. </param>
-        /// <param name="tier"> The SKU tier. </param>
-        /// <param name="size"> The SKU size. </param>
-        /// <param name="family"> The SKU family. </param>
-        /// <param name="model"> The SKU model. </param>
-        /// <param name="capacity"> The SKU capacity. </param>
-        /// <returns> A new <see cref="Models.ResourcesSku"/> instance for mocking. </returns>
-        public static ResourcesSku ResourcesSku(string name = null, string tier = null, string size = null, string family = null, string model = null, int? capacity = null)
-        {
-            return new ResourcesSku(name, tier, size, family, model, capacity);
-        }
-
         /// <summary> Initializes a new instance of TrackedResourceExtendedData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -346,16 +316,6 @@ namespace Azure.ResourceManager.Resources.Models
             return new TagResourceData(id, name, resourceType, systemData, tagValues != null ? new Tag(tagValues) : null);
         }
 
-        /// <summary> Initializes a new instance of Tag. </summary>
-        /// <param name="tagValues"> Dictionary of &lt;string&gt;. </param>
-        /// <returns> A new <see cref="Models.Tag"/> instance for mocking. </returns>
-        public static Tag Tag(IDictionary<string, string> tagValues = null)
-        {
-            tagValues ??= new Dictionary<string, string>();
-
-            return new Tag(tagValues);
-        }
-
         /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -374,33 +334,6 @@ namespace Azure.ResourceManager.Resources.Models
             parameters ??= new Dictionary<string, ArmPolicyParameter>();
 
             return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters);
-        }
-
-        /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
-        /// <param name="parameterType"> The data type of the parameter. </param>
-        /// <param name="allowedValues"> The allowed values for the parameter. </param>
-        /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
-        /// <param name="metadata"> General metadata for the parameter. </param>
-        /// <returns> A new <see cref="Models.ArmPolicyParameter"/> instance for mocking. </returns>
-        public static ArmPolicyParameter ArmPolicyParameter(ArmPolicyParameterType? parameterType = null, IEnumerable<BinaryData> allowedValues = null, BinaryData defaultValue = null, ParameterDefinitionsValueMetadata metadata = null)
-        {
-            allowedValues ??= new List<BinaryData>();
-
-            return new ArmPolicyParameter(parameterType, allowedValues?.ToList(), defaultValue, metadata);
-        }
-
-        /// <summary> Initializes a new instance of ParameterDefinitionsValueMetadata. </summary>
-        /// <param name="displayName"> The display name for the parameter. </param>
-        /// <param name="description"> The description of the parameter. </param>
-        /// <param name="strongType"> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </param>
-        /// <param name="assignPermissions"> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.ParameterDefinitionsValueMetadata"/> instance for mocking. </returns>
-        public static ParameterDefinitionsValueMetadata ParameterDefinitionsValueMetadata(string displayName = null, string description = null, string strongType = null, bool? assignPermissions = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new ParameterDefinitionsValueMetadata(displayName, description, strongType, assignPermissions, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
@@ -423,32 +356,6 @@ namespace Azure.ResourceManager.Resources.Models
             policyDefinitionGroups ??= new List<PolicyDefinitionGroup>();
 
             return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>
-        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
-        /// <param name="parameters"> The parameter values for the referenced policy rule. The keys are the parameter names. </param>
-        /// <param name="policyDefinitionReferenceId"> A unique id (within the policy set definition) for this policy definition reference. </param>
-        /// <param name="groupNames"> The name of the groups that this policy definition reference belongs to. </param>
-        /// <returns> A new <see cref="Models.PolicyDefinitionReference"/> instance for mocking. </returns>
-        public static PolicyDefinitionReference PolicyDefinitionReference(string policyDefinitionId = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string policyDefinitionReferenceId = null, IEnumerable<string> groupNames = null)
-        {
-            parameters ??= new Dictionary<string, ArmPolicyParameterValue>();
-            groupNames ??= new List<string>();
-
-            return new PolicyDefinitionReference(policyDefinitionId, parameters, policyDefinitionReferenceId, groupNames?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PolicyDefinitionGroup. </summary>
-        /// <param name="name"> The name of the group. </param>
-        /// <param name="displayName"> The group&apos;s display name. </param>
-        /// <param name="category"> The group&apos;s category. </param>
-        /// <param name="description"> The group&apos;s description. </param>
-        /// <param name="additionalMetadataId"> A resource ID of a resource that contains additional metadata about the group. </param>
-        /// <returns> A new <see cref="Models.PolicyDefinitionGroup"/> instance for mocking. </returns>
-        public static PolicyDefinitionGroup PolicyDefinitionGroup(string name = null, string displayName = null, string category = null, string description = null, string additionalMetadataId = null)
-        {
-            return new PolicyDefinitionGroup(name, displayName, category, description, additionalMetadataId);
         }
 
         /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
@@ -524,14 +431,6 @@ namespace Azure.ResourceManager.Resources.Models
             owners ??= new List<ManagementLockOwner>();
 
             return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ManagementLockOwner. </summary>
-        /// <param name="applicationId"> The application ID of the lock owner. </param>
-        /// <returns> A new <see cref="Models.ManagementLockOwner"/> instance for mocking. </returns>
-        public static ManagementLockOwner ManagementLockOwner(string applicationId = null)
-        {
-            return new ManagementLockOwner(applicationId);
         }
 
         /// <summary> Initializes a new instance of LocationExpanded. </summary>

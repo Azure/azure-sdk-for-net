@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -92,74 +91,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
             txtRecords ??= new List<PrivateDnsTxtRecordInfo>();
 
             return new PrivateDnsRecordData(id, name, resourceType, systemData, etag, metadata, ttlInSeconds, fqdn, isAutoRegistered, aRecords?.ToList(), aaaaRecords?.ToList(), cname != null ? new PrivateDnsCnameRecordInfo(cname) : null, privateDnsMXRecords?.ToList(), ptrRecords?.ToList(), privateDnsSoaRecordInfo, srvRecords?.ToList(), txtRecords?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PrivateDnsARecordInfo. </summary>
-        /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsARecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsARecordInfo PrivateDnsARecordInfo(IPAddress ipv4Address = null)
-        {
-            return new PrivateDnsARecordInfo(ipv4Address);
-        }
-
-        /// <summary> Initializes a new instance of PrivateDnsAaaaRecordInfo. </summary>
-        /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsAaaaRecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(IPAddress ipv6Address = null)
-        {
-            return new PrivateDnsAaaaRecordInfo(ipv6Address);
-        }
-
-        /// <summary> Initializes a new instance of PrivateDnsMXRecordInfo. </summary>
-        /// <param name="preference"> The preference value for this MX record. </param>
-        /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsMXRecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsMXRecordInfo PrivateDnsMXRecordInfo(int? preference = null, string exchange = null)
-        {
-            return new PrivateDnsMXRecordInfo(preference, exchange);
-        }
-
-        /// <summary> Initializes a new instance of PrivateDnsPtrRecordInfo. </summary>
-        /// <param name="ptrDomainName"> The PTR target domain name for this PTR record. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsPtrRecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsPtrRecordInfo PrivateDnsPtrRecordInfo(string ptrDomainName = null)
-        {
-            return new PrivateDnsPtrRecordInfo(ptrDomainName);
-        }
-
-        /// <summary> Initializes a new instance of PrivateDnsSoaRecordInfo. </summary>
-        /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
-        /// <param name="email"> The email contact for this SOA record. </param>
-        /// <param name="serialNumber"> The serial number for this SOA record. </param>
-        /// <param name="refreshTimeInSeconds"> The refresh value for this SOA record. </param>
-        /// <param name="retryTimeInSeconds"> The retry time for this SOA record. </param>
-        /// <param name="expireTimeInSeconds"> The expire time for this SOA record. </param>
-        /// <param name="minimumTtlInSeconds"> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsSoaRecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo(string host = null, string email = null, long? serialNumber = null, long? refreshTimeInSeconds = null, long? retryTimeInSeconds = null, long? expireTimeInSeconds = null, long? minimumTtlInSeconds = null)
-        {
-            return new PrivateDnsSoaRecordInfo(host, email, serialNumber, refreshTimeInSeconds, retryTimeInSeconds, expireTimeInSeconds, minimumTtlInSeconds);
-        }
-
-        /// <summary> Initializes a new instance of PrivateDnsSrvRecordInfo. </summary>
-        /// <param name="priority"> The priority value for this SRV record. </param>
-        /// <param name="weight"> The weight value for this SRV record. </param>
-        /// <param name="port"> The port value for this SRV record. </param>
-        /// <param name="target"> The target domain name for this SRV record. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsSrvRecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsSrvRecordInfo PrivateDnsSrvRecordInfo(int? priority = null, int? weight = null, int? port = null, string target = null)
-        {
-            return new PrivateDnsSrvRecordInfo(priority, weight, port, target);
-        }
-
-        /// <summary> Initializes a new instance of PrivateDnsTxtRecordInfo. </summary>
-        /// <param name="values"> The text value of this TXT record. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsTxtRecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsTxtRecordInfo PrivateDnsTxtRecordInfo(IEnumerable<string> values = null)
-        {
-            values ??= new List<string>();
-
-            return new PrivateDnsTxtRecordInfo(values?.ToList());
         }
     }
 }

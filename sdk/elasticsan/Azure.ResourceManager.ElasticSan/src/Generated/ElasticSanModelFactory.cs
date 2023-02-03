@@ -80,15 +80,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
             return new ElasticSanData(id, name, resourceType, systemData, tags, location, sku, availabilityZones?.ToList(), provisioningState, baseSizeTiB, extendedCapacitySizeTiB, totalVolumeSizeGiB, volumeGroupCount, totalIops, totalMbps, totalSizeTiB);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSku. </summary>
-        /// <param name="name"> The sku name. </param>
-        /// <param name="tier"> The sku tier. </param>
-        /// <returns> A new <see cref="Models.ElasticSanSku"/> instance for mocking. </returns>
-        public static ElasticSanSku ElasticSanSku(ElasticSanSkuName name = default, ElasticSanSkuTier? tier = null)
-        {
-            return new ElasticSanSku(name, tier);
-        }
-
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -134,15 +125,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
             tags ??= new Dictionary<string, string>();
 
             return new ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget, tags);
-        }
-
-        /// <summary> Initializes a new instance of ElasticSanVolumeDataSourceInfo. </summary>
-        /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
-        /// <param name="sourceUri"> If createOption is Copy, this is the ARM id of the source snapshot or disk. If createOption is Restore, this is the ARM-like id of the source disk restore point. </param>
-        /// <returns> A new <see cref="Models.ElasticSanVolumeDataSourceInfo"/> instance for mocking. </returns>
-        public static ElasticSanVolumeDataSourceInfo ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource = null, Uri sourceUri = null)
-        {
-            return new ElasticSanVolumeDataSourceInfo(createSource, sourceUri);
         }
 
         /// <summary> Initializes a new instance of IscsiTargetInfo. </summary>

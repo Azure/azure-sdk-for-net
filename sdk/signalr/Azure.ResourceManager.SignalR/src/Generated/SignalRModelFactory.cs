@@ -153,16 +153,6 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState);
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.SignalRPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static SignalRPrivateLinkServiceConnectionState SignalRPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new SignalRPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -177,154 +167,6 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, SignalRProvisioningState? provisioningState = null, string requestMessage = null, SignalRSharedPrivateLinkResourceStatus? status = null)
         {
             return new SignalRSharedPrivateLinkResourceData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status);
-        }
-
-        /// <summary> Initializes a new instance of SignalRFeature. </summary>
-        /// <param name="flag">
-        /// FeatureFlags is the supported features of Azure SignalR service.
-        /// - ServiceMode: Flag for backend server for SignalR service. Values allowed: &quot;Default&quot;: have your own backend server; &quot;Serverless&quot;: your application doesn&apos;t have a backend server; &quot;Classic&quot;: for backward compatibility. Support both Default and Serverless mode but not recommended; &quot;PredefinedOnly&quot;: for future use.
-        /// - EnableConnectivityLogs: &quot;true&quot;/&quot;false&quot;, to enable/disable the connectivity log category respectively.
-        /// - EnableMessagingLogs: &quot;true&quot;/&quot;false&quot;, to enable/disable the connectivity log category respectively.
-        /// - EnableLiveTrace: Live Trace allows you to know what&apos;s happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: &quot;true&quot;/&quot;false&quot;, to enable/disable live trace feature.
-        /// </param>
-        /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
-        /// <param name="properties"> Optional properties related to this feature. </param>
-        /// <returns> A new <see cref="Models.SignalRFeature"/> instance for mocking. </returns>
-        public static SignalRFeature SignalRFeature(SignalRFeatureFlag flag = default, string value = null, IDictionary<string, string> properties = null)
-        {
-            properties ??= new Dictionary<string, string>();
-
-            return new SignalRFeature(flag, value, properties);
-        }
-
-        /// <summary> Initializes a new instance of SignalRLiveTraceConfiguration. </summary>
-        /// <param name="enabled">
-        /// Indicates whether or not enable live trace.
-        /// When it&apos;s set to true, live trace client can connect to the service.
-        /// Otherwise, live trace client can&apos;t connect to the service, so that you are unable to receive any log, no matter what you configure in &quot;categories&quot;.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </param>
-        /// <param name="categories"> Gets or sets the list of category configurations. </param>
-        /// <returns> A new <see cref="Models.SignalRLiveTraceConfiguration"/> instance for mocking. </returns>
-        public static SignalRLiveTraceConfiguration SignalRLiveTraceConfiguration(string enabled = null, IEnumerable<SignalRLiveTraceCategory> categories = null)
-        {
-            categories ??= new List<SignalRLiveTraceCategory>();
-
-            return new SignalRLiveTraceConfiguration(enabled, categories?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SignalRLiveTraceCategory. </summary>
-        /// <param name="name">
-        /// Gets or sets the live trace category&apos;s name.
-        /// Available values: ConnectivityLogs, MessagingLogs.
-        /// Case insensitive.
-        /// </param>
-        /// <param name="enabled">
-        /// Indicates whether or the live trace category is enabled.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </param>
-        /// <returns> A new <see cref="Models.SignalRLiveTraceCategory"/> instance for mocking. </returns>
-        public static SignalRLiveTraceCategory SignalRLiveTraceCategory(string name = null, string enabled = null)
-        {
-            return new SignalRLiveTraceCategory(name, enabled);
-        }
-
-        /// <summary> Initializes a new instance of SignalRResourceLogCategory. </summary>
-        /// <param name="name">
-        /// Gets or sets the resource log category&apos;s name.
-        /// Available values: ConnectivityLogs, MessagingLogs.
-        /// Case insensitive.
-        /// </param>
-        /// <param name="enabled">
-        /// Indicates whether or the resource log category is enabled.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </param>
-        /// <returns> A new <see cref="Models.SignalRResourceLogCategory"/> instance for mocking. </returns>
-        public static SignalRResourceLogCategory SignalRResourceLogCategory(string name = null, string enabled = null)
-        {
-            return new SignalRResourceLogCategory(name, enabled);
-        }
-
-        /// <summary> Initializes a new instance of SignalRUpstreamTemplate. </summary>
-        /// <param name="hubPattern">
-        /// Gets or sets the matching pattern for hub names. If not set, it matches any hub.
-        /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any hub name.
-        ///     2. Combine multiple hubs with &quot;,&quot;, for example &quot;hub1,hub2&quot;, it matches &quot;hub1&quot; and &quot;hub2&quot;.
-        ///     3. The single hub name, for example, &quot;hub1&quot;, it matches &quot;hub1&quot;.
-        /// </param>
-        /// <param name="eventPattern">
-        /// Gets or sets the matching pattern for event names. If not set, it matches any event.
-        /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any event name.
-        ///     2. Combine multiple events with &quot;,&quot;, for example &quot;connect,disconnect&quot;, it matches event &quot;connect&quot; and &quot;disconnect&quot;.
-        ///     3. The single event name, for example, &quot;connect&quot;, it matches &quot;connect&quot;.
-        /// </param>
-        /// <param name="categoryPattern">
-        /// Gets or sets the matching pattern for category names. If not set, it matches any category.
-        /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any category name.
-        ///     2. Combine multiple categories with &quot;,&quot;, for example &quot;connections,messages&quot;, it matches category &quot;connections&quot; and &quot;messages&quot;.
-        ///     3. The single category name, for example, &quot;connections&quot;, it matches the category &quot;connections&quot;.
-        /// </param>
-        /// <param name="urlTemplate">
-        /// Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.
-        /// For example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`.
-        /// </param>
-        /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
-        /// <returns> A new <see cref="Models.SignalRUpstreamTemplate"/> instance for mocking. </returns>
-        public static SignalRUpstreamTemplate SignalRUpstreamTemplate(string hubPattern = null, string eventPattern = null, string categoryPattern = null, string urlTemplate = null, SignalRUpstreamAuthSettings auth = null)
-        {
-            return new SignalRUpstreamTemplate(hubPattern, eventPattern, categoryPattern, urlTemplate, auth);
-        }
-
-        /// <summary> Initializes a new instance of SignalRUpstreamAuthSettings. </summary>
-        /// <param name="authType"> Upstream auth type enum. </param>
-        /// <param name="managedIdentityResource"> Managed identity settings for upstream. </param>
-        /// <returns> A new <see cref="Models.SignalRUpstreamAuthSettings"/> instance for mocking. </returns>
-        public static SignalRUpstreamAuthSettings SignalRUpstreamAuthSettings(SignalRUpstreamAuthType? authType = null, string managedIdentityResource = null)
-        {
-            return new SignalRUpstreamAuthSettings(authType, managedIdentityResource != null ? new ManagedIdentitySettings(managedIdentityResource) : null);
-        }
-
-        /// <summary> Initializes a new instance of SignalRNetworkAcls. </summary>
-        /// <param name="defaultAction"> Azure Networking ACL Action. </param>
-        /// <param name="publicNetwork"> Network ACL. </param>
-        /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
-        /// <returns> A new <see cref="Models.SignalRNetworkAcls"/> instance for mocking. </returns>
-        public static SignalRNetworkAcls SignalRNetworkAcls(SignalRNetworkAclAction? defaultAction = null, SignalRNetworkAcl publicNetwork = null, IEnumerable<SignalRPrivateEndpointAcl> privateEndpoints = null)
-        {
-            privateEndpoints ??= new List<SignalRPrivateEndpointAcl>();
-
-            return new SignalRNetworkAcls(defaultAction, publicNetwork, privateEndpoints?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SignalRNetworkAcl. </summary>
-        /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <returns> A new <see cref="Models.SignalRNetworkAcl"/> instance for mocking. </returns>
-        public static SignalRNetworkAcl SignalRNetworkAcl(IEnumerable<SignalRRequestType> allow = null, IEnumerable<SignalRRequestType> deny = null)
-        {
-            allow ??= new List<SignalRRequestType>();
-            deny ??= new List<SignalRRequestType>();
-
-            return new SignalRNetworkAcl(allow?.ToList(), deny?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SignalRPrivateEndpointAcl. </summary>
-        /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <param name="name"> Name of the private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.SignalRPrivateEndpointAcl"/> instance for mocking. </returns>
-        public static SignalRPrivateEndpointAcl SignalRPrivateEndpointAcl(IEnumerable<SignalRRequestType> allow = null, IEnumerable<SignalRRequestType> deny = null, string name = null)
-        {
-            allow ??= new List<SignalRRequestType>();
-            deny ??= new List<SignalRRequestType>();
-
-            return new SignalRPrivateEndpointAcl(allow?.ToList(), deny?.ToList(), name);
         }
 
         /// <summary> Initializes a new instance of SignalRCustomCertificateData. </summary>
@@ -384,25 +226,6 @@ namespace Azure.ResourceManager.SignalR.Models
             shareablePrivateLinkResourceTypes ??= new List<ShareablePrivateLinkResourceType>();
 
             return new SignalRPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), shareablePrivateLinkResourceTypes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceType. </summary>
-        /// <param name="name"> The name of the resource type that has been onboarded to private link service. </param>
-        /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service. </param>
-        /// <returns> A new <see cref="Models.ShareablePrivateLinkResourceType"/> instance for mocking. </returns>
-        public static ShareablePrivateLinkResourceType ShareablePrivateLinkResourceType(string name = null, ShareablePrivateLinkResourceProperties properties = null)
-        {
-            return new ShareablePrivateLinkResourceType(name, properties);
-        }
-
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceProperties. </summary>
-        /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
-        /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
-        /// <param name="shareablePrivateLinkResourcePropertiesType"> The resource provider type for the resource that has been onboarded to private link service. </param>
-        /// <returns> A new <see cref="Models.ShareablePrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static ShareablePrivateLinkResourceProperties ShareablePrivateLinkResourceProperties(string description = null, string groupId = null, string shareablePrivateLinkResourcePropertiesType = null)
-        {
-            return new ShareablePrivateLinkResourceProperties(description, groupId, shareablePrivateLinkResourcePropertiesType);
         }
 
         /// <summary> Initializes a new instance of SignalRSku. </summary>

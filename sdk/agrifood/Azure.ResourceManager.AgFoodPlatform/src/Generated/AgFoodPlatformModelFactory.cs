@@ -135,16 +135,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             return new AgFoodPlatformPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.AgFoodPlatformPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static AgFoodPlatformPrivateLinkServiceConnectionState AgFoodPlatformPrivateLinkServiceConnectionState(AgFoodPlatformPrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new AgFoodPlatformPrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of ArmAsyncOperation. </summary>
         /// <param name="status"> Status of the async operation. </param>
         /// <returns> A new <see cref="Models.ArmAsyncOperation"/> instance for mocking. </returns>

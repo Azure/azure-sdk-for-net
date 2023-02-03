@@ -37,22 +37,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             return new ManagedNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, etag, scope, connectivity);
         }
 
-        /// <summary> Initializes a new instance of Scope. </summary>
-        /// <param name="managementGroups"> The collection of management groups covered by the Managed Network. </param>
-        /// <param name="subscriptions"> The collection of subscriptions covered by the Managed Network. </param>
-        /// <param name="virtualNetworks"> The collection of virtual nets covered by the Managed Network. </param>
-        /// <param name="subnets"> The collection of  subnets covered by the Managed Network. </param>
-        /// <returns> A new <see cref="Models.Scope"/> instance for mocking. </returns>
-        public static Scope Scope(IEnumerable<WritableSubResource> managementGroups = null, IEnumerable<WritableSubResource> subscriptions = null, IEnumerable<WritableSubResource> virtualNetworks = null, IEnumerable<WritableSubResource> subnets = null)
-        {
-            managementGroups ??= new List<WritableSubResource>();
-            subscriptions ??= new List<WritableSubResource>();
-            virtualNetworks ??= new List<WritableSubResource>();
-            subnets ??= new List<WritableSubResource>();
-
-            return new Scope(managementGroups?.ToList(), subscriptions?.ToList(), virtualNetworks?.ToList(), subnets?.ToList());
-        }
-
         /// <summary> Initializes a new instance of ConnectivityCollection. </summary>
         /// <param name="groups"> The collection of connectivity related Managed Network Groups within the Managed Network. </param>
         /// <param name="peerings"> The collection of Managed Network Peering Policies within the Managed Network. </param>

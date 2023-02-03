@@ -167,15 +167,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new StorageCacheUpgradeStatus(currentFirmwareVersion, firmwareUpdateStatus, firmwareUpdateDeadline, lastFirmwareUpdate, pendingFirmwareVersion);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUpgradeSettings. </summary>
-        /// <param name="enableUpgradeSchedule"> True if the user chooses to select an installation time between now and firmwareUpdateDeadline. Else the firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
-        /// <param name="scheduledOn"> When upgradeScheduleEnabled is true, this field holds the user-chosen upgrade time. At the user-chosen time, the firmware update will automatically be installed on the cache. </param>
-        /// <returns> A new <see cref="Models.StorageCacheUpgradeSettings"/> instance for mocking. </returns>
-        public static StorageCacheUpgradeSettings StorageCacheUpgradeSettings(bool? enableUpgradeSchedule = null, DateTimeOffset? scheduledOn = null)
-        {
-            return new StorageCacheUpgradeSettings(enableUpgradeSchedule, scheduledOn);
-        }
-
         /// <summary> Initializes a new instance of StorageCacheNetworkSettings. </summary>
         /// <param name="mtu"> The IPv4 maximum transmission unit configured for the subnet. </param>
         /// <param name="utilityAddresses"> Array of additional IP addresses used by this Cache. </param>
@@ -189,39 +180,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             dnsServers ??= new List<IPAddress>();
 
             return new StorageCacheNetworkSettings(mtu, utilityAddresses?.ToList(), dnsServers?.ToList(), dnsSearchDomain, ntpServer);
-        }
-
-        /// <summary> Initializes a new instance of StorageCacheEncryptionSettings. </summary>
-        /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in Key Vault. </param>
-        /// <param name="enableRotationToLatestKeyVersion"> Specifies whether the service will automatically rotate to the newest version of the key in the Key Vault. </param>
-        /// <returns> A new <see cref="Models.StorageCacheEncryptionSettings"/> instance for mocking. </returns>
-        public static StorageCacheEncryptionSettings StorageCacheEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, bool? enableRotationToLatestKeyVersion = null)
-        {
-            return new StorageCacheEncryptionSettings(keyEncryptionKey, enableRotationToLatestKeyVersion);
-        }
-
-        /// <summary> Initializes a new instance of NfsAccessRule. </summary>
-        /// <param name="scope"> Scope for this rule. The scope and filter determine which clients match the rule. </param>
-        /// <param name="filter"> Filter applied to the scope for this rule. The filter&apos;s format depends on its scope. &apos;default&apos; scope matches all clients and has no filter value. &apos;network&apos; scope takes a filter in CIDR format (for example, 10.99.1.0/24). &apos;host&apos; takes an IP address or fully qualified domain name as filter. If a client does not match any filter rule and there is no default rule, access is denied. </param>
-        /// <param name="access"> Access allowed by this rule. </param>
-        /// <param name="allowSuid"> Allow SUID semantics. </param>
-        /// <param name="allowSubmountAccess"> For the default policy, allow access to subdirectories under the root export. If this is set to no, clients can only mount the path &apos;/&apos;. If set to yes, clients can mount a deeper path, like &apos;/a/b&apos;. </param>
-        /// <param name="enableRootSquash"> Map root accesses to anonymousUID and anonymousGID. </param>
-        /// <param name="anonymousUID"> UID value that replaces 0 when rootSquash is true. 65534 will be used if not provided. </param>
-        /// <param name="anonymousGID"> GID value that replaces 0 when rootSquash is true. This will use the value of anonymousUID if not provided. </param>
-        /// <returns> A new <see cref="Models.NfsAccessRule"/> instance for mocking. </returns>
-        public static NfsAccessRule NfsAccessRule(NfsAccessRuleScope scope = default, string filter = null, NfsAccessRuleAccess access = default, bool? allowSuid = null, bool? allowSubmountAccess = null, bool? enableRootSquash = null, string anonymousUID = null, string anonymousGID = null)
-        {
-            return new NfsAccessRule(scope, filter, access, allowSuid, allowSubmountAccess, enableRootSquash, anonymousUID, anonymousGID);
-        }
-
-        /// <summary> Initializes a new instance of StorageCacheDirectorySettings. </summary>
-        /// <param name="activeDirectory"> Specifies settings for joining the HPC Cache to an Active Directory domain. </param>
-        /// <param name="usernameDownload"> Specifies settings for Extended Groups. Extended Groups allows users to be members of more than 16 groups. </param>
-        /// <returns> A new <see cref="Models.StorageCacheDirectorySettings"/> instance for mocking. </returns>
-        public static StorageCacheDirectorySettings StorageCacheDirectorySettings(StorageCacheActiveDirectorySettings activeDirectory = null, StorageCacheUsernameDownloadSettings usernameDownload = null)
-        {
-            return new StorageCacheDirectorySettings(activeDirectory, usernameDownload);
         }
 
         /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
@@ -257,15 +215,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new StorageCacheUsernameDownloadSettings(enableExtendedGroups, usernameSource, groupFileUri, userFileUri, ldapServer, ldapBaseDN, encryptLdapConnection, requireValidCertificate, autoDownloadCertificate, caCertificateUri, usernameDownloaded, credentials);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadCredential. </summary>
-        /// <param name="bindDistinguishedName"> The Bind Distinguished Name identity to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </param>
-        /// <param name="bindPassword"> The Bind password to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </param>
-        /// <returns> A new <see cref="Models.StorageCacheUsernameDownloadCredential"/> instance for mocking. </returns>
-        public static StorageCacheUsernameDownloadCredential StorageCacheUsernameDownloadCredential(string bindDistinguishedName = null, string bindPassword = null)
-        {
-            return new StorageCacheUsernameDownloadCredential(bindDistinguishedName, bindPassword);
-        }
-
         /// <summary> Initializes a new instance of PrimingJob. </summary>
         /// <param name="primingJobName"> The priming job name. </param>
         /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
@@ -278,15 +227,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static PrimingJob PrimingJob(string primingJobName = null, Uri primingManifestUri = null, string primingJobId = null, PrimingJobState? primingJobState = null, string primingJobStatus = null, string primingJobDetails = null, double? primingJobPercentComplete = null)
         {
             return new PrimingJob(primingJobName, primingManifestUri, primingJobId, primingJobState, primingJobStatus, primingJobDetails, primingJobPercentComplete);
-        }
-
-        /// <summary> Initializes a new instance of StorageTargetSpaceAllocation. </summary>
-        /// <param name="name"> Name of the storage target. </param>
-        /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
-        /// <returns> A new <see cref="Models.StorageTargetSpaceAllocation"/> instance for mocking. </returns>
-        public static StorageTargetSpaceAllocation StorageTargetSpaceAllocation(string name = null, int? allocationPercentage = null)
-        {
-            return new StorageTargetSpaceAllocation(name, allocationPercentage);
         }
 
         /// <summary> Initializes a new instance of StorageTargetData. </summary>
@@ -311,35 +251,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             unknownAttributes ??= new Dictionary<string, string>();
 
             return new StorageTargetData(id, name, resourceType, systemData, junctions?.ToList(), targetType, provisioningState, state, nfs3, clfsTarget != null ? new ClfsTarget(clfsTarget) : null, unknownAttributes != null ? new UnknownTarget(unknownAttributes) : null, blobNfs, allocationPercentage, location);
-        }
-
-        /// <summary> Initializes a new instance of NamespaceJunction. </summary>
-        /// <param name="namespacePath"> Namespace path on a Cache for a Storage Target. </param>
-        /// <param name="targetPath"> Path in Storage Target to which namespacePath points. </param>
-        /// <param name="nfsExport"> NFS export where targetPath exists. </param>
-        /// <param name="nfsAccessPolicy"> Name of the access policy applied to this junction. </param>
-        /// <returns> A new <see cref="Models.NamespaceJunction"/> instance for mocking. </returns>
-        public static NamespaceJunction NamespaceJunction(string namespacePath = null, string targetPath = null, string nfsExport = null, string nfsAccessPolicy = null)
-        {
-            return new NamespaceJunction(namespacePath, targetPath, nfsExport, nfsAccessPolicy);
-        }
-
-        /// <summary> Initializes a new instance of Nfs3Target. </summary>
-        /// <param name="target"> IP address or host name of an NFSv3 host (e.g., 10.0.44.44). </param>
-        /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
-        /// <returns> A new <see cref="Models.Nfs3Target"/> instance for mocking. </returns>
-        public static Nfs3Target Nfs3Target(string target = null, string usageModel = null)
-        {
-            return new Nfs3Target(target, usageModel);
-        }
-
-        /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
-        /// <param name="target"> Resource ID of the storage container. </param>
-        /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
-        /// <returns> A new <see cref="Models.BlobNfsTarget"/> instance for mocking. </returns>
-        public static BlobNfsTarget BlobNfsTarget(ResourceIdentifier target = null, string usageModel = null)
-        {
-            return new BlobNfsTarget(target, usageModel);
         }
     }
 }

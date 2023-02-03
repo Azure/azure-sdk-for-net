@@ -68,16 +68,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             return new DeviceUpdatePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.DeviceUpdatePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static DeviceUpdatePrivateLinkServiceConnectionState DeviceUpdatePrivateLinkServiceConnectionState(DeviceUpdatePrivateEndpointServiceConnectionStatus? status = null, string description = null, string actionsRequired = null)
-        {
-            return new DeviceUpdatePrivateLinkServiceConnectionState(status, description, actionsRequired);
-        }
-
         /// <summary> Initializes a new instance of DeviceUpdateAccountLocationDetail. </summary>
         /// <param name="name"></param>
         /// <param name="role"> Whether the location is primary or failover. </param>
@@ -106,16 +96,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             iotHubs ??= new List<IotHubSettings>();
 
             return new DeviceUpdateInstanceData(id, name, resourceType, systemData, tags, location, provisioningState, accountName, iotHubs?.ToList(), enableDiagnostics, diagnosticStorageProperties);
-        }
-
-        /// <summary> Initializes a new instance of DiagnosticStorageProperties. </summary>
-        /// <param name="authenticationType"> Authentication Type. </param>
-        /// <param name="connectionString"> ConnectionString of the diagnostic storage account. </param>
-        /// <param name="resourceId"> ResourceId of the diagnostic storage account. </param>
-        /// <returns> A new <see cref="Models.DiagnosticStorageProperties"/> instance for mocking. </returns>
-        public static DiagnosticStorageProperties DiagnosticStorageProperties(AuthenticationType authenticationType = default, string connectionString = null, string resourceId = null)
-        {
-            return new DiagnosticStorageProperties(authenticationType, connectionString, resourceId);
         }
 
         /// <summary> Initializes a new instance of PrivateLinkData. </summary>
@@ -149,52 +129,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static PrivateEndpointConnectionProxyData PrivateEndpointConnectionProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProxyProvisioningState? provisioningState = null, string eTag = null, RemotePrivateEndpoint remotePrivateEndpoint = null, string status = null)
         {
             return new PrivateEndpointConnectionProxyData(id, name, resourceType, systemData, provisioningState, eTag, remotePrivateEndpoint, status);
-        }
-
-        /// <summary> Initializes a new instance of RemotePrivateEndpoint. </summary>
-        /// <param name="id"> Remote endpoint resource ID. </param>
-        /// <param name="location"> ARM location of the remote private endpoint. </param>
-        /// <param name="immutableSubscriptionId"> Original subscription ID needed by Microsoft.Network. </param>
-        /// <param name="immutableResourceId"> Original resource ID needed by Microsoft.Network. </param>
-        /// <param name="vnetTrafficTag"> Virtual network traffic tag. </param>
-        /// <param name="manualPrivateLinkServiceConnections"> List of private link service connections that need manual approval. </param>
-        /// <param name="privateLinkServiceConnections"> List of automatically approved private link service connections. </param>
-        /// <param name="privateLinkServiceProxies"> List of private link service proxies. </param>
-        /// <param name="connectionDetails"> List of connection details. </param>
-        /// <returns> A new <see cref="Models.RemotePrivateEndpoint"/> instance for mocking. </returns>
-        public static RemotePrivateEndpoint RemotePrivateEndpoint(string id = null, AzureLocation? location = null, string immutableSubscriptionId = null, string immutableResourceId = null, string vnetTrafficTag = null, IEnumerable<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = null, IEnumerable<PrivateLinkServiceConnection> privateLinkServiceConnections = null, IEnumerable<PrivateLinkServiceProxy> privateLinkServiceProxies = null, IEnumerable<ConnectionDetails> connectionDetails = null)
-        {
-            manualPrivateLinkServiceConnections ??= new List<PrivateLinkServiceConnection>();
-            privateLinkServiceConnections ??= new List<PrivateLinkServiceConnection>();
-            privateLinkServiceProxies ??= new List<PrivateLinkServiceProxy>();
-            connectionDetails ??= new List<ConnectionDetails>();
-
-            return new RemotePrivateEndpoint(id, location, immutableSubscriptionId, immutableResourceId, vnetTrafficTag, manualPrivateLinkServiceConnections?.ToList(), privateLinkServiceConnections?.ToList(), privateLinkServiceProxies?.ToList(), connectionDetails?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
-        /// <param name="name"> Private link service connection name. </param>
-        /// <param name="groupIds"> List of group IDs. </param>
-        /// <param name="requestMessage"> Request message. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkServiceConnection"/> instance for mocking. </returns>
-        public static PrivateLinkServiceConnection PrivateLinkServiceConnection(string name = null, IEnumerable<string> groupIds = null, string requestMessage = null)
-        {
-            groupIds ??= new List<string>();
-
-            return new PrivateLinkServiceConnection(name, groupIds?.ToList(), requestMessage);
-        }
-
-        /// <summary> Initializes a new instance of PrivateLinkServiceProxy. </summary>
-        /// <param name="id"> NRP resource ID. </param>
-        /// <param name="remotePrivateLinkServiceConnectionState"> Remote private link service connection state. </param>
-        /// <param name="remotePrivateEndpointConnectionId"> Remote private endpoint connection details. </param>
-        /// <param name="groupConnectivityInformation"> Group connectivity information. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkServiceProxy"/> instance for mocking. </returns>
-        public static PrivateLinkServiceProxy PrivateLinkServiceProxy(string id = null, DeviceUpdatePrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState = null, ResourceIdentifier remotePrivateEndpointConnectionId = null, IEnumerable<GroupConnectivityInformation> groupConnectivityInformation = null)
-        {
-            groupConnectivityInformation ??= new List<GroupConnectivityInformation>();
-
-            return new PrivateLinkServiceProxy(id, remotePrivateLinkServiceConnectionState, remotePrivateEndpointConnectionId != null ? ResourceManagerModelFactory.SubResource(remotePrivateEndpointConnectionId) : null, groupConnectivityInformation?.ToList());
         }
 
         /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>

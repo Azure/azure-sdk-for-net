@@ -45,18 +45,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new VirtualWorkspaceData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, applicationGroupReferences?.ToList(), isCloudPCResource, managedBy, kind, etag, identity, sku, plan);
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationSku. </summary>
-        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
-        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.DesktopVirtualizationSku"/> instance for mocking. </returns>
-        public static DesktopVirtualizationSku DesktopVirtualizationSku(string name = null, DesktopVirtualizationSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new DesktopVirtualizationSku(name, tier, size, family, capacity);
-        }
-
         /// <summary> Initializes a new instance of ScalingPlanData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -88,42 +76,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ScalingPlanData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, timeZone, hostPoolType, exclusionTag, schedules?.ToList(), hostPoolReferences?.ToList(), managedBy, kind, etag, identity, sku, plan);
         }
 
-        /// <summary> Initializes a new instance of ScalingSchedule. </summary>
-        /// <param name="name"> Name of the scaling schedule. </param>
-        /// <param name="daysOfWeek"> Set of days of the week on which this schedule is active. </param>
-        /// <param name="rampUpStartOn"> Starting time for ramp up period. </param>
-        /// <param name="rampUpLoadBalancingAlgorithm"> Load balancing algorithm for ramp up period. </param>
-        /// <param name="rampUpMinimumHostsPct"> Minimum host percentage for ramp up period. </param>
-        /// <param name="rampUpCapacityThresholdPct"> Capacity threshold for ramp up period. </param>
-        /// <param name="peakStartOn"> Starting time for peak period. </param>
-        /// <param name="peakLoadBalancingAlgorithm"> Load balancing algorithm for peak period. </param>
-        /// <param name="rampDownStartOn"> Starting time for ramp down period. </param>
-        /// <param name="rampDownLoadBalancingAlgorithm"> Load balancing algorithm for ramp down period. </param>
-        /// <param name="rampDownMinimumHostsPct"> Minimum host percentage for ramp down period. </param>
-        /// <param name="rampDownCapacityThresholdPct"> Capacity threshold for ramp down period. </param>
-        /// <param name="rampDownForceLogoffUsers"> Should users be logged off forcefully from hosts. </param>
-        /// <param name="rampDownStopHostsWhen"> Specifies when to stop hosts during ramp down period. </param>
-        /// <param name="rampDownWaitTimeMinutes"> Number of minutes to wait to stop hosts during ramp down period. </param>
-        /// <param name="rampDownNotificationMessage"> Notification message for users during ramp down period. </param>
-        /// <param name="offPeakStartOn"> Starting time for off-peak period. </param>
-        /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
-        /// <returns> A new <see cref="Models.ScalingSchedule"/> instance for mocking. </returns>
-        public static ScalingSchedule ScalingSchedule(string name = null, IEnumerable<ScalingScheduleDaysOfWeekItem> daysOfWeek = null, DateTimeOffset? rampUpStartOn = null, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = null, int? rampUpMinimumHostsPct = null, int? rampUpCapacityThresholdPct = null, DateTimeOffset? peakStartOn = null, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = null, DateTimeOffset? rampDownStartOn = null, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = null, int? rampDownMinimumHostsPct = null, int? rampDownCapacityThresholdPct = null, bool? rampDownForceLogoffUsers = null, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = null, int? rampDownWaitTimeMinutes = null, string rampDownNotificationMessage = null, DateTimeOffset? offPeakStartOn = null, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = null)
-        {
-            daysOfWeek ??= new List<ScalingScheduleDaysOfWeekItem>();
-
-            return new ScalingSchedule(name, daysOfWeek?.ToList(), rampUpStartOn, rampUpLoadBalancingAlgorithm, rampUpMinimumHostsPct, rampUpCapacityThresholdPct, peakStartOn, peakLoadBalancingAlgorithm, rampDownStartOn, rampDownLoadBalancingAlgorithm, rampDownMinimumHostsPct, rampDownCapacityThresholdPct, rampDownForceLogoffUsers, rampDownStopHostsWhen, rampDownWaitTimeMinutes, rampDownNotificationMessage, offPeakStartOn, offPeakLoadBalancingAlgorithm);
-        }
-
-        /// <summary> Initializes a new instance of ScalingHostPoolReference. </summary>
-        /// <param name="hostPoolId"> Arm path of referenced hostpool. </param>
-        /// <param name="isScalingPlanEnabled"> Is the scaling plan enabled for this hostpool. </param>
-        /// <returns> A new <see cref="Models.ScalingHostPoolReference"/> instance for mocking. </returns>
-        public static ScalingHostPoolReference ScalingHostPoolReference(ResourceIdentifier hostPoolId = null, bool? isScalingPlanEnabled = null)
-        {
-            return new ScalingHostPoolReference(hostPoolId, isScalingPlanEnabled);
-        }
-
         /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -151,15 +103,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             tags ??= new Dictionary<string, string>();
 
             return new VirtualApplicationGroupData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, hostPoolId, workspaceId, applicationGroupType, migrationRequest, isCloudPCResource, managedBy, kind, etag, identity, sku, plan);
-        }
-
-        /// <summary> Initializes a new instance of DesktopVirtualizationMigrationProperties. </summary>
-        /// <param name="operation"> The type of operation for migration. </param>
-        /// <param name="migrationPath"> The path to the legacy object to migrate. </param>
-        /// <returns> A new <see cref="Models.DesktopVirtualizationMigrationProperties"/> instance for mocking. </returns>
-        public static DesktopVirtualizationMigrationProperties DesktopVirtualizationMigrationProperties(MigrationOperation? operation = null, string migrationPath = null)
-        {
-            return new DesktopVirtualizationMigrationProperties(operation, migrationPath);
         }
 
         /// <summary> Initializes a new instance of VirtualApplicationGroupPatch. </summary>
@@ -278,16 +221,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolData(id, name, resourceType, systemData, tags, location, objectId, friendlyName, description, hostPoolType, personalDesktopAssignmentType, customRdpProperty, maxSessionLimit, loadBalancerType, ring, isValidationEnvironment, registrationInfo, vmTemplate, applicationGroupReferences?.ToList(), ssoAdfsAuthority, ssoClientId, ssoClientSecretKeyVaultPath, ssoSecretType, preferredAppGroupType, startVmOnConnect, migrationRequest, isCloudPCResource, managedBy, kind, etag, identity, sku, plan);
         }
 
-        /// <summary> Initializes a new instance of HostPoolRegistrationInfo. </summary>
-        /// <param name="expireOn"> Expiration time of registration token. </param>
-        /// <param name="token"> The registration token base64 encoded string. </param>
-        /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
-        /// <returns> A new <see cref="Models.HostPoolRegistrationInfo"/> instance for mocking. </returns>
-        public static HostPoolRegistrationInfo HostPoolRegistrationInfo(DateTimeOffset? expireOn = null, string token = null, HostPoolRegistrationTokenOperation? registrationTokenOperation = null)
-        {
-            return new HostPoolRegistrationInfo(expireOn, token, registrationTokenOperation);
-        }
-
         /// <summary> Initializes a new instance of HostPoolPatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -316,15 +249,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             tags ??= new Dictionary<string, string>();
 
             return new HostPoolPatch(id, name, resourceType, systemData, tags, friendlyName, description, customRdpProperty, maxSessionLimit, personalDesktopAssignmentType, loadBalancerType, ring, isValidationEnvironment, registrationInfo, vmTemplate, ssoAdfsAuthority, ssoClientId, ssoClientSecretKeyVaultPath, ssoSecretType, preferredAppGroupType, startVmOnConnect);
-        }
-
-        /// <summary> Initializes a new instance of HostPoolRegistrationInfoPatch. </summary>
-        /// <param name="expireOn"> Expiration time of registration token. </param>
-        /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
-        /// <returns> A new <see cref="Models.HostPoolRegistrationInfoPatch"/> instance for mocking. </returns>
-        public static HostPoolRegistrationInfoPatch HostPoolRegistrationInfoPatch(DateTimeOffset? expireOn = null, HostPoolRegistrationTokenOperation? registrationTokenOperation = null)
-        {
-            return new HostPoolRegistrationInfoPatch(expireOn, registrationTokenOperation);
         }
 
         /// <summary> Initializes a new instance of UserSessionData. </summary>
@@ -429,30 +353,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             packageApplications ??= new List<MsixPackageApplications>();
 
             return new MsixPackageData(id, name, resourceType, systemData, imagePath, packageName, packageFamilyName, displayName, packageRelativePath, isRegularRegistration, isActive, packageDependencies?.ToList(), version, lastUpdatedOn, packageApplications?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MsixPackageDependencies. </summary>
-        /// <param name="dependencyName"> Name of package dependency. </param>
-        /// <param name="publisher"> Name of dependency publisher. </param>
-        /// <param name="minVersion"> Dependency version required. </param>
-        /// <returns> A new <see cref="Models.MsixPackageDependencies"/> instance for mocking. </returns>
-        public static MsixPackageDependencies MsixPackageDependencies(string dependencyName = null, string publisher = null, string minVersion = null)
-        {
-            return new MsixPackageDependencies(dependencyName, publisher, minVersion);
-        }
-
-        /// <summary> Initializes a new instance of MsixPackageApplications. </summary>
-        /// <param name="appId"> Package Application Id, found in appxmanifest.xml. </param>
-        /// <param name="description"> Description of Package Application. </param>
-        /// <param name="appUserModelId"> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </param>
-        /// <param name="friendlyName"> User friendly name. </param>
-        /// <param name="iconImageName"> User friendly name. </param>
-        /// <param name="rawIcon"> the icon a 64 bit string as a byte array. </param>
-        /// <param name="rawPng"> the icon a 64 bit string as a byte array. </param>
-        /// <returns> A new <see cref="Models.MsixPackageApplications"/> instance for mocking. </returns>
-        public static MsixPackageApplications MsixPackageApplications(string appId = null, string description = null, string appUserModelId = null, string friendlyName = null, string iconImageName = null, BinaryData rawIcon = null, BinaryData rawPng = null)
-        {
-            return new MsixPackageApplications(appId, description, appUserModelId, friendlyName, iconImageName, rawIcon, rawPng);
         }
 
         /// <summary> Initializes a new instance of MsixPackagePatch. </summary>

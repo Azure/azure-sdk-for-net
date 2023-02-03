@@ -42,15 +42,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             return new ScVmmServerData(id, name, resourceType, systemData, tags, location, extendedLocation, credentials, fqdn, port, connectionStatus, errorMessage, uuid, version, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VmmServerPropertiesCredentials. </summary>
-        /// <param name="username"> Username to use to connect to VMMServer. </param>
-        /// <param name="password"> Credentials to use to connect to VMMServer. </param>
-        /// <returns> A new <see cref="Models.VmmServerPropertiesCredentials"/> instance for mocking. </returns>
-        public static VmmServerPropertiesCredentials VmmServerPropertiesCredentials(string username = null, string password = null)
-        {
-            return new VmmServerPropertiesCredentials(username, password);
-        }
-
         /// <summary> Initializes a new instance of ScVmmCloudData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -155,26 +146,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             return new ScVmmVirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, vmmServerId, cloudId, templateId, checkpointType, checkpoints?.ToList(), availabilitySets?.ToList(), osProfile, hardwareProfile, networkInterfaces != null ? new NetworkProfile(networkInterfaces?.ToList()) : null, storageDisks != null ? new StorageProfile(storageDisks?.ToList()) : null, vmName, uuid, generation, powerState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of Checkpoint. </summary>
-        /// <param name="parentCheckpointId"> Gets ID of parent of the checkpoint. </param>
-        /// <param name="checkpointId"> Gets ID of the checkpoint. </param>
-        /// <param name="name"> Gets name of the checkpoint. </param>
-        /// <param name="description"> Gets description of the checkpoint. </param>
-        /// <returns> A new <see cref="Models.Checkpoint"/> instance for mocking. </returns>
-        public static Checkpoint Checkpoint(string parentCheckpointId = null, string checkpointId = null, string name = null, string description = null)
-        {
-            return new Checkpoint(parentCheckpointId, checkpointId, name, description);
-        }
-
-        /// <summary> Initializes a new instance of AvailabilitySetListItem. </summary>
-        /// <param name="id"> Gets the ARM Id of the microsoft.scvmm/availabilitySets resource. </param>
-        /// <param name="name"> Gets or sets the name of the availability set. </param>
-        /// <returns> A new <see cref="Models.AvailabilitySetListItem"/> instance for mocking. </returns>
-        public static AvailabilitySetListItem AvailabilitySetListItem(string id = null, string name = null)
-        {
-            return new AvailabilitySetListItem(id, name);
-        }
-
         /// <summary> Initializes a new instance of OSProfile. </summary>
         /// <param name="adminPassword"> Admin password of the virtual machine. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
@@ -184,20 +155,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static OSProfile OSProfile(string adminPassword = null, string computerName = null, OSType? osType = null, string osName = null)
         {
             return new OSProfile(adminPassword, computerName, osType, osName);
-        }
-
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
-        /// <param name="memoryMB"> MemoryMB is the size of a virtual machine&apos;s memory, in MB. </param>
-        /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
-        /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
-        /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>
-        /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
-        /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
-        /// <param name="isHighlyAvailable"> Gets highly available property. </param>
-        /// <returns> A new <see cref="Models.HardwareProfile"/> instance for mocking. </returns>
-        public static HardwareProfile HardwareProfile(int? memoryMB = null, int? cpuCount = null, LimitCpuForMigration? limitCpuForMigration = null, DynamicMemoryEnabled? dynamicMemoryEnabled = null, int? dynamicMemoryMaxMB = null, int? dynamicMemoryMinMB = null, string isHighlyAvailable = null)
-        {
-            return new HardwareProfile(memoryMB, cpuCount, limitCpuForMigration, dynamicMemoryEnabled, dynamicMemoryMaxMB, dynamicMemoryMinMB, isHighlyAvailable);
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaces. </summary>
@@ -240,15 +197,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static VirtualDisk VirtualDisk(string name = null, string displayName = null, string diskId = null, int? diskSizeGB = null, int? maxDiskSizeGB = null, int? bus = null, int? lun = null, string busType = null, string vhdType = null, string volumeType = null, string vhdFormatType = null, string templateDiskId = null, StorageQoSPolicyDetails storageQoSPolicy = null, CreateDiffDisk? createDiffDisk = null)
         {
             return new VirtualDisk(name, displayName, diskId, diskSizeGB, maxDiskSizeGB, bus, lun, busType, vhdType, volumeType, vhdFormatType, templateDiskId, storageQoSPolicy, createDiffDisk);
-        }
-
-        /// <summary> Initializes a new instance of StorageQoSPolicyDetails. </summary>
-        /// <param name="name"> The name of the policy. </param>
-        /// <param name="id"> The ID of the QoS policy. </param>
-        /// <returns> A new <see cref="Models.StorageQoSPolicyDetails"/> instance for mocking. </returns>
-        public static StorageQoSPolicyDetails StorageQoSPolicyDetails(string name = null, string id = null)
-        {
-            return new StorageQoSPolicyDetails(name, id);
         }
 
         /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>

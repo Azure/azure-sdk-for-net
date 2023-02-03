@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Elastic;
 using Azure.ResourceManager.Models;
@@ -48,15 +47,6 @@ namespace Azure.ResourceManager.Elastic.Models
             return new MonitorProperties(provisioningState, monitoringStatus, elasticProperties, userInfo, liftrResourceCategory, liftrResourcePreference);
         }
 
-        /// <summary> Initializes a new instance of ElasticProperties. </summary>
-        /// <param name="elasticCloudUser"> Details of the user&apos;s elastic account. </param>
-        /// <param name="elasticCloudDeployment"> Details of the elastic cloud deployment. </param>
-        /// <returns> A new <see cref="Models.ElasticProperties"/> instance for mocking. </returns>
-        public static ElasticProperties ElasticProperties(ElasticCloudUser elasticCloudUser = null, ElasticCloudDeployment elasticCloudDeployment = null)
-        {
-            return new ElasticProperties(elasticCloudUser, elasticCloudDeployment);
-        }
-
         /// <summary> Initializes a new instance of ElasticCloudUser. </summary>
         /// <param name="emailAddress"> Email of the Elastic User Account. </param>
         /// <param name="id"> User Id of the elastic account of the User. </param>
@@ -79,30 +69,6 @@ namespace Azure.ResourceManager.Elastic.Models
         public static ElasticCloudDeployment ElasticCloudDeployment(string name = null, string deploymentId = null, string azureSubscriptionId = null, string elasticsearchRegion = null, Uri elasticsearchServiceUri = null, Uri kibanaServiceUri = null, Uri kibanaSsoUri = null)
         {
             return new ElasticCloudDeployment(name, deploymentId, azureSubscriptionId, elasticsearchRegion, elasticsearchServiceUri, kibanaServiceUri, kibanaSsoUri);
-        }
-
-        /// <summary> Initializes a new instance of UserInfo. </summary>
-        /// <param name="firstName"> First name of the user. </param>
-        /// <param name="lastName"> Last name of the user. </param>
-        /// <param name="companyName"> Company name of the user. </param>
-        /// <param name="emailAddress"> Email of the user used by Elastic for contacting them if needed. </param>
-        /// <param name="companyInfo"> Company information of the user to be passed to partners. </param>
-        /// <returns> A new <see cref="Models.UserInfo"/> instance for mocking. </returns>
-        public static UserInfo UserInfo(string firstName = null, string lastName = null, string companyName = null, string emailAddress = null, CompanyInfo companyInfo = null)
-        {
-            return new UserInfo(firstName, lastName, companyName, emailAddress, companyInfo);
-        }
-
-        /// <summary> Initializes a new instance of CompanyInfo. </summary>
-        /// <param name="domain"> Domain of the company. </param>
-        /// <param name="business"> Business of the company. </param>
-        /// <param name="employeesNumber"> Number of employees in the company. </param>
-        /// <param name="state"> State of the company location. </param>
-        /// <param name="country"> Country of the company location. </param>
-        /// <returns> A new <see cref="Models.CompanyInfo"/> instance for mocking. </returns>
-        public static CompanyInfo CompanyInfo(string domain = null, string business = null, string employeesNumber = null, string state = null, string country = null)
-        {
-            return new CompanyInfo(domain, business, employeesNumber, state, country);
         }
 
         /// <summary> Initializes a new instance of MonitoredResource. </summary>
@@ -136,38 +102,6 @@ namespace Azure.ResourceManager.Elastic.Models
         public static MonitoringTagRuleData MonitoringTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoringTagRulesProperties properties = null)
         {
             return new MonitoringTagRuleData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of MonitoringTagRulesProperties. </summary>
-        /// <param name="provisioningState"> Provisioning state of the monitoring tag rules. </param>
-        /// <param name="logRules"> Rules for sending logs. </param>
-        /// <returns> A new <see cref="Models.MonitoringTagRulesProperties"/> instance for mocking. </returns>
-        public static MonitoringTagRulesProperties MonitoringTagRulesProperties(ProvisioningState? provisioningState = null, LogRules logRules = null)
-        {
-            return new MonitoringTagRulesProperties(provisioningState, logRules);
-        }
-
-        /// <summary> Initializes a new instance of LogRules. </summary>
-        /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
-        /// <param name="sendSubscriptionLogs"> Flag specifying if subscription logs should be sent for the Monitor resource. </param>
-        /// <param name="sendActivityLogs"> Flag specifying if activity logs from Azure resources should be sent for the Monitor resource. </param>
-        /// <param name="filteringTags"> List of filtering tags to be used for capturing logs. This only takes effect if SendActivityLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
-        /// <returns> A new <see cref="Models.LogRules"/> instance for mocking. </returns>
-        public static LogRules LogRules(bool? sendAadLogs = null, bool? sendSubscriptionLogs = null, bool? sendActivityLogs = null, IEnumerable<FilteringTag> filteringTags = null)
-        {
-            filteringTags ??= new List<FilteringTag>();
-
-            return new LogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of FilteringTag. </summary>
-        /// <param name="name"> The name (also known as the key) of the tag. </param>
-        /// <param name="value"> The value of the tag. </param>
-        /// <param name="action"> Valid actions for a filtering tag. </param>
-        /// <returns> A new <see cref="Models.FilteringTag"/> instance for mocking. </returns>
-        public static FilteringTag FilteringTag(string name = null, string value = null, TagAction? action = null)
-        {
-            return new FilteringTag(name, value, action);
         }
 
         /// <summary> Initializes a new instance of VmResources. </summary>

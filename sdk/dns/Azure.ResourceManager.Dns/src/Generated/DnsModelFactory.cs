@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns;
@@ -54,92 +53,6 @@ namespace Azure.ResourceManager.Dns.Models
             caaRecords ??= new List<DnsCaaRecordInfo>();
 
             return new DnsRecordData(id, name, resourceType, systemData, etag, metadata, ttlInSeconds, fqdn, provisioningState, targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null, aRecords?.ToList(), aaaaRecords?.ToList(), mxRecords?.ToList(), nsRecords?.ToList(), ptrRecords?.ToList(), srvRecords?.ToList(), txtRecords?.ToList(), cname != null ? new DnsCnameRecordInfo(cname) : null, dnsSoaRecordInfo, caaRecords?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DnsARecordInfo. </summary>
-        /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
-        /// <returns> A new <see cref="Models.DnsARecordInfo"/> instance for mocking. </returns>
-        public static DnsARecordInfo DnsARecordInfo(IPAddress ipv4Address = null)
-        {
-            return new DnsARecordInfo(ipv4Address);
-        }
-
-        /// <summary> Initializes a new instance of DnsAaaaRecordInfo. </summary>
-        /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
-        /// <returns> A new <see cref="Models.DnsAaaaRecordInfo"/> instance for mocking. </returns>
-        public static DnsAaaaRecordInfo DnsAaaaRecordInfo(IPAddress ipv6Address = null)
-        {
-            return new DnsAaaaRecordInfo(ipv6Address);
-        }
-
-        /// <summary> Initializes a new instance of DnsMXRecordInfo. </summary>
-        /// <param name="preference"> The preference value for this MX record. </param>
-        /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
-        /// <returns> A new <see cref="Models.DnsMXRecordInfo"/> instance for mocking. </returns>
-        public static DnsMXRecordInfo DnsMXRecordInfo(int? preference = null, string exchange = null)
-        {
-            return new DnsMXRecordInfo(preference, exchange);
-        }
-
-        /// <summary> Initializes a new instance of DnsNSRecordInfo. </summary>
-        /// <param name="dnsNSDomainName"> The name server name for this NS record. </param>
-        /// <returns> A new <see cref="Models.DnsNSRecordInfo"/> instance for mocking. </returns>
-        public static DnsNSRecordInfo DnsNSRecordInfo(string dnsNSDomainName = null)
-        {
-            return new DnsNSRecordInfo(dnsNSDomainName);
-        }
-
-        /// <summary> Initializes a new instance of DnsPtrRecordInfo. </summary>
-        /// <param name="dnsPtrDomainName"> The PTR target domain name for this PTR record. </param>
-        /// <returns> A new <see cref="Models.DnsPtrRecordInfo"/> instance for mocking. </returns>
-        public static DnsPtrRecordInfo DnsPtrRecordInfo(string dnsPtrDomainName = null)
-        {
-            return new DnsPtrRecordInfo(dnsPtrDomainName);
-        }
-
-        /// <summary> Initializes a new instance of DnsSrvRecordInfo. </summary>
-        /// <param name="priority"> The priority value for this SRV record. </param>
-        /// <param name="weight"> The weight value for this SRV record. </param>
-        /// <param name="port"> The port value for this SRV record. </param>
-        /// <param name="target"> The target domain name for this SRV record. </param>
-        /// <returns> A new <see cref="Models.DnsSrvRecordInfo"/> instance for mocking. </returns>
-        public static DnsSrvRecordInfo DnsSrvRecordInfo(int? priority = null, int? weight = null, int? port = null, string target = null)
-        {
-            return new DnsSrvRecordInfo(priority, weight, port, target);
-        }
-
-        /// <summary> Initializes a new instance of DnsTxtRecordInfo. </summary>
-        /// <param name="values"> The text value of this TXT record. </param>
-        /// <returns> A new <see cref="Models.DnsTxtRecordInfo"/> instance for mocking. </returns>
-        public static DnsTxtRecordInfo DnsTxtRecordInfo(IEnumerable<string> values = null)
-        {
-            values ??= new List<string>();
-
-            return new DnsTxtRecordInfo(values?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DnsSoaRecordInfo. </summary>
-        /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
-        /// <param name="email"> The email contact for this SOA record. </param>
-        /// <param name="serialNumber"> The serial number for this SOA record. </param>
-        /// <param name="refreshTimeInSeconds"> The refresh value for this SOA record. </param>
-        /// <param name="retryTimeInSeconds"> The retry time for this SOA record. </param>
-        /// <param name="expireTimeInSeconds"> The expire time for this SOA record. </param>
-        /// <param name="minimumTtlInSeconds"> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </param>
-        /// <returns> A new <see cref="Models.DnsSoaRecordInfo"/> instance for mocking. </returns>
-        public static DnsSoaRecordInfo DnsSoaRecordInfo(string host = null, string email = null, long? serialNumber = null, long? refreshTimeInSeconds = null, long? retryTimeInSeconds = null, long? expireTimeInSeconds = null, long? minimumTtlInSeconds = null)
-        {
-            return new DnsSoaRecordInfo(host, email, serialNumber, refreshTimeInSeconds, retryTimeInSeconds, expireTimeInSeconds, minimumTtlInSeconds);
-        }
-
-        /// <summary> Initializes a new instance of DnsCaaRecordInfo. </summary>
-        /// <param name="flags"> The flags for this CAA record as an integer between 0 and 255. </param>
-        /// <param name="tag"> The tag for this CAA record. </param>
-        /// <param name="value"> The value for this CAA record. </param>
-        /// <returns> A new <see cref="Models.DnsCaaRecordInfo"/> instance for mocking. </returns>
-        public static DnsCaaRecordInfo DnsCaaRecordInfo(int? flags = null, string tag = null, string value = null)
-        {
-            return new DnsCaaRecordInfo(flags, tag, value);
         }
 
         /// <summary> Initializes a new instance of DnsZoneData. </summary>

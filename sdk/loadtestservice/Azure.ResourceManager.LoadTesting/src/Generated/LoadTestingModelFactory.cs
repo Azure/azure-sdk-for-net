@@ -46,15 +46,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingQuotaBucketContent(id, name, resourceType, systemData, currentUsage, currentQuota, newQuota, dimensions);
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaBucketDimensions. </summary>
-        /// <param name="subscriptionId"> Subscription Id dimension for new quota request of the quota bucket. </param>
-        /// <param name="location"> Location dimension for new quota request of the quota bucket. </param>
-        /// <returns> A new <see cref="Models.LoadTestingQuotaBucketDimensions"/> instance for mocking. </returns>
-        public static LoadTestingQuotaBucketDimensions LoadTestingQuotaBucketDimensions(string subscriptionId = null, AzureLocation? location = null)
-        {
-            return new LoadTestingQuotaBucketDimensions(subscriptionId, location);
-        }
-
         /// <summary> Initializes a new instance of LoadTestingQuotaAvailabilityResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -81,40 +72,22 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="dataPlaneUri"> Resource data plane URI. </param>
         /// <param name="encryption"> CMK Encryption property. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTestingResourceData"/> instance for mocking. </returns>
-        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string description = null, LoadTestingProvisioningState? provisioningState = null, string dataPlaneUri = null, CustomerManagedKeyEncryptionProperties encryption = null)
+        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string description = null, LoadTestingProvisioningState? provisioningState = null, string dataPlaneUri = null, LoadTestingCmkEncryptionProperties encryption = null)
         {
             tags ??= new Dictionary<string, string>();
 
             return new LoadTestingResourceData(id, name, resourceType, systemData, tags, location, identity, description, provisioningState, dataPlaneUri, encryption);
         }
 
-        /// <summary> Initializes a new instance of CustomerManagedKeyEncryptionProperties. </summary>
-        /// <param name="identity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
-        /// <param name="keyUri"> key encryption key Url, versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
-        /// <returns> A new <see cref="Models.CustomerManagedKeyEncryptionProperties"/> instance for mocking. </returns>
-        public static CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryptionProperties(CustomerManagedKeyIdentity identity = null, Uri keyUri = null)
-        {
-            return new CustomerManagedKeyEncryptionProperties(identity, keyUri);
-        }
-
-        /// <summary> Initializes a new instance of CustomerManagedKeyIdentity. </summary>
-        /// <param name="identityType"> Managed identity type to use for accessing encryption key Url. </param>
-        /// <param name="resourceId"> user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. </param>
-        /// <returns> A new <see cref="Models.CustomerManagedKeyIdentity"/> instance for mocking. </returns>
-        public static CustomerManagedKeyIdentity CustomerManagedKeyIdentity(CustomerManagedKeyIdentityType? identityType = null, ResourceIdentifier resourceId = null)
-        {
-            return new CustomerManagedKeyIdentity(identityType, resourceId);
-        }
-
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of LoadTestingOutboundEnvironmentEndpoint. </summary>
         /// <param name="category"> The type of service that Azure Load Testing connects to. </param>
         /// <param name="endpoints"> The endpoints for this service to which the Batch service makes outbound calls. </param>
-        /// <returns> A new <see cref="Models.OutboundEnvironmentEndpoint"/> instance for mocking. </returns>
-        public static OutboundEnvironmentEndpoint OutboundEnvironmentEndpoint(string category = null, IEnumerable<LoadTestingEndpointDependency> endpoints = null)
+        /// <returns> A new <see cref="Models.LoadTestingOutboundEnvironmentEndpoint"/> instance for mocking. </returns>
+        public static LoadTestingOutboundEnvironmentEndpoint LoadTestingOutboundEnvironmentEndpoint(string category = null, IEnumerable<LoadTestingEndpointDependency> endpoints = null)
         {
             endpoints ??= new List<LoadTestingEndpointDependency>();
 
-            return new OutboundEnvironmentEndpoint(category, endpoints?.ToList());
+            return new LoadTestingOutboundEnvironmentEndpoint(category, endpoints?.ToList());
         }
 
         /// <summary> Initializes a new instance of LoadTestingEndpointDependency. </summary>

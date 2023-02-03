@@ -45,56 +45,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultProperties(tenantId, sku, accessPolicies?.ToList(), vaultUri, hsmPoolResourceId, enabledForDeployment, enabledForDiskEncryption, enabledForTemplateDeployment, enableSoftDelete, softDeleteRetentionInDays, enableRbacAuthorization, createMode, enablePurgeProtection, networkRuleSet, provisioningState, privateEndpointConnections?.ToList(), publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicy. </summary>
-        /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
-        /// <param name="objectId"> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </param>
-        /// <param name="applicationId"> Application ID of the client making request on behalf of a principal. </param>
-        /// <param name="permissions"> Permissions the identity has for keys, secrets and certificates. </param>
-        /// <returns> A new <see cref="Models.KeyVaultAccessPolicy"/> instance for mocking. </returns>
-        public static KeyVaultAccessPolicy KeyVaultAccessPolicy(Guid tenantId = default, string objectId = null, Guid? applicationId = null, IdentityAccessPermissions permissions = null)
-        {
-            return new KeyVaultAccessPolicy(tenantId, objectId, applicationId, permissions);
-        }
-
-        /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>
-        /// <param name="keys"> Permissions to keys. </param>
-        /// <param name="secrets"> Permissions to secrets. </param>
-        /// <param name="certificates"> Permissions to certificates. </param>
-        /// <param name="storage"> Permissions to storage accounts. </param>
-        /// <returns> A new <see cref="Models.IdentityAccessPermissions"/> instance for mocking. </returns>
-        public static IdentityAccessPermissions IdentityAccessPermissions(IEnumerable<IdentityAccessKeyPermission> keys = null, IEnumerable<IdentityAccessSecretPermission> secrets = null, IEnumerable<IdentityAccessCertificatePermission> certificates = null, IEnumerable<IdentityAccessStoragePermission> storage = null)
-        {
-            keys ??= new List<IdentityAccessKeyPermission>();
-            secrets ??= new List<IdentityAccessSecretPermission>();
-            certificates ??= new List<IdentityAccessCertificatePermission>();
-            storage ??= new List<IdentityAccessStoragePermission>();
-
-            return new IdentityAccessPermissions(keys?.ToList(), secrets?.ToList(), certificates?.ToList(), storage?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultNetworkRuleSet. </summary>
-        /// <param name="bypass"> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </param>
-        /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
-        /// <param name="ipRules"> The list of IP address rules. </param>
-        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        /// <returns> A new <see cref="Models.KeyVaultNetworkRuleSet"/> instance for mocking. </returns>
-        public static KeyVaultNetworkRuleSet KeyVaultNetworkRuleSet(KeyVaultNetworkRuleBypassOption? bypass = null, KeyVaultNetworkRuleAction? defaultAction = null, IEnumerable<KeyVaultIPRule> ipRules = null, IEnumerable<KeyVaultVirtualNetworkRule> virtualNetworkRules = null)
-        {
-            ipRules ??= new List<KeyVaultIPRule>();
-            virtualNetworkRules ??= new List<KeyVaultVirtualNetworkRule>();
-
-            return new KeyVaultNetworkRuleSet(bypass, defaultAction, ipRules?.ToList(), virtualNetworkRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultVirtualNetworkRule. </summary>
-        /// <param name="id"> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Property to specify whether NRP will ignore the check if parent subnet has serviceEndpoints configured. </param>
-        /// <returns> A new <see cref="Models.KeyVaultVirtualNetworkRule"/> instance for mocking. </returns>
-        public static KeyVaultVirtualNetworkRule KeyVaultVirtualNetworkRule(string id = null, bool? ignoreMissingVnetServiceEndpoint = null)
-        {
-            return new KeyVaultVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint);
-        }
-
         /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionItemData. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
@@ -105,16 +55,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
-        /// <param name="description"> The reason for approval or rejection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.KeyVaultPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static KeyVaultPrivateLinkServiceConnectionState KeyVaultPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status = null, string description = null, KeyVaultActionsRequiredMessage? actionsRequired = null)
-        {
-            return new KeyVaultPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
         /// <summary> Initializes a new instance of KeyVaultData. </summary>
@@ -264,20 +204,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmProperties(tenantId, initialAdminObjectIds?.ToList(), hsmUri, enableSoftDelete, softDeleteRetentionInDays, enablePurgeProtection, createMode, statusMessage, provisioningState, networkRuleSet, privateEndpointConnections?.ToList(), publicNetworkAccess, scheduledPurgeOn);
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmNetworkRuleSet. </summary>
-        /// <param name="bypass"> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </param>
-        /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
-        /// <param name="ipRules"> The list of IP address rules. </param>
-        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        /// <returns> A new <see cref="Models.ManagedHsmNetworkRuleSet"/> instance for mocking. </returns>
-        public static ManagedHsmNetworkRuleSet ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass = null, ManagedHsmNetworkRuleAction? defaultAction = null, IEnumerable<ManagedHsmIPRule> ipRules = null, IEnumerable<ManagedHsmVirtualNetworkRule> virtualNetworkRules = null)
-        {
-            ipRules ??= new List<ManagedHsmIPRule>();
-            virtualNetworkRules ??= new List<ManagedHsmVirtualNetworkRule>();
-
-            return new ManagedHsmNetworkRuleSet(bypass, defaultAction, ipRules?.ToList(), virtualNetworkRules?.ToList());
-        }
-
         /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
         /// <param name="privateEndpointId"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
@@ -286,16 +212,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             return new ManagedHsmPrivateEndpointConnectionItemData(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
-        /// <param name="description"> The reason for approval or rejection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateLinkServiceConnectionState ManagedHsmPrivateLinkServiceConnectionState(ManagedHsmPrivateEndpointServiceConnectionStatus? status = null, string description = null, ManagedHsmActionsRequiredMessage? actionsRequired = null)
-        {
-            return new ManagedHsmPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
         /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionData. </summary>

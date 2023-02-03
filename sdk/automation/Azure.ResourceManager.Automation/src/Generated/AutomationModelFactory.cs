@@ -44,15 +44,6 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of AutomationResponseError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message indicating why the operation failed. </param>
-        /// <returns> A new <see cref="Models.AutomationResponseError"/> instance for mocking. </returns>
-        public static AutomationResponseError AutomationResponseError(string code = null, string message = null)
-        {
-            return new AutomationResponseError(code, message);
-        }
-
         /// <summary> Initializes a new instance of AutomationPrivateLinkResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -93,25 +84,6 @@ namespace Azure.ResourceManager.Automation.Models
             tags ??= new Dictionary<string, string>();
 
             return new AutomationModuleData(id, name, resourceType, systemData, tags, location, etag, isGlobal, version, sizeInBytes, activityCount, provisioningState, contentLink, error, createdOn, lastModifiedOn, description, isComposite);
-        }
-
-        /// <summary> Initializes a new instance of AutomationContentLink. </summary>
-        /// <param name="uri"> Gets or sets the uri of the runbook content. </param>
-        /// <param name="contentHash"> Gets or sets the hash. </param>
-        /// <param name="version"> Gets or sets the version of the content. </param>
-        /// <returns> A new <see cref="Models.AutomationContentLink"/> instance for mocking. </returns>
-        public static AutomationContentLink AutomationContentLink(Uri uri = null, AutomationContentHash contentHash = null, string version = null)
-        {
-            return new AutomationContentLink(uri, contentHash, version);
-        }
-
-        /// <summary> Initializes a new instance of AutomationModuleErrorInfo. </summary>
-        /// <param name="code"> Gets or sets the error code. </param>
-        /// <param name="message"> Gets or sets the error message. </param>
-        /// <returns> A new <see cref="Models.AutomationModuleErrorInfo"/> instance for mocking. </returns>
-        public static AutomationModuleErrorInfo AutomationModuleErrorInfo(string code = null, string message = null)
-        {
-            return new AutomationModuleErrorInfo(code, message);
         }
 
         /// <summary> Initializes a new instance of AgentRegistration. </summary>
@@ -155,15 +127,6 @@ namespace Azure.ResourceManager.Automation.Models
             extensionHandler ??= new List<DscNodeExtensionHandlerAssociationProperty>();
 
             return new DscNodeData(id, name, resourceType, systemData, lastSeenOn, registrationOn, ip, accountId, status, nodeId, etag, totalCount, extensionHandler?.ToList(), namePropertiesNodeConfigurationName);
-        }
-
-        /// <summary> Initializes a new instance of DscNodeExtensionHandlerAssociationProperty. </summary>
-        /// <param name="name"> Gets or sets the name of the extension handler. </param>
-        /// <param name="version"> Gets or sets the version of the extension handler. </param>
-        /// <returns> A new <see cref="Models.DscNodeExtensionHandlerAssociationProperty"/> instance for mocking. </returns>
-        public static DscNodeExtensionHandlerAssociationProperty DscNodeExtensionHandlerAssociationProperty(string name = null, string version = null)
-        {
-            return new DscNodeExtensionHandlerAssociationProperty(name, version);
         }
 
         /// <summary> Initializes a new instance of DscNodeReport. </summary>
@@ -266,25 +229,6 @@ namespace Azure.ResourceManager.Automation.Models
         public static DscNodeConfigurationData DscNodeConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, string configurationName = null, string source = null, long? nodeCount = null, bool? isIncrementNodeConfigurationBuildRequired = null)
         {
             return new DscNodeConfigurationData(id, name, resourceType, systemData, lastModifiedOn, createdOn, configurationName != null ? new DscConfigurationAssociationProperty(configurationName) : null, source, nodeCount, isIncrementNodeConfigurationBuildRequired);
-        }
-
-        /// <summary> Initializes a new instance of DscConfigurationAssociationProperty. </summary>
-        /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
-        /// <returns> A new <see cref="Models.DscConfigurationAssociationProperty"/> instance for mocking. </returns>
-        public static DscConfigurationAssociationProperty DscConfigurationAssociationProperty(string configurationName = null)
-        {
-            return new DscConfigurationAssociationProperty(configurationName);
-        }
-
-        /// <summary> Initializes a new instance of AutomationContentSource. </summary>
-        /// <param name="hash"> Gets or sets the hash. </param>
-        /// <param name="sourceType"> Gets or sets the content source type. </param>
-        /// <param name="value"> Gets or sets the value of the content. This is based on the content source type. </param>
-        /// <param name="version"> Gets or sets the version of the content. </param>
-        /// <returns> A new <see cref="Models.AutomationContentSource"/> instance for mocking. </returns>
-        public static AutomationContentSource AutomationContentSource(AutomationContentHash hash = null, AutomationContentSourceType? sourceType = null, string value = null, string version = null)
-        {
-            return new AutomationContentSource(hash, sourceType, value, version);
         }
 
         /// <summary> Initializes a new instance of DscCompilationJobData. </summary>
@@ -419,36 +363,6 @@ namespace Azure.ResourceManager.Automation.Models
             return new SourceControlSyncJobStreamResult(id, sourceControlSyncJobStreamId, summary, time, streamType, streamText, value);
         }
 
-        /// <summary> Initializes a new instance of AutomationSku. </summary>
-        /// <param name="name"> Gets or sets the SKU name of the account. </param>
-        /// <param name="family"> Gets or sets the SKU family. </param>
-        /// <param name="capacity"> Gets or sets the SKU capacity. </param>
-        /// <returns> A new <see cref="Models.AutomationSku"/> instance for mocking. </returns>
-        public static AutomationSku AutomationSku(AutomationSkuName name = default, string family = null, int? capacity = null)
-        {
-            return new AutomationSku(name, family, capacity);
-        }
-
-        /// <summary> Initializes a new instance of AutomationEncryptionProperties. </summary>
-        /// <param name="keyVaultProperties"> Key vault properties. </param>
-        /// <param name="keySource"> Encryption Key Source. </param>
-        /// <param name="userAssignedIdentity"> User identity used for CMK. </param>
-        /// <returns> A new <see cref="Models.AutomationEncryptionProperties"/> instance for mocking. </returns>
-        public static AutomationEncryptionProperties AutomationEncryptionProperties(AutomationKeyVaultProperties keyVaultProperties = null, EncryptionKeySourceType? keySource = null, BinaryData userAssignedIdentity = null)
-        {
-            return new AutomationEncryptionProperties(keyVaultProperties, keySource, userAssignedIdentity != null ? new EncryptionPropertiesIdentity(userAssignedIdentity) : null);
-        }
-
-        /// <summary> Initializes a new instance of AutomationKeyVaultProperties. </summary>
-        /// <param name="keyvaultUri"> The URI of the key vault key used to encrypt data. </param>
-        /// <param name="keyName"> The name of key used to encrypt data. </param>
-        /// <param name="keyVersion"> The key version of the key used to encrypt data. </param>
-        /// <returns> A new <see cref="Models.AutomationKeyVaultProperties"/> instance for mocking. </returns>
-        public static AutomationKeyVaultProperties AutomationKeyVaultProperties(Uri keyvaultUri = null, string keyName = null, string keyVersion = null)
-        {
-            return new AutomationKeyVaultProperties(keyvaultUri, keyName, keyVersion);
-        }
-
         /// <summary> Initializes a new instance of AutomationAccountData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -557,14 +471,6 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationConnectionData(id, name, resourceType, systemData, connectionTypeName != null ? new ConnectionTypeAssociationProperty(connectionTypeName) : null, fieldDefinitionValues, createdOn, lastModifiedOn, description);
         }
 
-        /// <summary> Initializes a new instance of ConnectionTypeAssociationProperty. </summary>
-        /// <param name="name"> Gets or sets the name of the connection type. </param>
-        /// <returns> A new <see cref="Models.ConnectionTypeAssociationProperty"/> instance for mocking. </returns>
-        public static ConnectionTypeAssociationProperty ConnectionTypeAssociationProperty(string name = null)
-        {
-            return new ConnectionTypeAssociationProperty(name);
-        }
-
         /// <summary> Initializes a new instance of AutomationConnectionTypeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -581,16 +487,6 @@ namespace Azure.ResourceManager.Automation.Models
             fieldDefinitions ??= new Dictionary<string, AutomationConnectionFieldDefinition>();
 
             return new AutomationConnectionTypeData(id, name, resourceType, systemData, isGlobal, fieldDefinitions, createdOn, lastModifiedOn, description);
-        }
-
-        /// <summary> Initializes a new instance of AutomationConnectionFieldDefinition. </summary>
-        /// <param name="isEncrypted"> Gets or sets the isEncrypted flag of the connection field definition. </param>
-        /// <param name="isOptional"> Gets or sets the isOptional flag of the connection field definition. </param>
-        /// <param name="fieldDefinitionType"> Gets or sets the type of the connection field definition. </param>
-        /// <returns> A new <see cref="Models.AutomationConnectionFieldDefinition"/> instance for mocking. </returns>
-        public static AutomationConnectionFieldDefinition AutomationConnectionFieldDefinition(bool? isEncrypted = null, bool? isOptional = null, string fieldDefinitionType = null)
-        {
-            return new AutomationConnectionFieldDefinition(isEncrypted, isOptional, fieldDefinitionType);
         }
 
         /// <summary> Initializes a new instance of AutomationCredentialData. </summary>
@@ -624,22 +520,6 @@ namespace Azure.ResourceManager.Automation.Models
             parameters ??= new Dictionary<string, string>();
 
             return new AutomationJobScheduleData(id, name, resourceType, systemData, jobScheduleId, scheduleName != null ? new ScheduleAssociationProperty(scheduleName) : null, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, runOn, parameters);
-        }
-
-        /// <summary> Initializes a new instance of ScheduleAssociationProperty. </summary>
-        /// <param name="name"> Gets or sets the name of the Schedule. </param>
-        /// <returns> A new <see cref="Models.ScheduleAssociationProperty"/> instance for mocking. </returns>
-        public static ScheduleAssociationProperty ScheduleAssociationProperty(string name = null)
-        {
-            return new ScheduleAssociationProperty(name);
-        }
-
-        /// <summary> Initializes a new instance of RunbookAssociationProperty. </summary>
-        /// <param name="name"> Gets or sets the name of the runbook. </param>
-        /// <returns> A new <see cref="Models.RunbookAssociationProperty"/> instance for mocking. </returns>
-        public static RunbookAssociationProperty RunbookAssociationProperty(string name = null)
-        {
-            return new RunbookAssociationProperty(name);
         }
 
         /// <summary> Initializes a new instance of AutomationLinkedWorkspace. </summary>
@@ -722,29 +602,6 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationModuleField AutomationModuleField(string name = null, string fieldType = null)
         {
             return new AutomationModuleField(name, fieldType);
-        }
-
-        /// <summary> Initializes a new instance of AutomationAdvancedSchedule. </summary>
-        /// <param name="weekDays"> Days of the week that the job should execute on. </param>
-        /// <param name="monthDays"> Days of the month that the job should execute on. Must be between 1 and 31. </param>
-        /// <param name="monthlyOccurrences"> Occurrences of days within a month. </param>
-        /// <returns> A new <see cref="Models.AutomationAdvancedSchedule"/> instance for mocking. </returns>
-        public static AutomationAdvancedSchedule AutomationAdvancedSchedule(IEnumerable<string> weekDays = null, IEnumerable<int> monthDays = null, IEnumerable<AutomationAdvancedScheduleMonthlyOccurrence> monthlyOccurrences = null)
-        {
-            weekDays ??= new List<string>();
-            monthDays ??= new List<int>();
-            monthlyOccurrences ??= new List<AutomationAdvancedScheduleMonthlyOccurrence>();
-
-            return new AutomationAdvancedSchedule(weekDays?.ToList(), monthDays?.ToList(), monthlyOccurrences?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AutomationAdvancedScheduleMonthlyOccurrence. </summary>
-        /// <param name="occurrence"> Occurrence of the week within the month. Must be between 1 and 5. </param>
-        /// <param name="day"> Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday. </param>
-        /// <returns> A new <see cref="Models.AutomationAdvancedScheduleMonthlyOccurrence"/> instance for mocking. </returns>
-        public static AutomationAdvancedScheduleMonthlyOccurrence AutomationAdvancedScheduleMonthlyOccurrence(int? occurrence = null, AutomationDayOfWeek? day = null)
-        {
-            return new AutomationAdvancedScheduleMonthlyOccurrence(occurrence, day);
         }
 
         /// <summary> Initializes a new instance of AutomationScheduleData. </summary>
@@ -841,17 +698,6 @@ namespace Azure.ResourceManager.Automation.Models
             return new DscConfigurationData(id, name, resourceType, systemData, tags, location, etag, provisioningState, jobCount, parameters, source, state, isLogVerboseEnabled, createdOn, lastModifiedOn, nodeConfigurationCount, description);
         }
 
-        /// <summary> Initializes a new instance of DscConfigurationParameterDefinition. </summary>
-        /// <param name="dscConfigurationParameterType"> Gets or sets the type of the parameter. </param>
-        /// <param name="isMandatory"> Gets or sets a Boolean value to indicate whether the parameter is mandatory or not. </param>
-        /// <param name="position"> Get or sets the position of the parameter. </param>
-        /// <param name="defaultValue"> Gets or sets the default value of parameter. </param>
-        /// <returns> A new <see cref="Models.DscConfigurationParameterDefinition"/> instance for mocking. </returns>
-        public static DscConfigurationParameterDefinition DscConfigurationParameterDefinition(string dscConfigurationParameterType = null, bool? isMandatory = null, int? position = null, string defaultValue = null)
-        {
-            return new DscConfigurationParameterDefinition(dscConfigurationParameterType, isMandatory, position, defaultValue);
-        }
-
         /// <summary> Initializes a new instance of AutomationJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -899,25 +745,6 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationJobCollectionItemData(id, name, resourceType, systemData, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, jobId, createdOn, status, startOn, endOn, lastModifiedOn, provisioningState, runOn);
         }
 
-        /// <summary> Initializes a new instance of GraphicalRunbookContent. </summary>
-        /// <param name="rawContent"> Raw graphical Runbook content. </param>
-        /// <param name="graphRunbookJson"> Graphical Runbook content as JSON. </param>
-        /// <returns> A new <see cref="Models.GraphicalRunbookContent"/> instance for mocking. </returns>
-        public static GraphicalRunbookContent GraphicalRunbookContent(RawGraphicalRunbookContent rawContent = null, string graphRunbookJson = null)
-        {
-            return new GraphicalRunbookContent(rawContent, graphRunbookJson);
-        }
-
-        /// <summary> Initializes a new instance of RawGraphicalRunbookContent. </summary>
-        /// <param name="schemaVersion"> Schema version of the serializer. </param>
-        /// <param name="runbookDefinition"> Serialized Graphical runbook. </param>
-        /// <param name="runbookType"> Runbook Type. </param>
-        /// <returns> A new <see cref="Models.RawGraphicalRunbookContent"/> instance for mocking. </returns>
-        public static RawGraphicalRunbookContent RawGraphicalRunbookContent(string schemaVersion = null, string runbookDefinition = null, GraphRunbookType? runbookType = null)
-        {
-            return new RawGraphicalRunbookContent(schemaVersion, runbookDefinition, runbookType);
-        }
-
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -936,96 +763,6 @@ namespace Azure.ResourceManager.Automation.Models
         public static SoftwareUpdateConfigurationData SoftwareUpdateConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SoftwareUpdateConfigurationSpecificProperties updateConfiguration = null, SoftwareUpdateConfigurationScheduleProperties scheduleInfo = null, string provisioningState = null, AutomationResponseError error = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, SoftwareUpdateConfigurationTasks tasks = null)
         {
             return new SoftwareUpdateConfigurationData(id, name, resourceType, systemData, updateConfiguration, scheduleInfo, provisioningState, error, createdOn, createdBy, lastModifiedOn, lastModifiedBy, tasks);
-        }
-
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationSpecificProperties. </summary>
-        /// <param name="operatingSystem"> operating system of target machines. </param>
-        /// <param name="windows"> Windows specific update configuration. </param>
-        /// <param name="linux"> Linux specific update configuration. </param>
-        /// <param name="duration"> Maximum time allowed for the software update configuration run. Duration needs to be specified using the format PT[n]H[n]M[n]S as per ISO8601. </param>
-        /// <param name="azureVirtualMachines"> List of azure resource Ids for azure virtual machines targeted by the software update configuration. </param>
-        /// <param name="nonAzureComputerNames"> List of names of non-azure machines targeted by the software update configuration. </param>
-        /// <param name="targets"> Group targets for the software update configuration. </param>
-        /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationSpecificProperties"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationSpecificProperties SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType operatingSystem = default, WindowsUpdateConfigurationProperties windows = null, LinuxUpdateConfigurationProperties linux = null, TimeSpan? duration = null, IEnumerable<string> azureVirtualMachines = null, IEnumerable<string> nonAzureComputerNames = null, SoftwareUpdateConfigurationTargetProperties targets = null)
-        {
-            azureVirtualMachines ??= new List<string>();
-            nonAzureComputerNames ??= new List<string>();
-
-            return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows, linux, duration, azureVirtualMachines?.ToList(), nonAzureComputerNames?.ToList(), targets);
-        }
-
-        /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>
-        /// <param name="includedUpdateClassifications"> Update classification included in the software update configuration. A comma separated string with required values. </param>
-        /// <param name="excludedKBNumbers"> KB numbers excluded from the software update configuration. </param>
-        /// <param name="includedKBNumbers"> KB numbers included from the software update configuration. </param>
-        /// <param name="rebootSetting"> Reboot setting for the software update configuration. </param>
-        /// <returns> A new <see cref="Models.WindowsUpdateConfigurationProperties"/> instance for mocking. </returns>
-        public static WindowsUpdateConfigurationProperties WindowsUpdateConfigurationProperties(WindowsUpdateClassification? includedUpdateClassifications = null, IEnumerable<string> excludedKBNumbers = null, IEnumerable<string> includedKBNumbers = null, string rebootSetting = null)
-        {
-            excludedKBNumbers ??= new List<string>();
-            includedKBNumbers ??= new List<string>();
-
-            return new WindowsUpdateConfigurationProperties(includedUpdateClassifications, excludedKBNumbers?.ToList(), includedKBNumbers?.ToList(), rebootSetting);
-        }
-
-        /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>
-        /// <param name="includedPackageClassifications"> Update classifications included in the software update configuration. </param>
-        /// <param name="excludedPackageNameMasks"> packages excluded from the software update configuration. </param>
-        /// <param name="includedPackageNameMasks"> packages included from the software update configuration. </param>
-        /// <param name="rebootSetting"> Reboot setting for the software update configuration. </param>
-        /// <returns> A new <see cref="Models.LinuxUpdateConfigurationProperties"/> instance for mocking. </returns>
-        public static LinuxUpdateConfigurationProperties LinuxUpdateConfigurationProperties(LinuxUpdateClassification? includedPackageClassifications = null, IEnumerable<string> excludedPackageNameMasks = null, IEnumerable<string> includedPackageNameMasks = null, string rebootSetting = null)
-        {
-            excludedPackageNameMasks ??= new List<string>();
-            includedPackageNameMasks ??= new List<string>();
-
-            return new LinuxUpdateConfigurationProperties(includedPackageClassifications, excludedPackageNameMasks?.ToList(), includedPackageNameMasks?.ToList(), rebootSetting);
-        }
-
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>
-        /// <param name="azureQueries"> List of Azure queries in the software update configuration. </param>
-        /// <param name="nonAzureQueries"> List of non Azure queries in the software update configuration. </param>
-        /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationTargetProperties"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationTargetProperties SoftwareUpdateConfigurationTargetProperties(IEnumerable<AzureQueryProperties> azureQueries = null, IEnumerable<NonAzureQueryProperties> nonAzureQueries = null)
-        {
-            azureQueries ??= new List<AzureQueryProperties>();
-            nonAzureQueries ??= new List<NonAzureQueryProperties>();
-
-            return new SoftwareUpdateConfigurationTargetProperties(azureQueries?.ToList(), nonAzureQueries?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AzureQueryProperties. </summary>
-        /// <param name="scope"> List of Subscription or Resource Group ARM Ids. </param>
-        /// <param name="locations"> List of locations to scope the query to. </param>
-        /// <param name="tagSettings"> Tag settings for the VM. </param>
-        /// <returns> A new <see cref="Models.AzureQueryProperties"/> instance for mocking. </returns>
-        public static AzureQueryProperties AzureQueryProperties(IEnumerable<string> scope = null, IEnumerable<AzureLocation> locations = null, QueryTagSettingsProperties tagSettings = null)
-        {
-            scope ??= new List<string>();
-            locations ??= new List<AzureLocation>();
-
-            return new AzureQueryProperties(scope?.ToList(), locations?.ToList(), tagSettings);
-        }
-
-        /// <summary> Initializes a new instance of QueryTagSettingsProperties. </summary>
-        /// <param name="tags"> Dictionary of tags with its list of values. </param>
-        /// <param name="filterOperator"> Filter VMs by Any or All specified tags. </param>
-        /// <returns> A new <see cref="Models.QueryTagSettingsProperties"/> instance for mocking. </returns>
-        public static QueryTagSettingsProperties QueryTagSettingsProperties(IDictionary<string, IList<string>> tags = null, QueryTagOperator? filterOperator = null)
-        {
-            tags ??= new Dictionary<string, IList<string>>();
-
-            return new QueryTagSettingsProperties(tags, filterOperator);
-        }
-
-        /// <summary> Initializes a new instance of NonAzureQueryProperties. </summary>
-        /// <param name="functionAlias"> Log Analytics Saved Search name. </param>
-        /// <param name="workspaceId"> Workspace Id for Log Analytics in which the saved Search is resided. </param>
-        /// <returns> A new <see cref="Models.NonAzureQueryProperties"/> instance for mocking. </returns>
-        public static NonAzureQueryProperties NonAzureQueryProperties(string functionAlias = null, string workspaceId = null)
-        {
-            return new NonAzureQueryProperties(functionAlias, workspaceId);
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationScheduleProperties. </summary>
@@ -1047,26 +784,6 @@ namespace Azure.ResourceManager.Automation.Models
         public static SoftwareUpdateConfigurationScheduleProperties SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn = null, double? startInMinutes = null, DateTimeOffset? expireOn = null, double? expireInMinutes = null, bool? isEnabled = null, DateTimeOffset? nextRunOn = null, double? nextRunInMinutes = null, long? interval = null, AutomationScheduleFrequency? frequency = null, string timeZone = null, AutomationAdvancedSchedule advancedSchedule = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
             return new SoftwareUpdateConfigurationScheduleProperties(startOn, startInMinutes, expireOn, expireInMinutes, isEnabled, nextRunOn, nextRunInMinutes, interval, frequency, timeZone, advancedSchedule, createdOn, lastModifiedOn, description);
-        }
-
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTasks. </summary>
-        /// <param name="preTask"> Pre task properties. </param>
-        /// <param name="postTask"> Post task properties. </param>
-        /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationTasks"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationTasks SoftwareUpdateConfigurationTasks(SoftwareUpdateConfigurationTaskProperties preTask = null, SoftwareUpdateConfigurationTaskProperties postTask = null)
-        {
-            return new SoftwareUpdateConfigurationTasks(preTask, postTask);
-        }
-
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTaskProperties. </summary>
-        /// <param name="parameters"> Gets or sets the parameters of the task. </param>
-        /// <param name="source"> Gets or sets the name of the runbook. </param>
-        /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationTaskProperties"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationTaskProperties SoftwareUpdateConfigurationTaskProperties(IDictionary<string, string> parameters = null, string source = null)
-        {
-            parameters ??= new Dictionary<string, string>();
-
-            return new SoftwareUpdateConfigurationTaskProperties(parameters, source);
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationCollectionItem. </summary>
@@ -1150,33 +867,6 @@ namespace Azure.ResourceManager.Automation.Models
         public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = null, ResourceIdentifier id = null, ResourceIdentifier targetComputerId = null, string targetComputerType = null, string softwareUpdateName = null, string status = null, string osType = null, Guid? correlationId = null, Guid? sourceComputerId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, TimeSpan? configuredDuration = null, Guid? jobId = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, AutomationResponseError error = null)
         {
             return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId, targetComputerType, softwareUpdateName != null ? new SoftwareUpdateConfigurationNavigation(softwareUpdateName) : null, status, osType, correlationId, sourceComputerId, startOn, endOn, configuredDuration, jobId != null ? new JobNavigation(jobId) : null, createdOn, createdBy, lastModifiedOn, lastModifiedBy, error);
-        }
-
-        /// <summary> Initializes a new instance of AutomationRunbookDraft. </summary>
-        /// <param name="isInEditMode"> Gets or sets whether runbook is in edit mode. </param>
-        /// <param name="draftContentLink"> Gets or sets the draft runbook content link. </param>
-        /// <param name="createdOn"> Gets or sets the creation time of the runbook draft. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the last modified time of the runbook draft. </param>
-        /// <param name="parameters"> Gets or sets the runbook draft parameters. </param>
-        /// <param name="outputTypes"> Gets or sets the runbook output types. </param>
-        /// <returns> A new <see cref="Models.AutomationRunbookDraft"/> instance for mocking. </returns>
-        public static AutomationRunbookDraft AutomationRunbookDraft(bool? isInEditMode = null, AutomationContentLink draftContentLink = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, IDictionary<string, RunbookParameterDefinition> parameters = null, IEnumerable<string> outputTypes = null)
-        {
-            parameters ??= new Dictionary<string, RunbookParameterDefinition>();
-            outputTypes ??= new List<string>();
-
-            return new AutomationRunbookDraft(isInEditMode, draftContentLink, createdOn, lastModifiedOn, parameters, outputTypes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RunbookParameterDefinition. </summary>
-        /// <param name="runbookParameterType"> Gets or sets the type of the parameter. </param>
-        /// <param name="isMandatory"> Gets or sets a Boolean value to indicate whether the parameter is mandatory or not. </param>
-        /// <param name="position"> Get or sets the position of the parameter. </param>
-        /// <param name="defaultValue"> Gets or sets the default value of parameter. </param>
-        /// <returns> A new <see cref="Models.RunbookParameterDefinition"/> instance for mocking. </returns>
-        public static RunbookParameterDefinition RunbookParameterDefinition(string runbookParameterType = null, bool? isMandatory = null, int? position = null, string defaultValue = null)
-        {
-            return new RunbookParameterDefinition(runbookParameterType, isMandatory, position, defaultValue);
         }
 
         /// <summary> Initializes a new instance of RunbookDraftUndoEditResult. </summary>

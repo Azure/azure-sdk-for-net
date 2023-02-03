@@ -52,18 +52,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerData(id, name, resourceType, systemData, tags, location, identity, sku, administratorLogin, administratorLoginPassword, version, availabilityZone, createMode, sourceServerResourceId, restorePointInTime, replicationRole, replicaCapacity, dataEncryption, state, fullyQualifiedDomainName, storage, backup, highAvailability, network, maintenanceWindow);
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDataEncryption. </summary>
-        /// <param name="primaryUserAssignedIdentityId"> Primary user identity resource id. </param>
-        /// <param name="primaryKeyUri"> Primary key uri. </param>
-        /// <param name="geoBackupUserAssignedIdentityId"> Geo backup user identity resource id as identity can&apos;t cross region, need identity in same region as geo backup. </param>
-        /// <param name="geoBackupKeyUri"> Geo backup key uri as key vault can&apos;t cross region, need cmk in same region as geo backup. </param>
-        /// <param name="encryptionType"> The key type, AzureKeyVault for enable cmk, SystemManaged for disable cmk. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerDataEncryption"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerDataEncryption MySqlFlexibleServerDataEncryption(ResourceIdentifier primaryUserAssignedIdentityId = null, Uri primaryKeyUri = null, ResourceIdentifier geoBackupUserAssignedIdentityId = null, Uri geoBackupKeyUri = null, MySqlFlexibleServerDataEncryptionType? encryptionType = null)
-        {
-            return new MySqlFlexibleServerDataEncryption(primaryUserAssignedIdentityId, primaryKeyUri, geoBackupUserAssignedIdentityId, geoBackupKeyUri, encryptionType);
-        }
-
         /// <summary> Initializes a new instance of MySqlFlexibleServerStorage. </summary>
         /// <param name="storageSizeInGB"> Max storage size allowed for a server. </param>
         /// <param name="iops"> Storage IOPS for a server. </param>
@@ -103,17 +91,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerNetwork MySqlFlexibleServerNetwork(MySqlFlexibleServerEnableStatusEnum? publicNetworkAccess = null, ResourceIdentifier delegatedSubnetResourceId = null, ResourceIdentifier privateDnsZoneResourceId = null)
         {
             return new MySqlFlexibleServerNetwork(publicNetworkAccess, delegatedSubnetResourceId, privateDnsZoneResourceId);
-        }
-
-        /// <summary> Initializes a new instance of MySqlFlexibleServerMaintenanceWindow. </summary>
-        /// <param name="customWindow"> indicates whether custom window is enabled or disabled. </param>
-        /// <param name="startHour"> start hour for maintenance window. </param>
-        /// <param name="startMinute"> start minute for maintenance window. </param>
-        /// <param name="dayOfWeek"> day of week for maintenance window. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerMaintenanceWindow"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerMaintenanceWindow MySqlFlexibleServerMaintenanceWindow(string customWindow = null, int? startHour = null, int? startMinute = null, int? dayOfWeek = null)
-        {
-            return new MySqlFlexibleServerMaintenanceWindow(customWindow, startHour, startMinute, dayOfWeek);
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerBackupData. </summary>

@@ -45,16 +45,6 @@ namespace Azure.ResourceManager.Analysis.Models
             return new AnalysisServerData(id, name, resourceType, systemData, tags, location, asAdministratorIdentities != null ? new ServerAdministrators(asAdministratorIdentities?.ToList()) : null, backupBlobContainerUri, gatewayDetails, ipv4FirewallSettings, queryPoolConnectionMode, managedMode, serverMonitorMode, state, provisioningState, serverFullName, analysisServerSku, analysisSku);
         }
 
-        /// <summary> Initializes a new instance of AnalysisResourceSku. </summary>
-        /// <param name="name"> Name of the SKU level. </param>
-        /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
-        /// <param name="capacity"> The number of instances in the read only query pool. </param>
-        /// <returns> A new <see cref="Models.AnalysisResourceSku"/> instance for mocking. </returns>
-        public static AnalysisResourceSku AnalysisResourceSku(string name = null, AnalysisSkuTier? tier = null, int? capacity = null)
-        {
-            return new AnalysisResourceSku(name, tier, capacity);
-        }
-
         /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
         /// <param name="gatewayResourceId"> Gateway resource to be associated with the server. </param>
         /// <param name="gatewayObjectId"> Gateway object id from in the DMTS cluster for the gateway resource. </param>
@@ -63,27 +53,6 @@ namespace Azure.ResourceManager.Analysis.Models
         public static AnalysisGatewayDetails AnalysisGatewayDetails(string gatewayResourceId = null, string gatewayObjectId = null, Uri dmtsClusterUri = null)
         {
             return new AnalysisGatewayDetails(gatewayResourceId, gatewayObjectId, dmtsClusterUri);
-        }
-
-        /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
-        /// <param name="firewallRules"> An array of firewall rules. </param>
-        /// <param name="isPowerBIServiceEnabled"> The indicator of enabling PBI service. </param>
-        /// <returns> A new <see cref="Models.AnalysisIPv4FirewallSettings"/> instance for mocking. </returns>
-        public static AnalysisIPv4FirewallSettings AnalysisIPv4FirewallSettings(IEnumerable<AnalysisIPv4FirewallRule> firewallRules = null, bool? isPowerBIServiceEnabled = null)
-        {
-            firewallRules ??= new List<AnalysisIPv4FirewallRule>();
-
-            return new AnalysisIPv4FirewallSettings(firewallRules?.ToList(), isPowerBIServiceEnabled);
-        }
-
-        /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
-        /// <param name="firewallRuleName"> The rule name. </param>
-        /// <param name="rangeStart"> The start range of IPv4. </param>
-        /// <param name="rangeEnd"> The end range of IPv4. </param>
-        /// <returns> A new <see cref="Models.AnalysisIPv4FirewallRule"/> instance for mocking. </returns>
-        public static AnalysisIPv4FirewallRule AnalysisIPv4FirewallRule(string firewallRuleName = null, string rangeStart = null, string rangeEnd = null)
-        {
-            return new AnalysisIPv4FirewallRule(firewallRuleName, rangeStart, rangeEnd);
         }
 
         /// <summary> Initializes a new instance of AnalysisExistingSku. </summary>

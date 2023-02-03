@@ -44,15 +44,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ConnectedRegistryData(id, name, resourceType, systemData, provisioningState, mode, version, connectionState, lastActivityOn, activationStatus != null ? new ConnectedRegistryActivation(activationStatus) : null, parent, clientTokenIds?.ToList(), loginServer, logging, statusDetails?.ToList(), notificationsList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectedRegistryParent. </summary>
-        /// <param name="id"> The resource ID of the parent to which the connected registry will be associated. </param>
-        /// <param name="syncProperties"> The sync properties of the connected registry with its parent. </param>
-        /// <returns> A new <see cref="Models.ConnectedRegistryParent"/> instance for mocking. </returns>
-        public static ConnectedRegistryParent ConnectedRegistryParent(ResourceIdentifier id = null, ConnectedRegistrySyncProperties syncProperties = null)
-        {
-            return new ConnectedRegistryParent(id, syncProperties);
-        }
-
         /// <summary> Initializes a new instance of ConnectedRegistrySyncProperties. </summary>
         /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
         /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will sync with its parent. </param>
@@ -93,15 +84,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new TlsCertificateProperties(locationType, certificateLocation);
         }
 
-        /// <summary> Initializes a new instance of ConnectedRegistryLogging. </summary>
-        /// <param name="logLevel"> The verbosity of logs persisted on the connected registry. </param>
-        /// <param name="auditLogStatus"> Indicates whether audit logs are enabled on the connected registry. </param>
-        /// <returns> A new <see cref="Models.ConnectedRegistryLogging"/> instance for mocking. </returns>
-        public static ConnectedRegistryLogging ConnectedRegistryLogging(ConnectedRegistryLogLevel? logLevel = null, ConnectedRegistryAuditLogStatus? auditLogStatus = null)
-        {
-            return new ConnectedRegistryLogging(logLevel, auditLogStatus);
-        }
-
         /// <summary> Initializes a new instance of ConnectedRegistryStatusDetail. </summary>
         /// <param name="statusDetailType"> The component of the connected registry corresponding to the status. </param>
         /// <param name="code"> The code of the status. </param>
@@ -132,20 +114,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ExportPipelineData(id, name, resourceType, systemData, location, identity, target, options?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ExportPipelineTargetProperties. </summary>
-        /// <param name="pipelineTargetType"> The type of target for the export pipeline. </param>
-        /// <param name="uri">
-        /// The target uri of the export pipeline.
-        /// When &apos;AzureStorageBlob&apos;: &quot;https://accountName.blob.core.windows.net/containerName/blobName&quot;
-        /// When &apos;AzureStorageBlobContainer&apos;:  &quot;https://accountName.blob.core.windows.net/containerName&quot;
-        /// </param>
-        /// <param name="keyVaultUri"> They key vault secret uri to obtain the target storage SAS token. </param>
-        /// <returns> A new <see cref="Models.ExportPipelineTargetProperties"/> instance for mocking. </returns>
-        public static ExportPipelineTargetProperties ExportPipelineTargetProperties(string pipelineTargetType = null, Uri uri = null, Uri keyVaultUri = null)
-        {
-            return new ExportPipelineTargetProperties(pipelineTargetType, uri, keyVaultUri);
-        }
-
         /// <summary> Initializes a new instance of ImportPipelineData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -163,20 +131,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             options ??= new List<PipelineOption>();
 
             return new ImportPipelineData(id, name, resourceType, systemData, location, identity, source, sourceTriggerStatus.HasValue ? new PipelineTriggerProperties(new PipelineSourceTriggerProperties(sourceTriggerStatus.Value)) : null, options?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of ImportPipelineSourceProperties. </summary>
-        /// <param name="pipelineSourceType"> The type of source for the import pipeline. </param>
-        /// <param name="uri">
-        /// The source uri of the import pipeline.
-        /// When &apos;AzureStorageBlob&apos;: &quot;https://accountName.blob.core.windows.net/containerName/blobName&quot;
-        /// When &apos;AzureStorageBlobContainer&apos;: &quot;https://accountName.blob.core.windows.net/containerName&quot;
-        /// </param>
-        /// <param name="keyVaultUri"> They key vault secret uri to obtain the source storage SAS token. </param>
-        /// <returns> A new <see cref="Models.ImportPipelineSourceProperties"/> instance for mocking. </returns>
-        public static ImportPipelineSourceProperties ImportPipelineSourceProperties(PipelineSourceType? pipelineSourceType = null, Uri uri = null, Uri keyVaultUri = null)
-        {
-            return new ImportPipelineSourceProperties(pipelineSourceType, uri, keyVaultUri);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryNameAvailableResult. </summary>
@@ -202,43 +156,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryPipelineRunData ContainerRegistryPipelineRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerRegistryProvisioningState? provisioningState = null, PipelineRunContent request = null, PipelineRunResult response = null, string forceUpdateTag = null)
         {
             return new ContainerRegistryPipelineRunData(id, name, resourceType, systemData, provisioningState, request, response, forceUpdateTag);
-        }
-
-        /// <summary> Initializes a new instance of PipelineRunContent. </summary>
-        /// <param name="pipelineResourceId"> The resource ID of the pipeline to run. </param>
-        /// <param name="artifacts">
-        /// List of source artifacts to be transferred by the pipeline. 
-        /// Specify an image by repository (&apos;hello-world&apos;). This will use the &apos;latest&apos; tag.
-        /// Specify an image by tag (&apos;hello-world:latest&apos;).
-        /// Specify an image by sha256-based manifest digest (&apos;hello-world@sha256:abc123&apos;).
-        /// </param>
-        /// <param name="source"> The source properties of the pipeline run. </param>
-        /// <param name="target"> The target properties of the pipeline run. </param>
-        /// <param name="catalogDigest"> The digest of the tar used to transfer the artifacts. </param>
-        /// <returns> A new <see cref="Models.PipelineRunContent"/> instance for mocking. </returns>
-        public static PipelineRunContent PipelineRunContent(ResourceIdentifier pipelineResourceId = null, IEnumerable<string> artifacts = null, PipelineRunSourceProperties source = null, PipelineRunTargetProperties target = null, string catalogDigest = null)
-        {
-            artifacts ??= new List<string>();
-
-            return new PipelineRunContent(pipelineResourceId, artifacts?.ToList(), source, target, catalogDigest);
-        }
-
-        /// <summary> Initializes a new instance of PipelineRunSourceProperties. </summary>
-        /// <param name="sourceType"> The type of the source. </param>
-        /// <param name="name"> The name of the source. </param>
-        /// <returns> A new <see cref="Models.PipelineRunSourceProperties"/> instance for mocking. </returns>
-        public static PipelineRunSourceProperties PipelineRunSourceProperties(PipelineRunSourceType? sourceType = null, string name = null)
-        {
-            return new PipelineRunSourceProperties(sourceType, name);
-        }
-
-        /// <summary> Initializes a new instance of PipelineRunTargetProperties. </summary>
-        /// <param name="targetType"> The type of the target. </param>
-        /// <param name="name"> The name of the target. </param>
-        /// <returns> A new <see cref="Models.PipelineRunTargetProperties"/> instance for mocking. </returns>
-        public static PipelineRunTargetProperties PipelineRunTargetProperties(PipelineRunTargetType? targetType = null, string name = null)
-        {
-            return new PipelineRunTargetProperties(targetType, name);
         }
 
         /// <summary> Initializes a new instance of PipelineRunResult. </summary>
@@ -272,16 +189,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryPrivateEndpointConnectionData ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ContainerRegistryPrivateLinkServiceConnectionState connectionState = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
             return new ContainerRegistryPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> The private link service connection status. </param>
-        /// <param name="description"> The description for connection status. For example if connection is rejected it can indicate reason for rejection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ContainerRegistryPrivateLinkServiceConnectionState ContainerRegistryPrivateLinkServiceConnectionState(ContainerRegistryPrivateLinkServiceConnectionStatus? status = null, string description = null, ActionsRequiredForPrivateLinkServiceConsumer? actionsRequired = null)
-        {
-            return new ContainerRegistryPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryData. </summary>
@@ -337,48 +244,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryResourceStatus(displayStatus, message, timestamp);
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryNetworkRuleSet. </summary>
-        /// <param name="defaultAction"> The default action of allow or deny when no other rules match. </param>
-        /// <param name="ipRules"> The IP ACL rules. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryNetworkRuleSet"/> instance for mocking. </returns>
-        public static ContainerRegistryNetworkRuleSet ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction = default, IEnumerable<ContainerRegistryIPRule> ipRules = null)
-        {
-            ipRules ??= new List<ContainerRegistryIPRule>();
-
-            return new ContainerRegistryNetworkRuleSet(defaultAction, ipRules?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryIPRule. </summary>
-        /// <param name="action"> The action of IP ACL rule. </param>
-        /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryIPRule"/> instance for mocking. </returns>
-        public static ContainerRegistryIPRule ContainerRegistryIPRule(ContainerRegistryIPRuleAction? action = null, string ipAddressOrRange = null)
-        {
-            return new ContainerRegistryIPRule(action, ipAddressOrRange);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryPolicies. </summary>
-        /// <param name="quarantineStatus"> The quarantine policy for a container registry. </param>
-        /// <param name="trustPolicy"> The content trust policy for a container registry. </param>
-        /// <param name="retentionPolicy"> The retention policy for a container registry. </param>
-        /// <param name="exportStatus"> The export policy for a container registry. </param>
-        /// <param name="azureADAuthenticationAsArmStatus"> The policy for using ARM audience token for a container registry. </param>
-        /// <param name="softDeletePolicy"> The soft delete policy for a container registry. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryPolicies"/> instance for mocking. </returns>
-        public static ContainerRegistryPolicies ContainerRegistryPolicies(ContainerRegistryPolicyStatus? quarantineStatus = null, ContainerRegistryTrustPolicy trustPolicy = null, ContainerRegistryRetentionPolicy retentionPolicy = null, ContainerRegistryExportPolicyStatus? exportStatus = null, AzureADAuthenticationAsArmPolicyStatus? azureADAuthenticationAsArmStatus = null, ContainerRegistrySoftDeletePolicy softDeletePolicy = null)
-        {
-            return new ContainerRegistryPolicies(quarantineStatus != null ? new ContainerRegistryQuarantinePolicy(quarantineStatus) : null, trustPolicy, retentionPolicy, exportStatus != null ? new ContainerRegistryExportPolicy(exportStatus) : null, azureADAuthenticationAsArmStatus != null ? new AzureADAuthenticationAsArmPolicy(azureADAuthenticationAsArmStatus) : null, softDeletePolicy);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryTrustPolicy. </summary>
-        /// <param name="policyType"> The type of trust policy. </param>
-        /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryTrustPolicy"/> instance for mocking. </returns>
-        public static ContainerRegistryTrustPolicy ContainerRegistryTrustPolicy(ContainerRegistryTrustPolicyType? policyType = null, ContainerRegistryPolicyStatus? status = null)
-        {
-            return new ContainerRegistryTrustPolicy(policyType, status);
-        }
-
         /// <summary> Initializes a new instance of ContainerRegistryRetentionPolicy. </summary>
         /// <param name="days"> The number of days to retain an untagged manifest after which it gets purged. </param>
         /// <param name="lastUpdatedOn"> The timestamp when the policy was last updated. </param>
@@ -397,15 +262,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistrySoftDeletePolicy ContainerRegistrySoftDeletePolicy(int? retentionDays = null, DateTimeOffset? lastUpdatedOn = null, ContainerRegistryPolicyStatus? status = null)
         {
             return new ContainerRegistrySoftDeletePolicy(retentionDays, lastUpdatedOn, status);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryEncryption. </summary>
-        /// <param name="status"> Indicates whether or not the encryption is enabled for container registry. </param>
-        /// <param name="keyVaultProperties"> Key vault properties. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryEncryption"/> instance for mocking. </returns>
-        public static ContainerRegistryEncryption ContainerRegistryEncryption(ContainerRegistryEncryptionStatus? status = null, ContainerRegistryKeyVaultProperties keyVaultProperties = null)
-        {
-            return new ContainerRegistryEncryption(status, keyVaultProperties);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryKeyVaultProperties. </summary>
@@ -523,29 +379,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryTokenData ContainerRegistryTokenData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null, ResourceIdentifier scopeMapId = null, ContainerRegistryTokenCredentials credentials = null, ContainerRegistryTokenStatus? status = null)
         {
             return new ContainerRegistryTokenData(id, name, resourceType, systemData, createdOn, provisioningState, scopeMapId, credentials, status);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCredentials. </summary>
-        /// <param name="certificates"></param>
-        /// <param name="passwords"></param>
-        /// <returns> A new <see cref="Models.ContainerRegistryTokenCredentials"/> instance for mocking. </returns>
-        public static ContainerRegistryTokenCredentials ContainerRegistryTokenCredentials(IEnumerable<ContainerRegistryTokenCertificate> certificates = null, IEnumerable<ContainerRegistryTokenPassword> passwords = null)
-        {
-            certificates ??= new List<ContainerRegistryTokenCertificate>();
-            passwords ??= new List<ContainerRegistryTokenPassword>();
-
-            return new ContainerRegistryTokenCredentials(certificates?.ToList(), passwords?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCertificate. </summary>
-        /// <param name="name"></param>
-        /// <param name="expireOn"> The expiry datetime of the certificate. </param>
-        /// <param name="thumbprint"> The thumbprint of the certificate. </param>
-        /// <param name="encodedPemCertificate"> Base 64 encoded string of the public certificate1 in PEM format that will be used for authenticating the token. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryTokenCertificate"/> instance for mocking. </returns>
-        public static ContainerRegistryTokenCertificate ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name = null, DateTimeOffset? expireOn = null, string thumbprint = null, string encodedPemCertificate = null)
-        {
-            return new ContainerRegistryTokenCertificate(name, expireOn, thumbprint, encodedPemCertificate);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryTokenPassword. </summary>
@@ -726,17 +559,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryAgentPoolQueueStatus(count);
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunContent. </summary>
-        /// <param name="runRequestType"> The type of the run request. </param>
-        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
-        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
-        /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryRunContent"/> instance for mocking. </returns>
-        public static ContainerRegistryRunContent ContainerRegistryRunContent(string runRequestType = null, bool? isArchiveEnabled = null, string agentPoolName = null, string logTemplate = null)
-        {
-            return new UnknownRunRequest(runRequestType, isArchiveEnabled, agentPoolName, logTemplate);
-        }
-
         /// <summary> Initializes a new instance of ContainerRegistryRunData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -771,62 +593,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             customRegistries ??= new List<string>();
 
             return new ContainerRegistryRunData(id, name, resourceType, systemData, runId, status, lastUpdatedOn, runType, agentPoolName, createdOn, startOn, finishOn, outputImages?.ToList(), task, imageUpdateTrigger, sourceTrigger, timerTrigger, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, sourceRegistryAuth, customRegistries?.ToList(), runErrorMessage, updateTriggerToken, logArtifact, provisioningState, isArchiveEnabled);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryImageDescriptor. </summary>
-        /// <param name="registry"> The registry login server. </param>
-        /// <param name="repository"> The repository name. </param>
-        /// <param name="tag"> The tag name. </param>
-        /// <param name="digest"> The sha256-based digest of the image manifest. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryImageDescriptor"/> instance for mocking. </returns>
-        public static ContainerRegistryImageDescriptor ContainerRegistryImageDescriptor(string registry = null, string repository = null, string tag = null, string digest = null)
-        {
-            return new ContainerRegistryImageDescriptor(registry, repository, tag, digest);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryImageUpdateTrigger. </summary>
-        /// <param name="id"> The unique ID of the trigger. </param>
-        /// <param name="timestamp"> The timestamp when the image update happened. </param>
-        /// <param name="images"> The list of image updates that caused the build. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryImageUpdateTrigger"/> instance for mocking. </returns>
-        public static ContainerRegistryImageUpdateTrigger ContainerRegistryImageUpdateTrigger(Guid? id = null, DateTimeOffset? timestamp = null, IEnumerable<ContainerRegistryImageDescriptor> images = null)
-        {
-            images ??= new List<ContainerRegistryImageDescriptor>();
-
-            return new ContainerRegistryImageUpdateTrigger(id, timestamp, images?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerDescriptor. </summary>
-        /// <param name="id"> The unique ID of the trigger. </param>
-        /// <param name="eventType"> The event type of the trigger. </param>
-        /// <param name="commitId"> The unique ID that identifies a commit. </param>
-        /// <param name="pullRequestId"> The unique ID that identifies pull request. </param>
-        /// <param name="repositoryUri"> The repository URL. </param>
-        /// <param name="branchName"> The branch name in the repository. </param>
-        /// <param name="providerType"> The source control provider type. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistrySourceTriggerDescriptor"/> instance for mocking. </returns>
-        public static ContainerRegistrySourceTriggerDescriptor ContainerRegistrySourceTriggerDescriptor(Guid? id = null, string eventType = null, string commitId = null, string pullRequestId = null, Uri repositoryUri = null, string branchName = null, string providerType = null)
-        {
-            return new ContainerRegistrySourceTriggerDescriptor(id, eventType, commitId, pullRequestId, repositoryUri, branchName, providerType);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTriggerDescriptor. </summary>
-        /// <param name="timerTriggerName"> The timer trigger name that caused the run. </param>
-        /// <param name="scheduleOccurrence"> The occurrence that triggered the run. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryTimerTriggerDescriptor"/> instance for mocking. </returns>
-        public static ContainerRegistryTimerTriggerDescriptor ContainerRegistryTimerTriggerDescriptor(string timerTriggerName = null, string scheduleOccurrence = null)
-        {
-            return new ContainerRegistryTimerTriggerDescriptor(timerTriggerName, scheduleOccurrence);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryPlatformProperties. </summary>
-        /// <param name="os"> The operating system type required for the run. </param>
-        /// <param name="architecture"> The OS architecture. </param>
-        /// <param name="variant"> Variant of the CPU. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryPlatformProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryPlatformProperties ContainerRegistryPlatformProperties(ContainerRegistryOS os = default, ContainerRegistryOSArchitecture? architecture = null, ContainerRegistryCpuVariant? variant = null)
-        {
-            return new ContainerRegistryPlatformProperties(os, architecture, variant);
         }
 
         /// <summary> Initializes a new instance of SourceUploadDefinition. </summary>
@@ -923,254 +689,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryBaseImageDependency ContainerRegistryBaseImageDependency(ContainerRegistryBaseImageDependencyType? dependencyType = null, string registry = null, string repository = null, string tag = null, string digest = null)
         {
             return new ContainerRegistryBaseImageDependency(dependencyType, registry, repository, tag, digest);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryTriggerProperties. </summary>
-        /// <param name="timerTriggers"> The collection of timer triggers. </param>
-        /// <param name="sourceTriggers"> The collection of triggers based on source code repository. </param>
-        /// <param name="baseImageTrigger"> The trigger based on base image dependencies. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryTriggerProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryTriggerProperties ContainerRegistryTriggerProperties(IEnumerable<ContainerRegistryTimerTrigger> timerTriggers = null, IEnumerable<ContainerRegistrySourceTrigger> sourceTriggers = null, ContainerRegistryBaseImageTrigger baseImageTrigger = null)
-        {
-            timerTriggers ??= new List<ContainerRegistryTimerTrigger>();
-            sourceTriggers ??= new List<ContainerRegistrySourceTrigger>();
-
-            return new ContainerRegistryTriggerProperties(timerTriggers?.ToList(), sourceTriggers?.ToList(), baseImageTrigger);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTrigger. </summary>
-        /// <param name="schedule"> The CRON expression for the task schedule. </param>
-        /// <param name="status"> The current status of trigger. </param>
-        /// <param name="name"> The name of the trigger. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryTimerTrigger"/> instance for mocking. </returns>
-        public static ContainerRegistryTimerTrigger ContainerRegistryTimerTrigger(string schedule = null, ContainerRegistryTriggerStatus? status = null, string name = null)
-        {
-            return new ContainerRegistryTimerTrigger(schedule, status, name);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTrigger. </summary>
-        /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
-        /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
-        /// <param name="status"> The current status of trigger. </param>
-        /// <param name="name"> The name of the trigger. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistrySourceTrigger"/> instance for mocking. </returns>
-        public static ContainerRegistrySourceTrigger ContainerRegistrySourceTrigger(SourceCodeRepoProperties sourceRepository = null, IEnumerable<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = null, ContainerRegistryTriggerStatus? status = null, string name = null)
-        {
-            sourceTriggerEvents ??= new List<ContainerRegistrySourceTriggerEvent>();
-
-            return new ContainerRegistrySourceTrigger(sourceRepository, sourceTriggerEvents?.ToList(), status, name);
-        }
-
-        /// <summary> Initializes a new instance of SourceCodeRepoProperties. </summary>
-        /// <param name="sourceControlType"> The type of source control service. </param>
-        /// <param name="repositoryUri"> The full URL to the source code repository. </param>
-        /// <param name="branch"> The branch name of the source code. </param>
-        /// <param name="sourceControlAuthProperties">
-        /// The authorization properties for accessing the source code repository and to set up
-        /// webhooks for notifications.
-        /// </param>
-        /// <returns> A new <see cref="Models.SourceCodeRepoProperties"/> instance for mocking. </returns>
-        public static SourceCodeRepoProperties SourceCodeRepoProperties(SourceControlType sourceControlType = default, Uri repositoryUri = null, string branch = null, SourceCodeRepoAuthInfo sourceControlAuthProperties = null)
-        {
-            return new SourceCodeRepoProperties(sourceControlType, repositoryUri, branch, sourceControlAuthProperties);
-        }
-
-        /// <summary> Initializes a new instance of SourceCodeRepoAuthInfo. </summary>
-        /// <param name="tokenType"> The type of Auth token. </param>
-        /// <param name="token"> The access token used to access the source control provider. </param>
-        /// <param name="refreshToken"> The refresh token used to refresh the access token. </param>
-        /// <param name="scope"> The scope of the access token. </param>
-        /// <param name="expireInSeconds"> Time in seconds that the token remains valid. </param>
-        /// <returns> A new <see cref="Models.SourceCodeRepoAuthInfo"/> instance for mocking. </returns>
-        public static SourceCodeRepoAuthInfo SourceCodeRepoAuthInfo(SourceCodeRepoAuthTokenType tokenType = default, string token = null, string refreshToken = null, string scope = null, int? expireInSeconds = null)
-        {
-            return new SourceCodeRepoAuthInfo(tokenType, token, refreshToken, scope, expireInSeconds);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageTrigger. </summary>
-        /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
-        /// <param name="updateTriggerEndpoint"> The endpoint URL for receiving update triggers. </param>
-        /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>
-        /// <param name="status"> The current status of trigger. </param>
-        /// <param name="name"> The name of the trigger. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryBaseImageTrigger"/> instance for mocking. </returns>
-        public static ContainerRegistryBaseImageTrigger ContainerRegistryBaseImageTrigger(ContainerRegistryBaseImageTriggerType baseImageTriggerType = default, string updateTriggerEndpoint = null, ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType = null, ContainerRegistryTriggerStatus? status = null, string name = null)
-        {
-            return new ContainerRegistryBaseImageTrigger(baseImageTriggerType, updateTriggerEndpoint, updateTriggerPayloadType, status, name);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
-        /// <param name="sourceRegistryLoginMode"> Describes the credential parameters for accessing the source registry. </param>
-        /// <param name="customRegistries">
-        /// Describes the credential parameters for accessing other custom registries. The key
-        /// for the dictionary item will be the registry login server (myregistry.azurecr.io) and
-        /// the value of the item will be the registry credentials for accessing the registry.
-        /// </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryCredentials"/> instance for mocking. </returns>
-        public static ContainerRegistryCredentials ContainerRegistryCredentials(SourceRegistryLoginMode? sourceRegistryLoginMode = null, IDictionary<string, CustomRegistryCredentials> customRegistries = null)
-        {
-            customRegistries ??= new Dictionary<string, CustomRegistryCredentials>();
-
-            return new ContainerRegistryCredentials(sourceRegistryLoginMode != null ? new SourceRegistryCredentials(sourceRegistryLoginMode) : null, customRegistries);
-        }
-
-        /// <summary> Initializes a new instance of CustomRegistryCredentials. </summary>
-        /// <param name="userName"> The username for logging into the custom registry. </param>
-        /// <param name="password">
-        /// The password for logging into the custom registry. The password is a secret 
-        /// object that allows multiple ways of providing the value for it.
-        /// </param>
-        /// <param name="identity">
-        /// Indicates the managed identity assigned to the custom credential. If a user-assigned identity
-        /// this value is the Client ID. If a system-assigned identity, the value will be `system`. In
-        /// the case of a system-assigned identity, the Client ID will be determined by the runner. This
-        /// identity may be used to authenticate to key vault to retrieve credentials or it may be the only 
-        /// source of authentication used for accessing the registry.
-        /// </param>
-        /// <returns> A new <see cref="Models.CustomRegistryCredentials"/> instance for mocking. </returns>
-        public static CustomRegistryCredentials CustomRegistryCredentials(ContainerRegistrySecretObject userName = null, ContainerRegistrySecretObject password = null, string identity = null)
-        {
-            return new CustomRegistryCredentials(userName, password, identity);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistrySecretObject. </summary>
-        /// <param name="value">
-        /// The value of the secret. The format of this value will be determined
-        /// based on the type of the secret object. If the type is Opaque, the value will be
-        /// used as is without any modification.
-        /// </param>
-        /// <param name="objectType">
-        /// The type of the secret object which determines how the value of the secret object has to be
-        /// interpreted.
-        /// </param>
-        /// <returns> A new <see cref="Models.ContainerRegistrySecretObject"/> instance for mocking. </returns>
-        public static ContainerRegistrySecretObject ContainerRegistrySecretObject(string value = null, ContainerRegistrySecretObjectType? objectType = null)
-        {
-            return new ContainerRegistrySecretObject(value, objectType);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryDockerBuildContent. </summary>
-        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
-        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
-        /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
-        /// <param name="imageNames"> The fully qualified image names including the repository and tag. </param>
-        /// <param name="isPushEnabled"> The value of this property indicates whether the image built should be pushed to the registry or not. </param>
-        /// <param name="noCache"> The value of this property indicates whether the image cache is enabled or not. </param>
-        /// <param name="dockerFilePath"> The Docker file path relative to the source location. </param>
-        /// <param name="target"> The name of the target build stage for the docker build. </param>
-        /// <param name="arguments"> The collection of override arguments to be used when executing the run. </param>
-        /// <param name="timeoutInSeconds"> Run timeout in seconds. </param>
-        /// <param name="platform"> The platform properties against which the run has to happen. </param>
-        /// <param name="agentCpu"> The machine configuration of the run agent. </param>
-        /// <param name="sourceLocation">
-        /// The URL(absolute or relative) of the source context. It can be an URL to a tar or git repository.
-        /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
-        /// </param>
-        /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryDockerBuildContent"/> instance for mocking. </returns>
-        public static ContainerRegistryDockerBuildContent ContainerRegistryDockerBuildContent(bool? isArchiveEnabled = null, string agentPoolName = null, string logTemplate = null, IEnumerable<string> imageNames = null, bool? isPushEnabled = null, bool? noCache = null, string dockerFilePath = null, string target = null, IEnumerable<ContainerRegistryRunArgument> arguments = null, int? timeoutInSeconds = null, ContainerRegistryPlatformProperties platform = null, int? agentCpu = null, string sourceLocation = null, ContainerRegistryCredentials credentials = null)
-        {
-            imageNames ??= new List<string>();
-            arguments ??= new List<ContainerRegistryRunArgument>();
-
-            return new ContainerRegistryDockerBuildContent("DockerBuildRequest", isArchiveEnabled, agentPoolName, logTemplate, imageNames?.ToList(), isPushEnabled, noCache, dockerFilePath, target, arguments?.ToList(), timeoutInSeconds, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, sourceLocation, credentials);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryRunArgument. </summary>
-        /// <param name="name"> The name of the argument. </param>
-        /// <param name="value"> The value of the argument. </param>
-        /// <param name="isSecret"> Flag to indicate whether the argument represents a secret and want to be removed from build logs. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryRunArgument"/> instance for mocking. </returns>
-        public static ContainerRegistryRunArgument ContainerRegistryRunArgument(string name = null, string value = null, bool? isSecret = null)
-        {
-            return new ContainerRegistryRunArgument(name, value, isSecret);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryFileTaskRunContent. </summary>
-        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
-        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
-        /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
-        /// <param name="taskFilePath"> The template/definition file path relative to the source. </param>
-        /// <param name="valuesFilePath"> The values/parameters file path relative to the source. </param>
-        /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
-        /// <param name="timeoutInSeconds"> Run timeout in seconds. </param>
-        /// <param name="platform"> The platform properties against which the run has to happen. </param>
-        /// <param name="agentCpu"> The machine configuration of the run agent. </param>
-        /// <param name="sourceLocation">
-        /// The URL(absolute or relative) of the source context. It can be an URL to a tar or git repository.
-        /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
-        /// </param>
-        /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryFileTaskRunContent"/> instance for mocking. </returns>
-        public static ContainerRegistryFileTaskRunContent ContainerRegistryFileTaskRunContent(bool? isArchiveEnabled = null, string agentPoolName = null, string logTemplate = null, string taskFilePath = null, string valuesFilePath = null, IEnumerable<ContainerRegistryTaskOverridableValue> values = null, int? timeoutInSeconds = null, ContainerRegistryPlatformProperties platform = null, int? agentCpu = null, string sourceLocation = null, ContainerRegistryCredentials credentials = null)
-        {
-            values ??= new List<ContainerRegistryTaskOverridableValue>();
-
-            return new ContainerRegistryFileTaskRunContent("FileTaskRunRequest", isArchiveEnabled, agentPoolName, logTemplate, taskFilePath, valuesFilePath, values?.ToList(), timeoutInSeconds, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, sourceLocation, credentials);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryTaskOverridableValue. </summary>
-        /// <param name="name"> The name of the overridable value. </param>
-        /// <param name="value"> The overridable value. </param>
-        /// <param name="isSecret"> Flag to indicate whether the value represents a secret or not. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryTaskOverridableValue"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskOverridableValue ContainerRegistryTaskOverridableValue(string name = null, string value = null, bool? isSecret = null)
-        {
-            return new ContainerRegistryTaskOverridableValue(name, value, isSecret);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunContent. </summary>
-        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
-        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
-        /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
-        /// <param name="taskId"> The resource ID of task against which run has to be queued. </param>
-        /// <param name="overrideTaskStepProperties"> Set of overridable parameters that can be passed when running a Task. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryTaskRunContent"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskRunContent ContainerRegistryTaskRunContent(bool? isArchiveEnabled = null, string agentPoolName = null, string logTemplate = null, ResourceIdentifier taskId = null, ContainerRegistryOverrideTaskStepProperties overrideTaskStepProperties = null)
-        {
-            return new ContainerRegistryTaskRunContent("TaskRunRequest", isArchiveEnabled, agentPoolName, logTemplate, taskId, overrideTaskStepProperties);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryOverrideTaskStepProperties. </summary>
-        /// <param name="contextPath"> The source context against which run has to be queued. </param>
-        /// <param name="file"> The file against which run has to be queued. </param>
-        /// <param name="arguments">
-        /// Gets or sets the collection of override arguments to be used when
-        /// executing a build step.
-        /// </param>
-        /// <param name="target"> The name of the target build stage for the docker build. </param>
-        /// <param name="values"> The collection of overridable values that can be passed when running a Task. </param>
-        /// <param name="updateTriggerToken"> Base64 encoded update trigger token that will be attached with the base image trigger webhook. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryOverrideTaskStepProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryOverrideTaskStepProperties ContainerRegistryOverrideTaskStepProperties(string contextPath = null, string file = null, IEnumerable<ContainerRegistryRunArgument> arguments = null, string target = null, IEnumerable<ContainerRegistryTaskOverridableValue> values = null, string updateTriggerToken = null)
-        {
-            arguments ??= new List<ContainerRegistryRunArgument>();
-            values ??= new List<ContainerRegistryTaskOverridableValue>();
-
-            return new ContainerRegistryOverrideTaskStepProperties(contextPath, file, arguments?.ToList(), target, values?.ToList(), updateTriggerToken);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskRunContent. </summary>
-        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
-        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
-        /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
-        /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
-        /// <param name="encodedValuesContent"> Base64 encoded value of the parameters/values file content. </param>
-        /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
-        /// <param name="timeoutInSeconds"> Run timeout in seconds. </param>
-        /// <param name="platform"> The platform properties against which the run has to happen. </param>
-        /// <param name="agentCpu"> The machine configuration of the run agent. </param>
-        /// <param name="sourceLocation">
-        /// The URL(absolute or relative) of the source context. It can be an URL to a tar or git repository.
-        /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
-        /// </param>
-        /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryEncodedTaskRunContent"/> instance for mocking. </returns>
-        public static ContainerRegistryEncodedTaskRunContent ContainerRegistryEncodedTaskRunContent(bool? isArchiveEnabled = null, string agentPoolName = null, string logTemplate = null, string encodedTaskContent = null, string encodedValuesContent = null, IEnumerable<ContainerRegistryTaskOverridableValue> values = null, int? timeoutInSeconds = null, ContainerRegistryPlatformProperties platform = null, int? agentCpu = null, string sourceLocation = null, ContainerRegistryCredentials credentials = null)
-        {
-            values ??= new List<ContainerRegistryTaskOverridableValue>();
-
-            return new ContainerRegistryEncodedTaskRunContent("EncodedTaskRunRequest", isArchiveEnabled, agentPoolName, logTemplate, encodedTaskContent, encodedValuesContent, values?.ToList(), timeoutInSeconds, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, sourceLocation, credentials);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryDockerBuildStep. </summary>
