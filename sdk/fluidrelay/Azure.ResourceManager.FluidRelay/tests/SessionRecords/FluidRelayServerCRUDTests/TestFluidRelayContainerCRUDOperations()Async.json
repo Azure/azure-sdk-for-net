@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71/resourcegroups/lin-demo?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/5a57980f-c6bb-4cd7-8b26-6d258bae1d71/resourcegroups/lin-demo?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

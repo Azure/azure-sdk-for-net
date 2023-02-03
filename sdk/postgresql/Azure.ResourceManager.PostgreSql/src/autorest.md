@@ -223,7 +223,7 @@ rename-mapping:
   CapabilityProperties.zoneRedundantHaSupported: IsZoneRedundantHASupported
   CapabilityProperties.zoneRedundantHaAndGeoBackupSupported: IsZoneRedundantHAAndGeoBackupSupported
   CapabilitiesListResult: PostgreSqlFlexibleServerCapabilitiesListResult
-  CheckNameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityRequest
+  CheckNameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityContent
   CheckNameAvailabilityResponse: PostgreSqlFlexibleServerNameAvailabilityResponse
   CheckNameAvailabilityReason: PostgreSqlFlexibleServerNameUnavailableReason
   NameAvailability: PostgreSqlFlexibleServerNameAvailabilityResult
@@ -267,5 +267,15 @@ directive:
   - from: FlexibleServers.json
     where: $.definitions
     transform: >
-      $.DataEncryption.properties.primaryUserAssignedIdentityId['format'] = 'arm-id'
+      $.DataEncryption.properties.primaryUserAssignedIdentityId['format'] = 'arm-id';
+      $.ServerForUpdate.properties.location = {"type": "string", "description": "The location the resource resides in."}
+  - from: types.json
+    where: $.definitions
+    transform: >
+      $.CheckNameAvailabilityRequest.required = ['name']
+  - from: Configuration.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/configurations/{configurationName}"].patch
+    transform: >
+      const parameters = $.parameters;
+      $.parameters[parameters.length-1].schema["$ref"] = "#/definitions/Configuration"
 ```

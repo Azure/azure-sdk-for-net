@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="nameAvailabilityRequest"> The required parameters for checking if resource name is available. </param>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
-                var response = await CheckNameAvailabilityRestClient.ExecuteAsync(Id.SubscriptionId, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await CheckNameAvailabilityRestClient.ExecuteAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -149,15 +149,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="nameAvailabilityRequest"> The required parameters for checking if resource name is available. </param>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
-                var response = CheckNameAvailabilityRestClient.Execute(Id.SubscriptionId, nameAvailabilityRequest, cancellationToken);
+                var response = CheckNameAvailabilityRestClient.Execute(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="nameAvailabilityRequest"> The required parameters for checking if resource name is available. </param>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CheckNameAvailabilityWithLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
             scope.Start();
             try
             {
-                var response = await CheckNameAvailabilityWithLocationRestClient.ExecuteAsync(Id.SubscriptionId, locationName, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await CheckNameAvailabilityWithLocationRestClient.ExecuteAsync(Id.SubscriptionId, locationName, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -213,15 +213,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="nameAvailabilityRequest"> The required parameters for checking if resource name is available. </param>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CheckNameAvailabilityWithLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
             scope.Start();
             try
             {
-                var response = CheckNameAvailabilityWithLocationRestClient.Execute(Id.SubscriptionId, locationName, nameAvailabilityRequest, cancellationToken);
+                var response = CheckNameAvailabilityWithLocationRestClient.Execute(Id.SubscriptionId, locationName, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
