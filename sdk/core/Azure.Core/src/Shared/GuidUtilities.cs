@@ -20,7 +20,7 @@ internal static class GuidUtilities
     {
         if (bytes.Length != GuidSizeInBytes)
         {
-            throw new ArgumentException("The length of the supplied bytes must be 16.", nameof(bytes));
+            return default;
         }
 
         ReadOnlySpan<byte> bytesSpan = bytes.Span;
