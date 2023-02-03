@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -548,11 +549,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             AmqpAnnotatedMessage annotatedMessage = AmqpMessageToAnnotatedMessage(amqpMessage, isPeeked);
 
-            ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage);
-
-            // lock token
-
-            sbMessage.LockTokenGuid = GuidUtilities.ParseGuidBytes(amqpMessage.DeliveryTag);
+            ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage)
+            {
+                // lock token
+                LockTokenGuid = GuidUtilities.ParseGuidBytes(amqpMessage.DeliveryTag)
+            };
 
             amqpMessage.Dispose();
 

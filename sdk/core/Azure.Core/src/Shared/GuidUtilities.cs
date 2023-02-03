@@ -6,20 +6,21 @@ using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Azure.Messaging.ServiceBus.Primitives;
+namespace Azure.Core.Shared;
 
+/// <summary>
+/// The purpose of this class is to provide an allocation free way to parse and write Guids on .NET Standard 2.0, taking into account
+/// endianness.
+/// </summary>
 internal static class GuidUtilities
 {
-    /// <summary>
-    /// The size, in bytes, to use for extracting the delivery tag bytes into <see cref="Guid"/>.
-    /// </summary>
     private const int GuidSizeInBytes = 16;
 
     public static Guid ParseGuidBytes(ReadOnlyMemory<byte> bytes)
     {
         if (bytes.Length != GuidSizeInBytes)
         {
-            ThrowArgumentException();
+            throw new ArgumentException("The length of the supplied bytes must be 16.", nameof(bytes));
         }
 
         ReadOnlySpan<byte> bytesSpan = bytes.Span;
@@ -28,6 +29,7 @@ internal static class GuidUtilities
             return MemoryMarshal.Read<Guid>(bytesSpan);
         }
 
+        // copied from https://github.com/dotnet/runtime/blob/9129083c2fc6ef32479168f0555875b54aee4dfb/src/libraries/System.Private.CoreLib/src/System/Guid.cs#L49
         // slower path for BigEndian:
         byte k = bytesSpan[15];  // hoist bounds checks
         int a = BinaryPrimitives.ReadInt32LittleEndian(bytesSpan);
@@ -42,19 +44,16 @@ internal static class GuidUtilities
         byte j = bytesSpan[14];
 
         return new Guid(a, b, c, d, e, f, g, h, i, j, k);
-
-        static void ThrowArgumentException()
-        {
-            throw new ArgumentException("TBD", nameof(bytes));
-        }
     }
 
     public static void WriteGuidBytes(Guid guid, byte[] buffer)
     {
         if (buffer.Length != GuidSizeInBytes)
         {
-            ThrowArgumentException();
+            throw new ArgumentException("The length of the supplied buffer must be 16.", nameof(buffer));
         }
+
+        // Copied from https://github.com/dotnet/runtime/blob/9129083c2fc6ef32479168f0555875b54aee4dfb/src/libraries/System.Private.CoreLib/src/System/Guid.cs#L836
 
         if (BitConverter.IsLittleEndian)
         {
@@ -76,11 +75,6 @@ internal static class GuidUtilities
         buffer[12] = data.H;
         buffer[13] = data.I;
         buffer[14] = data.J;
-
-        static void ThrowArgumentException()
-        {
-            throw new ArgumentException("TBD", nameof(buffer));
-        }
     }
 
     private readonly struct GuidData

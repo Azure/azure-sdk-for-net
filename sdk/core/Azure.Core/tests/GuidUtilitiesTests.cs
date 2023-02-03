@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.ServiceBus.Primitives;
+using Azure.Core.Shared;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests;
+namespace Azure.Core.Tests;
 
 public class GuidUtilitiesTests
 {
@@ -19,6 +19,12 @@ public class GuidUtilitiesTests
     }
 
     [Test]
+    public void ParseGuidBytesThrowsOnInvalidInput()
+    {
+        Assert.Throws<ArgumentException>(() => GuidUtilities.ParseGuidBytes(new byte[15]));
+    }
+
+    [Test]
     public void CanWriteGuidBytes()
     {
         var input = Guid.NewGuid();
@@ -26,5 +32,13 @@ public class GuidUtilitiesTests
 
         GuidUtilities.WriteGuidBytes(input, buffer);
         CollectionAssert.AreEqual(input.ToByteArray(), buffer);
+    }
+
+    [Test]
+    public void WriteGuidBytesThrowsOnInvalidBuffer()
+    {
+        var input = Guid.NewGuid();
+        var buffer = new byte[15];
+        Assert.Throws<ArgumentException>(() => GuidUtilities.WriteGuidBytes(input, buffer));
     }
 }
