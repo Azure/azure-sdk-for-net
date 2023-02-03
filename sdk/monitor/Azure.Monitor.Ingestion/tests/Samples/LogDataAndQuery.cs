@@ -10,7 +10,7 @@ using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Ingestion.Tests.Samples
 {
-    public partial class IngestionSamples : SamplesBase<MonitorIngestionTestEnvironment>
+    public partial class IngestionSamples: SamplesBase<MonitorIngestionTestEnvironment>
     {
         public void SetUpClient()
         {
