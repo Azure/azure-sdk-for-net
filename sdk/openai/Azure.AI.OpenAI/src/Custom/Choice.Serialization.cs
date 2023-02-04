@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
         {
             Optional<string> text = default;
             Optional<int?> index = default;
-            Optional<CompletionsLogProbs> logprobs = default;
+            Optional<CompletionsLogProbability> logprobs = default;
             Optional<string> finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -45,7 +45,7 @@ namespace Azure.AI.OpenAI
                     }
                     else
                     {
-                        logprobs = CompletionsLogProbs.DeserializeCompletionsLogProbs(property.Value);
+                        logprobs = CompletionsLogProbability.DeserializeCompletionsLogProbability(property.Value);
                         continue;
                     }
                 }

@@ -5,7 +5,7 @@ namespace Azure.AI.OpenAI
         internal Choice() { }
         public string FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
-        public Azure.AI.OpenAI.CompletionsLogProbs Logprobs { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsLogProbability Logprobs { get { throw null; } }
         public string Text { get { throw null; } }
     }
     public partial class Completions
@@ -18,32 +18,32 @@ namespace Azure.AI.OpenAI
         public string Object { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsUsage Usage { get { throw null; } }
     }
-    public partial class CompletionsLogProbs
+    public partial class CompletionsLogProbability
     {
-        internal CompletionsLogProbs() { }
+        internal CompletionsLogProbability() { }
         public System.Collections.Generic.IReadOnlyList<int> TextOffset { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<float> TokenLogprobs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<float> TokenLogProbability { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float>> TopLogprobs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float>> TopLogProbability { get { throw null; } }
     }
     public partial class CompletionsOptions
     {
         public CompletionsOptions() { }
-        public int? BestOf { get { throw null; } set { } }
         public int? CacheLevel { get { throw null; } set { } }
         public string CompletionConfig { get { throw null; } set { } }
         public bool? Echo { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
+        public int? GenerationSampleCount { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, int> LogitBias { get { throw null; } }
-        public int? Logprobs { get { throw null; } set { } }
+        public int? LogProbability { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }
-        public int? N { get { throw null; } set { } }
+        public float? NucleusSamplingFactor { get { throw null; } set { } }
         public float? PresencePenalty { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Prompt { get { throw null; } }
+        public int? SnippetCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Stop { get { throw null; } }
         public float? Temperature { get { throw null; } set { } }
-        public float? TopP { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
     }
     public partial class CompletionsUsage

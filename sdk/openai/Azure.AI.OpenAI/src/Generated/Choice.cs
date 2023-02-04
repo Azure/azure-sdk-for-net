@@ -20,7 +20,7 @@ namespace Azure.AI.OpenAI
         /// <param name="index"> Index. </param>
         /// <param name="logprobs"> Log Prob Model. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
-        internal Choice(string text, int? index, CompletionsLogProbs logprobs, string finishReason)
+        internal Choice(string text, int? index, CompletionsLogProbability logprobs, string finishReason)
         {
             Text = text;
             Index = index;
@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Index. </summary>
         public int? Index { get; }
         /// <summary> Log Prob Model. </summary>
-        public CompletionsLogProbs Logprobs { get; }
+        public CompletionsLogProbability Logprobs { get; }
         /// <summary> Reason for finishing. </summary>
         public string FinishReason { get; }
     }
