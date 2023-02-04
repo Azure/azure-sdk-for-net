@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListOfRecoveryServicesResourcesInResourceGroup()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/ListResources.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/ListResources.json
             // this example is just showing the usage of "Vaults_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetRecoveryServicesResource()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/GETVault.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/GETVault.json
             // this example is just showing the usage of "Vaults_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetRecoveryServicesResource()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/GETVault.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/GETVault.json
             // this example is just showing the usage of "Vaults_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,48 +125,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateRecoveryServicesVault()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/PUTVault.json
-            // this example is just showing the usage of "Vaults_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
-            string resourceGroupName = "Default-RecoveryServices-ResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VaultResource
-            VaultCollection collection = resourceGroupResource.GetVaults();
-
-            // invoke the operation
-            string vaultName = "swaggerExample";
-            VaultData data = new VaultData(new AzureLocation("West US"))
-            {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
-                Properties = new VaultProperties(),
-                Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
-            };
-            ArmOperation<VaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, data);
-            VaultResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VaultData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create or Update Vault With Monitoring Setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateVaultWithMonitoringSetting()
-        {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/PUTVault_WithMonitoringSettings.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/PUTVault.json
             // this example is just showing the usage of "Vaults_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -191,6 +150,51 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Properties = new VaultProperties()
                 {
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                },
+                Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
+            };
+            ArmOperation<VaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, data);
+            VaultResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VaultData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create or Update Vault With Monitoring Setting
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateOrUpdateVaultWithMonitoringSetting()
+        {
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/PUTVault_WithMonitoringSettings.json
+            // this example is just showing the usage of "Vaults_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string resourceGroupName = "Default-RecoveryServices-ResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VaultResource
+            VaultCollection collection = resourceGroupResource.GetVaults();
+
+            // invoke the operation
+            string vaultName = "swaggerExample";
+            VaultData data = new VaultData(new AzureLocation("West US"))
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Properties = new VaultProperties()
+                {
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
                     MonitoringSettings = new MonitoringSettings()
                     {
                         AzureMonitorAlertAlertsForAllJobFailures = AlertsState.Enabled,
@@ -214,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateVaultWithCustomerManagedKeys()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/PUTVault_WithCMK.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/PUTVault_WithCMK.json
             // this example is just showing the usage of "Vaults_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,6 +258,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                         },
                         InfrastructureEncryption = InfrastructureEncryptionState.Enabled,
                     },
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
                 },
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
@@ -272,7 +277,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateVaultWithUserAssignedIdentity()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/PUTVault_WithUserAssignedIdentity.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/PUTVault_WithUserAssignedIdentity.json
             // this example is just showing the usage of "Vaults_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -301,7 +306,10 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 [new ResourceIdentifier("/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi")] = new UserAssignedIdentity(),
 },
                 },
-                Properties = new VaultProperties(),
+                Properties = new VaultProperties()
+                {
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                },
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
             ArmOperation<VaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, data);

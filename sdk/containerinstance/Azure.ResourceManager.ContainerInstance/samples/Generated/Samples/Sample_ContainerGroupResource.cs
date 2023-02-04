@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetContainerGroups_ContainerGroupsList()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsList.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsList.json
             // this example is just showing the usage of "ContainerGroups_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,12 +51,43 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // ContainerGroupsGetWithPriority
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_ContainerGroupsGetWithPriority()
+        {
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGetPriority.json
+            // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerGroupResource created on azure
+            // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "demo";
+            string containerGroupName = "demo1";
+            ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
+            ContainerGroupResource containerGroup = client.GetContainerGroupResource(containerGroupResourceId);
+
+            // invoke the operation
+            ContainerGroupResource result = await containerGroup.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // ContainerGroupsGet_Failed
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ContainerGroupsGetFailed()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsGet_Failed.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGet_Failed.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +118,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ContainerGroupsGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsGet_Succeeded.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsGet_Succeeded.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +149,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ContainerGroupsUpdate()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsUpdate.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsUpdate.json
             // this example is just showing the usage of "ContainerGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +188,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ContainerGroupsDelete()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsDelete.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsDelete.json
             // this example is just showing the usage of "ContainerGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,7 +220,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_ContainerRestart()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsRestart.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsRestart.json
             // this example is just showing the usage of "ContainerGroups_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,7 +247,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Stop_ContainerStop()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsStop.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsStop.json
             // this example is just showing the usage of "ContainerGroups_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -243,7 +274,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Start_ContainerStart()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerGroupsStart.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerGroupsStart.json
             // this example is just showing the usage of "ContainerGroups_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -270,7 +301,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetContainerLogs_ContainerListLogs()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerListLogs.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerListLogs.json
             // this example is just showing the usage of "Containers_ListLogs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -299,7 +330,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExecuteContainerCommand_ContainerExec()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerExec.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerExec.json
             // this example is just showing the usage of "Containers_ExecuteCommand" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -336,7 +367,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AttachContainer_ContainerAttach()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2021-10-01/examples/ContainerAttach.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2022-10-01-preview/examples/ContainerAttach.json
             // this example is just showing the usage of "Containers_Attach" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

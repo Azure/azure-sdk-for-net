@@ -6,7 +6,8 @@
 This sample shows how to call GetProjectAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 Response response = await client.GetProjectAsync("<projectName>");
 
@@ -34,7 +35,8 @@ Schema for <c>Project</c>:
 This sample shows how to call GetProject with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 Response response = client.GetProject("<projectName>");
 
@@ -62,7 +64,8 @@ Schema for <c>Project</c>:
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetProjectsAsync())
 {
@@ -73,7 +76,8 @@ await foreach (var data in client.GetProjectsAsync())
 This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetProjectsAsync("<filter>", 1234))
 {
@@ -102,7 +106,8 @@ Schema for <c>ProjectListResultValue</c>:
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetProjects())
 {
@@ -113,7 +118,8 @@ foreach (var data in client.GetProjects())
 This sample shows how to call GetProjects with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetProjects("<filter>", 1234))
 {
@@ -142,7 +148,8 @@ Schema for <c>ProjectListResultValue</c>:
 This sample shows how to call GetAllDevBoxesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetAllDevBoxesAsync())
 {
@@ -153,7 +160,8 @@ await foreach (var data in client.GetAllDevBoxesAsync())
 This sample shows how to call GetAllDevBoxesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetAllDevBoxesAsync("<filter>", 1234))
 {
@@ -161,6 +169,7 @@ await foreach (var data in client.GetAllDevBoxesAsync("<filter>", 1234))
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
+    Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
     Console.WriteLine(result.GetProperty("provisioningState").ToString());
     Console.WriteLine(result.GetProperty("actionState").ToString());
     Console.WriteLine(result.GetProperty("powerState").ToString());
@@ -194,6 +203,7 @@ Schema for <c>DevBoxListResultValue</c>:
   name: string, # Optional. Display name for the Dev Box
   projectName: string, # Optional. Name of the project this Dev Box belongs to
   poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
+  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
   provisioningState: string, # Optional. The current provisioning state of the Dev Box.
   actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
   powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
@@ -204,7 +214,7 @@ Schema for <c>DevBoxListResultValue</c>:
   }, # Optional. Provisioning or action error details. Populated only for error states.
   location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
   osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. User identifier of the user this vm is assigned to.
+  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
   hardwareProfile: {
     skuName: string, # Optional. The name of the SKU
     vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
@@ -234,7 +244,8 @@ Schema for <c>DevBoxListResultValue</c>:
 This sample shows how to call GetAllDevBoxes and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetAllDevBoxes())
 {
@@ -245,7 +256,8 @@ foreach (var data in client.GetAllDevBoxes())
 This sample shows how to call GetAllDevBoxes with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetAllDevBoxes("<filter>", 1234))
 {
@@ -253,6 +265,7 @@ foreach (var data in client.GetAllDevBoxes("<filter>", 1234))
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
+    Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
     Console.WriteLine(result.GetProperty("provisioningState").ToString());
     Console.WriteLine(result.GetProperty("actionState").ToString());
     Console.WriteLine(result.GetProperty("powerState").ToString());
@@ -286,6 +299,7 @@ Schema for <c>DevBoxListResultValue</c>:
   name: string, # Optional. Display name for the Dev Box
   projectName: string, # Optional. Name of the project this Dev Box belongs to
   poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
+  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
   provisioningState: string, # Optional. The current provisioning state of the Dev Box.
   actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
   powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
@@ -296,7 +310,7 @@ Schema for <c>DevBoxListResultValue</c>:
   }, # Optional. Provisioning or action error details. Populated only for error states.
   location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
   osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. User identifier of the user this vm is assigned to.
+  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
   hardwareProfile: {
     skuName: string, # Optional. The name of the SKU
     vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
@@ -326,7 +340,8 @@ Schema for <c>DevBoxListResultValue</c>:
 This sample shows how to call GetAllDevBoxesByUserAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetAllDevBoxesByUserAsync())
 {
@@ -337,7 +352,8 @@ await foreach (var data in client.GetAllDevBoxesByUserAsync())
 This sample shows how to call GetAllDevBoxesByUserAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 await foreach (var data in client.GetAllDevBoxesByUserAsync(<me>, "<filter>", 1234))
 {
@@ -345,6 +361,7 @@ await foreach (var data in client.GetAllDevBoxesByUserAsync(<me>, "<filter>", 12
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
+    Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
     Console.WriteLine(result.GetProperty("provisioningState").ToString());
     Console.WriteLine(result.GetProperty("actionState").ToString());
     Console.WriteLine(result.GetProperty("powerState").ToString());
@@ -378,6 +395,7 @@ Schema for <c>DevBoxListResultValue</c>:
   name: string, # Optional. Display name for the Dev Box
   projectName: string, # Optional. Name of the project this Dev Box belongs to
   poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
+  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
   provisioningState: string, # Optional. The current provisioning state of the Dev Box.
   actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
   powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
@@ -388,7 +406,7 @@ Schema for <c>DevBoxListResultValue</c>:
   }, # Optional. Provisioning or action error details. Populated only for error states.
   location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
   osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. User identifier of the user this vm is assigned to.
+  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
   hardwareProfile: {
     skuName: string, # Optional. The name of the SKU
     vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
@@ -418,7 +436,8 @@ Schema for <c>DevBoxListResultValue</c>:
 This sample shows how to call GetAllDevBoxesByUser and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetAllDevBoxesByUser())
 {
@@ -429,7 +448,8 @@ foreach (var data in client.GetAllDevBoxesByUser())
 This sample shows how to call GetAllDevBoxesByUser with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new DevCenterClient("<tenantId>", "<devCenter>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new DevCenterClient(endpoint, credential);
 
 foreach (var data in client.GetAllDevBoxesByUser(<me>, "<filter>", 1234))
 {
@@ -437,6 +457,7 @@ foreach (var data in client.GetAllDevBoxesByUser(<me>, "<filter>", 1234))
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
+    Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
     Console.WriteLine(result.GetProperty("provisioningState").ToString());
     Console.WriteLine(result.GetProperty("actionState").ToString());
     Console.WriteLine(result.GetProperty("powerState").ToString());
@@ -470,6 +491,7 @@ Schema for <c>DevBoxListResultValue</c>:
   name: string, # Optional. Display name for the Dev Box
   projectName: string, # Optional. Name of the project this Dev Box belongs to
   poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
+  hibernateSupport: &quot;Disabled&quot; | &quot;Enabled&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
   provisioningState: string, # Optional. The current provisioning state of the Dev Box.
   actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
   powerState: &quot;Unknown&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Running&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
@@ -480,7 +502,7 @@ Schema for <c>DevBoxListResultValue</c>:
   }, # Optional. Provisioning or action error details. Populated only for error states.
   location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
   osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. User identifier of the user this vm is assigned to.
+  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
   hardwareProfile: {
     skuName: string, # Optional. The name of the SKU
     vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.

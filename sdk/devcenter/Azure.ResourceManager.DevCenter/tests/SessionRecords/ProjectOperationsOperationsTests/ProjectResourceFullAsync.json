@@ -43,7 +43,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourcegroups/sdkrg-devcenter?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourcegroups/sdkrg-devcenter?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

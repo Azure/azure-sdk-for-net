@@ -5,7 +5,7 @@
     <Version>0.1.0-preview.24</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net6.0</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
