@@ -14,7 +14,6 @@ require:
 title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```
 
 ### Change naming of countryCode to twoLetterIsoCountryName

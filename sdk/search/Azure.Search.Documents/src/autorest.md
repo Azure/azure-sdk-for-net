@@ -14,7 +14,6 @@ input-file:
  - https://github.com/Azure/azure-rest-api-specs/blob/932e261a870475e1a29115f62def7bb84e4d7b38/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
  - https://github.com/Azure/azure-rest-api-specs/blob/904899a23a417768ce1ec1d5f89f33817f8ef8ad/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```
 
 ## Release hacks

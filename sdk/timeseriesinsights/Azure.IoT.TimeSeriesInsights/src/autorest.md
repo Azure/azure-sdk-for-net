@@ -72,5 +72,4 @@ directive:
 # It is highly recommended that you generate the REST layer from the official source. However, in this case we are using a local file because there are a couple of minor issues fixed in the local swagger. These fixes should be made on the official source.
 input-file: $(this-folder)/swagger/timeseriesinsights.json
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```

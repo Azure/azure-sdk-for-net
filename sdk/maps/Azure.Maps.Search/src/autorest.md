@@ -31,7 +31,6 @@ add-credentials: true
 credential-default-policy-type: BearerTokenCredentialPolicy
 credential-scopes: https://atlas.microsoft.com/.default
 generation1-convenience-client: true
-model-factory-for-hlc: true
 sync-methods: None
 license-header: MICROSOFT_MIT_NO_VERSION
 namespace: Azure.Maps.Search

@@ -10,7 +10,6 @@ tag: release_1_0
 require:
     - https://github.com/Azure/azure-rest-api-specs/blob/3196a62202976da192d6da86f44b02246ca2aa97/specification/cognitiveservices/data-plane/TranslatorText/readme.md
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```
 
 ### Make generated models internal by default

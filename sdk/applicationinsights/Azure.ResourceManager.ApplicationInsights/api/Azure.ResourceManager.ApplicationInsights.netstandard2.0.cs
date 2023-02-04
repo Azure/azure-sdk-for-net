@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ApplicationInsights
 }
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
+    public static partial class ApplicationInsightsModelFactory
+    {
+        public static Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData ComponentLinkedStorageAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string linkedStorageAccount = null) { throw null; }
+    }
     public partial class ComponentLinkedStorageAccountPatch
     {
         public ComponentLinkedStorageAccountPatch() { }

@@ -128,6 +128,13 @@ namespace Azure.ResourceManager.FluidRelay.Models
         PrimaryKey = 0,
         SecondaryKey = 1,
     }
+    public static partial class FluidRelayModelFactory
+    {
+        public static Azure.ResourceManager.FluidRelay.FluidRelayContainerData FluidRelayContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? frsTenantId = default(System.Guid?), System.Guid? frsContainerId = default(System.Guid?), Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState? provisioningState = default(Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastAccessOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints FluidRelayEndpoints(System.Collections.Generic.IEnumerable<string> ordererEndpoints = null, System.Collections.Generic.IEnumerable<string> storageEndpoints = null, System.Collections.Generic.IEnumerable<string> serviceEndpoints = null) { throw null; }
+        public static Azure.ResourceManager.FluidRelay.FluidRelayServerData FluidRelayServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Guid? frsTenantId = default(System.Guid?), Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints fluidRelayEndpoints = null, Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState? provisioningState = default(Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState?), Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties customerManagedKeyEncryption = null, Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku? storageSku = default(Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku?)) { throw null; }
+        public static Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys FluidRelayServerKeys(string primaryKey = null, string secondaryKey = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FluidRelayProvisioningState : System.IEquatable<Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState>
     {

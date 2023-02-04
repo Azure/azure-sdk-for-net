@@ -5,33 +5,14 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Model factory for generated models. </summary>
     public static partial class DocumentTranslationModelFactory
     {
-        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
-        /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
-        /// <param name="sourceDocumentUri"> Location of the source document. </param>
-        /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
-        /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="translatedToLanguageCode"> To language. </param>
-        /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
-        /// <param name="progress"> Progress of the translation if available. </param>
-        /// <param name="id"> Document Id. </param>
-        /// <param name="charactersCharged"> Character charged by the API. </param>
-        /// <returns> A new <see cref="Document.DocumentStatusResult"/> instance for mocking. </returns>
-        public static DocumentStatusResult DocumentStatusResult(Uri translatedDocumentUri = null, Uri sourceDocumentUri = null, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, DocumentTranslationStatus status = default, string translatedToLanguageCode = null, JsonElement error = default, float progress = default, string id = null, long charactersCharged = default)
-        {
-            return new DocumentStatusResult(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedToLanguageCode, error, progress, id, charactersCharged);
-        }
-
         /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>

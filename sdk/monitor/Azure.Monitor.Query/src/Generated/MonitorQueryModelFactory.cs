@@ -6,40 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Model factory for generated models. </summary>
     public static partial class MonitorQueryModelFactory
     {
-        /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="allTables"> The list of tables, columns and rows. </param>
-        /// <param name="statistics"> Any object. </param>
-        /// <param name="visualization"> Any object. </param>
-        /// <param name="error"> Any object. </param>
-        /// <returns> A new <see cref="Models.LogsQueryResult"/> instance for mocking. </returns>
-        public static LogsQueryResult LogsQueryResult(IEnumerable<LogsTable> allTables = null, JsonElement statistics = default, JsonElement visualization = default, JsonElement error = default)
-        {
-            allTables ??= new List<LogsTable>();
-
-            return new LogsQueryResult(allTables?.ToList(), statistics, visualization, error);
-        }
-
-        /// <summary> Initializes a new instance of LogsTable. </summary>
-        /// <param name="name"> The name of the table. </param>
-        /// <param name="columns"> The list of columns in this table. </param>
-        /// <param name="internalRows"> The resulting rows from this query. </param>
-        /// <returns> A new <see cref="Models.LogsTable"/> instance for mocking. </returns>
-        public static LogsTable LogsTable(string name = null, IEnumerable<LogsTableColumn> columns = null, JsonElement internalRows = default)
-        {
-            columns ??= new List<LogsTableColumn>();
-
-            return new LogsTable(name, columns?.ToList(), internalRows);
-        }
-
         /// <summary> Initializes a new instance of LogsTableColumn. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
@@ -55,19 +27,6 @@ namespace Azure.Monitor.Query.Models
             return new LogsTableColumn(name, type);
         }
 
-        /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
-        /// <param name="allTables"> The list of tables, columns and rows. </param>
-        /// <param name="statistics"> Any object. </param>
-        /// <param name="visualization"> Any object. </param>
-        /// <param name="error"> Any object. </param>
-        /// <returns> A new <see cref="Models.LogsBatchQueryResult"/> instance for mocking. </returns>
-        public static LogsBatchQueryResult LogsBatchQueryResult(IEnumerable<LogsTable> allTables = null, JsonElement statistics = default, JsonElement visualization = default, JsonElement error = default)
-        {
-            allTables ??= new List<LogsTable>();
-
-            return new LogsBatchQueryResult(allTables?.ToList(), statistics, visualization, error);
-        }
-
         /// <summary> Initializes a new instance of MetricAvailability. </summary>
         /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
@@ -75,21 +34,6 @@ namespace Azure.Monitor.Query.Models
         public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
         {
             return new MetricAvailability(granularity, retention);
-        }
-
-        /// <summary> Initializes a new instance of MetricsQueryResult. </summary>
-        /// <param name="cost"> The integer value representing the relative cost of the query. </param>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="granularity"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="namespace"> The namespace of the metrics being queried. </param>
-        /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
-        /// <param name="metrics"> the value of the collection. </param>
-        /// <returns> A new <see cref="Models.MetricsQueryResult"/> instance for mocking. </returns>
-        public static MetricsQueryResult MetricsQueryResult(int? cost = null, string timespan = null, TimeSpan? granularity = null, string @namespace = null, string resourceRegion = null, IEnumerable<MetricResult> metrics = null)
-        {
-            metrics ??= new List<MetricResult>();
-
-            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics?.ToList());
         }
     }
 }

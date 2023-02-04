@@ -136,6 +136,13 @@ namespace Azure.ResourceManager.MixedReality.Models
         Primary = 1,
         Secondary = 2,
     }
+    public static partial class MixedRealityModelFactory
+    {
+        public static Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeys MixedRealityAccountKeys(string primaryKey = null, string secondaryKey = null) { throw null; }
+        public static Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult MixedRealityNameAvailabilityResult(bool isNameAvailable = false, Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason? reason = default(Azure.ResourceManager.MixedReality.Models.MixedRealityNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.MixedReality.RemoteRenderingAccountData RemoteRenderingAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Models.ManagedServiceIdentity plan = null, Azure.ResourceManager.MixedReality.Models.MixedRealitySku sku = null, Azure.ResourceManager.MixedReality.Models.MixedRealitySku kind = null, string storageAccountName = null, System.Guid? accountId = default(System.Guid?), string accountDomain = null) { throw null; }
+        public static Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData SpatialAnchorsAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Models.ManagedServiceIdentity plan = null, Azure.ResourceManager.MixedReality.Models.MixedRealitySku sku = null, Azure.ResourceManager.MixedReality.Models.MixedRealitySku kind = null, string storageAccountName = null, System.Guid? accountId = default(System.Guid?), string accountDomain = null) { throw null; }
+    }
     public partial class MixedRealityNameAvailabilityContent
     {
         public MixedRealityNameAvailabilityContent(string name, string resourceType) { }

@@ -11,7 +11,6 @@ tag: package-2022-05-31
 require:
   - https://github.com/Azure/azure-rest-api-specs/blob/9135e2063fba5479098437a9261e1f2b281fb624/specification/digitaltwins/data-plane/readme.md
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```
 
 ### Directives

@@ -9,7 +9,6 @@ input-file:
 
 model-namespace: false
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```
 
 ## Customizations for Code Generator

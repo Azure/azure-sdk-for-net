@@ -188,6 +188,16 @@ namespace Azure.ResourceManager.Automanage
 }
 namespace Azure.ResourceManager.Automanage.Models
 {
+    public static partial class AutomanageModelFactory
+    {
+        public static Azure.ResourceManager.Automanage.BestPracticeData BestPracticeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.BinaryData configuration = null) { throw null; }
+        public static Azure.ResourceManager.Automanage.ConfigurationProfileAssignmentData ConfigurationProfileAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentProperties properties = null, string managedBy = null) { throw null; }
+        public static Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentProperties ConfigurationProfileAssignmentProperties(string configurationProfile = null, string targetId = null, string status = null) { throw null; }
+        public static Azure.ResourceManager.Automanage.ConfigurationProfileData ConfigurationProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.BinaryData configuration = null) { throw null; }
+        public static Azure.ResourceManager.Automanage.Models.Report Report(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string startTime = null, string endTime = null, string lastModifiedTime = null, System.TimeSpan? duration = default(System.TimeSpan?), string typePropertiesType = null, string status = null, string configurationProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.Models.ReportResource> resources = null, Azure.ResponseError error = null, string reportFormatVersion = null) { throw null; }
+        public static Azure.ResourceManager.Automanage.Models.ReportResource ReportResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.Automanage.ServicePrincipalData ServicePrincipalData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string servicePrincipalId = null, bool? authorizationSet = default(bool?)) { throw null; }
+    }
     public partial class ConfigurationProfileAssignmentProperties
     {
         public ConfigurationProfileAssignmentProperties() { }

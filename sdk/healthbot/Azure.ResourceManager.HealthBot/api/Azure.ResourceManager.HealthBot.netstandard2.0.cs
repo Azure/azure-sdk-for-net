@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.HealthBot.Models
         public string KeyVersion { get { throw null; } set { } }
         public string UserIdentity { get { throw null; } set { } }
     }
+    public static partial class HealthBotModelFactory
+    {
+        public static Azure.ResourceManager.HealthBot.HealthBotData HealthBotData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthBot.Models.HealthBotSkuName? skuName = default(Azure.ResourceManager.HealthBot.Models.HealthBotSkuName?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HealthBot.Models.HealthBotProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HealthBot.Models.HealthBotProperties HealthBotProperties(string provisioningState = null, System.Uri botManagementPortalLink = null, Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties keyVaultProperties = null) { throw null; }
+    }
     public partial class HealthBotPatch
     {
         public HealthBotPatch() { }

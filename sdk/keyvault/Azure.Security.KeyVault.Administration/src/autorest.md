@@ -14,7 +14,6 @@ input-file:
 - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d78681a9d322bbd8d33ecaad7e6aaa2d513513b4/specification/keyvault/data-plane/Microsoft.KeyVault/preview/7.4-preview.1/settings.json
 namespace: Azure.Security.KeyVault.Administration
 generation1-convenience-client: true
-model-factory-for-hlc: true
 include-csproj: disable
 ```
 

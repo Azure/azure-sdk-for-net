@@ -12,6 +12,12 @@ namespace Azure.ResourceManager.ChangeAnalysis
 }
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
+    public static partial class ChangeAnalysisModelFactory
+    {
+        public static Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties ChangeProperties(Azure.Core.ResourceIdentifier resourceId = null, System.DateTimeOffset? changeDetectedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> initiatedByList = null, Azure.ResourceManager.ChangeAnalysis.Models.ChangeType? changeType = default(Azure.ResourceManager.ChangeAnalysis.Models.ChangeType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange> propertyChanges = null) { throw null; }
+        public static Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData DetectedChangeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange PropertyChange(Azure.ResourceManager.ChangeAnalysis.Models.ChangeType? changeType = default(Azure.ResourceManager.ChangeAnalysis.Models.ChangeType?), Azure.ResourceManager.ChangeAnalysis.Models.ChangeCategory? changeCategory = default(Azure.ResourceManager.ChangeAnalysis.Models.ChangeCategory?), string jsonPath = null, string displayName = null, Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel? level = default(Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel?), string description = null, string oldValue = null, string newValue = null, bool? isDataMasked = default(bool?)) { throw null; }
+    }
     public enum ChangeCategory
     {
         User = 0,

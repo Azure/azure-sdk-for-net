@@ -14,5 +14,4 @@ require:
 title: Azure Communication Services
 
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```

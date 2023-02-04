@@ -132,6 +132,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string Relay { get { throw null; } }
         public string Token { get { throw null; } }
     }
+    public static partial class KubernetesModelFactory
+    {
+        public static Azure.ResourceManager.Kubernetes.ConnectedClusterData ConnectedClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string agentPublicKeyCertificate = null, string kubernetesVersion = null, int? totalNodeCount = default(int?), int? totalCoreCount = default(int?), string agentVersion = null, Azure.ResourceManager.Kubernetes.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Kubernetes.Models.ProvisioningState?), string distribution = null, string infrastructure = null, string offering = null, System.DateTimeOffset? managedIdentityCertificateExpirationOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastConnectivityOn = default(System.DateTimeOffset?), Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus? connectivityStatus = default(Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus?), Azure.ResourceManager.Kubernetes.Models.PrivateLinkState? privateLinkState = default(Azure.ResourceManager.Kubernetes.Models.PrivateLinkState?), string privateLinkScopeResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Kubernetes.Models.CredentialResult CredentialResult(string name = null, byte[] value = null) { throw null; }
+        public static Azure.ResourceManager.Kubernetes.Models.CredentialResults CredentialResults(Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig hybridConnectionConfig = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kubernetes.Models.CredentialResult> kubeconfigs = null) { throw null; }
+        public static Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig HybridConnectionConfig(long? expirationTime = default(long?), string hybridConnectionName = null, string relay = null, string token = null) { throw null; }
+    }
     public partial class ListClusterUserCredentialProperties
     {
         public ListClusterUserCredentialProperties(Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod authenticationMethod, bool clientProxy) { }

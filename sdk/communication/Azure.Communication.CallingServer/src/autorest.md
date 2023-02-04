@@ -22,5 +22,4 @@ title:
   Call Automation
 
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```

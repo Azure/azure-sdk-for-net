@@ -965,7 +965,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -975,33 +974,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="requestedEndTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
         /// <returns> A new <see cref="Models.RerunTumblingWindowTrigger"/> instance for mocking. </returns>
-        public static RerunTumblingWindowTrigger RerunTumblingWindowTrigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, object parentTrigger = null, DateTimeOffset requestedStartTime = default, DateTimeOffset requestedEndTime = default, int rerunConcurrency = default)
+        public static RerunTumblingWindowTrigger RerunTumblingWindowTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, object parentTrigger = null, DateTimeOffset requestedStartTime = default, DateTimeOffset requestedEndTime = default, int rerunConcurrency = default)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new RerunTumblingWindowTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
+            return new RerunTumblingWindowTrigger("RerunTumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
         }
 
         /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <returns> A new <see cref="Models.MultiplePipelineTrigger"/> instance for mocking. </returns>
-        public static MultiplePipelineTrigger MultiplePipelineTrigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null)
+        public static MultiplePipelineTrigger MultiplePipelineTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new MultiplePipelineTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList());
+            return new MultiplePipelineTrigger("MultiplePipelineTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList());
         }
 
         /// <summary> Initializes a new instance of ScheduleTrigger. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -1009,17 +1006,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="recurrence"> Recurrence schedule configuration. </param>
         /// <returns> A new <see cref="Models.ScheduleTrigger"/> instance for mocking. </returns>
-        public static ScheduleTrigger ScheduleTrigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, ScheduleTriggerRecurrence recurrence = null)
+        public static ScheduleTrigger ScheduleTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, ScheduleTriggerRecurrence recurrence = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new ScheduleTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), recurrence);
+            return new ScheduleTrigger("ScheduleTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), recurrence);
         }
 
         /// <summary> Initializes a new instance of BlobTrigger. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -1029,17 +1025,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
         /// <returns> A new <see cref="Models.BlobTrigger"/> instance for mocking. </returns>
-        public static BlobTrigger BlobTrigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string folderPath = null, int maxConcurrency = default, LinkedServiceReference linkedService = null)
+        public static BlobTrigger BlobTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string folderPath = null, int maxConcurrency = default, LinkedServiceReference linkedService = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new BlobTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), folderPath, maxConcurrency, linkedService);
+            return new BlobTrigger("BlobTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), folderPath, maxConcurrency, linkedService);
         }
 
         /// <summary> Initializes a new instance of BlobEventsTrigger. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -1051,18 +1046,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <returns> A new <see cref="Models.BlobEventsTrigger"/> instance for mocking. </returns>
-        public static BlobEventsTrigger BlobEventsTrigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string blobPathBeginsWith = null, string blobPathEndsWith = null, bool? ignoreEmptyBlobs = null, IEnumerable<BlobEventType> events = null, string scope = null)
+        public static BlobEventsTrigger BlobEventsTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string blobPathBeginsWith = null, string blobPathEndsWith = null, bool? ignoreEmptyBlobs = null, IEnumerable<BlobEventType> events = null, string scope = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
             events ??= new List<BlobEventType>();
 
-            return new BlobEventsTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), blobPathBeginsWith, blobPathEndsWith, ignoreEmptyBlobs, events?.ToList(), scope);
+            return new BlobEventsTrigger("BlobEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), blobPathBeginsWith, blobPathEndsWith, ignoreEmptyBlobs, events?.ToList(), scope);
         }
 
         /// <summary> Initializes a new instance of CustomEventsTrigger. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -1073,18 +1067,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="events"> The list of event types that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
         /// <returns> A new <see cref="Models.CustomEventsTrigger"/> instance for mocking. </returns>
-        public static CustomEventsTrigger CustomEventsTrigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string subjectBeginsWith = null, string subjectEndsWith = null, IEnumerable<object> events = null, string scope = null)
+        public static CustomEventsTrigger CustomEventsTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string subjectBeginsWith = null, string subjectEndsWith = null, IEnumerable<object> events = null, string scope = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
             events ??= new List<object>();
 
-            return new CustomEventsTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), subjectBeginsWith, subjectEndsWith, events?.ToList(), scope);
+            return new CustomEventsTrigger("CustomEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), subjectBeginsWith, subjectEndsWith, events?.ToList(), scope);
         }
 
         /// <summary> Initializes a new instance of TumblingWindowTrigger. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -1103,17 +1096,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
         /// </param>
         /// <returns> A new <see cref="Models.TumblingWindowTrigger"/> instance for mocking. </returns>
-        public static TumblingWindowTrigger TumblingWindowTrigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, TriggerPipelineReference pipeline = null, TumblingWindowFrequency frequency = default, int interval = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = null, object delay = null, int maxConcurrency = default, RetryPolicy retryPolicy = null, IEnumerable<DependencyReference> dependsOn = null)
+        public static TumblingWindowTrigger TumblingWindowTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, TriggerPipelineReference pipeline = null, TumblingWindowFrequency frequency = default, int interval = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = null, object delay = null, int maxConcurrency = default, RetryPolicy retryPolicy = null, IEnumerable<DependencyReference> dependsOn = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
             dependsOn ??= new List<DependencyReference>();
 
-            return new TumblingWindowTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, frequency, interval, startTime, endTime, delay, maxConcurrency, retryPolicy, dependsOn?.ToList());
+            return new TumblingWindowTrigger("TumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, frequency, interval, startTime, endTime, delay, maxConcurrency, retryPolicy, dependsOn?.ToList());
         }
 
         /// <summary> Initializes a new instance of ChainingTrigger. </summary>
-        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -1122,13 +1114,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dependsOn"> Upstream Pipelines. </param>
         /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
         /// <returns> A new <see cref="Models.ChainingTrigger"/> instance for mocking. </returns>
-        public static ChainingTrigger ChainingTrigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, TriggerPipelineReference pipeline = null, IEnumerable<PipelineReference> dependsOn = null, string runDimension = null)
+        public static ChainingTrigger ChainingTrigger(string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null, TriggerPipelineReference pipeline = null, IEnumerable<PipelineReference> dependsOn = null, string runDimension = null)
         {
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
             dependsOn ??= new List<PipelineReference>();
 
-            return new ChainingTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, dependsOn?.ToList(), runDimension);
+            return new ChainingTrigger("ChainingTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, dependsOn?.ToList(), runDimension);
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.MetricsAdvisor;
 using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -91,9 +90,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="name"> Name of data source credential. </param>
         /// <param name="description"> Description of data source credential. </param>
         /// <returns> A new <see cref="Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
-        public static DataSourceCredentialEntity DataSourceCredentialEntity(DataSourceCredentialKind credentialKind = default, string id = null, string name = null, string description = null)
+        public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = "Unknown", string id = null, string name = null, string description = null)
         {
-            return new Administration.DataSourceCredentialEntity(credentialKind, id, name, description);
+            return new UnknownDataSourceCredential(credentialKind, id, name, description);
         }
 
         /// <summary> Initializes a new instance of DataFeedMetric. </summary>
@@ -105,34 +104,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedMetric DataFeedMetric(string id = null, string name = null, string displayName = null, string description = null)
         {
             return new DataFeedMetric(id, name, displayName, description);
-        }
-
-        /// <summary> Initializes a new instance of MetricFeedback. </summary>
-        /// <param name="feedbackKind"> feedback type. </param>
-        /// <param name="id"> feedback unique id. </param>
-        /// <param name="createdOn"> feedback created time. </param>
-        /// <param name="userPrincipal"> user who gives this feedback. </param>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"></param>
-        /// <returns> A new <see cref="MetricsAdvisor.MetricFeedback"/> instance for mocking. </returns>
-        public static MetricFeedback MetricFeedback(MetricFeedbackKind feedbackKind = default, string id = null, DateTimeOffset? createdOn = null, string userPrincipal = null, string metricId = null, FeedbackFilter dimensionFilter = null)
-        {
-            return new MetricsAdvisor.MetricFeedback(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter);
-        }
-
-        /// <summary> Initializes a new instance of NotificationHook. </summary>
-        /// <param name="hookKind"> hook type. </param>
-        /// <param name="id"> Hook unique id. </param>
-        /// <param name="name"> hook unique name. </param>
-        /// <param name="description"> hook description. </param>
-        /// <param name="internalExternalLink"> hook external link. </param>
-        /// <param name="administrators"> hook administrators. </param>
-        /// <returns> A new <see cref="Administration.NotificationHook"/> instance for mocking. </returns>
-        public static NotificationHook NotificationHook(NotificationHookKind hookKind = default, string id = null, string name = null, string description = null, string internalExternalLink = null, IEnumerable<string> administrators = null)
-        {
-            administrators ??= new List<string>();
-
-            return new Administration.NotificationHook(hookKind, id, name, description, internalExternalLink, administrators?.ToList());
         }
 
         /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
@@ -164,35 +135,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedIngestionProgress DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp = null, DateTimeOffset? latestActiveTimestamp = null)
         {
             return new DataFeedIngestionProgress(latestSuccessTimestamp, latestActiveTimestamp);
-        }
-
-        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
-        /// <param name="definition"></param>
-        /// <param name="timestamps"> timestamps of the data related to this time series. </param>
-        /// <param name="metricValues"> values of the data related to this time series. </param>
-        /// <returns> A new <see cref="Models.MetricSeriesData"/> instance for mocking. </returns>
-        public static MetricSeriesData MetricSeriesData(MetricSeriesDefinition definition = null, IEnumerable<DateTimeOffset> timestamps = null, IEnumerable<double> metricValues = null)
-        {
-            timestamps ??= new List<DateTimeOffset>();
-            metricValues ??= new List<double>();
-
-            return new MetricSeriesData(definition, timestamps?.ToList(), metricValues?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MetricSeriesDefinition. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimension"> dimension name and value pair. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimension"/> is null. </exception>
-        /// <returns> A new <see cref="Models.MetricSeriesDefinition"/> instance for mocking. </returns>
-        public static MetricSeriesDefinition MetricSeriesDefinition(string metricId = null, IReadOnlyDictionary<string, string> dimension = null)
-        {
-            if (metricId == null)
-            {
-                throw new ArgumentNullException(nameof(metricId));
-            }
-            dimension ??= new Dictionary<string, string>();
-
-            return new MetricSeriesDefinition(metricId, dimension);
         }
 
         /// <summary> Initializes a new instance of EnrichmentStatus. </summary>

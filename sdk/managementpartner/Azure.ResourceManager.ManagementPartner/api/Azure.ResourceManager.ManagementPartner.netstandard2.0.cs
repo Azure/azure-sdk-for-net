@@ -49,6 +49,12 @@ namespace Azure.ResourceManager.ManagementPartner
 }
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
+    public static partial class ManagementPartnerModelFactory
+    {
+        public static Azure.ResourceManager.ManagementPartner.Models.OperationDisplay OperationDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.ManagementPartner.Models.OperationResponse OperationResponse(string name = null, Azure.ResourceManager.ManagementPartner.Models.OperationDisplay display = null, string origin = null) { throw null; }
+        public static Azure.ResourceManager.ManagementPartner.PartnerResponseData PartnerResponseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? etag = default(int?), string partnerId = null, string partnerName = null, System.Guid? tenantId = default(System.Guid?), string objectId = null, int? version = default(int?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ManagementPartner.Models.ManagementPartnerState? state = default(Azure.ResourceManager.ManagementPartner.Models.ManagementPartnerState?)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagementPartnerState : System.IEquatable<Azure.ResourceManager.ManagementPartner.Models.ManagementPartnerState>
     {

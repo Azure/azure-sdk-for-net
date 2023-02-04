@@ -82,6 +82,14 @@ namespace Azure.ResourceManager.Analysis.Models
         All = 0,
         ReadOnly = 1,
     }
+    public static partial class AnalysiservicesModelFactory
+    {
+        public static Azure.ResourceManager.Analysis.Models.AnalysisExistingSku AnalysisExistingSku(Azure.ResourceManager.Analysis.Models.AnalysisResourceSku sku = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?)) { throw null; }
+        public static Azure.ResourceManager.Analysis.Models.AnalysisGatewayDetails AnalysisGatewayDetails(string gatewayResourceId = null, string gatewayObjectId = null, System.Uri dmtsClusterUri = null) { throw null; }
+        public static Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus AnalysisGatewayStatus(Azure.ResourceManager.Analysis.Models.AnalysisStatus? status = default(Azure.ResourceManager.Analysis.Models.AnalysisStatus?)) { throw null; }
+        public static Azure.ResourceManager.Analysis.AnalysisServerData AnalysisServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> asAdministratorIdentities = null, System.Uri backupBlobContainerUri = null, Azure.ResourceManager.Analysis.Models.AnalysisGatewayDetails gatewayDetails = null, Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallSettings ipv4FirewallSettings = null, Azure.ResourceManager.Analysis.Models.AnalysisConnectionMode? queryPoolConnectionMode = default(Azure.ResourceManager.Analysis.Models.AnalysisConnectionMode?), Azure.ResourceManager.Analysis.Models.AnalysisManagedMode? managedMode = default(Azure.ResourceManager.Analysis.Models.AnalysisManagedMode?), Azure.ResourceManager.Analysis.Models.ServerMonitorMode? serverMonitorMode = default(Azure.ResourceManager.Analysis.Models.ServerMonitorMode?), Azure.ResourceManager.Analysis.Models.AnalysisState? state = default(Azure.ResourceManager.Analysis.Models.AnalysisState?), Azure.ResourceManager.Analysis.Models.AnalysisProvisioningState? provisioningState = default(Azure.ResourceManager.Analysis.Models.AnalysisProvisioningState?), string serverFullName = null, Azure.ResourceManager.Analysis.Models.AnalysisResourceSku analysisServerSku = null, Azure.ResourceManager.Analysis.Models.AnalysisResourceSku analysisSku = null) { throw null; }
+        public static Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult AnalysisServerNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
+    }
     public partial class AnalysisExistingSku
     {
         internal AnalysisExistingSku() { }

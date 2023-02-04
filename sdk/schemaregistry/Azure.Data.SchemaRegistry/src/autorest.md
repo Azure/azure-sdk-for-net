@@ -6,7 +6,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 title: SchemaRegistryClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/70e53bf07d4f67000743c05d281930f2713a988e/specification/schemaregistry/data-plane/readme.md
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```
 
 ## Swagger workarounds

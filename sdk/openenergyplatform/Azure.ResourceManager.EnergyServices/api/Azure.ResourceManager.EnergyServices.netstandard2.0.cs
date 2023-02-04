@@ -125,6 +125,14 @@ namespace Azure.ResourceManager.EnergyServices.Models
         public string DnsName { get { throw null; } }
         public Azure.ResourceManager.EnergyServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
+    public static partial class EnergyServicesModelFactory
+    {
+        public static Azure.ResourceManager.EnergyServices.Models.DataPartition DataPartition(string name = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult DataPartitionsListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EnergyServices.Models.DataPartition> dataPartitionInfo = null) { throw null; }
+        public static Azure.ResourceManager.EnergyServices.EnergyServiceData EnergyServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult EnergyServiceNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason? reason = default(Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties EnergyServiceProperties(string dnsName = null, Azure.ResourceManager.EnergyServices.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.EnergyServices.Models.ProvisioningState?), string authAppId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EnergyServices.Models.DataPartitionName> dataPartitionNames = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.EnergyServices.Models.ProvisioningState>
     {

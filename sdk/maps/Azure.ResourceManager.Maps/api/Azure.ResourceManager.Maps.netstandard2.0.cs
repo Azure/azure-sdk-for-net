@@ -181,6 +181,15 @@ namespace Azure.ResourceManager.Maps.Models
         public static bool operator !=(Azure.ResourceManager.Maps.Models.MapsKeyType left, Azure.ResourceManager.Maps.Models.MapsKeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class MapsModelFactory
+    {
+        public static Azure.ResourceManager.Maps.MapsAccountData MapsAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Maps.Models.MapsSku sku = null, Azure.ResourceManager.Maps.Models.MapsAccountKind? kind = default(Azure.ResourceManager.Maps.Models.MapsAccountKind?), Azure.ResourceManager.Maps.Models.MapsAccountProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Maps.Models.MapsAccountKeys MapsAccountKeys(System.DateTimeOffset? primaryKeyLastUpdatedOn = default(System.DateTimeOffset?), string primaryKey = null, string secondaryKey = null, System.DateTimeOffset? secondaryKeyLastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Maps.Models.MapsAccountProperties MapsAccountProperties(System.Guid? uniqueId = default(System.Guid?), bool? disableLocalAuth = default(bool?), string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.Maps.MapsCreatorData MapsCreatorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Maps.Models.MapsCreatorProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Maps.Models.MapsCreatorProperties MapsCreatorProperties(string provisioningState = null, int storageUnits = 0) { throw null; }
+        public static Azure.ResourceManager.Maps.Models.MapsSku MapsSku(Azure.ResourceManager.Maps.Models.MapsSkuName name = default(Azure.ResourceManager.Maps.Models.MapsSkuName), string tier = null) { throw null; }
+    }
     public partial class MapsSku
     {
         public MapsSku(Azure.ResourceManager.Maps.Models.MapsSkuName name) { }

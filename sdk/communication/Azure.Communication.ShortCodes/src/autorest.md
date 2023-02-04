@@ -9,7 +9,6 @@ input-file:
     -  $(this-folder)/swagger/2021-10-25-preview/swagger.json
 payload-flattening-threshold: 3
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```
 
 ### Customizations

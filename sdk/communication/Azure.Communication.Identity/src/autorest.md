@@ -11,5 +11,4 @@ require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a8c4340400f1ab1ae6a43b10e8d635ecb9c49a2a/specification/communication/data-plane/Identity/readme.md
 payload-flattening-threshold: 3
 generation1-convenience-client: true
-model-factory-for-hlc: true
 ```

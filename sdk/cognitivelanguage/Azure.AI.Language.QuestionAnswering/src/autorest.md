@@ -12,13 +12,11 @@ batch:
   clear-output-folder: true
   model-namespace: false
   generation1-convenience-client: true
-  model-factory-for-hlc: true
 
 - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/59ad2b7dd63e952822aa51e11a26a0af5724f996/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
   namespace: Azure.AI.Language.QuestionAnswering.Authoring
   add-credentials: true
   data-plane: true
-  model-factory-for-hlc: true
 
 modelerfour:
   lenient-model-deduplication: true

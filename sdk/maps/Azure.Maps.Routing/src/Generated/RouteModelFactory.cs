@@ -92,18 +92,6 @@ namespace Azure.Maps.Routing.Models
             return new RouteData(summary, legs?.ToList(), sections?.ToList(), guidance);
         }
 
-        /// <summary> Initializes a new instance of RouteSummary. </summary>
-        /// <param name="lengthInMeters"> Length In Meters property. </param>
-        /// <param name="travelTimeInSeconds"> Estimated travel time in seconds property that includes the delay due to real-time traffic. Note that even when traffic=false travelTimeInSeconds still includes the delay due to traffic. If DepartAt is in the future, travel time is calculated using time-dependent historic traffic data. </param>
-        /// <param name="trafficDelayInSeconds"> Estimated delay in seconds caused by the real-time incident(s) according to traffic information. For routes planned with departure time in the future, delays is always 0. To return additional travel times using different types of traffic information, parameter computeTravelTimeFor=all needs to be added. </param>
-        /// <param name="departureTime"> The estimated departure time for the route or leg. </param>
-        /// <param name="arrivalTime"> The estimated arrival time for the route or leg. </param>
-        /// <returns> A new <see cref="Models.RouteSummary"/> instance for mocking. </returns>
-        public static RouteSummary RouteSummary(int? lengthInMeters = null, int? travelTimeInSeconds = null, int? trafficDelayInSeconds = null, DateTimeOffset? departureTime = null, DateTimeOffset? arrivalTime = null)
-        {
-            return new RouteSummary(lengthInMeters, travelTimeInSeconds, trafficDelayInSeconds, departureTime, arrivalTime);
-        }
-
         /// <summary> Initializes a new instance of RouteSection. </summary>
         /// <param name="startPointIndex"> Index of the first point (offset 0) in the route this section applies to. </param>
         /// <param name="endPointIndex"> Index of the last point (offset 0) in the route this section applies to. </param>

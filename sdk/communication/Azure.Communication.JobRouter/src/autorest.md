@@ -18,6 +18,5 @@ require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c350a26aa5bd64ccc7a768f2cb5464a1cbe825e5/specification/communication/data-plane/JobRouter/readme.md
 
 generation1-convenience-client: true
-model-factory-for-hlc: true
 reflect-api-versions: true
 ```

@@ -111,4 +111,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         public string ProvisioningState { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public static partial class ExtendedLocationsModelFactory
+    {
+        public static Azure.ResourceManager.ExtendedLocations.CustomLocationData CustomLocationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication authentication = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> clusterExtensionIds = null, string displayName = null, Azure.Core.ResourceIdentifier hostResourceId = null, Azure.ResourceManager.ExtendedLocations.Models.CustomLocationHostType? hostType = default(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationHostType?), string @namespace = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType CustomLocationEnabledResourceType(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier clusterExtensionId = null, string extensionType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata> typesMetadata = null) { throw null; }
+    }
 }

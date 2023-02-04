@@ -84,6 +84,14 @@ namespace Azure.ResourceManager.DevSpaces.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string TargetContainerHostCredentialsBase64 { get { throw null; } set { } }
     }
+    public static partial class DevSpacesModelFactory
+    {
+        public static Azure.ResourceManager.DevSpaces.Models.ContainerHostMapping ContainerHostMapping(string containerHostResourceId = null, string mappedControllerResourceId = null) { throw null; }
+        public static Azure.ResourceManager.DevSpaces.Models.ControllerConnectionDetails ControllerConnectionDetails(Azure.ResourceManager.DevSpaces.Models.OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = null) { throw null; }
+        public static Azure.ResourceManager.DevSpaces.Models.ControllerConnectionDetailsList ControllerConnectionDetailsList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevSpaces.Models.ControllerConnectionDetails> connectionDetailsList = null) { throw null; }
+        public static Azure.ResourceManager.DevSpaces.ControllerData ControllerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevSpaces.Models.DevSpacesSku sku = null, Azure.ResourceManager.DevSpaces.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DevSpaces.Models.ProvisioningState?), string hostSuffix = null, string dataPlaneFqdn = null, string targetContainerHostApiServerFqdn = null, string targetContainerHostResourceId = null, string targetContainerHostCredentialsBase64 = null) { throw null; }
+        public static Azure.ResourceManager.DevSpaces.Models.KubernetesConnectionDetails KubernetesConnectionDetails(string kubeConfig = null) { throw null; }
+    }
     public partial class DevSpacesSku
     {
         public DevSpacesSku(Azure.ResourceManager.DevSpaces.Models.DevSpacesSkuName name) { }
