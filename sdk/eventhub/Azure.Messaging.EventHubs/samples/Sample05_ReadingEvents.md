@@ -303,6 +303,83 @@ finally
 }
 ```
 
+## Read events from a partition, starting from the previous checkpoint position and updating the checkpoint after the events are read
+
+The "GetCheckpointAsync" method of "BlobCheckpointStore" allows to fetch the checkpoint information for a specific partition.This enables to read the data from where previously we had stopped and helps in preventing duplicate processing of events.
+The "UpdateCheckpointAsync" method of "BlobCheckpointStore" allows to update the checkpoint information for a specific partition.
+In the below code sample, when the cancel operation is triggered the control goes out of loop then we are updating the checkpoint
+
+```C# Snippet:EventHubs_Sample05_ReadEventsFromAPartitionandUpdateCheckpoint
+
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Primitives;
+using Azure.Storage.Blobs;
+using System.Diagnostics;
+using System.Text;
+
+var eventHubNamespaceConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+var storageAccountConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< STORAGE ACCOUNT CONTAINER NAME  >>";
+
+var fullyQualifiedNamespace = "<< HOST NAME OF THE EVENT HUB NAMESPACE >>";
+string? partitionId = null;
+long offset = long.MinValue;
+long? sequenceNumber = null;
+
+var consumer = new EventHubConsumerClient(consumerGroup,
+                   eventHubNamespaceConnectionString,
+                   eventHubName);
+
+var blobContainerClient = new BlobContainerClient(storageAccountConnectionString,
+                              blobContainerName);
+
+var blobCheckPointStore = new BlobCheckpointStore(blobContainerClient);
+
+try
+{
+    using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+    cancellationSource.CancelAfter(TimeSpan.FromSeconds(120));
+    string firstPartition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
+
+    var eventProcessorCheckpoint = await blobCheckPointStore.GetCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, firstPartition,     cancellationSource.Token);
+    EventPosition startingPosition = eventProcessorCheckpoint.StartingPosition;
+
+
+    await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(firstPartition,
+                                                                                          startingPosition,
+                                                                                          cancellationSource.Token))
+    {
+        partitionId = partitionEvent.Partition.PartitionId;
+        offset = partitionEvent.Data.Offset;
+        sequenceNumber = partitionEvent.Data.SequenceNumber;    
+        ReadOnlyMemory<byte> eventBodyBytes = partitionEvent.Data.EventBody.ToMemory();
+        
+        Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {partitionId}");
+
+        await blobCheckPointStore.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, cancellationSource.Token);
+    }
+
+    // When the cancel operation is triggered, control goes out of loop then we are updating the checkpoint
+    if (partitionId != null && offset != long.MinValue && sequenceNumber != null)
+    {
+        await blobCheckPointStore.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, cancellationSource.Token); 
+    }
+}
+catch (TaskCanceledException)
+{
+    // This is expected if the cancellation token is
+    // signaled.
+}
+finally
+{    
+    await consumer.CloseAsync();
+}
+```
+
 ## Read events from a partition, starting from a specific date and time
 
 When reading event from a partition, consumers can request to begin reading from the partition's event stream at a specific point in time.  This example illustrates reading events starting with an hour prior to the current time, and will continue reading for a duration of 30 seconds before cancellation is triggered.
