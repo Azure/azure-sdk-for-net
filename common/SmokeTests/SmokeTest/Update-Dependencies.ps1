@@ -7,6 +7,15 @@ param(
 
 . (Join-Path $PSScriptRoot ../../../eng/scripts/smoketest/Get-Package-Version.ps1)
 
+# Define a set that contains the list of packages which should not be included
+# as references to the smoke tests.  This is necessary because some compatibility
+# packages do not target netstandard2.0, and the package source is unable to
+# filter upstream to restrict to the appropriate packages for the running target.
+
+$packageExcludeSet = [System.Collections.Generic.HashSet[string]]@(
+    "Microsoft.Azure.WebPubSub.AspNetCore"
+)
+
 function Log-Warning($message) {
     if ($CI) {
         Write-Host "##vso[task.logissue type=warning]$message"
@@ -67,6 +76,7 @@ Log-Info "Querying package information."
 $referenceUpdateCount = 0
 
 Get-SmokeTestPkgProperties -ArtifactsPath $ArtifactsPath
+| Where-Object { -not $packageExcludeSet.Contains($_.Name) }
 | Foreach-Object { $referenceUpdateCount += AddPackageReference $csproj $referenceNode $_ }
 
 # Save the project and report the outcome.  If no refrences were added, consider this
