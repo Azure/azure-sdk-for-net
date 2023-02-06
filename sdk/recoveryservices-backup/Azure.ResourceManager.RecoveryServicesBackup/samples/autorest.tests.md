@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateTest` to generate code.
 
-# Azure.ResourceManager.KubernetesConfiguration.Tests
+# Azure.ResourceManager.RecoveryServicesBackup.Tests
 
 > see https://aka.ms/autorest
 ``` yaml
