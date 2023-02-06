@@ -7,6 +7,8 @@ Project("{AC9865CC-D101-4E25-8525-DE67240212FD}") = "Azure.ResourceManager.Synap
 EndProject
 Project("{AC9865CC-D101-4E25-8525-DE67240212FD}") = "Azure.ResourceManager.Synapse.Tests", "tests\Azure.ResourceManager.Synapse.Tests.csproj", "{039E1538-E974-40C7-926C-BB5E815B1486}"
 EndProject
+Project("{AC9865CC-D101-4E25-8525-DE67240212FD}") = "Azure.ResourceManager.Synapse.Samples", "samples\Azure.ResourceManager.Synapse.Samples.csproj", "{FEB26AC3-2771-4488-8860-DE2715385F67}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
