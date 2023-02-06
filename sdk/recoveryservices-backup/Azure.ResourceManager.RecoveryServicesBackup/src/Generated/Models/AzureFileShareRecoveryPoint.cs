@@ -24,12 +24,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="fileShareSnapshotUri"> Contains Url to the snapshot of fileshare, if applicable. </param>
         /// <param name="recoveryPointSizeInGB"> Contains recovery point size. </param>
-        internal AzureFileShareRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB) : base(objectType)
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        internal AzureFileShareRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties) : base(objectType)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
             FileShareSnapshotUri = fileShareSnapshotUri;
             RecoveryPointSizeInGB = recoveryPointSizeInGB;
+            RecoveryPointProperties = recoveryPointProperties;
             ObjectType = objectType ?? "AzureFileShareRecoveryPoint";
         }
 
@@ -41,5 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Uri FileShareSnapshotUri { get; set; }
         /// <summary> Contains recovery point size. </summary>
         public int? RecoveryPointSizeInGB { get; set; }
+        /// <summary> Properties of Recovery Point. </summary>
+        public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

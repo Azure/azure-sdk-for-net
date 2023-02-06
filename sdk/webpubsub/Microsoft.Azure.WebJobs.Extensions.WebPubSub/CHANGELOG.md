@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2023-02-01)
+
+### Bugs Fixed
+- Fix setting generic converters in JsonSerializerSettings.
 
 ## 1.3.0 (2022-11-11)
 
