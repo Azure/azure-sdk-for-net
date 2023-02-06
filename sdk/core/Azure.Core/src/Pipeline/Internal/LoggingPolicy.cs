@@ -57,7 +57,10 @@ namespace Azure.Core.Pipeline
         {
             Request request = message.Request;
 
-            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _assemblyName);
+            if (s_eventSource.IsEnabledInformational())
+            {
+                s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _assemblyName);
+            }
 
             Encoding? requestTextEncoding = null;
 
@@ -106,7 +109,7 @@ namespace Azure.Core.Pipeline
             {
                 s_eventSource.ErrorResponse(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
             }
-            else
+            else if (s_eventSource.IsEnabledVerbose())
             {
                 s_eventSource.Response(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
             }
@@ -358,48 +361,55 @@ namespace Azure.Core.Pipeline
 
             private void Log(string requestId, EventType eventType, byte[] bytes, Encoding? textEncoding, int? block = null)
             {
-                string? stringValue = textEncoding?.GetString(bytes);
-
                 // We checked IsEnabled before we got here
                 Debug.Assert(_eventSource != null);
                 AzureCoreEventSource azureCoreEventSource = _eventSource!;
 
-                switch (eventType)
+                if (azureCoreEventSource.IsEnabledVerbose())
                 {
-                    case EventType.Request when stringValue != null:
-                        azureCoreEventSource.RequestContentText(requestId, stringValue);
-                        break;
-                    case EventType.Request:
-                        azureCoreEventSource.RequestContent(requestId, bytes);
-                        break;
+                    switch (eventType)
+                    {
+                        case EventType.Request when textEncoding != null:
+                            azureCoreEventSource.RequestContentText(requestId, textEncoding.GetString(bytes));
+                            break;
+                        case EventType.Request:
+                            azureCoreEventSource.RequestContent(requestId, bytes);
+                            break;
 
-                    // Response
-                    case EventType.Response when block != null && stringValue != null:
-                        azureCoreEventSource.ResponseContentTextBlock(requestId, block.Value, stringValue);
-                        break;
-                    case EventType.Response when block != null:
-                        azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes);
-                        break;
-                    case EventType.Response when stringValue != null:
-                        azureCoreEventSource.ResponseContentText(requestId, stringValue);
-                        break;
-                    case EventType.Response:
-                        azureCoreEventSource.ResponseContent(requestId, bytes);
-                        break;
+                        // Response
+                        case EventType.Response when block != null && textEncoding != null:
+                            azureCoreEventSource.ResponseContentTextBlock(requestId, block.Value, textEncoding.GetString(bytes));
+                            break;
+                        case EventType.Response when block != null:
+                            azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes);
+                            break;
+                        case EventType.Response when textEncoding != null:
+                            azureCoreEventSource.ResponseContentText(requestId, textEncoding.GetString(bytes));
+                            break;
+                        case EventType.Response:
+                            azureCoreEventSource.ResponseContent(requestId, bytes);
+                            break;
+                    }
+                }
 
-                    // ResponseError
-                    case EventType.ErrorResponse when block != null && stringValue != null:
-                        azureCoreEventSource.ErrorResponseContentTextBlock(requestId, block.Value, stringValue);
-                        break;
-                    case EventType.ErrorResponse when block != null:
-                        azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes);
-                        break;
-                    case EventType.ErrorResponse when stringValue != null:
-                        azureCoreEventSource.ErrorResponseContentText(requestId, stringValue);
-                        break;
-                    case EventType.ErrorResponse:
-                        azureCoreEventSource.ErrorResponseContent(requestId, bytes);
-                        break;
+                if (azureCoreEventSource.IsEnabledInformational())
+                {
+                    switch (eventType)
+                    {
+                        // ResponseError
+                        case EventType.ErrorResponse when block != null && textEncoding != null:
+                            azureCoreEventSource.ErrorResponseContentTextBlock(requestId, block.Value, textEncoding.GetString(bytes));
+                            break;
+                        case EventType.ErrorResponse when block != null:
+                            azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes);
+                            break;
+                        case EventType.ErrorResponse when textEncoding != null:
+                            azureCoreEventSource.ErrorResponseContentText(requestId, textEncoding.GetString(bytes));
+                            break;
+                        case EventType.ErrorResponse:
+                            azureCoreEventSource.ErrorResponseContent(requestId, bytes);
+                            break;
+                    }
                 }
             }
 
