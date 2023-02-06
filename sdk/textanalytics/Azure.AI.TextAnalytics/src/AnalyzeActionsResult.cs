@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults,
-            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionResults
+            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractSummaryActionResults
             )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyResults = multiLabelClassifyActionResults;
             AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
             ExtractiveSummarizeResults = extractiveSummarizeActionResults;
-            AbstractSummaryResults = abstractSummaryActionResults;
+            AbstractiveSummarizeResults = abstractSummaryActionResults;
         }
 
         internal AnalyzeActionsResult(
@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesResults = Array.Empty<RecognizeCustomEntitiesActionResult>();
             AnalyzeHealthcareEntitiesResults = Array.Empty<AnalyzeHealthcareEntitiesActionResult>();
             ExtractiveSummarizeResults = Array.Empty<ExtractiveSummarizeActionResult>();
-            AbstractSummaryResults = Array.Empty<AbstractSummaryActionResult>();
+            AbstractiveSummarizeResults = Array.Empty<AbstractiveSummarizeActionResult>();
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<ExtractiveSummarizeActionResult> ExtractiveSummarizeResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="AbstractSummaryActionResult"/>.
+        /// Determines the collection of <see cref="AbstractiveSummarizeActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<AbstractSummaryActionResult> AbstractSummaryResults { get; }
+        public IReadOnlyCollection<AbstractiveSummarizeActionResult> AbstractiveSummarizeResults { get; }
     }
 }

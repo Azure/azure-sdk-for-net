@@ -76,10 +76,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsModelFactory.ExtractiveSummarizeActionResult(default, default, default),
             };
 
-            var abstractSummaryActionResults = new List<AbstractSummaryActionResult>()
+            var abstractSummaryActionResults = new List<AbstractiveSummarizeActionResult>()
             {
-                TextAnalyticsModelFactory.AbstractSummaryActionResult(default, default, default),
-                TextAnalyticsModelFactory.AbstractSummaryActionResult(default, default, default),
+                TextAnalyticsModelFactory.AbstractiveSummarizeActionResult(default, default, default),
+                TextAnalyticsModelFactory.AbstractiveSummarizeActionResult(default, default, default),
             };
 
             var actionsResult = TextAnalyticsModelFactory.AnalyzeActionsResult(
@@ -118,7 +118,7 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(multiLabelClassifyActionResults, actionsResult.MultiLabelClassifyResults);
             CollectionAssert.AreEquivalent(analyzeHealthcareEntitiesActionResults, actionsResult.AnalyzeHealthcareEntitiesResults);
             CollectionAssert.AreEquivalent(extractiveSummarizeActionResults, actionsResult.ExtractiveSummarizeResults);
-            CollectionAssert.AreEquivalent(abstractSummaryActionResults, actionsResult.AbstractSummaryResults);
+            CollectionAssert.AreEquivalent(abstractSummaryActionResults, actionsResult.AbstractiveSummarizeResults);
         }
         #endregion Action Result Models
     }

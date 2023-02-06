@@ -10,14 +10,14 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// A representation of the result of performing abstractive summarization on a given document.
     /// </summary>
-    public partial class AbstractSummaryResult : TextAnalyticsResult
+    public partial class AbstractiveSummarizeResult : TextAnalyticsResult
     {
         private readonly IReadOnlyCollection<AbstractiveSummary> _summaries;
 
         /// <summary>
-        /// Initializes a successful <see cref="AbstractSummaryResult"/>.
+        /// Initializes a successful <see cref="AbstractiveSummarizeResult"/>.
         /// </summary>
-        internal AbstractSummaryResult(
+        internal AbstractiveSummarizeResult(
             string id,
             TextDocumentStatistics statistics,
             IList<AbstractiveSummary> summaries,
@@ -37,9 +37,9 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes an <see cref="AbstractSummaryResult"/> with an error.
+        /// Initializes an <see cref="AbstractiveSummarizeResult"/> with an error.
         /// </summary>
-        internal AbstractSummaryResult(string id, TextAnalyticsError error) : base(id, error) { }
+        internal AbstractiveSummarizeResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// The warnings that resulted from processing the document.

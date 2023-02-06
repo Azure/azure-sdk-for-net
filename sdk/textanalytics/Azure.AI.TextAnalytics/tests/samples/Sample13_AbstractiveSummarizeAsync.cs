@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public async Task AbstractSummaryAsync()
+        public async Task AbstractiveSummarizeAsync()
         {
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
@@ -53,13 +53,13 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            AbstractSummaryOptions options = new()
+            AbstractiveSummarizeOptions options = new()
             {
                 MaxSentenceCount = 2
             };
 
             // Start the text analysis operation.
-            AbstractSummaryOperation operation = client.StartAbstractSummary(documentBatch, options);
+            AbstractiveSummarizeOperation operation = client.StartAbstractiveSummarize(documentBatch, options);
 
             await operation.WaitForCompletionAsync();
 
@@ -75,12 +75,12 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            await foreach (AbstractSummaryResultCollection documentsInPage in operation.Value)
+            await foreach (AbstractiveSummarizeResultCollection documentsInPage in operation.Value)
             {
                 Console.WriteLine($"Results of \"Abstractive Summarization\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (AbstractSummaryResult documentResult in documentsInPage)
+                foreach (AbstractiveSummarizeResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {

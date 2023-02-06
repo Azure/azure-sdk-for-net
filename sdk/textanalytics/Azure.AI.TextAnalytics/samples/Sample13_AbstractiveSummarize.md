@@ -13,9 +13,9 @@ TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKe
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Perform abstractive summarization on one or more documents
-To perform abstractive text summarization on one or more documents, call `StartAbstractSummary` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `AbstractSummaryOperation`, which is a long-running operation that can be used to poll the service until the operation has completed and the results of the abstractive summarization are available.
+To perform abstractive text summarization on one or more documents, call `StartAbstractiveSummarize` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `AbstractiveSummarizeOperation`, which is a long-running operation that can be used to poll the service until the operation has completed and the results of the abstractive summarization are available.
 
-```C# Snippet:TextAnalyticsAbstractSummaryAsync
+```C# Snippet:TextAnalyticsAbstractiveSummarizeAsync
 // Get the document.
 string document =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from"
@@ -49,7 +49,7 @@ List<string> documentBatch = new()
 };
 
 // Start the text analysis operation.
-AbstractSummaryOperation operation = client.StartAbstractSummary(documentBatch);
+AbstractiveSummarizeOperation operation = client.StartAbstractiveSummarize(documentBatch);
 
 await operation.WaitForCompletionAsync();
 
@@ -57,9 +57,9 @@ Console.WriteLine($"The operation has completed.");
 Console.WriteLine();
 ```
 
-The `AbstractSummaryOperation` includes general information about the status of the operation, and it can be queried at any time:
+The `AbstractiveSummarizeOperation` includes general information about the status of the operation, and it can be queried at any time:
 
-```C# Snippet:TextAnalyticsAbstractSummaryOperationStatus
+```C# Snippet:TextAnalyticsAbstractiveSummarizeOperationStatus
 // View the operation status.
 Console.WriteLine($"Created On   : {operation.CreatedOn}");
 Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -71,14 +71,14 @@ Console.WriteLine();
 
 Once the long-running operation has completed, you can view the results of the abstractive summarization, including any errors that might have occurred:
 
-```C# Snippet:TextAnalyticsAbstractSummaryAsyncViewResults
+```C# Snippet:TextAnalyticsAbstractiveSummarizeAsyncViewResults
 // View the operation results.
-await foreach (AbstractSummaryResultCollection documentsInPage in operation.Value)
+await foreach (AbstractiveSummarizeResultCollection documentsInPage in operation.Value)
 {
     Console.WriteLine($"Results of \"Abstractive Summarization\" Model, version: \"{documentsInPage.ModelVersion}\"");
     Console.WriteLine();
 
-    foreach (AbstractSummaryResult documentResult in documentsInPage)
+    foreach (AbstractiveSummarizeResult documentResult in documentsInPage)
     {
         if (documentResult.HasError)
         {

@@ -1547,9 +1547,9 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 throw Validation.NotSupported(nameof(ExtractiveSummarizeAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
             }
-            if (actions.AbstractSummaryActions != null && actions.AbstractSummaryActions.Count > 0)
+            if (actions.AbstractiveSummarizeActions != null && actions.AbstractiveSummarizeActions.Count > 0)
             {
-                throw Validation.NotSupported(nameof(AbstractSummaryAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+                throw Validation.NotSupported(nameof(AbstractiveSummarizeAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
             }
             return tasks;
         }

@@ -1051,7 +1051,7 @@ namespace Azure.AI.TextAnalytics
                 new List<MultiLabelClassifyActionResult>(),
                 new List<AnalyzeHealthcareEntitiesActionResult>(),
                 new List<ExtractiveSummarizeActionResult>(),
-                new List<AbstractSummaryActionResult>()
+                new List<AbstractiveSummarizeActionResult>()
                 );
         }
 
@@ -1089,7 +1089,7 @@ namespace Azure.AI.TextAnalytics
                 multiLabelClassifyActionResults.ToList(),
                 new List<AnalyzeHealthcareEntitiesActionResult>(),
                 new List<ExtractiveSummarizeActionResult>(),
-                new List<AbstractSummaryActionResult>()
+                new List<AbstractiveSummarizeActionResult>()
                 );
         }
 
@@ -1129,7 +1129,7 @@ namespace Azure.AI.TextAnalytics
                 multiLabelClassifyActionResults.ToList(),
                 analyzeHealthcareEntitiesActionResults.ToList(),
                 new List<ExtractiveSummarizeActionResult>(),
-                new List<AbstractSummaryActionResult>()
+                new List<AbstractiveSummarizeActionResult>()
                 );
         }
 
@@ -1146,7 +1146,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="multiLabelClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiLabelClassifyActionResult"/>.</param>
         /// <param name="analyzeHealthcareEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/>.</param>
         /// <param name="extractiveSummarizeActionResults">Sets the collection of <see cref="TextAnalytics.ExtractiveSummarizeActionResult"/>.</param>
-        /// <param name="abstractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.AbstractSummaryActionResult"/>.</param>
+        /// <param name="abstractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.AbstractiveSummarizeActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
@@ -1159,7 +1159,7 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IEnumerable<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
             IEnumerable<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults,
-            IEnumerable<AbstractSummaryActionResult> abstractSummaryActionResults)
+            IEnumerable<AbstractiveSummarizeActionResult> abstractSummaryActionResults)
         {
             return new AnalyzeActionsResult(
                 extractKeyPhrasesActionResults.ToList(),
@@ -1738,35 +1738,35 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummarizeActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="result">Sets the <see cref="AbstractSummaryActionResult.DocumentsResults"/> property.</param>
+        /// <param name="result">Sets the <see cref="AbstractiveSummarizeActionResult.DocumentsResults"/> property.</param>
         /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.</returns>
-        public static AbstractSummaryActionResult AbstractSummaryActionResult(
-            AbstractSummaryResultCollection result,
+        /// <returns>A new instance of <see cref="TextAnalytics.AbstractiveSummarizeActionResult"/> for mocking purposes.</returns>
+        public static AbstractiveSummarizeActionResult AbstractiveSummarizeActionResult(
+            AbstractiveSummarizeResultCollection result,
             string actionName,
             DateTimeOffset completedOn)
         {
-            return new AbstractSummaryActionResult(result, actionName, completedOn);
+            return new AbstractiveSummarizeActionResult(result, actionName, completedOn);
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummarizeActionResult"/> for mocking purposes.
         /// </summary>
         /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
         /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.AbstractSummaryActionResult"/> for mocking purposes.</returns>
-        public static AbstractSummaryActionResult AbstractSummaryActionResult(
+        /// <returns>A new instance of <see cref="TextAnalytics.AbstractiveSummarizeActionResult"/> for mocking purposes.</returns>
+        public static AbstractiveSummarizeActionResult AbstractiveSummarizeActionResult(
             string actionName,
             DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new AbstractSummaryActionResult(actionName, completedOn, new Error(code, message));
+            return new AbstractiveSummarizeActionResult(actionName, completedOn, new Error(code, message));
         }
 
         #endregion Action Result Models
@@ -2010,55 +2010,55 @@ namespace Azure.AI.TextAnalytics
         #region Abstract Summary
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummarizeResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
-        /// <param name="summaries">Sets the <see cref="AbstractSummaryResult.Summaries"/> property.</param>
+        /// <param name="summaries">Sets the <see cref="AbstractiveSummarizeResult.Summaries"/> property.</param>
         /// <param name="detectedLanguage">Sets the <see cref="ExtractiveSummarizeResult.DetectedLanguage"/> property.</param>
-        /// <param name="warnings">Sets the <see cref="AbstractSummaryResult.Warnings"/> property.</param>
+        /// <param name="warnings">Sets the <see cref="AbstractiveSummarizeResult.Warnings"/> property.</param>
         /// <returns>
-        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// A new instance of <see cref="TextAnalytics.AbstractiveSummarizeResult"/> for mocking purposes.
         /// </returns>
-        public static AbstractSummaryResult AbstractSummaryResult(
+        public static AbstractiveSummarizeResult AbstractiveSummarizeResult(
             string id,
             TextDocumentStatistics statistics,
             IEnumerable<AbstractiveSummary> summaries,
             DetectedLanguage? detectedLanguage = default,
             IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new AbstractSummaryResult(id, statistics, summaries.ToList(), detectedLanguage, warnings.ToList());
+            return new AbstractiveSummarizeResult(id, statistics, summaries.ToList(), detectedLanguage, warnings.ToList());
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummarizeResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
         /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>
-        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
+        /// A new instance of <see cref="TextAnalytics.AbstractiveSummarizeResult"/> for mocking purposes.
         /// </returns>
-        public static AbstractSummaryResult AbstractSummaryResult(string id, string code, string message)
+        public static AbstractiveSummarizeResult AbstractiveSummarizeResult(string id, string code, string message)
         {
-            return new AbstractSummaryResult(id, new TextAnalyticsError(code, message));
+            return new AbstractiveSummarizeResult(id, new TextAnalyticsError(code, message));
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AbstractSummaryResultCollection"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummarizeResultCollection"/> for mocking purposes.
         /// </summary>
-        /// <param name="results">Sets the collection of <see cref="TextAnalytics.AbstractSummaryResult"/>.</param>
-        /// <param name="statistics">Sets the <see cref="AbstractSummaryResultCollection.Statistics"/> property.</param>
-        /// <param name="modelVersion">Sets the <see cref="AbstractSummaryResultCollection.ModelVersion"/> property.</param>
+        /// <param name="results">Sets the collection of <see cref="TextAnalytics.AbstractiveSummarizeResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="AbstractiveSummarizeResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="AbstractiveSummarizeResultCollection.ModelVersion"/> property.</param>
         /// <returns>
-        /// A new instance of <see cref="TextAnalytics.AbstractSummaryResultCollection"/> for mocking purposes.
+        /// A new instance of <see cref="TextAnalytics.AbstractiveSummarizeResultCollection"/> for mocking purposes.
         /// </returns>
-        public static AbstractSummaryResultCollection AbstractSummaryResultCollection(
-            IEnumerable<AbstractSummaryResult> results,
+        public static AbstractiveSummarizeResultCollection AbstractiveSummarizeResultCollection(
+            IEnumerable<AbstractiveSummarizeResult> results,
             TextDocumentBatchStatistics statistics,
             string modelVersion)
         {
-            return new AbstractSummaryResultCollection(results.ToList(), statistics, modelVersion);
+            return new AbstractiveSummarizeResultCollection(results.ToList(), statistics, modelVersion);
         }
 
         /// <summary>

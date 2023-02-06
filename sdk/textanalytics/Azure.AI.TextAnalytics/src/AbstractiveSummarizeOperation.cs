@@ -17,8 +17,8 @@ namespace Azure.AI.TextAnalytics
     /// A representation of abstractive summarization being performed on a given set of documents as a pageable,
     /// long-running operation.
     /// </summary>
-    public class AbstractSummaryOperation
-        : PageableOperation<AbstractSummaryResultCollection>, IOperation<AsyncPageable<AbstractSummaryResultCollection>>
+    public class AbstractiveSummarizeOperation
+        : PageableOperation<AbstractiveSummarizeResultCollection>, IOperation<AsyncPageable<AbstractiveSummarizeResultCollection>>
     {
         internal readonly IDictionary<string, int> _idToIndexMap;
 
@@ -26,14 +26,14 @@ namespace Azure.AI.TextAnalytics
         private readonly string _jobId;
         private readonly ServiceClient _serviceClient;
         private readonly ClientDiagnostics _diagnostics;
-        private readonly OperationInternal<AsyncPageable<AbstractSummaryResultCollection>> _operationInternal;
+        private readonly OperationInternal<AsyncPageable<AbstractiveSummarizeResultCollection>> _operationInternal;
 
         private TextAnalyticsOperationStatus _status;
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
         private DateTimeOffset _createdOn;
         private string _displayName;
-        private Page<AbstractSummaryResultCollection> _firstPage;
+        private Page<AbstractiveSummarizeResultCollection> _firstPage;
 
         /// <summary>
         /// The identifier of the long-running operation, which can be used to poll its current status.
@@ -76,7 +76,7 @@ namespace Azure.AI.TextAnalytics
         public override bool HasValue => _operationInternal.HasValue;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractSummaryOperation"/> class.
+        /// Initializes a new instance of the <see cref="AbstractiveSummarizeOperation"/> class.
         /// </summary>
         /// <param name="operationId">The identifier of the long-running operation.</param>
         /// <param name="client">The client used to check for completion.</param>
@@ -87,7 +87,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="ArgumentNullException">
         /// <paramref name="operationId"/> or <paramref name="client"/> is null.
         /// </exception>
-        public AbstractSummaryOperation(string operationId, TextAnalyticsClient client)
+        public AbstractiveSummarizeOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(client, nameof(client));
@@ -102,7 +102,7 @@ namespace Azure.AI.TextAnalytics
             }
             catch (Exception e)
             {
-                throw new ArgumentException($"Invalid value. Please use the {nameof(AbstractSummaryOperation)}.{nameof(Id)} property value.", nameof(operationId), e);
+                throw new ArgumentException($"Invalid value. Please use the {nameof(AbstractiveSummarizeOperation)}.{nameof(Id)} property value.", nameof(operationId), e);
             }
 
             Id = operationId;
@@ -112,9 +112,9 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractSummaryOperation"/> class.
+        /// Initializes a new instance of the <see cref="AbstractiveSummarizeOperation"/> class.
         /// </summary>
-        internal AbstractSummaryOperation(
+        internal AbstractiveSummarizeOperation(
             ServiceClient serviceClient,
             ClientDiagnostics diagnostics,
             string operationLocation,
@@ -133,10 +133,10 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractSummaryOperation"/> class. This constructor is only
+        /// Initializes a new instance of the <see cref="AbstractiveSummarizeOperation"/> class. This constructor is only
         /// intended for mocking.
         /// </summary>
-        protected AbstractSummaryOperation()
+        protected AbstractiveSummarizeOperation()
         {
         }
 
@@ -144,7 +144,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the last HTTP response received from the server associated with this long-running operation.
         /// </summary>
         /// <remarks>
-        /// An instance of the <see cref="AbstractSummaryOperation"/> class sends requests to the server via methods
+        /// An instance of the <see cref="AbstractiveSummarizeOperation"/> class sends requests to the server via methods
         /// such as <see cref="UpdateStatus"/>, <see cref="UpdateStatusAsync"/>, etc.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
@@ -182,7 +182,7 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>The HTTP response received from the server.</returns>
-        public override async ValueTask<Response<AsyncPageable<AbstractSummaryResultCollection>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<AsyncPageable<AbstractiveSummarizeResultCollection>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Azure.AI.TextAnalytics
         /// </param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>The HTTP response received from the server.</returns>
-        public override async ValueTask<Response<AsyncPageable<AbstractSummaryResultCollection>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<AsyncPageable<AbstractiveSummarizeResultCollection>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -221,15 +221,15 @@ namespace Azure.AI.TextAnalytics
         /// The operation must have completed successfully (i.e., <see cref="HasValue"/> is <c>true</c>).
         /// </remarks>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
-        public override Pageable<AbstractSummaryResultCollection> GetValues(CancellationToken cancellationToken = default)
+        public override Pageable<AbstractiveSummarizeResultCollection> GetValues(CancellationToken cancellationToken = default)
         {
             // Validates that the operation has completed successfully.
             _ = _operationInternal.Value;
 
-            Page<AbstractSummaryResultCollection> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AbstractiveSummarizeResultCollection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var response = _serviceClient.AnalyzeTextJobStatusNextPage(nextLink, pageSizeHint, _idToIndexMap, cancellationToken);
-                return Page.FromValues(new List<AbstractSummaryResultCollection>() { Transforms.ConvertToAbstractSummaryResultCollection(response.Value, _idToIndexMap) }, response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(new List<AbstractiveSummarizeResultCollection>() { Transforms.ConvertToAbstractiveSummarizeResultCollection(response.Value, _idToIndexMap) }, response.Value.NextLink, response.GetRawResponse());
             }
 
             return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
@@ -242,25 +242,25 @@ namespace Azure.AI.TextAnalytics
         /// The operation must have completed successfully (i.e., <see cref="HasValue"/> is <c>true</c>).
         /// </remarks>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
-        public override AsyncPageable<AbstractSummaryResultCollection> GetValuesAsync(CancellationToken cancellationToken = default)
+        public override AsyncPageable<AbstractiveSummarizeResultCollection> GetValuesAsync(CancellationToken cancellationToken = default)
         {
             // Validates that the operation has completed successfully.
             _ = _operationInternal.Value;
             return CreateOperationValueAsync(cancellationToken);
         }
 
-        private AsyncPageable<AbstractSummaryResultCollection> CreateOperationValueAsync(CancellationToken cancellationToken = default)
+        private AsyncPageable<AbstractiveSummarizeResultCollection> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AbstractSummaryResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AbstractiveSummarizeResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var response = await _serviceClient.AnalyzeTextJobStatusNextPageAsync(nextLink, pageSizeHint, _idToIndexMap, cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(new List<AbstractSummaryResultCollection>() { Transforms.ConvertToAbstractSummaryResultCollection(response.Value, _idToIndexMap) }, response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(new List<AbstractiveSummarizeResultCollection>() { Transforms.ConvertToAbstractiveSummarizeResultCollection(response.Value, _idToIndexMap) }, response.Value.NextLink, response.GetRawResponse());
             }
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
         }
 
-        async ValueTask<OperationState<AsyncPageable<AbstractSummaryResultCollection>>> IOperation<AsyncPageable<AbstractSummaryResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationState<AsyncPageable<AbstractiveSummarizeResultCollection>>> IOperation<AsyncPageable<AbstractiveSummarizeResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeTextJobState> response = async
                 ? await _serviceClient.AnalyzeTextJobStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
@@ -277,22 +277,22 @@ namespace Azure.AI.TextAnalytics
             if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             {
                 string nextLink = response.Value.NextLink;
-                _firstPage = Page.FromValues(new List<AbstractSummaryResultCollection>() { Transforms.ConvertToAbstractSummaryResultCollection(response.Value, _idToIndexMap) }, nextLink, rawResponse);
+                _firstPage = Page.FromValues(new List<AbstractiveSummarizeResultCollection>() { Transforms.ConvertToAbstractiveSummarizeResultCollection(response.Value, _idToIndexMap) }, nextLink, rawResponse);
 
-                return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
+                return OperationState<AsyncPageable<AbstractiveSummarizeResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
 
             if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
-                return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Pending(rawResponse);
+                return OperationState<AsyncPageable<AbstractiveSummarizeResultCollection>>.Pending(rawResponse);
             }
 
             if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
             {
-                return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
+                return OperationState<AsyncPageable<AbstractiveSummarizeResultCollection>>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
+            return OperationState<AsyncPageable<AbstractiveSummarizeResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
     }
 }
