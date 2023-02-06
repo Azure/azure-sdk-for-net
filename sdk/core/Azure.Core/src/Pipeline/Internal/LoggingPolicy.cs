@@ -57,10 +57,7 @@ namespace Azure.Core.Pipeline
         {
             Request request = message.Request;
 
-            if (s_eventSource.IsEnabledInformational())
-            {
-                s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _assemblyName);
-            }
+            s_eventSource.Request(request, _assemblyName, _sanitizer);
 
             Encoding? requestTextEncoding = null;
 
@@ -107,11 +104,11 @@ namespace Azure.Core.Pipeline
 
             if (isError)
             {
-                s_eventSource.ErrorResponse(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
+                s_eventSource.ErrorResponse(response, _sanitizer, elapsed);
             }
-            else if (s_eventSource.IsEnabledVerbose())
+            else
             {
-                s_eventSource.Response(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
+                s_eventSource.Response(response, _sanitizer, elapsed);
             }
 
             if (wrapResponseContent)
@@ -127,24 +124,6 @@ namespace Azure.Core.Pipeline
             {
                 s_eventSource.ResponseDelay(response.ClientRequestId, elapsed);
             }
-        }
-
-        private string FormatUri(RequestUriBuilder requestUri)
-        {
-            return _sanitizer.SanitizeUrl(requestUri.ToString());
-        }
-
-        private string FormatHeaders(IEnumerable<HttpHeader> headers)
-        {
-            var stringBuilder = new StringBuilder();
-            foreach (HttpHeader header in headers)
-            {
-                stringBuilder.Append(header.Name);
-                stringBuilder.Append(':');
-                string newValue = _sanitizer.SanitizeHeader(header.Name, header.Value);
-                stringBuilder.AppendLine(newValue);
-            }
-            return stringBuilder.ToString();
         }
 
         private class LoggingStream : ReadOnlyStream
@@ -365,51 +344,27 @@ namespace Azure.Core.Pipeline
                 Debug.Assert(_eventSource != null);
                 AzureCoreEventSource azureCoreEventSource = _eventSource!;
 
-                if (azureCoreEventSource.IsEnabledVerbose())
+                switch (eventType)
                 {
-                    switch (eventType)
-                    {
-                        case EventType.Request when textEncoding != null:
-                            azureCoreEventSource.RequestContentText(requestId, textEncoding.GetString(bytes));
-                            break;
-                        case EventType.Request:
-                            azureCoreEventSource.RequestContent(requestId, bytes);
-                            break;
+                    case EventType.Request:
+                        azureCoreEventSource.RequestContent(requestId, bytes, textEncoding);
+                        break;
 
-                        // Response
-                        case EventType.Response when block != null && textEncoding != null:
-                            azureCoreEventSource.ResponseContentTextBlock(requestId, block.Value, textEncoding.GetString(bytes));
-                            break;
-                        case EventType.Response when block != null:
-                            azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes);
-                            break;
-                        case EventType.Response when textEncoding != null:
-                            azureCoreEventSource.ResponseContentText(requestId, textEncoding.GetString(bytes));
-                            break;
-                        case EventType.Response:
-                            azureCoreEventSource.ResponseContent(requestId, bytes);
-                            break;
-                    }
-                }
+                    // Response
+                    case EventType.Response when block != null:
+                        azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes, textEncoding);
+                        break;
+                    case EventType.Response:
+                        azureCoreEventSource.ResponseContent(requestId, bytes, textEncoding);
+                        break;
 
-                if (azureCoreEventSource.IsEnabledInformational())
-                {
-                    switch (eventType)
-                    {
-                        // ResponseError
-                        case EventType.ErrorResponse when block != null && textEncoding != null:
-                            azureCoreEventSource.ErrorResponseContentTextBlock(requestId, block.Value, textEncoding.GetString(bytes));
-                            break;
-                        case EventType.ErrorResponse when block != null:
-                            azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes);
-                            break;
-                        case EventType.ErrorResponse when textEncoding != null:
-                            azureCoreEventSource.ErrorResponseContentText(requestId, textEncoding.GetString(bytes));
-                            break;
-                        case EventType.ErrorResponse:
-                            azureCoreEventSource.ErrorResponseContent(requestId, bytes);
-                            break;
-                    }
+                    // ResponseError
+                    case EventType.ErrorResponse when block != null:
+                        azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes, textEncoding);
+                        break;
+                    case EventType.ErrorResponse:
+                        azureCoreEventSource.ErrorResponseContent(requestId, bytes, textEncoding);
+                        break;
                 }
             }
 
