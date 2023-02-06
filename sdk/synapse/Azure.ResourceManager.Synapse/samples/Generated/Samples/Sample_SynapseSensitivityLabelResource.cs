@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -17,6 +18,80 @@ namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseSensitivityLabelResource
     {
+        // Updates the sensitivity label of a given column with all parameters
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_UpdatesTheSensitivityLabelOfAGivenColumnWithAllParameters()
+        {
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateOrUpdateSqlPoolColumnSensitivityLabelWithAllParameters.json
+            // this example is just showing the usage of "SqlPoolSensitivityLabels_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SynapseSensitivityLabelResource created on azure
+            // for more information of creating SynapseSensitivityLabelResource, please refer to the document of SynapseSensitivityLabelResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "myRG";
+            string workspaceName = "myServer";
+            string sqlPoolName = "myDatabase";
+            string schemaName = "dbo";
+            string tableName = "myTable";
+            string columnName = "myColumn";
+            ResourceIdentifier synapseSensitivityLabelResourceId = SynapseSensitivityLabelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName, columnName);
+            SynapseSensitivityLabelResource synapseSensitivityLabel = client.GetSynapseSensitivityLabelResource(synapseSensitivityLabelResourceId);
+
+            // invoke the operation
+            SynapseSensitivityLabelData data = new SynapseSensitivityLabelData()
+            {
+                LabelName = "PII",
+                LabelId = Guid.Parse("bf91e08c-f4f0-478a-b016-25164b2a65ff"),
+                InformationType = "PhoneNumber",
+                InformationTypeId = Guid.Parse("d22fa6e9-5ee4-3bde-4c2b-a409604c4646"),
+            };
+            ArmOperation<SynapseSensitivityLabelResource> lro = await synapseSensitivityLabel.UpdateAsync(WaitUntil.Completed, data);
+            SynapseSensitivityLabelResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SynapseSensitivityLabelData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Deletes the sensitivity label of a given column
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Delete_DeletesTheSensitivityLabelOfAGivenColumn()
+        {
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/DeleteSqlPoolColumnSensitivityLabel.json
+            // this example is just showing the usage of "SqlPoolSensitivityLabels_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SynapseSensitivityLabelResource created on azure
+            // for more information of creating SynapseSensitivityLabelResource, please refer to the document of SynapseSensitivityLabelResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "myRG";
+            string workspaceName = "myServer";
+            string sqlPoolName = "myDatabase";
+            string schemaName = "dbo";
+            string tableName = "myTable";
+            string columnName = "myColumn";
+            ResourceIdentifier synapseSensitivityLabelResourceId = SynapseSensitivityLabelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName, columnName);
+            SynapseSensitivityLabelResource synapseSensitivityLabel = client.GetSynapseSensitivityLabelResource(synapseSensitivityLabelResourceId);
+
+            // invoke the operation
+            await synapseSensitivityLabel.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // Gets the sensitivity label of a given column
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
