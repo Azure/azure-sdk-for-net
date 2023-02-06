@@ -2224,8 +2224,8 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="document">The document to analyze.</param>
         /// <param name="categories">The categories that the documents can be classified with.</param>
+        /// <param name="classificationType">The type of classification to perform.</param>
         /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
         /// The collection of categories used to classify each document that was successfully analyzed.
@@ -2237,10 +2237,10 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<ClassificationCategoryCollection> DynamicClassify(
             string document,
             IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
             string language = default,
-            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default) =>
-            _serviceClient.DynamicClassify(document, categories, language, options, cancellationToken);
+            _serviceClient.DynamicClassify(document, categories, classificationType, language, cancellationToken);
 
         /// <summary>
         /// Performs dynamic classification on the given documents.
@@ -2252,8 +2252,9 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="categories">The categories that the documents can be classified with.</param>
+        /// <param name="classificationType">The type of classification to perform.</param>
         /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
+        /// <param name="options">The additional <see cref="TextAnalyticsRequestOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
         /// The collection of categories used to classify each document that was successfully analyzed.
@@ -2265,12 +2266,13 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
             IEnumerable<string> documents,
             IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
             string language = default,
-            DynamicClassifyOptions options = default,
+            TextAnalyticsRequestOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.DynamicClassifyBatch(documents, categories, language, options, cancellationToken);
+            return _serviceClient.DynamicClassifyBatch(documents, categories, classificationType, language, options, cancellationToken);
         }
 
         /// <summary>
@@ -2283,7 +2285,8 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="categories">The categories that the documents can be classified with.</param>
-        /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
+        /// <param name="classificationType">The type of classification to perform.</param>
+        /// <param name="options">The additional <see cref="TextAnalyticsRequestOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
         /// The collection of categories used to classify each document that was successfully analyzed.
@@ -2295,11 +2298,12 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
             IEnumerable<TextDocumentInput> documents,
             IEnumerable<string> categories,
-            DynamicClassifyOptions options = default,
+            ClassificationType? classificationType = default,
+            TextAnalyticsRequestOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.DynamicClassifyBatch(documents, categories, options, cancellationToken);
+            return _serviceClient.DynamicClassifyBatch(documents, categories, classificationType, options, cancellationToken);
         }
 
         /// <summary>
@@ -2312,8 +2316,8 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="document">The document to analyze.</param>
         /// <param name="categories">The categories that the documents can be classified with.</param>
+        /// <param name="classificationType">The type of classification to perform.</param>
         /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
         /// The collection of categories used to classify each document that was successfully analyzed.
@@ -2325,10 +2329,10 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
             string document,
             IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
             string language = default,
-            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await _serviceClient.DynamicClassifyAsync(document, categories, language, options, cancellationToken).ConfigureAwait(false);
+            await _serviceClient.DynamicClassifyAsync(document, categories, classificationType, language, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Performs dynamic classification on the given documents.
@@ -2340,8 +2344,9 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="categories">The categories that the documents can be classified with.</param>
+        /// <param name="classificationType">The type of classification to perform.</param>
         /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
+        /// <param name="options">The additional <see cref="TextAnalyticsRequestOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
         /// The collection of categories used to classify each document that was successfully analyzed.
@@ -2353,12 +2358,13 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
             IEnumerable<string> documents,
             IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
             string language = default,
-            DynamicClassifyOptions options = default,
+            TextAnalyticsRequestOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.DynamicClassifyBatchAsync(documents, categories, language, options,cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.DynamicClassifyBatchAsync(documents, categories, classificationType, language, options,cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2371,7 +2377,8 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="categories">The categories that the documents can be classified with.</param>
-        /// <param name="options">The additional <see cref="DynamicClassifyOptions"/> used to configure the operation.</param>
+        /// <param name="classificationType">The type of classification to perform.</param>
+        /// <param name="options">The additional <see cref="TextAnalyticsRequestOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
         /// The collection of categories used to classify each document that was successfully analyzed.
@@ -2383,11 +2390,12 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
             IEnumerable<TextDocumentInput> documents,
             IEnumerable<string> categories,
-            DynamicClassifyOptions options = default,
+            ClassificationType? classificationType = default,
+            TextAnalyticsRequestOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.DynamicClassifyBatchAsync(documents, categories, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.DynamicClassifyBatchAsync(documents, categories, classificationType, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
