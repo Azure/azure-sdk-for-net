@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI.Models
+namespace Azure.AI.OpenAI
 {
     /// <summary> Measurment of the amount of tokens used in this request and response. </summary>
     public partial class EmbeddingsUsage

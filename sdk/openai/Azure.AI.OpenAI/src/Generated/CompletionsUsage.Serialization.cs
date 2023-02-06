@@ -9,20 +9,20 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Models
+namespace Azure.AI.OpenAI
 {
     public partial class CompletionsUsage
     {
         internal static CompletionsUsage DeserializeCompletionsUsage(JsonElement element)
         {
-            int completionToken = default;
+            int completionTokens = default;
             int promptTokens = default;
             int totalTokens = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("completion_token"))
+                if (property.NameEquals("completion_tokens"))
                 {
-                    completionToken = property.Value.GetInt32();
+                    completionTokens = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("prompt_tokens"))
@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Models
                     continue;
                 }
             }
-            return new CompletionsUsage(completionToken, promptTokens, totalTokens);
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

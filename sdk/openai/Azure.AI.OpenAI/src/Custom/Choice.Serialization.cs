@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Models
+namespace Azure.AI.OpenAI
 {
     public partial class Choice
     {
@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI.Models
         {
             Optional<string> text = default;
             Optional<int?> index = default;
-            Optional<CompletionsLogProbs> logprobs = default;
+            Optional<CompletionsLogProbability> logprobs = default;
             Optional<string> finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -45,7 +45,7 @@ namespace Azure.AI.OpenAI.Models
                     }
                     else
                     {
-                        logprobs = CompletionsLogProbs.DeserializeCompletionsLogProbs(property.Value);
+                        logprobs = CompletionsLogProbability.DeserializeCompletionsLogProbability(property.Value);
                         continue;
                     }
                 }
