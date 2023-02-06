@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net7.0;net6.0;net461</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
 

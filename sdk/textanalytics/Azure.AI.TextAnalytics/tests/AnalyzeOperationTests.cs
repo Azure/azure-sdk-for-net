@@ -814,7 +814,6 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeHealthcareEntitiesResultCollection analyzeHealthcareEntitiesDocumentsResults = analyzeHealthcareEntitiesActionResults.FirstOrDefault().DocumentsResults;
             Assert.AreEqual(1, analyzeHealthcareEntitiesDocumentsResults.Count);
             Assert.IsNotNull(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle);
-            Assert.Greater(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle.Count, 0);
         }
 
         [RecordedTest]

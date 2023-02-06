@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static CrossSubscriptionRestoreSettings DeserializeCrossSubscriptionRestoreSettings(JsonElement element)
         {
-            Optional<CrossSubscriptionRestoreState> state = default;
+            Optional<DataProtectionBackupCrossSubscriptionRestoreState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new CrossSubscriptionRestoreState(property.Value.GetString());
+                    state = new DataProtectionBackupCrossSubscriptionRestoreState(property.Value.GetString());
                     continue;
                 }
             }

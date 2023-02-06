@@ -55,10 +55,15 @@ Request Body:
 
 Schema for <c>EmbeddingsOptions</c>:
 <code>{
-  user: string, # Optional.
-  input_type: string, # Optional.
-  model: string, # Optional.
-  input: Union, # Required.
+  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
+  input_type: string, # Optional. input type of embedding search to use
+  model: string, # Optional. ID of the model to use
+  input: Union, # Required. Input text to get embeddings for, encoded as a string.
+To get embeddings for multiple inputs in a single request, pass an array of strings.
+Each input must not exceed 2048 tokens in length.
+
+Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+as we have observed inferior results when newlines are present.
 }
 </code>
 
@@ -66,19 +71,19 @@ Response Body:
 
 Schema for <c>Embeddings</c>:
 <code>{
-  object: Literal, # Required.
+  object: Literal, # Required. Type of the data field
   data: [
     {
-      object: Literal, # Required.
-      embedding: [number], # Required.
-      index: number, # Required.
+      object: Literal, # Required. Name of the field in which the embedding is contained
+      embedding: [number], # Required. List of embeddings value for the input prompt. These represents a measurement of releated of text strings
+      index: number, # Required. Index of the prompt to which the EmbeddingItem corresponds
     }
-  ], # Required.
-  model: string, # Optional.
+  ], # Required. Embedding values for the prompts submitted in the request
+  model: string, # Optional. ID of the model to use
   usage: {
-    prompt_tokens: number, # Required.
-    total_tokens: number, # Required.
-  }, # Required.
+    prompt_tokens: number, # Required. Number of tokens sent in the original request
+    total_tokens: number, # Required. Total number of tokens transacted in this request/response
+  }, # Required. Usage counts for tokens input using the embeddings API
 }
 </code>
 
@@ -138,10 +143,15 @@ Request Body:
 
 Schema for <c>EmbeddingsOptions</c>:
 <code>{
-  user: string, # Optional.
-  input_type: string, # Optional.
-  model: string, # Optional.
-  input: Union, # Required.
+  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
+  input_type: string, # Optional. input type of embedding search to use
+  model: string, # Optional. ID of the model to use
+  input: Union, # Required. Input text to get embeddings for, encoded as a string.
+To get embeddings for multiple inputs in a single request, pass an array of strings.
+Each input must not exceed 2048 tokens in length.
+
+Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+as we have observed inferior results when newlines are present.
 }
 </code>
 
@@ -149,19 +159,19 @@ Response Body:
 
 Schema for <c>Embeddings</c>:
 <code>{
-  object: Literal, # Required.
+  object: Literal, # Required. Type of the data field
   data: [
     {
-      object: Literal, # Required.
-      embedding: [number], # Required.
-      index: number, # Required.
+      object: Literal, # Required. Name of the field in which the embedding is contained
+      embedding: [number], # Required. List of embeddings value for the input prompt. These represents a measurement of releated of text strings
+      index: number, # Required. Index of the prompt to which the EmbeddingItem corresponds
     }
-  ], # Required.
-  model: string, # Optional.
+  ], # Required. Embedding values for the prompts submitted in the request
+  model: string, # Optional. ID of the model to use
   usage: {
-    prompt_tokens: number, # Required.
-    total_tokens: number, # Required.
-  }, # Required.
+    prompt_tokens: number, # Required. Number of tokens sent in the original request
+    total_tokens: number, # Required. Total number of tokens transacted in this request/response
+  }, # Required. Usage counts for tokens input using the embeddings API
 }
 </code>
 
@@ -181,7 +191,7 @@ Response response = await client.GetCompletionsAsync("<deploymentId>", RequestCo
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
-Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
@@ -230,7 +240,7 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetPr
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
-Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
@@ -242,22 +252,59 @@ Request Body:
 
 Schema for <c>CompletionsOptions</c>:
 <code>{
-  prompt: [string], # Optional.
-  max_tokens: number, # Optional.
-  temperature: number, # Optional.
-  top_p: number, # Optional.
-  logit_bias: Dictionary&lt;string, number&gt;, # Optional.
-  user: string, # Optional.
-  n: number, # Optional.
-  logprobs: number, # Optional.
-  model: string, # Optional.
-  echo: boolean, # Optional.
-  stop: [string], # Optional.
-  completion_config: string, # Optional.
-  cache_level: number, # Optional.
-  presence_penalty: number, # Optional.
-  frequency_penalty: number, # Optional.
-  best_of: number, # Optional.
+  prompt: [string], # Optional. An optional prompt to complete from, encoded as a string, a list of strings, or
+a list of token lists. Defaults to &amp;lt;|endoftext|&amp;gt;. The prompt to complete from.
+If you would like to provide multiple prompts, use the POST variant of this
+method. Note that &amp;lt;|endoftext|&amp;gt; is the document separator that the model sees
+during training, so if a prompt is not specified the model will generate as if
+from the beginning of a new document. Maximum allowed size of string list is
+2048.
+  max_tokens: number, # Optional. The maximum number of tokens to generate. Has minimum of 0.
+  temperature: number, # Optional. What sampling temperature to use. Higher values means the model will take more
+risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones
+with a well-defined answer.
+We generally recommend using this or `top_p` but
+not both.
+Minimum of 0 and maximum of 2 allowed.
+
+  top_p: number, # Optional. An alternative to sampling with temperature, called nucleus sampling, where the
+model considers the results of the tokens with top_p probability mass. So 0.1
+means only the tokens comprising the top 10% probability mass are
+considered.
+We generally recommend using this or `temperature` but not
+both.
+Minimum of 0 and maximum of 1 allowed.
+
+  logit_bias: Dictionary&lt;string, number&gt;, # Optional. Defaults to null. Modify the likelihood of specified tokens appearing in the
+completion. Accepts a json object that maps tokens (specified by their token ID
+in the GPT tokenizer) to an associated bias value from -100 to 100. You can use
+this tokenizer tool (which works for both GPT-2 and GPT-3) to convert text to
+token IDs. Mathematically, the bias is added to the logits generated by the
+model prior to sampling. The exact effect will vary per model, but values
+between -1 and 1 should decrease or increase likelihood of selection; values
+like -100 or 100 should result in a ban or exclusive selection of the relevant
+token. As an example, you can pass {&quot;50256&quot; &amp;amp;#58; -100} to prevent the
+&amp;lt;|endoftext|&amp;gt; token from being generated.
+  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
+  n: number, # Optional. How many snippets to generate for each prompt. Minimum of 1 and maximum of 128
+allowed.
+  logprobs: number, # Optional. Include the log probabilities on the `logprobs` most likely tokens, as well the
+chosen tokens. So for example, if `logprobs` is 10, the API will return a list
+of the 10 most likely tokens. If `logprobs` is 0, only the chosen tokens will
+have logprobs returned. Minimum of 0 and maximum of 100 allowed.
+  model: string, # Optional. The name of the model to use
+  echo: boolean, # Optional. Echo back the prompt in addition to the completion
+  stop: [string], # Optional. A sequence which indicates the end of the current document.
+  completion_config: string, # Optional. Completion configuration
+  cache_level: number, # Optional. can be used to disable any server-side caching, 0=no cache, 1=prompt prefix
+enabled, 2=full cache
+  presence_penalty: number, # Optional. How much to penalize new tokens based on their existing frequency in the text
+so far. Decreases the model&apos;s likelihood to repeat the same line verbatim. Has
+minimum of -2 and maximum of 2.
+  frequency_penalty: number, # Optional. How much to penalize new tokens based on whether they appear in the text so
+far. Increases the model&apos;s likelihood to talk about new topics.
+  best_of: number, # Optional. How many generations to create server side, and display only the best. Will not
+stream intermediate progress if best_of &amp;gt; 1. Has maximum value of 128.
 }
 </code>
 
@@ -265,28 +312,28 @@ Response Body:
 
 Schema for <c>Completions</c>:
 <code>{
-  id: string, # Optional.
-  object: Literal, # Required.
-  created: number, # Optional.
-  model: string, # Optional.
+  id: string, # Optional. Id for completion response
+  object: Literal, # Required. Object for completion response
+  created: number, # Optional. Created time for completion response
+  model: string, # Optional. Model used for completion response
   choices: [
     {
-      text: string, # Optional.
-      index: number, # Optional.
+      text: string, # Optional. Generated text for given completion prompt
+      index: number, # Optional. Index
       logprobs: {
-        tokens: [string], # Optional.
-        token_logprobs: [number], # Optional.
-        top_logprobs: [Dictionary&lt;string, number&gt;], # Optional.
-        text_offset: [number], # Optional.
-      }, # Optional.
-      finish_reason: string, # Optional.
+        tokens: [string], # Optional. Tokens
+        token_logprobs: [number], # Optional. LogProbs of Tokens
+        top_logprobs: [Dictionary&lt;string, number&gt;], # Optional. Top LogProbs
+        text_offset: [number], # Optional. Text offset
+      }, # Optional. Log Prob Model
+      finish_reason: string, # Optional. Reason for finishing
     }
-  ], # Optional.
+  ], # Optional. Array of choices returned containing text completions to prompts sent
   usage: {
-    completion_token: number, # Required.
-    prompt_tokens: number, # Required.
-    total_tokens: number, # Required.
-  }, # Required.
+    completion_tokens: number, # Required. Number of tokens received in the completion
+    prompt_tokens: number, # Required. Number of tokens sent in the original request
+    total_tokens: number, # Required. Total number of tokens transacted in this request/response
+  }, # Required. Usage counts for tokens input using the completions API
 }
 </code>
 
@@ -306,7 +353,7 @@ Response response = client.GetCompletions("<deploymentId>", RequestContent.Creat
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
-Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
@@ -355,7 +402,7 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetPr
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
-Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
@@ -367,22 +414,59 @@ Request Body:
 
 Schema for <c>CompletionsOptions</c>:
 <code>{
-  prompt: [string], # Optional.
-  max_tokens: number, # Optional.
-  temperature: number, # Optional.
-  top_p: number, # Optional.
-  logit_bias: Dictionary&lt;string, number&gt;, # Optional.
-  user: string, # Optional.
-  n: number, # Optional.
-  logprobs: number, # Optional.
-  model: string, # Optional.
-  echo: boolean, # Optional.
-  stop: [string], # Optional.
-  completion_config: string, # Optional.
-  cache_level: number, # Optional.
-  presence_penalty: number, # Optional.
-  frequency_penalty: number, # Optional.
-  best_of: number, # Optional.
+  prompt: [string], # Optional. An optional prompt to complete from, encoded as a string, a list of strings, or
+a list of token lists. Defaults to &amp;lt;|endoftext|&amp;gt;. The prompt to complete from.
+If you would like to provide multiple prompts, use the POST variant of this
+method. Note that &amp;lt;|endoftext|&amp;gt; is the document separator that the model sees
+during training, so if a prompt is not specified the model will generate as if
+from the beginning of a new document. Maximum allowed size of string list is
+2048.
+  max_tokens: number, # Optional. The maximum number of tokens to generate. Has minimum of 0.
+  temperature: number, # Optional. What sampling temperature to use. Higher values means the model will take more
+risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones
+with a well-defined answer.
+We generally recommend using this or `top_p` but
+not both.
+Minimum of 0 and maximum of 2 allowed.
+
+  top_p: number, # Optional. An alternative to sampling with temperature, called nucleus sampling, where the
+model considers the results of the tokens with top_p probability mass. So 0.1
+means only the tokens comprising the top 10% probability mass are
+considered.
+We generally recommend using this or `temperature` but not
+both.
+Minimum of 0 and maximum of 1 allowed.
+
+  logit_bias: Dictionary&lt;string, number&gt;, # Optional. Defaults to null. Modify the likelihood of specified tokens appearing in the
+completion. Accepts a json object that maps tokens (specified by their token ID
+in the GPT tokenizer) to an associated bias value from -100 to 100. You can use
+this tokenizer tool (which works for both GPT-2 and GPT-3) to convert text to
+token IDs. Mathematically, the bias is added to the logits generated by the
+model prior to sampling. The exact effect will vary per model, but values
+between -1 and 1 should decrease or increase likelihood of selection; values
+like -100 or 100 should result in a ban or exclusive selection of the relevant
+token. As an example, you can pass {&quot;50256&quot; &amp;amp;#58; -100} to prevent the
+&amp;lt;|endoftext|&amp;gt; token from being generated.
+  user: string, # Optional. The ID of the end-user, for use in tracking and rate-limiting.
+  n: number, # Optional. How many snippets to generate for each prompt. Minimum of 1 and maximum of 128
+allowed.
+  logprobs: number, # Optional. Include the log probabilities on the `logprobs` most likely tokens, as well the
+chosen tokens. So for example, if `logprobs` is 10, the API will return a list
+of the 10 most likely tokens. If `logprobs` is 0, only the chosen tokens will
+have logprobs returned. Minimum of 0 and maximum of 100 allowed.
+  model: string, # Optional. The name of the model to use
+  echo: boolean, # Optional. Echo back the prompt in addition to the completion
+  stop: [string], # Optional. A sequence which indicates the end of the current document.
+  completion_config: string, # Optional. Completion configuration
+  cache_level: number, # Optional. can be used to disable any server-side caching, 0=no cache, 1=prompt prefix
+enabled, 2=full cache
+  presence_penalty: number, # Optional. How much to penalize new tokens based on their existing frequency in the text
+so far. Decreases the model&apos;s likelihood to repeat the same line verbatim. Has
+minimum of -2 and maximum of 2.
+  frequency_penalty: number, # Optional. How much to penalize new tokens based on whether they appear in the text so
+far. Increases the model&apos;s likelihood to talk about new topics.
+  best_of: number, # Optional. How many generations to create server side, and display only the best. Will not
+stream intermediate progress if best_of &amp;gt; 1. Has maximum value of 128.
 }
 </code>
 
@@ -390,28 +474,28 @@ Response Body:
 
 Schema for <c>Completions</c>:
 <code>{
-  id: string, # Optional.
-  object: Literal, # Required.
-  created: number, # Optional.
-  model: string, # Optional.
+  id: string, # Optional. Id for completion response
+  object: Literal, # Required. Object for completion response
+  created: number, # Optional. Created time for completion response
+  model: string, # Optional. Model used for completion response
   choices: [
     {
-      text: string, # Optional.
-      index: number, # Optional.
+      text: string, # Optional. Generated text for given completion prompt
+      index: number, # Optional. Index
       logprobs: {
-        tokens: [string], # Optional.
-        token_logprobs: [number], # Optional.
-        top_logprobs: [Dictionary&lt;string, number&gt;], # Optional.
-        text_offset: [number], # Optional.
-      }, # Optional.
-      finish_reason: string, # Optional.
+        tokens: [string], # Optional. Tokens
+        token_logprobs: [number], # Optional. LogProbs of Tokens
+        top_logprobs: [Dictionary&lt;string, number&gt;], # Optional. Top LogProbs
+        text_offset: [number], # Optional. Text offset
+      }, # Optional. Log Prob Model
+      finish_reason: string, # Optional. Reason for finishing
     }
-  ], # Optional.
+  ], # Optional. Array of choices returned containing text completions to prompts sent
   usage: {
-    completion_token: number, # Required.
-    prompt_tokens: number, # Required.
-    total_tokens: number, # Required.
-  }, # Required.
+    completion_tokens: number, # Required. Number of tokens received in the completion
+    prompt_tokens: number, # Required. Number of tokens sent in the original request
+    total_tokens: number, # Required. Total number of tokens transacted in this request/response
+  }, # Required. Usage counts for tokens input using the completions API
 }
 </code>
 

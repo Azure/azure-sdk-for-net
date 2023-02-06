@@ -74,10 +74,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             context.AddBindingRule<EventHubTriggerAttribute>()
                 .BindToTrigger(triggerBindingProvider);
 
-            // register our binding provider
+            // Allows binding to IAsyncCollector
             context.AddBindingRule<EventHubAttribute>()
                 .BindToCollector(BuildFromAttribute);
 
+            // Allows binding to EventHubProducerClient
             context.AddBindingRule<EventHubAttribute>()
                 .BindToInput(attribute => _clientFactory.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection));
 

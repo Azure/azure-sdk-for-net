@@ -36,16 +36,10 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(FhirBundle))
+            if (Optional.IsDefined(FhirBundle))
             {
                 writer.WritePropertyName("fhirBundle");
-                writer.WriteStartObject();
-                foreach (var item in FhirBundle)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
+                FhirBundle.WriteTo(writer);
             }
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
@@ -69,7 +63,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<string> detectedLanguage = default;
             IList<HealthcareEntityInternal> entities = default;
             IList<HealthcareRelationInternal> relations = default;
-            Optional<IDictionary<string, object>> fhirBundle = default;
+            Optional<JsonElement> fhirBundle = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -102,17 +96,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("fhirBundle"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
-                    }
-                    fhirBundle = dictionary;
+                    fhirBundle = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -141,7 +125,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(id, warnings, Optional.ToNullable(statistics), entities, relations, Optional.ToDictionary(fhirBundle), detectedLanguage.Value);
+            return new HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(id, warnings, Optional.ToNullable(statistics), entities, relations, fhirBundle, detectedLanguage.Value);
         }
     }
 }
