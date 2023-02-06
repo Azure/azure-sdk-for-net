@@ -654,7 +654,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// Create an outgoing group call to target identities.
         /// </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -699,7 +699,9 @@ namespace Azure.Communication.CallAutomation
         {
             CallSourceInternal sourceDto = new(CommunicationIdentifierSerializer.Serialize(Source))
             {
-                CallerId = new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
+                CallerId = options?.CallInvite?.SourceCallerIdNumber == null
+                    ? null
+                    : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 DisplayName = options.CallInvite.SourceDisplayName,
             };
 
@@ -726,7 +728,7 @@ namespace Azure.Communication.CallAutomation
         {
             CallSourceInternal sourceDto = new(CommunicationIdentifierSerializer.Serialize(Source))
             {
-                CallerId = new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
+                CallerId = options?.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 DisplayName = options.SourceDisplayName,
             };
 
@@ -819,7 +821,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// Get source identity used by Call Automation client.
         /// </summary>
         /// <returns></returns>
         public virtual CommunicationUserIdentifier GetSourceIdentity()
