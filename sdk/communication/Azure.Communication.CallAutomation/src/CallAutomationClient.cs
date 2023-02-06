@@ -469,7 +469,6 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
-
         }
 
         /// <summary>
