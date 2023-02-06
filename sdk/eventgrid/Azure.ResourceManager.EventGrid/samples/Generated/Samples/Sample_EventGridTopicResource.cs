@@ -212,5 +212,37 @@ Action = EventGridIPActionType.Allow,
 
             Console.WriteLine($"Succeeded: {result}");
         }
+
+        // Topics_ListEventTypes
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetEventTypes_TopicsListEventTypes()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/Topics_ListEventTypes.json
+            // this example is just showing the usage of "Topics_ListEventTypes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            string providerNamespace = "Microsoft.Storage";
+            string resourceTypeName = "storageAccounts";
+            string resourceName = "ExampleStorageAccount";
+            await foreach (EventTypeUnderTopic item in resourceGroupResource.GetEventTypesAsync(providerNamespace, resourceTypeName, resourceName))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
     }
 }
