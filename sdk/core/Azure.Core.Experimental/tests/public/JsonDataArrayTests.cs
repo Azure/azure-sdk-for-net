@@ -241,28 +241,14 @@ namespace Azure.Core.Tests.Public
         public void CanGetArrayLength()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.AreEqual(3, data.Length);
+            Assert.AreEqual(3, ((int[])data).Length);
         }
 
         [Test]
         public void CanGetArrayPropertyLength()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
-            Assert.AreEqual(3, data.value.Length);
-        }
-
-        [Test]
-        public void CannotSetArrayLength()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.Throws<InvalidOperationException>(() => { data.Length = 5; });
-        }
-
-        [Test]
-        public void CannotSetArrayPropertyLength()
-        {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
-            Assert.Throws<InvalidOperationException>(() => { data.value.Length = 5; });
+            Assert.AreEqual(3, ((int[])data.value).Length);
         }
 
         [Test]

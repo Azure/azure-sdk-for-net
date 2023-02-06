@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
+using System.IO;
 
 namespace Azure.Core.Dynamic
 {
@@ -14,15 +14,15 @@ namespace Azure.Core.Dynamic
     public abstract class DynamicData
     {
         /// <summary>
-        /// Writes the data to the provided writer as a JSON value.
+        /// Writes the data to the provided stream.
         /// </summary>
-        /// <param name="writer">The writer to which to write the document.</param>
+        /// <param name="stream">The stream to which to write the document.</param>
         /// <param name="data">The dynamic data value to write.</param>
-        public static void WriteTo(Utf8JsonWriter writer, DynamicData data)
+        public static void WriteTo(Stream stream, DynamicData data)
         {
-            data.WriteTo(writer);
+            data.WriteTo(stream);
         }
 
-        internal abstract void WriteTo(Utf8JsonWriter writer);
+        internal abstract void WriteTo(Stream stream);
     }
 }
