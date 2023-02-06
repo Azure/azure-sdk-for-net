@@ -7,16 +7,90 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeploymentManager;
+using Azure.ResourceManager.DeploymentManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeploymentManager.Samples
 {
     public partial class Sample_RolloutCollection
     {
+        // Create or update rollout
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateOrUpdateRollout()
+        {
+            // Generated from example definition: specification/deploymentmanager/resource-manager/Microsoft.DeploymentManager/preview/2019-11-01-preview/examples/rollout_createorupdate.json
+            // this example is just showing the usage of "Rollouts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "caac1590-e859-444f-a9e0-62091c0f5929";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this RolloutResource
+            RolloutCollection collection = resourceGroupResource.GetRollouts();
+
+            // invoke the operation
+            string rolloutName = "myRollout";
+            RolloutCreateOrUpdateContent content = new RolloutCreateOrUpdateContent(new AzureLocation("centralus"), new Identity("userAssigned", new string[]
+            {
+"/subscriptions/caac1590-e859-444f-a9e0-62091c0f5929/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userassignedidentities/myuseridentity"
+            }), "1.0.0.1", "/subscriptions/caac1590-e859-444f-a9e0-62091c0f5929/resourceGroups/myResourceGroup/Microsoft.DeploymentManager/serviceTopologies/myTopology", new StepGroup[]
+            {
+new StepGroup("FirstRegion","Microsoft.DeploymentManager/serviceTopologies/myTopology/services/myService/serviceUnits/myServiceUnit1'")
+{
+PreDeploymentSteps =
+{
+new PrePostStep("Microsoft.DeploymentManager/steps/preDeployStep1"),new PrePostStep("Microsoft.DeploymentManager/steps/preDeployStep2")
+},
+PostDeploymentSteps =
+{
+new PrePostStep("Microsoft.DeploymentManager/steps/postDeployStep1")
+},
+},new StepGroup("SecondRegion","Microsoft.DeploymentManager/serviceTopologies/myTopology/services/myService/serviceUnits/myServiceUnit2'")
+{
+DependsOnStepGroups =
+{
+"FirstRegion"
+},
+PreDeploymentSteps =
+{
+new PrePostStep("Microsoft.DeploymentManager/steps/preDeployStep3"),new PrePostStep("Microsoft.DeploymentManager/steps/preDeployStep4")
+},
+PostDeploymentSteps =
+{
+new PrePostStep("Microsoft.DeploymentManager/steps/postDeployStep5")
+},
+}
+            })
+            {
+                ArtifactSourceId = "/subscriptions/caac1590-e859-444f-a9e0-62091c0f5929/resourceGroups/myResourceGroup/Microsoft.DeploymentManager/artifactSources/myArtifactSource",
+                Tags =
+{
+},
+            };
+            ArmOperation<RolloutResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, rolloutName, content);
+            RolloutResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            RolloutData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Get rollout
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
