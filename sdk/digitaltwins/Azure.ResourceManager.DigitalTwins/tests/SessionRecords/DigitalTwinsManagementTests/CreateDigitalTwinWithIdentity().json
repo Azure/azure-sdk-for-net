@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9fef/resourcegroups/digitaltwinsrg2123?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9fef/resourcegroups/digitaltwinsrg2123?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

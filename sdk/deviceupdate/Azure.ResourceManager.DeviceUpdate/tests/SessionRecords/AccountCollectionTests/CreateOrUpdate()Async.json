@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourcegroups/testRg-746?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourcegroups/testRg-746?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

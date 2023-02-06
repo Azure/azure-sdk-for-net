@@ -38,7 +38,7 @@ extends:
     ArtifactName: packages
     Artifacts:
     - name: Azure.Monitor.OpenTelemetry.Exporter
-      safeName: MicrosoftOpenTelemetryExporterAzureMonitor
+      safeName: AzureMonitorOpenTelemetryExporter
     - name: Azure.Monitor.Query
       safeName: AzureMonitorQuery
     - name: Azure.Monitor.Ingestion

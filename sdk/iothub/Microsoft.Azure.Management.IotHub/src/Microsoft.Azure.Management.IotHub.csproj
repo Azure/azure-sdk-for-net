@@ -5,7 +5,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -7,7 +7,7 @@ using Azure.Core.Dynamic;
 using BenchmarkDotNet.Attributes;
 using Newtonsoft.Json.Linq;
 
-namespace Azure.Data.AppConfiguration.Performance
+namespace Azure.Core.Experimental.Perf.Benchmarks
 {
     [MemoryDiagnoser]
     [InProcess]

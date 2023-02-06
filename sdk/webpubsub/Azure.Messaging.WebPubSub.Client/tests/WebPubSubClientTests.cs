@@ -264,6 +264,72 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         }
 
         [Test]
+        public async Task WebPubSubRejoinGroupsTest()
+        {
+            _webSocketClientMoc.Setup(c => c.ReceiveOneFrameAsync(It.IsAny<CancellationToken>())).Returns(() =>
+            {
+                // Make the close a PolicyViolation to stop recover
+                return Task.FromResult(new WebSocketReadResult(default, true, WebSocketCloseStatus.PolicyViolation));
+            });
+
+            var tcs = new MultipleTimesTaskCompletionSource<object>(10);
+            var clientMoc = new Mock<WebPubSubClient>(new Uri("wss://test.com"));
+            clientMoc.Setup(c => c.JoinGroupAttemptAsync(It.IsAny<string>(), It.IsAny<ulong?>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                tcs.IncreaseCallTimes(null);
+                return new WebPubSubResult();
+            });
+            clientMoc.CallBase = true;
+            var client = clientMoc.Object;
+
+            // Join 2 groups first
+            await client.JoinGroupAsync("a");
+            await client.JoinGroupAsync("b");
+
+            await tcs.VerifyCalledTimesAsync(2);
+            TestUtils.AssertTimeout(tcs.VerifyCalledTimesAsync(3));
+
+            client.HandleConnectionConnected(new ConnectedMessage("user", "conn", null), default);
+
+            // Expect 2 more calls representing the rejoin groups
+            await tcs.VerifyCalledTimesAsync(4);
+        }
+
+        [Test]
+        public async Task WebPubSubRejoinGroupsFalseTest()
+        {
+            _webSocketClientMoc.Setup(c => c.ReceiveOneFrameAsync(It.IsAny<CancellationToken>())).Returns(() =>
+            {
+                // Make the close a PolicyViolation to stop recover
+                return Task.FromResult(new WebSocketReadResult(default, true, WebSocketCloseStatus.PolicyViolation));
+            });
+
+            var tcs = new MultipleTimesTaskCompletionSource<object>(10);
+            var option = new WebPubSubClientOptions();
+            option.AutoRejoinGroups = false;
+            var clientMoc = new Mock<WebPubSubClient>(new Uri("wss://test.com"), option);
+            clientMoc.Setup(c => c.JoinGroupAttemptAsync(It.IsAny<string>(), It.IsAny<ulong?>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                tcs.IncreaseCallTimes(null);
+                return new WebPubSubResult();
+            });
+            clientMoc.CallBase = true;
+            var client = clientMoc.Object;
+
+            // Join 2 groups first
+            await client.JoinGroupAsync("a");
+            await client.JoinGroupAsync("b");
+
+            await tcs.VerifyCalledTimesAsync(2);
+            TestUtils.AssertTimeout(tcs.VerifyCalledTimesAsync(3));
+
+            client.HandleConnectionConnected(new ConnectedMessage("user", "conn", null), default);
+
+            // Expect no more calls representing the rejoin groups
+            TestUtils.AssertTimeout(tcs.VerifyCalledTimesAsync(3));
+        }
+
+        [Test]
         public async Task JoinGroupRetryTest()
         {
             var tcs = new MultipleTimesTaskCompletionSource<object>(10);
