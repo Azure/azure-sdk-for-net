@@ -154,10 +154,10 @@ namespace Azure.Data.AppConfiguration
         public ConfigurationSettingsSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingFilter> filters) { }
         public Azure.Data.AppConfiguration.CompositionType? CompositionType { get { throw null; } set { } }
         public System.DateTimeOffset? Created { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
         public System.DateTimeOffset? Expires { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.ConfigurationSettingFilter> Filters { get { throw null; } }
-        public long? ItemsCount { get { throw null; } }
+        public long? ItemCount { get { throw null; } }
         public string Name { get { throw null; } }
         public long? RetentionPeriod { get { throw null; } set { } }
         public long? Size { get { throw null; } }

@@ -32,10 +32,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="expires"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
         /// <param name="size"> The size in bytes of the snapshot. </param>
-        /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
+        /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="etag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, int? statusCode, IList<ConfigurationSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, string etag)
+        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, int? statusCode, IList<ConfigurationSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag etag)
         {
             Name = name;
             Status = status;
@@ -46,7 +46,7 @@ namespace Azure.Data.AppConfiguration
             Expires = expires;
             RetentionPeriod = retentionPeriod;
             Size = size;
-            ItemsCount = itemsCount;
+            ItemCount = itemCount;
             Tags = tags;
             Etag = etag;
         }
@@ -70,10 +70,10 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The size in bytes of the snapshot. </summary>
         public long? Size { get; }
         /// <summary> The amount of key-values in the snapshot. </summary>
-        public long? ItemsCount { get; }
+        public long? ItemCount { get; }
         /// <summary> The tags of the snapshot. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> A value representing the current state of the snapshot. </summary>
-        public string Etag { get; }
+        public ETag Etag { get; }
     }
 }

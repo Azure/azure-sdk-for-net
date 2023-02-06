@@ -176,7 +176,7 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationSettingsSnapshot(name.Value, Optional.ToNullable(status), Optional.ToNullable(statusCode), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), etag.Value);
+            return new ConfigurationSettingsSnapshot(name.Value, Optional.ToNullable(status), Optional.ToNullable(statusCode), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), new ETag(etag.Value));
         }
 
         // Mapping raw response to model
