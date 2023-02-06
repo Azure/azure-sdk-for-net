@@ -31,7 +31,7 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            var options = new ClientCertificateCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value};
+            var options = new ClientCertificateCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false};
             var pipeline = CredentialPipeline.GetInstance(options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
@@ -204,7 +204,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 
@@ -233,7 +233,7 @@ namespace Azure.Identity.Tests
         public async Task SendCertificateChain([Values(true, false)] bool usePemFile, [Values(true)] bool sendCertChain)
         {
             TestSetup();
-            var _transport = Createx5cValidatingTransport(sendCertChain);
+            var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
             var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
             var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);

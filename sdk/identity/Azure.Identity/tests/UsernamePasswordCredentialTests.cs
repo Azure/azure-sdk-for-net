@@ -4,9 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -27,13 +25,18 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("TenantId cannot be null.");
+            }
+
             var options = new UsernamePasswordCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
             };
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, options, pipeline, null));
+            return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, null));
         }
 
         [Test]
@@ -98,7 +101,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, token.ExpiresOn);
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 

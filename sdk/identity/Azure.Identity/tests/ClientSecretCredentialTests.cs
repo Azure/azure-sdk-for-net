@@ -20,12 +20,22 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            var options = new ClientSecretCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value};
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("TenantId cannot be null.");
+            }
+
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = config.Transport,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+            };
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new ClientSecretCredential(TenantId, ClientId, "secret", options, pipeline, null));
+            return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, null));
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 

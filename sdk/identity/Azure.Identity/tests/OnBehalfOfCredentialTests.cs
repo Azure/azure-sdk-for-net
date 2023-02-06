@@ -43,7 +43,7 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            var options = new OnBehalfOfCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value };
+            var options = new OnBehalfOfCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(
                 new OnBehalfOfCredential(
@@ -73,7 +73,7 @@ namespace Azure.Identity.Tests
                 new OnBehalfOfCredential(TenantId, ClientId, clientSecret, null, null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, clientSecret, userAssertion, null);
             // Assert
-            Assert.AreEqual(clientSecret, cred._client._clientSecret);
+            Assert.AreEqual(clientSecret, cred.Client._clientSecret);
 
             Assert.Throws<ArgumentNullException>(() =>
                 new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion));
@@ -85,7 +85,7 @@ namespace Azure.Identity.Tests
                 new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion);
             // Assert
-            Assert.NotNull(cred._client._certificateProvider);
+            Assert.NotNull(cred.Client._certificateProvider);
 
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
@@ -94,7 +94,7 @@ namespace Azure.Identity.Tests
             Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null, new OnBehalfOfCredentialOptions()));
             cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions());
             // Assert
-            Assert.NotNull(cred._client._certificateProvider);
+            Assert.NotNull(cred.Client._certificateProvider);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             options = new OnBehalfOfCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
-            var context = new TokenRequestContext(new[] {Scope}, tenantId: tenantId);
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
             OnBehalfOfCredential client = InstrumentClient(
                 new OnBehalfOfCredential(
@@ -121,7 +121,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 
@@ -149,8 +149,8 @@ namespace Azure.Identity.Tests
         public async Task SendCertificateChain([Values(true, false)] bool sendCertChain)
         {
             TestSetup();
-            var _transport = Createx5cValidatingTransport(sendCertChain);
-            var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
+            var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 

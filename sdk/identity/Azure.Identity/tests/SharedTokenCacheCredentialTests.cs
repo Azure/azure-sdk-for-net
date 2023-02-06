@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
             // Configure mock cache to return a token for the expected user
-            var mockBytes = GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, TenantId, "token", "refreshToken");
+            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, TenantId, "token", "refreshToken");
             var tokenCacheOptions = new MockTokenCache(
                 () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
                 args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
@@ -33,8 +33,7 @@ namespace Azure.Identity.Tests
             var options = new SharedTokenCacheCredentialOptions(tokenCacheOptions)
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value
-            };
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false            };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new SharedTokenCacheCredential(TenantId, null, options, pipeline, null));
         }
@@ -629,7 +628,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, token.ExpiresOn);
         }
 
-        public override Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
         {
             Assert.Ignore("Tenant Enforcement tests do not apply to the SharedTokenCacheCredential.");
             return Task.CompletedTask;

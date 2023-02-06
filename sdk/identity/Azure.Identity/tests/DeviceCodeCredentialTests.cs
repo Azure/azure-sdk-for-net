@@ -60,7 +60,7 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
             expectedCode = Guid.NewGuid().ToString();
-            var options = new DeviceCodeCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value };
+            var options = new DeviceCodeCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false};
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new DeviceCodeCredential((code, _) => {
                 return Task.CompletedTask;
@@ -91,7 +91,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken);
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 

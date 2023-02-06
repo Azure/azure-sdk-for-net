@@ -23,7 +23,7 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            var options = new AuthorizationCodeCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value};
+            var options = new AuthorizationCodeCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(
            new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, null, pipeline));
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token2.Token, expectedToken, "Should be the expected token value");
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 
@@ -112,7 +112,7 @@ namespace Azure.Identity.Tests
                     var content = ReadMockRequestContent(req).GetAwaiter().GetResult();
                     Assert.That(WebUtility.UrlDecode(content), Does.Contain(redirectUri ?? string.Empty));
                 }
-                return CreateMockMsalTokenResponse(200, expectedToken, TenantId, "foo");
+                return CredentialTestHelpers.CreateMockMsalTokenResponse(200, expectedToken, TenantId, "foo");
             });
             var options = new AuthorizationCodeCredentialOptions { Transport = mockTransport };
             if (redirectUri != null)

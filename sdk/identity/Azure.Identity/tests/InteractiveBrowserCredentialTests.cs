@@ -23,7 +23,7 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
             // Configure mock cache to return a token for the expected user
-            var mockBytes = GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, TenantId, "token", "refreshToken");
+            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, TenantId, "token", "refreshToken");
             var tokenCacheOptions = new MockTokenCache(
                 () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
                 args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
@@ -31,7 +31,7 @@ namespace Azure.Identity.Tests
             var options = new InteractiveBrowserCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery.Value,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
                 TokenCachePersistenceOptions = tokenCacheOptions,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{TenantId}", TenantId, ClientId),
             };
@@ -260,7 +260,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 

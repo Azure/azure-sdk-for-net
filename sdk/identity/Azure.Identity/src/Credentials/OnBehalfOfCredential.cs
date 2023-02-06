@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// </summary>
     public class OnBehalfOfCredential : TokenCredential
     {
-        internal readonly MsalConfidentialClient _client;
+        internal MsalConfidentialClient Client { get; }
         private readonly string _tenantId;
         private readonly CredentialPipeline _pipeline;
         private readonly string _clientId;
@@ -118,7 +118,7 @@ namespace Azure.Identity
             options ??= new OnBehalfOfCredentialOptions();
             _userAssertion = new UserAssertion(userAssertion);
 
-            _client = client ??
+            Client = client ??
                       new MsalConfidentialClient(
                           _pipeline,
                           tenantId,
@@ -148,7 +148,7 @@ namespace Azure.Identity
             _clientId = clientId;
             _clientSecret = clientSecret;
             _userAssertion = new UserAssertion(userAssertion);
-            _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
+            Client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
 
             _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
@@ -185,7 +185,7 @@ namespace Azure.Identity
             {
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
 
-                AuthenticationResult result = await _client
+                AuthenticationResult result = await Client
                     .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
                     .ConfigureAwait(false);
 
