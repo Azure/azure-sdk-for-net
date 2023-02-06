@@ -2329,7 +2329,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #endregion
 
-        #region Extract Summary
+        #region Extractive Summarize
 
         public override ExtractiveSummarizeOperation StartExtractiveSummarize(IEnumerable<string> documents, string language = default, ExtractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
         {

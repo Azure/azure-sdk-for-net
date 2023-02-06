@@ -55,13 +55,13 @@ namespace Azure.AI.TextAnalytics.Tests
             + " “The impact that I believe we are finding, and the impact that we’re going to find going forward, is being able to access specialists from outside the territory and organizations outside the territory to come in and help us with our projects, being able to get people on staff with us to help us deliver the day-to-day expertise that we need to run the government,” he said."
             + " “Being able to improve healthcare, being able to improve education, economic development is going to improve the quality of life in the communities.”";
 
-        private static readonly List<string> s_extractSummaryBatchConvenienceDocuments = new List<string>
+        private static readonly List<string> s_extractiveSummarizeBatchConvenienceDocuments = new List<string>
         {
             ExtractiveSummarizeDocument1,
             ExtractiveSummarizeDocument2
         };
 
-        private static List<TextDocumentInput> s_extractSummaryBatchDocuments = new List<TextDocumentInput>
+        private static List<TextDocumentInput> s_extractiveSummarizeBatchDocuments = new List<TextDocumentInput>
         {
             new TextDocumentInput("1", ExtractiveSummarizeDocument1)
             {
@@ -82,7 +82,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractSummaryBatchDocuments);
+            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 OrderBy = SummarySentencesOrder.Rank
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractSummaryBatchDocuments, options);
+            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchDocuments, options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -147,7 +147,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractSummaryBatchConvenienceDocuments);
+            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchConvenienceDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -170,7 +170,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true,
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractSummaryBatchConvenienceDocuments, "en", options);
+            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchConvenienceDocuments, "en", options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -187,7 +187,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractSummaryBatchDocuments);
+            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -210,7 +210,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true,
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractSummaryBatchDocuments, options);
+            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchDocuments, options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -229,7 +229,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             ExtractiveSummarizeOptions options = new() { AutoDetectionDefaultLanguage = "en" };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractSummaryBatchConvenienceDocuments, "auto", options);
+            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchConvenienceDocuments, "auto", options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
@@ -246,7 +246,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task AnalyzeOperationExtractiveSummarizeWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<string> documents = s_extractSummaryBatchConvenienceDocuments;
+            List<string> documents = s_extractiveSummarizeBatchConvenienceDocuments;
             TextAnalyticsActions actions = new()
             {
                 ExtractiveSummarizeActions = new List<ExtractiveSummarizeAction>() { new ExtractiveSummarizeAction() },
@@ -287,7 +287,7 @@ namespace Azure.AI.TextAnalytics.Tests
             for (int i = 0; i < sentences.Count; i++)
             {
                 SummarySentence sentence = sentences.ElementAt(i);
-                string originalDocument = s_extractSummaryBatchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
+                string originalDocument = s_extractiveSummarizeBatchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
                 Assert.False(string.IsNullOrEmpty(originalDocument));
                 Assert.GreaterOrEqual(sentence.Offset, 0);

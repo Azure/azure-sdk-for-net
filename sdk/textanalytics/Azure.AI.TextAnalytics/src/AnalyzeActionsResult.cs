@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
-            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractSummaryActionResults,
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults,
             IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionResults
             )
         {
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyResults = singleLabelClassifyActionResults;
             MultiLabelClassifyResults = multiLabelClassifyActionResults;
             AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
-            ExtractiveSummarizeResults = extractSummaryActionResults;
+            ExtractiveSummarizeResults = extractiveSummarizeActionResults;
             AbstractSummaryResults = abstractSummaryActionResults;
         }
 

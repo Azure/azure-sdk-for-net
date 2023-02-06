@@ -2400,7 +2400,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Extract Summary
+        #region Extractive Summarize
 
         /// <summary>
         /// Performs extractive summarization on the given documents, which consists of extracting sentences that
