@@ -188,16 +188,6 @@ namespace Azure.Core.TestFramework
         public string ClientId => GetRecordedVariable("CLIENT_ID");
 
         /// <summary>
-        ///   The storage container endpoint to use during Import Live tests. Recorded.
-        /// </summary>
-        public string StorageContainerEndpoint => GetRecordedVariable("STORAGE_CONTAINER_URI");
-
-        /// <summary>
-        ///   The input blob uri to use during Import Live tests. Recorded.
-        /// </summary>
-        public string InputBlobUri => GetRecordedVariable("INPUT_BLOB_URI");
-
-        /// <summary>
         ///   The client secret of the Azure Active Directory service principal to use during Live tests. Not recorded.
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
