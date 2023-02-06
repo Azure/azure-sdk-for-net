@@ -1,4 +1,4 @@
-# Registering and retrieving Avro, Json, and custom schemas (preview)
+# Registering and retrieving Avro, Json, and custom schemas
 
 The following shows examples of how to use the basic functionality of the `SchemaRegistryClient` with each of the available schema format types. All of the client methods can be used with each format by passing in the proper 'SchemaFormat' value when needed.
 
@@ -6,14 +6,13 @@ Each Event Hubs Namespace can only accept one format of schemas.
 
 In the current service version, the Schema Registry service only accepts and validates draft 3 Json schemas. Functionality to support additional drafts of Json will be added.
 
-- [Registering and retrieving Avro, Json, and custom schemas (preview)](#registering-and-retrieving-avro-json-and-custom-schemas-preview)
+- [Registering and retrieving Avro, Json, and custom schemas](#registering-and-retrieving-avro-json-and-custom-schemas)
     - [Register an Avro schema](#register-an-avro-schema)
     - [Retrieve an Avro schema](#retrieve-an-avro-schema)
-    - [Register a Json schema](#register-a-json-schema)
-    - [Retrieve a Json schema](#retrieve-a-json-schema)
-    - [Register a custom schema](#register-a-custom-schema)
-    - [Retrieve a custom schema](#retrieve-a-custom-schema)
-  - [Contributing](#contributing)
+    - [Register a Json schema (preview)](#register-a-json-schema-preview)
+    - [Retrieve a Json schema (preview)](#retrieve-a-json-schema-preview)
+    - [Register a custom schema (preview)](#register-a-custom-schema-preview)
+    - [Retrieve a custom schema (preview)](#retrieve-a-custom-schema-preview)
 
 ### Register an Avro schema
 
@@ -46,7 +45,7 @@ SchemaRegistrySchema schema = client.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
-### Register a Json schema
+### Register a Json schema (preview)
 
 Register a Json schema to be stored in the Azure Schema Registry.
 
@@ -77,7 +76,7 @@ required: [""name"", ""favoriteNumber""],
 Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
 ```
 
-### Retrieve a Json schema
+### Retrieve a Json schema (preview)
 
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
@@ -86,7 +85,7 @@ SchemaRegistrySchema schema = client.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
-### Register a custom schema
+### Register a custom schema (preview)
 
 Register a custom schema to be stored in the Azure Schema Registry.
 
@@ -104,7 +103,7 @@ string definition = @"
 Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
 ```
 
-### Retrieve a custom schema
+### Retrieve a custom schema (preview)
 
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
@@ -112,13 +111,3 @@ Retrieve a previously registered schema's content from the Azure Schema Registry
 SchemaRegistrySchema schema = client.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
-
-## Contributing
-
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
