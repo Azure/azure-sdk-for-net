@@ -7,6 +7,8 @@ Project("{5EE5FE33-D5CE-4F9A-A7B0-6BE1357884B1}") = "Azure.ResourceManager.Event
 EndProject
 Project("{5EE5FE33-D5CE-4F9A-A7B0-6BE1357884B1}") = "Azure.ResourceManager.EventGrid.Tests", "tests\Azure.ResourceManager.EventGrid.Tests.csproj", "{816095C3-0E48-4341-AE19-6546C781228C}"
 EndProject
+Project("{5EE5FE33-D5CE-4F9A-A7B0-6BE1357884B1}") = "Azure.ResourceManager.EventGrid.Samples", "samples\Azure.ResourceManager.EventGrid.Samples.csproj", "{14E576B4-F0D7-4587-BD19-05BA39EBF629}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
