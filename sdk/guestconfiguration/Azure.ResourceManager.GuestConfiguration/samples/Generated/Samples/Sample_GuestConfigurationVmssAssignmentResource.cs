@@ -18,6 +18,38 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
 {
     public partial class Sample_GuestConfigurationVmssAssignmentResource
     {
+        // Get a VMSS guest configuration assignment
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetAVMSSGuestConfigurationAssignment()
+        {
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2022-01-25/examples/getVMSSGuestConfigurationAssignment.json
+            // this example is just showing the usage of "GuestConfigurationAssignmentsVMSS_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GuestConfigurationVmssAssignmentResource created on azure
+            // for more information of creating GuestConfigurationVmssAssignmentResource, please refer to the document of GuestConfigurationVmssAssignmentResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
+            string vmssName = "myVMSSName";
+            string name = "SecureProtocol";
+            ResourceIdentifier guestConfigurationVmssAssignmentResourceId = GuestConfigurationVmssAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmssName, name);
+            GuestConfigurationVmssAssignmentResource guestConfigurationVmssAssignment = client.GetGuestConfigurationVmssAssignmentResource(guestConfigurationVmssAssignmentResourceId);
+
+            // invoke the operation
+            GuestConfigurationVmssAssignmentResource result = await guestConfigurationVmssAssignment.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GuestConfigurationAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Delete an guest configuration assignment for VMSS
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
