@@ -14,6 +14,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Samples
 {
@@ -143,6 +144,36 @@ namespace Azure.ResourceManager.DnsResolver.Samples
                 DnsResolverData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // List DNS resolvers by virtual network
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetDnsResolvers_ListDNSResolversByVirtualNetwork()
+        {
+            // Generated from example definition: specification/dnsresolver/resource-manager/Microsoft.Network/stable/2022-07-01/examples/DnsResolver_ListByVirtualNetwork.json
+            // this example is just showing the usage of "DnsResolvers_ListByVirtualNetwork" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "abdd4249-9f34-4cc6-8e42-c2e32110603e";
+            string resourceGroupName = "sampleResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            string virtualNetworkName = "sampleVirtualNetwork";
+            await foreach (WritableSubResource item in resourceGroupResource.GetDnsResolversAsync(virtualNetworkName))
+            {
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine($"Succeeded");
