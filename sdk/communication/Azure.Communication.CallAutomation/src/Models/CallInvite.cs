@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
     public class CallInvite
     {
         /// <summary>
-        ///
+        /// Creates a new CallInvite object.
         /// </summary>
         /// <param name="targetPhoneNumberIdentity"></param>
         /// <param name="callerIdNumber"></param>
@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// Creates a new CallInvite object.
         /// </summary>
         /// <param name="targetIdentity"></param>
         public CallInvite(CommunicationUserIdentifier targetIdentity)
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// Creates a new CallInvite object.
         /// </summary>
         /// <param name="targetIdentity"></param>
         public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity)
@@ -38,19 +38,19 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// The target callee.
         /// </summary>
         /// <value></value>
         public CommunicationIdentifier Target { get; }
 
         /// <summary>
-        /// 
+        /// The caller ID number to appear on target PSTN callee.
         /// </summary>
         /// <value></value>
         public PhoneNumberIdentifier SourceCallerIdNumber { get; }
 
         /// <summary>
-        /// 
+        /// The display name to appear on target callee.
         /// </summary>
         /// <value></value>
         public string SourceDisplayName { get; set; }

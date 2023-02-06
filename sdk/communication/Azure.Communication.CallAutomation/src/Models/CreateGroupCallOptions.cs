@@ -33,13 +33,13 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// 
+        /// The caller ID number to appear on target PSTN callee.
         /// </summary>
         /// <value></value>
         public PhoneNumberIdentifier SourceCallerIdNumber { get; set; }
 
         /// <summary>
-        /// 
+        /// The display name to appear on target callee.
         /// </summary>
         /// <value></value>
         public string SourceDisplayName { get; set; }
