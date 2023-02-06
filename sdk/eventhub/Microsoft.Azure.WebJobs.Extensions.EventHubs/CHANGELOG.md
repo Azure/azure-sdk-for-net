@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added the ability to bind to the `EventHubAsyncCollector` for output, which supports an overload allowing a partition key to be specified.
+- Added the an overload for `IAsyncCollector<EventData>` allowing a partition key to be specified.  Because `IAsyncCollector<T>` is owned by the Functions runtime, this method could not be directly added.  Instead, this has been implemented as an extension method within the Event Hubs extension package.  Unfortunately, this knowingly makes the overload unable to be mocked.
 
 ### Breaking Changes
 

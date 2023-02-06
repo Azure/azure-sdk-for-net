@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             Utility.LogException(e.Exception, message, logger);
         }
 
-        private EventHubAsyncCollector BuildFromAttribute(EventHubAttribute attribute)
+        private IAsyncCollector<EventData> BuildFromAttribute(EventHubAttribute attribute)
         {
             EventHubProducerClient client = _clientFactory.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection);
             return new EventHubAsyncCollector(new EventHubProducerClientImpl(client, _loggerFactory.CreateLogger<EventHubProducerClientImpl>()));
