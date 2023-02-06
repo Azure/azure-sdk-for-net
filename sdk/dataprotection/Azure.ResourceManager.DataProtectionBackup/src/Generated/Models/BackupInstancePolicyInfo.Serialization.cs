@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             ResourceIdentifier policyId = default;
             Optional<string> policyVersion = default;
-            Optional<PolicyParameters> policyParameters = default;
+            Optional<BackupInstancePolicySettings> policyParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyId"))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policyParameters = PolicyParameters.DeserializePolicyParameters(property.Value);
+                    policyParameters = BackupInstancePolicySettings.DeserializeBackupInstancePolicySettings(property.Value);
                     continue;
                 }
             }

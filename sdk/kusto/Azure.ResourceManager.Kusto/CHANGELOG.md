@@ -1,14 +1,15 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2023-02-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Introduce management of table functions sharing for follower database
+- Introduce new SKU
 
 ### Other Changes
+
+- Upgraded API version to 2022-12-29.
 
 ## 1.2.0 (2023-01-10)
 

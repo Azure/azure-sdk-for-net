@@ -43,6 +43,7 @@
     <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)GuidUtilities.cs" LinkBase="SharedSource\Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
