@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafToString()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidCastException>(
+            Assert.Throws<InvalidOperationException>(
                 () => { var s = (string)data; }
             );
         }
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafPropertyToString()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
-            Assert.Throws<InvalidCastException>(
+            Assert.Throws<InvalidOperationException>(
                 () => { var s = (string)data.value; }
             );
         }
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafToBoolean()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidCastException>(
+            Assert.Throws<InvalidOperationException>(
                 () => { var b = (bool)data; }
             );
         }
@@ -84,7 +84,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafPropertyToBoolean()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
-            Assert.Throws<InvalidCastException>(
+            Assert.Throws<InvalidOperationException>(
                 () => { var b = (bool)data.value; }
             );
         }

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestUri": "https://sdk6955.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "61",
         "Content-Type": "application/json",
-        "traceparent": "00-e7b4c527a1c7d191c6f85c9fa8366a20-94c869d64adf89d4-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230125.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "90d4fae356b74641b86026f6bc27ec94",
+        "traceparent": "00-6cbcb25c6a41f8a596f9f069c8d53da3-6ff1e89359184b03-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230201.1 (.NET 7.0.2; Microsoft Windows 10.0.25281)",
+        "x-ms-client-request-id": "0c67cf3986871336eb64a016aca27f71",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,34 +22,34 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "78ee7455-f60c-44d9-9ec7-a52ec2a7193b",
+        "apim-request-id": "4b3d0900-bcff-44e8-a254-b138b9f062cb",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "453",
+        "Content-Length": "429",
         "Content-Type": "application/json",
-        "Date": "Wed, 25 Jan 2023 20:21:42 GMT",
+        "Date": "Wed, 01 Feb 2023 20:35:33 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "310.945",
+        "openai-processing-ms": "325.7528",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "90d4fae356b74641b86026f6bc27ec94",
-        "x-ms-region": "South Central US",
-        "X-Request-ID": "8333af59-dd1f-4502-b9be-db7aca15ddea"
+        "x-ms-client-request-id": "0c67cf3986871336eb64a016aca27f71",
+        "x-ms-region": "East US",
+        "X-Request-ID": "49f272fe-b738-401b-b8a3-6fed5c879f74"
       },
       "ResponseBody": {
-        "id": "cmpl-6cgZ5ghyqSTSLQ4PURlJZJGJvy2rb",
+        "id": "cmpl-6fE7JukTseCUICtJAvOTvefqUoQh9",
         "object": "text_completion",
-        "created": 1674678103,
+        "created": 1675283733,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\u0022: Start learning computer.\n- 2. index_1 (index_2",
+            "text": "\n\n\nHello! Welcome to my profile. \n\nA little about me",
             "index": 0,
             "finish_reason": "length",
             "logprobs": null
           },
           {
-            "text": "\n\nHaving a difficult time getting over the death of her best friend, Sarah",
+            "text": "\u2019, or the idea that we will feel \u2018stuck\u2019",
             "index": 1,
             "finish_reason": "length",
             "logprobs": null
@@ -67,8 +67,8 @@
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
-    "OPENAI_ENDPOINT": "https://sdk.openai.azure.com/",
-    "RandomSeed": "1067226900",
-    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
+    "OPENAI_ENDPOINT": "https://sdk6955.openai.azure.com/",
+    "RandomSeed": "219066846",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

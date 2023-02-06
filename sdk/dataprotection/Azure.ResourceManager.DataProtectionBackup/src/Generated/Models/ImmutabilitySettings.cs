@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of ImmutabilitySettings. </summary>
         /// <param name="state"> Immutability state. </param>
-        internal ImmutabilitySettings(ImmutabilityState? state)
+        internal ImmutabilitySettings(BackupVaultImmutabilityState? state)
         {
             State = state;
         }
 
         /// <summary> Immutability state. </summary>
-        public ImmutabilityState? State { get; set; }
+        public BackupVaultImmutabilityState? State { get; set; }
     }
 }
