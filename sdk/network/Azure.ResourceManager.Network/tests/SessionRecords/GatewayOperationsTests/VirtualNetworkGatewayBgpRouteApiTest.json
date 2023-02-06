@@ -56,7 +56,7 @@
             "StatusCode": 200
         },
         {
-            "RequestUri": "/subscriptions/0113c7b2-a5e4-468d-ba23-03355d84410e/resourcegroups/csmrg8097?api-version=2015-11-01",
+            "RequestUri": "/subscriptions/0113c7b2-a5e4-468d-ba23-03355d84410e/resourcegroups/csmrg8097?api-version=**",
             "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDExM2M3YjItYTVlNC00NjhkLWJhMjMtMDMzNTVkODQ0MTBlL3Jlc291cmNlZ3JvdXBzL2NzbXJnODA5Nz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
             "RequestMethod": "PUT",
             "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",

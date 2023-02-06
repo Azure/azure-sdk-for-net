@@ -31,19 +31,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties"> ResourceGuardResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        /// <param name="identity"> Input Managed Identity Details. </param>
-        internal ResourceGuardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProperties properties, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal ResourceGuardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
-            Identity = identity;
         }
 
         /// <summary> ResourceGuardResource properties. </summary>
         public ResourceGuardProperties Properties { get; set; }
         /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> Input Managed Identity Details. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
     }
 }

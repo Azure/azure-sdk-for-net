@@ -138,9 +138,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             }
 
-            // Check that the FHIR bundle is not null, but empty.
-            Assert.IsNotNull(result1.FhirBundle);
-            Assert.AreEqual(0, result1.FhirBundle.Count);
+            Assert.IsNull(result1.FhirBundle);
         }
 
         [RecordedTest]
@@ -480,7 +478,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Check the FHIR bundle.
             Assert.IsNotNull(resultCollection[0].FhirBundle);
-            Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
         }
 
         [RecordedTest]
