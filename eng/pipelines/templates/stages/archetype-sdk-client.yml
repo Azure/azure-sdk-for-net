@@ -29,7 +29,7 @@ parameters:
   default: azure-docs-sdk-dotnet
 - name: BuildSnippets
   type: boolean
-  default: false
+  default: true
 - name: TestSetupSteps
   type: stepList
   default: []
