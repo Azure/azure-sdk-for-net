@@ -5741,8 +5741,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         // Expected; do nothing.
                     }
 
+                    state.BufferedEventCount = 0;
                     while (state.TryReadEvent(out _)) {}
-                    Volatile.Write(ref state.BufferedEventCount, 0);
 
                     if (releaseFlag)
                     {
@@ -5754,7 +5754,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         finishedCompletionSource.TrySetResult(true);
                     }
                 })
-                .Returns(Task.CompletedTask);
+                .Returns(finishedCompletionSource.Task);
 
             mockBufferedProducer.Object.Logger = mockLogger.Object;
 
@@ -5791,7 +5791,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             finally
             {
-                await InvokeStopPublishingAsync(mockBufferedProducer.Object, executionLimitCancellationSource.Token).IgnoreExceptions();
+                await InvokeStopPublishingAsync(mockBufferedProducer.Object, executionLimitCancellationSource.Token).AwaitWithCancellation(executionLimitCancellationSource.Token);
             }
 
             Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
