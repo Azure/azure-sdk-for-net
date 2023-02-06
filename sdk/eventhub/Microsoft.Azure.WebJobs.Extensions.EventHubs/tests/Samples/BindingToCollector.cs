@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests.Samples
             [TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
             [EventHub("<event_hub_name>", Connection = "<connection_name>")] IAsyncCollector<EventData> collector)
         {
-            // When no partition key is used, partitiions will be assigned via round-robin.
+            // When no partition key is used, partitions will be assigned per-batch via round-robin.
             await collector.AddAsync(new EventData($"Event 1 added at: {DateTime.Now}"));
             await collector.AddAsync(new EventData($"Event 2 added at: {DateTime.Now}"));
 
