@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class RecognizeCompleted
+    internal partial class RecognizeCompletedInternal
     {
-        internal static RecognizeCompleted DeserializeRecognizeCompleted(JsonElement element)
+        internal static RecognizeCompletedInternal DeserializeRecognizeCompletedInternal(JsonElement element)
         {
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
@@ -85,7 +85,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeCompleted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, choiceResult.Value);
+            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, choiceResult.Value);
         }
     }
 }
