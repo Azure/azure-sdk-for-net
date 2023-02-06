@@ -86,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults = resultCollection.ExtractSummaryResults;
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractSummaryActionResults = resultCollection.ExtractiveSummarizeResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
@@ -818,7 +818,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationExtractSummary()
+        public async Task AnalyzeOperationExtractiveSummarize()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<string>
@@ -830,8 +830,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() { MaxSentenceCount = 2 } },
-                DisplayName = "AnalyzeOperationExtractSummary",
+                ExtractiveSummarizeActions = new List<ExtractiveSummarizeAction>() { new ExtractiveSummarizeAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationExtractiveSummarize",
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -839,10 +839,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractSummaryActionsResults = resultCollection.ExtractiveSummarizeResults;
             Assert.IsNotNull(extractSummaryActionsResults);
 
-            ExtractSummaryResultCollection extractSummaryDocumentsResults = extractSummaryActionsResults.FirstOrDefault().DocumentsResults;
+            ExtractiveSummarizeResultCollection extractSummaryDocumentsResults = extractSummaryActionsResults.FirstOrDefault().DocumentsResults;
             Assert.AreEqual(1, extractSummaryDocumentsResults.Count);
 
             Assert.AreEqual(2, extractSummaryDocumentsResults[0].Sentences.Count);
@@ -970,7 +970,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeOperationExtractSummaryActionNotSupported()
+        public void AnalyzeOperationExtractiveSummarizeActionNotSupported()
         {
             TestDiagnostics = false;
 
@@ -978,9 +978,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new()
             {
-                ExtractSummaryActions = new[]
+                ExtractiveSummarizeActions = new[]
                 {
-                    new ExtractSummaryAction(),
+                    new ExtractiveSummarizeAction(),
                 },
             };
 

@@ -1720,7 +1720,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only supported in service API version v3.1 and newer. The
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
-        /// in service API version 2022-05-01 and newer. The <see cref="ExtractSummaryAction"/> and
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
         /// <see cref="AbstractSummaryAction"/> are only supported in service API version 2022-10-01-preview and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
@@ -1767,7 +1767,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only supported in service API version v3.1 and newer. The
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
-        /// in service API version 2022-05-01 and newer. The <see cref="ExtractSummaryAction"/> and
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
         /// <see cref="AbstractSummaryAction"/> are only supported in service API version 2022-10-01-preview and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
@@ -1813,7 +1813,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only supported in service API version v3.1 and newer. The
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
-        /// in service API version 2022-05-01 and newer. The <see cref="ExtractSummaryAction"/> and
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
         /// <see cref="AbstractSummaryAction"/> are only supported in service API version 2022-10-01-preview and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
@@ -1858,7 +1858,7 @@ namespace Azure.AI.TextAnalytics
         /// This method is only supported in service API version v3.1 and newer. The
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
-        /// in service API version 2022-05-01 and newer. The <see cref="ExtractSummaryAction"/> and
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
         /// <see cref="AbstractSummaryAction"/> are only supported in service API version 2022-10-01-preview and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
@@ -2415,10 +2415,10 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of extractive
+        /// An <see cref="ExtractiveSummarizeOperation"/> that can be used to monitor the status of extractive
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
@@ -2426,14 +2426,14 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual ExtractSummaryOperation StartExtractSummary(
+        public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(
             IEnumerable<string> documents,
             string language = default,
-            ExtractSummaryOptions options = default,
+            ExtractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.StartExtractSummary(documents, language, options, cancellationToken);
+            return _serviceClient.StartExtractiveSummarize(documents, language, options, cancellationToken);
         }
 
         /// <summary>
@@ -2448,10 +2448,10 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of extractive
+        /// An <see cref="ExtractiveSummarizeOperation"/> that can be used to monitor the status of extractive
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
@@ -2459,13 +2459,13 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual ExtractSummaryOperation StartExtractSummary(
+        public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(
             IEnumerable<TextDocumentInput> documents,
-            ExtractSummaryOptions options = default,
+            ExtractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.StartExtractSummary(documents, options, cancellationToken);
+            return _serviceClient.StartExtractiveSummarize(documents, options, cancellationToken);
         }
 
         /// <summary>
@@ -2481,10 +2481,10 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// A <see cref="Task{ExtractSummaryOperation}"/> that can be used to monitor the status of the extractive
+        /// A <see cref="Task{ExtractiveSummarizeOperation}"/> that can be used to monitor the status of the extractive
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
@@ -2492,14 +2492,14 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual async Task<ExtractSummaryOperation> StartExtractSummaryAsync(
+        public virtual async Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(
             IEnumerable<string> documents,
             string language = default,
-            ExtractSummaryOptions options = default,
+            ExtractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.StartExtractSummaryAsync(documents, language, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.StartExtractiveSummarizeAsync(documents, language, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2514,10 +2514,10 @@ namespace Azure.AI.TextAnalytics
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional <see cref="ExtractSummaryOptions"/> used to configure the operation.</param>
+        /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         /// <returns>
-        /// A <see cref="Task{ExtractSummaryOperation}"/> that can be used to monitor the status of the extractive
+        /// A <see cref="Task{ExtractiveSummarizeOperation}"/> that can be used to monitor the status of the extractive
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
@@ -2525,13 +2525,13 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual async Task<ExtractSummaryOperation> StartExtractSummaryAsync(
+        public virtual async Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(
             IEnumerable<TextDocumentInput> documents,
-            ExtractSummaryOptions options = default,
+            ExtractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.StartExtractSummaryAsync(documents, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.StartExtractiveSummarizeAsync(documents, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

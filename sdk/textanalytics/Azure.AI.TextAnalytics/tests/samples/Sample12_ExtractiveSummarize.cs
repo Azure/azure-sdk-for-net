@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public void ExtractSummary()
+        public void ExtractiveSummarize()
         {
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
@@ -52,14 +52,14 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            ExtractSummaryOptions options = new()
+            ExtractiveSummarizeOptions options = new()
             {
                 MaxSentenceCount = 5,
                 OrderBy = SummarySentencesOrder.Rank
             };
 
             // Start the text analysis operation.
-            ExtractSummaryOperation operation = client.StartExtractSummary(documentBatch, options);
+            ExtractiveSummarizeOperation operation = client.StartExtractiveSummarize(documentBatch, options);
 
             operation.WaitForCompletion();
 
@@ -75,12 +75,12 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            foreach (ExtractSummaryResultCollection documentsInPage in operation.GetValues())
+            foreach (ExtractiveSummarizeResultCollection documentsInPage in operation.GetValues())
             {
                 Console.WriteLine($"Results of \"Extractive Summarization\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (ExtractSummaryResult documentResult in documentsInPage)
+                foreach (ExtractiveSummarizeResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {

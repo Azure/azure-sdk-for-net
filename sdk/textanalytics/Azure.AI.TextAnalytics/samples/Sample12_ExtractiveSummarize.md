@@ -13,9 +13,9 @@ TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKe
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Perform extractive summarization on one or more documents
-To perform extractive text summarization on one or more documents, call `StartExtractSummary` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `ExtractSummaryOperation`, which is a long-running operation that can be used to poll the service until the operation has completed and the results of the extractive summarization are available.
+To perform extractive text summarization on one or more documents, call `StartExtractiveSummarize` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `ExtractiveSummarizeOperation`, which is a long-running operation that can be used to poll the service until the operation has completed and the results of the extractive summarization are available.
 
-```C# Snippet:TextAnalyticsExtractSummaryAsync
+```C# Snippet:TextAnalyticsExtractiveSummarizeAsync
 // Get the document.
 string document =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from"
@@ -49,7 +49,7 @@ List<string> documentBatch = new()
 };
 
 // Start the text analysis operation.
-ExtractSummaryOperation operation = client.StartExtractSummary(documentBatch);
+ExtractiveSummarizeOperation operation = client.StartExtractiveSummarize(documentBatch);
 
 await operation.WaitForCompletionAsync();
 
@@ -57,9 +57,9 @@ Console.WriteLine($"The operation has completed.");
 Console.WriteLine();
 ```
 
-The `ExtractSummaryOperation` includes general information about the status of the operation, and it can be queried at any time:
+The `ExtractiveSummarizeOperation` includes general information about the status of the operation, and it can be queried at any time:
 
-```C# Snippet:TextAnalyticsExtractSummaryOperationStatus
+```C# Snippet:TextAnalyticsExtractiveSummarizeOperationStatus
 // View the operation status.
 Console.WriteLine($"Created On   : {operation.CreatedOn}");
 Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -71,14 +71,14 @@ Console.WriteLine();
 
 Once the long-running operation has completed, you can view the results of the extractive summarization, including any errors that might have occurred:
 
-```C# Snippet:TextAnalyticsExtractSummaryAsyncViewResults
+```C# Snippet:TextAnalyticsExtractiveSummarizeAsyncViewResults
 // View the operation results.
-await foreach (ExtractSummaryResultCollection documentsInPage in operation.Value)
+await foreach (ExtractiveSummarizeResultCollection documentsInPage in operation.Value)
 {
     Console.WriteLine($"Results of \"Extractive Summarization\" Model, version: \"{documentsInPage.ModelVersion}\"");
     Console.WriteLine();
 
-    foreach (ExtractSummaryResult documentResult in documentsInPage)
+    foreach (ExtractiveSummarizeResult documentResult in documentsInPage)
     {
         if (documentResult.HasError)
         {

@@ -10,14 +10,14 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// A representation of the result of performing extractive summarization on a given document.
     /// </summary>
-    public partial class ExtractSummaryResult : TextAnalyticsResult
+    public partial class ExtractiveSummarizeResult : TextAnalyticsResult
     {
         private readonly IReadOnlyCollection<SummarySentence> _sentences;
 
         /// <summary>
-        /// Initializes a successful <see cref="ExtractSummaryResult"/>.
+        /// Initializes a successful <see cref="ExtractiveSummarizeResult"/>.
         /// </summary>
-        internal ExtractSummaryResult(
+        internal ExtractiveSummarizeResult(
             string id,
             TextDocumentStatistics statistics,
             IList<SummarySentence> sentences,
@@ -37,9 +37,9 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes an <see cref="ExtractSummaryResult"/> with an error.
+        /// Initializes an <see cref="ExtractiveSummarizeResult"/> with an error.
         /// </summary>
-        internal ExtractSummaryResult(string id, TextAnalyticsError error) : base(id, error) { }
+        internal ExtractiveSummarizeResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// The warnings that resulted from processing the document.

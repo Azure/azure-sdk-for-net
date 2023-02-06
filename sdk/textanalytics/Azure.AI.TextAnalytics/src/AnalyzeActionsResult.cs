@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractSummaryActionResults,
             IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionResults
             )
         {
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyResults = singleLabelClassifyActionResults;
             MultiLabelClassifyResults = multiLabelClassifyActionResults;
             AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
-            ExtractSummaryResults = extractSummaryActionResults;
+            ExtractiveSummarizeResults = extractSummaryActionResults;
             AbstractSummaryResults = abstractSummaryActionResults;
         }
 
@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyResults = Array.Empty<MultiLabelClassifyActionResult>();
             RecognizeCustomEntitiesResults = Array.Empty<RecognizeCustomEntitiesActionResult>();
             AnalyzeHealthcareEntitiesResults = Array.Empty<AnalyzeHealthcareEntitiesActionResult>();
-            ExtractSummaryResults = Array.Empty<ExtractSummaryActionResult>();
+            ExtractiveSummarizeResults = Array.Empty<ExtractiveSummarizeActionResult>();
             AbstractSummaryResults = Array.Empty<AbstractSummaryActionResult>();
         }
 
@@ -105,9 +105,9 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> AnalyzeHealthcareEntitiesResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
+        /// Determines the collection of <see cref="ExtractiveSummarizeActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryResults { get; }
+        public IReadOnlyCollection<ExtractiveSummarizeActionResult> ExtractiveSummarizeResults { get; }
 
         /// <summary>
         /// Determines the collection of <see cref="AbstractSummaryActionResult"/>.
