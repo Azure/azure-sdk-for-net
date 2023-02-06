@@ -71,7 +71,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 }
             }
 
-            var callAutomationClientOptions = new CallAutomationClientOptions
+            var callAutomationClientOptions = new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345"))
             {
                 Transport = new MockTransport(mockResponse)
             };
