@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2023-02-01)
+## 1.0.0-beta.2 (2023-02-06)
 ### Bugs Fixed
 - Fix AutoRejoinGroups doesn't work issue
 
