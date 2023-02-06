@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProtectionIntentResourcesByBackupProtectionIntent_ListProtectionIntentWithBackupManagementTypeFilter()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureWorkload/BackupProtectionIntent_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureWorkload/BackupProtectionIntent_List.json
             // this example is just showing the usage of "BackupProtectionIntent_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupUsageSummaries_GetProtectedContainersUsagesSummary()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/Common/BackupProtectionContainers_UsageSummary_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Common/BackupProtectionContainers_UsageSummary_Get.json
             // this example is just showing the usage of "BackupUsageSummaries_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupUsageSummaries_GetProtectedItemsUsagesSummary()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/Common/BackupProtectedItem_UsageSummary_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Common/BackupProtectedItem_UsageSummary_Get.json
             // this example is just showing the usage of "BackupUsageSummaries_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetExportJobsOperationResult_ExportJobsOperationResults()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/Common/ExportJobsOperationResult.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Common/ExportJobsOperationResult.json
             // this example is just showing the usage of "ExportJobsOperationResults_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExportJob_ExportJobs()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/Common/TriggerExportJobs.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Common/TriggerExportJobs.json
             // this example is just showing the usage of "Jobs_Export" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProtectedItemResourcesByBackupProtectedItem_ListProtectedItemsWithBackupManagementTypeFilterAsAzureIaasVm()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureIaasVm/BackupProtectedItems_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/BackupProtectedItems_List.json
             // this example is just showing the usage of "BackupProtectedItems_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateOperation_ValidateOperation()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureIaasVm/ValidateOperation_RestoreDisk.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/ValidateOperation_RestoreDisk.json
             // this example is just showing the usage of "Operation_Validate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateOperation_ValidateOperationWithIdentityBasedRestoreDetails()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureIaasVm/ValidateOperation_RestoreDisk_IdentityBasedRestoreDetails.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/ValidateOperation_RestoreDisk_IdentityBasedRestoreDetails.json
             // this example is just showing the usage of "Operation_Validate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task TriggerValidateOperation_TriggerValidateOperation()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureIaasVm/TriggerValidateOperation_RestoreDisk.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/TriggerValidateOperation_RestoreDisk.json
             // this example is just showing the usage of "ValidateOperation_Trigger" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetValidateOperationResult_GetOperationResultsOfValidateOperation()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureIaasVm/ValidateOperationResults.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/ValidateOperationResults.json
             // this example is just showing the usage of "ValidateOperationResults_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetValidateOperationStatus_GetOperationStatusOfValidateOperation()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureIaasVm/ValidateOperationStatus.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/ValidateOperationStatus.json
             // this example is just showing the usage of "ValidateOperationStatuses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProtectionContainerRefreshOperationResult_AzureVmDiscoveryOperationResult()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/Common/RefreshContainers_OperationResults.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Common/RefreshContainers_OperationResults.json
             // this example is just showing the usage of "ProtectionContainerRefreshOperationResults_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProtectableContainers_ListProtectableItemsWithBackupManagementTypeFilterAsAzureStorage()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureStorage/ProtectableContainers_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureStorage/ProtectableContainers_List.json
             // this example is just showing the usage of "ProtectableContainers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupOperationResult_GetResultForProtectedItemDeleteOperation()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/Common/ProtectedItem_Delete_OperationResult.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Common/ProtectedItem_Delete_OperationResult.json
             // this example is just showing the usage of "BackupOperationResults_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupOperationStatus_GetProtectedItemDeleteOperationStatus()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/Common/ProtectedItem_Delete_OperationStatus.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Common/ProtectedItem_Delete_OperationStatus.json
             // this example is just showing the usage of "BackupOperationStatuses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupProtectableItems_ListProtectableItemsWithBackupManagementTypeFilterAsAzureIaasVm()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureIaasVm/BackupProtectableItems_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/BackupProtectableItems_List.json
             // this example is just showing the usage of "BackupProtectableItems_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProtectionContainerResourcesByBackupProtectionContainer_ListBackupProtectionContainers()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/AzureStorage/ProtectionContainers_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureStorage/ProtectionContainers_List.json
             // this example is just showing the usage of "BackupProtectionContainers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -594,12 +594,47 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // List Backup Protection Containers
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSoftDeletedProtectionContainers_ListBackupProtectionContainers()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureStorage/SoftDeletedContainers_List.json
+            // this example is just showing the usage of "DeletedProtectionContainers_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "testRg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            string vaultName = "testVault";
+            string filter = "backupManagementType eq 'AzureWorkload'";
+            await foreach (ProtectionContainerResource item in resourceGroupResource.GetSoftDeletedProtectionContainersAsync(vaultName, filter: filter))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ProtectionContainerResourceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // Get Vault Security Pin
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecurityPIN_GetVaultSecurityPin()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/preview/2022-06-01-preview/examples/Common/BackupSecurityPin_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Common/BackupSecurityPin_Get.json
             // this example is just showing the usage of "SecurityPINs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
