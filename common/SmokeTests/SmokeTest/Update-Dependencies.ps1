@@ -12,7 +12,7 @@ param(
 # packages do not target netstandard2.0, and the package source is unable to
 # filter upstream to restrict to the appropriate packages for the running target.
 
-$packageExcludeSet = [System.Collections.Generic.HashSet[string]]@(
+$packageExcludeSet = @(
     "Microsoft.Azure.WebPubSub.AspNetCore"
 )
 
@@ -76,7 +76,7 @@ Log-Info "Querying package information."
 $referenceUpdateCount = 0
 
 Get-SmokeTestPkgProperties -ArtifactsPath $ArtifactsPath
-| Where-Object { -not $packageExcludeSet.Contains($_.Name) }
+| Where-Object { $packageExcludeSet -notcontains $_.Name }
 | Foreach-Object { $referenceUpdateCount += AddPackageReference $csproj $referenceNode $_ }
 
 # Save the project and report the outcome.  If no refrences were added, consider this
