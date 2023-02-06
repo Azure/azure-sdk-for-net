@@ -652,8 +652,8 @@ try {
             }
         }
         catch {
-            Write-Warning "The Object ID of the test application was unable to be queried. " + `
-                          "You may want to consider passing it explicitly with the 'TestApplicationOid` parameter."
+            Write-Warning ("The Object ID of the test application was unable to be queried. " +
+                          "You may want to consider passing it explicitly with the 'TestApplicationOid` parameter.")
             throw $_.Exception
         }
 
@@ -693,9 +693,9 @@ try {
         if ($principalOwnerAssignment.RoleDefinitionName -eq 'Owner') {
             Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the Test Application '$TestApplicationId'"
         } else {
-            Write-Warning "The 'Owner' role for '$ResourceGroupName' could not be assigned. " + `
-                          "You may need to manually grant 'Owner' for the resource group to the " + `
-                          "Test Application '$TestApplicationId' if it does not have subscription-level permissions."
+            Write-Warning ("The 'Owner' role for '$ResourceGroupName' could not be assigned. " +
+                          "You may need to manually grant 'Owner' for the resource group to the " +
+                          "Test Application '$TestApplicationId' if it does not have subscription-level permissions.")
         }
     }
 
