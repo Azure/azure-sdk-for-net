@@ -8,33 +8,29 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the analyze healthcare operation,
-    /// containing the predicted healthcare entities, warning, and relations.
+    /// A representation of the result of analyzing the healthcare entities in a given document.
     /// </summary>
     public partial class AnalyzeHealthcareEntitiesResult : TextAnalyticsResult
     {
         private readonly IReadOnlyCollection<HealthcareEntity> _entities;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesResult"/>.
+        /// Initializes a successful <see cref="AnalyzeHealthcareEntitiesResult"/>.
         /// </summary>
         internal AnalyzeHealthcareEntitiesResult(
             string id,
             TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,
-            IDictionary<string, object> fhirBundle,
+            BinaryData fhirBundle,
             string detectedLanguage,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
+            FhirBundle = fhirBundle;
             DetectedLanguage = detectedLanguage;
-
-            FhirBundle = (fhirBundle is not null)
-                ? new ReadOnlyDictionary<string, object>(fhirBundle)
-                : new Dictionary<string, object>();
 
             Warnings = (warnings is not null)
                 ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
@@ -42,16 +38,14 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesResult"/>.
+        /// Initializes an <see cref="AnalyzeHealthcareEntitiesResult"/> with an error.
         /// </summary>
-        /// <param name="id">Analyze operation id.</param>
-        /// <param name="error">Operation error object.</param>
         internal AnalyzeHealthcareEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// Warnings encountered while processing document.
+        /// The warnings that resulted from processing the document.
         /// </summary>
-        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
         /// <summary>
         /// The language of the input document as detected by the service when requested to perform automatic language
@@ -60,7 +54,7 @@ namespace Azure.AI.TextAnalytics
         public string DetectedLanguage { get; }
 
         /// <summary>
-        /// Gets the collection of healthcare entities in the document.
+        /// The collection of healthcare entities that were recognized in this document.
         /// </summary>
         public IReadOnlyCollection<HealthcareEntity> Entities
         {
@@ -77,14 +71,15 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the relations between the entities. <see cref="HealthcareEntityRelation"/>.
+        /// The collection of relations between the healthcare entities that were recognized in this document.
         /// </summary>
         public IReadOnlyCollection<HealthcareEntityRelation> EntityRelations { get; }
 
         /// <summary>
-        /// Gets the FHIR bundle that was produced for this result according to the specified <see cref="AnalyzeHealthcareEntitiesOptions.FhirVersion"/>.
-        /// For additional information, see <see href="https://www.hl7.org/fhir/overview.html"/>.
+        /// The FHIR bundle that was produced for this document according to the specified
+        /// <see cref="WellKnownFhirVersion"/>. For additional information, see
+        /// <see href="https://www.hl7.org/fhir/overview.html"/>.
         /// </summary>
-        public IReadOnlyDictionary<string, object> FhirBundle { get; }
+        public BinaryData FhirBundle { get; }
     }
 }

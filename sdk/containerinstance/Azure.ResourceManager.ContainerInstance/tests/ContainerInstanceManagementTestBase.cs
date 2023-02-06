@@ -98,7 +98,8 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 keyName: "testencryptionkey",
                 keyVersion: "804d3f1d5ce2456b9bc3dc9e35aaa67e");
 
-	    if (priority == "Spot") {
+            if (priority == "Spot")
+            {
                 var priorityContainerGroup = new ContainerGroupData(
                     location: "westus",
                     containers: containers,
@@ -125,10 +126,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     },
                     EncryptionProperties = encryptionProps,
                     Priority = ContainerGroupPriority.Spot,
-		    Sku = ContainerGroupSku.Standard
+                    Sku = ContainerGroupSku.Standard
                 };
                 return priorityContainerGroup;
-	    }
+            }
 
             var confidentialComputeProperties = new ConfidentialComputeProperties();
             var sku = new ContainerGroupSku("Standard");
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                 cpu: 1.0))
                     )
                     {
-		        Ports =
+                Ports =
                         {
                             new ContainerPort(80)
                         },
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     IPAddress = new ContainerGroupIPAddress(
                             ports: new[] { new ContainerGroupPort(80) { Protocol = ContainerGroupNetworkProtocol.Tcp } },
                             addressType: ContainerGroupIPAddressType.Public
-		    ),
+            ),
                     RestartPolicy = ContainerGroupRestartPolicy.Never,
                     Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                     InitContainers = {
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     Sku = ContainerGroupSku.Confidential
                 };
                 return confContainerGroup;
-	    }
+            }
 
             var containerGroup = new ContainerGroupData(
                 location: "westus",
@@ -249,11 +250,11 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.AreEqual(expected.Diagnostics?.LogAnalytics.WorkspaceId, actual.Diagnostics?.LogAnalytics.WorkspaceId);
             Assert.NotNull(actual.Containers);
             Assert.AreEqual(1, actual.Containers.Count);
-	    if (expected.Priority != ContainerGroupPriority.Spot)
-	    {
-		Assert.NotNull(actual.IPAddress);
+            if (expected.Priority != ContainerGroupPriority.Spot)
+            {
+                Assert.NotNull(actual.IPAddress);
                 Assert.NotNull(actual.IPAddress.IP);
-	    }
+            }
             Assert.AreEqual(expected.EncryptionProperties?.KeyName, actual.EncryptionProperties?.KeyName);
             Assert.AreEqual(expected.EncryptionProperties?.KeyVersion, actual.EncryptionProperties?.KeyVersion);
             Assert.AreEqual(expected.EncryptionProperties?.VaultBaseUri, actual.EncryptionProperties?.VaultBaseUri);
@@ -267,9 +268,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.AreEqual(expected.InitContainers[0].Name, actual.InitContainers[0].Name);
             Assert.AreEqual(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
             Assert.AreEqual(expected.Priority, actual.Priority);
-            if (expected.Sku == ContainerGroupSku.Confidential) {
+            if (expected.Sku == ContainerGroupSku.Confidential)
+            {
                 Assert.NotNull(actual.ConfidentialComputeProperties?.CcePolicy);
-	    }
+            }
         }
     }
 }

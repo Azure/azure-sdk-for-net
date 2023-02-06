@@ -183,7 +183,8 @@ namespace Azure
             foreach (HttpHeader responseHeader in response.Headers)
             {
                 string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
-                messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
+                string header = $"{responseHeader.Name}: {headerValue}";
+                messageBuilder.AppendLine(header);
             }
 
             var formatMessage = messageBuilder.ToString();

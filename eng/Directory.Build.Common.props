@@ -27,7 +27,7 @@
 
   <!-- Setup default project properties -->
   <PropertyGroup>
-    <LangVersion>9</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <!--
       Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).

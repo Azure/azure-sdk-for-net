@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(RecoveryPointProperties))
+            {
+                writer.WritePropertyName("recoveryPointProperties");
+                writer.WriteObjectValue(RecoveryPointProperties);
+            }
             writer.WritePropertyName("objectType");
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
@@ -59,6 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RestorePointType> type = default;
             Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
             Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
+            Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -112,13 +118,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointMoveReadinessInfo = dictionary;
                     continue;
                 }
+                if (property.NameEquals("recoveryPointProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("objectType"))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureWorkloadSAPHanaRecoveryPoint(objectType, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo));
+            return new AzureWorkloadSAPHanaRecoveryPoint(objectType, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value);
         }
     }
 }
