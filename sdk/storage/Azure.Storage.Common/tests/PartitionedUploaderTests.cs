@@ -57,7 +57,7 @@ namespace Azure.Storage.Tests
             return mock;
         }
 
-        private Mock<PartitionedUploader<object, object>.SingleUploadBinaryDataInternal> GetMockSingleUploadContentInternal(int expectedSize)
+        private Mock<PartitionedUploader<object, object>.SingleUploadBinaryDataInternal> GetMockSingleUploadBinaryDataInternal(int expectedSize)
         {
             var mock = new Mock<PartitionedUploader<object, object>.SingleUploadBinaryDataInternal>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsNotNull<BinaryData>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), s_operationName, IsAsync, s_cancellation))
@@ -96,7 +96,7 @@ namespace Azure.Storage.Tests
             return mock;
         }
 
-        private Mock<PartitionedUploader<object, object>.UploadPartitionBinaryDataInternal> GetMockUploadPartitionContentInternal(int maxSize)
+        private Mock<PartitionedUploader<object, object>.UploadPartitionBinaryDataInternal> GetMockUploadPartitionBinaryDataInternal(int maxSize)
         {
             var mock = new Mock<PartitionedUploader<object, object>.UploadPartitionBinaryDataInternal>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsNotNull<BinaryData>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
@@ -117,6 +117,41 @@ namespace Azure.Storage.Tests
 
             return mock;
         }
+
+        private class MockBehaviors
+        {
+            public Mock<PartitionedUploader<object, object>.CreateScope> CreateScope { get; set; }
+            public Mock<PartitionedUploader<object, object>.InitializeDestinationInternal> Initialize { get; set; }
+            public Mock<PartitionedUploader<object, object>.SingleUploadStreamingInternal> SingleUploadStream { get; set; }
+            public Mock<PartitionedUploader<object, object>.UploadPartitionStreamingInternal> PartitionUploadStream { get; set; }
+            public Mock<PartitionedUploader<object, object>.SingleUploadBinaryDataInternal> SingleUploadBinaryData { get; set; }
+            public Mock<PartitionedUploader<object, object>.UploadPartitionBinaryDataInternal> PartitionUploadBinaryData { get; set; }
+            public Mock<PartitionedUploader<object, object>.CommitPartitionedUploadInternal> Commit { get; set; }
+
+            public PartitionedUploader<object, object>.Behaviors ToBehaviors()
+                => new PartitionedUploader<object, object>.Behaviors
+                {
+                    Scope = CreateScope.Object,
+                    InitializeDestination = Initialize.Object,
+                    SingleUploadStreaming = SingleUploadStream.Object,
+                    SingleUploadBinaryData = SingleUploadBinaryData.Object,
+                    UploadPartitionStreaming = PartitionUploadStream.Object,
+                    UploadPartitionBinaryData = PartitionUploadBinaryData.Object,
+                    CommitPartitionedUpload = Commit.Object
+                };
+        }
+
+        private MockBehaviors GetMockBehaviors(int dataSize, int blockSize)
+            => new MockBehaviors
+            {
+                CreateScope = GetMockCreateScope(),
+                Initialize = GetMockInitializeDestinationInternal(),
+                SingleUploadStream = GetMockSingleUploadStreamingInternal(dataSize),
+                SingleUploadBinaryData = GetMockSingleUploadBinaryDataInternal(dataSize),
+                PartitionUploadStream = GetMockUploadPartitionStreamingInternal(blockSize),
+                PartitionUploadBinaryData = GetMockUploadPartitionBinaryDataInternal(blockSize),
+                Commit = GetMockCommitPartitionedUploadInternal()
+            };
 
         [TestCase(Constants.KB, 64, true)]
         [TestCase(64, Constants.KB, true)]
@@ -142,8 +177,8 @@ namespace Azure.Storage.Tests
             var initializeDestination = GetMockInitializeDestinationInternal();
             var singleUploadStreaming = GetMockSingleUploadStreamingInternal(streamSize);
             var uploadPartitionStreaming = GetMockUploadPartitionStreamingInternal(blockSize);
-            var singleUploadContent = GetMockSingleUploadContentInternal(streamSize);
-            var uploadPartitionContent = GetMockUploadPartitionContentInternal(blockSize);
+            var singleUploadContent = GetMockSingleUploadBinaryDataInternal(streamSize);
+            var uploadPartitionContent = GetMockUploadPartitionBinaryDataInternal(blockSize);
             var commitPartitions = GetMockCommitPartitionedUploadInternal();
             var partitionedUploader = new PartitionedUploader<object, object>(
                 new PartitionedUploader<object, object>.Behaviors
@@ -198,8 +233,8 @@ namespace Azure.Storage.Tests
             var initializeDestination = GetMockInitializeDestinationInternal();
             var singleUploadStreaming = GetMockSingleUploadStreamingInternal(dataSize);
             var uploadPartitionStreaming = GetMockUploadPartitionStreamingInternal(blockSize);
-            var singleUploadContent = GetMockSingleUploadContentInternal(dataSize);
-            var uploadPartitionContent = GetMockUploadPartitionContentInternal(blockSize);
+            var singleUploadContent = GetMockSingleUploadBinaryDataInternal(dataSize);
+            var uploadPartitionContent = GetMockUploadPartitionBinaryDataInternal(blockSize);
             var commitPartitions = GetMockCommitPartitionedUploadInternal();
             var partitionedUploader = new PartitionedUploader<object, object>(
                 new PartitionedUploader<object, object>.Behaviors
@@ -238,6 +273,83 @@ namespace Azure.Storage.Tests
                 Assert.AreEqual(numPartitions, uploadPartitionStreaming.Invocations.Count);
                 Assert.AreEqual(1, commitPartitions.Invocations.Count);
             }
+        }
+
+        [TestCase(1024, 2048, 2048)]
+        [TestCase(1024, 500, 200)]
+        public async Task CorrectStreamingBehaviorCalls(
+            int dataSize,
+            int initialTransfer,
+            int maxTransfer)
+        {
+            // Arrange
+            var data = TestHelper.GetRandomBuffer(dataSize);
+
+            var stream = new Mock<MemoryStream>(MockBehavior.Loose, data)
+            {
+                CallBase = true
+            };
+
+            var mocks = GetMockBehaviors(dataSize, maxTransfer);
+            var partitionedUploader = new PartitionedUploader<object, object>(
+                mocks.ToBehaviors(),
+                new StorageTransferOptions()
+                {
+                    InitialTransferSize = initialTransfer,
+                    MaximumTransferSize = maxTransfer,
+                },
+                s_validationOptions,
+                operationName: s_operationName);
+
+            // Act
+            Response<object> result = await partitionedUploader.UploadInternal(stream.Object, dataSize, s_objectArgs, s_progress, IsAsync, s_cancellation);
+
+            // Assert
+            (int expectedSingleUpload, int expectedPartitionUpload, int expectedCommit) = dataSize <= maxTransfer
+                ? (1, 0, 0)
+                : (0, (int)Math.Ceiling((double)dataSize / maxTransfer), 1);
+
+            Assert.AreEqual(expectedSingleUpload, mocks.SingleUploadStream.Invocations.Count);
+            Assert.AreEqual(expectedPartitionUpload, mocks.PartitionUploadStream.Invocations.Count);
+            Assert.AreEqual(expectedCommit, mocks.Commit.Invocations.Count);
+            Assert.AreEqual(0, mocks.SingleUploadBinaryData.Invocations.Count);
+            Assert.AreEqual(0, mocks.PartitionUploadBinaryData.Invocations.Count);
+        }
+
+        [TestCase(1024, 2048, 2048)]
+        [TestCase(1024, 500, 200)]
+        public async Task CorrectBinaryDataBehaviorCalls(
+            int dataSize,
+            int initialTransfer,
+            int maxTransfer)
+        {
+            // Arrange
+            var data = TestHelper.GetRandomBuffer(dataSize);
+
+            var mocks = GetMockBehaviors(dataSize, maxTransfer);
+            var partitionedUploader = new PartitionedUploader<object, object>(
+                mocks.ToBehaviors(),
+                new StorageTransferOptions()
+                {
+                    InitialTransferSize = initialTransfer,
+                    MaximumTransferSize = maxTransfer,
+                },
+                s_validationOptions,
+                operationName: s_operationName);
+
+            // Act
+            Response<object> result = await partitionedUploader.UploadInternal(BinaryData.FromBytes(data), s_objectArgs, s_progress, IsAsync, s_cancellation);
+
+            // Assert
+            (int expectedSingleUpload, int expectedPartitionUpload, int expectedCommit) = dataSize <= maxTransfer
+                ? (1, 0, 0)
+                : (0, (int)Math.Ceiling((double)dataSize / maxTransfer), 1);
+
+            Assert.AreEqual(expectedSingleUpload, mocks.SingleUploadBinaryData.Invocations.Count);
+            Assert.AreEqual(expectedPartitionUpload, mocks.PartitionUploadBinaryData.Invocations.Count);
+            Assert.AreEqual(expectedCommit, mocks.Commit.Invocations.Count);
+            Assert.AreEqual(0, mocks.SingleUploadStream.Invocations.Count);
+            Assert.AreEqual(0, mocks.PartitionUploadStream.Invocations.Count);
         }
     }
 }
