@@ -2,6 +2,11 @@
 
 ## 1.2.0-beta.1 (Unreleased)
 
+### Breaking Changes
+
+Polishing since last public beta release:
+- Corrected the format of `ScriptExecutionData.ScriptCmdletId` property. It is not a `ResourceIdentifier`.
+
 ### Features Added
 
 ### Breaking Changes

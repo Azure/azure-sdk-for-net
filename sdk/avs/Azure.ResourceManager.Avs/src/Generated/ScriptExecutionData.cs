@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="information"> Standard information out stream from the powershell execution. </param>
         /// <param name="warnings"> Standard warning out stream from the powershell execution. </param>
         /// <param name="errors"> Standard error output stream from the powershell execution. </param>
-        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier scriptCmdletId, IList<ScriptExecutionParameterDetails> parameters, IList<ScriptExecutionParameterDetails> hiddenParameters, string failureReason, string timeout, string retention, DateTimeOffset? submittedOn, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, ScriptExecutionProvisioningState? provisioningState, IList<string> output, BinaryData namedOutputs, IReadOnlyList<string> information, IReadOnlyList<string> warnings, IReadOnlyList<string> errors) : base(id, name, resourceType, systemData)
+        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scriptCmdletId, IList<ScriptExecutionParameterDetails> parameters, IList<ScriptExecutionParameterDetails> hiddenParameters, string failureReason, string timeout, string retention, DateTimeOffset? submittedOn, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, ScriptExecutionProvisioningState? provisioningState, IList<string> output, BinaryData namedOutputs, IReadOnlyList<string> information, IReadOnlyList<string> warnings, IReadOnlyList<string> errors) : base(id, name, resourceType, systemData)
         {
             ScriptCmdletId = scriptCmdletId;
             Parameters = parameters;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> A reference to the script cmdlet resource if user is running a AVS script. </summary>
-        public ResourceIdentifier ScriptCmdletId { get; set; }
+        public string ScriptCmdletId { get; set; }
         /// <summary>
         /// Parameters the script will accept
         /// Please note <see cref="ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

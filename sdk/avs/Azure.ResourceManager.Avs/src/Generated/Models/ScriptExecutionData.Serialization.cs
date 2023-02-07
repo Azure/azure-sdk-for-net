@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> scriptCmdletId = default;
+            Optional<string> scriptCmdletId = default;
             Optional<IList<ScriptExecutionParameterDetails>> parameters = default;
             Optional<IList<ScriptExecutionParameterDetails>> hiddenParameters = default;
             Optional<string> failureReason = default;
@@ -143,12 +143,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         if (property0.NameEquals("scriptCmdletId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            scriptCmdletId = new ResourceIdentifier(property0.Value.GetString());
+                            scriptCmdletId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
