@@ -71,8 +71,8 @@ Since Azure confidential ledger is a distributed system, rare transient failures
 
 ```C# Snippet:GetStatus
 Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-
-string status = statusResponse.Content.ToDynamic().state;
+dynamic transactionStatus = statusResponse.Content.ToDynamic();
+string status = transactionStatus.state;
 
 Console.WriteLine($"Transaction status: {status}");
 
@@ -80,7 +80,8 @@ Console.WriteLine($"Transaction status: {status}");
 while (status == "Pending")
 {
     statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-    status = statusResponse.Content.ToDynamic().state;
+    transactionStatus = statusResponse.Content.ToDynamic();
+    status = transactionStatus.state;
 }
 
 Console.WriteLine($"Transaction status: {status}");
@@ -116,37 +117,37 @@ ledgerClient.PostLedgerEntry(
 When no collection id is specified on method calls, the Azure confidential ledger service will assume a constant, service-determined collection id.
 
 ```C# Snippet:NoCollectionId
-         Response postResponse = ledgerClient.PostLedgerEntry(
-         waitUntil: WaitUntil.Completed,
-             RequestContent.Create(
-                 new { contents = "Hello world!" }));
+Operation postResponse = ledgerClient.PostLedgerEntry(
+waitUntil: WaitUntil.Completed,
+    RequestContent.Create(
+        new { contents = "Hello world!" }));
 
-         string content = postOperation.GetRawResponse().Content.ToString();
-         string transactionId = postOperation.Id;
-         string collectionId = "subledger:0";
+string content = postOperation.GetRawResponse().Content.ToString();
+transactionId = postResponse.Id;
+string collectionId = "subledger:0";
 
-         // Try fetching the ledger entry until it is "loaded".
-         Response getByCollectionResponse = default;
-         dynamic ledgerEntry = default;
-         bool loaded = false;
+// Try fetching the ledger entry until it is "loaded".
+Response getByCollectionResponse = default;
+dynamic ledgerEntry = default;
+bool loaded = false;
 
-         while (!loaded)
-         {
-             // Provide both the transactionId and collectionId.
-             getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
-             ledgerEntry = getByCollectionResponse.Content.ToDynamic();
-             loaded = ledgerEntry.state != "Loading";
-         }
+while (!loaded)
+{
+    // Provide both the transactionId and collectionId.
+    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+    ledgerEntry = getByCollectionResponse.Content.ToDynamic();
+    loaded = ledgerEntry.state != "Loading";
+}
 
 string contents = ledgerEntry.entry.contents;
-         Console.WriteLine(contents); // "Hello world!"
+Console.WriteLine(contents); // "Hello world!"
 
-         // Now just provide the transactionId.
-         getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
+// Now just provide the transactionId.
+getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
 
-         string collectionId2 = ledgerEntry.entry.collectionId;
+string collectionId2 = ledgerEntry.entry.collectionId;
 
-         Console.WriteLine($"{collectionId} == {collectionId2}");
+Console.WriteLine($"{collectionId} == {collectionId2}");
 ```
 
 Ledger entries are retrieved from collections. When a transaction id is specified, the returned value is the value contained in the specified collection at the point in time identified by the transaction id. If no transaction id is specified, the latest available value is returned.
@@ -166,14 +167,15 @@ ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world collection 1" }),
     "my collection");
-string transactionId = firstPostOperation.Id;
+transactionId = firstPostOperation.Id;
 
 // Wait for the entry to be committed
 status = "Pending";
 while (status == "Pending")
 {
     statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-    status = statusResponse.Content.ToDynamic().state;
+    transactionStatus = statusResponse.Content.ToDynamic();
+    status = transactionStatus.state;
 }
 
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
