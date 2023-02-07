@@ -262,23 +262,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
         }
 
-        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            var options = new InteractiveBrowserCredentialOptions { TenantId = parameters.TenantId };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-            var mockMsalClient = new MockMsalPublicClient(AuthenticationResultFactory.Create());
-            var cred = InstrumentClient(
-                new InteractiveBrowserCredential(parameters.TenantId, Constants.DeveloperSignOnClientId, options, null, mockMsalClient));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
-        }
-
         public class ExtendedInteractiveBrowserCredentialOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
         {
             private Action<PublicClientApplicationBuilder> _beforeBuildClient;

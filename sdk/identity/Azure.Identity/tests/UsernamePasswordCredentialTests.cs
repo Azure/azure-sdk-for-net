@@ -101,29 +101,5 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expectedToken, token.Token);
             Assert.AreEqual(expiresOn, token.ExpiresOn);
         }
-
-        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            // no need to test with null TenantId since we can't construct this credential without it
-            if (parameters.TenantId == null)
-            {
-                Assert.Ignore("Null TenantId test does not apply to this credential");
-            }
-
-            var options = new UsernamePasswordCredentialOptions();
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var msalClientMock = new MockMsalPublicClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(new UsernamePasswordCredential("username", "password", parameters.TenantId, ClientId, options, null, msalClientMock));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
-        }
     }
 }

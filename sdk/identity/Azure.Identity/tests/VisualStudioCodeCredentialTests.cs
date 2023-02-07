@@ -70,36 +70,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
         }
 
-        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            using var env = new TestEnvVar(new Dictionary<string, string> { { "IDENTITY_TENANT_ID", TenantId } });
-            var environment = new IdentityTestEnvironment();
-            var options = new VisualStudioCodeCredentialOptions
-            {
-                TenantId = parameters.TenantId,
-                Transport = new MockTransport()
-            };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var msalClientMock = new MockMsalPublicClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(
-                new VisualStudioCodeCredential(
-                    options,
-                    null,
-                    msalClientMock,
-                    CredentialTestHelpers.CreateFileSystemForVisualStudioCode(environment),
-                    new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
-        }
-
         [Test]
         public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {

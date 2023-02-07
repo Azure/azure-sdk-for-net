@@ -63,28 +63,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
-            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
-            var testProcess = new TestProcess { Output = processOutput };
-            var vsOptions = new VisualStudioCredentialOptions
-            {
-                TenantId = parameters.TenantId
-            };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                vsOptions.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var cred = InstrumentClient(new VisualStudioCredential(parameters.TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
-        }
-
         [Test]
         public async Task AuthenticateWithVsCredential_FirstProcessFail()
         {

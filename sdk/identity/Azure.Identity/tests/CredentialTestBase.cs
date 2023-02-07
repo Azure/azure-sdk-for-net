@@ -187,9 +187,6 @@ namespace Azure.Identity.Tests
             await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
         }
 
-        [TestCaseSource(nameof(GetAllowedTenantsTestCases))]
-        public abstract Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters);
-
         public class AllowedTenantsTestParameters
         {
             public string TenantId { get; set; }

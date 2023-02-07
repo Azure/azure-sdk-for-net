@@ -68,25 +68,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            var options = new AzureDeveloperCliCredentialOptions { TenantId = parameters.TenantId };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
-            var testProcess = new TestProcess { Output = processOutput };
-            AzureDeveloperCliCredential credential =
-                InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), options));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
-        }
-
         [Test]
         public void AuthenticateWithCliCredential_InvalidJsonOutput(
             [Values("", "{}", "{\"Some\": false}", "{\"token\": \"token\"}", "{\"expiresOn\" : \"1900-01-01T00:00:00Z\"}")]

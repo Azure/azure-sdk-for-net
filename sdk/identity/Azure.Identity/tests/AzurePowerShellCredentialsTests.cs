@@ -85,25 +85,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            var options = new AzurePowerShellCredentialOptions { TenantId = parameters.TenantId };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
-            var testProcess = new TestProcess { Output = processOutput };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
-        }
-
         private static IEnumerable<object[]> ErrorScenarios()
         {
             yield return new object[] { "Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };

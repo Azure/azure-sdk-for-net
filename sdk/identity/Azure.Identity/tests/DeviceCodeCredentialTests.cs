@@ -97,25 +97,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken);
         }
 
-        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            var options = new DeviceCodeCredentialOptions { TenantId = parameters.TenantId };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-            var authResult = AuthenticationResultFactory.Create();
-            var msalClientMock = new MockMsalPublicClient(authResult);
-
-            var cred = InstrumentClient(
-                new DeviceCodeCredential((code, _) => Task.CompletedTask, parameters.TenantId, ClientId, options, null, msalClientMock));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
-        }
-
         [Test]
         public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {

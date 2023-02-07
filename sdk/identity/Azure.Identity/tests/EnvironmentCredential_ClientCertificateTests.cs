@@ -52,11 +52,5 @@ namespace Azure.Identity.Tests
                 return InstrumentClient(new EnvironmentCredential(pipeline, options));
             }
         }
-
-        public override async Task VerifyAllowedTenantEnforcementAllCreds(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(GetType().Name);
-            await Task.Yield();
-        }
     }
 }
