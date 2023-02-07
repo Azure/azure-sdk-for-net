@@ -90,7 +90,7 @@ try {
 
         Write-Host "Re-generating tests"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot/../service.proj /restore /t:GenerateTests /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
+            & dotnet msbuild $PSScriptRoot/../service.proj /restore /t:GenerateTest /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
         }
     }
 
