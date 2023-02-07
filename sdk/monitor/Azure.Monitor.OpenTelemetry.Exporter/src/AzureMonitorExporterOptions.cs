@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// The latest service version supported by this library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2020_09_15_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.v2_1;
 
         /// <summary>
         /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.
@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.
         /// </summary>
-        public ServiceVersion Version { get; set; } = ServiceVersion.V2020_09_15_Preview;
+        public ServiceVersion Version { get; set; } = LatestVersion;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.
@@ -56,6 +56,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             /// (https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/2020-09-15_Preview/swagger.json).
             /// </summary>
             V2020_09_15_Preview = 1,
+
+            /// <summary>
+            /// (https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/v2.1/swagger.json).
+            /// </summary>
+            v2_1 = 2,
         }
 
         /// <summary>
