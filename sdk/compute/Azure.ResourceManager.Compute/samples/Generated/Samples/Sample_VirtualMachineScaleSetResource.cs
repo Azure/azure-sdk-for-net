@@ -351,7 +351,7 @@ SuppressFailures = true,
                     },
                     LicenseType = "aaaaaaaaaaaa",
                     BillingMaxPrice = -1,
-                    ScheduledEventsProfile = new ScheduledEventsProfile()
+                    ScheduledEventsProfile = new ComputeScheduledEventsProfile()
                     {
                         TerminateNotificationProfile = new TerminateNotificationProfile()
                         {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
             set
             {
                 if (ScheduledEventsProfile is null)
-                    ScheduledEventsProfile = new ScheduledEventsProfile();
+                    ScheduledEventsProfile = new ComputeScheduledEventsProfile();
                 ScheduledEventsProfile.TerminateNotificationProfile = value;
             }
         }

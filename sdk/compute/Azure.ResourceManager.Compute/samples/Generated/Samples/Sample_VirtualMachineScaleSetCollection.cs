@@ -1413,7 +1413,7 @@ EnableIPForwarding = true,
 }
 },
                     },
-                    ScheduledEventsProfile = new ScheduledEventsProfile()
+                    ScheduledEventsProfile = new ComputeScheduledEventsProfile()
                     {
                         OSImageNotificationProfile = new OSImageNotificationProfile()
                         {
@@ -3456,7 +3456,7 @@ EnableIPForwarding = true,
 }
 },
                     },
-                    ScheduledEventsProfile = new ScheduledEventsProfile()
+                    ScheduledEventsProfile = new ComputeScheduledEventsProfile()
                     {
                         TerminateNotificationProfile = new TerminateNotificationProfile()
                         {

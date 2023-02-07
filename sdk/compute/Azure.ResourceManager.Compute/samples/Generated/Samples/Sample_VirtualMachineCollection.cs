@@ -2636,7 +2636,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     Enabled = true,
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
                 },
-                ScheduledEventsProfile = new ScheduledEventsProfile()
+                ScheduledEventsProfile = new ComputeScheduledEventsProfile()
                 {
                     TerminateNotificationProfile = new TerminateNotificationProfile()
                     {
