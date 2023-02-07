@@ -39,6 +39,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The display name to appear for target callee.
         /// </summary>
+        /// <value></value>
         public string SourceDisplayName { get; set; }
 
         /// <summary>
