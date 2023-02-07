@@ -23,10 +23,12 @@ namespace Azure.Core.Dynamic
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         private MutableJsonElement _element;
+        private DynamicJsonOptions _options;
 
-        internal DynamicJson(MutableJsonElement element)
+        internal DynamicJson(MutableJsonElement element, DynamicJsonOptions options = default)
         {
             _element = element;
+            _options = options;
         }
 
         internal override void WriteTo(Stream stream)
@@ -38,7 +40,39 @@ namespace Azure.Core.Dynamic
 
         private object GetProperty(string name)
         {
-            return new DynamicJson(_element.GetProperty(name));
+            if (!_options.AccessPropertyNamesPascalOrCamelCase)
+            {
+                return new DynamicJson(_element.GetProperty(name));
+            }
+
+            if (_element.TryGetProperty(name, out MutableJsonElement property))
+            {
+                return new DynamicJson(property);
+            }
+
+            // Either PascalCase or camelCase lookup failed. Try the other.
+            string otherCaseName = GetAsOtherCasing(name);
+            if (_element.TryGetProperty(otherCaseName, out property))
+            {
+                return new DynamicJson(property);
+            }
+
+            return new InvalidOperationException($"JSON does not contain property called {name}");
+        }
+
+        private static string GetAsOtherCasing(string value)
+        {
+            if (value.Length < 1)
+            {
+                throw new InvalidOperationException($"Invalid property name: {value}");
+            }
+
+            if (char.IsUpper(value[0]))
+            {
+                return $"{char.ToLowerInvariant(value[0])}{value.Substring(1)}";
+            }
+
+            return $"{char.ToUpperInvariant(value[0])}{value.Substring(1)}";
         }
 
         private object GetViaIndexer(object index)
