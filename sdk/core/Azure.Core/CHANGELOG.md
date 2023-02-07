@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- ActivitySource activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version.
+
 ### Breaking Changes
 
 ### Bugs Fixed
