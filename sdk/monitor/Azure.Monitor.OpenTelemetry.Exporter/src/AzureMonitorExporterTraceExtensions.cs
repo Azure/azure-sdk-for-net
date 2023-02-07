@@ -5,6 +5,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 
@@ -36,7 +37,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Statsbeat.InitializeAttachStatsbeat(options.ConnectionString);
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
-            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options, credential)));
+            var azureMonitorExporter = new AzureMonitorTraceExporter(options, credential);
+            builder.AddProcessor(new StandardMetricsExtractionProcessor(options.ConnectionString));
+            return builder.AddProcessor(new BatchActivityExportProcessor(azureMonitorExporter));
         }
     }
 }

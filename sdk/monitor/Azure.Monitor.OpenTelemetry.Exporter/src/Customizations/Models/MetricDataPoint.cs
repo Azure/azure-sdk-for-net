@@ -10,8 +10,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         public MetricDataPoint(Metric metric, MetricPoint metricPoint)
         {
-            Name = metric.Name;
-            Namespace = metric.MeterName;
+            var standardMetricName = StandardMetricsExtractionProcessor.s_standardMetricNameMapping[metric.Name];
+            if (standardMetricName != null)
+            {
+                Name =  standardMetricName;
+            }
+            else
+            {
+                Name= metric.Name;
+                Namespace = metric.MeterName;
+            }
 
             switch (metric.MetricType)
             {
