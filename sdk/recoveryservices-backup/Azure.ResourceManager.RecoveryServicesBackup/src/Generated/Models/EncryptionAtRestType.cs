@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Encryption At Rest Type. </summary>
+    /// <summary>
+    /// Encryption At Rest Type
+    /// Serialized Name: EncryptionAtRestType
+    /// </summary>
     public readonly partial struct EncryptionAtRestType : IEquatable<EncryptionAtRestType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string MicrosoftManagedValue = "MicrosoftManaged";
         private const string CustomerManagedValue = "CustomerManaged";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: EncryptionAtRestType.Invalid
+        /// </summary>
         public static EncryptionAtRestType Invalid { get; } = new EncryptionAtRestType(InvalidValue);
-        /// <summary> MicrosoftManaged. </summary>
+        /// <summary>
+        /// MicrosoftManaged
+        /// Serialized Name: EncryptionAtRestType.MicrosoftManaged
+        /// </summary>
         public static EncryptionAtRestType MicrosoftManaged { get; } = new EncryptionAtRestType(MicrosoftManagedValue);
-        /// <summary> CustomerManaged. </summary>
+        /// <summary>
+        /// CustomerManaged
+        /// Serialized Name: EncryptionAtRestType.CustomerManaged
+        /// </summary>
         public static EncryptionAtRestType CustomerManaged { get; } = new EncryptionAtRestType(CustomerManagedValue);
         /// <summary> Determines if two <see cref="EncryptionAtRestType"/> values are the same. </summary>
         public static bool operator ==(EncryptionAtRestType left, EncryptionAtRestType right) => left.Equals(right);

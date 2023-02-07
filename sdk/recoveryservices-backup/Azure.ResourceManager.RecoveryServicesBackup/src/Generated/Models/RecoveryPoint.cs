@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup copies. Workload-specific backup copies are derived from this class.
+    /// Serialized Name: RecoveryPoint
     /// Please note <see cref="RecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureFileShareRecoveryPoint"/>, <see cref="AzureWorkloadPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaRecoveryPoint"/>, <see cref="AzureWorkloadSQLPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSQLRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPoint. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: RecoveryPoint.objectType
+        /// </param>
         internal RecoveryPoint(string objectType)
         {
             ObjectType = objectType;
         }
 
-        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        /// <summary>
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: RecoveryPoint.objectType
+        /// </summary>
         internal string ObjectType { get; set; }
     }
 }

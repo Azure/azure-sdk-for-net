@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Response for feature support requests for Azure IaasVm. </summary>
+    /// <summary>
+    /// Response for feature support requests for Azure IaasVm
+    /// Serialized Name: AzureVMResourceFeatureSupportResponse
+    /// </summary>
     public partial class AzureVmResourceFeatureSupportResponse
     {
         /// <summary> Initializes a new instance of AzureVmResourceFeatureSupportResponse. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureVmResourceFeatureSupportResponse. </summary>
-        /// <param name="supportStatus"> Support status of feature. </param>
+        /// <param name="supportStatus">
+        /// Support status of feature
+        /// Serialized Name: AzureVMResourceFeatureSupportResponse.supportStatus
+        /// </param>
         internal AzureVmResourceFeatureSupportResponse(SupportStatus? supportStatus)
         {
             SupportStatus = supportStatus;
         }
 
-        /// <summary> Support status of feature. </summary>
+        /// <summary>
+        /// Support status of feature
+        /// Serialized Name: AzureVMResourceFeatureSupportResponse.supportStatus
+        /// </summary>
         public SupportStatus? SupportStatus { get; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Additional information of the container. </summary>
+    /// <summary>
+    /// Additional information of the container.
+    /// Serialized Name: MabContainerExtendedInfo
+    /// </summary>
     public partial class MabContainerExtendedInfo
     {
         /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>
@@ -21,11 +24,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>
-        /// <param name="lastRefreshedOn"> Time stamp when this container was refreshed. </param>
-        /// <param name="backupItemType"> Type of backup items associated with this container. </param>
-        /// <param name="backupItems"> List of backup items associated with this container. </param>
-        /// <param name="policyName"> Backup policy associated with this container. </param>
-        /// <param name="lastBackupStatus"> Latest backup status of this container. </param>
+        /// <param name="lastRefreshedOn">
+        /// Time stamp when this container was refreshed.
+        /// Serialized Name: MabContainerExtendedInfo.lastRefreshedAt
+        /// </param>
+        /// <param name="backupItemType">
+        /// Type of backup items associated with this container.
+        /// Serialized Name: MabContainerExtendedInfo.backupItemType
+        /// </param>
+        /// <param name="backupItems">
+        /// List of backup items associated with this container.
+        /// Serialized Name: MabContainerExtendedInfo.backupItems
+        /// </param>
+        /// <param name="policyName">
+        /// Backup policy associated with this container.
+        /// Serialized Name: MabContainerExtendedInfo.policyName
+        /// </param>
+        /// <param name="lastBackupStatus">
+        /// Latest backup status of this container.
+        /// Serialized Name: MabContainerExtendedInfo.lastBackupStatus
+        /// </param>
         internal MabContainerExtendedInfo(DateTimeOffset? lastRefreshedOn, BackupItemType? backupItemType, IList<string> backupItems, string policyName, string lastBackupStatus)
         {
             LastRefreshedOn = lastRefreshedOn;
@@ -35,15 +53,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             LastBackupStatus = lastBackupStatus;
         }
 
-        /// <summary> Time stamp when this container was refreshed. </summary>
+        /// <summary>
+        /// Time stamp when this container was refreshed.
+        /// Serialized Name: MabContainerExtendedInfo.lastRefreshedAt
+        /// </summary>
         public DateTimeOffset? LastRefreshedOn { get; set; }
-        /// <summary> Type of backup items associated with this container. </summary>
+        /// <summary>
+        /// Type of backup items associated with this container.
+        /// Serialized Name: MabContainerExtendedInfo.backupItemType
+        /// </summary>
         public BackupItemType? BackupItemType { get; set; }
-        /// <summary> List of backup items associated with this container. </summary>
+        /// <summary>
+        /// List of backup items associated with this container.
+        /// Serialized Name: MabContainerExtendedInfo.backupItems
+        /// </summary>
         public IList<string> BackupItems { get; }
-        /// <summary> Backup policy associated with this container. </summary>
+        /// <summary>
+        /// Backup policy associated with this container.
+        /// Serialized Name: MabContainerExtendedInfo.policyName
+        /// </summary>
         public string PolicyName { get; set; }
-        /// <summary> Latest backup status of this container. </summary>
+        /// <summary>
+        /// Latest backup status of this container.
+        /// Serialized Name: MabContainerExtendedInfo.lastBackupStatus
+        /// </summary>
         public string LastBackupStatus { get; set; }
     }
 }

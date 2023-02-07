@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Type of workload for the backup management. </summary>
+    /// <summary>
+    /// Type of workload for the backup management
+    /// Serialized Name: WorkloadType
+    /// </summary>
     public readonly partial struct WorkloadType : IEquatable<WorkloadType>
     {
         private readonly string _value;
@@ -39,37 +42,85 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SAPAseDatabaseValue = "SAPAseDatabase";
         private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: WorkloadType.Invalid
+        /// </summary>
         public static WorkloadType Invalid { get; } = new WorkloadType(InvalidValue);
-        /// <summary> VM. </summary>
+        /// <summary>
+        /// VM
+        /// Serialized Name: WorkloadType.VM
+        /// </summary>
         public static WorkloadType Vm { get; } = new WorkloadType(VmValue);
-        /// <summary> FileFolder. </summary>
+        /// <summary>
+        /// FileFolder
+        /// Serialized Name: WorkloadType.FileFolder
+        /// </summary>
         public static WorkloadType FileFolder { get; } = new WorkloadType(FileFolderValue);
-        /// <summary> AzureSqlDb. </summary>
+        /// <summary>
+        /// AzureSqlDb
+        /// Serialized Name: WorkloadType.AzureSqlDb
+        /// </summary>
         public static WorkloadType AzureSqlDb { get; } = new WorkloadType(AzureSqlDbValue);
-        /// <summary> SQLDB. </summary>
+        /// <summary>
+        /// SQLDB
+        /// Serialized Name: WorkloadType.SQLDB
+        /// </summary>
         public static WorkloadType SqlDB { get; } = new WorkloadType(SqlDBValue);
-        /// <summary> Exchange. </summary>
+        /// <summary>
+        /// Exchange
+        /// Serialized Name: WorkloadType.Exchange
+        /// </summary>
         public static WorkloadType Exchange { get; } = new WorkloadType(ExchangeValue);
-        /// <summary> Sharepoint. </summary>
+        /// <summary>
+        /// Sharepoint
+        /// Serialized Name: WorkloadType.Sharepoint
+        /// </summary>
         public static WorkloadType Sharepoint { get; } = new WorkloadType(SharepointValue);
-        /// <summary> VMwareVM. </summary>
+        /// <summary>
+        /// VMwareVM
+        /// Serialized Name: WorkloadType.VMwareVM
+        /// </summary>
         public static WorkloadType VMwareVm { get; } = new WorkloadType(VMwareVmValue);
-        /// <summary> SystemState. </summary>
+        /// <summary>
+        /// SystemState
+        /// Serialized Name: WorkloadType.SystemState
+        /// </summary>
         public static WorkloadType SystemState { get; } = new WorkloadType(SystemStateValue);
-        /// <summary> Client. </summary>
+        /// <summary>
+        /// Client
+        /// Serialized Name: WorkloadType.Client
+        /// </summary>
         public static WorkloadType Client { get; } = new WorkloadType(ClientValue);
-        /// <summary> GenericDataSource. </summary>
+        /// <summary>
+        /// GenericDataSource
+        /// Serialized Name: WorkloadType.GenericDataSource
+        /// </summary>
         public static WorkloadType GenericDataSource { get; } = new WorkloadType(GenericDataSourceValue);
-        /// <summary> SQLDataBase. </summary>
+        /// <summary>
+        /// SQLDataBase
+        /// Serialized Name: WorkloadType.SQLDataBase
+        /// </summary>
         public static WorkloadType SQLDataBase { get; } = new WorkloadType(SQLDataBaseValue);
-        /// <summary> AzureFileShare. </summary>
+        /// <summary>
+        /// AzureFileShare
+        /// Serialized Name: WorkloadType.AzureFileShare
+        /// </summary>
         public static WorkloadType AzureFileShare { get; } = new WorkloadType(AzureFileShareValue);
-        /// <summary> SAPHanaDatabase. </summary>
+        /// <summary>
+        /// SAPHanaDatabase
+        /// Serialized Name: WorkloadType.SAPHanaDatabase
+        /// </summary>
         public static WorkloadType SAPHanaDatabase { get; } = new WorkloadType(SAPHanaDatabaseValue);
-        /// <summary> SAPAseDatabase. </summary>
+        /// <summary>
+        /// SAPAseDatabase
+        /// Serialized Name: WorkloadType.SAPAseDatabase
+        /// </summary>
         public static WorkloadType SAPAseDatabase { get; } = new WorkloadType(SAPAseDatabaseValue);
-        /// <summary> SAPHanaDBInstance. </summary>
+        /// <summary>
+        /// SAPHanaDBInstance
+        /// Serialized Name: WorkloadType.SAPHanaDBInstance
+        /// </summary>
         public static WorkloadType SAPHanaDBInstance { get; } = new WorkloadType(SAPHanaDBInstanceValue);
         /// <summary> Determines if two <see cref="WorkloadType"/> values are the same. </summary>
         public static bool operator ==(WorkloadType left, WorkloadType right) => left.Equals(right);

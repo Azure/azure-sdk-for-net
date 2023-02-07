@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Validation Status. </summary>
+    /// <summary>
+    /// Validation Status
+    /// Serialized Name: ValidationStatus
+    /// </summary>
     public readonly partial struct ValidationStatus : IEquatable<ValidationStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: ValidationStatus.Invalid
+        /// </summary>
         public static ValidationStatus Invalid { get; } = new ValidationStatus(InvalidValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ValidationStatus.Succeeded
+        /// </summary>
         public static ValidationStatus Succeeded { get; } = new ValidationStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ValidationStatus.Failed
+        /// </summary>
         public static ValidationStatus Failed { get; } = new ValidationStatus(FailedValue);
         /// <summary> Determines if two <see cref="ValidationStatus"/> values are the same. </summary>
         public static bool operator ==(ValidationStatus left, ValidationStatus right) => left.Equals(right);

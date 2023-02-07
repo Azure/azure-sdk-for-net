@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Private Link Service Connection State. </summary>
+    /// <summary>
+    /// Private Link Service Connection State
+    /// Serialized Name: PrivateLinkServiceConnectionState
+    /// </summary>
     public partial class RecoveryServicesBackupPrivateLinkServiceConnectionState
     {
         /// <summary> Initializes a new instance of RecoveryServicesBackupPrivateLinkServiceConnectionState. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesBackupPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Gets or sets the status. </param>
-        /// <param name="description"> Gets or sets description. </param>
-        /// <param name="actionRequired"> Gets or sets actions required. </param>
+        /// <param name="status">
+        /// Gets or sets the status
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </param>
+        /// <param name="description">
+        /// Gets or sets description
+        /// Serialized Name: PrivateLinkServiceConnectionState.description
+        /// </param>
+        /// <param name="actionRequired">
+        /// Gets or sets actions required
+        /// Serialized Name: PrivateLinkServiceConnectionState.actionRequired
+        /// </param>
         internal RecoveryServicesBackupPrivateLinkServiceConnectionState(PrivateEndpointConnectionStatus? status, string description, string actionRequired)
         {
             Status = status;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ActionRequired = actionRequired;
         }
 
-        /// <summary> Gets or sets the status. </summary>
+        /// <summary>
+        /// Gets or sets the status
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </summary>
         public PrivateEndpointConnectionStatus? Status { get; set; }
-        /// <summary> Gets or sets description. </summary>
+        /// <summary>
+        /// Gets or sets description
+        /// Serialized Name: PrivateLinkServiceConnectionState.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Gets or sets actions required. </summary>
+        /// <summary>
+        /// Gets or sets actions required
+        /// Serialized Name: PrivateLinkServiceConnectionState.actionRequired
+        /// </summary>
         public string ActionRequired { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for operation result info.
+    /// Serialized Name: OperationResultInfoBase
     /// Please note <see cref="OperationResultInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ExportJobsOperationResultInfo"/> and <see cref="OperationResultInfo"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationResultInfoBase. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationResultInfoBase.objectType
+        /// </param>
         internal OperationResultInfoBase(string objectType)
         {
             ObjectType = objectType;
         }
 
-        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        /// <summary>
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationResultInfoBase.objectType
+        /// </summary>
         internal string ObjectType { get; set; }
     }
 }

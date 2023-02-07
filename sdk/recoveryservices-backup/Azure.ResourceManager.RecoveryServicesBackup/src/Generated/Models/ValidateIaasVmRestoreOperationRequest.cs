@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> AzureRestoreValidation request. </summary>
+    /// <summary>
+    /// AzureRestoreValidation request.
+    /// Serialized Name: ValidateIaasVMRestoreOperationRequest
+    /// </summary>
     public partial class ValidateIaasVmRestoreOperationRequest : ValidateRestoreOperationRequest
     {
         /// <summary> Initializes a new instance of ValidateIaasVmRestoreOperationRequest. </summary>

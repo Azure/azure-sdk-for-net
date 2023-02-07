@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> SQLDataDirectory info. </summary>
+    /// <summary>
+    /// SQLDataDirectory info
+    /// Serialized Name: SQLDataDirectory
+    /// </summary>
     public partial class SQLDataDirectory
     {
         /// <summary> Initializes a new instance of SQLDataDirectory. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of SQLDataDirectory. </summary>
-        /// <param name="directoryType"> Type of data directory mapping. </param>
-        /// <param name="path"> File path. </param>
-        /// <param name="logicalName"> Logical name of the file. </param>
+        /// <param name="directoryType">
+        /// Type of data directory mapping
+        /// Serialized Name: SQLDataDirectory.type
+        /// </param>
+        /// <param name="path">
+        /// File path
+        /// Serialized Name: SQLDataDirectory.path
+        /// </param>
+        /// <param name="logicalName">
+        /// Logical name of the file
+        /// Serialized Name: SQLDataDirectory.logicalName
+        /// </param>
         internal SQLDataDirectory(SQLDataDirectoryType? directoryType, string path, string logicalName)
         {
             DirectoryType = directoryType;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             LogicalName = logicalName;
         }
 
-        /// <summary> Type of data directory mapping. </summary>
+        /// <summary>
+        /// Type of data directory mapping
+        /// Serialized Name: SQLDataDirectory.type
+        /// </summary>
         public SQLDataDirectoryType? DirectoryType { get; set; }
-        /// <summary> File path. </summary>
+        /// <summary>
+        /// File path
+        /// Serialized Name: SQLDataDirectory.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> Logical name of the file. </summary>
+        /// <summary>
+        /// Logical name of the file
+        /// Serialized Name: SQLDataDirectory.logicalName
+        /// </summary>
         public string LogicalName { get; set; }
     }
 }

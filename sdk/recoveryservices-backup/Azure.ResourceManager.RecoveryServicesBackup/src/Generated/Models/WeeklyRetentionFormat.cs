@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Weekly retention format. </summary>
+    /// <summary>
+    /// Weekly retention format.
+    /// Serialized Name: WeeklyRetentionFormat
+    /// </summary>
     public partial class WeeklyRetentionFormat
     {
         /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
-        /// <param name="daysOfTheWeek"> List of days of the week. </param>
-        /// <param name="weeksOfTheMonth"> List of weeks of month. </param>
+        /// <param name="daysOfTheWeek">
+        /// List of days of the week.
+        /// Serialized Name: WeeklyRetentionFormat.daysOfTheWeek
+        /// </param>
+        /// <param name="weeksOfTheMonth">
+        /// List of weeks of month.
+        /// Serialized Name: WeeklyRetentionFormat.weeksOfTheMonth
+        /// </param>
         internal WeeklyRetentionFormat(IList<DayOfWeek> daysOfTheWeek, IList<WeekOfMonth> weeksOfTheMonth)
         {
             DaysOfTheWeek = daysOfTheWeek;
             WeeksOfTheMonth = weeksOfTheMonth;
         }
 
-        /// <summary> List of days of the week. </summary>
+        /// <summary>
+        /// List of days of the week.
+        /// Serialized Name: WeeklyRetentionFormat.daysOfTheWeek
+        /// </summary>
         public IList<DayOfWeek> DaysOfTheWeek { get; }
-        /// <summary> List of weeks of month. </summary>
+        /// <summary>
+        /// List of weeks of month.
+        /// Serialized Name: WeeklyRetentionFormat.weeksOfTheMonth
+        /// </summary>
         public IList<WeekOfMonth> WeeksOfTheMonth { get; }
     }
 }

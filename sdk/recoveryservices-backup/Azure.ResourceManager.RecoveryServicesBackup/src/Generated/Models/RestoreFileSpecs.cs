@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Restore file specs like file path, type and target folder path info. </summary>
+    /// <summary>
+    /// Restore file specs like file path, type and target folder path info.
+    /// Serialized Name: RestoreFileSpecs
+    /// </summary>
     public partial class RestoreFileSpecs
     {
         /// <summary> Initializes a new instance of RestoreFileSpecs. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RestoreFileSpecs. </summary>
-        /// <param name="path"> Source File/Folder path. </param>
-        /// <param name="fileSpecType"> Indicates what the Path variable stands for. </param>
-        /// <param name="targetFolderPath"> Destination folder path in target FileShare. </param>
+        /// <param name="path">
+        /// Source File/Folder path
+        /// Serialized Name: RestoreFileSpecs.path
+        /// </param>
+        /// <param name="fileSpecType">
+        /// Indicates what the Path variable stands for
+        /// Serialized Name: RestoreFileSpecs.fileSpecType
+        /// </param>
+        /// <param name="targetFolderPath">
+        /// Destination folder path in target FileShare
+        /// Serialized Name: RestoreFileSpecs.targetFolderPath
+        /// </param>
         internal RestoreFileSpecs(string path, string fileSpecType, string targetFolderPath)
         {
             Path = path;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TargetFolderPath = targetFolderPath;
         }
 
-        /// <summary> Source File/Folder path. </summary>
+        /// <summary>
+        /// Source File/Folder path
+        /// Serialized Name: RestoreFileSpecs.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> Indicates what the Path variable stands for. </summary>
+        /// <summary>
+        /// Indicates what the Path variable stands for
+        /// Serialized Name: RestoreFileSpecs.fileSpecType
+        /// </summary>
         public string FileSpecType { get; set; }
-        /// <summary> Destination folder path in target FileShare. </summary>
+        /// <summary>
+        /// Destination folder path in target FileShare
+        /// Serialized Name: RestoreFileSpecs.targetFolderPath
+        /// </summary>
         public string TargetFolderPath { get; set; }
     }
 }

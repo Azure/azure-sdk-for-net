@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> IaaS VM workload specific restore details for restores using managed identity. </summary>
+    /// <summary>
+    /// IaaS VM workload specific restore details for restores using managed identity
+    /// Serialized Name: IdentityBasedRestoreDetails
+    /// </summary>
     public partial class IdentityBasedRestoreDetails
     {
         /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
-        /// <param name="objectType"> Gets the class type. </param>
-        /// <param name="targetStorageAccountId"> Fully qualified ARM ID of the target storage account. </param>
+        /// <param name="objectType">
+        /// Gets the class type.
+        /// Serialized Name: IdentityBasedRestoreDetails.objectType
+        /// </param>
+        /// <param name="targetStorageAccountId">
+        /// Fully qualified ARM ID of the target storage account.
+        /// Serialized Name: IdentityBasedRestoreDetails.targetStorageAccountId
+        /// </param>
         internal IdentityBasedRestoreDetails(string objectType, string targetStorageAccountId)
         {
             ObjectType = objectType;
             TargetStorageAccountId = targetStorageAccountId;
         }
 
-        /// <summary> Gets the class type. </summary>
+        /// <summary>
+        /// Gets the class type.
+        /// Serialized Name: IdentityBasedRestoreDetails.objectType
+        /// </summary>
         public string ObjectType { get; set; }
-        /// <summary> Fully qualified ARM ID of the target storage account. </summary>
+        /// <summary>
+        /// Fully qualified ARM ID of the target storage account.
+        /// Serialized Name: IdentityBasedRestoreDetails.targetStorageAccountId
+        /// </summary>
         public string TargetStorageAccountId { get; set; }
     }
 }

@@ -16,6 +16,23 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug: 
+  show-serialized-names: true
+
+rename-mapping:
+  Job: BackupJobProperties
+  JobResource: BackupJob
+  BackupEngineBase: BackupEngineProperties
+  BackupEngineBaseResource: BackupEngine
+  BackupResourceConfig: BackupResourceConfigProperties
+  BackupResourceConfigResource: BackupResourceConfig
+  BackupResourceEncryptionConfigExtended: BackupResourceEncryptionConfigExtendedProperties
+  BackupResourceEncryptionConfigExtendedResource: BackupResourceEncryptionConfigExtended
+  BackupResourceVaultConfig: BackupResourceVaultConfigProperties
+  BackupResourceVaultConfigResource: BackupResourceVaultConfig
+  PrivateEndpointConnection: BackupPrivateEndpointConnectionProperties
+  PrivateEndpointConnectionResource: BackupPrivateEndpointConnection
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

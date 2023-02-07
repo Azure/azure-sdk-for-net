@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Retention duration type of retention policy. </summary>
+    /// <summary>
+    /// Retention duration type of retention policy.
+    /// Serialized Name: RetentionDurationType
+    /// </summary>
     public readonly partial struct RetentionDurationType : IEquatable<RetentionDurationType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string MonthsValue = "Months";
         private const string YearsValue = "Years";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: RetentionDurationType.Invalid
+        /// </summary>
         public static RetentionDurationType Invalid { get; } = new RetentionDurationType(InvalidValue);
-        /// <summary> Days. </summary>
+        /// <summary>
+        /// Days
+        /// Serialized Name: RetentionDurationType.Days
+        /// </summary>
         public static RetentionDurationType Days { get; } = new RetentionDurationType(DaysValue);
-        /// <summary> Weeks. </summary>
+        /// <summary>
+        /// Weeks
+        /// Serialized Name: RetentionDurationType.Weeks
+        /// </summary>
         public static RetentionDurationType Weeks { get; } = new RetentionDurationType(WeeksValue);
-        /// <summary> Months. </summary>
+        /// <summary>
+        /// Months
+        /// Serialized Name: RetentionDurationType.Months
+        /// </summary>
         public static RetentionDurationType Months { get; } = new RetentionDurationType(MonthsValue);
-        /// <summary> Years. </summary>
+        /// <summary>
+        /// Years
+        /// Serialized Name: RetentionDurationType.Years
+        /// </summary>
         public static RetentionDurationType Years { get; } = new RetentionDurationType(YearsValue);
         /// <summary> Determines if two <see cref="RetentionDurationType"/> values are the same. </summary>
         public static bool operator ==(RetentionDurationType left, RetentionDurationType right) => left.Equals(right);

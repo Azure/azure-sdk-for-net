@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Operation status. </summary>
+    /// <summary>
+    /// Operation status.
+    /// Serialized Name: OperationStatus
+    /// </summary>
     public partial class OperationStatus
     {
         /// <summary> Initializes a new instance of OperationStatus. </summary>
@@ -18,14 +21,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationStatus. </summary>
-        /// <param name="id"> ID of the operation. </param>
-        /// <param name="name"> Name of the operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="startOn"> Operation start time. Format: ISO-8601. </param>
-        /// <param name="endOn"> Operation end time. Format: ISO-8601. </param>
-        /// <param name="error"> Error information related to this operation. </param>
+        /// <param name="id">
+        /// ID of the operation.
+        /// Serialized Name: OperationStatus.id
+        /// </param>
+        /// <param name="name">
+        /// Name of the operation.
+        /// Serialized Name: OperationStatus.name
+        /// </param>
+        /// <param name="status">
+        /// Operation status.
+        /// Serialized Name: OperationStatus.status
+        /// </param>
+        /// <param name="startOn">
+        /// Operation start time. Format: ISO-8601.
+        /// Serialized Name: OperationStatus.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// Operation end time. Format: ISO-8601.
+        /// Serialized Name: OperationStatus.endTime
+        /// </param>
+        /// <param name="error">
+        /// Error information related to this operation.
+        /// Serialized Name: OperationStatus.error
+        /// </param>
         /// <param name="properties">
         /// Additional information associated with this operation.
+        /// Serialized Name: OperationStatus.properties
         /// Please note <see cref="OperationStatusExtendedInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OperationStatusJobExtendedInfo"/>, <see cref="OperationStatusJobsExtendedInfo"/>, <see cref="OperationStatusProvisionILRExtendedInfo"/> and <see cref="OperationStatusValidateOperationExtendedInfo"/>.
         /// </param>
@@ -40,20 +62,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Properties = properties;
         }
 
-        /// <summary> ID of the operation. </summary>
+        /// <summary>
+        /// ID of the operation.
+        /// Serialized Name: OperationStatus.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Name of the operation. </summary>
+        /// <summary>
+        /// Name of the operation.
+        /// Serialized Name: OperationStatus.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Operation status. </summary>
+        /// <summary>
+        /// Operation status.
+        /// Serialized Name: OperationStatus.status
+        /// </summary>
         public OperationStatusValue? Status { get; }
-        /// <summary> Operation start time. Format: ISO-8601. </summary>
+        /// <summary>
+        /// Operation start time. Format: ISO-8601.
+        /// Serialized Name: OperationStatus.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> Operation end time. Format: ISO-8601. </summary>
+        /// <summary>
+        /// Operation end time. Format: ISO-8601.
+        /// Serialized Name: OperationStatus.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Error information related to this operation. </summary>
+        /// <summary>
+        /// Error information related to this operation.
+        /// Serialized Name: OperationStatus.error
+        /// </summary>
         public OperationStatusError Error { get; }
         /// <summary>
         /// Additional information associated with this operation.
+        /// Serialized Name: OperationStatus.properties
         /// Please note <see cref="OperationStatusExtendedInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OperationStatusJobExtendedInfo"/>, <see cref="OperationStatusJobsExtendedInfo"/>, <see cref="OperationStatusProvisionILRExtendedInfo"/> and <see cref="OperationStatusValidateOperationExtendedInfo"/>.
         /// </summary>

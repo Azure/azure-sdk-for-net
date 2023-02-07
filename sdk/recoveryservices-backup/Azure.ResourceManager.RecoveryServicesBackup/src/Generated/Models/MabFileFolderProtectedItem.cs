@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> MAB workload-specific backup item. </summary>
+    /// <summary>
+    /// MAB workload-specific backup item.
+    /// Serialized Name: MabFileFolderProtectedItem
+    /// </summary>
     public partial class MabFileFolderProtectedItem : ProtectedItem
     {
         /// <summary> Initializes a new instance of MabFileFolderProtectedItem. </summary>
@@ -20,31 +23,106 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of MabFileFolderProtectedItem. </summary>
-        /// <param name="protectedItemType"> backup item type. </param>
-        /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
-        /// <param name="workloadType"> Type of workload this item represents. </param>
-        /// <param name="containerName"> Unique name of container. </param>
-        /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
-        /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="lastRecoveryPoint"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
-        /// <param name="backupSetName"> Name of the backup set the backup item belongs to. </param>
-        /// <param name="createMode"> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </param>
-        /// <param name="deferredDeleteTimeInUTC"> Time for deferred deletion in UTC. </param>
-        /// <param name="isScheduledForDeferredDelete"> Flag to identify whether the DS is scheduled for deferred delete. </param>
-        /// <param name="deferredDeleteTimeRemaining"> Time remaining before the DS marked for deferred delete is permanently deleted. </param>
-        /// <param name="isDeferredDeleteScheduleUpcoming"> Flag to identify whether the deferred deleted DS is to be purged soon. </param>
-        /// <param name="isRehydrate"> Flag to identify that deferred deleted DS is to be moved into Pause state. </param>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
-        /// <param name="policyName"> Name of the policy used for protection. </param>
-        /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
-        /// <param name="friendlyName"> Friendly name of this backup item. </param>
-        /// <param name="computerName"> Name of the computer associated with this backup item. </param>
-        /// <param name="lastBackupStatus"> Status of last backup operation. </param>
-        /// <param name="lastBackupOn"> Timestamp of the last backup operation on this backup item. </param>
-        /// <param name="protectionState"> Protected, ProtectionStopped, IRPending or ProtectionError. </param>
-        /// <param name="deferredDeleteSyncTimeInUTC"> Sync time for deferred deletion in UTC. </param>
-        /// <param name="extendedInfo"> Additional information with this backup item. </param>
+        /// <param name="protectedItemType">
+        /// backup item type.
+        /// Serialized Name: ProtectedItem.protectedItemType
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the backed up item.
+        /// Serialized Name: ProtectedItem.backupManagementType
+        /// </param>
+        /// <param name="workloadType">
+        /// Type of workload this item represents.
+        /// Serialized Name: ProtectedItem.workloadType
+        /// </param>
+        /// <param name="containerName">
+        /// Unique name of container
+        /// Serialized Name: ProtectedItem.containerName
+        /// </param>
+        /// <param name="sourceResourceId">
+        /// ARM ID of the resource to be backed up.
+        /// Serialized Name: ProtectedItem.sourceResourceId
+        /// </param>
+        /// <param name="policyId">
+        /// ID of the backup policy with which this item is backed up.
+        /// Serialized Name: ProtectedItem.policyId
+        /// </param>
+        /// <param name="lastRecoveryPoint">
+        /// Timestamp when the last (latest) backup copy was created for this backup item.
+        /// Serialized Name: ProtectedItem.lastRecoveryPoint
+        /// </param>
+        /// <param name="backupSetName">
+        /// Name of the backup set the backup item belongs to
+        /// Serialized Name: ProtectedItem.backupSetName
+        /// </param>
+        /// <param name="createMode">
+        /// Create mode to indicate recovery of existing soft deleted data source or creation of new data source.
+        /// Serialized Name: ProtectedItem.createMode
+        /// </param>
+        /// <param name="deferredDeleteTimeInUTC">
+        /// Time for deferred deletion in UTC
+        /// Serialized Name: ProtectedItem.deferredDeleteTimeInUTC
+        /// </param>
+        /// <param name="isScheduledForDeferredDelete">
+        /// Flag to identify whether the DS is scheduled for deferred delete
+        /// Serialized Name: ProtectedItem.isScheduledForDeferredDelete
+        /// </param>
+        /// <param name="deferredDeleteTimeRemaining">
+        /// Time remaining before the DS marked for deferred delete is permanently deleted
+        /// Serialized Name: ProtectedItem.deferredDeleteTimeRemaining
+        /// </param>
+        /// <param name="isDeferredDeleteScheduleUpcoming">
+        /// Flag to identify whether the deferred deleted DS is to be purged soon
+        /// Serialized Name: ProtectedItem.isDeferredDeleteScheduleUpcoming
+        /// </param>
+        /// <param name="isRehydrate">
+        /// Flag to identify that deferred deleted DS is to be moved into Pause state
+        /// Serialized Name: ProtectedItem.isRehydrate
+        /// </param>
+        /// <param name="resourceGuardOperationRequests">
+        /// ResourceGuardOperationRequests on which LAC check will be performed
+        /// Serialized Name: ProtectedItem.resourceGuardOperationRequests
+        /// </param>
+        /// <param name="isArchiveEnabled">
+        /// Flag to identify whether datasource is protected in archive
+        /// Serialized Name: ProtectedItem.isArchiveEnabled
+        /// </param>
+        /// <param name="policyName">
+        /// Name of the policy used for protection
+        /// Serialized Name: ProtectedItem.policyName
+        /// </param>
+        /// <param name="softDeleteRetentionPeriod">
+        /// Soft delete retention period in days
+        /// Serialized Name: ProtectedItem.softDeleteRetentionPeriod
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of this backup item.
+        /// Serialized Name: MabFileFolderProtectedItem.friendlyName
+        /// </param>
+        /// <param name="computerName">
+        /// Name of the computer associated with this backup item.
+        /// Serialized Name: MabFileFolderProtectedItem.computerName
+        /// </param>
+        /// <param name="lastBackupStatus">
+        /// Status of last backup operation.
+        /// Serialized Name: MabFileFolderProtectedItem.lastBackupStatus
+        /// </param>
+        /// <param name="lastBackupOn">
+        /// Timestamp of the last backup operation on this backup item.
+        /// Serialized Name: MabFileFolderProtectedItem.lastBackupTime
+        /// </param>
+        /// <param name="protectionState">
+        /// Protected, ProtectionStopped, IRPending or ProtectionError
+        /// Serialized Name: MabFileFolderProtectedItem.protectionState
+        /// </param>
+        /// <param name="deferredDeleteSyncTimeInUTC">
+        /// Sync time for deferred deletion in UTC
+        /// Serialized Name: MabFileFolderProtectedItem.deferredDeleteSyncTimeInUTC
+        /// </param>
+        /// <param name="extendedInfo">
+        /// Additional information with this backup item.
+        /// Serialized Name: MabFileFolderProtectedItem.extendedInfo
+        /// </param>
         internal MabFileFolderProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, DataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, CreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string computerName, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectionState, long? deferredDeleteSyncTimeInUTC, MabFileFolderProtectedItemExtendedInfo extendedInfo) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             FriendlyName = friendlyName;
@@ -57,19 +135,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemType = protectedItemType ?? "MabFileFolderProtectedItem";
         }
 
-        /// <summary> Friendly name of this backup item. </summary>
+        /// <summary>
+        /// Friendly name of this backup item.
+        /// Serialized Name: MabFileFolderProtectedItem.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> Name of the computer associated with this backup item. </summary>
+        /// <summary>
+        /// Name of the computer associated with this backup item.
+        /// Serialized Name: MabFileFolderProtectedItem.computerName
+        /// </summary>
         public string ComputerName { get; set; }
-        /// <summary> Status of last backup operation. </summary>
+        /// <summary>
+        /// Status of last backup operation.
+        /// Serialized Name: MabFileFolderProtectedItem.lastBackupStatus
+        /// </summary>
         public string LastBackupStatus { get; set; }
-        /// <summary> Timestamp of the last backup operation on this backup item. </summary>
+        /// <summary>
+        /// Timestamp of the last backup operation on this backup item.
+        /// Serialized Name: MabFileFolderProtectedItem.lastBackupTime
+        /// </summary>
         public DateTimeOffset? LastBackupOn { get; set; }
-        /// <summary> Protected, ProtectionStopped, IRPending or ProtectionError. </summary>
+        /// <summary>
+        /// Protected, ProtectionStopped, IRPending or ProtectionError
+        /// Serialized Name: MabFileFolderProtectedItem.protectionState
+        /// </summary>
         public string ProtectionState { get; set; }
-        /// <summary> Sync time for deferred deletion in UTC. </summary>
+        /// <summary>
+        /// Sync time for deferred deletion in UTC
+        /// Serialized Name: MabFileFolderProtectedItem.deferredDeleteSyncTimeInUTC
+        /// </summary>
         public long? DeferredDeleteSyncTimeInUTC { get; set; }
-        /// <summary> Additional information with this backup item. </summary>
+        /// <summary>
+        /// Additional information with this backup item.
+        /// Serialized Name: MabFileFolderProtectedItem.extendedInfo
+        /// </summary>
         public MabFileFolderProtectedItemExtendedInfo ExtendedInfo { get; set; }
     }
 }

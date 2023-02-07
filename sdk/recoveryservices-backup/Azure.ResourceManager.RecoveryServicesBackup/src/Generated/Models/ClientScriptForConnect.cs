@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Client script details for file / folder restore. </summary>
+    /// <summary>
+    /// Client script details for file / folder restore.
+    /// Serialized Name: ClientScriptForConnect
+    /// </summary>
     public partial class ClientScriptForConnect
     {
         /// <summary> Initializes a new instance of ClientScriptForConnect. </summary>
@@ -18,13 +21,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ClientScriptForConnect. </summary>
-        /// <param name="scriptContent"> File content of the client script for file / folder restore. </param>
-        /// <param name="scriptExtension"> File extension of the client script for file / folder restore - .ps1 , .sh , etc. </param>
-        /// <param name="osType"> OS type - Windows, Linux etc. for which this file / folder restore client script works. </param>
-        /// <param name="uri"> URL of Executable from where to source the content. If this is not null then ScriptContent should not be used. </param>
+        /// <param name="scriptContent">
+        /// File content of the client script for file / folder restore.
+        /// Serialized Name: ClientScriptForConnect.scriptContent
+        /// </param>
+        /// <param name="scriptExtension">
+        /// File extension of the client script for file / folder restore - .ps1 , .sh , etc.
+        /// Serialized Name: ClientScriptForConnect.scriptExtension
+        /// </param>
+        /// <param name="osType">
+        /// OS type - Windows, Linux etc. for which this file / folder restore client script works.
+        /// Serialized Name: ClientScriptForConnect.osType
+        /// </param>
+        /// <param name="uri">
+        /// URL of Executable from where to source the content. If this is not null then ScriptContent should not be used
+        /// Serialized Name: ClientScriptForConnect.url
+        /// </param>
         /// <param name="scriptNameSuffix">
         /// Mandatory suffix that should be added to the name of script that is given for download to user.
         /// If its null or empty then , ignore it.
+        /// Serialized Name: ClientScriptForConnect.scriptNameSuffix
         /// </param>
         internal ClientScriptForConnect(string scriptContent, string scriptExtension, string osType, Uri uri, string scriptNameSuffix)
         {
@@ -35,17 +51,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ScriptNameSuffix = scriptNameSuffix;
         }
 
-        /// <summary> File content of the client script for file / folder restore. </summary>
+        /// <summary>
+        /// File content of the client script for file / folder restore.
+        /// Serialized Name: ClientScriptForConnect.scriptContent
+        /// </summary>
         public string ScriptContent { get; }
-        /// <summary> File extension of the client script for file / folder restore - .ps1 , .sh , etc. </summary>
+        /// <summary>
+        /// File extension of the client script for file / folder restore - .ps1 , .sh , etc.
+        /// Serialized Name: ClientScriptForConnect.scriptExtension
+        /// </summary>
         public string ScriptExtension { get; }
-        /// <summary> OS type - Windows, Linux etc. for which this file / folder restore client script works. </summary>
+        /// <summary>
+        /// OS type - Windows, Linux etc. for which this file / folder restore client script works.
+        /// Serialized Name: ClientScriptForConnect.osType
+        /// </summary>
         public string OSType { get; }
-        /// <summary> URL of Executable from where to source the content. If this is not null then ScriptContent should not be used. </summary>
+        /// <summary>
+        /// URL of Executable from where to source the content. If this is not null then ScriptContent should not be used
+        /// Serialized Name: ClientScriptForConnect.url
+        /// </summary>
         public Uri Uri { get; }
         /// <summary>
         /// Mandatory suffix that should be added to the name of script that is given for download to user.
         /// If its null or empty then , ignore it.
+        /// Serialized Name: ClientScriptForConnect.scriptNameSuffix
         /// </summary>
         public string ScriptNameSuffix { get; }
     }

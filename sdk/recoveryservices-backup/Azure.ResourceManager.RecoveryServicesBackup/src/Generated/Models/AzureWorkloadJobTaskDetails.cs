@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure VM workload specific job task details. </summary>
+    /// <summary>
+    /// Azure VM workload specific job task details.
+    /// Serialized Name: AzureWorkloadJobTaskDetails
+    /// </summary>
     public partial class AzureWorkloadJobTaskDetails
     {
         /// <summary> Initializes a new instance of AzureWorkloadJobTaskDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadJobTaskDetails. </summary>
-        /// <param name="taskId"> The task display name. </param>
-        /// <param name="status"> The status. </param>
+        /// <param name="taskId">
+        /// The task display name.
+        /// Serialized Name: AzureWorkloadJobTaskDetails.taskId
+        /// </param>
+        /// <param name="status">
+        /// The status.
+        /// Serialized Name: AzureWorkloadJobTaskDetails.status
+        /// </param>
         internal AzureWorkloadJobTaskDetails(string taskId, string status)
         {
             TaskId = taskId;
             Status = status;
         }
 
-        /// <summary> The task display name. </summary>
+        /// <summary>
+        /// The task display name.
+        /// Serialized Name: AzureWorkloadJobTaskDetails.taskId
+        /// </summary>
         public string TaskId { get; set; }
-        /// <summary> The status. </summary>
+        /// <summary>
+        /// The status.
+        /// Serialized Name: AzureWorkloadJobTaskDetails.status
+        /// </summary>
         public string Status { get; set; }
     }
 }

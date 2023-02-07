@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Target details for file / folder restore. </summary>
+    /// <summary>
+    /// Target details for file / folder restore.
+    /// Serialized Name: InstantItemRecoveryTarget
+    /// </summary>
     internal partial class InstantItemRecoveryTarget
     {
         /// <summary> Initializes a new instance of InstantItemRecoveryTarget. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of InstantItemRecoveryTarget. </summary>
-        /// <param name="clientScripts"> List of client scripts. </param>
+        /// <param name="clientScripts">
+        /// List of client scripts.
+        /// Serialized Name: InstantItemRecoveryTarget.clientScripts
+        /// </param>
         internal InstantItemRecoveryTarget(IReadOnlyList<ClientScriptForConnect> clientScripts)
         {
             ClientScripts = clientScripts;
         }
 
-        /// <summary> List of client scripts. </summary>
+        /// <summary>
+        /// List of client scripts.
+        /// Serialized Name: InstantItemRecoveryTarget.clientScripts
+        /// </summary>
         public IReadOnlyList<ClientScriptForConnect> ClientScripts { get; }
     }
 }

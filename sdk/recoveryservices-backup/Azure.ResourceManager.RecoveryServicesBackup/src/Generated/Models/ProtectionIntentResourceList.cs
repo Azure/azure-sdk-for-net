@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> List of ProtectionIntent resources. </summary>
+    /// <summary>
+    /// List of ProtectionIntent resources
+    /// Serialized Name: ProtectionIntentResourceList
+    /// </summary>
     internal partial class ProtectionIntentResourceList
     {
         /// <summary> Initializes a new instance of ProtectionIntentResourceList. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ProtectionIntentResourceList. </summary>
-        /// <param name="value"> List of resources. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
+        /// <param name="value">
+        /// List of resources.
+        /// Serialized Name: ProtectionIntentResourceList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: ProtectionIntentResourceList.nextLink
+        /// </param>
         internal ProtectionIntentResourceList(IReadOnlyList<ProtectionIntentResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of resources. </summary>
+        /// <summary>
+        /// List of resources.
+        /// Serialized Name: ProtectionIntentResourceList.value
+        /// </summary>
         public IReadOnlyList<ProtectionIntentResourceData> Value { get; }
-        /// <summary> The uri to fetch the next page of resources. </summary>
+        /// <summary>
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: ProtectionIntentResourceList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

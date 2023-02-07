@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Backup state of the backed up item. </summary>
+    /// <summary>
+    /// Backup state of the backed up item.
+    /// Serialized Name: ProtectedItemState
+    /// </summary>
     public readonly partial struct ProtectedItemState : IEquatable<ProtectedItemState>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ProtectionPausedValue = "ProtectionPaused";
         private const string BackupsSuspendedValue = "BackupsSuspended";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: ProtectedItemState.Invalid
+        /// </summary>
         public static ProtectedItemState Invalid { get; } = new ProtectedItemState(InvalidValue);
-        /// <summary> IRPending. </summary>
+        /// <summary>
+        /// IRPending
+        /// Serialized Name: ProtectedItemState.IRPending
+        /// </summary>
         public static ProtectedItemState IRPending { get; } = new ProtectedItemState(IRPendingValue);
-        /// <summary> Protected. </summary>
+        /// <summary>
+        /// Protected
+        /// Serialized Name: ProtectedItemState.Protected
+        /// </summary>
         public static ProtectedItemState Protected { get; } = new ProtectedItemState(ProtectedValue);
-        /// <summary> ProtectionError. </summary>
+        /// <summary>
+        /// ProtectionError
+        /// Serialized Name: ProtectedItemState.ProtectionError
+        /// </summary>
         public static ProtectedItemState ProtectionError { get; } = new ProtectedItemState(ProtectionErrorValue);
-        /// <summary> ProtectionStopped. </summary>
+        /// <summary>
+        /// ProtectionStopped
+        /// Serialized Name: ProtectedItemState.ProtectionStopped
+        /// </summary>
         public static ProtectedItemState ProtectionStopped { get; } = new ProtectedItemState(ProtectionStoppedValue);
-        /// <summary> ProtectionPaused. </summary>
+        /// <summary>
+        /// ProtectionPaused
+        /// Serialized Name: ProtectedItemState.ProtectionPaused
+        /// </summary>
         public static ProtectedItemState ProtectionPaused { get; } = new ProtectedItemState(ProtectionPausedValue);
-        /// <summary> BackupsSuspended. </summary>
+        /// <summary>
+        /// BackupsSuspended
+        /// Serialized Name: ProtectedItemState.BackupsSuspended
+        /// </summary>
         public static ProtectedItemState BackupsSuspended { get; } = new ProtectedItemState(BackupsSuspendedValue);
         /// <summary> Determines if two <see cref="ProtectedItemState"/> values are the same. </summary>
         public static bool operator ==(ProtectedItemState left, ProtectedItemState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The ResourceGuardProxyBase. </summary>
+    /// <summary>
+    /// The ResourceGuardProxyBase.
+    /// Serialized Name: ResourceGuardProxyBase
+    /// </summary>
     public partial class ResourceGuardProxyBase
     {
         /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
@@ -20,10 +23,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
-        /// <param name="resourceGuardResourceId"></param>
-        /// <param name="resourceGuardOperationDetails"></param>
-        /// <param name="lastUpdatedTime"></param>
-        /// <param name="description"></param>
+        /// <param name="resourceGuardResourceId"> Serialized Name: ResourceGuardProxyBase.resourceGuardResourceId. </param>
+        /// <param name="resourceGuardOperationDetails"> Serialized Name: ResourceGuardProxyBase.resourceGuardOperationDetails. </param>
+        /// <param name="lastUpdatedTime"> Serialized Name: ResourceGuardProxyBase.lastUpdatedTime. </param>
+        /// <param name="description"> Serialized Name: ResourceGuardProxyBase.description. </param>
         internal ResourceGuardProxyBase(string resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, string lastUpdatedTime, string description)
         {
             ResourceGuardResourceId = resourceGuardResourceId;
@@ -32,13 +35,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Description = description;
         }
 
-        /// <summary> Gets or sets the resource guard resource id. </summary>
+        /// <summary> Serialized Name: ResourceGuardProxyBase.resourceGuardResourceId. </summary>
         public string ResourceGuardResourceId { get; set; }
-        /// <summary> Gets the resource guard operation details. </summary>
+        /// <summary> Serialized Name: ResourceGuardProxyBase.resourceGuardOperationDetails. </summary>
         public IList<ResourceGuardOperationDetail> ResourceGuardOperationDetails { get; }
-        /// <summary> Gets or sets the last updated time. </summary>
+        /// <summary> Serialized Name: ResourceGuardProxyBase.lastUpdatedTime. </summary>
         public string LastUpdatedTime { get; set; }
-        /// <summary> Gets or sets the description. </summary>
+        /// <summary> Serialized Name: ResourceGuardProxyBase.description. </summary>
         public string Description { get; set; }
     }
 }

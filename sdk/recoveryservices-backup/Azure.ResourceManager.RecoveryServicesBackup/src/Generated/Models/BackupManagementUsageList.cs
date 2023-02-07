@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Backup management usage for vault. </summary>
+    /// <summary>
+    /// Backup management usage for vault.
+    /// Serialized Name: BackupManagementUsageList
+    /// </summary>
     internal partial class BackupManagementUsageList
     {
         /// <summary> Initializes a new instance of BackupManagementUsageList. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupManagementUsageList. </summary>
-        /// <param name="value"> The list of backup management usages for the given vault. </param>
+        /// <param name="value">
+        /// The list of backup management usages for the given vault.
+        /// Serialized Name: BackupManagementUsageList.value
+        /// </param>
         internal BackupManagementUsageList(IReadOnlyList<BackupManagementUsage> value)
         {
             Value = value;
         }
 
-        /// <summary> The list of backup management usages for the given vault. </summary>
+        /// <summary>
+        /// The list of backup management usages for the given vault.
+        /// Serialized Name: BackupManagementUsageList.value
+        /// </summary>
         public IReadOnlyList<BackupManagementUsage> Value { get; }
     }
 }

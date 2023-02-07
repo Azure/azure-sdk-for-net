@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Type of this recovery. </summary>
+    /// <summary>
+    /// Type of this recovery.
+    /// Serialized Name: RecoveryType
+    /// </summary>
     public readonly partial struct RecoveryType : IEquatable<RecoveryType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string RestoreDisksValue = "RestoreDisks";
         private const string OfflineValue = "Offline";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: RecoveryType.Invalid
+        /// </summary>
         public static RecoveryType Invalid { get; } = new RecoveryType(InvalidValue);
-        /// <summary> OriginalLocation. </summary>
+        /// <summary>
+        /// OriginalLocation
+        /// Serialized Name: RecoveryType.OriginalLocation
+        /// </summary>
         public static RecoveryType OriginalLocation { get; } = new RecoveryType(OriginalLocationValue);
-        /// <summary> AlternateLocation. </summary>
+        /// <summary>
+        /// AlternateLocation
+        /// Serialized Name: RecoveryType.AlternateLocation
+        /// </summary>
         public static RecoveryType AlternateLocation { get; } = new RecoveryType(AlternateLocationValue);
-        /// <summary> RestoreDisks. </summary>
+        /// <summary>
+        /// RestoreDisks
+        /// Serialized Name: RecoveryType.RestoreDisks
+        /// </summary>
         public static RecoveryType RestoreDisks { get; } = new RecoveryType(RestoreDisksValue);
-        /// <summary> Offline. </summary>
+        /// <summary>
+        /// Offline
+        /// Serialized Name: RecoveryType.Offline
+        /// </summary>
         public static RecoveryType Offline { get; } = new RecoveryType(OfflineValue);
         /// <summary> Determines if two <see cref="RecoveryType"/> values are the same. </summary>
         public static bool operator ==(RecoveryType left, RecoveryType right) => left.Equals(right);

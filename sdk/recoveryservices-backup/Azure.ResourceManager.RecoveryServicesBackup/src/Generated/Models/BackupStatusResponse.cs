@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> BackupStatus response. </summary>
+    /// <summary>
+    /// BackupStatus response.
+    /// Serialized Name: BackupStatusResponse
+    /// </summary>
     public partial class BackupStatusResponse
     {
         /// <summary> Initializes a new instance of BackupStatusResponse. </summary>
@@ -16,15 +19,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupStatusResponse. </summary>
-        /// <param name="protectionStatus"> Specifies whether the container is registered or not. </param>
-        /// <param name="vaultId"> Specifies the arm resource id of the vault. </param>
-        /// <param name="fabricName"> Specifies the fabric name - Azure or AD. </param>
-        /// <param name="containerName"> Specifies the product specific container name. E.g. iaasvmcontainer;iaasvmcontainer;csname;vmname. </param>
-        /// <param name="protectedItemName"> Specifies the product specific ds name. E.g. vm;iaasvmcontainer;csname;vmname. </param>
-        /// <param name="errorCode"> ErrorCode in case of intent failed. </param>
-        /// <param name="errorMessage"> ErrorMessage in case of intent failed. </param>
-        /// <param name="policyName"> Specifies the policy name which is used for protection. </param>
-        /// <param name="registrationStatus"> Container registration status. </param>
+        /// <param name="protectionStatus">
+        /// Specifies whether the container is registered or not
+        /// Serialized Name: BackupStatusResponse.protectionStatus
+        /// </param>
+        /// <param name="vaultId">
+        /// Specifies the arm resource id of the vault
+        /// Serialized Name: BackupStatusResponse.vaultId
+        /// </param>
+        /// <param name="fabricName">
+        /// Specifies the fabric name - Azure or AD
+        /// Serialized Name: BackupStatusResponse.fabricName
+        /// </param>
+        /// <param name="containerName">
+        /// Specifies the product specific container name. E.g. iaasvmcontainer;iaasvmcontainer;csname;vmname.
+        /// Serialized Name: BackupStatusResponse.containerName
+        /// </param>
+        /// <param name="protectedItemName">
+        /// Specifies the product specific ds name. E.g. vm;iaasvmcontainer;csname;vmname.
+        /// Serialized Name: BackupStatusResponse.protectedItemName
+        /// </param>
+        /// <param name="errorCode">
+        /// ErrorCode in case of intent failed
+        /// Serialized Name: BackupStatusResponse.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// ErrorMessage in case of intent failed.
+        /// Serialized Name: BackupStatusResponse.errorMessage
+        /// </param>
+        /// <param name="policyName">
+        /// Specifies the policy name which is used for protection
+        /// Serialized Name: BackupStatusResponse.policyName
+        /// </param>
+        /// <param name="registrationStatus">
+        /// Container registration status
+        /// Serialized Name: BackupStatusResponse.registrationStatus
+        /// </param>
         internal BackupStatusResponse(ProtectionStatus? protectionStatus, string vaultId, FabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus)
         {
             ProtectionStatus = protectionStatus;
@@ -38,23 +68,50 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RegistrationStatus = registrationStatus;
         }
 
-        /// <summary> Specifies whether the container is registered or not. </summary>
+        /// <summary>
+        /// Specifies whether the container is registered or not
+        /// Serialized Name: BackupStatusResponse.protectionStatus
+        /// </summary>
         public ProtectionStatus? ProtectionStatus { get; }
-        /// <summary> Specifies the arm resource id of the vault. </summary>
+        /// <summary>
+        /// Specifies the arm resource id of the vault
+        /// Serialized Name: BackupStatusResponse.vaultId
+        /// </summary>
         public string VaultId { get; }
-        /// <summary> Specifies the fabric name - Azure or AD. </summary>
+        /// <summary>
+        /// Specifies the fabric name - Azure or AD
+        /// Serialized Name: BackupStatusResponse.fabricName
+        /// </summary>
         public FabricName? FabricName { get; }
-        /// <summary> Specifies the product specific container name. E.g. iaasvmcontainer;iaasvmcontainer;csname;vmname. </summary>
+        /// <summary>
+        /// Specifies the product specific container name. E.g. iaasvmcontainer;iaasvmcontainer;csname;vmname.
+        /// Serialized Name: BackupStatusResponse.containerName
+        /// </summary>
         public string ContainerName { get; }
-        /// <summary> Specifies the product specific ds name. E.g. vm;iaasvmcontainer;csname;vmname. </summary>
+        /// <summary>
+        /// Specifies the product specific ds name. E.g. vm;iaasvmcontainer;csname;vmname.
+        /// Serialized Name: BackupStatusResponse.protectedItemName
+        /// </summary>
         public string ProtectedItemName { get; }
-        /// <summary> ErrorCode in case of intent failed. </summary>
+        /// <summary>
+        /// ErrorCode in case of intent failed
+        /// Serialized Name: BackupStatusResponse.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> ErrorMessage in case of intent failed. </summary>
+        /// <summary>
+        /// ErrorMessage in case of intent failed.
+        /// Serialized Name: BackupStatusResponse.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> Specifies the policy name which is used for protection. </summary>
+        /// <summary>
+        /// Specifies the policy name which is used for protection
+        /// Serialized Name: BackupStatusResponse.policyName
+        /// </summary>
         public string PolicyName { get; }
-        /// <summary> Container registration status. </summary>
+        /// <summary>
+        /// Container registration status
+        /// Serialized Name: BackupStatusResponse.registrationStatus
+        /// </summary>
         public string RegistrationStatus { get; }
     }
 }

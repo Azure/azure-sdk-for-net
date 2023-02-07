@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The InfrastructureEncryptionState. </summary>
+    /// <summary>
+    /// The InfrastructureEncryptionState.
+    /// Serialized Name: InfrastructureEncryptionState
+    /// </summary>
     public readonly partial struct InfrastructureEncryptionState : IEquatable<InfrastructureEncryptionState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: InfrastructureEncryptionState.Invalid
+        /// </summary>
         public static InfrastructureEncryptionState Invalid { get; } = new InfrastructureEncryptionState(InvalidValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: InfrastructureEncryptionState.Disabled
+        /// </summary>
         public static InfrastructureEncryptionState Disabled { get; } = new InfrastructureEncryptionState(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: InfrastructureEncryptionState.Enabled
+        /// </summary>
         public static InfrastructureEncryptionState Enabled { get; } = new InfrastructureEncryptionState(EnabledValue);
         /// <summary> Determines if two <see cref="InfrastructureEncryptionState"/> values are the same. </summary>
         public static bool operator ==(InfrastructureEncryptionState left, InfrastructureEncryptionState right) => left.Equals(right);

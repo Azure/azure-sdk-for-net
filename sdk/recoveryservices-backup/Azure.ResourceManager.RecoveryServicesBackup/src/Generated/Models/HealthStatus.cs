@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Health status of protected item. </summary>
+    /// <summary>
+    /// Health status of protected item.
+    /// Serialized Name: HealthStatus
+    /// </summary>
     public readonly partial struct HealthStatus : IEquatable<HealthStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ActionSuggestedValue = "ActionSuggested";
         private const string InvalidValue = "Invalid";
 
-        /// <summary> Passed. </summary>
+        /// <summary>
+        /// Passed
+        /// Serialized Name: HealthStatus.Passed
+        /// </summary>
         public static HealthStatus Passed { get; } = new HealthStatus(PassedValue);
-        /// <summary> ActionRequired. </summary>
+        /// <summary>
+        /// ActionRequired
+        /// Serialized Name: HealthStatus.ActionRequired
+        /// </summary>
         public static HealthStatus ActionRequired { get; } = new HealthStatus(ActionRequiredValue);
-        /// <summary> ActionSuggested. </summary>
+        /// <summary>
+        /// ActionSuggested
+        /// Serialized Name: HealthStatus.ActionSuggested
+        /// </summary>
         public static HealthStatus ActionSuggested { get; } = new HealthStatus(ActionSuggestedValue);
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: HealthStatus.Invalid
+        /// </summary>
         public static HealthStatus Invalid { get; } = new HealthStatus(InvalidValue);
         /// <summary> Determines if two <see cref="HealthStatus"/> values are the same. </summary>
         public static bool operator ==(HealthStatus left, HealthStatus right) => left.Equals(right);

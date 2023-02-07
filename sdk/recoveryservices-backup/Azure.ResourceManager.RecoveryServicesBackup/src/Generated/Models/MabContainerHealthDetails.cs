@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> MAB workload-specific Health Details. </summary>
+    /// <summary>
+    /// MAB workload-specific Health Details.
+    /// Serialized Name: MABContainerHealthDetails
+    /// </summary>
     public partial class MabContainerHealthDetails
     {
         /// <summary> Initializes a new instance of MabContainerHealthDetails. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of MabContainerHealthDetails. </summary>
-        /// <param name="code"> Health Code. </param>
-        /// <param name="title"> Health Title. </param>
-        /// <param name="message"> Health Message. </param>
-        /// <param name="recommendations"> Health Recommended Actions. </param>
+        /// <param name="code">
+        /// Health Code
+        /// Serialized Name: MABContainerHealthDetails.code
+        /// </param>
+        /// <param name="title">
+        /// Health Title
+        /// Serialized Name: MABContainerHealthDetails.title
+        /// </param>
+        /// <param name="message">
+        /// Health Message
+        /// Serialized Name: MABContainerHealthDetails.message
+        /// </param>
+        /// <param name="recommendations">
+        /// Health Recommended Actions
+        /// Serialized Name: MABContainerHealthDetails.recommendations
+        /// </param>
         internal MabContainerHealthDetails(int? code, string title, string message, IList<string> recommendations)
         {
             Code = code;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Recommendations = recommendations;
         }
 
-        /// <summary> Health Code. </summary>
+        /// <summary>
+        /// Health Code
+        /// Serialized Name: MABContainerHealthDetails.code
+        /// </summary>
         public int? Code { get; set; }
-        /// <summary> Health Title. </summary>
+        /// <summary>
+        /// Health Title
+        /// Serialized Name: MABContainerHealthDetails.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> Health Message. </summary>
+        /// <summary>
+        /// Health Message
+        /// Serialized Name: MABContainerHealthDetails.message
+        /// </summary>
         public string Message { get; set; }
-        /// <summary> Health Recommended Actions. </summary>
+        /// <summary>
+        /// Health Recommended Actions
+        /// Serialized Name: MABContainerHealthDetails.recommendations
+        /// </summary>
         public IList<string> Recommendations { get; }
     }
 }

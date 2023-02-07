@@ -7,102 +7,246 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> HTTP Status Code of the operation. </summary>
+    /// <summary>
+    /// HTTP Status Code of the operation.
+    /// Serialized Name: HttpStatusCode
+    /// </summary>
     public enum HttpStatusCode
     {
-        /// <summary> Continue. </summary>
+        /// <summary>
+        /// Continue
+        /// Serialized Name: HttpStatusCode.Continue
+        /// </summary>
         Continue,
-        /// <summary> SwitchingProtocols. </summary>
+        /// <summary>
+        /// SwitchingProtocols
+        /// Serialized Name: HttpStatusCode.SwitchingProtocols
+        /// </summary>
         SwitchingProtocols,
-        /// <summary> OK. </summary>
+        /// <summary>
+        /// OK
+        /// Serialized Name: HttpStatusCode.OK
+        /// </summary>
         OK,
-        /// <summary> Created. </summary>
+        /// <summary>
+        /// Created
+        /// Serialized Name: HttpStatusCode.Created
+        /// </summary>
         Created,
-        /// <summary> Accepted. </summary>
+        /// <summary>
+        /// Accepted
+        /// Serialized Name: HttpStatusCode.Accepted
+        /// </summary>
         Accepted,
-        /// <summary> NonAuthoritativeInformation. </summary>
+        /// <summary>
+        /// NonAuthoritativeInformation
+        /// Serialized Name: HttpStatusCode.NonAuthoritativeInformation
+        /// </summary>
         NonAuthoritativeInformation,
-        /// <summary> NoContent. </summary>
+        /// <summary>
+        /// NoContent
+        /// Serialized Name: HttpStatusCode.NoContent
+        /// </summary>
         NoContent,
-        /// <summary> ResetContent. </summary>
+        /// <summary>
+        /// ResetContent
+        /// Serialized Name: HttpStatusCode.ResetContent
+        /// </summary>
         ResetContent,
-        /// <summary> PartialContent. </summary>
+        /// <summary>
+        /// PartialContent
+        /// Serialized Name: HttpStatusCode.PartialContent
+        /// </summary>
         PartialContent,
-        /// <summary> MultipleChoices. </summary>
+        /// <summary>
+        /// MultipleChoices
+        /// Serialized Name: HttpStatusCode.MultipleChoices
+        /// </summary>
         MultipleChoices,
-        /// <summary> Ambiguous. </summary>
+        /// <summary>
+        /// Ambiguous
+        /// Serialized Name: HttpStatusCode.Ambiguous
+        /// </summary>
         Ambiguous,
-        /// <summary> MovedPermanently. </summary>
+        /// <summary>
+        /// MovedPermanently
+        /// Serialized Name: HttpStatusCode.MovedPermanently
+        /// </summary>
         MovedPermanently,
-        /// <summary> Moved. </summary>
+        /// <summary>
+        /// Moved
+        /// Serialized Name: HttpStatusCode.Moved
+        /// </summary>
         Moved,
-        /// <summary> Found. </summary>
+        /// <summary>
+        /// Found
+        /// Serialized Name: HttpStatusCode.Found
+        /// </summary>
         Found,
-        /// <summary> Redirect. </summary>
+        /// <summary>
+        /// Redirect
+        /// Serialized Name: HttpStatusCode.Redirect
+        /// </summary>
         Redirect,
-        /// <summary> SeeOther. </summary>
+        /// <summary>
+        /// SeeOther
+        /// Serialized Name: HttpStatusCode.SeeOther
+        /// </summary>
         SeeOther,
-        /// <summary> RedirectMethod. </summary>
+        /// <summary>
+        /// RedirectMethod
+        /// Serialized Name: HttpStatusCode.RedirectMethod
+        /// </summary>
         RedirectMethod,
-        /// <summary> NotModified. </summary>
+        /// <summary>
+        /// NotModified
+        /// Serialized Name: HttpStatusCode.NotModified
+        /// </summary>
         NotModified,
-        /// <summary> UseProxy. </summary>
+        /// <summary>
+        /// UseProxy
+        /// Serialized Name: HttpStatusCode.UseProxy
+        /// </summary>
         UseProxy,
-        /// <summary> Unused. </summary>
+        /// <summary>
+        /// Unused
+        /// Serialized Name: HttpStatusCode.Unused
+        /// </summary>
         Unused,
-        /// <summary> TemporaryRedirect. </summary>
+        /// <summary>
+        /// TemporaryRedirect
+        /// Serialized Name: HttpStatusCode.TemporaryRedirect
+        /// </summary>
         TemporaryRedirect,
-        /// <summary> RedirectKeepVerb. </summary>
+        /// <summary>
+        /// RedirectKeepVerb
+        /// Serialized Name: HttpStatusCode.RedirectKeepVerb
+        /// </summary>
         RedirectKeepVerb,
-        /// <summary> BadRequest. </summary>
+        /// <summary>
+        /// BadRequest
+        /// Serialized Name: HttpStatusCode.BadRequest
+        /// </summary>
         BadRequest,
-        /// <summary> Unauthorized. </summary>
+        /// <summary>
+        /// Unauthorized
+        /// Serialized Name: HttpStatusCode.Unauthorized
+        /// </summary>
         Unauthorized,
-        /// <summary> PaymentRequired. </summary>
+        /// <summary>
+        /// PaymentRequired
+        /// Serialized Name: HttpStatusCode.PaymentRequired
+        /// </summary>
         PaymentRequired,
-        /// <summary> Forbidden. </summary>
+        /// <summary>
+        /// Forbidden
+        /// Serialized Name: HttpStatusCode.Forbidden
+        /// </summary>
         Forbidden,
-        /// <summary> NotFound. </summary>
+        /// <summary>
+        /// NotFound
+        /// Serialized Name: HttpStatusCode.NotFound
+        /// </summary>
         NotFound,
-        /// <summary> MethodNotAllowed. </summary>
+        /// <summary>
+        /// MethodNotAllowed
+        /// Serialized Name: HttpStatusCode.MethodNotAllowed
+        /// </summary>
         MethodNotAllowed,
-        /// <summary> NotAcceptable. </summary>
+        /// <summary>
+        /// NotAcceptable
+        /// Serialized Name: HttpStatusCode.NotAcceptable
+        /// </summary>
         NotAcceptable,
-        /// <summary> ProxyAuthenticationRequired. </summary>
+        /// <summary>
+        /// ProxyAuthenticationRequired
+        /// Serialized Name: HttpStatusCode.ProxyAuthenticationRequired
+        /// </summary>
         ProxyAuthenticationRequired,
-        /// <summary> RequestTimeout. </summary>
+        /// <summary>
+        /// RequestTimeout
+        /// Serialized Name: HttpStatusCode.RequestTimeout
+        /// </summary>
         RequestTimeout,
-        /// <summary> Conflict. </summary>
+        /// <summary>
+        /// Conflict
+        /// Serialized Name: HttpStatusCode.Conflict
+        /// </summary>
         Conflict,
-        /// <summary> Gone. </summary>
+        /// <summary>
+        /// Gone
+        /// Serialized Name: HttpStatusCode.Gone
+        /// </summary>
         Gone,
-        /// <summary> LengthRequired. </summary>
+        /// <summary>
+        /// LengthRequired
+        /// Serialized Name: HttpStatusCode.LengthRequired
+        /// </summary>
         LengthRequired,
-        /// <summary> PreconditionFailed. </summary>
+        /// <summary>
+        /// PreconditionFailed
+        /// Serialized Name: HttpStatusCode.PreconditionFailed
+        /// </summary>
         PreconditionFailed,
-        /// <summary> RequestEntityTooLarge. </summary>
+        /// <summary>
+        /// RequestEntityTooLarge
+        /// Serialized Name: HttpStatusCode.RequestEntityTooLarge
+        /// </summary>
         RequestEntityTooLarge,
-        /// <summary> RequestUriTooLong. </summary>
+        /// <summary>
+        /// RequestUriTooLong
+        /// Serialized Name: HttpStatusCode.RequestUriTooLong
+        /// </summary>
         RequestUriTooLong,
-        /// <summary> UnsupportedMediaType. </summary>
+        /// <summary>
+        /// UnsupportedMediaType
+        /// Serialized Name: HttpStatusCode.UnsupportedMediaType
+        /// </summary>
         UnsupportedMediaType,
-        /// <summary> RequestedRangeNotSatisfiable. </summary>
+        /// <summary>
+        /// RequestedRangeNotSatisfiable
+        /// Serialized Name: HttpStatusCode.RequestedRangeNotSatisfiable
+        /// </summary>
         RequestedRangeNotSatisfiable,
-        /// <summary> ExpectationFailed. </summary>
+        /// <summary>
+        /// ExpectationFailed
+        /// Serialized Name: HttpStatusCode.ExpectationFailed
+        /// </summary>
         ExpectationFailed,
-        /// <summary> UpgradeRequired. </summary>
+        /// <summary>
+        /// UpgradeRequired
+        /// Serialized Name: HttpStatusCode.UpgradeRequired
+        /// </summary>
         UpgradeRequired,
-        /// <summary> InternalServerError. </summary>
+        /// <summary>
+        /// InternalServerError
+        /// Serialized Name: HttpStatusCode.InternalServerError
+        /// </summary>
         InternalServerError,
-        /// <summary> NotImplemented. </summary>
+        /// <summary>
+        /// NotImplemented
+        /// Serialized Name: HttpStatusCode.NotImplemented
+        /// </summary>
         NotImplemented,
-        /// <summary> BadGateway. </summary>
+        /// <summary>
+        /// BadGateway
+        /// Serialized Name: HttpStatusCode.BadGateway
+        /// </summary>
         BadGateway,
-        /// <summary> ServiceUnavailable. </summary>
+        /// <summary>
+        /// ServiceUnavailable
+        /// Serialized Name: HttpStatusCode.ServiceUnavailable
+        /// </summary>
         ServiceUnavailable,
-        /// <summary> GatewayTimeout. </summary>
+        /// <summary>
+        /// GatewayTimeout
+        /// Serialized Name: HttpStatusCode.GatewayTimeout
+        /// </summary>
         GatewayTimeout,
-        /// <summary> HttpVersionNotSupported. </summary>
+        /// <summary>
+        /// HttpVersionNotSupported
+        /// Serialized Name: HttpStatusCode.HttpVersionNotSupported
+        /// </summary>
         HttpVersionNotSupported
     }
 }

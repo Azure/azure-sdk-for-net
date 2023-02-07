@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Daily retention schedule. </summary>
+    /// <summary>
+    /// Daily retention schedule.
+    /// Serialized Name: DailyRetentionSchedule
+    /// </summary>
     public partial class DailyRetentionSchedule
     {
         /// <summary> Initializes a new instance of DailyRetentionSchedule. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DailyRetentionSchedule. </summary>
-        /// <param name="retentionTimes"> Retention times of retention policy. </param>
-        /// <param name="retentionDuration"> Retention duration of retention Policy. </param>
+        /// <param name="retentionTimes">
+        /// Retention times of retention policy.
+        /// Serialized Name: DailyRetentionSchedule.retentionTimes
+        /// </param>
+        /// <param name="retentionDuration">
+        /// Retention duration of retention Policy.
+        /// Serialized Name: DailyRetentionSchedule.retentionDuration
+        /// </param>
         internal DailyRetentionSchedule(IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
         {
             RetentionTimes = retentionTimes;
             RetentionDuration = retentionDuration;
         }
 
-        /// <summary> Retention times of retention policy. </summary>
+        /// <summary>
+        /// Retention times of retention policy.
+        /// Serialized Name: DailyRetentionSchedule.retentionTimes
+        /// </summary>
         public IList<DateTimeOffset> RetentionTimes { get; }
-        /// <summary> Retention duration of retention Policy. </summary>
+        /// <summary>
+        /// Retention duration of retention Policy.
+        /// Serialized Name: DailyRetentionSchedule.retentionDuration
+        /// </summary>
         public RetentionDuration RetentionDuration { get; set; }
     }
 }

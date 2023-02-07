@@ -11,13 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Prepare DataMove Request. </summary>
+    /// <summary>
+    /// Prepare DataMove Request
+    /// Serialized Name: PrepareDataMoveRequest
+    /// </summary>
     public partial class PrepareDataMoveContent
     {
         /// <summary> Initializes a new instance of PrepareDataMoveContent. </summary>
-        /// <param name="targetResourceId"> ARM Id of target vault. </param>
-        /// <param name="targetRegion"> Target Region. </param>
-        /// <param name="dataMoveLevel"> DataMove Level. </param>
+        /// <param name="targetResourceId">
+        /// ARM Id of target vault
+        /// Serialized Name: PrepareDataMoveRequest.targetResourceId
+        /// </param>
+        /// <param name="targetRegion">
+        /// Target Region
+        /// Serialized Name: PrepareDataMoveRequest.targetRegion
+        /// </param>
+        /// <param name="dataMoveLevel">
+        /// DataMove Level
+        /// Serialized Name: PrepareDataMoveRequest.dataMoveLevel
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="targetRegion"/> is null. </exception>
         public PrepareDataMoveContent(string targetResourceId, string targetRegion, DataMoveLevel dataMoveLevel)
         {
@@ -30,18 +42,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SourceContainerArmIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> ARM Id of target vault. </summary>
+        /// <summary>
+        /// ARM Id of target vault
+        /// Serialized Name: PrepareDataMoveRequest.targetResourceId
+        /// </summary>
         public string TargetResourceId { get; }
-        /// <summary> Target Region. </summary>
+        /// <summary>
+        /// Target Region
+        /// Serialized Name: PrepareDataMoveRequest.targetRegion
+        /// </summary>
         public string TargetRegion { get; }
-        /// <summary> DataMove Level. </summary>
+        /// <summary>
+        /// DataMove Level
+        /// Serialized Name: PrepareDataMoveRequest.dataMoveLevel
+        /// </summary>
         public DataMoveLevel DataMoveLevel { get; }
         /// <summary>
         /// Source Container ArmIds
         /// This needs to be populated only if DataMoveLevel is set to container
+        /// Serialized Name: PrepareDataMoveRequest.sourceContainerArmIds
         /// </summary>
         public IList<string> SourceContainerArmIds { get; }
-        /// <summary> Ignore the artifacts which are already moved. </summary>
+        /// <summary>
+        /// Ignore the artifacts which are already moved.
+        /// Serialized Name: PrepareDataMoveRequest.ignoreMoved
+        /// </summary>
         public bool? IgnoreMoved { get; set; }
     }
 }

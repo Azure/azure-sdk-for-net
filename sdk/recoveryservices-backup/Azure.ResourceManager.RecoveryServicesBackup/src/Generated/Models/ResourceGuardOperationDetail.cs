@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The ResourceGuardOperationDetail. </summary>
+    /// <summary>
+    /// The ResourceGuardOperationDetail.
+    /// Serialized Name: ResourceGuardOperationDetail
+    /// </summary>
     public partial class ResourceGuardOperationDetail
     {
         /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
-        /// <param name="vaultCriticalOperation"></param>
-        /// <param name="defaultResourceRequest"></param>
+        /// <param name="vaultCriticalOperation"> Serialized Name: ResourceGuardOperationDetail.vaultCriticalOperation. </param>
+        /// <param name="defaultResourceRequest"> Serialized Name: ResourceGuardOperationDetail.defaultResourceRequest. </param>
         internal ResourceGuardOperationDetail(string vaultCriticalOperation, string defaultResourceRequest)
         {
             VaultCriticalOperation = vaultCriticalOperation;
             DefaultResourceRequest = defaultResourceRequest;
         }
 
-        /// <summary> Gets or sets the vault critical operation. </summary>
+        /// <summary> Serialized Name: ResourceGuardOperationDetail.vaultCriticalOperation. </summary>
         public string VaultCriticalOperation { get; set; }
-        /// <summary> Gets or sets the default resource request. </summary>
+        /// <summary> Serialized Name: ResourceGuardOperationDetail.defaultResourceRequest. </summary>
         public string DefaultResourceRequest { get; set; }
     }
 }

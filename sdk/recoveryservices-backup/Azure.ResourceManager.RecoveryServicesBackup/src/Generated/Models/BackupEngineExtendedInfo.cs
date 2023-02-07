@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Additional information on backup engine. </summary>
+    /// <summary>
+    /// Additional information on backup engine.
+    /// Serialized Name: BackupEngineExtendedInfo
+    /// </summary>
     public partial class BackupEngineExtendedInfo
     {
         /// <summary> Initializes a new instance of BackupEngineExtendedInfo. </summary>
@@ -18,14 +21,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupEngineExtendedInfo. </summary>
-        /// <param name="databaseName"> Database name of backup engine. </param>
-        /// <param name="protectedItemsCount"> Number of protected items in the backup engine. </param>
-        /// <param name="protectedServersCount"> Number of protected servers in the backup engine. </param>
-        /// <param name="diskCount"> Number of disks in the backup engine. </param>
-        /// <param name="usedDiskSpace"> Disk space used in the backup engine. </param>
-        /// <param name="availableDiskSpace"> Disk space currently available in the backup engine. </param>
-        /// <param name="refreshedOn"> Last refresh time in the backup engine. </param>
-        /// <param name="azureProtectedInstances"> Protected instances in the backup engine. </param>
+        /// <param name="databaseName">
+        /// Database name of backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.databaseName
+        /// </param>
+        /// <param name="protectedItemsCount">
+        /// Number of protected items in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.protectedItemsCount
+        /// </param>
+        /// <param name="protectedServersCount">
+        /// Number of protected servers in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.protectedServersCount
+        /// </param>
+        /// <param name="diskCount">
+        /// Number of disks in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.diskCount
+        /// </param>
+        /// <param name="usedDiskSpace">
+        /// Disk space used in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.usedDiskSpace
+        /// </param>
+        /// <param name="availableDiskSpace">
+        /// Disk space currently available in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.availableDiskSpace
+        /// </param>
+        /// <param name="refreshedOn">
+        /// Last refresh time in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.refreshedAt
+        /// </param>
+        /// <param name="azureProtectedInstances">
+        /// Protected instances in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.azureProtectedInstances
+        /// </param>
         internal BackupEngineExtendedInfo(string databaseName, int? protectedItemsCount, int? protectedServersCount, int? diskCount, double? usedDiskSpace, double? availableDiskSpace, DateTimeOffset? refreshedOn, int? azureProtectedInstances)
         {
             DatabaseName = databaseName;
@@ -38,21 +65,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             AzureProtectedInstances = azureProtectedInstances;
         }
 
-        /// <summary> Database name of backup engine. </summary>
+        /// <summary>
+        /// Database name of backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.databaseName
+        /// </summary>
         public string DatabaseName { get; set; }
-        /// <summary> Number of protected items in the backup engine. </summary>
+        /// <summary>
+        /// Number of protected items in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.protectedItemsCount
+        /// </summary>
         public int? ProtectedItemsCount { get; set; }
-        /// <summary> Number of protected servers in the backup engine. </summary>
+        /// <summary>
+        /// Number of protected servers in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.protectedServersCount
+        /// </summary>
         public int? ProtectedServersCount { get; set; }
-        /// <summary> Number of disks in the backup engine. </summary>
+        /// <summary>
+        /// Number of disks in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.diskCount
+        /// </summary>
         public int? DiskCount { get; set; }
-        /// <summary> Disk space used in the backup engine. </summary>
+        /// <summary>
+        /// Disk space used in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.usedDiskSpace
+        /// </summary>
         public double? UsedDiskSpace { get; set; }
-        /// <summary> Disk space currently available in the backup engine. </summary>
+        /// <summary>
+        /// Disk space currently available in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.availableDiskSpace
+        /// </summary>
         public double? AvailableDiskSpace { get; set; }
-        /// <summary> Last refresh time in the backup engine. </summary>
+        /// <summary>
+        /// Last refresh time in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.refreshedAt
+        /// </summary>
         public DateTimeOffset? RefreshedOn { get; set; }
-        /// <summary> Protected instances in the backup engine. </summary>
+        /// <summary>
+        /// Protected instances in the backup engine.
+        /// Serialized Name: BackupEngineExtendedInfo.azureProtectedInstances
+        /// </summary>
         public int? AzureProtectedInstances { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure IaaS VM workload-specific job task details. </summary>
+    /// <summary>
+    /// Azure IaaS VM workload-specific job task details.
+    /// Serialized Name: AzureIaaSVMJobTaskDetails
+    /// </summary>
     public partial class AzureIaasVmJobTaskDetails
     {
         /// <summary> Initializes a new instance of AzureIaasVmJobTaskDetails. </summary>
@@ -18,16 +21,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureIaasVmJobTaskDetails. </summary>
-        /// <param name="taskId"> The task display name. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
-        /// <param name="instanceId"> The instanceId. </param>
-        /// <param name="duration"> Time elapsed for task. </param>
-        /// <param name="status"> The status. </param>
-        /// <param name="progressPercentage"> Progress of the task. </param>
+        /// <param name="taskId">
+        /// The task display name.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.taskId
+        /// </param>
+        /// <param name="startOn">
+        /// The start time.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The end time.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.endTime
+        /// </param>
+        /// <param name="instanceId">
+        /// The instanceId.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.instanceId
+        /// </param>
+        /// <param name="duration">
+        /// Time elapsed for task.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.duration
+        /// </param>
+        /// <param name="status">
+        /// The status.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.status
+        /// </param>
+        /// <param name="progressPercentage">
+        /// Progress of the task.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.progressPercentage
+        /// </param>
         /// <param name="taskExecutionDetails">
         /// Details about execution of the task.
         /// eg: number of bytes transferred etc
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.taskExecutionDetails
         /// </param>
         internal AzureIaasVmJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, string instanceId, TimeSpan? duration, string status, double? progressPercentage, string taskExecutionDetails)
         {
@@ -41,23 +66,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TaskExecutionDetails = taskExecutionDetails;
         }
 
-        /// <summary> The task display name. </summary>
+        /// <summary>
+        /// The task display name.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.taskId
+        /// </summary>
         public string TaskId { get; set; }
-        /// <summary> The start time. </summary>
+        /// <summary>
+        /// The start time.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> The end time. </summary>
+        /// <summary>
+        /// The end time.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> The instanceId. </summary>
+        /// <summary>
+        /// The instanceId.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.instanceId
+        /// </summary>
         public string InstanceId { get; set; }
-        /// <summary> Time elapsed for task. </summary>
+        /// <summary>
+        /// Time elapsed for task.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.duration
+        /// </summary>
         public TimeSpan? Duration { get; set; }
-        /// <summary> The status. </summary>
+        /// <summary>
+        /// The status.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.status
+        /// </summary>
         public string Status { get; set; }
-        /// <summary> Progress of the task. </summary>
+        /// <summary>
+        /// Progress of the task.
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.progressPercentage
+        /// </summary>
         public double? ProgressPercentage { get; set; }
         /// <summary>
         /// Details about execution of the task.
         /// eg: number of bytes transferred etc
+        /// Serialized Name: AzureIaaSVMJobTaskDetails.taskExecutionDetails
         /// </summary>
         public string TaskExecutionDetails { get; set; }
     }

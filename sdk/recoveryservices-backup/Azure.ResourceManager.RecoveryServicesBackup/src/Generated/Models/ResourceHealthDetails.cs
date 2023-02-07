@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Health Details for backup items. </summary>
+    /// <summary>
+    /// Health Details for backup items.
+    /// Serialized Name: ResourceHealthDetails
+    /// </summary>
     public partial class ResourceHealthDetails
     {
         /// <summary> Initializes a new instance of ResourceHealthDetails. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ResourceHealthDetails. </summary>
-        /// <param name="code"> Health Code. </param>
-        /// <param name="title"> Health Title. </param>
-        /// <param name="message"> Health Message. </param>
-        /// <param name="recommendations"> Health Recommended Actions. </param>
+        /// <param name="code">
+        /// Health Code
+        /// Serialized Name: ResourceHealthDetails.code
+        /// </param>
+        /// <param name="title">
+        /// Health Title
+        /// Serialized Name: ResourceHealthDetails.title
+        /// </param>
+        /// <param name="message">
+        /// Health Message
+        /// Serialized Name: ResourceHealthDetails.message
+        /// </param>
+        /// <param name="recommendations">
+        /// Health Recommended Actions
+        /// Serialized Name: ResourceHealthDetails.recommendations
+        /// </param>
         internal ResourceHealthDetails(int? code, string title, string message, IReadOnlyList<string> recommendations)
         {
             Code = code;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Recommendations = recommendations;
         }
 
-        /// <summary> Health Code. </summary>
+        /// <summary>
+        /// Health Code
+        /// Serialized Name: ResourceHealthDetails.code
+        /// </summary>
         public int? Code { get; }
-        /// <summary> Health Title. </summary>
+        /// <summary>
+        /// Health Title
+        /// Serialized Name: ResourceHealthDetails.title
+        /// </summary>
         public string Title { get; }
-        /// <summary> Health Message. </summary>
+        /// <summary>
+        /// Health Message
+        /// Serialized Name: ResourceHealthDetails.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> Health Recommended Actions. </summary>
+        /// <summary>
+        /// Health Recommended Actions
+        /// Serialized Name: ResourceHealthDetails.recommendations
+        /// </summary>
         public IReadOnlyList<string> Recommendations { get; }
     }
 }

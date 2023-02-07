@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The ValidateOperationsResponse. </summary>
+    /// <summary>
+    /// The ValidateOperationsResponse.
+    /// Serialized Name: ValidateOperationsResponse
+    /// </summary>
     public partial class ValidateOperationsResponse
     {
         /// <summary> Initializes a new instance of ValidateOperationsResponse. </summary>
@@ -18,15 +21,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ValidateOperationsResponse. </summary>
-        /// <param name="validateOperationResponse"> Base class for validate operation response. </param>
+        /// <param name="validateOperationResponse">
+        /// Base class for validate operation response.
+        /// Serialized Name: ValidateOperationsResponse.validateOperationResponse
+        /// </param>
         internal ValidateOperationsResponse(ValidateOperationResponse validateOperationResponse)
         {
             ValidateOperationResponse = validateOperationResponse;
         }
 
-        /// <summary> Base class for validate operation response. </summary>
+        /// <summary>
+        /// Base class for validate operation response.
+        /// Serialized Name: ValidateOperationsResponse.validateOperationResponse
+        /// </summary>
         internal ValidateOperationResponse ValidateOperationResponse { get; }
-        /// <summary> Gets the validation result. </summary>
+        /// <summary>
+        /// Gets the validation result
+        /// Serialized Name: ValidateOperationResponse.validationResults
+        /// </summary>
         public IReadOnlyList<ErrorDetail> ValidateOperationResponseValidationResults
         {
             get => ValidateOperationResponse?.ValidationResults;

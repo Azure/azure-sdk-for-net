@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Base class for validate operation response. </summary>
+    /// <summary>
+    /// Base class for validate operation response.
+    /// Serialized Name: ValidateOperationResponse
+    /// </summary>
     internal partial class ValidateOperationResponse
     {
         /// <summary> Initializes a new instance of ValidateOperationResponse. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ValidateOperationResponse. </summary>
-        /// <param name="validationResults"> Gets the validation result. </param>
+        /// <param name="validationResults">
+        /// Gets the validation result
+        /// Serialized Name: ValidateOperationResponse.validationResults
+        /// </param>
         internal ValidateOperationResponse(IReadOnlyList<ErrorDetail> validationResults)
         {
             ValidationResults = validationResults;
         }
 
-        /// <summary> Gets the validation result. </summary>
+        /// <summary>
+        /// Gets the validation result
+        /// Serialized Name: ValidateOperationResponse.validationResults
+        /// </summary>
         public IReadOnlyList<ErrorDetail> ValidationResults { get; }
     }
 }

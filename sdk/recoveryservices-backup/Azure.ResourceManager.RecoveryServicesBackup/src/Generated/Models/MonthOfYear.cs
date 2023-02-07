@@ -7,34 +7,76 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The MonthOfYear. </summary>
+    /// <summary>
+    /// The MonthOfYear.
+    /// Serialized Name: MonthOfYear
+    /// </summary>
     public enum MonthOfYear
     {
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: MonthOfYear.Invalid
+        /// </summary>
         Invalid,
-        /// <summary> January. </summary>
+        /// <summary>
+        /// January
+        /// Serialized Name: MonthOfYear.January
+        /// </summary>
         January,
-        /// <summary> February. </summary>
+        /// <summary>
+        /// February
+        /// Serialized Name: MonthOfYear.February
+        /// </summary>
         February,
-        /// <summary> March. </summary>
+        /// <summary>
+        /// March
+        /// Serialized Name: MonthOfYear.March
+        /// </summary>
         March,
-        /// <summary> April. </summary>
+        /// <summary>
+        /// April
+        /// Serialized Name: MonthOfYear.April
+        /// </summary>
         April,
-        /// <summary> May. </summary>
+        /// <summary>
+        /// May
+        /// Serialized Name: MonthOfYear.May
+        /// </summary>
         May,
-        /// <summary> June. </summary>
+        /// <summary>
+        /// June
+        /// Serialized Name: MonthOfYear.June
+        /// </summary>
         June,
-        /// <summary> July. </summary>
+        /// <summary>
+        /// July
+        /// Serialized Name: MonthOfYear.July
+        /// </summary>
         July,
-        /// <summary> August. </summary>
+        /// <summary>
+        /// August
+        /// Serialized Name: MonthOfYear.August
+        /// </summary>
         August,
-        /// <summary> September. </summary>
+        /// <summary>
+        /// September
+        /// Serialized Name: MonthOfYear.September
+        /// </summary>
         September,
-        /// <summary> October. </summary>
+        /// <summary>
+        /// October
+        /// Serialized Name: MonthOfYear.October
+        /// </summary>
         October,
-        /// <summary> November. </summary>
+        /// <summary>
+        /// November
+        /// Serialized Name: MonthOfYear.November
+        /// </summary>
         November,
-        /// <summary> December. </summary>
+        /// <summary>
+        /// December
+        /// Serialized Name: MonthOfYear.December
+        /// </summary>
         December
     }
 }

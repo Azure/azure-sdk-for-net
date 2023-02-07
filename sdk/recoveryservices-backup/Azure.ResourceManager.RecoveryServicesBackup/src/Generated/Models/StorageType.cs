@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Storage type. </summary>
+    /// <summary>
+    /// Storage type
+    /// Serialized Name: StorageType
+    /// </summary>
     public readonly partial struct StorageType : IEquatable<StorageType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ZoneRedundantValue = "ZoneRedundant";
         private const string ReadAccessGeoZoneRedundantValue = "ReadAccessGeoZoneRedundant";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: StorageType.Invalid
+        /// </summary>
         public static StorageType Invalid { get; } = new StorageType(InvalidValue);
-        /// <summary> GeoRedundant. </summary>
+        /// <summary>
+        /// GeoRedundant
+        /// Serialized Name: StorageType.GeoRedundant
+        /// </summary>
         public static StorageType GeoRedundant { get; } = new StorageType(GeoRedundantValue);
-        /// <summary> LocallyRedundant. </summary>
+        /// <summary>
+        /// LocallyRedundant
+        /// Serialized Name: StorageType.LocallyRedundant
+        /// </summary>
         public static StorageType LocallyRedundant { get; } = new StorageType(LocallyRedundantValue);
-        /// <summary> ZoneRedundant. </summary>
+        /// <summary>
+        /// ZoneRedundant
+        /// Serialized Name: StorageType.ZoneRedundant
+        /// </summary>
         public static StorageType ZoneRedundant { get; } = new StorageType(ZoneRedundantValue);
-        /// <summary> ReadAccessGeoZoneRedundant. </summary>
+        /// <summary>
+        /// ReadAccessGeoZoneRedundant
+        /// Serialized Name: StorageType.ReadAccessGeoZoneRedundant
+        /// </summary>
         public static StorageType ReadAccessGeoZoneRedundant { get; } = new StorageType(ReadAccessGeoZoneRedundantValue);
         /// <summary> Determines if two <see cref="StorageType"/> values are the same. </summary>
         public static bool operator ==(StorageType left, StorageType right) => left.Equals(right);

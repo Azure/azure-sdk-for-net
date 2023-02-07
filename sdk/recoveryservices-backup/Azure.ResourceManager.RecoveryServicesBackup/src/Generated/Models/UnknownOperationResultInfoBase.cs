@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownOperationResultInfoBase. </summary>
+    /// <summary>
+    /// The UnknownOperationResultInfoBase.
+    /// Serialized Name: UnknownOperationResultInfoBase
+    /// </summary>
     internal partial class UnknownOperationResultInfoBase : OperationResultInfoBase
     {
         /// <summary> Initializes a new instance of UnknownOperationResultInfoBase. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationResultInfoBase.objectType
+        /// </param>
         internal UnknownOperationResultInfoBase(string objectType) : base(objectType)
         {
             ObjectType = objectType ?? "Unknown";

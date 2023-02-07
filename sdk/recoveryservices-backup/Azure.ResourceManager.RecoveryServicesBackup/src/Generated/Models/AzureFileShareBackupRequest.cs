@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> AzureFileShare workload-specific backup request. </summary>
+    /// <summary>
+    /// AzureFileShare workload-specific backup request.
+    /// Serialized Name: AzureFileShareBackupRequest
+    /// </summary>
     public partial class AzureFileShareBackupRequest : BackupRequest
     {
         /// <summary> Initializes a new instance of AzureFileShareBackupRequest. </summary>
@@ -19,15 +22,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureFileShareBackupRequest. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="recoveryPointExpiryTimeInUTC"> Backup copy will expire after the time specified (UTC). </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: BackupRequest.objectType
+        /// </param>
+        /// <param name="recoveryPointExpiryTimeInUTC">
+        /// Backup copy will expire after the time specified (UTC).
+        /// Serialized Name: AzureFileShareBackupRequest.recoveryPointExpiryTimeInUTC
+        /// </param>
         internal AzureFileShareBackupRequest(string objectType, DateTimeOffset? recoveryPointExpiryTimeInUTC) : base(objectType)
         {
             RecoveryPointExpiryTimeInUTC = recoveryPointExpiryTimeInUTC;
             ObjectType = objectType ?? "AzureFileShareBackupRequest";
         }
 
-        /// <summary> Backup copy will expire after the time specified (UTC). </summary>
+        /// <summary>
+        /// Backup copy will expire after the time specified (UTC).
+        /// Serialized Name: AzureFileShareBackupRequest.recoveryPointExpiryTimeInUTC
+        /// </summary>
         public DateTimeOffset? RecoveryPointExpiryTimeInUTC { get; set; }
     }
 }

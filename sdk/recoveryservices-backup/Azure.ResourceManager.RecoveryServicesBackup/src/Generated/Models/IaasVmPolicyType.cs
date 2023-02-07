@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The IaasVmPolicyType. </summary>
+    /// <summary>
+    /// The IaasVmPolicyType.
+    /// Serialized Name: IaasvmPolicyType
+    /// </summary>
     public readonly partial struct IaasVmPolicyType : IEquatable<IaasVmPolicyType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string V1Value = "V1";
         private const string V2Value = "V2";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: IaasvmPolicyType.Invalid
+        /// </summary>
         public static IaasVmPolicyType Invalid { get; } = new IaasVmPolicyType(InvalidValue);
-        /// <summary> V1. </summary>
+        /// <summary>
+        /// V1
+        /// Serialized Name: IaasvmPolicyType.V1
+        /// </summary>
         public static IaasVmPolicyType V1 { get; } = new IaasVmPolicyType(V1Value);
-        /// <summary> V2. </summary>
+        /// <summary>
+        /// V2
+        /// Serialized Name: IaasvmPolicyType.V2
+        /// </summary>
         public static IaasVmPolicyType V2 { get; } = new IaasVmPolicyType(V2Value);
         /// <summary> Determines if two <see cref="IaasVmPolicyType"/> values are the same. </summary>
         public static bool operator ==(IaasVmPolicyType left, IaasVmPolicyType right) => left.Equals(right);

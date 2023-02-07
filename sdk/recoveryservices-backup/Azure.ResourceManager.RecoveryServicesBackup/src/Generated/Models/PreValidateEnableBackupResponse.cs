@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Response contract for enable backup validation request. </summary>
+    /// <summary>
+    /// Response contract for enable backup validation request
+    /// Serialized Name: PreValidateEnableBackupResponse
+    /// </summary>
     public partial class PreValidateEnableBackupResponse
     {
         /// <summary> Initializes a new instance of PreValidateEnableBackupResponse. </summary>
@@ -16,15 +19,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of PreValidateEnableBackupResponse. </summary>
-        /// <param name="status"> Validation Status. </param>
-        /// <param name="errorCode"> Response error code. </param>
-        /// <param name="errorMessage"> Response error message. </param>
-        /// <param name="recommendation"> Recommended action for user. </param>
+        /// <param name="status">
+        /// Validation Status
+        /// Serialized Name: PreValidateEnableBackupResponse.status
+        /// </param>
+        /// <param name="errorCode">
+        /// Response error code
+        /// Serialized Name: PreValidateEnableBackupResponse.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// Response error message
+        /// Serialized Name: PreValidateEnableBackupResponse.errorMessage
+        /// </param>
+        /// <param name="recommendation">
+        /// Recommended action for user
+        /// Serialized Name: PreValidateEnableBackupResponse.recommendation
+        /// </param>
         /// <param name="containerName">
         /// Specifies the product specific container name. E.g. iaasvmcontainer;iaasvmcontainer;rgname;vmname. This is required
         /// for portal
+        /// Serialized Name: PreValidateEnableBackupResponse.containerName
         /// </param>
-        /// <param name="protectedItemName"> Specifies the product specific ds name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for portal. </param>
+        /// <param name="protectedItemName">
+        /// Specifies the product specific ds name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for portal
+        /// Serialized Name: PreValidateEnableBackupResponse.protectedItemName
+        /// </param>
         internal PreValidateEnableBackupResponse(ValidationStatus? status, string errorCode, string errorMessage, string recommendation, string containerName, string protectedItemName)
         {
             Status = status;
@@ -35,20 +54,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemName = protectedItemName;
         }
 
-        /// <summary> Validation Status. </summary>
+        /// <summary>
+        /// Validation Status
+        /// Serialized Name: PreValidateEnableBackupResponse.status
+        /// </summary>
         public ValidationStatus? Status { get; }
-        /// <summary> Response error code. </summary>
+        /// <summary>
+        /// Response error code
+        /// Serialized Name: PreValidateEnableBackupResponse.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> Response error message. </summary>
+        /// <summary>
+        /// Response error message
+        /// Serialized Name: PreValidateEnableBackupResponse.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> Recommended action for user. </summary>
+        /// <summary>
+        /// Recommended action for user
+        /// Serialized Name: PreValidateEnableBackupResponse.recommendation
+        /// </summary>
         public string Recommendation { get; }
         /// <summary>
         /// Specifies the product specific container name. E.g. iaasvmcontainer;iaasvmcontainer;rgname;vmname. This is required
         /// for portal
+        /// Serialized Name: PreValidateEnableBackupResponse.containerName
         /// </summary>
         public string ContainerName { get; }
-        /// <summary> Specifies the product specific ds name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for portal. </summary>
+        /// <summary>
+        /// Specifies the product specific ds name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for portal
+        /// Serialized Name: PreValidateEnableBackupResponse.protectedItemName
+        /// </summary>
         public string ProtectedItemName { get; }
     }
 }

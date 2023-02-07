@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Weekly retention schedule. </summary>
+    /// <summary>
+    /// Weekly retention schedule.
+    /// Serialized Name: WeeklyRetentionSchedule
+    /// </summary>
     public partial class WeeklyRetentionSchedule
     {
         /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>
@@ -22,9 +25,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>
-        /// <param name="daysOfTheWeek"> List of days of week for weekly retention policy. </param>
-        /// <param name="retentionTimes"> Retention times of retention policy. </param>
-        /// <param name="retentionDuration"> Retention duration of retention Policy. </param>
+        /// <param name="daysOfTheWeek">
+        /// List of days of week for weekly retention policy.
+        /// Serialized Name: WeeklyRetentionSchedule.daysOfTheWeek
+        /// </param>
+        /// <param name="retentionTimes">
+        /// Retention times of retention policy.
+        /// Serialized Name: WeeklyRetentionSchedule.retentionTimes
+        /// </param>
+        /// <param name="retentionDuration">
+        /// Retention duration of retention Policy.
+        /// Serialized Name: WeeklyRetentionSchedule.retentionDuration
+        /// </param>
         internal WeeklyRetentionSchedule(IList<DayOfWeek> daysOfTheWeek, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
         {
             DaysOfTheWeek = daysOfTheWeek;
@@ -32,11 +44,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RetentionDuration = retentionDuration;
         }
 
-        /// <summary> List of days of week for weekly retention policy. </summary>
+        /// <summary>
+        /// List of days of week for weekly retention policy.
+        /// Serialized Name: WeeklyRetentionSchedule.daysOfTheWeek
+        /// </summary>
         public IList<DayOfWeek> DaysOfTheWeek { get; }
-        /// <summary> Retention times of retention policy. </summary>
+        /// <summary>
+        /// Retention times of retention policy.
+        /// Serialized Name: WeeklyRetentionSchedule.retentionTimes
+        /// </summary>
         public IList<DateTimeOffset> RetentionTimes { get; }
-        /// <summary> Retention duration of retention Policy. </summary>
+        /// <summary>
+        /// Retention duration of retention Policy.
+        /// Serialized Name: WeeklyRetentionSchedule.retentionDuration
+        /// </summary>
         public RetentionDuration RetentionDuration { get; set; }
     }
 }

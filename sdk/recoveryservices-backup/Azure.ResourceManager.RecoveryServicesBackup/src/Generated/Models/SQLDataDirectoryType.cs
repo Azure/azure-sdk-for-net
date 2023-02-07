@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Type of data directory mapping. </summary>
+    /// <summary>
+    /// Type of data directory mapping
+    /// Serialized Name: SQLDataDirectoryType
+    /// </summary>
     public readonly partial struct SQLDataDirectoryType : IEquatable<SQLDataDirectoryType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string DataValue = "Data";
         private const string LogValue = "Log";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: SQLDataDirectoryType.Invalid
+        /// </summary>
         public static SQLDataDirectoryType Invalid { get; } = new SQLDataDirectoryType(InvalidValue);
-        /// <summary> Data. </summary>
+        /// <summary>
+        /// Data
+        /// Serialized Name: SQLDataDirectoryType.Data
+        /// </summary>
         public static SQLDataDirectoryType Data { get; } = new SQLDataDirectoryType(DataValue);
-        /// <summary> Log. </summary>
+        /// <summary>
+        /// Log
+        /// Serialized Name: SQLDataDirectoryType.Log
+        /// </summary>
         public static SQLDataDirectoryType Log { get; } = new SQLDataDirectoryType(LogValue);
         /// <summary> Determines if two <see cref="SQLDataDirectoryType"/> values are the same. </summary>
         public static bool operator ==(SQLDataDirectoryType left, SQLDataDirectoryType right) => left.Equals(right);

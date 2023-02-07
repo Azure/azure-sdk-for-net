@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The WeeklySchedule. </summary>
+    /// <summary>
+    /// The WeeklySchedule.
+    /// Serialized Name: WeeklySchedule
+    /// </summary>
     public partial class WeeklySchedule
     {
         /// <summary> Initializes a new instance of WeeklySchedule. </summary>
@@ -22,17 +25,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WeeklySchedule. </summary>
-        /// <param name="scheduleRunDays"></param>
-        /// <param name="scheduleRunTimes"> List of times of day this schedule has to be run. </param>
+        /// <param name="scheduleRunDays"> Serialized Name: WeeklySchedule.scheduleRunDays. </param>
+        /// <param name="scheduleRunTimes">
+        /// List of times of day this schedule has to be run.
+        /// Serialized Name: WeeklySchedule.scheduleRunTimes
+        /// </param>
         internal WeeklySchedule(IList<DayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes)
         {
             ScheduleRunDays = scheduleRunDays;
             ScheduleRunTimes = scheduleRunTimes;
         }
 
-        /// <summary> Gets the schedule run days. </summary>
+        /// <summary> Serialized Name: WeeklySchedule.scheduleRunDays. </summary>
         public IList<DayOfWeek> ScheduleRunDays { get; }
-        /// <summary> List of times of day this schedule has to be run. </summary>
+        /// <summary>
+        /// List of times of day this schedule has to be run.
+        /// Serialized Name: WeeklySchedule.scheduleRunTimes
+        /// </summary>
         public IList<DateTimeOffset> ScheduleRunTimes { get; }
     }
 }

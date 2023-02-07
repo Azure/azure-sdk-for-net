@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Soft Delete feature state. </summary>
+    /// <summary>
+    /// Soft Delete feature state
+    /// Serialized Name: SoftDeleteFeatureState
+    /// </summary>
     public readonly partial struct SoftDeleteFeatureState : IEquatable<SoftDeleteFeatureState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: SoftDeleteFeatureState.Invalid
+        /// </summary>
         public static SoftDeleteFeatureState Invalid { get; } = new SoftDeleteFeatureState(InvalidValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SoftDeleteFeatureState.Enabled
+        /// </summary>
         public static SoftDeleteFeatureState Enabled { get; } = new SoftDeleteFeatureState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SoftDeleteFeatureState.Disabled
+        /// </summary>
         public static SoftDeleteFeatureState Disabled { get; } = new SoftDeleteFeatureState(DisabledValue);
         /// <summary> Determines if two <see cref="SoftDeleteFeatureState"/> values are the same. </summary>
         public static bool operator ==(SoftDeleteFeatureState left, SoftDeleteFeatureState right) => left.Equals(right);

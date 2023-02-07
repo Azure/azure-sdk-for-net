@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Operation status. </summary>
+    /// <summary>
+    /// Operation status.
+    /// Serialized Name: OperationStatusValues
+    /// </summary>
     public readonly partial struct OperationStatusValue : IEquatable<OperationStatusValue>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: OperationStatusValues.Invalid
+        /// </summary>
         public static OperationStatusValue Invalid { get; } = new OperationStatusValue(InvalidValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: OperationStatusValues.InProgress
+        /// </summary>
         public static OperationStatusValue InProgress { get; } = new OperationStatusValue(InProgressValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: OperationStatusValues.Succeeded
+        /// </summary>
         public static OperationStatusValue Succeeded { get; } = new OperationStatusValue(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: OperationStatusValues.Failed
+        /// </summary>
         public static OperationStatusValue Failed { get; } = new OperationStatusValue(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: OperationStatusValues.Canceled
+        /// </summary>
         public static OperationStatusValue Canceled { get; } = new OperationStatusValue(CanceledValue);
         /// <summary> Determines if two <see cref="OperationStatusValue"/> values are the same. </summary>
         public static bool operator ==(OperationStatusValue left, OperationStatusValue right) => left.Equals(right);

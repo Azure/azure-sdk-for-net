@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Health status of the backup item, evaluated based on last heartbeat received. </summary>
+    /// <summary>
+    /// Health status of the backup item, evaluated based on last heartbeat received
+    /// Serialized Name: ProtectedItemHealthStatus
+    /// </summary>
     public readonly partial struct ProtectedItemHealthStatus : IEquatable<ProtectedItemHealthStatus>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string NotReachableValue = "NotReachable";
         private const string IRPendingValue = "IRPending";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: ProtectedItemHealthStatus.Invalid
+        /// </summary>
         public static ProtectedItemHealthStatus Invalid { get; } = new ProtectedItemHealthStatus(InvalidValue);
-        /// <summary> Healthy. </summary>
+        /// <summary>
+        /// Healthy
+        /// Serialized Name: ProtectedItemHealthStatus.Healthy
+        /// </summary>
         public static ProtectedItemHealthStatus Healthy { get; } = new ProtectedItemHealthStatus(HealthyValue);
-        /// <summary> Unhealthy. </summary>
+        /// <summary>
+        /// Unhealthy
+        /// Serialized Name: ProtectedItemHealthStatus.Unhealthy
+        /// </summary>
         public static ProtectedItemHealthStatus Unhealthy { get; } = new ProtectedItemHealthStatus(UnhealthyValue);
-        /// <summary> NotReachable. </summary>
+        /// <summary>
+        /// NotReachable
+        /// Serialized Name: ProtectedItemHealthStatus.NotReachable
+        /// </summary>
         public static ProtectedItemHealthStatus NotReachable { get; } = new ProtectedItemHealthStatus(NotReachableValue);
-        /// <summary> IRPending. </summary>
+        /// <summary>
+        /// IRPending
+        /// Serialized Name: ProtectedItemHealthStatus.IRPending
+        /// </summary>
         public static ProtectedItemHealthStatus IRPending { get; } = new ProtectedItemHealthStatus(IRPendingValue);
         /// <summary> Determines if two <see cref="ProtectedItemHealthStatus"/> values are the same. </summary>
         public static bool operator ==(ProtectedItemHealthStatus left, ProtectedItemHealthStatus right) => left.Equals(right);

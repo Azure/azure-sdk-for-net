@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> SAPHana specific recoverypoint, specifically encapsulates full/diff recoverypoints. </summary>
+    /// <summary>
+    /// SAPHana specific recoverypoint, specifically encapsulates full/diff recoverypoints
+    /// Serialized Name: AzureWorkloadSAPHanaRecoveryPoint
+    /// </summary>
     public partial class AzureWorkloadSAPHanaRecoveryPoint : AzureWorkloadRecoveryPoint
     {
         /// <summary> Initializes a new instance of AzureWorkloadSAPHanaRecoveryPoint. </summary>
@@ -20,12 +23,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadSAPHanaRecoveryPoint. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="recoveryPointTimeInUTC"> UTC time at which recovery point was created. </param>
-        /// <param name="restorePointType"> Type of restore point. </param>
-        /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
-        /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
-        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: RecoveryPoint.objectType
+        /// </param>
+        /// <param name="recoveryPointTimeInUTC">
+        /// UTC time at which recovery point was created
+        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTimeInUTC
+        /// </param>
+        /// <param name="restorePointType">
+        /// Type of restore point
+        /// Serialized Name: AzureWorkloadRecoveryPoint.type
+        /// </param>
+        /// <param name="recoveryPointTierDetails">
+        /// Recovery point tier information.
+        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTierDetails
+        /// </param>
+        /// <param name="recoveryPointMoveReadinessInfo">
+        /// Eligibility of RP to be moved to another tier
+        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointMoveReadinessInfo
+        /// </param>
+        /// <param name="recoveryPointProperties">
+        /// Properties of Recovery Point
+        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointProperties
+        /// </param>
         internal AzureWorkloadSAPHanaRecoveryPoint(string objectType, DateTimeOffset? recoveryPointTimeInUTC, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, recoveryPointTimeInUTC, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
         {
             ObjectType = objectType ?? "AzureWorkloadSAPHanaRecoveryPoint";

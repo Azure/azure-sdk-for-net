@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Provides details for log ranges. </summary>
+    /// <summary>
+    /// Provides details for log ranges
+    /// Serialized Name: PointInTimeRange
+    /// </summary>
     public partial class PointInTimeRange
     {
         /// <summary> Initializes a new instance of PointInTimeRange. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of PointInTimeRange. </summary>
-        /// <param name="startOn"> Start time of the time range for log recovery. </param>
-        /// <param name="endOn"> End time of the time range for log recovery. </param>
+        /// <param name="startOn">
+        /// Start time of the time range for log recovery.
+        /// Serialized Name: PointInTimeRange.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time of the time range for log recovery.
+        /// Serialized Name: PointInTimeRange.endTime
+        /// </param>
         internal PointInTimeRange(DateTimeOffset? startOn, DateTimeOffset? endOn)
         {
             StartOn = startOn;
             EndOn = endOn;
         }
 
-        /// <summary> Start time of the time range for log recovery. </summary>
+        /// <summary>
+        /// Start time of the time range for log recovery.
+        /// Serialized Name: PointInTimeRange.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time of the time range for log recovery. </summary>
+        /// <summary>
+        /// End time of the time range for log recovery.
+        /// Serialized Name: PointInTimeRange.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
     }
 }

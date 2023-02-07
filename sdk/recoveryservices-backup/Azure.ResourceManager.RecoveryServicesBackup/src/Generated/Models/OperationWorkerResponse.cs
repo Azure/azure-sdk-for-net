@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> This is the base class for operation result responses. </summary>
+    /// <summary>
+    /// This is the base class for operation result responses.
+    /// Serialized Name: OperationWorkerResponse
+    /// </summary>
     public partial class OperationWorkerResponse
     {
         /// <summary> Initializes a new instance of OperationWorkerResponse. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationWorkerResponse. </summary>
-        /// <param name="statusCode"> HTTP Status Code of the operation. </param>
-        /// <param name="headers"> HTTP headers associated with this operation. </param>
+        /// <param name="statusCode">
+        /// HTTP Status Code of the operation.
+        /// Serialized Name: OperationWorkerResponse.statusCode
+        /// </param>
+        /// <param name="headers">
+        /// HTTP headers associated with this operation.
+        /// Serialized Name: OperationWorkerResponse.headers
+        /// </param>
         internal OperationWorkerResponse(HttpStatusCode? statusCode, IReadOnlyDictionary<string, IList<string>> headers)
         {
             StatusCode = statusCode;
             Headers = headers;
         }
 
-        /// <summary> HTTP Status Code of the operation. </summary>
+        /// <summary>
+        /// HTTP Status Code of the operation.
+        /// Serialized Name: OperationWorkerResponse.statusCode
+        /// </summary>
         public HttpStatusCode? StatusCode { get; }
-        /// <summary> HTTP headers associated with this operation. </summary>
+        /// <summary>
+        /// HTTP headers associated with this operation.
+        /// Serialized Name: OperationWorkerResponse.headers
+        /// </summary>
         public IReadOnlyDictionary<string, IList<string>> Headers { get; }
     }
 }

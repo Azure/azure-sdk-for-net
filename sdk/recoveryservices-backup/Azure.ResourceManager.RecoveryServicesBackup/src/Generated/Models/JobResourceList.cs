@@ -11,27 +11,42 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> List of Job resources. </summary>
+    /// <summary>
+    /// List of Job resources
+    /// Serialized Name: JobResourceList
+    /// </summary>
     internal partial class JobResourceList
     {
         /// <summary> Initializes a new instance of JobResourceList. </summary>
         internal JobResourceList()
         {
-            Value = new ChangeTrackingList<JobResourceData>();
+            Value = new ChangeTrackingList<BackupJobData>();
         }
 
         /// <summary> Initializes a new instance of JobResourceList. </summary>
-        /// <param name="value"> List of resources. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
-        internal JobResourceList(IReadOnlyList<JobResourceData> value, string nextLink)
+        /// <param name="value">
+        /// List of resources.
+        /// Serialized Name: JobResourceList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: JobResourceList.nextLink
+        /// </param>
+        internal JobResourceList(IReadOnlyList<BackupJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of resources. </summary>
-        public IReadOnlyList<JobResourceData> Value { get; }
-        /// <summary> The uri to fetch the next page of resources. </summary>
+        /// <summary>
+        /// List of resources.
+        /// Serialized Name: JobResourceList.value
+        /// </summary>
+        public IReadOnlyList<BackupJobData> Value { get; }
+        /// <summary>
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: JobResourceList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

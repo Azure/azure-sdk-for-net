@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Details needed if the VM was encrypted at the time of backup. </summary>
+    /// <summary>
+    /// Details needed if the VM was encrypted at the time of backup.
+    /// Serialized Name: EncryptionDetails
+    /// </summary>
     public partial class EncryptionDetails
     {
         /// <summary> Initializes a new instance of EncryptionDetails. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionDetails. </summary>
-        /// <param name="encryptionEnabled"> Identifies whether this backup copy represents an encrypted VM at the time of backup. </param>
-        /// <param name="kekUri"> Key Url. </param>
-        /// <param name="secretKeyUri"> Secret Url. </param>
-        /// <param name="kekVaultId"> ID of Key Vault where KEK is stored. </param>
-        /// <param name="secretKeyVaultId"> ID of Key Vault where Secret is stored. </param>
+        /// <param name="encryptionEnabled">
+        /// Identifies whether this backup copy represents an encrypted VM at the time of backup.
+        /// Serialized Name: EncryptionDetails.encryptionEnabled
+        /// </param>
+        /// <param name="kekUri">
+        /// Key Url.
+        /// Serialized Name: EncryptionDetails.kekUrl
+        /// </param>
+        /// <param name="secretKeyUri">
+        /// Secret Url.
+        /// Serialized Name: EncryptionDetails.secretKeyUrl
+        /// </param>
+        /// <param name="kekVaultId">
+        /// ID of Key Vault where KEK is stored.
+        /// Serialized Name: EncryptionDetails.kekVaultId
+        /// </param>
+        /// <param name="secretKeyVaultId">
+        /// ID of Key Vault where Secret is stored.
+        /// Serialized Name: EncryptionDetails.secretKeyVaultId
+        /// </param>
         internal EncryptionDetails(bool? encryptionEnabled, Uri kekUri, Uri secretKeyUri, string kekVaultId, string secretKeyVaultId)
         {
             EncryptionEnabled = encryptionEnabled;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SecretKeyVaultId = secretKeyVaultId;
         }
 
-        /// <summary> Identifies whether this backup copy represents an encrypted VM at the time of backup. </summary>
+        /// <summary>
+        /// Identifies whether this backup copy represents an encrypted VM at the time of backup.
+        /// Serialized Name: EncryptionDetails.encryptionEnabled
+        /// </summary>
         public bool? EncryptionEnabled { get; set; }
-        /// <summary> Key Url. </summary>
+        /// <summary>
+        /// Key Url.
+        /// Serialized Name: EncryptionDetails.kekUrl
+        /// </summary>
         public Uri KekUri { get; set; }
-        /// <summary> Secret Url. </summary>
+        /// <summary>
+        /// Secret Url.
+        /// Serialized Name: EncryptionDetails.secretKeyUrl
+        /// </summary>
         public Uri SecretKeyUri { get; set; }
-        /// <summary> ID of Key Vault where KEK is stored. </summary>
+        /// <summary>
+        /// ID of Key Vault where KEK is stored.
+        /// Serialized Name: EncryptionDetails.kekVaultId
+        /// </summary>
         public string KekVaultId { get; set; }
-        /// <summary> ID of Key Vault where Secret is stored. </summary>
+        /// <summary>
+        /// ID of Key Vault where Secret is stored.
+        /// Serialized Name: EncryptionDetails.secretKeyVaultId
+        /// </summary>
         public string SecretKeyVaultId { get; set; }
     }
 }

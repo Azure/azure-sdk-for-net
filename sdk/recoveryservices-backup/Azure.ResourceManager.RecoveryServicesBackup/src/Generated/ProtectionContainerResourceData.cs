@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectionContainerResource properties
+        /// Serialized Name: ProtectionContainerResource.properties
         /// Please note <see cref="ProtectionContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBackupServerContainer"/>, <see cref="AzureSqlContainer"/>, <see cref="AzureWorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="AzureIaaSClassicComputeVmContainer"/>, <see cref="AzureIaaSComputeVmContainer"/>, <see cref="AzureSqlAGWorkloadContainerProtectionContainer"/>, <see cref="AzureStorageContainer"/>, <see cref="AzureVmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
         /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="eTag">
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         internal ProtectionContainerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectionContainer properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -43,11 +47,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// ProtectionContainerResource properties
+        /// Serialized Name: ProtectionContainerResource.properties
         /// Please note <see cref="ProtectionContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBackupServerContainer"/>, <see cref="AzureSqlContainer"/>, <see cref="AzureWorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="AzureIaaSClassicComputeVmContainer"/>, <see cref="AzureIaaSComputeVmContainer"/>, <see cref="AzureSqlAGWorkloadContainerProtectionContainer"/>, <see cref="AzureStorageContainer"/>, <see cref="AzureVmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
         /// </summary>
         public ProtectionContainer Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary>
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Extended information of the container. </summary>
+    /// <summary>
+    /// Extended information of the container.
+    /// Serialized Name: AzureWorkloadContainerExtendedInfo
+    /// </summary>
     public partial class AzureWorkloadContainerExtendedInfo
     {
         /// <summary> Initializes a new instance of AzureWorkloadContainerExtendedInfo. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadContainerExtendedInfo. </summary>
-        /// <param name="hostServerName"> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </param>
-        /// <param name="inquiryInfo"> Inquiry Status for the container. </param>
-        /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
+        /// <param name="hostServerName">
+        /// Host Os Name in case of Stand Alone and Cluster Name in case of distributed container.
+        /// Serialized Name: AzureWorkloadContainerExtendedInfo.hostServerName
+        /// </param>
+        /// <param name="inquiryInfo">
+        /// Inquiry Status for the container.
+        /// Serialized Name: AzureWorkloadContainerExtendedInfo.inquiryInfo
+        /// </param>
+        /// <param name="nodesList">
+        /// List of the nodes in case of distributed container.
+        /// Serialized Name: AzureWorkloadContainerExtendedInfo.nodesList
+        /// </param>
         internal AzureWorkloadContainerExtendedInfo(string hostServerName, InquiryInfo inquiryInfo, IList<DistributedNodesInfo> nodesList)
         {
             HostServerName = hostServerName;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             NodesList = nodesList;
         }
 
-        /// <summary> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </summary>
+        /// <summary>
+        /// Host Os Name in case of Stand Alone and Cluster Name in case of distributed container.
+        /// Serialized Name: AzureWorkloadContainerExtendedInfo.hostServerName
+        /// </summary>
         public string HostServerName { get; set; }
-        /// <summary> Inquiry Status for the container. </summary>
+        /// <summary>
+        /// Inquiry Status for the container.
+        /// Serialized Name: AzureWorkloadContainerExtendedInfo.inquiryInfo
+        /// </summary>
         public InquiryInfo InquiryInfo { get; set; }
-        /// <summary> List of the nodes in case of distributed container. </summary>
+        /// <summary>
+        /// List of the nodes in case of distributed container.
+        /// Serialized Name: AzureWorkloadContainerExtendedInfo.nodesList
+        /// </summary>
         public IList<DistributedNodesInfo> NodesList { get; }
     }
 }

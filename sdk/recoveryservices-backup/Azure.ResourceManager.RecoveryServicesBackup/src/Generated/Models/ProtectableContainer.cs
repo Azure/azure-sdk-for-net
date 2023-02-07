@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Protectable Container Class.
+    /// Serialized Name: ProtectableContainer
     /// Please note <see cref="ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureStorageProtectableContainer"/> and <see cref="AzureVmAppContainerProtectableContainer"/>.
     /// </summary>
@@ -20,15 +21,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ProtectableContainer. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectableContainer.friendlyName
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectableContainer.backupManagementType
+        /// </param>
         /// <param name="protectableContainerType">
         /// Type of the container. The value of this property for
         /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
         /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
+        /// Serialized Name: ProtectableContainer.protectableContainerType
         /// </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
+        /// <param name="healthStatus">
+        /// Status of health of the container.
+        /// Serialized Name: ProtectableContainer.healthStatus
+        /// </param>
+        /// <param name="containerId">
+        /// Fabric Id of the container such as ARM Id.
+        /// Serialized Name: ProtectableContainer.containerId
+        /// </param>
         internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId)
         {
             FriendlyName = friendlyName;
@@ -38,19 +52,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerId = containerId;
         }
 
-        /// <summary> Friendly name of the container. </summary>
+        /// <summary>
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectableContainer.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> Type of backup management for the container. </summary>
+        /// <summary>
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectableContainer.backupManagementType
+        /// </summary>
         public BackupManagementType? BackupManagementType { get; set; }
         /// <summary>
         /// Type of the container. The value of this property for
         /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
         /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
+        /// Serialized Name: ProtectableContainer.protectableContainerType
         /// </summary>
         internal ProtectableContainerType ProtectableContainerType { get; set; }
-        /// <summary> Status of health of the container. </summary>
+        /// <summary>
+        /// Status of health of the container.
+        /// Serialized Name: ProtectableContainer.healthStatus
+        /// </summary>
         public string HealthStatus { get; set; }
-        /// <summary> Fabric Id of the container such as ARM Id. </summary>
+        /// <summary>
+        /// Fabric Id of the container such as ARM Id.
+        /// Serialized Name: ProtectableContainer.containerId
+        /// </summary>
         public string ContainerId { get; set; }
     }
 }

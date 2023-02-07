@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> MAB workload-specific error information. </summary>
+    /// <summary>
+    /// MAB workload-specific error information.
+    /// Serialized Name: MabErrorInfo
+    /// </summary>
     public partial class MabErrorInfo
     {
         /// <summary> Initializes a new instance of MabErrorInfo. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of MabErrorInfo. </summary>
-        /// <param name="errorString"> Localized error string. </param>
-        /// <param name="recommendations"> List of localized recommendations. </param>
+        /// <param name="errorString">
+        /// Localized error string.
+        /// Serialized Name: MabErrorInfo.errorString
+        /// </param>
+        /// <param name="recommendations">
+        /// List of localized recommendations.
+        /// Serialized Name: MabErrorInfo.recommendations
+        /// </param>
         internal MabErrorInfo(string errorString, IReadOnlyList<string> recommendations)
         {
             ErrorString = errorString;
             Recommendations = recommendations;
         }
 
-        /// <summary> Localized error string. </summary>
+        /// <summary>
+        /// Localized error string.
+        /// Serialized Name: MabErrorInfo.errorString
+        /// </summary>
         public string ErrorString { get; }
-        /// <summary> List of localized recommendations. </summary>
+        /// <summary>
+        /// List of localized recommendations.
+        /// Serialized Name: MabErrorInfo.recommendations
+        /// </summary>
         public IReadOnlyList<string> Recommendations { get; }
     }
 }

@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// IaaS VM workload-specific container.
+    /// Serialized Name: IaaSVMContainer
     /// Please note <see cref="IaasVmContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureIaaSClassicComputeVmContainer"/> and <see cref="AzureIaaSComputeVmContainer"/>.
     /// </summary>
@@ -21,20 +22,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IaasVmContainer. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectionContainer.friendlyName
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectionContainer.backupManagementType
+        /// </param>
+        /// <param name="registrationStatus">
+        /// Status of registration of the container with the Recovery Services Vault.
+        /// Serialized Name: ProtectionContainer.registrationStatus
+        /// </param>
+        /// <param name="healthStatus">
+        /// Status of health of the container.
+        /// Serialized Name: ProtectionContainer.healthStatus
+        /// </param>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
+        /// Serialized Name: ProtectionContainer.containerType
         /// </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
-        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
-        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <param name="protectableObjectType">
+        /// Type of the protectable object associated with this container
+        /// Serialized Name: ProtectionContainer.protectableObjectType
+        /// </param>
+        /// <param name="virtualMachineId">
+        /// Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container.
+        /// Serialized Name: IaaSVMContainer.virtualMachineId
+        /// </param>
+        /// <param name="virtualMachineVersion">
+        /// Specifies whether the container represents a Classic or an Azure Resource Manager VM.
+        /// Serialized Name: IaaSVMContainer.virtualMachineVersion
+        /// </param>
+        /// <param name="resourceGroup">
+        /// Resource group name of Recovery Services Vault.
+        /// Serialized Name: IaaSVMContainer.resourceGroup
+        /// </param>
         internal IaasVmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             VirtualMachineId = virtualMachineId;
@@ -43,11 +69,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerType = containerType;
         }
 
-        /// <summary> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </summary>
+        /// <summary>
+        /// Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container.
+        /// Serialized Name: IaaSVMContainer.virtualMachineId
+        /// </summary>
         public string VirtualMachineId { get; set; }
-        /// <summary> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </summary>
+        /// <summary>
+        /// Specifies whether the container represents a Classic or an Azure Resource Manager VM.
+        /// Serialized Name: IaaSVMContainer.virtualMachineVersion
+        /// </summary>
         public string VirtualMachineVersion { get; set; }
-        /// <summary> Resource group name of Recovery Services Vault. </summary>
+        /// <summary>
+        /// Resource group name of Recovery Services Vault.
+        /// Serialized Name: IaaSVMContainer.resourceGroup
+        /// </summary>
         public string ResourceGroup { get; set; }
     }
 }

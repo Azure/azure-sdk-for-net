@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure File Share workload specific backup copy. </summary>
+    /// <summary>
+    /// Azure File Share workload specific backup copy.
+    /// Serialized Name: AzureFileShareRecoveryPoint
+    /// </summary>
     public partial class AzureFileShareRecoveryPoint : RecoveryPoint
     {
         /// <summary> Initializes a new instance of AzureFileShareRecoveryPoint. </summary>
@@ -19,12 +22,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureFileShareRecoveryPoint. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="recoveryPointType"> Type of the backup copy. Specifies whether it is a crash consistent backup or app consistent. </param>
-        /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
-        /// <param name="fileShareSnapshotUri"> Contains Url to the snapshot of fileshare, if applicable. </param>
-        /// <param name="recoveryPointSizeInGB"> Contains recovery point size. </param>
-        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: RecoveryPoint.objectType
+        /// </param>
+        /// <param name="recoveryPointType">
+        /// Type of the backup copy. Specifies whether it is a crash consistent backup or app consistent.
+        /// Serialized Name: AzureFileShareRecoveryPoint.recoveryPointType
+        /// </param>
+        /// <param name="recoveryPointOn">
+        /// Time at which this backup copy was created.
+        /// Serialized Name: AzureFileShareRecoveryPoint.recoveryPointTime
+        /// </param>
+        /// <param name="fileShareSnapshotUri">
+        /// Contains Url to the snapshot of fileshare, if applicable
+        /// Serialized Name: AzureFileShareRecoveryPoint.fileShareSnapshotUri
+        /// </param>
+        /// <param name="recoveryPointSizeInGB">
+        /// Contains recovery point size
+        /// Serialized Name: AzureFileShareRecoveryPoint.recoveryPointSizeInGB
+        /// </param>
+        /// <param name="recoveryPointProperties">
+        /// Properties of Recovery Point
+        /// Serialized Name: AzureFileShareRecoveryPoint.recoveryPointProperties
+        /// </param>
         internal AzureFileShareRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties) : base(objectType)
         {
             RecoveryPointType = recoveryPointType;
@@ -35,15 +56,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "AzureFileShareRecoveryPoint";
         }
 
-        /// <summary> Type of the backup copy. Specifies whether it is a crash consistent backup or app consistent. </summary>
+        /// <summary>
+        /// Type of the backup copy. Specifies whether it is a crash consistent backup or app consistent.
+        /// Serialized Name: AzureFileShareRecoveryPoint.recoveryPointType
+        /// </summary>
         public string RecoveryPointType { get; set; }
-        /// <summary> Time at which this backup copy was created. </summary>
+        /// <summary>
+        /// Time at which this backup copy was created.
+        /// Serialized Name: AzureFileShareRecoveryPoint.recoveryPointTime
+        /// </summary>
         public DateTimeOffset? RecoveryPointOn { get; set; }
-        /// <summary> Contains Url to the snapshot of fileshare, if applicable. </summary>
+        /// <summary>
+        /// Contains Url to the snapshot of fileshare, if applicable
+        /// Serialized Name: AzureFileShareRecoveryPoint.fileShareSnapshotUri
+        /// </summary>
         public Uri FileShareSnapshotUri { get; set; }
-        /// <summary> Contains recovery point size. </summary>
+        /// <summary>
+        /// Contains recovery point size
+        /// Serialized Name: AzureFileShareRecoveryPoint.recoveryPointSizeInGB
+        /// </summary>
         public int? RecoveryPointSizeInGB { get; set; }
-        /// <summary> Properties of Recovery Point. </summary>
+        /// <summary>
+        /// Properties of Recovery Point
+        /// Serialized Name: AzureFileShareRecoveryPoint.recoveryPointProperties
+        /// </summary>
         public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Parameters to Provision ILR API. </summary>
+    /// <summary>
+    /// Parameters to Provision ILR API.
+    /// Serialized Name: ILRRequestResource
+    /// </summary>
     public partial class ILRRequestResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ILRRequestResource. </summary>
@@ -30,10 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ILRRequestResource properties
+        /// Serialized Name: ILRRequestResource.properties
         /// Please note <see cref="ILRRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileShareProvisionILRRequest"/> and <see cref="IaasVmilrRegistrationRequest"/>.
         /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="eTag">
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         internal ILRRequestResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ILRRequest properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -42,11 +49,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// ILRRequestResource properties
+        /// Serialized Name: ILRRequestResource.properties
         /// Please note <see cref="ILRRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileShareProvisionILRRequest"/> and <see cref="IaasVmilrRegistrationRequest"/>.
         /// </summary>
         public ILRRequest Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary>
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

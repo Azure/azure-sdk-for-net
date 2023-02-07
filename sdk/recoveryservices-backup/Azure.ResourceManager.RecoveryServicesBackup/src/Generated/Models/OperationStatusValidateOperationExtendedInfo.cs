@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Operation status extended info for ValidateOperation action. </summary>
+    /// <summary>
+    /// Operation status extended info for ValidateOperation action.
+    /// Serialized Name: OperationStatusValidateOperationExtendedInfo
+    /// </summary>
     public partial class OperationStatusValidateOperationExtendedInfo : OperationStatusExtendedInfo
     {
         /// <summary> Initializes a new instance of OperationStatusValidateOperationExtendedInfo. </summary>
@@ -19,17 +22,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationStatusValidateOperationExtendedInfo. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="validateOperationResponse"> Gets the validation operation response. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationStatusExtendedInfo.objectType
+        /// </param>
+        /// <param name="validateOperationResponse">
+        /// Gets the validation operation response
+        /// Serialized Name: OperationStatusValidateOperationExtendedInfo.validateOperationResponse
+        /// </param>
         internal OperationStatusValidateOperationExtendedInfo(string objectType, ValidateOperationResponse validateOperationResponse) : base(objectType)
         {
             ValidateOperationResponse = validateOperationResponse;
             ObjectType = objectType ?? "OperationStatusValidateOperationExtendedInfo";
         }
 
-        /// <summary> Gets the validation operation response. </summary>
+        /// <summary>
+        /// Gets the validation operation response
+        /// Serialized Name: OperationStatusValidateOperationExtendedInfo.validateOperationResponse
+        /// </summary>
         internal ValidateOperationResponse ValidateOperationResponse { get; }
-        /// <summary> Gets the validation result. </summary>
+        /// <summary>
+        /// Gets the validation result
+        /// Serialized Name: ValidateOperationResponse.validationResults
+        /// </summary>
         public IReadOnlyList<ErrorDetail> ValidateOperationResponseValidationResults
         {
             get => ValidateOperationResponse?.ValidationResults;

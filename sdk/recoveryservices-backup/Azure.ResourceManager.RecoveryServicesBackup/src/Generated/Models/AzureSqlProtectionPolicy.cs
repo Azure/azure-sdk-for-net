@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure SQL workload-specific backup policy. </summary>
+    /// <summary>
+    /// Azure SQL workload-specific backup policy.
+    /// Serialized Name: AzureSqlProtectionPolicy
+    /// </summary>
     public partial class AzureSqlProtectionPolicy : ProtectionPolicy
     {
         /// <summary> Initializes a new instance of AzureSqlProtectionPolicy. </summary>
@@ -19,11 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureSqlProtectionPolicy. </summary>
-        /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
-        /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="protectedItemsCount">
+        /// Number of items associated with this policy.
+        /// Serialized Name: ProtectionPolicy.protectedItemsCount
+        /// </param>
+        /// <param name="backupManagementType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: ProtectionPolicy.backupManagementType
+        /// </param>
+        /// <param name="resourceGuardOperationRequests">
+        /// ResourceGuard Operation Requests
+        /// Serialized Name: ProtectionPolicy.resourceGuardOperationRequests
+        /// </param>
         /// <param name="retentionPolicy">
         /// Retention policy details.
+        /// Serialized Name: AzureSqlProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
@@ -35,6 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Retention policy details.
+        /// Serialized Name: AzureSqlProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </summary>

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> IaaS VM workload-specific backup policy. </summary>
+    /// <summary>
+    /// IaaS VM workload-specific backup policy.
+    /// Serialized Name: AzureIaaSVMProtectionPolicy
+    /// </summary>
     public partial class AzureIaasVmProtectionPolicy : ProtectionPolicy
     {
         /// <summary> Initializes a new instance of AzureIaasVmProtectionPolicy. </summary>
@@ -21,17 +24,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureIaasVmProtectionPolicy. </summary>
-        /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
-        /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
-        /// <param name="instantRPDetails"></param>
+        /// <param name="protectedItemsCount">
+        /// Number of items associated with this policy.
+        /// Serialized Name: ProtectionPolicy.protectedItemsCount
+        /// </param>
+        /// <param name="backupManagementType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: ProtectionPolicy.backupManagementType
+        /// </param>
+        /// <param name="resourceGuardOperationRequests">
+        /// ResourceGuard Operation Requests
+        /// Serialized Name: ProtectionPolicy.resourceGuardOperationRequests
+        /// </param>
+        /// <param name="instantRPDetails"> Serialized Name: AzureIaaSVMProtectionPolicy.instantRPDetails. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.schedulePolicy
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </param>
         /// <param name="retentionPolicy">
         /// Retention policy with the details on backup copy retention ranges.
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
@@ -39,10 +53,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Tiering policy to automatically move RPs to another tier
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.tieringPolicy
         /// </param>
-        /// <param name="instantRpRetentionRangeInDays"> Instant RP retention policy range in days. </param>
-        /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </param>
-        /// <param name="policyType"></param>
+        /// <param name="instantRpRetentionRangeInDays">
+        /// Instant RP retention policy range in days
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.instantRpRetentionRangeInDays
+        /// </param>
+        /// <param name="timeZone">
+        /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.timeZone
+        /// </param>
+        /// <param name="policyType"> Serialized Name: AzureIaaSVMProtectionPolicy.policyType. </param>
         internal AzureIaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, InstantRPAdditionalDetails instantRPDetails, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy, int? instantRpRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
         {
             InstantRPDetails = instantRPDetails;
@@ -55,16 +76,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupManagementType = backupManagementType ?? "AzureIaasVM";
         }
 
-        /// <summary> Gets or sets the instant rp details. </summary>
+        /// <summary> Serialized Name: AzureIaaSVMProtectionPolicy.instantRPDetails. </summary>
         public InstantRPAdditionalDetails InstantRPDetails { get; set; }
         /// <summary>
         /// Backup schedule specified as part of backup policy.
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.schedulePolicy
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </summary>
         public SchedulePolicy SchedulePolicy { get; set; }
         /// <summary>
         /// Retention policy with the details on backup copy retention ranges.
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </summary>
@@ -73,13 +96,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Tiering policy to automatically move RPs to another tier
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.tieringPolicy
         /// </summary>
         public IDictionary<string, TieringPolicy> TieringPolicy { get; }
-        /// <summary> Instant RP retention policy range in days. </summary>
+        /// <summary>
+        /// Instant RP retention policy range in days
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.instantRpRetentionRangeInDays
+        /// </summary>
         public int? InstantRpRetentionRangeInDays { get; set; }
-        /// <summary> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </summary>
+        /// <summary>
+        /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
+        /// Serialized Name: AzureIaaSVMProtectionPolicy.timeZone
+        /// </summary>
         public string TimeZone { get; set; }
-        /// <summary> Gets or sets the policy type. </summary>
+        /// <summary> Serialized Name: AzureIaaSVMProtectionPolicy.policyType. </summary>
         public IaasVmPolicyType? PolicyType { get; set; }
     }
 }

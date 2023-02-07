@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> ListRecoveryPointsRecommendedForMoveRequest Request. </summary>
+    /// <summary>
+    /// ListRecoveryPointsRecommendedForMoveRequest Request
+    /// Serialized Name: ListRecoveryPointsRecommendedForMoveRequest
+    /// </summary>
     public partial class ListRecoveryPointsRecommendedForMoveContent
     {
         /// <summary> Initializes a new instance of ListRecoveryPointsRecommendedForMoveContent. </summary>
@@ -19,9 +22,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExcludedRPList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Gets the class type. </summary>
+        /// <summary>
+        /// Gets the class type.
+        /// Serialized Name: ListRecoveryPointsRecommendedForMoveRequest.objectType
+        /// </summary>
         public string ObjectType { get; set; }
-        /// <summary> List of Recovery Points excluded from Move. </summary>
+        /// <summary>
+        /// List of Recovery Points excluded from Move
+        /// Serialized Name: ListRecoveryPointsRecommendedForMoveRequest.excludedRPList
+        /// </summary>
         public IList<string> ExcludedRPList { get; }
     }
 }

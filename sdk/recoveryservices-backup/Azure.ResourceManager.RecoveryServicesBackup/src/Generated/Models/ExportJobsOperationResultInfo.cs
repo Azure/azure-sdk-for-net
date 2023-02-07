@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> This class is used to send blob details after exporting jobs. </summary>
+    /// <summary>
+    /// This class is used to send blob details after exporting jobs.
+    /// Serialized Name: ExportJobsOperationResultInfo
+    /// </summary>
     public partial class ExportJobsOperationResultInfo : OperationResultInfoBase
     {
         /// <summary> Initializes a new instance of ExportJobsOperationResultInfo. </summary>
@@ -19,11 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ExportJobsOperationResultInfo. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="blobUri"> URL of the blob into which the serialized string of list of jobs is exported. </param>
-        /// <param name="blobSasKey"> SAS key to access the blob. It expires in 15 mins. </param>
-        /// <param name="excelFileBlobUri"> URL of the blob into which the ExcelFile is uploaded. </param>
-        /// <param name="excelFileBlobSasKey"> SAS key to access the blob. It expires in 15 mins. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationResultInfoBase.objectType
+        /// </param>
+        /// <param name="blobUri">
+        /// URL of the blob into which the serialized string of list of jobs is exported.
+        /// Serialized Name: ExportJobsOperationResultInfo.blobUrl
+        /// </param>
+        /// <param name="blobSasKey">
+        /// SAS key to access the blob. It expires in 15 mins.
+        /// Serialized Name: ExportJobsOperationResultInfo.blobSasKey
+        /// </param>
+        /// <param name="excelFileBlobUri">
+        /// URL of the blob into which the ExcelFile is uploaded.
+        /// Serialized Name: ExportJobsOperationResultInfo.excelFileBlobUrl
+        /// </param>
+        /// <param name="excelFileBlobSasKey">
+        /// SAS key to access the blob. It expires in 15 mins.
+        /// Serialized Name: ExportJobsOperationResultInfo.excelFileBlobSasKey
+        /// </param>
         internal ExportJobsOperationResultInfo(string objectType, Uri blobUri, string blobSasKey, Uri excelFileBlobUri, string excelFileBlobSasKey) : base(objectType)
         {
             BlobUri = blobUri;
@@ -33,13 +51,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "ExportJobsOperationResultInfo";
         }
 
-        /// <summary> URL of the blob into which the serialized string of list of jobs is exported. </summary>
+        /// <summary>
+        /// URL of the blob into which the serialized string of list of jobs is exported.
+        /// Serialized Name: ExportJobsOperationResultInfo.blobUrl
+        /// </summary>
         public Uri BlobUri { get; }
-        /// <summary> SAS key to access the blob. It expires in 15 mins. </summary>
+        /// <summary>
+        /// SAS key to access the blob. It expires in 15 mins.
+        /// Serialized Name: ExportJobsOperationResultInfo.blobSasKey
+        /// </summary>
         public string BlobSasKey { get; }
-        /// <summary> URL of the blob into which the ExcelFile is uploaded. </summary>
+        /// <summary>
+        /// URL of the blob into which the ExcelFile is uploaded.
+        /// Serialized Name: ExportJobsOperationResultInfo.excelFileBlobUrl
+        /// </summary>
         public Uri ExcelFileBlobUri { get; }
-        /// <summary> SAS key to access the blob. It expires in 15 mins. </summary>
+        /// <summary>
+        /// SAS key to access the blob. It expires in 15 mins.
+        /// Serialized Name: ExportJobsOperationResultInfo.excelFileBlobSasKey
+        /// </summary>
         public string ExcelFileBlobSasKey { get; }
     }
 }

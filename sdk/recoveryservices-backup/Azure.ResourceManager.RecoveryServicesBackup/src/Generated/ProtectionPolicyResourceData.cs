@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectionPolicyResource properties
+        /// Serialized Name: ProtectionPolicyResource.properties
         /// Please note <see cref="ProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureIaasVmProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="AzureFileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
         /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="eTag">
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         internal ProtectionPolicyResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectionPolicy properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -43,11 +47,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// ProtectionPolicyResource properties
+        /// Serialized Name: ProtectionPolicyResource.properties
         /// Please note <see cref="ProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureIaasVmProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="AzureFileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
         /// </summary>
         public ProtectionPolicy Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary>
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

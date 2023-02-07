@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for validate operation request.
+    /// Serialized Name: ValidateOperationRequest
     /// Please note <see cref="ValidateOperationRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ValidateIaasVmRestoreOperationRequest"/> and <see cref="ValidateRestoreOperationRequest"/>.
     /// </summary>
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
         }
 
-        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        /// <summary>
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: ValidateOperationRequest.objectType
+        /// </summary>
         internal string ObjectType { get; set; }
     }
 }

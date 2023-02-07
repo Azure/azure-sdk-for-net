@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Specifies the fabric name - Azure or AD. </summary>
+    /// <summary>
+    /// Specifies the fabric name - Azure or AD
+    /// Serialized Name: FabricName
+    /// </summary>
     public readonly partial struct FabricName : IEquatable<FabricName>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InvalidValue = "Invalid";
         private const string AzureValue = "Azure";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: FabricName.Invalid
+        /// </summary>
         public static FabricName Invalid { get; } = new FabricName(InvalidValue);
-        /// <summary> Azure. </summary>
+        /// <summary>
+        /// Azure
+        /// Serialized Name: FabricName.Azure
+        /// </summary>
         public static FabricName Azure { get; } = new FabricName(AzureValue);
         /// <summary> Determines if two <see cref="FabricName"/> values are the same. </summary>
         public static bool operator ==(FabricName left, FabricName right) => left.Equals(right);

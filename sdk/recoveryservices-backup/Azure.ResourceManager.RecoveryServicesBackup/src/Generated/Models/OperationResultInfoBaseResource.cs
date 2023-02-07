@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Base class for operation result info. </summary>
+    /// <summary>
+    /// Base class for operation result info.
+    /// Serialized Name: OperationResultInfoBaseResource
+    /// </summary>
     public partial class OperationResultInfoBaseResource : OperationWorkerResponse
     {
         /// <summary> Initializes a new instance of OperationResultInfoBaseResource. </summary>
@@ -18,10 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationResultInfoBaseResource. </summary>
-        /// <param name="statusCode"> HTTP Status Code of the operation. </param>
-        /// <param name="headers"> HTTP headers associated with this operation. </param>
+        /// <param name="statusCode">
+        /// HTTP Status Code of the operation.
+        /// Serialized Name: OperationWorkerResponse.statusCode
+        /// </param>
+        /// <param name="headers">
+        /// HTTP headers associated with this operation.
+        /// Serialized Name: OperationWorkerResponse.headers
+        /// </param>
         /// <param name="operation">
         /// OperationResultInfoBaseResource operation
+        /// Serialized Name: OperationResultInfoBaseResource.operation
         /// Please note <see cref="OperationResultInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExportJobsOperationResultInfo"/> and <see cref="OperationResultInfo"/>.
         /// </param>
@@ -32,6 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// OperationResultInfoBaseResource operation
+        /// Serialized Name: OperationResultInfoBaseResource.operation
         /// Please note <see cref="OperationResultInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExportJobsOperationResultInfo"/> and <see cref="OperationResultInfo"/>.
         /// </summary>

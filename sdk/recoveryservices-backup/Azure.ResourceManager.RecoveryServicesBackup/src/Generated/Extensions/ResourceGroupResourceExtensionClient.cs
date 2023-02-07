@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Gets a collection of BackupResourceConfigResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of BackupResourceConfigResources and their operations over a BackupResourceConfigResource. </returns>
-        public virtual BackupResourceConfigResourceCollection GetBackupResourceConfigResources()
+        public virtual BackupResourceConfigCollection GetBackupResourceConfigs()
         {
-            return GetCachedClient(Client => new BackupResourceConfigResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupResourceConfigCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ProtectionIntentResources in the ResourceGroupResource. </summary>
@@ -127,23 +127,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Gets a collection of BackupResourceVaultConfigResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of BackupResourceVaultConfigResources and their operations over a BackupResourceVaultConfigResource. </returns>
-        public virtual BackupResourceVaultConfigResourceCollection GetBackupResourceVaultConfigResources()
+        public virtual BackupResourceVaultConfigCollection GetBackupResourceVaultConfigs()
         {
-            return GetCachedClient(Client => new BackupResourceVaultConfigResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupResourceVaultConfigCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of BackupResourceEncryptionConfigExtendedResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of BackupResourceEncryptionConfigExtendedResources and their operations over a BackupResourceEncryptionConfigExtendedResource. </returns>
-        public virtual BackupResourceEncryptionConfigExtendedResourceCollection GetBackupResourceEncryptionConfigExtendedResources()
+        public virtual BackupResourceEncryptionConfigExtendedCollection GetBackupResourceEncryptionConfigExtendeds()
         {
-            return GetCachedClient(Client => new BackupResourceEncryptionConfigExtendedResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupResourceEncryptionConfigExtendedCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionResourceCollection GetPrivateEndpointConnectionResources()
+        /// <summary> Gets a collection of BackupPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BackupPrivateEndpointConnectionResources and their operations over a BackupPrivateEndpointConnectionResource. </returns>
+        public virtual BackupPrivateEndpointConnectionCollection GetBackupPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ProtectionPolicyResources in the ResourceGroupResource. </summary>
@@ -154,20 +154,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return new ProtectionPolicyResourceCollection(Client, Id, vaultName);
         }
 
-        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupJobResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public virtual JobResourceCollection GetJobResources(string vaultName)
+        /// <returns> An object representing collection of BackupJobResources and their operations over a BackupJobResource. </returns>
+        public virtual BackupJobCollection GetBackupJobs(string vaultName)
         {
-            return new JobResourceCollection(Client, Id, vaultName);
+            return new BackupJobCollection(Client, Id, vaultName);
         }
 
-        /// <summary> Gets a collection of BackupEngineBaseResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupEngineResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of BackupEngineBaseResources and their operations over a BackupEngineBaseResource. </returns>
-        public virtual BackupEngineBaseResourceCollection GetBackupEngineBaseResources(string vaultName)
+        /// <returns> An object representing collection of BackupEngineResources and their operations over a BackupEngineResource. </returns>
+        public virtual BackupEngineCollection GetBackupEngines(string vaultName)
         {
-            return new BackupEngineBaseResourceCollection(Client, Id, vaultName);
+            return new BackupEngineCollection(Client, Id, vaultName);
         }
 
         /// <summary> Gets a collection of ProtectionContainerResources in the ResourceGroupResource. </summary>

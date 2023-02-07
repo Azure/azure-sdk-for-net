@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// AzureRestoreValidation request.
+    /// Serialized Name: ValidateRestoreOperationRequest
     /// Please note <see cref="ValidateRestoreOperationRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ValidateIaasVmRestoreOperationRequest"/>.
     /// </summary>
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Sets restore request to be validated
+        /// Serialized Name: ValidateRestoreOperationRequest.restoreRequest
         /// Please note <see cref="RestoreRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileShareRestoreRequest"/>, <see cref="AzureWorkloadPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSAPHanaRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSQLPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSQLRestoreRequest"/>, <see cref="AzureWorkloadSQLRestoreWithRehydrateRequest"/>, <see cref="IaasVmRestoreRequest"/> and <see cref="IaasVmRestoreWithRehydrationRequest"/>.
         /// </summary>

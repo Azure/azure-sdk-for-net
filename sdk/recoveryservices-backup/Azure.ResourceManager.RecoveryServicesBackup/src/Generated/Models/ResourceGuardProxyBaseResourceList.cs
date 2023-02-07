@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> List of ResourceGuardProxyBase resources. </summary>
+    /// <summary>
+    /// List of ResourceGuardProxyBase resources
+    /// Serialized Name: ResourceGuardProxyBaseResourceList
+    /// </summary>
     internal partial class ResourceGuardProxyBaseResourceList
     {
         /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
-        /// <param name="value"> List of resources. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
+        /// <param name="value">
+        /// List of resources.
+        /// Serialized Name: ResourceGuardProxyBaseResourceList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: ResourceGuardProxyBaseResourceList.nextLink
+        /// </param>
         internal ResourceGuardProxyBaseResourceList(IReadOnlyList<ResourceGuardProxyBaseResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of resources. </summary>
+        /// <summary>
+        /// List of resources.
+        /// Serialized Name: ResourceGuardProxyBaseResourceList.value
+        /// </summary>
         public IReadOnlyList<ResourceGuardProxyBaseResourceData> Value { get; }
-        /// <summary> The uri to fetch the next page of resources. </summary>
+        /// <summary>
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: ResourceGuardProxyBaseResourceList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

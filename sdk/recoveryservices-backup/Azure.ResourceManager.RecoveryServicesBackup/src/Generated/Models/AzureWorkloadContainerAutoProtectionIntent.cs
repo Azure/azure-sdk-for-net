@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure workload specific protection intent item. </summary>
+    /// <summary>
+    /// Azure workload specific protection intent item.
+    /// Serialized Name: AzureWorkloadContainerAutoProtectionIntent
+    /// </summary>
     public partial class AzureWorkloadContainerAutoProtectionIntent : ProtectionIntent
     {
         /// <summary> Initializes a new instance of AzureWorkloadContainerAutoProtectionIntent. </summary>
@@ -17,12 +20,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadContainerAutoProtectionIntent. </summary>
-        /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
-        /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
-        /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
-        /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
-        /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="protectionState"> Backup state of this backup item. </param>
+        /// <param name="protectionIntentItemType">
+        /// backup protectionIntent type.
+        /// Serialized Name: ProtectionIntent.protectionIntentItemType
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the backed up item.
+        /// Serialized Name: ProtectionIntent.backupManagementType
+        /// </param>
+        /// <param name="sourceResourceId">
+        /// ARM ID of the resource to be backed up.
+        /// Serialized Name: ProtectionIntent.sourceResourceId
+        /// </param>
+        /// <param name="itemId">
+        /// ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId
+        /// Serialized Name: ProtectionIntent.itemId
+        /// </param>
+        /// <param name="policyId">
+        /// ID of the backup policy with which this item is backed up.
+        /// Serialized Name: ProtectionIntent.policyId
+        /// </param>
+        /// <param name="protectionState">
+        /// Backup state of this backup item.
+        /// Serialized Name: ProtectionIntent.protectionState
+        /// </param>
         internal AzureWorkloadContainerAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, string sourceResourceId, string itemId, string policyId, ProtectionStatus? protectionState) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
         {
             ProtectionIntentItemType = protectionIntentItemType;

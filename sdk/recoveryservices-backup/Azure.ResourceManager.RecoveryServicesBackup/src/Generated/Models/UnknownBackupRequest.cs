@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownBackupRequest. </summary>
+    /// <summary>
+    /// The UnknownBackupRequest.
+    /// Serialized Name: UnknownBackupRequest
+    /// </summary>
     internal partial class UnknownBackupRequest : BackupRequest
     {
         /// <summary> Initializes a new instance of UnknownBackupRequest. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: BackupRequest.objectType
+        /// </param>
         internal UnknownBackupRequest(string objectType) : base(objectType)
         {
             ObjectType = objectType ?? "Unknown";

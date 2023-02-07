@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Pre-backup validation for Azure VM Workload provider. </summary>
+    /// <summary>
+    /// Pre-backup validation for Azure VM Workload provider.
+    /// Serialized Name: PreBackupValidation
+    /// </summary>
     public partial class PreBackupValidation
     {
         /// <summary> Initializes a new instance of PreBackupValidation. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of PreBackupValidation. </summary>
-        /// <param name="status"> Status of protectable item, i.e. InProgress,Succeeded,Failed. </param>
-        /// <param name="code"> Error code of protectable item. </param>
-        /// <param name="message"> Message corresponding to the error code for the protectable item. </param>
+        /// <param name="status">
+        /// Status of protectable item, i.e. InProgress,Succeeded,Failed
+        /// Serialized Name: PreBackupValidation.status
+        /// </param>
+        /// <param name="code">
+        /// Error code of protectable item
+        /// Serialized Name: PreBackupValidation.code
+        /// </param>
+        /// <param name="message">
+        /// Message corresponding to the error code for the protectable item
+        /// Serialized Name: PreBackupValidation.message
+        /// </param>
         internal PreBackupValidation(InquiryStatus? status, string code, string message)
         {
             Status = status;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Message = message;
         }
 
-        /// <summary> Status of protectable item, i.e. InProgress,Succeeded,Failed. </summary>
+        /// <summary>
+        /// Status of protectable item, i.e. InProgress,Succeeded,Failed
+        /// Serialized Name: PreBackupValidation.status
+        /// </summary>
         public InquiryStatus? Status { get; set; }
-        /// <summary> Error code of protectable item. </summary>
+        /// <summary>
+        /// Error code of protectable item
+        /// Serialized Name: PreBackupValidation.code
+        /// </summary>
         public string Code { get; set; }
-        /// <summary> Message corresponding to the error code for the protectable item. </summary>
+        /// <summary>
+        /// Message corresponding to the error code for the protectable item
+        /// Serialized Name: PreBackupValidation.message
+        /// </summary>
         public string Message { get; set; }
     }
 }

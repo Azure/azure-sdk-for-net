@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Operation status extended info for ILR provision action. </summary>
+    /// <summary>
+    /// Operation status extended info for ILR provision action.
+    /// Serialized Name: OperationStatusProvisionILRExtendedInfo
+    /// </summary>
     public partial class OperationStatusProvisionILRExtendedInfo : OperationStatusExtendedInfo
     {
         /// <summary> Initializes a new instance of OperationStatusProvisionILRExtendedInfo. </summary>
@@ -19,17 +22,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationStatusProvisionILRExtendedInfo. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="recoveryTarget"> Target details for file / folder restore. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationStatusExtendedInfo.objectType
+        /// </param>
+        /// <param name="recoveryTarget">
+        /// Target details for file / folder restore.
+        /// Serialized Name: OperationStatusProvisionILRExtendedInfo.recoveryTarget
+        /// </param>
         internal OperationStatusProvisionILRExtendedInfo(string objectType, InstantItemRecoveryTarget recoveryTarget) : base(objectType)
         {
             RecoveryTarget = recoveryTarget;
             ObjectType = objectType ?? "OperationStatusProvisionILRExtendedInfo";
         }
 
-        /// <summary> Target details for file / folder restore. </summary>
+        /// <summary>
+        /// Target details for file / folder restore.
+        /// Serialized Name: OperationStatusProvisionILRExtendedInfo.recoveryTarget
+        /// </summary>
         internal InstantItemRecoveryTarget RecoveryTarget { get; }
-        /// <summary> List of client scripts. </summary>
+        /// <summary>
+        /// List of client scripts.
+        /// Serialized Name: InstantItemRecoveryTarget.clientScripts
+        /// </summary>
         public IReadOnlyList<ClientScriptForConnect> RecoveryTargetClientScripts
         {
             get => RecoveryTarget?.ClientScripts;

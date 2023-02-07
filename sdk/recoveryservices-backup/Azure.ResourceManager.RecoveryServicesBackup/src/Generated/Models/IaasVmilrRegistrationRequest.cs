@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Restore files/folders from a backup copy of IaaS VM. </summary>
+    /// <summary>
+    /// Restore files/folders from a backup copy of IaaS VM.
+    /// Serialized Name: IaasVmilrRegistrationRequest
+    /// </summary>
     public partial class IaasVmilrRegistrationRequest : ILRRequest
     {
         /// <summary> Initializes a new instance of IaasVmilrRegistrationRequest. </summary>
@@ -17,11 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IaasVmilrRegistrationRequest. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="recoveryPointId"> ID of the IaaS VM backup copy from where the files/folders have to be restored. </param>
-        /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine whose the files / folders have to be restored. </param>
-        /// <param name="initiatorName"> iSCSI initiator name. </param>
-        /// <param name="renewExistingRegistration"> Whether to renew existing registration with the iSCSI server. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: ILRRequest.objectType
+        /// </param>
+        /// <param name="recoveryPointId">
+        /// ID of the IaaS VM backup copy from where the files/folders have to be restored.
+        /// Serialized Name: IaasVmilrRegistrationRequest.recoveryPointId
+        /// </param>
+        /// <param name="virtualMachineId">
+        /// Fully qualified ARM ID of the virtual machine whose the files / folders have to be restored.
+        /// Serialized Name: IaasVmilrRegistrationRequest.virtualMachineId
+        /// </param>
+        /// <param name="initiatorName">
+        /// iSCSI initiator name.
+        /// Serialized Name: IaasVmilrRegistrationRequest.initiatorName
+        /// </param>
+        /// <param name="renewExistingRegistration">
+        /// Whether to renew existing registration with the iSCSI server.
+        /// Serialized Name: IaasVmilrRegistrationRequest.renewExistingRegistration
+        /// </param>
         internal IaasVmilrRegistrationRequest(string objectType, string recoveryPointId, string virtualMachineId, string initiatorName, bool? renewExistingRegistration) : base(objectType)
         {
             RecoveryPointId = recoveryPointId;
@@ -31,13 +49,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "IaasVMILRRegistrationRequest";
         }
 
-        /// <summary> ID of the IaaS VM backup copy from where the files/folders have to be restored. </summary>
+        /// <summary>
+        /// ID of the IaaS VM backup copy from where the files/folders have to be restored.
+        /// Serialized Name: IaasVmilrRegistrationRequest.recoveryPointId
+        /// </summary>
         public string RecoveryPointId { get; set; }
-        /// <summary> Fully qualified ARM ID of the virtual machine whose the files / folders have to be restored. </summary>
+        /// <summary>
+        /// Fully qualified ARM ID of the virtual machine whose the files / folders have to be restored.
+        /// Serialized Name: IaasVmilrRegistrationRequest.virtualMachineId
+        /// </summary>
         public string VirtualMachineId { get; set; }
-        /// <summary> iSCSI initiator name. </summary>
+        /// <summary>
+        /// iSCSI initiator name.
+        /// Serialized Name: IaasVmilrRegistrationRequest.initiatorName
+        /// </summary>
         public string InitiatorName { get; set; }
-        /// <summary> Whether to renew existing registration with the iSCSI server. </summary>
+        /// <summary>
+        /// Whether to renew existing registration with the iSCSI server.
+        /// Serialized Name: IaasVmilrRegistrationRequest.renewExistingRegistration
+        /// </summary>
         public bool? RenewExistingRegistration { get; set; }
     }
 }

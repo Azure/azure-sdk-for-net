@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Operation result info. </summary>
+    /// <summary>
+    /// Operation result info.
+    /// Serialized Name: OperationResultInfo
+    /// </summary>
     public partial class OperationResultInfo : OperationResultInfoBase
     {
         /// <summary> Initializes a new instance of OperationResultInfo. </summary>
@@ -21,15 +24,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationResultInfo. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="jobList"> List of jobs created by this operation. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationResultInfoBase.objectType
+        /// </param>
+        /// <param name="jobList">
+        /// List of jobs created by this operation.
+        /// Serialized Name: OperationResultInfo.jobList
+        /// </param>
         internal OperationResultInfo(string objectType, IReadOnlyList<string> jobList) : base(objectType)
         {
             JobList = jobList;
             ObjectType = objectType ?? "OperationResultInfo";
         }
 
-        /// <summary> List of jobs created by this operation. </summary>
+        /// <summary>
+        /// List of jobs created by this operation.
+        /// Serialized Name: OperationResultInfo.jobList
+        /// </summary>
         public IReadOnlyList<string> JobList { get; }
     }
 }

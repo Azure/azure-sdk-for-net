@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The RecoveryPointMoveReadinessInfo. </summary>
+    /// <summary>
+    /// The RecoveryPointMoveReadinessInfo.
+    /// Serialized Name: RecoveryPointMoveReadinessInfo
+    /// </summary>
     public partial class RecoveryPointMoveReadinessInfo
     {
         /// <summary> Initializes a new instance of RecoveryPointMoveReadinessInfo. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointMoveReadinessInfo. </summary>
-        /// <param name="isReadyForMove"></param>
-        /// <param name="additionalInfo"></param>
+        /// <param name="isReadyForMove"> Serialized Name: RecoveryPointMoveReadinessInfo.isReadyForMove. </param>
+        /// <param name="additionalInfo"> Serialized Name: RecoveryPointMoveReadinessInfo.additionalInfo. </param>
         internal RecoveryPointMoveReadinessInfo(bool? isReadyForMove, string additionalInfo)
         {
             IsReadyForMove = isReadyForMove;
             AdditionalInfo = additionalInfo;
         }
 
-        /// <summary> Gets or sets the is ready for move. </summary>
+        /// <summary> Serialized Name: RecoveryPointMoveReadinessInfo.isReadyForMove. </summary>
         public bool? IsReadyForMove { get; set; }
-        /// <summary> Gets or sets the additional info. </summary>
+        /// <summary> Serialized Name: RecoveryPointMoveReadinessInfo.additionalInfo. </summary>
         public string AdditionalInfo { get; set; }
     }
 }

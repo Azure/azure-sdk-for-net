@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup item. Workload-specific backup items are derived from this class.
+    /// Serialized Name: WorkloadItem
     /// Please note <see cref="WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureVmWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSQLDatabaseWorkloadItem"/> and <see cref="AzureVmWorkloadSQLInstanceWorkloadItem"/>.
     /// </summary>
@@ -20,11 +21,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadItem. </summary>
-        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
-        /// <param name="workloadType"> Type of workload for the backup management. </param>
-        /// <param name="workloadItemType"> Type of the backup item. </param>
-        /// <param name="friendlyName"> Friendly name of the backup item. </param>
-        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management to backup an item.
+        /// Serialized Name: WorkloadItem.backupManagementType
+        /// </param>
+        /// <param name="workloadType">
+        /// Type of workload for the backup management
+        /// Serialized Name: WorkloadItem.workloadType
+        /// </param>
+        /// <param name="workloadItemType">
+        /// Type of the backup item.
+        /// Serialized Name: WorkloadItem.workloadItemType
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the backup item.
+        /// Serialized Name: WorkloadItem.friendlyName
+        /// </param>
+        /// <param name="protectionState">
+        /// State of the back up item.
+        /// Serialized Name: WorkloadItem.protectionState
+        /// </param>
         internal WorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, ProtectionStatus? protectionState)
         {
             BackupManagementType = backupManagementType;
@@ -34,15 +50,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectionState = protectionState;
         }
 
-        /// <summary> Type of backup management to backup an item. </summary>
+        /// <summary>
+        /// Type of backup management to backup an item.
+        /// Serialized Name: WorkloadItem.backupManagementType
+        /// </summary>
         public string BackupManagementType { get; set; }
-        /// <summary> Type of workload for the backup management. </summary>
+        /// <summary>
+        /// Type of workload for the backup management
+        /// Serialized Name: WorkloadItem.workloadType
+        /// </summary>
         public string WorkloadType { get; set; }
-        /// <summary> Type of the backup item. </summary>
+        /// <summary>
+        /// Type of the backup item.
+        /// Serialized Name: WorkloadItem.workloadItemType
+        /// </summary>
         internal string WorkloadItemType { get; set; }
-        /// <summary> Friendly name of the backup item. </summary>
+        /// <summary>
+        /// Friendly name of the backup item.
+        /// Serialized Name: WorkloadItem.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> State of the back up item. </summary>
+        /// <summary>
+        /// State of the back up item.
+        /// Serialized Name: WorkloadItem.protectionState
+        /// </summary>
         public ProtectionStatus? ProtectionState { get; set; }
     }
 }

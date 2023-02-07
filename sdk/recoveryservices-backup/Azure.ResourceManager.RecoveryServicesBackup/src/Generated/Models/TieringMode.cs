@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// 1. TierRecommended: Tier all recovery points recommended to be tiered
     /// 2. TierAfter: Tier all recovery points after a fixed period, as specified in duration + durationType below.
     /// 3. DoNotTier: Do not tier any recovery points
+    /// Serialized Name: TieringMode
     /// </summary>
     public readonly partial struct TieringMode : IEquatable<TieringMode>
     {
@@ -32,13 +33,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string TierAfterValue = "TierAfter";
         private const string DoNotTierValue = "DoNotTier";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: TieringMode.Invalid
+        /// </summary>
         public static TieringMode Invalid { get; } = new TieringMode(InvalidValue);
-        /// <summary> TierRecommended. </summary>
+        /// <summary>
+        /// TierRecommended
+        /// Serialized Name: TieringMode.TierRecommended
+        /// </summary>
         public static TieringMode TierRecommended { get; } = new TieringMode(TierRecommendedValue);
-        /// <summary> TierAfter. </summary>
+        /// <summary>
+        /// TierAfter
+        /// Serialized Name: TieringMode.TierAfter
+        /// </summary>
         public static TieringMode TierAfter { get; } = new TieringMode(TierAfterValue);
-        /// <summary> DoNotTier. </summary>
+        /// <summary>
+        /// DoNotTier
+        /// Serialized Name: TieringMode.DoNotTier
+        /// </summary>
         public static TieringMode DoNotTier { get; } = new TieringMode(DoNotTierValue);
         /// <summary> Determines if two <see cref="TieringMode"/> values are the same. </summary>
         public static bool operator ==(TieringMode left, TieringMode right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Type of restore point. </summary>
+    /// <summary>
+    /// Type of restore point
+    /// Serialized Name: RestorePointType
+    /// </summary>
     public readonly partial struct RestorePointType : IEquatable<RestorePointType>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SnapshotFullValue = "SnapshotFull";
         private const string SnapshotCopyOnlyFullValue = "SnapshotCopyOnlyFull";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: RestorePointType.Invalid
+        /// </summary>
         public static RestorePointType Invalid { get; } = new RestorePointType(InvalidValue);
-        /// <summary> Full. </summary>
+        /// <summary>
+        /// Full
+        /// Serialized Name: RestorePointType.Full
+        /// </summary>
         public static RestorePointType Full { get; } = new RestorePointType(FullValue);
-        /// <summary> Log. </summary>
+        /// <summary>
+        /// Log
+        /// Serialized Name: RestorePointType.Log
+        /// </summary>
         public static RestorePointType Log { get; } = new RestorePointType(LogValue);
-        /// <summary> Differential. </summary>
+        /// <summary>
+        /// Differential
+        /// Serialized Name: RestorePointType.Differential
+        /// </summary>
         public static RestorePointType Differential { get; } = new RestorePointType(DifferentialValue);
-        /// <summary> Incremental. </summary>
+        /// <summary>
+        /// Incremental
+        /// Serialized Name: RestorePointType.Incremental
+        /// </summary>
         public static RestorePointType Incremental { get; } = new RestorePointType(IncrementalValue);
-        /// <summary> SnapshotFull. </summary>
+        /// <summary>
+        /// SnapshotFull
+        /// Serialized Name: RestorePointType.SnapshotFull
+        /// </summary>
         public static RestorePointType SnapshotFull { get; } = new RestorePointType(SnapshotFullValue);
-        /// <summary> SnapshotCopyOnlyFull. </summary>
+        /// <summary>
+        /// SnapshotCopyOnlyFull
+        /// Serialized Name: RestorePointType.SnapshotCopyOnlyFull
+        /// </summary>
         public static RestorePointType SnapshotCopyOnlyFull { get; } = new RestorePointType(SnapshotCopyOnlyFullValue);
         /// <summary> Determines if two <see cref="RestorePointType"/> values are the same. </summary>
         public static bool operator ==(RestorePointType left, RestorePointType right) => left.Equals(right);

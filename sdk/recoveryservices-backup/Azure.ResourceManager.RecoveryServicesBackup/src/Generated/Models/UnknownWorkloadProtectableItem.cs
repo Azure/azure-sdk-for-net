@@ -7,15 +7,33 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownWorkloadProtectableItem. </summary>
+    /// <summary>
+    /// The UnknownWorkloadProtectableItem.
+    /// Serialized Name: UnknownWorkloadProtectableItem
+    /// </summary>
     internal partial class UnknownWorkloadProtectableItem : WorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of UnknownWorkloadProtectableItem. </summary>
-        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
-        /// <param name="workloadType"> Type of workload for the backup management. </param>
-        /// <param name="protectableItemType"> Type of the backup item. </param>
-        /// <param name="friendlyName"> Friendly name of the backup item. </param>
-        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management to backup an item.
+        /// Serialized Name: WorkloadProtectableItem.backupManagementType
+        /// </param>
+        /// <param name="workloadType">
+        /// Type of workload for the backup management
+        /// Serialized Name: WorkloadProtectableItem.workloadType
+        /// </param>
+        /// <param name="protectableItemType">
+        /// Type of the backup item.
+        /// Serialized Name: WorkloadProtectableItem.protectableItemType
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the backup item.
+        /// Serialized Name: WorkloadProtectableItem.friendlyName
+        /// </param>
+        /// <param name="protectionState">
+        /// State of the back up item.
+        /// Serialized Name: WorkloadProtectableItem.protectionState
+        /// </param>
         internal UnknownWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
         {
             ProtectableItemType = protectableItemType ?? "Unknown";

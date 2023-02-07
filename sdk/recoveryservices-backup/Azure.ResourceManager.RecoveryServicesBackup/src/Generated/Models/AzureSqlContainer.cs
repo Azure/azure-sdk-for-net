@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure Sql workload-specific container. </summary>
+    /// <summary>
+    /// Azure Sql workload-specific container.
+    /// Serialized Name: AzureSqlContainer
+    /// </summary>
     public partial class AzureSqlContainer : ProtectionContainer
     {
         /// <summary> Initializes a new instance of AzureSqlContainer. </summary>
@@ -17,17 +20,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureSqlContainer. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectionContainer.friendlyName
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectionContainer.backupManagementType
+        /// </param>
+        /// <param name="registrationStatus">
+        /// Status of registration of the container with the Recovery Services Vault.
+        /// Serialized Name: ProtectionContainer.registrationStatus
+        /// </param>
+        /// <param name="healthStatus">
+        /// Status of health of the container.
+        /// Serialized Name: ProtectionContainer.healthStatus
+        /// </param>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
+        /// Serialized Name: ProtectionContainer.containerType
         /// </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="protectableObjectType">
+        /// Type of the protectable object associated with this container
+        /// Serialized Name: ProtectionContainer.protectableObjectType
+        /// </param>
         internal AzureSqlContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             ContainerType = containerType;

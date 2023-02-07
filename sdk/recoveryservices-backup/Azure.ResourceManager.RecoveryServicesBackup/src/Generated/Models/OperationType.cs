@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Re-Do Operation. </summary>
+    /// <summary>
+    /// Re-Do Operation
+    /// Serialized Name: OperationType
+    /// </summary>
     public readonly partial struct OperationType : IEquatable<OperationType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string RegisterValue = "Register";
         private const string ReregisterValue = "Reregister";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: OperationType.Invalid
+        /// </summary>
         public static OperationType Invalid { get; } = new OperationType(InvalidValue);
-        /// <summary> Register. </summary>
+        /// <summary>
+        /// Register
+        /// Serialized Name: OperationType.Register
+        /// </summary>
         public static OperationType Register { get; } = new OperationType(RegisterValue);
-        /// <summary> Reregister. </summary>
+        /// <summary>
+        /// Reregister
+        /// Serialized Name: OperationType.Reregister
+        /// </summary>
         public static OperationType Reregister { get; } = new OperationType(ReregisterValue);
         /// <summary> Determines if two <see cref="OperationType"/> values are the same. </summary>
         public static bool operator ==(OperationType left, OperationType right) => left.Equals(right);

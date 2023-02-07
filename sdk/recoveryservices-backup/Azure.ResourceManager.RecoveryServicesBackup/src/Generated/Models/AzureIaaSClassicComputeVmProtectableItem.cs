@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> IaaS VM workload-specific backup item representing the Classic Compute VM. </summary>
+    /// <summary>
+    /// IaaS VM workload-specific backup item representing the Classic Compute VM.
+    /// Serialized Name: AzureIaaSClassicComputeVMProtectableItem
+    /// </summary>
     public partial class AzureIaaSClassicComputeVmProtectableItem : IaasVmProtectableItem
     {
         /// <summary> Initializes a new instance of AzureIaaSClassicComputeVmProtectableItem. </summary>
@@ -17,14 +20,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureIaaSClassicComputeVmProtectableItem. </summary>
-        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
-        /// <param name="workloadType"> Type of workload for the backup management. </param>
-        /// <param name="protectableItemType"> Type of the backup item. </param>
-        /// <param name="friendlyName"> Friendly name of the backup item. </param>
-        /// <param name="protectionState"> State of the back up item. </param>
-        /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine. </param>
-        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
-        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management to backup an item.
+        /// Serialized Name: WorkloadProtectableItem.backupManagementType
+        /// </param>
+        /// <param name="workloadType">
+        /// Type of workload for the backup management
+        /// Serialized Name: WorkloadProtectableItem.workloadType
+        /// </param>
+        /// <param name="protectableItemType">
+        /// Type of the backup item.
+        /// Serialized Name: WorkloadProtectableItem.protectableItemType
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the backup item.
+        /// Serialized Name: WorkloadProtectableItem.friendlyName
+        /// </param>
+        /// <param name="protectionState">
+        /// State of the back up item.
+        /// Serialized Name: WorkloadProtectableItem.protectionState
+        /// </param>
+        /// <param name="virtualMachineId">
+        /// Fully qualified ARM ID of the virtual machine.
+        /// Serialized Name: IaaSVMProtectableItem.virtualMachineId
+        /// </param>
+        /// <param name="virtualMachineVersion">
+        /// Specifies whether the container represents a Classic or an Azure Resource Manager VM.
+        /// Serialized Name: IaaSVMProtectableItem.virtualMachineVersion
+        /// </param>
+        /// <param name="resourceGroup">
+        /// Resource group name of Recovery Services Vault.
+        /// Serialized Name: IaaSVMProtectableItem.resourceGroup
+        /// </param>
         internal AzureIaaSClassicComputeVmProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, virtualMachineId, virtualMachineVersion, resourceGroup)
         {
             ProtectableItemType = protectableItemType ?? "Microsoft.ClassicCompute/virtualMachines";

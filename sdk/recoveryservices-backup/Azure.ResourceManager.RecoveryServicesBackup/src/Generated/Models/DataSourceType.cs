@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Type of workload this item represents. </summary>
+    /// <summary>
+    /// Type of workload this item represents.
+    /// Serialized Name: DataSourceType
+    /// </summary>
     public readonly partial struct DataSourceType : IEquatable<DataSourceType>
     {
         private readonly string _value;
@@ -39,37 +42,85 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SAPAseDatabaseValue = "SAPAseDatabase";
         private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: DataSourceType.Invalid
+        /// </summary>
         public static DataSourceType Invalid { get; } = new DataSourceType(InvalidValue);
-        /// <summary> VM. </summary>
+        /// <summary>
+        /// VM
+        /// Serialized Name: DataSourceType.VM
+        /// </summary>
         public static DataSourceType Vm { get; } = new DataSourceType(VmValue);
-        /// <summary> FileFolder. </summary>
+        /// <summary>
+        /// FileFolder
+        /// Serialized Name: DataSourceType.FileFolder
+        /// </summary>
         public static DataSourceType FileFolder { get; } = new DataSourceType(FileFolderValue);
-        /// <summary> AzureSqlDb. </summary>
+        /// <summary>
+        /// AzureSqlDb
+        /// Serialized Name: DataSourceType.AzureSqlDb
+        /// </summary>
         public static DataSourceType AzureSqlDb { get; } = new DataSourceType(AzureSqlDbValue);
-        /// <summary> SQLDB. </summary>
+        /// <summary>
+        /// SQLDB
+        /// Serialized Name: DataSourceType.SQLDB
+        /// </summary>
         public static DataSourceType SqlDB { get; } = new DataSourceType(SqlDBValue);
-        /// <summary> Exchange. </summary>
+        /// <summary>
+        /// Exchange
+        /// Serialized Name: DataSourceType.Exchange
+        /// </summary>
         public static DataSourceType Exchange { get; } = new DataSourceType(ExchangeValue);
-        /// <summary> Sharepoint. </summary>
+        /// <summary>
+        /// Sharepoint
+        /// Serialized Name: DataSourceType.Sharepoint
+        /// </summary>
         public static DataSourceType Sharepoint { get; } = new DataSourceType(SharepointValue);
-        /// <summary> VMwareVM. </summary>
+        /// <summary>
+        /// VMwareVM
+        /// Serialized Name: DataSourceType.VMwareVM
+        /// </summary>
         public static DataSourceType VMwareVm { get; } = new DataSourceType(VMwareVmValue);
-        /// <summary> SystemState. </summary>
+        /// <summary>
+        /// SystemState
+        /// Serialized Name: DataSourceType.SystemState
+        /// </summary>
         public static DataSourceType SystemState { get; } = new DataSourceType(SystemStateValue);
-        /// <summary> Client. </summary>
+        /// <summary>
+        /// Client
+        /// Serialized Name: DataSourceType.Client
+        /// </summary>
         public static DataSourceType Client { get; } = new DataSourceType(ClientValue);
-        /// <summary> GenericDataSource. </summary>
+        /// <summary>
+        /// GenericDataSource
+        /// Serialized Name: DataSourceType.GenericDataSource
+        /// </summary>
         public static DataSourceType GenericDataSource { get; } = new DataSourceType(GenericDataSourceValue);
-        /// <summary> SQLDataBase. </summary>
+        /// <summary>
+        /// SQLDataBase
+        /// Serialized Name: DataSourceType.SQLDataBase
+        /// </summary>
         public static DataSourceType SQLDataBase { get; } = new DataSourceType(SQLDataBaseValue);
-        /// <summary> AzureFileShare. </summary>
+        /// <summary>
+        /// AzureFileShare
+        /// Serialized Name: DataSourceType.AzureFileShare
+        /// </summary>
         public static DataSourceType AzureFileShare { get; } = new DataSourceType(AzureFileShareValue);
-        /// <summary> SAPHanaDatabase. </summary>
+        /// <summary>
+        /// SAPHanaDatabase
+        /// Serialized Name: DataSourceType.SAPHanaDatabase
+        /// </summary>
         public static DataSourceType SAPHanaDatabase { get; } = new DataSourceType(SAPHanaDatabaseValue);
-        /// <summary> SAPAseDatabase. </summary>
+        /// <summary>
+        /// SAPAseDatabase
+        /// Serialized Name: DataSourceType.SAPAseDatabase
+        /// </summary>
         public static DataSourceType SAPAseDatabase { get; } = new DataSourceType(SAPAseDatabaseValue);
-        /// <summary> SAPHanaDBInstance. </summary>
+        /// <summary>
+        /// SAPHanaDBInstance
+        /// Serialized Name: DataSourceType.SAPHanaDBInstance
+        /// </summary>
         public static DataSourceType SAPHanaDBInstance { get; } = new DataSourceType(SAPHanaDBInstanceValue);
         /// <summary> Determines if two <see cref="DataSourceType"/> values are the same. </summary>
         public static bool operator ==(DataSourceType left, DataSourceType right) => left.Equals(right);

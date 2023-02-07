@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Encapsulates Managed Identity related information. </summary>
+    /// <summary>
+    /// Encapsulates Managed Identity related information
+    /// Serialized Name: IdentityInfo
+    /// </summary>
     public partial class IdentityInfo
     {
         /// <summary> Initializes a new instance of IdentityInfo. </summary>
@@ -16,10 +19,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IdentityInfo. </summary>
-        /// <param name="isSystemAssignedIdentity"> To differentiate if the managed identity is system assigned or user assigned. </param>
+        /// <param name="isSystemAssignedIdentity">
+        /// To differentiate if the managed identity is system assigned or user assigned
+        /// Serialized Name: IdentityInfo.isSystemAssignedIdentity
+        /// </param>
         /// <param name="managedIdentityResourceId">
         /// Managed Identity Resource Id
         /// Optional: Might not be required in the case of system assigned managed identity
+        /// Serialized Name: IdentityInfo.managedIdentityResourceId
         /// </param>
         internal IdentityInfo(bool? isSystemAssignedIdentity, string managedIdentityResourceId)
         {
@@ -27,11 +34,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ManagedIdentityResourceId = managedIdentityResourceId;
         }
 
-        /// <summary> To differentiate if the managed identity is system assigned or user assigned. </summary>
+        /// <summary>
+        /// To differentiate if the managed identity is system assigned or user assigned
+        /// Serialized Name: IdentityInfo.isSystemAssignedIdentity
+        /// </summary>
         public bool? IsSystemAssignedIdentity { get; set; }
         /// <summary>
         /// Managed Identity Resource Id
         /// Optional: Might not be required in the case of system assigned managed identity
+        /// Serialized Name: IdentityInfo.managedIdentityResourceId
         /// </summary>
         public string ManagedIdentityResourceId { get; set; }
     }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Target Azure File Share Info. </summary>
+    /// <summary>
+    /// Target Azure File Share Info.
+    /// Serialized Name: TargetAFSRestoreInfo
+    /// </summary>
     public partial class TargetAFSRestoreInfo
     {
         /// <summary> Initializes a new instance of TargetAFSRestoreInfo. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of TargetAFSRestoreInfo. </summary>
-        /// <param name="name"> File share name. </param>
-        /// <param name="targetResourceId"> Target file share resource ARM ID. </param>
+        /// <param name="name">
+        /// File share name
+        /// Serialized Name: TargetAFSRestoreInfo.name
+        /// </param>
+        /// <param name="targetResourceId">
+        /// Target file share resource ARM ID
+        /// Serialized Name: TargetAFSRestoreInfo.targetResourceId
+        /// </param>
         internal TargetAFSRestoreInfo(string name, string targetResourceId)
         {
             Name = name;
             TargetResourceId = targetResourceId;
         }
 
-        /// <summary> File share name. </summary>
+        /// <summary>
+        /// File share name
+        /// Serialized Name: TargetAFSRestoreInfo.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Target file share resource ARM ID. </summary>
+        /// <summary>
+        /// Target file share resource ARM ID
+        /// Serialized Name: TargetAFSRestoreInfo.targetResourceId
+        /// </summary>
         public string TargetResourceId { get; set; }
     }
 }

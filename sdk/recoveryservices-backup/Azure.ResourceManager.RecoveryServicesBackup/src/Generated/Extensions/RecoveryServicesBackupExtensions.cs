@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Gets a collection of BackupResourceConfigResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BackupResourceConfigResources and their operations over a BackupResourceConfigResource. </returns>
-        public static BackupResourceConfigResourceCollection GetBackupResourceConfigResources(this ResourceGroupResource resourceGroupResource)
+        public static BackupResourceConfigCollection GetBackupResourceConfigs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetBackupResourceConfigResources();
+            return GetExtensionClient(resourceGroupResource).GetBackupResourceConfigs();
         }
 
         /// <summary>
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BackupResourceConfigResource>> GetBackupResourceConfigResourceAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupResourceConfigResource>> GetBackupResourceConfigAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetBackupResourceConfigResources().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetBackupResourceConfigs().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,9 +256,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BackupResourceConfigResource> GetBackupResourceConfigResource(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static Response<BackupResourceConfigResource> GetBackupResourceConfig(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetBackupResourceConfigResources().Get(vaultName, cancellationToken);
+            return resourceGroupResource.GetBackupResourceConfigs().Get(vaultName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProtectionIntentResources in the ResourceGroupResource. </summary>
@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Gets a collection of BackupResourceVaultConfigResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BackupResourceVaultConfigResources and their operations over a BackupResourceVaultConfigResource. </returns>
-        public static BackupResourceVaultConfigResourceCollection GetBackupResourceVaultConfigResources(this ResourceGroupResource resourceGroupResource)
+        public static BackupResourceVaultConfigCollection GetBackupResourceVaultConfigs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetBackupResourceVaultConfigResources();
+            return GetExtensionClient(resourceGroupResource).GetBackupResourceVaultConfigs();
         }
 
         /// <summary>
@@ -350,9 +350,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BackupResourceVaultConfigResource>> GetBackupResourceVaultConfigResourceAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupResourceVaultConfigResource>> GetBackupResourceVaultConfigAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetBackupResourceVaultConfigResources().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetBackupResourceVaultConfigs().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -374,17 +374,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BackupResourceVaultConfigResource> GetBackupResourceVaultConfigResource(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static Response<BackupResourceVaultConfigResource> GetBackupResourceVaultConfig(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetBackupResourceVaultConfigResources().Get(vaultName, cancellationToken);
+            return resourceGroupResource.GetBackupResourceVaultConfigs().Get(vaultName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BackupResourceEncryptionConfigExtendedResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BackupResourceEncryptionConfigExtendedResources and their operations over a BackupResourceEncryptionConfigExtendedResource. </returns>
-        public static BackupResourceEncryptionConfigExtendedResourceCollection GetBackupResourceEncryptionConfigExtendedResources(this ResourceGroupResource resourceGroupResource)
+        public static BackupResourceEncryptionConfigExtendedCollection GetBackupResourceEncryptionConfigExtendeds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetBackupResourceEncryptionConfigExtendedResources();
+            return GetExtensionClient(resourceGroupResource).GetBackupResourceEncryptionConfigExtendeds();
         }
 
         /// <summary>
@@ -406,9 +406,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BackupResourceEncryptionConfigExtendedResource>> GetBackupResourceEncryptionConfigExtendedResourceAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupResourceEncryptionConfigExtendedResource>> GetBackupResourceEncryptionConfigExtendedAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetBackupResourceEncryptionConfigExtendedResources().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetBackupResourceEncryptionConfigExtendeds().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -430,17 +430,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BackupResourceEncryptionConfigExtendedResource> GetBackupResourceEncryptionConfigExtendedResource(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static Response<BackupResourceEncryptionConfigExtendedResource> GetBackupResourceEncryptionConfigExtended(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetBackupResourceEncryptionConfigExtendedResources().Get(vaultName, cancellationToken);
+            return resourceGroupResource.GetBackupResourceEncryptionConfigExtendeds().Get(vaultName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public static PrivateEndpointConnectionResourceCollection GetPrivateEndpointConnectionResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of BackupPrivateEndpointConnectionResources and their operations over a BackupPrivateEndpointConnectionResource. </returns>
+        public static BackupPrivateEndpointConnectionCollection GetBackupPrivateEndpointConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetPrivateEndpointConnectionResources();
+            return GetExtensionClient(resourceGroupResource).GetBackupPrivateEndpointConnections();
         }
 
         /// <summary>
@@ -463,9 +463,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionResourceAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupPrivateEndpointConnectionResource>> GetBackupPrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPrivateEndpointConnectionResources().GetAsync(vaultName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetBackupPrivateEndpointConnections().GetAsync(vaultName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -488,9 +488,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnectionResource(this ResourceGroupResource resourceGroupResource, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public static Response<BackupPrivateEndpointConnectionResource> GetBackupPrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPrivateEndpointConnectionResources().Get(vaultName, privateEndpointConnectionName, cancellationToken);
+            return resourceGroupResource.GetBackupPrivateEndpointConnections().Get(vaultName, privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProtectionPolicyResources in the ResourceGroupResource. </summary>
@@ -558,17 +558,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return resourceGroupResource.GetProtectionPolicyResources(vaultName).Get(policyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupJobResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public static JobResourceCollection GetJobResources(this ResourceGroupResource resourceGroupResource, string vaultName)
+        /// <returns> An object representing collection of BackupJobResources and their operations over a BackupJobResource. </returns>
+        public static BackupJobCollection GetBackupJobs(this ResourceGroupResource resourceGroupResource, string vaultName)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetJobResources(vaultName);
+            return GetExtensionClient(resourceGroupResource).GetBackupJobs(vaultName);
         }
 
         /// <summary>
@@ -591,9 +591,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<JobResource>> GetJobResourceAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string jobName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupJobResource>> GetBackupJobAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetJobResources(vaultName).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetBackupJobs(vaultName).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -616,22 +616,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<JobResource> GetJobResource(this ResourceGroupResource resourceGroupResource, string vaultName, string jobName, CancellationToken cancellationToken = default)
+        public static Response<BackupJobResource> GetBackupJob(this ResourceGroupResource resourceGroupResource, string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetJobResources(vaultName).Get(jobName, cancellationToken);
+            return resourceGroupResource.GetBackupJobs(vaultName).Get(jobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BackupEngineBaseResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupEngineResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An object representing collection of BackupEngineBaseResources and their operations over a BackupEngineBaseResource. </returns>
-        public static BackupEngineBaseResourceCollection GetBackupEngineBaseResources(this ResourceGroupResource resourceGroupResource, string vaultName)
+        /// <returns> An object representing collection of BackupEngineResources and their operations over a BackupEngineResource. </returns>
+        public static BackupEngineCollection GetBackupEngines(this ResourceGroupResource resourceGroupResource, string vaultName)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetBackupEngineBaseResources(vaultName);
+            return GetExtensionClient(resourceGroupResource).GetBackupEngines(vaultName);
         }
 
         /// <summary>
@@ -656,9 +656,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BackupEngineBaseResource>> GetBackupEngineBaseResourceAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupEngineResource>> GetBackupEngineAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetBackupEngineBaseResources(vaultName).GetAsync(backupEngineName, filter, skipToken, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetBackupEngines(vaultName).GetAsync(backupEngineName, filter, skipToken, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -683,9 +683,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BackupEngineBaseResource> GetBackupEngineBaseResource(this ResourceGroupResource resourceGroupResource, string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Response<BackupEngineResource> GetBackupEngine(this ResourceGroupResource resourceGroupResource, string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetBackupEngineBaseResources(vaultName).Get(backupEngineName, filter, skipToken, cancellationToken);
+            return resourceGroupResource.GetBackupEngines(vaultName).Get(backupEngineName, filter, skipToken, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProtectionContainerResources in the ResourceGroupResource. </summary>
@@ -1895,20 +1895,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
         #endregion
 
-        #region PrivateEndpointConnectionResource
+        #region BackupPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BackupPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BackupPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupPrivateEndpointConnectionResource" /> object. </returns>
+        public static BackupPrivateEndpointConnectionResource GetBackupPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new PrivateEndpointConnectionResource(client, id);
+                BackupPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new BackupPrivateEndpointConnectionResource(client, id);
             }
             );
         }
@@ -1971,39 +1971,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
         #endregion
 
-        #region JobResource
+        #region BackupJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BackupJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupJobResource.CreateResourceIdentifier" /> to create a <see cref="BackupJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobResource" /> object. </returns>
-        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupJobResource" /> object. </returns>
+        public static BackupJobResource GetBackupJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobResource.ValidateResourceId(id);
-                return new JobResource(client, id);
+                BackupJobResource.ValidateResourceId(id);
+                return new BackupJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BackupEngineBaseResource
+        #region BackupEngineResource
         /// <summary>
-        /// Gets an object representing a <see cref="BackupEngineBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupEngineBaseResource.CreateResourceIdentifier" /> to create a <see cref="BackupEngineBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BackupEngineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupEngineResource.CreateResourceIdentifier" /> to create a <see cref="BackupEngineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupEngineBaseResource" /> object. </returns>
-        public static BackupEngineBaseResource GetBackupEngineBaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupEngineResource" /> object. </returns>
+        public static BackupEngineResource GetBackupEngineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BackupEngineBaseResource.ValidateResourceId(id);
-                return new BackupEngineBaseResource(client, id);
+                BackupEngineResource.ValidateResourceId(id);
+                return new BackupEngineResource(client, id);
             }
             );
         }

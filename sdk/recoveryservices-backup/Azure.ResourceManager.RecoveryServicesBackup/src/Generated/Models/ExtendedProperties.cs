@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Extended Properties for Azure IaasVM Backup. </summary>
+    /// <summary>
+    /// Extended Properties for Azure IaasVM Backup.
+    /// Serialized Name: ExtendedProperties
+    /// </summary>
     public partial class ExtendedProperties
     {
         /// <summary> Initializes a new instance of ExtendedProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ExtendedProperties. </summary>
-        /// <param name="diskExclusionProperties"> Extended Properties for Disk Exclusion. </param>
-        /// <param name="linuxVmApplicationName"> Linux VM name. </param>
+        /// <param name="diskExclusionProperties">
+        /// Extended Properties for Disk Exclusion.
+        /// Serialized Name: ExtendedProperties.diskExclusionProperties
+        /// </param>
+        /// <param name="linuxVmApplicationName">
+        /// Linux VM name
+        /// Serialized Name: ExtendedProperties.linuxVmApplicationName
+        /// </param>
         internal ExtendedProperties(DiskExclusionProperties diskExclusionProperties, string linuxVmApplicationName)
         {
             DiskExclusionProperties = diskExclusionProperties;
             LinuxVmApplicationName = linuxVmApplicationName;
         }
 
-        /// <summary> Extended Properties for Disk Exclusion. </summary>
+        /// <summary>
+        /// Extended Properties for Disk Exclusion.
+        /// Serialized Name: ExtendedProperties.diskExclusionProperties
+        /// </summary>
         public DiskExclusionProperties DiskExclusionProperties { get; set; }
-        /// <summary> Linux VM name. </summary>
+        /// <summary>
+        /// Linux VM name
+        /// Serialized Name: ExtendedProperties.linuxVmApplicationName
+        /// </summary>
         public string LinuxVmApplicationName { get; set; }
     }
 }

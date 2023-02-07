@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure IaaS VM workload-specific Health Details. </summary>
+    /// <summary>
+    /// Azure IaaS VM workload-specific Health Details.
+    /// Serialized Name: AzureIaaSVMHealthDetails
+    /// </summary>
     public partial class AzureIaasVmHealthDetails : ResourceHealthDetails
     {
         /// <summary> Initializes a new instance of AzureIaasVmHealthDetails. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureIaasVmHealthDetails. </summary>
-        /// <param name="code"> Health Code. </param>
-        /// <param name="title"> Health Title. </param>
-        /// <param name="message"> Health Message. </param>
-        /// <param name="recommendations"> Health Recommended Actions. </param>
+        /// <param name="code">
+        /// Health Code
+        /// Serialized Name: ResourceHealthDetails.code
+        /// </param>
+        /// <param name="title">
+        /// Health Title
+        /// Serialized Name: ResourceHealthDetails.title
+        /// </param>
+        /// <param name="message">
+        /// Health Message
+        /// Serialized Name: ResourceHealthDetails.message
+        /// </param>
+        /// <param name="recommendations">
+        /// Health Recommended Actions
+        /// Serialized Name: ResourceHealthDetails.recommendations
+        /// </param>
         internal AzureIaasVmHealthDetails(int? code, string title, string message, IReadOnlyList<string> recommendations) : base(code, title, message, recommendations)
         {
         }

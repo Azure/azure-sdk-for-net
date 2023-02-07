@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure VM workload-specific additional information for job. </summary>
+    /// <summary>
+    /// Azure VM workload-specific additional information for job.
+    /// Serialized Name: AzureWorkloadJobExtendedInfo
+    /// </summary>
     public partial class AzureWorkloadJobExtendedInfo
     {
         /// <summary> Initializes a new instance of AzureWorkloadJobExtendedInfo. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadJobExtendedInfo. </summary>
-        /// <param name="tasksList"> List of tasks for this job. </param>
-        /// <param name="propertyBag"> Job properties. </param>
-        /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
+        /// <param name="tasksList">
+        /// List of tasks for this job
+        /// Serialized Name: AzureWorkloadJobExtendedInfo.tasksList
+        /// </param>
+        /// <param name="propertyBag">
+        /// Job properties.
+        /// Serialized Name: AzureWorkloadJobExtendedInfo.propertyBag
+        /// </param>
+        /// <param name="dynamicErrorMessage">
+        /// Non localized error message on job execution.
+        /// Serialized Name: AzureWorkloadJobExtendedInfo.dynamicErrorMessage
+        /// </param>
         internal AzureWorkloadJobExtendedInfo(IList<AzureWorkloadJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, string dynamicErrorMessage)
         {
             TasksList = tasksList;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DynamicErrorMessage = dynamicErrorMessage;
         }
 
-        /// <summary> List of tasks for this job. </summary>
+        /// <summary>
+        /// List of tasks for this job
+        /// Serialized Name: AzureWorkloadJobExtendedInfo.tasksList
+        /// </summary>
         public IList<AzureWorkloadJobTaskDetails> TasksList { get; }
-        /// <summary> Job properties. </summary>
+        /// <summary>
+        /// Job properties.
+        /// Serialized Name: AzureWorkloadJobExtendedInfo.propertyBag
+        /// </summary>
         public IDictionary<string, string> PropertyBag { get; }
-        /// <summary> Non localized error message on job execution. </summary>
+        /// <summary>
+        /// Non localized error message on job execution.
+        /// Serialized Name: AzureWorkloadJobExtendedInfo.dynamicErrorMessage
+        /// </summary>
         public string DynamicErrorMessage { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Request body of unlock delete API. </summary>
+    /// <summary>
+    /// Request body of unlock delete API.
+    /// Serialized Name: UnlockDeleteRequest
+    /// </summary>
     public partial class UnlockDeleteContent
     {
         /// <summary> Initializes a new instance of UnlockDeleteContent. </summary>
@@ -19,9 +22,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Gets the resource guard operation requests. </summary>
+        /// <summary> Serialized Name: UnlockDeleteRequest.resourceGuardOperationRequests. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
-        /// <summary> Gets or sets the resource to be deleted. </summary>
+        /// <summary> Serialized Name: UnlockDeleteRequest.resourceToBeDeleted. </summary>
         public string ResourceToBeDeleted { get; set; }
     }
 }

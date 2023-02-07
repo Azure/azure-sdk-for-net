@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> AzureStorage backup policy. </summary>
+    /// <summary>
+    /// AzureStorage backup policy.
+    /// Serialized Name: AzureFileShareProtectionPolicy
+    /// </summary>
     public partial class AzureFileShareProtectionPolicy : ProtectionPolicy
     {
         /// <summary> Initializes a new instance of AzureFileShareProtectionPolicy. </summary>
@@ -19,21 +22,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureFileShareProtectionPolicy. </summary>
-        /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
-        /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
-        /// <param name="workLoadType"> Type of workload for the backup management. </param>
+        /// <param name="protectedItemsCount">
+        /// Number of items associated with this policy.
+        /// Serialized Name: ProtectionPolicy.protectedItemsCount
+        /// </param>
+        /// <param name="backupManagementType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: ProtectionPolicy.backupManagementType
+        /// </param>
+        /// <param name="resourceGuardOperationRequests">
+        /// ResourceGuard Operation Requests
+        /// Serialized Name: ProtectionPolicy.resourceGuardOperationRequests
+        /// </param>
+        /// <param name="workLoadType">
+        /// Type of workload for the backup management
+        /// Serialized Name: AzureFileShareProtectionPolicy.workLoadType
+        /// </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
+        /// Serialized Name: AzureFileShareProtectionPolicy.schedulePolicy
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </param>
         /// <param name="retentionPolicy">
         /// Retention policy with the details on backup copy retention ranges.
+        /// Serialized Name: AzureFileShareProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
-        /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </param>
+        /// <param name="timeZone">
+        /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
+        /// Serialized Name: AzureFileShareProtectionPolicy.timeZone
+        /// </param>
         internal AzureFileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, WorkloadType? workLoadType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
         {
             WorkLoadType = workLoadType;
@@ -43,21 +63,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupManagementType = backupManagementType ?? "AzureStorage";
         }
 
-        /// <summary> Type of workload for the backup management. </summary>
+        /// <summary>
+        /// Type of workload for the backup management
+        /// Serialized Name: AzureFileShareProtectionPolicy.workLoadType
+        /// </summary>
         public WorkloadType? WorkLoadType { get; set; }
         /// <summary>
         /// Backup schedule specified as part of backup policy.
+        /// Serialized Name: AzureFileShareProtectionPolicy.schedulePolicy
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </summary>
         public SchedulePolicy SchedulePolicy { get; set; }
         /// <summary>
         /// Retention policy with the details on backup copy retention ranges.
+        /// Serialized Name: AzureFileShareProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </summary>
         public RetentionPolicy RetentionPolicy { get; set; }
-        /// <summary> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </summary>
+        /// <summary>
+        /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
+        /// Serialized Name: AzureFileShareProtectionPolicy.timeZone
+        /// </summary>
         public string TimeZone { get; set; }
     }
 }

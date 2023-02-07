@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> DataMove Level. </summary>
+    /// <summary>
+    /// DataMove Level
+    /// Serialized Name: DataMoveLevel
+    /// </summary>
     public readonly partial struct DataMoveLevel : IEquatable<DataMoveLevel>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string VaultValue = "Vault";
         private const string ContainerValue = "Container";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: DataMoveLevel.Invalid
+        /// </summary>
         public static DataMoveLevel Invalid { get; } = new DataMoveLevel(InvalidValue);
-        /// <summary> Vault. </summary>
+        /// <summary>
+        /// Vault
+        /// Serialized Name: DataMoveLevel.Vault
+        /// </summary>
         public static DataMoveLevel Vault { get; } = new DataMoveLevel(VaultValue);
-        /// <summary> Container. </summary>
+        /// <summary>
+        /// Container
+        /// Serialized Name: DataMoveLevel.Container
+        /// </summary>
         public static DataMoveLevel Container { get; } = new DataMoveLevel(ContainerValue);
         /// <summary> Determines if two <see cref="DataMoveLevel"/> values are the same. </summary>
         public static bool operator ==(DataMoveLevel left, DataMoveLevel right) => left.Equals(right);

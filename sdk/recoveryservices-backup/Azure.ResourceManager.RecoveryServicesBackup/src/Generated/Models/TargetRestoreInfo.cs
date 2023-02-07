@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Details about target workload during restore operation. </summary>
+    /// <summary>
+    /// Details about target workload during restore operation.
+    /// Serialized Name: TargetRestoreInfo
+    /// </summary>
     public partial class TargetRestoreInfo
     {
         /// <summary> Initializes a new instance of TargetRestoreInfo. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of TargetRestoreInfo. </summary>
-        /// <param name="overwriteOption"> Can Overwrite if Target DataBase already exists. </param>
-        /// <param name="containerId"> Resource Id name of the container in which Target DataBase resides. </param>
-        /// <param name="databaseName"> Database name InstanceName/DataBaseName for SQL or System/DbName for SAP Hana. </param>
-        /// <param name="targetDirectoryForFileRestore"> Target directory location for restore as files. </param>
+        /// <param name="overwriteOption">
+        /// Can Overwrite if Target DataBase already exists
+        /// Serialized Name: TargetRestoreInfo.overwriteOption
+        /// </param>
+        /// <param name="containerId">
+        /// Resource Id name of the container in which Target DataBase resides
+        /// Serialized Name: TargetRestoreInfo.containerId
+        /// </param>
+        /// <param name="databaseName">
+        /// Database name InstanceName/DataBaseName for SQL or System/DbName for SAP Hana
+        /// Serialized Name: TargetRestoreInfo.databaseName
+        /// </param>
+        /// <param name="targetDirectoryForFileRestore">
+        /// Target directory location for restore as files.
+        /// Serialized Name: TargetRestoreInfo.targetDirectoryForFileRestore
+        /// </param>
         internal TargetRestoreInfo(OverwriteOption? overwriteOption, string containerId, string databaseName, string targetDirectoryForFileRestore)
         {
             OverwriteOption = overwriteOption;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TargetDirectoryForFileRestore = targetDirectoryForFileRestore;
         }
 
-        /// <summary> Can Overwrite if Target DataBase already exists. </summary>
+        /// <summary>
+        /// Can Overwrite if Target DataBase already exists
+        /// Serialized Name: TargetRestoreInfo.overwriteOption
+        /// </summary>
         public OverwriteOption? OverwriteOption { get; set; }
-        /// <summary> Resource Id name of the container in which Target DataBase resides. </summary>
+        /// <summary>
+        /// Resource Id name of the container in which Target DataBase resides
+        /// Serialized Name: TargetRestoreInfo.containerId
+        /// </summary>
         public string ContainerId { get; set; }
-        /// <summary> Database name InstanceName/DataBaseName for SQL or System/DbName for SAP Hana. </summary>
+        /// <summary>
+        /// Database name InstanceName/DataBaseName for SQL or System/DbName for SAP Hana
+        /// Serialized Name: TargetRestoreInfo.databaseName
+        /// </summary>
         public string DatabaseName { get; set; }
-        /// <summary> Target directory location for restore as files. </summary>
+        /// <summary>
+        /// Target directory location for restore as files.
+        /// Serialized Name: TargetRestoreInfo.targetDirectoryForFileRestore
+        /// </summary>
         public string TargetDirectoryForFileRestore { get; set; }
     }
 }

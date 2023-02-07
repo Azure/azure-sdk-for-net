@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The WeekOfMonth. </summary>
+    /// <summary>
+    /// The WeekOfMonth.
+    /// Serialized Name: WeekOfMonth
+    /// </summary>
     public enum WeekOfMonth
     {
-        /// <summary> First. </summary>
+        /// <summary>
+        /// First
+        /// Serialized Name: WeekOfMonth.First
+        /// </summary>
         First,
-        /// <summary> Second. </summary>
+        /// <summary>
+        /// Second
+        /// Serialized Name: WeekOfMonth.Second
+        /// </summary>
         Second,
-        /// <summary> Third. </summary>
+        /// <summary>
+        /// Third
+        /// Serialized Name: WeekOfMonth.Third
+        /// </summary>
         Third,
-        /// <summary> Fourth. </summary>
+        /// <summary>
+        /// Fourth
+        /// Serialized Name: WeekOfMonth.Fourth
+        /// </summary>
         Fourth,
-        /// <summary> Last. </summary>
+        /// <summary>
+        /// Last
+        /// Serialized Name: WeekOfMonth.Last
+        /// </summary>
         Last,
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: WeekOfMonth.Invalid
+        /// </summary>
         Invalid
     }
 }

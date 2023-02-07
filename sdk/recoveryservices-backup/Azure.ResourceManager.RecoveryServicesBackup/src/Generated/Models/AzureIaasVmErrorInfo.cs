@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure IaaS VM workload-specific error information. </summary>
+    /// <summary>
+    /// Azure IaaS VM workload-specific error information.
+    /// Serialized Name: AzureIaaSVMErrorInfo
+    /// </summary>
     public partial class AzureIaasVmErrorInfo
     {
         /// <summary> Initializes a new instance of AzureIaasVmErrorInfo. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureIaasVmErrorInfo. </summary>
-        /// <param name="errorCode"> Error code. </param>
-        /// <param name="errorTitle"> Title: Typically, the entity that the error pertains to. </param>
-        /// <param name="errorString"> Localized error string. </param>
-        /// <param name="recommendations"> List of localized recommendations for above error code. </param>
+        /// <param name="errorCode">
+        /// Error code.
+        /// Serialized Name: AzureIaaSVMErrorInfo.errorCode
+        /// </param>
+        /// <param name="errorTitle">
+        /// Title: Typically, the entity that the error pertains to.
+        /// Serialized Name: AzureIaaSVMErrorInfo.errorTitle
+        /// </param>
+        /// <param name="errorString">
+        /// Localized error string.
+        /// Serialized Name: AzureIaaSVMErrorInfo.errorString
+        /// </param>
+        /// <param name="recommendations">
+        /// List of localized recommendations for above error code.
+        /// Serialized Name: AzureIaaSVMErrorInfo.recommendations
+        /// </param>
         internal AzureIaasVmErrorInfo(int? errorCode, string errorTitle, string errorString, IReadOnlyList<string> recommendations)
         {
             ErrorCode = errorCode;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Recommendations = recommendations;
         }
 
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: AzureIaaSVMErrorInfo.errorCode
+        /// </summary>
         public int? ErrorCode { get; }
-        /// <summary> Title: Typically, the entity that the error pertains to. </summary>
+        /// <summary>
+        /// Title: Typically, the entity that the error pertains to.
+        /// Serialized Name: AzureIaaSVMErrorInfo.errorTitle
+        /// </summary>
         public string ErrorTitle { get; }
-        /// <summary> Localized error string. </summary>
+        /// <summary>
+        /// Localized error string.
+        /// Serialized Name: AzureIaaSVMErrorInfo.errorString
+        /// </summary>
         public string ErrorString { get; }
-        /// <summary> List of localized recommendations for above error code. </summary>
+        /// <summary>
+        /// List of localized recommendations for above error code.
+        /// Serialized Name: AzureIaaSVMErrorInfo.recommendations
+        /// </summary>
         public IReadOnlyList<string> Recommendations { get; }
     }
 }

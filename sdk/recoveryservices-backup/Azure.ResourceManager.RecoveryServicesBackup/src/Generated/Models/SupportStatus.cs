@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Support status of feature. </summary>
+    /// <summary>
+    /// Support status of feature
+    /// Serialized Name: SupportStatus
+    /// </summary>
     public readonly partial struct SupportStatus : IEquatable<SupportStatus>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string DefaultONValue = "DefaultON";
         private const string NotSupportedValue = "NotSupported";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: SupportStatus.Invalid
+        /// </summary>
         public static SupportStatus Invalid { get; } = new SupportStatus(InvalidValue);
-        /// <summary> Supported. </summary>
+        /// <summary>
+        /// Supported
+        /// Serialized Name: SupportStatus.Supported
+        /// </summary>
         public static SupportStatus Supported { get; } = new SupportStatus(SupportedValue);
-        /// <summary> DefaultOFF. </summary>
+        /// <summary>
+        /// DefaultOFF
+        /// Serialized Name: SupportStatus.DefaultOFF
+        /// </summary>
         public static SupportStatus DefaultOFF { get; } = new SupportStatus(DefaultOFFValue);
-        /// <summary> DefaultON. </summary>
+        /// <summary>
+        /// DefaultON
+        /// Serialized Name: SupportStatus.DefaultON
+        /// </summary>
         public static SupportStatus DefaultON { get; } = new SupportStatus(DefaultONValue);
-        /// <summary> NotSupported. </summary>
+        /// <summary>
+        /// NotSupported
+        /// Serialized Name: SupportStatus.NotSupported
+        /// </summary>
         public static SupportStatus NotSupported { get; } = new SupportStatus(NotSupportedValue);
         /// <summary> Determines if two <see cref="SupportStatus"/> values are the same. </summary>
         public static bool operator ==(SupportStatus left, SupportStatus right) => left.Equals(right);

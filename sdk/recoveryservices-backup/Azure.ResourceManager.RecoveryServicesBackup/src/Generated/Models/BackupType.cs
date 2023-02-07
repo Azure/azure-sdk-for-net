@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Type of backup, viz. Full, Differential, Log or CopyOnlyFull. </summary>
+    /// <summary>
+    /// Type of backup, viz. Full, Differential, Log or CopyOnlyFull
+    /// Serialized Name: BackupType
+    /// </summary>
     public readonly partial struct BackupType : IEquatable<BackupType>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SnapshotFullValue = "SnapshotFull";
         private const string SnapshotCopyOnlyFullValue = "SnapshotCopyOnlyFull";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: BackupType.Invalid
+        /// </summary>
         public static BackupType Invalid { get; } = new BackupType(InvalidValue);
-        /// <summary> Full. </summary>
+        /// <summary>
+        /// Full
+        /// Serialized Name: BackupType.Full
+        /// </summary>
         public static BackupType Full { get; } = new BackupType(FullValue);
-        /// <summary> Differential. </summary>
+        /// <summary>
+        /// Differential
+        /// Serialized Name: BackupType.Differential
+        /// </summary>
         public static BackupType Differential { get; } = new BackupType(DifferentialValue);
-        /// <summary> Log. </summary>
+        /// <summary>
+        /// Log
+        /// Serialized Name: BackupType.Log
+        /// </summary>
         public static BackupType Log { get; } = new BackupType(LogValue);
-        /// <summary> CopyOnlyFull. </summary>
+        /// <summary>
+        /// CopyOnlyFull
+        /// Serialized Name: BackupType.CopyOnlyFull
+        /// </summary>
         public static BackupType CopyOnlyFull { get; } = new BackupType(CopyOnlyFullValue);
-        /// <summary> Incremental. </summary>
+        /// <summary>
+        /// Incremental
+        /// Serialized Name: BackupType.Incremental
+        /// </summary>
         public static BackupType Incremental { get; } = new BackupType(IncrementalValue);
-        /// <summary> SnapshotFull. </summary>
+        /// <summary>
+        /// SnapshotFull
+        /// Serialized Name: BackupType.SnapshotFull
+        /// </summary>
         public static BackupType SnapshotFull { get; } = new BackupType(SnapshotFullValue);
-        /// <summary> SnapshotCopyOnlyFull. </summary>
+        /// <summary>
+        /// SnapshotCopyOnlyFull
+        /// Serialized Name: BackupType.SnapshotCopyOnlyFull
+        /// </summary>
         public static BackupType SnapshotCopyOnlyFull { get; } = new BackupType(SnapshotCopyOnlyFullValue);
         /// <summary> Determines if two <see cref="BackupType"/> values are the same. </summary>
         public static bool operator ==(BackupType left, BackupType right) => left.Equals(right);

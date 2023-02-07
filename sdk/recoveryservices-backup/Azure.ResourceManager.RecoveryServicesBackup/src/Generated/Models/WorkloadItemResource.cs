@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Base class for backup item. Workload-specific backup items are derived from this class. </summary>
+    /// <summary>
+    /// Base class for backup item. Workload-specific backup items are derived from this class.
+    /// Serialized Name: WorkloadItemResource
+    /// </summary>
     public partial class WorkloadItemResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of WorkloadItemResource. </summary>
@@ -30,10 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// WorkloadItemResource properties
+        /// Serialized Name: WorkloadItemResource.properties
         /// Please note <see cref="WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureVmWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSQLDatabaseWorkloadItem"/> and <see cref="AzureVmWorkloadSQLInstanceWorkloadItem"/>.
         /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="eTag">
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         internal WorkloadItemResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadItem properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -42,11 +49,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// WorkloadItemResource properties
+        /// Serialized Name: WorkloadItemResource.properties
         /// Please note <see cref="WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureVmWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSQLDatabaseWorkloadItem"/> and <see cref="AzureVmWorkloadSQLInstanceWorkloadItem"/>.
         /// </summary>
         public WorkloadItem Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary>
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

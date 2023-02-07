@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> IaaS VM workload-specific backup request. </summary>
+    /// <summary>
+    /// IaaS VM workload-specific backup request.
+    /// Serialized Name: IaasVMBackupRequest
+    /// </summary>
     public partial class IaasVmBackupRequest : BackupRequest
     {
         /// <summary> Initializes a new instance of IaasVmBackupRequest. </summary>
@@ -19,15 +22,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IaasVmBackupRequest. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="recoveryPointExpiryTimeInUTC"> Backup copy will expire after the time specified (UTC). </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: BackupRequest.objectType
+        /// </param>
+        /// <param name="recoveryPointExpiryTimeInUTC">
+        /// Backup copy will expire after the time specified (UTC).
+        /// Serialized Name: IaasVMBackupRequest.recoveryPointExpiryTimeInUTC
+        /// </param>
         internal IaasVmBackupRequest(string objectType, DateTimeOffset? recoveryPointExpiryTimeInUTC) : base(objectType)
         {
             RecoveryPointExpiryTimeInUTC = recoveryPointExpiryTimeInUTC;
             ObjectType = objectType ?? "IaasVMBackupRequest";
         }
 
-        /// <summary> Backup copy will expire after the time specified (UTC). </summary>
+        /// <summary>
+        /// Backup copy will expire after the time specified (UTC).
+        /// Serialized Name: IaasVMBackupRequest.recoveryPointExpiryTimeInUTC
+        /// </summary>
         public DateTimeOffset? RecoveryPointExpiryTimeInUTC { get; set; }
     }
 }

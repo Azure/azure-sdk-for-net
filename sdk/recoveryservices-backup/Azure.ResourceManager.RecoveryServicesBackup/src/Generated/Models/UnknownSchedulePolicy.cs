@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownSchedulePolicy. </summary>
+    /// <summary>
+    /// The UnknownSchedulePolicy.
+    /// Serialized Name: UnknownSchedulePolicy
+    /// </summary>
     internal partial class UnknownSchedulePolicy : SchedulePolicy
     {
         /// <summary> Initializes a new instance of UnknownSchedulePolicy. </summary>
-        /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="schedulePolicyType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: SchedulePolicy.schedulePolicyType
+        /// </param>
         internal UnknownSchedulePolicy(string schedulePolicyType) : base(schedulePolicyType)
         {
             SchedulePolicyType = schedulePolicyType ?? "Unknown";

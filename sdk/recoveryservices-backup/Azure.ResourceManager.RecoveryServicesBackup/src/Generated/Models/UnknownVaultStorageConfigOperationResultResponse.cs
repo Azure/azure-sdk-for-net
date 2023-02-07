@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownVaultStorageConfigOperationResultResponse. </summary>
+    /// <summary>
+    /// The UnknownVaultStorageConfigOperationResultResponse.
+    /// Serialized Name: UnknownVaultStorageConfigOperationResultResponse
+    /// </summary>
     internal partial class UnknownVaultStorageConfigOperationResultResponse : VaultStorageConfigOperationResultResponse
     {
         /// <summary> Initializes a new instance of UnknownVaultStorageConfigOperationResultResponse. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: VaultStorageConfigOperationResultResponse.objectType
+        /// </param>
         internal UnknownVaultStorageConfigOperationResultResponse(string objectType) : base(objectType)
         {
             ObjectType = objectType ?? "Unknown";

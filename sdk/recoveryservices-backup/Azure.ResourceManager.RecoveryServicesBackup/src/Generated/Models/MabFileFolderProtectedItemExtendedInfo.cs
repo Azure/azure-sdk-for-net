@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Additional information on the backed up item. </summary>
+    /// <summary>
+    /// Additional information on the backed up item.
+    /// Serialized Name: MabFileFolderProtectedItemExtendedInfo
+    /// </summary>
     public partial class MabFileFolderProtectedItemExtendedInfo
     {
         /// <summary> Initializes a new instance of MabFileFolderProtectedItemExtendedInfo. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of MabFileFolderProtectedItemExtendedInfo. </summary>
-        /// <param name="lastRefreshedOn"> Last time when the agent data synced to service. </param>
-        /// <param name="oldestRecoveryPoint"> The oldest backup copy available. </param>
-        /// <param name="recoveryPointCount"> Number of backup copies associated with the backup item. </param>
+        /// <param name="lastRefreshedOn">
+        /// Last time when the agent data synced to service.
+        /// Serialized Name: MabFileFolderProtectedItemExtendedInfo.lastRefreshedAt
+        /// </param>
+        /// <param name="oldestRecoveryPoint">
+        /// The oldest backup copy available.
+        /// Serialized Name: MabFileFolderProtectedItemExtendedInfo.oldestRecoveryPoint
+        /// </param>
+        /// <param name="recoveryPointCount">
+        /// Number of backup copies associated with the backup item.
+        /// Serialized Name: MabFileFolderProtectedItemExtendedInfo.recoveryPointCount
+        /// </param>
         internal MabFileFolderProtectedItemExtendedInfo(DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount)
         {
             LastRefreshedOn = lastRefreshedOn;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointCount = recoveryPointCount;
         }
 
-        /// <summary> Last time when the agent data synced to service. </summary>
+        /// <summary>
+        /// Last time when the agent data synced to service.
+        /// Serialized Name: MabFileFolderProtectedItemExtendedInfo.lastRefreshedAt
+        /// </summary>
         public DateTimeOffset? LastRefreshedOn { get; set; }
-        /// <summary> The oldest backup copy available. </summary>
+        /// <summary>
+        /// The oldest backup copy available.
+        /// Serialized Name: MabFileFolderProtectedItemExtendedInfo.oldestRecoveryPoint
+        /// </summary>
         public DateTimeOffset? OldestRecoveryPoint { get; set; }
-        /// <summary> Number of backup copies associated with the backup item. </summary>
+        /// <summary>
+        /// Number of backup copies associated with the backup item.
+        /// Serialized Name: MabFileFolderProtectedItemExtendedInfo.recoveryPointCount
+        /// </summary>
         public int? RecoveryPointCount { get; set; }
     }
 }

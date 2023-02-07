@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Parameters to Provision ILR API.
+    /// Serialized Name: ILRRequest
     /// Please note <see cref="ILRRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureFileShareProvisionILRRequest"/> and <see cref="IaasVmilrRegistrationRequest"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ILRRequest. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: ILRRequest.objectType
+        /// </param>
         internal ILRRequest(string objectType)
         {
             ObjectType = objectType;
         }
 
-        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        /// <summary>
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: ILRRequest.objectType
+        /// </summary>
         internal string ObjectType { get; set; }
     }
 }

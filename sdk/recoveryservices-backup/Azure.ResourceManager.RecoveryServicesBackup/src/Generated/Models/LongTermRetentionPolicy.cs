@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Long term retention policy. </summary>
+    /// <summary>
+    /// Long term retention policy.
+    /// Serialized Name: LongTermRetentionPolicy
+    /// </summary>
     public partial class LongTermRetentionPolicy : RetentionPolicy
     {
         /// <summary> Initializes a new instance of LongTermRetentionPolicy. </summary>
@@ -17,11 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of LongTermRetentionPolicy. </summary>
-        /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="dailySchedule"> Daily retention schedule of the protection policy. </param>
-        /// <param name="weeklySchedule"> Weekly retention schedule of the protection policy. </param>
-        /// <param name="monthlySchedule"> Monthly retention schedule of the protection policy. </param>
-        /// <param name="yearlySchedule"> Yearly retention schedule of the protection policy. </param>
+        /// <param name="retentionPolicyType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: RetentionPolicy.retentionPolicyType
+        /// </param>
+        /// <param name="dailySchedule">
+        /// Daily retention schedule of the protection policy.
+        /// Serialized Name: LongTermRetentionPolicy.dailySchedule
+        /// </param>
+        /// <param name="weeklySchedule">
+        /// Weekly retention schedule of the protection policy.
+        /// Serialized Name: LongTermRetentionPolicy.weeklySchedule
+        /// </param>
+        /// <param name="monthlySchedule">
+        /// Monthly retention schedule of the protection policy.
+        /// Serialized Name: LongTermRetentionPolicy.monthlySchedule
+        /// </param>
+        /// <param name="yearlySchedule">
+        /// Yearly retention schedule of the protection policy.
+        /// Serialized Name: LongTermRetentionPolicy.yearlySchedule
+        /// </param>
         internal LongTermRetentionPolicy(string retentionPolicyType, DailyRetentionSchedule dailySchedule, WeeklyRetentionSchedule weeklySchedule, MonthlyRetentionSchedule monthlySchedule, YearlyRetentionSchedule yearlySchedule) : base(retentionPolicyType)
         {
             DailySchedule = dailySchedule;
@@ -31,13 +49,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RetentionPolicyType = retentionPolicyType ?? "LongTermRetentionPolicy";
         }
 
-        /// <summary> Daily retention schedule of the protection policy. </summary>
+        /// <summary>
+        /// Daily retention schedule of the protection policy.
+        /// Serialized Name: LongTermRetentionPolicy.dailySchedule
+        /// </summary>
         public DailyRetentionSchedule DailySchedule { get; set; }
-        /// <summary> Weekly retention schedule of the protection policy. </summary>
+        /// <summary>
+        /// Weekly retention schedule of the protection policy.
+        /// Serialized Name: LongTermRetentionPolicy.weeklySchedule
+        /// </summary>
         public WeeklyRetentionSchedule WeeklySchedule { get; set; }
-        /// <summary> Monthly retention schedule of the protection policy. </summary>
+        /// <summary>
+        /// Monthly retention schedule of the protection policy.
+        /// Serialized Name: LongTermRetentionPolicy.monthlySchedule
+        /// </summary>
         public MonthlyRetentionSchedule MonthlySchedule { get; set; }
-        /// <summary> Yearly retention schedule of the protection policy. </summary>
+        /// <summary>
+        /// Yearly retention schedule of the protection policy.
+        /// Serialized Name: LongTermRetentionPolicy.yearlySchedule
+        /// </summary>
         public YearlyRetentionSchedule YearlySchedule { get; set; }
     }
 }

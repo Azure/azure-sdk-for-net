@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Defines whether the current recovery mode is file restore or database restore. </summary>
+    /// <summary>
+    /// Defines whether the current recovery mode is file restore or database restore
+    /// Serialized Name: RecoveryMode
+    /// </summary>
     public readonly partial struct RecoveryMode : IEquatable<RecoveryMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string FileRecoveryValue = "FileRecovery";
         private const string WorkloadRecoveryValue = "WorkloadRecovery";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: RecoveryMode.Invalid
+        /// </summary>
         public static RecoveryMode Invalid { get; } = new RecoveryMode(InvalidValue);
-        /// <summary> FileRecovery. </summary>
+        /// <summary>
+        /// FileRecovery
+        /// Serialized Name: RecoveryMode.FileRecovery
+        /// </summary>
         public static RecoveryMode FileRecovery { get; } = new RecoveryMode(FileRecoveryValue);
-        /// <summary> WorkloadRecovery. </summary>
+        /// <summary>
+        /// WorkloadRecovery
+        /// Serialized Name: RecoveryMode.WorkloadRecovery
+        /// </summary>
         public static RecoveryMode WorkloadRecovery { get; } = new RecoveryMode(WorkloadRecoveryValue);
         /// <summary> Determines if two <see cref="RecoveryMode"/> values are the same. </summary>
         public static bool operator ==(RecoveryMode left, RecoveryMode right) => left.Equals(right);

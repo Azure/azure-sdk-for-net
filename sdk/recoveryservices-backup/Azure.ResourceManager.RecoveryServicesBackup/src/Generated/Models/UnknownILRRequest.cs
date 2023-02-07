@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownILRRequest. </summary>
+    /// <summary>
+    /// The UnknownILRRequest.
+    /// Serialized Name: UnknownILRRequest
+    /// </summary>
     internal partial class UnknownILRRequest : ILRRequest
     {
         /// <summary> Initializes a new instance of UnknownILRRequest. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: ILRRequest.objectType
+        /// </param>
         internal UnknownILRRequest(string objectType) : base(objectType)
         {
             ObjectType = objectType ?? "Unknown";

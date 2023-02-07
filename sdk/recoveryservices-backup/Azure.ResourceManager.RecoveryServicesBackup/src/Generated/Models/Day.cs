@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Day of the week. </summary>
+    /// <summary>
+    /// Day of the week.
+    /// Serialized Name: Day
+    /// </summary>
     public partial class Day
     {
         /// <summary> Initializes a new instance of Day. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of Day. </summary>
-        /// <param name="date"> Date of the month. </param>
-        /// <param name="isLast"> Whether Date is last date of month. </param>
+        /// <param name="date">
+        /// Date of the month
+        /// Serialized Name: Day.date
+        /// </param>
+        /// <param name="isLast">
+        /// Whether Date is last date of month
+        /// Serialized Name: Day.isLast
+        /// </param>
         internal Day(int? date, bool? isLast)
         {
             Date = date;
             IsLast = isLast;
         }
 
-        /// <summary> Date of the month. </summary>
+        /// <summary>
+        /// Date of the month
+        /// Serialized Name: Day.date
+        /// </summary>
         public int? Date { get; set; }
-        /// <summary> Whether Date is last date of month. </summary>
+        /// <summary>
+        /// Whether Date is last date of month
+        /// Serialized Name: Day.isLast
+        /// </summary>
         public bool? IsLast { get; set; }
     }
 }

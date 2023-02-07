@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Server type of MAB container. </summary>
+    /// <summary>
+    /// Server type of MAB container.
+    /// Serialized Name: MabServerType
+    /// </summary>
     public readonly partial struct MabServerType : IEquatable<MabServerType>
     {
         private readonly string _value;
@@ -38,35 +41,80 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string StorageContainerValue = "StorageContainer";
         private const string GenericContainerValue = "GenericContainer";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: MabServerType.Invalid
+        /// </summary>
         public static MabServerType Invalid { get; } = new MabServerType(InvalidValue);
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: MabServerType.Unknown
+        /// </summary>
         public static MabServerType Unknown { get; } = new MabServerType(UnknownValue);
-        /// <summary> IaasVMContainer. </summary>
+        /// <summary>
+        /// IaasVMContainer
+        /// Serialized Name: MabServerType.IaasVMContainer
+        /// </summary>
         public static MabServerType IaasVmContainer { get; } = new MabServerType(IaasVmContainerValue);
-        /// <summary> IaasVMServiceContainer. </summary>
+        /// <summary>
+        /// IaasVMServiceContainer
+        /// Serialized Name: MabServerType.IaasVMServiceContainer
+        /// </summary>
         public static MabServerType IaasVmServiceContainer { get; } = new MabServerType(IaasVmServiceContainerValue);
-        /// <summary> DPMContainer. </summary>
+        /// <summary>
+        /// DPMContainer
+        /// Serialized Name: MabServerType.DPMContainer
+        /// </summary>
         public static MabServerType DpmContainer { get; } = new MabServerType(DpmContainerValue);
-        /// <summary> AzureBackupServerContainer. </summary>
+        /// <summary>
+        /// AzureBackupServerContainer
+        /// Serialized Name: MabServerType.AzureBackupServerContainer
+        /// </summary>
         public static MabServerType AzureBackupServerContainer { get; } = new MabServerType(AzureBackupServerContainerValue);
-        /// <summary> MABContainer. </summary>
+        /// <summary>
+        /// MABContainer
+        /// Serialized Name: MabServerType.MABContainer
+        /// </summary>
         public static MabServerType MabContainer { get; } = new MabServerType(MabContainerValue);
-        /// <summary> Cluster. </summary>
+        /// <summary>
+        /// Cluster
+        /// Serialized Name: MabServerType.Cluster
+        /// </summary>
         public static MabServerType Cluster { get; } = new MabServerType(ClusterValue);
-        /// <summary> AzureSqlContainer. </summary>
+        /// <summary>
+        /// AzureSqlContainer
+        /// Serialized Name: MabServerType.AzureSqlContainer
+        /// </summary>
         public static MabServerType AzureSqlContainer { get; } = new MabServerType(AzureSqlContainerValue);
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: MabServerType.Windows
+        /// </summary>
         public static MabServerType Windows { get; } = new MabServerType(WindowsValue);
-        /// <summary> VCenter. </summary>
+        /// <summary>
+        /// VCenter
+        /// Serialized Name: MabServerType.VCenter
+        /// </summary>
         public static MabServerType VCenter { get; } = new MabServerType(VCenterValue);
-        /// <summary> VMAppContainer. </summary>
+        /// <summary>
+        /// VMAppContainer
+        /// Serialized Name: MabServerType.VMAppContainer
+        /// </summary>
         public static MabServerType VmAppContainer { get; } = new MabServerType(VmAppContainerValue);
-        /// <summary> SQLAGWorkLoadContainer. </summary>
+        /// <summary>
+        /// SQLAGWorkLoadContainer
+        /// Serialized Name: MabServerType.SQLAGWorkLoadContainer
+        /// </summary>
         public static MabServerType SqlAGWorkLoadContainer { get; } = new MabServerType(SqlAGWorkLoadContainerValue);
-        /// <summary> StorageContainer. </summary>
+        /// <summary>
+        /// StorageContainer
+        /// Serialized Name: MabServerType.StorageContainer
+        /// </summary>
         public static MabServerType StorageContainer { get; } = new MabServerType(StorageContainerValue);
-        /// <summary> GenericContainer. </summary>
+        /// <summary>
+        /// GenericContainer
+        /// Serialized Name: MabServerType.GenericContainer
+        /// </summary>
         public static MabServerType GenericContainer { get; } = new MabServerType(GenericContainerValue);
         /// <summary> Determines if two <see cref="MabServerType"/> values are the same. </summary>
         public static bool operator ==(MabServerType left, MabServerType right) => left.Equals(right);

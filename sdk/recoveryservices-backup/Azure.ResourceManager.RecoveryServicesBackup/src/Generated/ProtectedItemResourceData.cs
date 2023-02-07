@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectedItemResource properties
+        /// Serialized Name: ProtectedItemResource.properties
         /// Please note <see cref="ProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileshareProtectedItem"/>, <see cref="AzureIaasVmProtectedItem"/>, <see cref="AzureVmWorkloadProtectedItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDBInstanceProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSQLDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, <see cref="MabFileFolderProtectedItem"/>, <see cref="AzureIaaSClassicComputeVmProtectedItem"/>, <see cref="AzureIaaSComputeVmProtectedItem"/> and <see cref="AzureSqlProtectedItem"/>.
         /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="eTag">
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         internal ProtectedItemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectedItem properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -43,11 +47,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// ProtectedItemResource properties
+        /// Serialized Name: ProtectedItemResource.properties
         /// Please note <see cref="ProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileshareProtectedItem"/>, <see cref="AzureIaasVmProtectedItem"/>, <see cref="AzureVmWorkloadProtectedItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDBInstanceProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSQLDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, <see cref="MabFileFolderProtectedItem"/>, <see cref="AzureIaaSClassicComputeVmProtectedItem"/>, <see cref="AzureIaaSComputeVmProtectedItem"/> and <see cref="AzureSqlProtectedItem"/>.
         /// </summary>
         public ProtectedItem Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary>
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectionIntentResource properties
+        /// Serialized Name: ProtectionIntentResource.properties
         /// Please note <see cref="ProtectionIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceProtectionIntent"/>, <see cref="AzureWorkloadAutoProtectionIntent"/>, <see cref="AzureWorkloadContainerAutoProtectionIntent"/>, <see cref="AzureWorkloadSQLAutoProtectionIntent"/> and <see cref="AzureRecoveryServiceVaultProtectionIntent"/>.
         /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="eTag">
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         internal ProtectionIntentResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectionIntent properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -43,11 +47,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// ProtectionIntentResource properties
+        /// Serialized Name: ProtectionIntentResource.properties
         /// Please note <see cref="ProtectionIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceProtectionIntent"/>, <see cref="AzureWorkloadAutoProtectionIntent"/>, <see cref="AzureWorkloadContainerAutoProtectionIntent"/>, <see cref="AzureWorkloadSQLAutoProtectionIntent"/> and <see cref="AzureRecoveryServiceVaultProtectionIntent"/>.
         /// </summary>
         public ProtectionIntent Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary>
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

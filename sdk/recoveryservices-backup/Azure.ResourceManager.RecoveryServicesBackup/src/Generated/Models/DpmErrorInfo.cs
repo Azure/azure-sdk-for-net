@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> DPM workload-specific error information. </summary>
+    /// <summary>
+    /// DPM workload-specific error information.
+    /// Serialized Name: DpmErrorInfo
+    /// </summary>
     public partial class DpmErrorInfo
     {
         /// <summary> Initializes a new instance of DpmErrorInfo. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DpmErrorInfo. </summary>
-        /// <param name="errorString"> Localized error string. </param>
-        /// <param name="recommendations"> List of localized recommendations for above error code. </param>
+        /// <param name="errorString">
+        /// Localized error string.
+        /// Serialized Name: DpmErrorInfo.errorString
+        /// </param>
+        /// <param name="recommendations">
+        /// List of localized recommendations for above error code.
+        /// Serialized Name: DpmErrorInfo.recommendations
+        /// </param>
         internal DpmErrorInfo(string errorString, IList<string> recommendations)
         {
             ErrorString = errorString;
             Recommendations = recommendations;
         }
 
-        /// <summary> Localized error string. </summary>
+        /// <summary>
+        /// Localized error string.
+        /// Serialized Name: DpmErrorInfo.errorString
+        /// </summary>
         public string ErrorString { get; set; }
-        /// <summary> List of localized recommendations for above error code. </summary>
+        /// <summary>
+        /// List of localized recommendations for above error code.
+        /// Serialized Name: DpmErrorInfo.recommendations
+        /// </summary>
         public IList<string> Recommendations { get; }
     }
 }

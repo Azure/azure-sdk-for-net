@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// IaaS VM workload-specific backup item.
+    /// Serialized Name: AzureIaaSVMProtectedItem
     /// Please note <see cref="AzureIaasVmProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureIaaSClassicComputeVmProtectedItem"/> and <see cref="AzureIaaSComputeVmProtectedItem"/>.
     /// </summary>
@@ -27,36 +28,126 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureIaasVmProtectedItem. </summary>
-        /// <param name="protectedItemType"> backup item type. </param>
-        /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
-        /// <param name="workloadType"> Type of workload this item represents. </param>
-        /// <param name="containerName"> Unique name of container. </param>
-        /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
-        /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="lastRecoveryPoint"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
-        /// <param name="backupSetName"> Name of the backup set the backup item belongs to. </param>
-        /// <param name="createMode"> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </param>
-        /// <param name="deferredDeleteTimeInUTC"> Time for deferred deletion in UTC. </param>
-        /// <param name="isScheduledForDeferredDelete"> Flag to identify whether the DS is scheduled for deferred delete. </param>
-        /// <param name="deferredDeleteTimeRemaining"> Time remaining before the DS marked for deferred delete is permanently deleted. </param>
-        /// <param name="isDeferredDeleteScheduleUpcoming"> Flag to identify whether the deferred deleted DS is to be purged soon. </param>
-        /// <param name="isRehydrate"> Flag to identify that deferred deleted DS is to be moved into Pause state. </param>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
-        /// <param name="policyName"> Name of the policy used for protection. </param>
-        /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
-        /// <param name="friendlyName"> Friendly name of the VM represented by this backup item. </param>
-        /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine represented by this item. </param>
-        /// <param name="protectionStatus"> Backup status of this backup item. </param>
-        /// <param name="protectionState"> Backup state of this backup item. </param>
-        /// <param name="healthStatus"> Health status of protected item. </param>
-        /// <param name="healthDetails"> Health details on this backup item. </param>
-        /// <param name="kpisHealths"> Health details of different KPIs. </param>
-        /// <param name="lastBackupStatus"> Last backup operation status. </param>
-        /// <param name="lastBackupOn"> Timestamp of the last backup operation on this backup item. </param>
-        /// <param name="protectedItemDataId"> Data ID of the protected item. </param>
-        /// <param name="extendedInfo"> Additional information for this backup item. </param>
-        /// <param name="extendedProperties"> Extended Properties for Azure IaasVM Backup. </param>
+        /// <param name="protectedItemType">
+        /// backup item type.
+        /// Serialized Name: ProtectedItem.protectedItemType
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the backed up item.
+        /// Serialized Name: ProtectedItem.backupManagementType
+        /// </param>
+        /// <param name="workloadType">
+        /// Type of workload this item represents.
+        /// Serialized Name: ProtectedItem.workloadType
+        /// </param>
+        /// <param name="containerName">
+        /// Unique name of container
+        /// Serialized Name: ProtectedItem.containerName
+        /// </param>
+        /// <param name="sourceResourceId">
+        /// ARM ID of the resource to be backed up.
+        /// Serialized Name: ProtectedItem.sourceResourceId
+        /// </param>
+        /// <param name="policyId">
+        /// ID of the backup policy with which this item is backed up.
+        /// Serialized Name: ProtectedItem.policyId
+        /// </param>
+        /// <param name="lastRecoveryPoint">
+        /// Timestamp when the last (latest) backup copy was created for this backup item.
+        /// Serialized Name: ProtectedItem.lastRecoveryPoint
+        /// </param>
+        /// <param name="backupSetName">
+        /// Name of the backup set the backup item belongs to
+        /// Serialized Name: ProtectedItem.backupSetName
+        /// </param>
+        /// <param name="createMode">
+        /// Create mode to indicate recovery of existing soft deleted data source or creation of new data source.
+        /// Serialized Name: ProtectedItem.createMode
+        /// </param>
+        /// <param name="deferredDeleteTimeInUTC">
+        /// Time for deferred deletion in UTC
+        /// Serialized Name: ProtectedItem.deferredDeleteTimeInUTC
+        /// </param>
+        /// <param name="isScheduledForDeferredDelete">
+        /// Flag to identify whether the DS is scheduled for deferred delete
+        /// Serialized Name: ProtectedItem.isScheduledForDeferredDelete
+        /// </param>
+        /// <param name="deferredDeleteTimeRemaining">
+        /// Time remaining before the DS marked for deferred delete is permanently deleted
+        /// Serialized Name: ProtectedItem.deferredDeleteTimeRemaining
+        /// </param>
+        /// <param name="isDeferredDeleteScheduleUpcoming">
+        /// Flag to identify whether the deferred deleted DS is to be purged soon
+        /// Serialized Name: ProtectedItem.isDeferredDeleteScheduleUpcoming
+        /// </param>
+        /// <param name="isRehydrate">
+        /// Flag to identify that deferred deleted DS is to be moved into Pause state
+        /// Serialized Name: ProtectedItem.isRehydrate
+        /// </param>
+        /// <param name="resourceGuardOperationRequests">
+        /// ResourceGuardOperationRequests on which LAC check will be performed
+        /// Serialized Name: ProtectedItem.resourceGuardOperationRequests
+        /// </param>
+        /// <param name="isArchiveEnabled">
+        /// Flag to identify whether datasource is protected in archive
+        /// Serialized Name: ProtectedItem.isArchiveEnabled
+        /// </param>
+        /// <param name="policyName">
+        /// Name of the policy used for protection
+        /// Serialized Name: ProtectedItem.policyName
+        /// </param>
+        /// <param name="softDeleteRetentionPeriod">
+        /// Soft delete retention period in days
+        /// Serialized Name: ProtectedItem.softDeleteRetentionPeriod
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the VM represented by this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.friendlyName
+        /// </param>
+        /// <param name="virtualMachineId">
+        /// Fully qualified ARM ID of the virtual machine represented by this item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.virtualMachineId
+        /// </param>
+        /// <param name="protectionStatus">
+        /// Backup status of this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.protectionStatus
+        /// </param>
+        /// <param name="protectionState">
+        /// Backup state of this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.protectionState
+        /// </param>
+        /// <param name="healthStatus">
+        /// Health status of protected item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.healthStatus
+        /// </param>
+        /// <param name="healthDetails">
+        /// Health details on this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.healthDetails
+        /// </param>
+        /// <param name="kpisHealths">
+        /// Health details of different KPIs
+        /// Serialized Name: AzureIaaSVMProtectedItem.kpisHealths
+        /// </param>
+        /// <param name="lastBackupStatus">
+        /// Last backup operation status.
+        /// Serialized Name: AzureIaaSVMProtectedItem.lastBackupStatus
+        /// </param>
+        /// <param name="lastBackupOn">
+        /// Timestamp of the last backup operation on this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.lastBackupTime
+        /// </param>
+        /// <param name="protectedItemDataId">
+        /// Data ID of the protected item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.protectedItemDataId
+        /// </param>
+        /// <param name="extendedInfo">
+        /// Additional information for this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.extendedInfo
+        /// </param>
+        /// <param name="extendedProperties">
+        /// Extended Properties for Azure IaasVM Backup.
+        /// Serialized Name: AzureIaaSVMProtectedItem.extendedProperties
+        /// </param>
         internal AzureIaasVmProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, DataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, CreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string virtualMachineId, string protectionStatus, ProtectionState? protectionState, HealthStatus? healthStatus, IList<AzureIaasVmHealthDetails> healthDetails, IDictionary<string, KPIResourceHealthDetails> kpisHealths, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectedItemDataId, AzureIaasVmProtectedItemExtendedInfo extendedInfo, ExtendedProperties extendedProperties) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             FriendlyName = friendlyName;
@@ -74,29 +165,65 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemType = protectedItemType ?? "AzureIaaSVMProtectedItem";
         }
 
-        /// <summary> Friendly name of the VM represented by this backup item. </summary>
+        /// <summary>
+        /// Friendly name of the VM represented by this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> Fully qualified ARM ID of the virtual machine represented by this item. </summary>
+        /// <summary>
+        /// Fully qualified ARM ID of the virtual machine represented by this item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.virtualMachineId
+        /// </summary>
         public string VirtualMachineId { get; }
-        /// <summary> Backup status of this backup item. </summary>
+        /// <summary>
+        /// Backup status of this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.protectionStatus
+        /// </summary>
         public string ProtectionStatus { get; set; }
-        /// <summary> Backup state of this backup item. </summary>
+        /// <summary>
+        /// Backup state of this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.protectionState
+        /// </summary>
         public ProtectionState? ProtectionState { get; set; }
-        /// <summary> Health status of protected item. </summary>
+        /// <summary>
+        /// Health status of protected item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.healthStatus
+        /// </summary>
         public HealthStatus? HealthStatus { get; }
-        /// <summary> Health details on this backup item. </summary>
+        /// <summary>
+        /// Health details on this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.healthDetails
+        /// </summary>
         public IList<AzureIaasVmHealthDetails> HealthDetails { get; }
-        /// <summary> Health details of different KPIs. </summary>
+        /// <summary>
+        /// Health details of different KPIs
+        /// Serialized Name: AzureIaaSVMProtectedItem.kpisHealths
+        /// </summary>
         public IDictionary<string, KPIResourceHealthDetails> KpisHealths { get; }
-        /// <summary> Last backup operation status. </summary>
+        /// <summary>
+        /// Last backup operation status.
+        /// Serialized Name: AzureIaaSVMProtectedItem.lastBackupStatus
+        /// </summary>
         public string LastBackupStatus { get; set; }
-        /// <summary> Timestamp of the last backup operation on this backup item. </summary>
+        /// <summary>
+        /// Timestamp of the last backup operation on this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.lastBackupTime
+        /// </summary>
         public DateTimeOffset? LastBackupOn { get; }
-        /// <summary> Data ID of the protected item. </summary>
+        /// <summary>
+        /// Data ID of the protected item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.protectedItemDataId
+        /// </summary>
         public string ProtectedItemDataId { get; }
-        /// <summary> Additional information for this backup item. </summary>
+        /// <summary>
+        /// Additional information for this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItem.extendedInfo
+        /// </summary>
         public AzureIaasVmProtectedItemExtendedInfo ExtendedInfo { get; set; }
-        /// <summary> Extended Properties for Azure IaasVM Backup. </summary>
+        /// <summary>
+        /// Extended Properties for Azure IaasVM Backup.
+        /// Serialized Name: AzureIaaSVMProtectedItem.extendedProperties
+        /// </summary>
         public ExtendedProperties ExtendedProperties { get; set; }
     }
 }

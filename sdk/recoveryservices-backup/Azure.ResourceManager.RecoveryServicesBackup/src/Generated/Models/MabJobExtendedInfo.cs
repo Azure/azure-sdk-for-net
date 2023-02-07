@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Additional information for the MAB workload-specific job. </summary>
+    /// <summary>
+    /// Additional information for the MAB workload-specific job.
+    /// Serialized Name: MabJobExtendedInfo
+    /// </summary>
     public partial class MabJobExtendedInfo
     {
         /// <summary> Initializes a new instance of MabJobExtendedInfo. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of MabJobExtendedInfo. </summary>
-        /// <param name="tasksList"> List of tasks for this job. </param>
-        /// <param name="propertyBag"> The job properties. </param>
-        /// <param name="dynamicErrorMessage"> Non localized error message specific to this job. </param>
+        /// <param name="tasksList">
+        /// List of tasks for this job.
+        /// Serialized Name: MabJobExtendedInfo.tasksList
+        /// </param>
+        /// <param name="propertyBag">
+        /// The job properties.
+        /// Serialized Name: MabJobExtendedInfo.propertyBag
+        /// </param>
+        /// <param name="dynamicErrorMessage">
+        /// Non localized error message specific to this job.
+        /// Serialized Name: MabJobExtendedInfo.dynamicErrorMessage
+        /// </param>
         internal MabJobExtendedInfo(IList<MabJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, string dynamicErrorMessage)
         {
             TasksList = tasksList;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DynamicErrorMessage = dynamicErrorMessage;
         }
 
-        /// <summary> List of tasks for this job. </summary>
+        /// <summary>
+        /// List of tasks for this job.
+        /// Serialized Name: MabJobExtendedInfo.tasksList
+        /// </summary>
         public IList<MabJobTaskDetails> TasksList { get; }
-        /// <summary> The job properties. </summary>
+        /// <summary>
+        /// The job properties.
+        /// Serialized Name: MabJobExtendedInfo.propertyBag
+        /// </summary>
         public IDictionary<string, string> PropertyBag { get; }
-        /// <summary> Non localized error message specific to this job. </summary>
+        /// <summary>
+        /// Non localized error message specific to this job.
+        /// Serialized Name: MabJobExtendedInfo.dynamicErrorMessage
+        /// </summary>
         public string DynamicErrorMessage { get; set; }
     }
 }

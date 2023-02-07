@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure storage specific error information. </summary>
+    /// <summary>
+    /// Azure storage specific error information
+    /// Serialized Name: AzureWorkloadErrorInfo
+    /// </summary>
     public partial class AzureWorkloadErrorInfo
     {
         /// <summary> Initializes a new instance of AzureWorkloadErrorInfo. </summary>
@@ -20,11 +23,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadErrorInfo. </summary>
-        /// <param name="errorCode"> Error code. </param>
-        /// <param name="errorString"> Localized error string. </param>
-        /// <param name="errorTitle"> Title: Typically, the entity that the error pertains to. </param>
-        /// <param name="recommendations"> List of localized recommendations for above error code. </param>
-        /// <param name="additionalDetails"> Additional details for above error code. </param>
+        /// <param name="errorCode">
+        /// Error code.
+        /// Serialized Name: AzureWorkloadErrorInfo.errorCode
+        /// </param>
+        /// <param name="errorString">
+        /// Localized error string.
+        /// Serialized Name: AzureWorkloadErrorInfo.errorString
+        /// </param>
+        /// <param name="errorTitle">
+        /// Title: Typically, the entity that the error pertains to.
+        /// Serialized Name: AzureWorkloadErrorInfo.errorTitle
+        /// </param>
+        /// <param name="recommendations">
+        /// List of localized recommendations for above error code.
+        /// Serialized Name: AzureWorkloadErrorInfo.recommendations
+        /// </param>
+        /// <param name="additionalDetails">
+        /// Additional details for above error code.
+        /// Serialized Name: AzureWorkloadErrorInfo.additionalDetails
+        /// </param>
         internal AzureWorkloadErrorInfo(int? errorCode, string errorString, string errorTitle, IList<string> recommendations, string additionalDetails)
         {
             ErrorCode = errorCode;
@@ -34,15 +52,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             AdditionalDetails = additionalDetails;
         }
 
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: AzureWorkloadErrorInfo.errorCode
+        /// </summary>
         public int? ErrorCode { get; set; }
-        /// <summary> Localized error string. </summary>
+        /// <summary>
+        /// Localized error string.
+        /// Serialized Name: AzureWorkloadErrorInfo.errorString
+        /// </summary>
         public string ErrorString { get; set; }
-        /// <summary> Title: Typically, the entity that the error pertains to. </summary>
+        /// <summary>
+        /// Title: Typically, the entity that the error pertains to.
+        /// Serialized Name: AzureWorkloadErrorInfo.errorTitle
+        /// </summary>
         public string ErrorTitle { get; set; }
-        /// <summary> List of localized recommendations for above error code. </summary>
+        /// <summary>
+        /// List of localized recommendations for above error code.
+        /// Serialized Name: AzureWorkloadErrorInfo.recommendations
+        /// </summary>
         public IList<string> Recommendations { get; }
-        /// <summary> Additional details for above error code. </summary>
+        /// <summary>
+        /// Additional details for above error code.
+        /// Serialized Name: AzureWorkloadErrorInfo.additionalDetails
+        /// </summary>
         public string AdditionalDetails { get; set; }
     }
 }

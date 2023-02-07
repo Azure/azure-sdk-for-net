@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The LastUpdateStatus. </summary>
+    /// <summary>
+    /// The LastUpdateStatus.
+    /// Serialized Name: LastUpdateStatus
+    /// </summary>
     public readonly partial struct LastUpdateStatus : IEquatable<LastUpdateStatus>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InitializedValue = "Initialized";
         private const string FirstInitializationValue = "FirstInitialization";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: LastUpdateStatus.Invalid
+        /// </summary>
         public static LastUpdateStatus Invalid { get; } = new LastUpdateStatus(InvalidValue);
-        /// <summary> NotEnabled. </summary>
+        /// <summary>
+        /// NotEnabled
+        /// Serialized Name: LastUpdateStatus.NotEnabled
+        /// </summary>
         public static LastUpdateStatus NotEnabled { get; } = new LastUpdateStatus(NotEnabledValue);
-        /// <summary> PartiallySucceeded. </summary>
+        /// <summary>
+        /// PartiallySucceeded
+        /// Serialized Name: LastUpdateStatus.PartiallySucceeded
+        /// </summary>
         public static LastUpdateStatus PartiallySucceeded { get; } = new LastUpdateStatus(PartiallySucceededValue);
-        /// <summary> PartiallyFailed. </summary>
+        /// <summary>
+        /// PartiallyFailed
+        /// Serialized Name: LastUpdateStatus.PartiallyFailed
+        /// </summary>
         public static LastUpdateStatus PartiallyFailed { get; } = new LastUpdateStatus(PartiallyFailedValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: LastUpdateStatus.Failed
+        /// </summary>
         public static LastUpdateStatus Failed { get; } = new LastUpdateStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: LastUpdateStatus.Succeeded
+        /// </summary>
         public static LastUpdateStatus Succeeded { get; } = new LastUpdateStatus(SucceededValue);
-        /// <summary> Initialized. </summary>
+        /// <summary>
+        /// Initialized
+        /// Serialized Name: LastUpdateStatus.Initialized
+        /// </summary>
         public static LastUpdateStatus Initialized { get; } = new LastUpdateStatus(InitializedValue);
-        /// <summary> FirstInitialization. </summary>
+        /// <summary>
+        /// FirstInitialization
+        /// Serialized Name: LastUpdateStatus.FirstInitialization
+        /// </summary>
         public static LastUpdateStatus FirstInitialization { get; } = new LastUpdateStatus(FirstInitializationValue);
         /// <summary> Determines if two <see cref="LastUpdateStatus"/> values are the same. </summary>
         public static bool operator ==(LastUpdateStatus left, LastUpdateStatus right) => left.Equals(right);

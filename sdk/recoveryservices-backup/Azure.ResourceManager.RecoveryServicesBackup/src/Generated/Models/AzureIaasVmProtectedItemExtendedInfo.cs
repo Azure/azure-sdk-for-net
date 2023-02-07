@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Additional information on Azure IaaS VM specific backup item. </summary>
+    /// <summary>
+    /// Additional information on Azure IaaS VM specific backup item.
+    /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo
+    /// </summary>
     public partial class AzureIaasVmProtectedItemExtendedInfo
     {
         /// <summary> Initializes a new instance of AzureIaasVmProtectedItemExtendedInfo. </summary>
@@ -18,12 +21,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureIaasVmProtectedItemExtendedInfo. </summary>
-        /// <param name="oldestRecoveryPoint"> The oldest backup copy available for this backup item across all tiers. </param>
-        /// <param name="oldestRecoveryPointInVault"> The oldest backup copy available for this backup item in vault tier. </param>
-        /// <param name="oldestRecoveryPointInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
-        /// <param name="newestRecoveryPointInArchive"> The latest backup copy available for this backup item in archive tier. </param>
-        /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
-        /// <param name="policyInconsistent"> Specifies if backup policy associated with the backup item is inconsistent. </param>
+        /// <param name="oldestRecoveryPoint">
+        /// The oldest backup copy available for this backup item across all tiers.
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.oldestRecoveryPoint
+        /// </param>
+        /// <param name="oldestRecoveryPointInVault">
+        /// The oldest backup copy available for this backup item in vault tier
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.oldestRecoveryPointInVault
+        /// </param>
+        /// <param name="oldestRecoveryPointInArchive">
+        /// The oldest backup copy available for this backup item in archive tier
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.oldestRecoveryPointInArchive
+        /// </param>
+        /// <param name="newestRecoveryPointInArchive">
+        /// The latest backup copy available for this backup item in archive tier
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.newestRecoveryPointInArchive
+        /// </param>
+        /// <param name="recoveryPointCount">
+        /// Number of backup copies available for this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.recoveryPointCount
+        /// </param>
+        /// <param name="policyInconsistent">
+        /// Specifies if backup policy associated with the backup item is inconsistent.
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.policyInconsistent
+        /// </param>
         internal AzureIaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoveryPoint, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, bool? policyInconsistent)
         {
             OldestRecoveryPoint = oldestRecoveryPoint;
@@ -34,17 +55,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             PolicyInconsistent = policyInconsistent;
         }
 
-        /// <summary> The oldest backup copy available for this backup item across all tiers. </summary>
+        /// <summary>
+        /// The oldest backup copy available for this backup item across all tiers.
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.oldestRecoveryPoint
+        /// </summary>
         public DateTimeOffset? OldestRecoveryPoint { get; set; }
-        /// <summary> The oldest backup copy available for this backup item in vault tier. </summary>
+        /// <summary>
+        /// The oldest backup copy available for this backup item in vault tier
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.oldestRecoveryPointInVault
+        /// </summary>
         public DateTimeOffset? OldestRecoveryPointInVault { get; set; }
-        /// <summary> The oldest backup copy available for this backup item in archive tier. </summary>
+        /// <summary>
+        /// The oldest backup copy available for this backup item in archive tier
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.oldestRecoveryPointInArchive
+        /// </summary>
         public DateTimeOffset? OldestRecoveryPointInArchive { get; set; }
-        /// <summary> The latest backup copy available for this backup item in archive tier. </summary>
+        /// <summary>
+        /// The latest backup copy available for this backup item in archive tier
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.newestRecoveryPointInArchive
+        /// </summary>
         public DateTimeOffset? NewestRecoveryPointInArchive { get; set; }
-        /// <summary> Number of backup copies available for this backup item. </summary>
+        /// <summary>
+        /// Number of backup copies available for this backup item.
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.recoveryPointCount
+        /// </summary>
         public int? RecoveryPointCount { get; set; }
-        /// <summary> Specifies if backup policy associated with the backup item is inconsistent. </summary>
+        /// <summary>
+        /// Specifies if backup policy associated with the backup item is inconsistent.
+        /// Serialized Name: AzureIaaSVMProtectedItemExtendedInfo.policyInconsistent
+        /// </summary>
         public bool? PolicyInconsistent { get; set; }
     }
 }

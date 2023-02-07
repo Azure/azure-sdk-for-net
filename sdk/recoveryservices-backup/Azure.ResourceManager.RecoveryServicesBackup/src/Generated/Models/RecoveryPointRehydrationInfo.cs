@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> RP Rehydration Info. </summary>
+    /// <summary>
+    /// RP Rehydration Info
+    /// Serialized Name: RecoveryPointRehydrationInfo
+    /// </summary>
     public partial class RecoveryPointRehydrationInfo
     {
         /// <summary> Initializes a new instance of RecoveryPointRehydrationInfo. </summary>
@@ -21,8 +24,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="rehydrationRetentionDuration">
         /// How long the rehydrated RP should be kept
         /// Should be ISO8601 Duration format e.g. &quot;P7D&quot;
+        /// Serialized Name: RecoveryPointRehydrationInfo.rehydrationRetentionDuration
         /// </param>
-        /// <param name="rehydrationPriority"> Rehydration Priority. </param>
+        /// <param name="rehydrationPriority">
+        /// Rehydration Priority
+        /// Serialized Name: RecoveryPointRehydrationInfo.rehydrationPriority
+        /// </param>
         internal RecoveryPointRehydrationInfo(TimeSpan? rehydrationRetentionDuration, RehydrationPriority? rehydrationPriority)
         {
             RehydrationRetentionDuration = rehydrationRetentionDuration;
@@ -32,9 +39,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary>
         /// How long the rehydrated RP should be kept
         /// Should be ISO8601 Duration format e.g. &quot;P7D&quot;
+        /// Serialized Name: RecoveryPointRehydrationInfo.rehydrationRetentionDuration
         /// </summary>
         public TimeSpan? RehydrationRetentionDuration { get; set; }
-        /// <summary> Rehydration Priority. </summary>
+        /// <summary>
+        /// Rehydration Priority
+        /// Serialized Name: RecoveryPointRehydrationInfo.rehydrationPriority
+        /// </summary>
         public RehydrationPriority? RehydrationPriority { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> IaaS VM workload specific backup copy. </summary>
+    /// <summary>
+    /// IaaS VM workload specific backup copy.
+    /// Serialized Name: IaasVMRecoveryPoint
+    /// </summary>
     public partial class IaasVmRecoveryPoint : RecoveryPoint
     {
         /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
@@ -24,23 +27,74 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="recoveryPointType"> Type of the backup copy. </param>
-        /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
-        /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
-        /// <param name="sourceVmStorageType"> Storage type of the VM whose backup copy is created. </param>
-        /// <param name="isSourceVmEncrypted"> Identifies whether the VM was encrypted when the backup copy is created. </param>
-        /// <param name="keyAndSecret"> Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true. </param>
-        /// <param name="isInstantIlrSessionActive"> Is the session to recover items from this backup copy still active. </param>
-        /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
-        /// <param name="isManagedVirtualMachine"> Whether VM is with Managed Disks. </param>
-        /// <param name="virtualMachineSize"> Virtual Machine Size. </param>
-        /// <param name="originalStorageAccountOption"> Original Storage Account Option. </param>
-        /// <param name="osType"> OS type. </param>
-        /// <param name="recoveryPointDiskConfiguration"> Disk configuration. </param>
-        /// <param name="zones"> Identifies the zone of the VM at the time of backup. Applicable only for zone-pinned Vms. </param>
-        /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
-        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: RecoveryPoint.objectType
+        /// </param>
+        /// <param name="recoveryPointType">
+        /// Type of the backup copy.
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointType
+        /// </param>
+        /// <param name="recoveryPointOn">
+        /// Time at which this backup copy was created.
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointTime
+        /// </param>
+        /// <param name="recoveryPointAdditionalInfo">
+        /// Additional information associated with this backup copy.
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointAdditionalInfo
+        /// </param>
+        /// <param name="sourceVmStorageType">
+        /// Storage type of the VM whose backup copy is created.
+        /// Serialized Name: IaasVMRecoveryPoint.sourceVMStorageType
+        /// </param>
+        /// <param name="isSourceVmEncrypted">
+        /// Identifies whether the VM was encrypted when the backup copy is created.
+        /// Serialized Name: IaasVMRecoveryPoint.isSourceVMEncrypted
+        /// </param>
+        /// <param name="keyAndSecret">
+        /// Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true.
+        /// Serialized Name: IaasVMRecoveryPoint.keyAndSecret
+        /// </param>
+        /// <param name="isInstantIlrSessionActive">
+        /// Is the session to recover items from this backup copy still active.
+        /// Serialized Name: IaasVMRecoveryPoint.isInstantIlrSessionActive
+        /// </param>
+        /// <param name="recoveryPointTierDetails">
+        /// Recovery point tier information.
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointTierDetails
+        /// </param>
+        /// <param name="isManagedVirtualMachine">
+        /// Whether VM is with Managed Disks
+        /// Serialized Name: IaasVMRecoveryPoint.isManagedVirtualMachine
+        /// </param>
+        /// <param name="virtualMachineSize">
+        /// Virtual Machine Size
+        /// Serialized Name: IaasVMRecoveryPoint.virtualMachineSize
+        /// </param>
+        /// <param name="originalStorageAccountOption">
+        /// Original Storage Account Option
+        /// Serialized Name: IaasVMRecoveryPoint.originalStorageAccountOption
+        /// </param>
+        /// <param name="osType">
+        /// OS type
+        /// Serialized Name: IaasVMRecoveryPoint.osType
+        /// </param>
+        /// <param name="recoveryPointDiskConfiguration">
+        /// Disk configuration
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointDiskConfiguration
+        /// </param>
+        /// <param name="zones">
+        /// Identifies the zone of the VM at the time of backup. Applicable only for zone-pinned Vms
+        /// Serialized Name: IaasVMRecoveryPoint.zones
+        /// </param>
+        /// <param name="recoveryPointMoveReadinessInfo">
+        /// Eligibility of RP to be moved to another tier
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointMoveReadinessInfo
+        /// </param>
+        /// <param name="recoveryPointProperties">
+        /// Properties of Recovery Point
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointProperties
+        /// </param>
         internal IaasVmRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
         {
             RecoveryPointType = recoveryPointType;
@@ -62,37 +116,85 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "IaasVMRecoveryPoint";
         }
 
-        /// <summary> Type of the backup copy. </summary>
+        /// <summary>
+        /// Type of the backup copy.
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointType
+        /// </summary>
         public string RecoveryPointType { get; set; }
-        /// <summary> Time at which this backup copy was created. </summary>
+        /// <summary>
+        /// Time at which this backup copy was created.
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointTime
+        /// </summary>
         public DateTimeOffset? RecoveryPointOn { get; set; }
-        /// <summary> Additional information associated with this backup copy. </summary>
+        /// <summary>
+        /// Additional information associated with this backup copy.
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointAdditionalInfo
+        /// </summary>
         public string RecoveryPointAdditionalInfo { get; set; }
-        /// <summary> Storage type of the VM whose backup copy is created. </summary>
+        /// <summary>
+        /// Storage type of the VM whose backup copy is created.
+        /// Serialized Name: IaasVMRecoveryPoint.sourceVMStorageType
+        /// </summary>
         public string SourceVmStorageType { get; set; }
-        /// <summary> Identifies whether the VM was encrypted when the backup copy is created. </summary>
+        /// <summary>
+        /// Identifies whether the VM was encrypted when the backup copy is created.
+        /// Serialized Name: IaasVMRecoveryPoint.isSourceVMEncrypted
+        /// </summary>
         public bool? IsSourceVmEncrypted { get; set; }
-        /// <summary> Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true. </summary>
+        /// <summary>
+        /// Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true.
+        /// Serialized Name: IaasVMRecoveryPoint.keyAndSecret
+        /// </summary>
         public KeyAndSecretDetails KeyAndSecret { get; set; }
-        /// <summary> Is the session to recover items from this backup copy still active. </summary>
+        /// <summary>
+        /// Is the session to recover items from this backup copy still active.
+        /// Serialized Name: IaasVMRecoveryPoint.isInstantIlrSessionActive
+        /// </summary>
         public bool? IsInstantIlrSessionActive { get; set; }
-        /// <summary> Recovery point tier information. </summary>
+        /// <summary>
+        /// Recovery point tier information.
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointTierDetails
+        /// </summary>
         public IList<RecoveryPointTierInformationV2> RecoveryPointTierDetails { get; }
-        /// <summary> Whether VM is with Managed Disks. </summary>
+        /// <summary>
+        /// Whether VM is with Managed Disks
+        /// Serialized Name: IaasVMRecoveryPoint.isManagedVirtualMachine
+        /// </summary>
         public bool? IsManagedVirtualMachine { get; set; }
-        /// <summary> Virtual Machine Size. </summary>
+        /// <summary>
+        /// Virtual Machine Size
+        /// Serialized Name: IaasVMRecoveryPoint.virtualMachineSize
+        /// </summary>
         public string VirtualMachineSize { get; set; }
-        /// <summary> Original Storage Account Option. </summary>
+        /// <summary>
+        /// Original Storage Account Option
+        /// Serialized Name: IaasVMRecoveryPoint.originalStorageAccountOption
+        /// </summary>
         public bool? OriginalStorageAccountOption { get; set; }
-        /// <summary> OS type. </summary>
+        /// <summary>
+        /// OS type
+        /// Serialized Name: IaasVMRecoveryPoint.osType
+        /// </summary>
         public string OSType { get; set; }
-        /// <summary> Disk configuration. </summary>
+        /// <summary>
+        /// Disk configuration
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointDiskConfiguration
+        /// </summary>
         public RecoveryPointDiskConfiguration RecoveryPointDiskConfiguration { get; set; }
-        /// <summary> Identifies the zone of the VM at the time of backup. Applicable only for zone-pinned Vms. </summary>
+        /// <summary>
+        /// Identifies the zone of the VM at the time of backup. Applicable only for zone-pinned Vms
+        /// Serialized Name: IaasVMRecoveryPoint.zones
+        /// </summary>
         public IList<string> Zones { get; }
-        /// <summary> Eligibility of RP to be moved to another tier. </summary>
+        /// <summary>
+        /// Eligibility of RP to be moved to another tier
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointMoveReadinessInfo
+        /// </summary>
         public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; }
-        /// <summary> Properties of Recovery Point. </summary>
+        /// <summary>
+        /// Properties of Recovery Point
+        /// Serialized Name: IaasVMRecoveryPoint.recoveryPointProperties
+        /// </summary>
         public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

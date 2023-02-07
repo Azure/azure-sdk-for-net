@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> KEK is encryption key for BEK. </summary>
+    /// <summary>
+    /// KEK is encryption key for BEK.
+    /// Serialized Name: KEKDetails
+    /// </summary>
     public partial class KEKDetails
     {
         /// <summary> Initializes a new instance of KEKDetails. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of KEKDetails. </summary>
-        /// <param name="keyUri"> Key is KEK. </param>
-        /// <param name="keyVaultId"> Key Vault ID where this Key is stored. </param>
-        /// <param name="keyBackupData"> KEK data. </param>
+        /// <param name="keyUri">
+        /// Key is KEK.
+        /// Serialized Name: KEKDetails.keyUrl
+        /// </param>
+        /// <param name="keyVaultId">
+        /// Key Vault ID where this Key is stored.
+        /// Serialized Name: KEKDetails.keyVaultId
+        /// </param>
+        /// <param name="keyBackupData">
+        /// KEK data.
+        /// Serialized Name: KEKDetails.keyBackupData
+        /// </param>
         internal KEKDetails(Uri keyUri, string keyVaultId, string keyBackupData)
         {
             KeyUri = keyUri;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             KeyBackupData = keyBackupData;
         }
 
-        /// <summary> Key is KEK. </summary>
+        /// <summary>
+        /// Key is KEK.
+        /// Serialized Name: KEKDetails.keyUrl
+        /// </summary>
         public Uri KeyUri { get; set; }
-        /// <summary> Key Vault ID where this Key is stored. </summary>
+        /// <summary>
+        /// Key Vault ID where this Key is stored.
+        /// Serialized Name: KEKDetails.keyVaultId
+        /// </summary>
         public string KeyVaultId { get; set; }
-        /// <summary> KEK data. </summary>
+        /// <summary>
+        /// KEK data.
+        /// Serialized Name: KEKDetails.keyBackupData
+        /// </summary>
         public string KeyBackupData { get; set; }
     }
 }

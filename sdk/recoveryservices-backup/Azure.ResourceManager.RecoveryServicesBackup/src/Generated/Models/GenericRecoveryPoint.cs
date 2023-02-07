@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Generic backup copy. </summary>
+    /// <summary>
+    /// Generic backup copy.
+    /// Serialized Name: GenericRecoveryPoint
+    /// </summary>
     public partial class GenericRecoveryPoint : RecoveryPoint
     {
         /// <summary> Initializes a new instance of GenericRecoveryPoint. </summary>
@@ -19,12 +22,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of GenericRecoveryPoint. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="friendlyName"> Friendly name of the backup copy. </param>
-        /// <param name="recoveryPointType"> Type of the backup copy. </param>
-        /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
-        /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
-        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: RecoveryPoint.objectType
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the backup copy.
+        /// Serialized Name: GenericRecoveryPoint.friendlyName
+        /// </param>
+        /// <param name="recoveryPointType">
+        /// Type of the backup copy.
+        /// Serialized Name: GenericRecoveryPoint.recoveryPointType
+        /// </param>
+        /// <param name="recoveryPointOn">
+        /// Time at which this backup copy was created.
+        /// Serialized Name: GenericRecoveryPoint.recoveryPointTime
+        /// </param>
+        /// <param name="recoveryPointAdditionalInfo">
+        /// Additional information associated with this backup copy.
+        /// Serialized Name: GenericRecoveryPoint.recoveryPointAdditionalInfo
+        /// </param>
+        /// <param name="recoveryPointProperties">
+        /// Properties of Recovery Point
+        /// Serialized Name: GenericRecoveryPoint.recoveryPointProperties
+        /// </param>
         internal GenericRecoveryPoint(string objectType, string friendlyName, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
         {
             FriendlyName = friendlyName;
@@ -35,15 +56,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "GenericRecoveryPoint";
         }
 
-        /// <summary> Friendly name of the backup copy. </summary>
+        /// <summary>
+        /// Friendly name of the backup copy.
+        /// Serialized Name: GenericRecoveryPoint.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> Type of the backup copy. </summary>
+        /// <summary>
+        /// Type of the backup copy.
+        /// Serialized Name: GenericRecoveryPoint.recoveryPointType
+        /// </summary>
         public string RecoveryPointType { get; set; }
-        /// <summary> Time at which this backup copy was created. </summary>
+        /// <summary>
+        /// Time at which this backup copy was created.
+        /// Serialized Name: GenericRecoveryPoint.recoveryPointTime
+        /// </summary>
         public DateTimeOffset? RecoveryPointOn { get; set; }
-        /// <summary> Additional information associated with this backup copy. </summary>
+        /// <summary>
+        /// Additional information associated with this backup copy.
+        /// Serialized Name: GenericRecoveryPoint.recoveryPointAdditionalInfo
+        /// </summary>
         public string RecoveryPointAdditionalInfo { get; set; }
-        /// <summary> Properties of Recovery Point. </summary>
+        /// <summary>
+        /// Properties of Recovery Point
+        /// Serialized Name: GenericRecoveryPoint.recoveryPointProperties
+        /// </summary>
         public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

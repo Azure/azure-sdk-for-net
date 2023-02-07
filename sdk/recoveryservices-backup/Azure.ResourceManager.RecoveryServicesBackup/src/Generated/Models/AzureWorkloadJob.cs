@@ -11,8 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure storage specific job. </summary>
-    public partial class AzureWorkloadJob : Job
+    /// <summary>
+    /// Azure storage specific job.
+    /// Serialized Name: AzureWorkloadJob
+    /// </summary>
+    public partial class AzureWorkloadJob : BackupJobProperties
     {
         /// <summary> Initializes a new instance of AzureWorkloadJob. </summary>
         public AzureWorkloadJob()
@@ -23,19 +26,58 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadJob. </summary>
-        /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
-        /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
-        /// <param name="operation"> The operation name. </param>
-        /// <param name="status"> Job status. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
-        /// <param name="activityId"> ActivityId of job. </param>
-        /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="workloadType"> Workload type of the job. </param>
-        /// <param name="duration"> Time elapsed during the execution of this job. </param>
-        /// <param name="actionsInfo"> Gets or sets the state/actions applicable on this job like cancel/retry. </param>
-        /// <param name="errorDetails"> Error details on execution of this job. </param>
-        /// <param name="extendedInfo"> Additional information about the job. </param>
+        /// <param name="entityFriendlyName">
+        /// Friendly name of the entity on which the current job is executing.
+        /// Serialized Name: Job.entityFriendlyName
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Backup management type to execute the current job.
+        /// Serialized Name: Job.backupManagementType
+        /// </param>
+        /// <param name="operation">
+        /// The operation name.
+        /// Serialized Name: Job.operation
+        /// </param>
+        /// <param name="status">
+        /// Job status.
+        /// Serialized Name: Job.status
+        /// </param>
+        /// <param name="startOn">
+        /// The start time.
+        /// Serialized Name: Job.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The end time.
+        /// Serialized Name: Job.endTime
+        /// </param>
+        /// <param name="activityId">
+        /// ActivityId of job.
+        /// Serialized Name: Job.activityId
+        /// </param>
+        /// <param name="jobType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: Job.jobType
+        /// </param>
+        /// <param name="workloadType">
+        /// Workload type of the job
+        /// Serialized Name: AzureWorkloadJob.workloadType
+        /// </param>
+        /// <param name="duration">
+        /// Time elapsed during the execution of this job.
+        /// Serialized Name: AzureWorkloadJob.duration
+        /// </param>
+        /// <param name="actionsInfo">
+        /// Gets or sets the state/actions applicable on this job like cancel/retry.
+        /// Serialized Name: AzureWorkloadJob.actionsInfo
+        /// </param>
+        /// <param name="errorDetails">
+        /// Error details on execution of this job.
+        /// Serialized Name: AzureWorkloadJob.errorDetails
+        /// </param>
+        /// <param name="extendedInfo">
+        /// Additional information about the job.
+        /// Serialized Name: AzureWorkloadJob.extendedInfo
+        /// </param>
         internal AzureWorkloadJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, string workloadType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<AzureWorkloadErrorInfo> errorDetails, AzureWorkloadJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
         {
             WorkloadType = workloadType;
@@ -46,15 +88,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = jobType ?? "AzureWorkloadJob";
         }
 
-        /// <summary> Workload type of the job. </summary>
+        /// <summary>
+        /// Workload type of the job
+        /// Serialized Name: AzureWorkloadJob.workloadType
+        /// </summary>
         public string WorkloadType { get; set; }
-        /// <summary> Time elapsed during the execution of this job. </summary>
+        /// <summary>
+        /// Time elapsed during the execution of this job.
+        /// Serialized Name: AzureWorkloadJob.duration
+        /// </summary>
         public TimeSpan? Duration { get; set; }
-        /// <summary> Gets or sets the state/actions applicable on this job like cancel/retry. </summary>
+        /// <summary>
+        /// Gets or sets the state/actions applicable on this job like cancel/retry.
+        /// Serialized Name: AzureWorkloadJob.actionsInfo
+        /// </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
-        /// <summary> Error details on execution of this job. </summary>
+        /// <summary>
+        /// Error details on execution of this job.
+        /// Serialized Name: AzureWorkloadJob.errorDetails
+        /// </summary>
         public IList<AzureWorkloadErrorInfo> ErrorDetails { get; }
-        /// <summary> Additional information about the job. </summary>
+        /// <summary>
+        /// Additional information about the job.
+        /// Serialized Name: AzureWorkloadJob.extendedInfo
+        /// </summary>
         public AzureWorkloadJobExtendedInfo ExtendedInfo { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Vault Job for CMK - has CMK specific info. </summary>
+    /// <summary>
+    /// Vault Job for CMK - has CMK specific info.
+    /// Serialized Name: VaultJobExtendedInfo
+    /// </summary>
     internal partial class VaultJobExtendedInfo
     {
         /// <summary> Initializes a new instance of VaultJobExtendedInfo. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of VaultJobExtendedInfo. </summary>
-        /// <param name="propertyBag"> Job properties. </param>
+        /// <param name="propertyBag">
+        /// Job properties.
+        /// Serialized Name: VaultJobExtendedInfo.propertyBag
+        /// </param>
         internal VaultJobExtendedInfo(IDictionary<string, string> propertyBag)
         {
             PropertyBag = propertyBag;
         }
 
-        /// <summary> Job properties. </summary>
+        /// <summary>
+        /// Job properties.
+        /// Serialized Name: VaultJobExtendedInfo.propertyBag
+        /// </summary>
         public IDictionary<string, string> PropertyBag { get; }
     }
 }

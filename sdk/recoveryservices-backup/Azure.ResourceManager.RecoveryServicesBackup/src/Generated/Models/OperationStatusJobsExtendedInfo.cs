@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Operation status extended info for list of jobs. </summary>
+    /// <summary>
+    /// Operation status extended info for list of jobs.
+    /// Serialized Name: OperationStatusJobsExtendedInfo
+    /// </summary>
     public partial class OperationStatusJobsExtendedInfo : OperationStatusExtendedInfo
     {
         /// <summary> Initializes a new instance of OperationStatusJobsExtendedInfo. </summary>
@@ -22,9 +25,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationStatusJobsExtendedInfo. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="jobIds"> IDs of the jobs created for the protected item. </param>
-        /// <param name="failedJobsError"> Stores all the failed jobs along with the corresponding error codes. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationStatusExtendedInfo.objectType
+        /// </param>
+        /// <param name="jobIds">
+        /// IDs of the jobs created for the protected item.
+        /// Serialized Name: OperationStatusJobsExtendedInfo.jobIds
+        /// </param>
+        /// <param name="failedJobsError">
+        /// Stores all the failed jobs along with the corresponding error codes.
+        /// Serialized Name: OperationStatusJobsExtendedInfo.failedJobsError
+        /// </param>
         internal OperationStatusJobsExtendedInfo(string objectType, IReadOnlyList<string> jobIds, IReadOnlyDictionary<string, string> failedJobsError) : base(objectType)
         {
             JobIds = jobIds;
@@ -32,9 +44,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "OperationStatusJobsExtendedInfo";
         }
 
-        /// <summary> IDs of the jobs created for the protected item. </summary>
+        /// <summary>
+        /// IDs of the jobs created for the protected item.
+        /// Serialized Name: OperationStatusJobsExtendedInfo.jobIds
+        /// </summary>
         public IReadOnlyList<string> JobIds { get; }
-        /// <summary> Stores all the failed jobs along with the corresponding error codes. </summary>
+        /// <summary>
+        /// Stores all the failed jobs along with the corresponding error codes.
+        /// Serialized Name: OperationStatusJobsExtendedInfo.failedJobsError
+        /// </summary>
         public IReadOnlyDictionary<string, string> FailedJobsError { get; }
     }
 }

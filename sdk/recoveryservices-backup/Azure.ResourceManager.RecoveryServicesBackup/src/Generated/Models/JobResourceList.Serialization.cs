@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static JobResourceList DeserializeJobResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<JobResourceData>> value = default;
+            Optional<IReadOnlyList<BackupJobData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobResourceData> array = new List<JobResourceData>();
+                    List<BackupJobData> array = new List<BackupJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobResourceData.DeserializeJobResourceData(item));
+                        array.Add(BackupJobData.DeserializeBackupJobData(item));
                     }
                     value = array;
                     continue;

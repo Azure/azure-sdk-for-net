@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Base class for generic container of backup items. </summary>
+    /// <summary>
+    /// Base class for generic container of backup items
+    /// Serialized Name: GenericContainer
+    /// </summary>
     public partial class GenericContainer : ProtectionContainer
     {
         /// <summary> Initializes a new instance of GenericContainer. </summary>
@@ -17,19 +20,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of GenericContainer. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectionContainer.friendlyName
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectionContainer.backupManagementType
+        /// </param>
+        /// <param name="registrationStatus">
+        /// Status of registration of the container with the Recovery Services Vault.
+        /// Serialized Name: ProtectionContainer.registrationStatus
+        /// </param>
+        /// <param name="healthStatus">
+        /// Status of health of the container.
+        /// Serialized Name: ProtectionContainer.healthStatus
+        /// </param>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
+        /// Serialized Name: ProtectionContainer.containerType
         /// </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="fabricName"> Name of the container&apos;s fabric. </param>
-        /// <param name="extendedInformation"> Extended information (not returned in List container API calls). </param>
+        /// <param name="protectableObjectType">
+        /// Type of the protectable object associated with this container
+        /// Serialized Name: ProtectionContainer.protectableObjectType
+        /// </param>
+        /// <param name="fabricName">
+        /// Name of the container&apos;s fabric
+        /// Serialized Name: GenericContainer.fabricName
+        /// </param>
+        /// <param name="extendedInformation">
+        /// Extended information (not returned in List container API calls)
+        /// Serialized Name: GenericContainer.extendedInformation
+        /// </param>
         internal GenericContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string fabricName, GenericContainerExtendedInfo extendedInformation) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             FabricName = fabricName;
@@ -37,9 +62,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerType = containerType;
         }
 
-        /// <summary> Name of the container&apos;s fabric. </summary>
+        /// <summary>
+        /// Name of the container&apos;s fabric
+        /// Serialized Name: GenericContainer.fabricName
+        /// </summary>
         public string FabricName { get; set; }
-        /// <summary> Extended information (not returned in List container API calls). </summary>
+        /// <summary>
+        /// Extended information (not returned in List container API calls)
+        /// Serialized Name: GenericContainer.extendedInformation
+        /// </summary>
         public GenericContainerExtendedInfo ExtendedInformation { get; set; }
     }
 }

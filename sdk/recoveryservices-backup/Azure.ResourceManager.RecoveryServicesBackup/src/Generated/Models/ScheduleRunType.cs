@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Frequency of the schedule operation of this policy. </summary>
+    /// <summary>
+    /// Frequency of the schedule operation of this policy.
+    /// Serialized Name: ScheduleRunType
+    /// </summary>
     public readonly partial struct ScheduleRunType : IEquatable<ScheduleRunType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string WeeklyValue = "Weekly";
         private const string HourlyValue = "Hourly";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: ScheduleRunType.Invalid
+        /// </summary>
         public static ScheduleRunType Invalid { get; } = new ScheduleRunType(InvalidValue);
-        /// <summary> Daily. </summary>
+        /// <summary>
+        /// Daily
+        /// Serialized Name: ScheduleRunType.Daily
+        /// </summary>
         public static ScheduleRunType Daily { get; } = new ScheduleRunType(DailyValue);
-        /// <summary> Weekly. </summary>
+        /// <summary>
+        /// Weekly
+        /// Serialized Name: ScheduleRunType.Weekly
+        /// </summary>
         public static ScheduleRunType Weekly { get; } = new ScheduleRunType(WeeklyValue);
-        /// <summary> Hourly. </summary>
+        /// <summary>
+        /// Hourly
+        /// Serialized Name: ScheduleRunType.Hourly
+        /// </summary>
         public static ScheduleRunType Hourly { get; } = new ScheduleRunType(HourlyValue);
         /// <summary> Determines if two <see cref="ScheduleRunType"/> values are the same. </summary>
         public static bool operator ==(ScheduleRunType left, ScheduleRunType right) => left.Equals(right);

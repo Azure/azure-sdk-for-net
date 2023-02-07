@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Container for the workloads running inside Azure Compute or Classic Compute.
+    /// Serialized Name: AzureWorkloadContainer
     /// Please note <see cref="AzureWorkloadContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureSqlAGWorkloadContainerProtectionContainer"/> and <see cref="AzureVmAppContainerProtectionContainer"/>.
     /// </summary>
@@ -23,22 +24,53 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadContainer. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectionContainer.friendlyName
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectionContainer.backupManagementType
+        /// </param>
+        /// <param name="registrationStatus">
+        /// Status of registration of the container with the Recovery Services Vault.
+        /// Serialized Name: ProtectionContainer.registrationStatus
+        /// </param>
+        /// <param name="healthStatus">
+        /// Status of health of the container.
+        /// Serialized Name: ProtectionContainer.healthStatus
+        /// </param>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
+        /// Serialized Name: ProtectionContainer.containerType
         /// </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceResourceId"> ARM ID of the virtual machine represented by this Azure Workload Container. </param>
-        /// <param name="lastUpdatedOn"> Time stamp when this container was updated. </param>
-        /// <param name="extendedInfo"> Additional details of a workload container. </param>
-        /// <param name="workloadType"> Workload type for which registration was sent. </param>
-        /// <param name="operationType"> Re-Do Operation. </param>
+        /// <param name="protectableObjectType">
+        /// Type of the protectable object associated with this container
+        /// Serialized Name: ProtectionContainer.protectableObjectType
+        /// </param>
+        /// <param name="sourceResourceId">
+        /// ARM ID of the virtual machine represented by this Azure Workload Container
+        /// Serialized Name: AzureWorkloadContainer.sourceResourceId
+        /// </param>
+        /// <param name="lastUpdatedOn">
+        /// Time stamp when this container was updated.
+        /// Serialized Name: AzureWorkloadContainer.lastUpdatedTime
+        /// </param>
+        /// <param name="extendedInfo">
+        /// Additional details of a workload container.
+        /// Serialized Name: AzureWorkloadContainer.extendedInfo
+        /// </param>
+        /// <param name="workloadType">
+        /// Workload type for which registration was sent.
+        /// Serialized Name: AzureWorkloadContainer.workloadType
+        /// </param>
+        /// <param name="operationType">
+        /// Re-Do Operation
+        /// Serialized Name: AzureWorkloadContainer.operationType
+        /// </param>
         internal AzureWorkloadContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string sourceResourceId, DateTimeOffset? lastUpdatedOn, AzureWorkloadContainerExtendedInfo extendedInfo, WorkloadType? workloadType, OperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             SourceResourceId = sourceResourceId;
@@ -49,15 +81,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerType = containerType;
         }
 
-        /// <summary> ARM ID of the virtual machine represented by this Azure Workload Container. </summary>
+        /// <summary>
+        /// ARM ID of the virtual machine represented by this Azure Workload Container
+        /// Serialized Name: AzureWorkloadContainer.sourceResourceId
+        /// </summary>
         public string SourceResourceId { get; set; }
-        /// <summary> Time stamp when this container was updated. </summary>
+        /// <summary>
+        /// Time stamp when this container was updated.
+        /// Serialized Name: AzureWorkloadContainer.lastUpdatedTime
+        /// </summary>
         public DateTimeOffset? LastUpdatedOn { get; set; }
-        /// <summary> Additional details of a workload container. </summary>
+        /// <summary>
+        /// Additional details of a workload container.
+        /// Serialized Name: AzureWorkloadContainer.extendedInfo
+        /// </summary>
         public AzureWorkloadContainerExtendedInfo ExtendedInfo { get; set; }
-        /// <summary> Workload type for which registration was sent. </summary>
+        /// <summary>
+        /// Workload type for which registration was sent.
+        /// Serialized Name: AzureWorkloadContainer.workloadType
+        /// </summary>
         public WorkloadType? WorkloadType { get; set; }
-        /// <summary> Re-Do Operation. </summary>
+        /// <summary>
+        /// Re-Do Operation
+        /// Serialized Name: AzureWorkloadContainer.operationType
+        /// </summary>
         public OperationType? OperationType { get; set; }
     }
 }

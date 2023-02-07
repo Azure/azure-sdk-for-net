@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for container with backup items. Containers with specific workloads are derived from this class.
+    /// Serialized Name: ProtectionContainer
     /// Please note <see cref="ProtectionContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureBackupServerContainer"/>, <see cref="AzureSqlContainer"/>, <see cref="AzureWorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="AzureIaaSClassicComputeVmContainer"/>, <see cref="AzureIaaSComputeVmContainer"/>, <see cref="AzureSqlAGWorkloadContainerProtectionContainer"/>, <see cref="AzureStorageContainer"/>, <see cref="AzureVmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
     /// </summary>
@@ -20,17 +21,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ProtectionContainer. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectionContainer.friendlyName
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectionContainer.backupManagementType
+        /// </param>
+        /// <param name="registrationStatus">
+        /// Status of registration of the container with the Recovery Services Vault.
+        /// Serialized Name: ProtectionContainer.registrationStatus
+        /// </param>
+        /// <param name="healthStatus">
+        /// Status of health of the container.
+        /// Serialized Name: ProtectionContainer.healthStatus
+        /// </param>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
+        /// Serialized Name: ProtectionContainer.containerType
         /// </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="protectableObjectType">
+        /// Type of the protectable object associated with this container
+        /// Serialized Name: ProtectionContainer.protectableObjectType
+        /// </param>
         internal ProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType)
         {
             FriendlyName = friendlyName;
@@ -41,22 +58,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectableObjectType = protectableObjectType;
         }
 
-        /// <summary> Friendly name of the container. </summary>
+        /// <summary>
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectionContainer.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> Type of backup management for the container. </summary>
+        /// <summary>
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectionContainer.backupManagementType
+        /// </summary>
         public BackupManagementType? BackupManagementType { get; set; }
-        /// <summary> Status of registration of the container with the Recovery Services Vault. </summary>
+        /// <summary>
+        /// Status of registration of the container with the Recovery Services Vault.
+        /// Serialized Name: ProtectionContainer.registrationStatus
+        /// </summary>
         public string RegistrationStatus { get; set; }
-        /// <summary> Status of health of the container. </summary>
+        /// <summary>
+        /// Status of health of the container.
+        /// Serialized Name: ProtectionContainer.healthStatus
+        /// </summary>
         public string HealthStatus { get; set; }
         /// <summary>
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
+        /// Serialized Name: ProtectionContainer.containerType
         /// </summary>
         internal ProtectableContainerType ContainerType { get; set; }
-        /// <summary> Type of the protectable object associated with this container. </summary>
+        /// <summary>
+        /// Type of the protectable object associated with this container
+        /// Serialized Name: ProtectionContainer.protectableObjectType
+        /// </summary>
         public string ProtectableObjectType { get; set; }
     }
 }

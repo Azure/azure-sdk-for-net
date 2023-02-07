@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Operation status job extended info. </summary>
+    /// <summary>
+    /// Operation status job extended info.
+    /// Serialized Name: OperationStatusJobExtendedInfo
+    /// </summary>
     public partial class OperationStatusJobExtendedInfo : OperationStatusExtendedInfo
     {
         /// <summary> Initializes a new instance of OperationStatusJobExtendedInfo. </summary>
@@ -17,15 +20,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationStatusJobExtendedInfo. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="jobId"> ID of the job created for this protected item. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: OperationStatusExtendedInfo.objectType
+        /// </param>
+        /// <param name="jobId">
+        /// ID of the job created for this protected item.
+        /// Serialized Name: OperationStatusJobExtendedInfo.jobId
+        /// </param>
         internal OperationStatusJobExtendedInfo(string objectType, string jobId) : base(objectType)
         {
             JobId = jobId;
             ObjectType = objectType ?? "OperationStatusJobExtendedInfo";
         }
 
-        /// <summary> ID of the job created for this protected item. </summary>
+        /// <summary>
+        /// ID of the job created for this protected item.
+        /// Serialized Name: OperationStatusJobExtendedInfo.jobId
+        /// </summary>
         public string JobId { get; }
     }
 }

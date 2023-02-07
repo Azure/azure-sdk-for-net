@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Container identity information. </summary>
+    /// <summary>
+    /// Container identity information
+    /// Serialized Name: ContainerIdentityInfo
+    /// </summary>
     public partial class ContainerIdentityInfo
     {
         /// <summary> Initializes a new instance of ContainerIdentityInfo. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ContainerIdentityInfo. </summary>
-        /// <param name="uniqueName"> Unique name of the container. </param>
-        /// <param name="aadTenantId"> Protection container identity - AAD Tenant. </param>
-        /// <param name="servicePrincipalClientId"> Protection container identity - AAD Service Principal. </param>
-        /// <param name="audience"> Protection container identity - Audience. </param>
+        /// <param name="uniqueName">
+        /// Unique name of the container
+        /// Serialized Name: ContainerIdentityInfo.uniqueName
+        /// </param>
+        /// <param name="aadTenantId">
+        /// Protection container identity - AAD Tenant
+        /// Serialized Name: ContainerIdentityInfo.aadTenantId
+        /// </param>
+        /// <param name="servicePrincipalClientId">
+        /// Protection container identity - AAD Service Principal
+        /// Serialized Name: ContainerIdentityInfo.servicePrincipalClientId
+        /// </param>
+        /// <param name="audience">
+        /// Protection container identity - Audience
+        /// Serialized Name: ContainerIdentityInfo.audience
+        /// </param>
         internal ContainerIdentityInfo(string uniqueName, string aadTenantId, string servicePrincipalClientId, string audience)
         {
             UniqueName = uniqueName;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Audience = audience;
         }
 
-        /// <summary> Unique name of the container. </summary>
+        /// <summary>
+        /// Unique name of the container
+        /// Serialized Name: ContainerIdentityInfo.uniqueName
+        /// </summary>
         public string UniqueName { get; set; }
-        /// <summary> Protection container identity - AAD Tenant. </summary>
+        /// <summary>
+        /// Protection container identity - AAD Tenant
+        /// Serialized Name: ContainerIdentityInfo.aadTenantId
+        /// </summary>
         public string AadTenantId { get; set; }
-        /// <summary> Protection container identity - AAD Service Principal. </summary>
+        /// <summary>
+        /// Protection container identity - AAD Service Principal
+        /// Serialized Name: ContainerIdentityInfo.servicePrincipalClientId
+        /// </summary>
         public string ServicePrincipalClientId { get; set; }
-        /// <summary> Protection container identity - Audience. </summary>
+        /// <summary>
+        /// Protection container identity - Audience
+        /// Serialized Name: ContainerIdentityInfo.audience
+        /// </summary>
         public string Audience { get; set; }
     }
 }

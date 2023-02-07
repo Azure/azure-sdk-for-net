@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Prepare DataMove Response. </summary>
+    /// <summary>
+    /// Prepare DataMove Response
+    /// Serialized Name: PrepareDataMoveResponse
+    /// </summary>
     public partial class PrepareDataMoveResponse : VaultStorageConfigOperationResultResponse
     {
         /// <summary> Initializes a new instance of PrepareDataMoveResponse. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of PrepareDataMoveResponse. </summary>
-        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="correlationId"> Co-relationId for move operation. </param>
-        /// <param name="sourceVaultProperties"> Source Vault Properties. </param>
+        /// <param name="objectType">
+        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
+        /// Serialized Name: VaultStorageConfigOperationResultResponse.objectType
+        /// </param>
+        /// <param name="correlationId">
+        /// Co-relationId for move operation
+        /// Serialized Name: PrepareDataMoveResponse.correlationId
+        /// </param>
+        /// <param name="sourceVaultProperties">
+        /// Source Vault Properties
+        /// Serialized Name: PrepareDataMoveResponse.sourceVaultProperties
+        /// </param>
         internal PrepareDataMoveResponse(string objectType, string correlationId, IReadOnlyDictionary<string, string> sourceVaultProperties) : base(objectType)
         {
             CorrelationId = correlationId;
@@ -31,9 +43,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "PrepareDataMoveResponse";
         }
 
-        /// <summary> Co-relationId for move operation. </summary>
+        /// <summary>
+        /// Co-relationId for move operation
+        /// Serialized Name: PrepareDataMoveResponse.correlationId
+        /// </summary>
         public string CorrelationId { get; }
-        /// <summary> Source Vault Properties. </summary>
+        /// <summary>
+        /// Source Vault Properties
+        /// Serialized Name: PrepareDataMoveResponse.sourceVaultProperties
+        /// </summary>
         public IReadOnlyDictionary<string, string> SourceVaultProperties { get; }
     }
 }

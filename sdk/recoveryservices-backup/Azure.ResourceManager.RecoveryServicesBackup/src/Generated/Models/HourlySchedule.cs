@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The HourlySchedule. </summary>
+    /// <summary>
+    /// The HourlySchedule.
+    /// Serialized Name: HourlySchedule
+    /// </summary>
     public partial class HourlySchedule
     {
         /// <summary> Initializes a new instance of HourlySchedule. </summary>
@@ -21,9 +24,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="interval">
         /// Interval at which backup needs to be triggered. For hourly the value
         ///  can be 4/6/8/12
+        /// Serialized Name: HourlySchedule.interval
         /// </param>
-        /// <param name="scheduleWindowStartOn"> To specify start time of the backup window. </param>
-        /// <param name="scheduleWindowDuration"> To specify duration of the backup window. </param>
+        /// <param name="scheduleWindowStartOn">
+        /// To specify start time of the backup window
+        /// Serialized Name: HourlySchedule.scheduleWindowStartTime
+        /// </param>
+        /// <param name="scheduleWindowDuration">
+        /// To specify duration of the backup window
+        /// Serialized Name: HourlySchedule.scheduleWindowDuration
+        /// </param>
         internal HourlySchedule(int? interval, DateTimeOffset? scheduleWindowStartOn, int? scheduleWindowDuration)
         {
             Interval = interval;
@@ -34,11 +44,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary>
         /// Interval at which backup needs to be triggered. For hourly the value
         ///  can be 4/6/8/12
+        /// Serialized Name: HourlySchedule.interval
         /// </summary>
         public int? Interval { get; set; }
-        /// <summary> To specify start time of the backup window. </summary>
+        /// <summary>
+        /// To specify start time of the backup window
+        /// Serialized Name: HourlySchedule.scheduleWindowStartTime
+        /// </summary>
         public DateTimeOffset? ScheduleWindowStartOn { get; set; }
-        /// <summary> To specify duration of the backup window. </summary>
+        /// <summary>
+        /// To specify duration of the backup window
+        /// Serialized Name: HourlySchedule.scheduleWindowDuration
+        /// </summary>
         public int? ScheduleWindowDuration { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> BEK is bitlocker encryption key. </summary>
+    /// <summary>
+    /// BEK is bitlocker encryption key.
+    /// Serialized Name: BEKDetails
+    /// </summary>
     public partial class BEKDetails
     {
         /// <summary> Initializes a new instance of BEKDetails. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BEKDetails. </summary>
-        /// <param name="secretUri"> Secret is BEK. </param>
-        /// <param name="secretVaultId"> ID of the Key Vault where this Secret is stored. </param>
-        /// <param name="secretData"> BEK data. </param>
+        /// <param name="secretUri">
+        /// Secret is BEK.
+        /// Serialized Name: BEKDetails.secretUrl
+        /// </param>
+        /// <param name="secretVaultId">
+        /// ID of the Key Vault where this Secret is stored.
+        /// Serialized Name: BEKDetails.secretVaultId
+        /// </param>
+        /// <param name="secretData">
+        /// BEK data.
+        /// Serialized Name: BEKDetails.secretData
+        /// </param>
         internal BEKDetails(Uri secretUri, string secretVaultId, string secretData)
         {
             SecretUri = secretUri;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SecretData = secretData;
         }
 
-        /// <summary> Secret is BEK. </summary>
+        /// <summary>
+        /// Secret is BEK.
+        /// Serialized Name: BEKDetails.secretUrl
+        /// </summary>
         public Uri SecretUri { get; set; }
-        /// <summary> ID of the Key Vault where this Secret is stored. </summary>
+        /// <summary>
+        /// ID of the Key Vault where this Secret is stored.
+        /// Serialized Name: BEKDetails.secretVaultId
+        /// </summary>
         public string SecretVaultId { get; set; }
-        /// <summary> BEK data. </summary>
+        /// <summary>
+        /// BEK data.
+        /// Serialized Name: BEKDetails.secretData
+        /// </summary>
         public string SecretData { get; set; }
     }
 }

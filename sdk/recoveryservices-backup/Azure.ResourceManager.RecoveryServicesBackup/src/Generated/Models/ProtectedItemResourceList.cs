@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> List of ProtectedItem resources. </summary>
+    /// <summary>
+    /// List of ProtectedItem resources
+    /// Serialized Name: ProtectedItemResourceList
+    /// </summary>
     internal partial class ProtectedItemResourceList
     {
         /// <summary> Initializes a new instance of ProtectedItemResourceList. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ProtectedItemResourceList. </summary>
-        /// <param name="value"> List of resources. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
+        /// <param name="value">
+        /// List of resources.
+        /// Serialized Name: ProtectedItemResourceList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: ProtectedItemResourceList.nextLink
+        /// </param>
         internal ProtectedItemResourceList(IReadOnlyList<ProtectedItemResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of resources. </summary>
+        /// <summary>
+        /// List of resources.
+        /// Serialized Name: ProtectedItemResourceList.value
+        /// </summary>
         public IReadOnlyList<ProtectedItemResourceData> Value { get; }
-        /// <summary> The uri to fetch the next page of resources. </summary>
+        /// <summary>
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: ProtectedItemResourceList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

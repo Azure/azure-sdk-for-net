@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> backup protectionIntent type. </summary>
+    /// <summary>
+    /// backup protectionIntent type.
+    /// Serialized Name: ProtectionIntentItemType
+    /// </summary>
     internal readonly partial struct ProtectionIntentItemType : IEquatable<ProtectionIntentItemType>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string AzureWorkloadAutoProtectionIntentValue = "AzureWorkloadAutoProtectionIntent";
         private const string AzureWorkloadSQLAutoProtectionIntentValue = "AzureWorkloadSQLAutoProtectionIntent";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: ProtectionIntentItemType.Invalid
+        /// </summary>
         public static ProtectionIntentItemType Invalid { get; } = new ProtectionIntentItemType(InvalidValue);
-        /// <summary> AzureResourceItem. </summary>
+        /// <summary>
+        /// AzureResourceItem
+        /// Serialized Name: ProtectionIntentItemType.AzureResourceItem
+        /// </summary>
         public static ProtectionIntentItemType AzureResourceItem { get; } = new ProtectionIntentItemType(AzureResourceItemValue);
-        /// <summary> RecoveryServiceVaultItem. </summary>
+        /// <summary>
+        /// RecoveryServiceVaultItem
+        /// Serialized Name: ProtectionIntentItemType.RecoveryServiceVaultItem
+        /// </summary>
         public static ProtectionIntentItemType RecoveryServiceVaultItem { get; } = new ProtectionIntentItemType(RecoveryServiceVaultItemValue);
-        /// <summary> AzureWorkloadContainerAutoProtectionIntent. </summary>
+        /// <summary>
+        /// AzureWorkloadContainerAutoProtectionIntent
+        /// Serialized Name: ProtectionIntentItemType.AzureWorkloadContainerAutoProtectionIntent
+        /// </summary>
         public static ProtectionIntentItemType AzureWorkloadContainerAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadContainerAutoProtectionIntentValue);
-        /// <summary> AzureWorkloadAutoProtectionIntent. </summary>
+        /// <summary>
+        /// AzureWorkloadAutoProtectionIntent
+        /// Serialized Name: ProtectionIntentItemType.AzureWorkloadAutoProtectionIntent
+        /// </summary>
         public static ProtectionIntentItemType AzureWorkloadAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadAutoProtectionIntentValue);
-        /// <summary> AzureWorkloadSQLAutoProtectionIntent. </summary>
+        /// <summary>
+        /// AzureWorkloadSQLAutoProtectionIntent
+        /// Serialized Name: ProtectionIntentItemType.AzureWorkloadSQLAutoProtectionIntent
+        /// </summary>
         public static ProtectionIntentItemType AzureWorkloadSQLAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadSQLAutoProtectionIntentValue);
         /// <summary> Determines if two <see cref="ProtectionIntentItemType"/> values are the same. </summary>
         public static bool operator ==(ProtectionIntentItemType left, ProtectionIntentItemType right) => left.Equals(right);

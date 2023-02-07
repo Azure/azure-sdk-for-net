@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Azure VM workload-specific protected item.
+    /// Serialized Name: AzureVmWorkloadProtectedItem
     /// Please note <see cref="AzureVmWorkloadProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureVmWorkloadSAPAseDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDBInstanceProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseProtectedItem"/> and <see cref="AzureVmWorkloadSQLDatabaseProtectedItem"/>.
     /// </summary>
@@ -26,37 +27,130 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of AzureVmWorkloadProtectedItem. </summary>
-        /// <param name="protectedItemType"> backup item type. </param>
-        /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
-        /// <param name="workloadType"> Type of workload this item represents. </param>
-        /// <param name="containerName"> Unique name of container. </param>
-        /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
-        /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="lastRecoveryPoint"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
-        /// <param name="backupSetName"> Name of the backup set the backup item belongs to. </param>
-        /// <param name="createMode"> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </param>
-        /// <param name="deferredDeleteTimeInUTC"> Time for deferred deletion in UTC. </param>
-        /// <param name="isScheduledForDeferredDelete"> Flag to identify whether the DS is scheduled for deferred delete. </param>
-        /// <param name="deferredDeleteTimeRemaining"> Time remaining before the DS marked for deferred delete is permanently deleted. </param>
-        /// <param name="isDeferredDeleteScheduleUpcoming"> Flag to identify whether the deferred deleted DS is to be purged soon. </param>
-        /// <param name="isRehydrate"> Flag to identify that deferred deleted DS is to be moved into Pause state. </param>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
-        /// <param name="policyName"> Name of the policy used for protection. </param>
-        /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
-        /// <param name="friendlyName"> Friendly name of the DB represented by this backup item. </param>
-        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
-        /// <param name="parentName"> Parent name of the DB such as Instance or Availability Group. </param>
-        /// <param name="parentType"> Parent type of protected item, example: for a DB, standalone server or distributed. </param>
-        /// <param name="protectionStatus"> Backup status of this backup item. </param>
-        /// <param name="protectionState"> Backup state of this backup item. </param>
-        /// <param name="lastBackupStatus"> Last backup operation status. Possible values: Healthy, Unhealthy. </param>
-        /// <param name="lastBackupOn"> Timestamp of the last backup operation on this backup item. </param>
-        /// <param name="lastBackupErrorDetail"> Error details in last backup. </param>
-        /// <param name="protectedItemDataSourceId"> Data ID of the protected item. </param>
-        /// <param name="protectedItemHealthStatus"> Health status of the backup item, evaluated based on last heartbeat received. </param>
-        /// <param name="extendedInfo"> Additional information for this backup item. </param>
-        /// <param name="kpisHealths"> Health details of different KPIs. </param>
+        /// <param name="protectedItemType">
+        /// backup item type.
+        /// Serialized Name: ProtectedItem.protectedItemType
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the backed up item.
+        /// Serialized Name: ProtectedItem.backupManagementType
+        /// </param>
+        /// <param name="workloadType">
+        /// Type of workload this item represents.
+        /// Serialized Name: ProtectedItem.workloadType
+        /// </param>
+        /// <param name="containerName">
+        /// Unique name of container
+        /// Serialized Name: ProtectedItem.containerName
+        /// </param>
+        /// <param name="sourceResourceId">
+        /// ARM ID of the resource to be backed up.
+        /// Serialized Name: ProtectedItem.sourceResourceId
+        /// </param>
+        /// <param name="policyId">
+        /// ID of the backup policy with which this item is backed up.
+        /// Serialized Name: ProtectedItem.policyId
+        /// </param>
+        /// <param name="lastRecoveryPoint">
+        /// Timestamp when the last (latest) backup copy was created for this backup item.
+        /// Serialized Name: ProtectedItem.lastRecoveryPoint
+        /// </param>
+        /// <param name="backupSetName">
+        /// Name of the backup set the backup item belongs to
+        /// Serialized Name: ProtectedItem.backupSetName
+        /// </param>
+        /// <param name="createMode">
+        /// Create mode to indicate recovery of existing soft deleted data source or creation of new data source.
+        /// Serialized Name: ProtectedItem.createMode
+        /// </param>
+        /// <param name="deferredDeleteTimeInUTC">
+        /// Time for deferred deletion in UTC
+        /// Serialized Name: ProtectedItem.deferredDeleteTimeInUTC
+        /// </param>
+        /// <param name="isScheduledForDeferredDelete">
+        /// Flag to identify whether the DS is scheduled for deferred delete
+        /// Serialized Name: ProtectedItem.isScheduledForDeferredDelete
+        /// </param>
+        /// <param name="deferredDeleteTimeRemaining">
+        /// Time remaining before the DS marked for deferred delete is permanently deleted
+        /// Serialized Name: ProtectedItem.deferredDeleteTimeRemaining
+        /// </param>
+        /// <param name="isDeferredDeleteScheduleUpcoming">
+        /// Flag to identify whether the deferred deleted DS is to be purged soon
+        /// Serialized Name: ProtectedItem.isDeferredDeleteScheduleUpcoming
+        /// </param>
+        /// <param name="isRehydrate">
+        /// Flag to identify that deferred deleted DS is to be moved into Pause state
+        /// Serialized Name: ProtectedItem.isRehydrate
+        /// </param>
+        /// <param name="resourceGuardOperationRequests">
+        /// ResourceGuardOperationRequests on which LAC check will be performed
+        /// Serialized Name: ProtectedItem.resourceGuardOperationRequests
+        /// </param>
+        /// <param name="isArchiveEnabled">
+        /// Flag to identify whether datasource is protected in archive
+        /// Serialized Name: ProtectedItem.isArchiveEnabled
+        /// </param>
+        /// <param name="policyName">
+        /// Name of the policy used for protection
+        /// Serialized Name: ProtectedItem.policyName
+        /// </param>
+        /// <param name="softDeleteRetentionPeriod">
+        /// Soft delete retention period in days
+        /// Serialized Name: ProtectedItem.softDeleteRetentionPeriod
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the DB represented by this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.friendlyName
+        /// </param>
+        /// <param name="serverName">
+        /// Host/Cluster Name for instance or AG
+        /// Serialized Name: AzureVmWorkloadProtectedItem.serverName
+        /// </param>
+        /// <param name="parentName">
+        /// Parent name of the DB such as Instance or Availability Group.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.parentName
+        /// </param>
+        /// <param name="parentType">
+        /// Parent type of protected item, example: for a DB, standalone server or distributed
+        /// Serialized Name: AzureVmWorkloadProtectedItem.parentType
+        /// </param>
+        /// <param name="protectionStatus">
+        /// Backup status of this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.protectionStatus
+        /// </param>
+        /// <param name="protectionState">
+        /// Backup state of this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.protectionState
+        /// </param>
+        /// <param name="lastBackupStatus">
+        /// Last backup operation status. Possible values: Healthy, Unhealthy.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.lastBackupStatus
+        /// </param>
+        /// <param name="lastBackupOn">
+        /// Timestamp of the last backup operation on this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.lastBackupTime
+        /// </param>
+        /// <param name="lastBackupErrorDetail">
+        /// Error details in last backup
+        /// Serialized Name: AzureVmWorkloadProtectedItem.lastBackupErrorDetail
+        /// </param>
+        /// <param name="protectedItemDataSourceId">
+        /// Data ID of the protected item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.protectedItemDataSourceId
+        /// </param>
+        /// <param name="protectedItemHealthStatus">
+        /// Health status of the backup item, evaluated based on last heartbeat received
+        /// Serialized Name: AzureVmWorkloadProtectedItem.protectedItemHealthStatus
+        /// </param>
+        /// <param name="extendedInfo">
+        /// Additional information for this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.extendedInfo
+        /// </param>
+        /// <param name="kpisHealths">
+        /// Health details of different KPIs
+        /// Serialized Name: AzureVmWorkloadProtectedItem.kpisHealths
+        /// </param>
         internal AzureVmWorkloadProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, DataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, CreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, ProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, ErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, ProtectedItemHealthStatus? protectedItemHealthStatus, AzureVmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KPIResourceHealthDetails> kpisHealths) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             FriendlyName = friendlyName;
@@ -75,31 +169,70 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemType = protectedItemType ?? "AzureVmWorkloadProtectedItem";
         }
 
-        /// <summary> Friendly name of the DB represented by this backup item. </summary>
+        /// <summary>
+        /// Friendly name of the DB represented by this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> Host/Cluster Name for instance or AG. </summary>
+        /// <summary>
+        /// Host/Cluster Name for instance or AG
+        /// Serialized Name: AzureVmWorkloadProtectedItem.serverName
+        /// </summary>
         public string ServerName { get; set; }
-        /// <summary> Parent name of the DB such as Instance or Availability Group. </summary>
+        /// <summary>
+        /// Parent name of the DB such as Instance or Availability Group.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.parentName
+        /// </summary>
         public string ParentName { get; set; }
-        /// <summary> Parent type of protected item, example: for a DB, standalone server or distributed. </summary>
+        /// <summary>
+        /// Parent type of protected item, example: for a DB, standalone server or distributed
+        /// Serialized Name: AzureVmWorkloadProtectedItem.parentType
+        /// </summary>
         public string ParentType { get; set; }
-        /// <summary> Backup status of this backup item. </summary>
+        /// <summary>
+        /// Backup status of this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.protectionStatus
+        /// </summary>
         public string ProtectionStatus { get; }
-        /// <summary> Backup state of this backup item. </summary>
+        /// <summary>
+        /// Backup state of this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.protectionState
+        /// </summary>
         public ProtectionState? ProtectionState { get; set; }
-        /// <summary> Last backup operation status. Possible values: Healthy, Unhealthy. </summary>
+        /// <summary>
+        /// Last backup operation status. Possible values: Healthy, Unhealthy.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.lastBackupStatus
+        /// </summary>
         public LastBackupStatus? LastBackupStatus { get; set; }
-        /// <summary> Timestamp of the last backup operation on this backup item. </summary>
+        /// <summary>
+        /// Timestamp of the last backup operation on this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.lastBackupTime
+        /// </summary>
         public DateTimeOffset? LastBackupOn { get; set; }
-        /// <summary> Error details in last backup. </summary>
+        /// <summary>
+        /// Error details in last backup
+        /// Serialized Name: AzureVmWorkloadProtectedItem.lastBackupErrorDetail
+        /// </summary>
         public ErrorDetail LastBackupErrorDetail { get; set; }
-        /// <summary> Data ID of the protected item. </summary>
+        /// <summary>
+        /// Data ID of the protected item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.protectedItemDataSourceId
+        /// </summary>
         public string ProtectedItemDataSourceId { get; set; }
-        /// <summary> Health status of the backup item, evaluated based on last heartbeat received. </summary>
+        /// <summary>
+        /// Health status of the backup item, evaluated based on last heartbeat received
+        /// Serialized Name: AzureVmWorkloadProtectedItem.protectedItemHealthStatus
+        /// </summary>
         public ProtectedItemHealthStatus? ProtectedItemHealthStatus { get; set; }
-        /// <summary> Additional information for this backup item. </summary>
+        /// <summary>
+        /// Additional information for this backup item.
+        /// Serialized Name: AzureVmWorkloadProtectedItem.extendedInfo
+        /// </summary>
         public AzureVmWorkloadProtectedItemExtendedInfo ExtendedInfo { get; set; }
-        /// <summary> Health details of different KPIs. </summary>
+        /// <summary>
+        /// Health details of different KPIs
+        /// Serialized Name: AzureVmWorkloadProtectedItem.kpisHealths
+        /// </summary>
         public IDictionary<string, KPIResourceHealthDetails> KpisHealths { get; }
     }
 }

@@ -31,10 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// RecoveryPointResource properties
+        /// Serialized Name: RecoveryPointResource.properties
         /// Please note <see cref="RecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileShareRecoveryPoint"/>, <see cref="AzureWorkloadPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaRecoveryPoint"/>, <see cref="AzureWorkloadSQLPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSQLRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
         /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="eTag">
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         internal RecoveryPointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RecoveryPoint properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -43,11 +47,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// RecoveryPointResource properties
+        /// Serialized Name: RecoveryPointResource.properties
         /// Please note <see cref="RecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileShareRecoveryPoint"/>, <see cref="AzureWorkloadPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaRecoveryPoint"/>, <see cref="AzureWorkloadSQLPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSQLRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
         /// </summary>
         public RecoveryPoint Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary>
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

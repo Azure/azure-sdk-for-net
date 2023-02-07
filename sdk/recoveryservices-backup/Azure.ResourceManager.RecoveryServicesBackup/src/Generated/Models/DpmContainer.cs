@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// DPM workload-specific protection container.
+    /// Serialized Name: DpmContainer
     /// Please note <see cref="DpmContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureBackupServerContainer"/>.
     /// </summary>
@@ -26,25 +27,65 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DpmContainer. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the container.
+        /// Serialized Name: ProtectionContainer.friendlyName
+        /// </param>
+        /// <param name="backupManagementType">
+        /// Type of backup management for the container.
+        /// Serialized Name: ProtectionContainer.backupManagementType
+        /// </param>
+        /// <param name="registrationStatus">
+        /// Status of registration of the container with the Recovery Services Vault.
+        /// Serialized Name: ProtectionContainer.registrationStatus
+        /// </param>
+        /// <param name="healthStatus">
+        /// Status of health of the container.
+        /// Serialized Name: ProtectionContainer.healthStatus
+        /// </param>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
+        /// Serialized Name: ProtectionContainer.containerType
         /// </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="canReRegister"> Specifies whether the container is re-registrable. </param>
-        /// <param name="containerId"> ID of container. </param>
-        /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
-        /// <param name="dpmAgentVersion"> Backup engine Agent version. </param>
-        /// <param name="dpmServers"> List of BackupEngines protecting the container. </param>
-        /// <param name="upgradeAvailable"> To check if upgrade available. </param>
-        /// <param name="protectionStatus"> Protection status of the container. </param>
-        /// <param name="extendedInfo"> Extended Info of the container. </param>
+        /// <param name="protectableObjectType">
+        /// Type of the protectable object associated with this container
+        /// Serialized Name: ProtectionContainer.protectableObjectType
+        /// </param>
+        /// <param name="canReRegister">
+        /// Specifies whether the container is re-registrable.
+        /// Serialized Name: DpmContainer.canReRegister
+        /// </param>
+        /// <param name="containerId">
+        /// ID of container.
+        /// Serialized Name: DpmContainer.containerId
+        /// </param>
+        /// <param name="protectedItemCount">
+        /// Number of protected items in the BackupEngine
+        /// Serialized Name: DpmContainer.protectedItemCount
+        /// </param>
+        /// <param name="dpmAgentVersion">
+        /// Backup engine Agent version
+        /// Serialized Name: DpmContainer.dpmAgentVersion
+        /// </param>
+        /// <param name="dpmServers">
+        /// List of BackupEngines protecting the container
+        /// Serialized Name: DpmContainer.dpmServers
+        /// </param>
+        /// <param name="upgradeAvailable">
+        /// To check if upgrade available
+        /// Serialized Name: DpmContainer.upgradeAvailable
+        /// </param>
+        /// <param name="protectionStatus">
+        /// Protection status of the container.
+        /// Serialized Name: DpmContainer.protectionStatus
+        /// </param>
+        /// <param name="extendedInfo">
+        /// Extended Info of the container.
+        /// Serialized Name: DpmContainer.extendedInfo
+        /// </param>
         internal DpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? upgradeAvailable, string protectionStatus, DpmContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             CanReRegister = canReRegister;
@@ -58,23 +99,50 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerType = containerType;
         }
 
-        /// <summary> Specifies whether the container is re-registrable. </summary>
+        /// <summary>
+        /// Specifies whether the container is re-registrable.
+        /// Serialized Name: DpmContainer.canReRegister
+        /// </summary>
         public bool? CanReRegister { get; set; }
-        /// <summary> ID of container. </summary>
+        /// <summary>
+        /// ID of container.
+        /// Serialized Name: DpmContainer.containerId
+        /// </summary>
         public string ContainerId { get; set; }
-        /// <summary> Number of protected items in the BackupEngine. </summary>
+        /// <summary>
+        /// Number of protected items in the BackupEngine
+        /// Serialized Name: DpmContainer.protectedItemCount
+        /// </summary>
         public long? ProtectedItemCount { get; set; }
-        /// <summary> Backup engine Agent version. </summary>
+        /// <summary>
+        /// Backup engine Agent version
+        /// Serialized Name: DpmContainer.dpmAgentVersion
+        /// </summary>
         public string DpmAgentVersion { get; set; }
-        /// <summary> List of BackupEngines protecting the container. </summary>
+        /// <summary>
+        /// List of BackupEngines protecting the container
+        /// Serialized Name: DpmContainer.dpmServers
+        /// </summary>
         public IList<string> DpmServers { get; }
-        /// <summary> To check if upgrade available. </summary>
+        /// <summary>
+        /// To check if upgrade available
+        /// Serialized Name: DpmContainer.upgradeAvailable
+        /// </summary>
         public bool? UpgradeAvailable { get; set; }
-        /// <summary> Protection status of the container. </summary>
+        /// <summary>
+        /// Protection status of the container.
+        /// Serialized Name: DpmContainer.protectionStatus
+        /// </summary>
         public string ProtectionStatus { get; set; }
-        /// <summary> Extended Info of the container. </summary>
+        /// <summary>
+        /// Extended Info of the container.
+        /// Serialized Name: DpmContainer.extendedInfo
+        /// </summary>
         internal DpmContainerExtendedInfo ExtendedInfo { get; set; }
-        /// <summary> Last refresh time of the DPMContainer. </summary>
+        /// <summary>
+        /// Last refresh time of the DPMContainer.
+        /// Serialized Name: DPMContainerExtendedInfo.lastRefreshedAt
+        /// </summary>
         public DateTimeOffset? ExtendedInfoLastRefreshedOn
         {
             get => ExtendedInfo is null ? default : ExtendedInfo.LastRefreshedOn;

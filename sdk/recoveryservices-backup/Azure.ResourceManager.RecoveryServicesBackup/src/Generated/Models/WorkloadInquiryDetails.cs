@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Details of an inquired protectable item. </summary>
+    /// <summary>
+    /// Details of an inquired protectable item.
+    /// Serialized Name: WorkloadInquiryDetails
+    /// </summary>
     public partial class WorkloadInquiryDetails
     {
         /// <summary> Initializes a new instance of WorkloadInquiryDetails. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadInquiryDetails. </summary>
-        /// <param name="workloadInquiryDetailsType"> Type of the Workload such as SQL, Oracle etc. </param>
-        /// <param name="itemCount"> Contains the protectable item Count inside this Container. </param>
-        /// <param name="inquiryValidation"> Inquiry validation such as permissions and other backup validations. </param>
+        /// <param name="workloadInquiryDetailsType">
+        /// Type of the Workload such as SQL, Oracle etc.
+        /// Serialized Name: WorkloadInquiryDetails.type
+        /// </param>
+        /// <param name="itemCount">
+        /// Contains the protectable item Count inside this Container.
+        /// Serialized Name: WorkloadInquiryDetails.itemCount
+        /// </param>
+        /// <param name="inquiryValidation">
+        /// Inquiry validation such as permissions and other backup validations.
+        /// Serialized Name: WorkloadInquiryDetails.inquiryValidation
+        /// </param>
         internal WorkloadInquiryDetails(string workloadInquiryDetailsType, long? itemCount, InquiryValidation inquiryValidation)
         {
             WorkloadInquiryDetailsType = workloadInquiryDetailsType;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             InquiryValidation = inquiryValidation;
         }
 
-        /// <summary> Type of the Workload such as SQL, Oracle etc. </summary>
+        /// <summary>
+        /// Type of the Workload such as SQL, Oracle etc.
+        /// Serialized Name: WorkloadInquiryDetails.type
+        /// </summary>
         public string WorkloadInquiryDetailsType { get; set; }
-        /// <summary> Contains the protectable item Count inside this Container. </summary>
+        /// <summary>
+        /// Contains the protectable item Count inside this Container.
+        /// Serialized Name: WorkloadInquiryDetails.itemCount
+        /// </summary>
         public long? ItemCount { get; set; }
-        /// <summary> Inquiry validation such as permissions and other backup validations. </summary>
+        /// <summary>
+        /// Inquiry validation such as permissions and other backup validations.
+        /// Serialized Name: WorkloadInquiryDetails.inquiryValidation
+        /// </summary>
         public InquiryValidation InquiryValidation { get; set; }
     }
 }

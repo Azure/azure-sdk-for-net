@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Daily retention format. </summary>
+    /// <summary>
+    /// Daily retention format.
+    /// Serialized Name: DailyRetentionFormat
+    /// </summary>
     internal partial class DailyRetentionFormat
     {
         /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
-        /// <param name="daysOfTheMonth"> List of days of the month. </param>
+        /// <param name="daysOfTheMonth">
+        /// List of days of the month.
+        /// Serialized Name: DailyRetentionFormat.daysOfTheMonth
+        /// </param>
         internal DailyRetentionFormat(IList<Day> daysOfTheMonth)
         {
             DaysOfTheMonth = daysOfTheMonth;
         }
 
-        /// <summary> List of days of the month. </summary>
+        /// <summary>
+        /// List of days of the month.
+        /// Serialized Name: DailyRetentionFormat.daysOfTheMonth
+        /// </summary>
         public IList<Day> DaysOfTheMonth { get; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> List of WorkloadItem resources. </summary>
+    /// <summary>
+    /// List of WorkloadItem resources
+    /// Serialized Name: WorkloadItemResourceList
+    /// </summary>
     internal partial class WorkloadItemResourceList
     {
         /// <summary> Initializes a new instance of WorkloadItemResourceList. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadItemResourceList. </summary>
-        /// <param name="value"> List of resources. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
+        /// <param name="value">
+        /// List of resources.
+        /// Serialized Name: WorkloadItemResourceList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: WorkloadItemResourceList.nextLink
+        /// </param>
         internal WorkloadItemResourceList(IReadOnlyList<WorkloadItemResource> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of resources. </summary>
+        /// <summary>
+        /// List of resources.
+        /// Serialized Name: WorkloadItemResourceList.value
+        /// </summary>
         public IReadOnlyList<WorkloadItemResource> Value { get; }
-        /// <summary> The uri to fetch the next page of resources. </summary>
+        /// <summary>
+        /// The uri to fetch the next page of resources.
+        /// Serialized Name: WorkloadItemResourceList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

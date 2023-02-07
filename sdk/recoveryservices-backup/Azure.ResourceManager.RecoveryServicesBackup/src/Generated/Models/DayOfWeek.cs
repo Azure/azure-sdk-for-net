@@ -7,22 +7,46 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The DayOfWeek. </summary>
+    /// <summary>
+    /// The DayOfWeek.
+    /// Serialized Name: DayOfWeek
+    /// </summary>
     public enum DayOfWeek
     {
-        /// <summary> Sunday. </summary>
+        /// <summary>
+        /// Sunday
+        /// Serialized Name: DayOfWeek.Sunday
+        /// </summary>
         Sunday,
-        /// <summary> Monday. </summary>
+        /// <summary>
+        /// Monday
+        /// Serialized Name: DayOfWeek.Monday
+        /// </summary>
         Monday,
-        /// <summary> Tuesday. </summary>
+        /// <summary>
+        /// Tuesday
+        /// Serialized Name: DayOfWeek.Tuesday
+        /// </summary>
         Tuesday,
-        /// <summary> Wednesday. </summary>
+        /// <summary>
+        /// Wednesday
+        /// Serialized Name: DayOfWeek.Wednesday
+        /// </summary>
         Wednesday,
-        /// <summary> Thursday. </summary>
+        /// <summary>
+        /// Thursday
+        /// Serialized Name: DayOfWeek.Thursday
+        /// </summary>
         Thursday,
-        /// <summary> Friday. </summary>
+        /// <summary>
+        /// Friday
+        /// Serialized Name: DayOfWeek.Friday
+        /// </summary>
         Friday,
-        /// <summary> Saturday. </summary>
+        /// <summary>
+        /// Saturday
+        /// Serialized Name: DayOfWeek.Saturday
+        /// </summary>
         Saturday
     }
 }

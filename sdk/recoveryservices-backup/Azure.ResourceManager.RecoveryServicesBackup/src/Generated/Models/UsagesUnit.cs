@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Unit of the usage. </summary>
+    /// <summary>
+    /// Unit of the usage.
+    /// Serialized Name: UsagesUnit
+    /// </summary>
     public readonly partial struct UsagesUnit : IEquatable<UsagesUnit>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string CountPerSecondValue = "CountPerSecond";
         private const string BytesPerSecondValue = "BytesPerSecond";
 
-        /// <summary> Count. </summary>
+        /// <summary>
+        /// Count
+        /// Serialized Name: UsagesUnit.Count
+        /// </summary>
         public static UsagesUnit Count { get; } = new UsagesUnit(CountValue);
-        /// <summary> Bytes. </summary>
+        /// <summary>
+        /// Bytes
+        /// Serialized Name: UsagesUnit.Bytes
+        /// </summary>
         public static UsagesUnit Bytes { get; } = new UsagesUnit(BytesValue);
-        /// <summary> Seconds. </summary>
+        /// <summary>
+        /// Seconds
+        /// Serialized Name: UsagesUnit.Seconds
+        /// </summary>
         public static UsagesUnit Seconds { get; } = new UsagesUnit(SecondsValue);
-        /// <summary> Percent. </summary>
+        /// <summary>
+        /// Percent
+        /// Serialized Name: UsagesUnit.Percent
+        /// </summary>
         public static UsagesUnit Percent { get; } = new UsagesUnit(PercentValue);
-        /// <summary> CountPerSecond. </summary>
+        /// <summary>
+        /// CountPerSecond
+        /// Serialized Name: UsagesUnit.CountPerSecond
+        /// </summary>
         public static UsagesUnit CountPerSecond { get; } = new UsagesUnit(CountPerSecondValue);
-        /// <summary> BytesPerSecond. </summary>
+        /// <summary>
+        /// BytesPerSecond
+        /// Serialized Name: UsagesUnit.BytesPerSecond
+        /// </summary>
         public static UsagesUnit BytesPerSecond { get; } = new UsagesUnit(BytesPerSecondValue);
         /// <summary> Determines if two <see cref="UsagesUnit"/> values are the same. </summary>
         public static bool operator ==(UsagesUnit left, UsagesUnit right) => left.Equals(right);

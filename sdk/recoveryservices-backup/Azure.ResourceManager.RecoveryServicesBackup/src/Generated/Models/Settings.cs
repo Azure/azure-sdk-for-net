@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Common settings field for backup management. </summary>
+    /// <summary>
+    /// Common settings field for backup management
+    /// Serialized Name: Settings
+    /// </summary>
     public partial class Settings
     {
         /// <summary> Initializes a new instance of Settings. </summary>
@@ -16,11 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of Settings. </summary>
-        /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </param>
-        /// <param name="isSqlCompression"> SQL compression flag. </param>
+        /// <param name="timeZone">
+        /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
+        /// Serialized Name: Settings.timeZone
+        /// </param>
+        /// <param name="isSqlCompression">
+        /// SQL compression flag
+        /// Serialized Name: Settings.issqlcompression
+        /// </param>
         /// <param name="isCompression">
         /// Workload compression flag. This has been added so that &apos;isSqlCompression&apos;
         /// will be deprecated once clients upgrade to consider this flag.
+        /// Serialized Name: Settings.isCompression
         /// </param>
         internal Settings(string timeZone, bool? isSqlCompression, bool? isCompression)
         {
@@ -29,13 +39,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IsCompression = isCompression;
         }
 
-        /// <summary> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </summary>
+        /// <summary>
+        /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
+        /// Serialized Name: Settings.timeZone
+        /// </summary>
         public string TimeZone { get; set; }
-        /// <summary> SQL compression flag. </summary>
+        /// <summary>
+        /// SQL compression flag
+        /// Serialized Name: Settings.issqlcompression
+        /// </summary>
         public bool? IsSqlCompression { get; set; }
         /// <summary>
         /// Workload compression flag. This has been added so that &apos;isSqlCompression&apos;
         /// will be deprecated once clients upgrade to consider this flag.
+        /// Serialized Name: Settings.isCompression
         /// </summary>
         public bool? IsCompression { get; set; }
     }

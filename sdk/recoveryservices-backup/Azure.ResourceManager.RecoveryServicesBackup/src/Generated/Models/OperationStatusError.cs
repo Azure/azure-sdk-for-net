@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Error information associated with operation status call. </summary>
+    /// <summary>
+    /// Error information associated with operation status call.
+    /// Serialized Name: OperationStatusError
+    /// </summary>
     public partial class OperationStatusError
     {
         /// <summary> Initializes a new instance of OperationStatusError. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of OperationStatusError. </summary>
-        /// <param name="code"> Error code of the operation failure. </param>
-        /// <param name="message"> Error message displayed if the operation failure. </param>
+        /// <param name="code">
+        /// Error code of the operation failure.
+        /// Serialized Name: OperationStatusError.code
+        /// </param>
+        /// <param name="message">
+        /// Error message displayed if the operation failure.
+        /// Serialized Name: OperationStatusError.message
+        /// </param>
         internal OperationStatusError(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
-        /// <summary> Error code of the operation failure. </summary>
+        /// <summary>
+        /// Error code of the operation failure.
+        /// Serialized Name: OperationStatusError.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Error message displayed if the operation failure. </summary>
+        /// <summary>
+        /// Error message displayed if the operation failure.
+        /// Serialized Name: OperationStatusError.message
+        /// </summary>
         public string Message { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Type of backup policy type. </summary>
+    /// <summary>
+    /// Type of backup policy type
+    /// Serialized Name: PolicyType
+    /// </summary>
     public readonly partial struct PolicyType : IEquatable<PolicyType>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SnapshotFullValue = "SnapshotFull";
         private const string SnapshotCopyOnlyFullValue = "SnapshotCopyOnlyFull";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: PolicyType.Invalid
+        /// </summary>
         public static PolicyType Invalid { get; } = new PolicyType(InvalidValue);
-        /// <summary> Full. </summary>
+        /// <summary>
+        /// Full
+        /// Serialized Name: PolicyType.Full
+        /// </summary>
         public static PolicyType Full { get; } = new PolicyType(FullValue);
-        /// <summary> Differential. </summary>
+        /// <summary>
+        /// Differential
+        /// Serialized Name: PolicyType.Differential
+        /// </summary>
         public static PolicyType Differential { get; } = new PolicyType(DifferentialValue);
-        /// <summary> Log. </summary>
+        /// <summary>
+        /// Log
+        /// Serialized Name: PolicyType.Log
+        /// </summary>
         public static PolicyType Log { get; } = new PolicyType(LogValue);
-        /// <summary> CopyOnlyFull. </summary>
+        /// <summary>
+        /// CopyOnlyFull
+        /// Serialized Name: PolicyType.CopyOnlyFull
+        /// </summary>
         public static PolicyType CopyOnlyFull { get; } = new PolicyType(CopyOnlyFullValue);
-        /// <summary> Incremental. </summary>
+        /// <summary>
+        /// Incremental
+        /// Serialized Name: PolicyType.Incremental
+        /// </summary>
         public static PolicyType Incremental { get; } = new PolicyType(IncrementalValue);
-        /// <summary> SnapshotFull. </summary>
+        /// <summary>
+        /// SnapshotFull
+        /// Serialized Name: PolicyType.SnapshotFull
+        /// </summary>
         public static PolicyType SnapshotFull { get; } = new PolicyType(SnapshotFullValue);
-        /// <summary> SnapshotCopyOnlyFull. </summary>
+        /// <summary>
+        /// SnapshotCopyOnlyFull
+        /// Serialized Name: PolicyType.SnapshotCopyOnlyFull
+        /// </summary>
         public static PolicyType SnapshotCopyOnlyFull { get; } = new PolicyType(SnapshotCopyOnlyFullValue);
         /// <summary> Determines if two <see cref="PolicyType"/> values are the same. </summary>
         public static bool operator ==(PolicyType left, PolicyType right) => left.Equals(right);

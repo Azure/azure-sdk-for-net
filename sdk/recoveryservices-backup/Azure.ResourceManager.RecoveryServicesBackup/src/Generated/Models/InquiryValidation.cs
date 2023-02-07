@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Validation for inquired protectable items under a given container. </summary>
+    /// <summary>
+    /// Validation for inquired protectable items under a given container.
+    /// Serialized Name: InquiryValidation
+    /// </summary>
     public partial class InquiryValidation
     {
         /// <summary> Initializes a new instance of InquiryValidation. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of InquiryValidation. </summary>
-        /// <param name="status"> Status for the Inquiry Validation. </param>
-        /// <param name="errorDetail"> Error Detail in case the status is non-success. </param>
-        /// <param name="additionalDetail"> Error Additional Detail in case the status is non-success. </param>
+        /// <param name="status">
+        /// Status for the Inquiry Validation.
+        /// Serialized Name: InquiryValidation.status
+        /// </param>
+        /// <param name="errorDetail">
+        /// Error Detail in case the status is non-success.
+        /// Serialized Name: InquiryValidation.errorDetail
+        /// </param>
+        /// <param name="additionalDetail">
+        /// Error Additional Detail in case the status is non-success.
+        /// Serialized Name: InquiryValidation.additionalDetail
+        /// </param>
         internal InquiryValidation(string status, ErrorDetail errorDetail, string additionalDetail)
         {
             Status = status;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             AdditionalDetail = additionalDetail;
         }
 
-        /// <summary> Status for the Inquiry Validation. </summary>
+        /// <summary>
+        /// Status for the Inquiry Validation.
+        /// Serialized Name: InquiryValidation.status
+        /// </summary>
         public string Status { get; set; }
-        /// <summary> Error Detail in case the status is non-success. </summary>
+        /// <summary>
+        /// Error Detail in case the status is non-success.
+        /// Serialized Name: InquiryValidation.errorDetail
+        /// </summary>
         public ErrorDetail ErrorDetail { get; set; }
-        /// <summary> Error Additional Detail in case the status is non-success. </summary>
+        /// <summary>
+        /// Error Additional Detail in case the status is non-success.
+        /// Serialized Name: InquiryValidation.additionalDetail
+        /// </summary>
         public string AdditionalDetail { get; }
     }
 }

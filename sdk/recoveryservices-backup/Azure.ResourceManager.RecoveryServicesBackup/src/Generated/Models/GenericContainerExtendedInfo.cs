@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Container extended information. </summary>
+    /// <summary>
+    /// Container extended information
+    /// Serialized Name: GenericContainerExtendedInfo
+    /// </summary>
     public partial class GenericContainerExtendedInfo
     {
         /// <summary> Initializes a new instance of GenericContainerExtendedInfo. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of GenericContainerExtendedInfo. </summary>
-        /// <param name="rawCertData"> Public key of container cert. </param>
-        /// <param name="containerIdentityInfo"> Container identity information. </param>
-        /// <param name="serviceEndpoints"> Azure Backup Service Endpoints for the container. </param>
+        /// <param name="rawCertData">
+        /// Public key of container cert
+        /// Serialized Name: GenericContainerExtendedInfo.rawCertData
+        /// </param>
+        /// <param name="containerIdentityInfo">
+        /// Container identity information
+        /// Serialized Name: GenericContainerExtendedInfo.containerIdentityInfo
+        /// </param>
+        /// <param name="serviceEndpoints">
+        /// Azure Backup Service Endpoints for the container
+        /// Serialized Name: GenericContainerExtendedInfo.serviceEndpoints
+        /// </param>
         internal GenericContainerExtendedInfo(string rawCertData, ContainerIdentityInfo containerIdentityInfo, IDictionary<string, string> serviceEndpoints)
         {
             RawCertData = rawCertData;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ServiceEndpoints = serviceEndpoints;
         }
 
-        /// <summary> Public key of container cert. </summary>
+        /// <summary>
+        /// Public key of container cert
+        /// Serialized Name: GenericContainerExtendedInfo.rawCertData
+        /// </summary>
         public string RawCertData { get; set; }
-        /// <summary> Container identity information. </summary>
+        /// <summary>
+        /// Container identity information
+        /// Serialized Name: GenericContainerExtendedInfo.containerIdentityInfo
+        /// </summary>
         public ContainerIdentityInfo ContainerIdentityInfo { get; set; }
-        /// <summary> Azure Backup Service Endpoints for the container. </summary>
+        /// <summary>
+        /// Azure Backup Service Endpoints for the container
+        /// Serialized Name: GenericContainerExtendedInfo.serviceEndpoints
+        /// </summary>
         public IDictionary<string, string> ServiceEndpoints { get; }
     }
 }

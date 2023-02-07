@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Response of Unlock Delete API. </summary>
+    /// <summary>
+    /// Response of Unlock Delete API.
+    /// Serialized Name: UnlockDeleteResponse
+    /// </summary>
     public partial class UnlockDeleteResponse
     {
         /// <summary> Initializes a new instance of UnlockDeleteResponse. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of UnlockDeleteResponse. </summary>
-        /// <param name="unlockDeleteExpiryTime"> This is the time when unlock delete privileges will get expired. </param>
+        /// <param name="unlockDeleteExpiryTime">
+        /// This is the time when unlock delete privileges will get expired.
+        /// Serialized Name: UnlockDeleteResponse.unlockDeleteExpiryTime
+        /// </param>
         internal UnlockDeleteResponse(string unlockDeleteExpiryTime)
         {
             UnlockDeleteExpiryTime = unlockDeleteExpiryTime;
         }
 
-        /// <summary> This is the time when unlock delete privileges will get expired. </summary>
+        /// <summary>
+        /// This is the time when unlock delete privileges will get expired.
+        /// Serialized Name: UnlockDeleteResponse.unlockDeleteExpiryTime
+        /// </summary>
         public string UnlockDeleteExpiryTime { get; }
     }
 }

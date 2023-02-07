@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Recovery point tier status. </summary>
+    /// <summary>
+    /// Recovery point tier status.
+    /// Serialized Name: RecoveryPointTierStatus
+    /// </summary>
     public enum RecoveryPointTierStatus
     {
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: RecoveryPointTierStatus.Invalid
+        /// </summary>
         Invalid,
-        /// <summary> Valid. </summary>
+        /// <summary>
+        /// Valid
+        /// Serialized Name: RecoveryPointTierStatus.Valid
+        /// </summary>
         Valid,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: RecoveryPointTierStatus.Disabled
+        /// </summary>
         Disabled,
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: RecoveryPointTierStatus.Deleted
+        /// </summary>
         Deleted,
-        /// <summary> Rehydrated. </summary>
+        /// <summary>
+        /// Rehydrated
+        /// Serialized Name: RecoveryPointTierStatus.Rehydrated
+        /// </summary>
         Rehydrated
     }
 }

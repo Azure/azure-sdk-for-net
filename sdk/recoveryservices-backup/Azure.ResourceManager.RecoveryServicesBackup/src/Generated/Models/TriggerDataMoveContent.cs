@@ -11,14 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Trigger DataMove Request. </summary>
+    /// <summary>
+    /// Trigger DataMove Request
+    /// Serialized Name: TriggerDataMoveRequest
+    /// </summary>
     public partial class TriggerDataMoveContent
     {
         /// <summary> Initializes a new instance of TriggerDataMoveContent. </summary>
-        /// <param name="sourceResourceId"> ARM Id of source vault. </param>
-        /// <param name="sourceRegion"> Source Region. </param>
-        /// <param name="dataMoveLevel"> DataMove Level. </param>
-        /// <param name="correlationId"> Correlation Id. </param>
+        /// <param name="sourceResourceId">
+        /// ARM Id of source vault
+        /// Serialized Name: TriggerDataMoveRequest.sourceResourceId
+        /// </param>
+        /// <param name="sourceRegion">
+        /// Source Region
+        /// Serialized Name: TriggerDataMoveRequest.sourceRegion
+        /// </param>
+        /// <param name="dataMoveLevel">
+        /// DataMove Level
+        /// Serialized Name: TriggerDataMoveRequest.dataMoveLevel
+        /// </param>
+        /// <param name="correlationId">
+        /// Correlation Id
+        /// Serialized Name: TriggerDataMoveRequest.correlationId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="sourceRegion"/> or <paramref name="correlationId"/> is null. </exception>
         public TriggerDataMoveContent(string sourceResourceId, string sourceRegion, DataMoveLevel dataMoveLevel, string correlationId)
         {
@@ -33,17 +48,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SourceContainerArmIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> ARM Id of source vault. </summary>
+        /// <summary>
+        /// ARM Id of source vault
+        /// Serialized Name: TriggerDataMoveRequest.sourceResourceId
+        /// </summary>
         public string SourceResourceId { get; }
-        /// <summary> Source Region. </summary>
+        /// <summary>
+        /// Source Region
+        /// Serialized Name: TriggerDataMoveRequest.sourceRegion
+        /// </summary>
         public string SourceRegion { get; }
-        /// <summary> DataMove Level. </summary>
+        /// <summary>
+        /// DataMove Level
+        /// Serialized Name: TriggerDataMoveRequest.dataMoveLevel
+        /// </summary>
         public DataMoveLevel DataMoveLevel { get; }
-        /// <summary> Correlation Id. </summary>
+        /// <summary>
+        /// Correlation Id
+        /// Serialized Name: TriggerDataMoveRequest.correlationId
+        /// </summary>
         public string CorrelationId { get; }
-        /// <summary> Source Container ArmIds. </summary>
+        /// <summary>
+        /// Source Container ArmIds
+        /// Serialized Name: TriggerDataMoveRequest.sourceContainerArmIds
+        /// </summary>
         public IList<string> SourceContainerArmIds { get; }
-        /// <summary> Pause GC. </summary>
+        /// <summary>
+        /// Pause GC
+        /// Serialized Name: TriggerDataMoveRequest.pauseGC
+        /// </summary>
         public bool? PauseGC { get; set; }
     }
 }

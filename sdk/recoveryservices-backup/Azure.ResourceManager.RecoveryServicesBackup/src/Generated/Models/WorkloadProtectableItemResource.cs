@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Base class for backup item. Workload-specific backup items are derived from this class. </summary>
+    /// <summary>
+    /// Base class for backup item. Workload-specific backup items are derived from this class.
+    /// Serialized Name: WorkloadProtectableItemResource
+    /// </summary>
     public partial class WorkloadProtectableItemResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of WorkloadProtectableItemResource. </summary>
@@ -30,10 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// WorkloadProtectableItemResource properties
+        /// Serialized Name: WorkloadProtectableItemResource.properties
         /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileShareProtectableItem"/>, <see cref="AzureVmWorkloadProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="AzureIaaSClassicComputeVmProtectableItem"/>, <see cref="AzureIaaSComputeVmProtectableItem"/>, <see cref="AzureVmWorkloadSAPAseSystemProtectableItem"/>, <see cref="AzureVmWorkloadSAPHanaDBInstance"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseProtectableItem"/>, <see cref="AzureVmWorkloadSAPHanaHSR"/>, <see cref="AzureVmWorkloadSAPHanaSystemProtectableItem"/>, <see cref="AzureVmWorkloadSQLAvailabilityGroupProtectableItem"/>, <see cref="AzureVmWorkloadSQLDatabaseProtectableItem"/> and <see cref="AzureVmWorkloadSQLInstanceProtectableItem"/>.
         /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="eTag">
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         internal WorkloadProtectableItemResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadProtectableItem properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -42,11 +49,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// WorkloadProtectableItemResource properties
+        /// Serialized Name: WorkloadProtectableItemResource.properties
         /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFileShareProtectableItem"/>, <see cref="AzureVmWorkloadProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="AzureIaaSClassicComputeVmProtectableItem"/>, <see cref="AzureIaaSComputeVmProtectableItem"/>, <see cref="AzureVmWorkloadSAPAseSystemProtectableItem"/>, <see cref="AzureVmWorkloadSAPHanaDBInstance"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseProtectableItem"/>, <see cref="AzureVmWorkloadSAPHanaHSR"/>, <see cref="AzureVmWorkloadSAPHanaSystemProtectableItem"/>, <see cref="AzureVmWorkloadSQLAvailabilityGroupProtectableItem"/>, <see cref="AzureVmWorkloadSQLDatabaseProtectableItem"/> and <see cref="AzureVmWorkloadSQLInstanceProtectableItem"/>.
         /// </summary>
         public WorkloadProtectableItem Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary>
+        /// Optional ETag.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }
