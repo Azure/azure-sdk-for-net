@@ -1,0 +1,72 @@
+﻿{
+    "swagger": "2.0",
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "positionInOperation": "first",
+        "parameters": [
+            {
+                "name": "endpoint",
+                "required": true,
+                "type": "string",
+                "in": "path",
+                "x-ms-skip-url-encoding": true,
+                "x-ms-parameter-location": "client"
+            }
+        ]
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/widgets/{id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Widget"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response."
+                    }
+                }
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "name": "widget",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Widget"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Widget": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
