@@ -85,7 +85,7 @@
     <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
     <PackageReference Update="Azure.Core" Version="1.27.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.23" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.24" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.5.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.7.5" />
