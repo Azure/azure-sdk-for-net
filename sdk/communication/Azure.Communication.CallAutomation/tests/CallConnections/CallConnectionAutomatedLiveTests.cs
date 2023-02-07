@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
 
-                CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+                CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
                 string? callConnectionId = null;
 
                 try
