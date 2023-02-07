@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The properties of an add vCenter request.
     /// Serialized Name: AddVCenterRequestProperties
     /// </summary>
-    public partial class AddVCenterRequestProperties
+    public partial class AddReplicationVCenterRequestProperties
     {
-        /// <summary> Initializes a new instance of AddVCenterRequestProperties. </summary>
-        public AddVCenterRequestProperties()
+        /// <summary> Initializes a new instance of AddReplicationVCenterRequestProperties. </summary>
+        public AddReplicationVCenterRequestProperties()
         {
         }
 

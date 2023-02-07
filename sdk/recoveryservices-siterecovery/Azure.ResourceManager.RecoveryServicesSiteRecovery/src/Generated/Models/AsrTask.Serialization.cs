@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ASRTask
+    public partial class AsrTask
     {
-        internal static ASRTask DeserializeASRTask(JsonElement element)
+        internal static AsrTask DeserializeAsrTask(JsonElement element)
         {
             Optional<string> taskId = default;
             Optional<string> name = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ASRTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, Optional.ToList(errors));
+            return new AsrTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, Optional.ToList(errors));
         }
     }
 }

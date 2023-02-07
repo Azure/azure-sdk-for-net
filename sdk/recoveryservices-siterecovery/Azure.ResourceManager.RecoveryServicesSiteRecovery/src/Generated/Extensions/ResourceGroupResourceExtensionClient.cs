@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ReplicationAlertConfigurationResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ReplicationAlertResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of ReplicationAlertConfigurationResources and their operations over a ReplicationAlertConfigurationResource. </returns>
-        public virtual ReplicationAlertConfigurationCollection GetReplicationAlertConfigurations(string resourceName)
+        /// <returns> An object representing collection of ReplicationAlertResources and their operations over a ReplicationAlertResource. </returns>
+        public virtual ReplicationAlertCollection GetReplicationAlerts(string resourceName)
         {
-            return new ReplicationAlertConfigurationCollection(Client, Id, resourceName);
+            return new ReplicationAlertCollection(Client, Id, resourceName);
         }
 
         /// <summary> Gets a collection of ReplicationEligibilityResultResources in the ResourceGroupResource. </summary>

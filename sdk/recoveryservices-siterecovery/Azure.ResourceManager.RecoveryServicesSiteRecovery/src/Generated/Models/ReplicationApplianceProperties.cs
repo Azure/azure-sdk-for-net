@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="providerSpecificDetails">
         /// Provider specific settings.
         /// Serialized Name: ReplicationApplianceProperties.providerSpecificDetails
-        /// Please note <see cref="ApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ReplicationApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageRcmApplianceSpecificDetails"/>.
         /// </param>
-        internal ReplicationApplianceProperties(ApplianceSpecificDetails providerSpecificDetails)
+        internal ReplicationApplianceProperties(ReplicationApplianceSpecificDetails providerSpecificDetails)
         {
             ProviderSpecificDetails = providerSpecificDetails;
         }
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary>
         /// Provider specific settings.
         /// Serialized Name: ReplicationApplianceProperties.providerSpecificDetails
-        /// Please note <see cref="ApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ReplicationApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageRcmApplianceSpecificDetails"/>.
         /// </summary>
-        public ApplianceSpecificDetails ProviderSpecificDetails { get; }
+        public ReplicationApplianceSpecificDetails ProviderSpecificDetails { get; }
     }
 }

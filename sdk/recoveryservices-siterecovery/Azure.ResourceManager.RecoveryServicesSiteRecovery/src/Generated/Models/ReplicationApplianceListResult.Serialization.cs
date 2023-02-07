@@ -8,15 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class ReplicationAlertConfigurationListResult
+    internal partial class ReplicationApplianceListResult
     {
-        internal static ReplicationAlertConfigurationListResult DeserializeReplicationAlertConfigurationListResult(JsonElement element)
+        internal static ReplicationApplianceListResult DeserializeReplicationApplianceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ReplicationAlertConfigurationData>> value = default;
+            Optional<IReadOnlyList<ReplicationAppliance>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReplicationAlertConfigurationData> array = new List<ReplicationAlertConfigurationData>();
+                    List<ReplicationAppliance> array = new List<ReplicationAppliance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationAlertConfigurationData.DeserializeReplicationAlertConfigurationData(item));
+                        array.Add(ReplicationAppliance.DeserializeReplicationAppliance(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ReplicationAlertConfigurationListResult(Optional.ToList(value), nextLink.Value);
+            return new ReplicationApplianceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

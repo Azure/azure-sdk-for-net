@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             );
         }
 
-        /// <summary> Gets a collection of ReplicationAlertConfigurationResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ReplicationAlertResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of ReplicationAlertConfigurationResources and their operations over a ReplicationAlertConfigurationResource. </returns>
-        public static ReplicationAlertConfigurationCollection GetReplicationAlertConfigurations(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <returns> An object representing collection of ReplicationAlertResources and their operations over a ReplicationAlertResource. </returns>
+        public static ReplicationAlertCollection GetReplicationAlerts(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetReplicationAlertConfigurations(resourceName);
+            return GetExtensionClient(resourceGroupResource).GetReplicationAlerts(resourceName);
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ReplicationAlertConfigurationResource>> GetReplicationAlertConfigurationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ReplicationAlertResource>> GetReplicationAlertAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetReplicationAlertConfigurations(resourceName).GetAsync(alertSettingName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetReplicationAlerts(resourceName).GetAsync(alertSettingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ReplicationAlertConfigurationResource> GetReplicationAlertConfiguration(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
+        public static Response<ReplicationAlertResource> GetReplicationAlert(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetReplicationAlertConfigurations(resourceName).Get(alertSettingName, cancellationToken);
+            return resourceGroupResource.GetReplicationAlerts(resourceName).Get(alertSettingName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ReplicationEligibilityResultResources in the ResourceGroupResource. </summary>
@@ -1333,20 +1333,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetExtensionClient(resourceGroupResource).RefreshReplicationVaultHealth(waitUntil, resourceName, cancellationToken);
         }
 
-        #region ReplicationAlertConfigurationResource
+        #region ReplicationAlertResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationAlertConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationAlertConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationAlertConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationAlertResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationAlertConfigurationResource" /> object. </returns>
-        public static ReplicationAlertConfigurationResource GetReplicationAlertConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationAlertResource" /> object. </returns>
+        public static ReplicationAlertResource GetReplicationAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReplicationAlertConfigurationResource.ValidateResourceId(id);
-                return new ReplicationAlertConfigurationResource(client, id);
+                ReplicationAlertResource.ValidateResourceId(id);
+                return new ReplicationAlertResource(client, id);
             }
             );
         }

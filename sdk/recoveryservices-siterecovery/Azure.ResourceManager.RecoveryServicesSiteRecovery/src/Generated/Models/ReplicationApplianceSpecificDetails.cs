@@ -10,22 +10,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary>
     /// Appliance specific details.
     /// Serialized Name: ApplianceSpecificDetails
-    /// Please note <see cref="ApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="ReplicationApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="InMageRcmApplianceSpecificDetails"/>.
     /// </summary>
-    public abstract partial class ApplianceSpecificDetails
+    public abstract partial class ReplicationApplianceSpecificDetails
     {
-        /// <summary> Initializes a new instance of ApplianceSpecificDetails. </summary>
-        protected ApplianceSpecificDetails()
+        /// <summary> Initializes a new instance of ReplicationApplianceSpecificDetails. </summary>
+        protected ReplicationApplianceSpecificDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of ReplicationApplianceSpecificDetails. </summary>
         /// <param name="instanceType">
         /// Gets the class type. Overridden in derived classes.
         /// Serialized Name: ApplianceSpecificDetails.instanceType
         /// </param>
-        internal ApplianceSpecificDetails(string instanceType)
+        internal ReplicationApplianceSpecificDetails(string instanceType)
         {
             InstanceType = instanceType;
         }

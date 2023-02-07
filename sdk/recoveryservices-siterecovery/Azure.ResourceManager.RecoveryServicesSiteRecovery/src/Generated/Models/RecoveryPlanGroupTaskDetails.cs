@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The group type.
         /// Serialized Name: RecoveryPlanGroupTaskDetails.rpGroupType
         /// </param>
-        internal RecoveryPlanGroupTaskDetails(string instanceType, IReadOnlyList<ASRTask> childTasks, string name, string groupId, string rpGroupType) : base(instanceType, childTasks)
+        internal RecoveryPlanGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, string name, string groupId, string rpGroupType) : base(instanceType, childTasks)
         {
             Name = name;
             GroupId = groupId;

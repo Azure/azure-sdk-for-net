@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ApplianceSpecificDetails
+    public partial class ReplicationApplianceSpecificDetails
     {
-        internal static ApplianceSpecificDetails DeserializeApplianceSpecificDetails(JsonElement element)
+        internal static ReplicationApplianceSpecificDetails DeserializeReplicationApplianceSpecificDetails(JsonElement element)
         {
             if (element.TryGetProperty("instanceType", out JsonElement discriminator))
             {

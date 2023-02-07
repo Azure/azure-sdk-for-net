@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class AlertProperties
+    public partial class ReplicationAlertProperties
     {
-        internal static AlertProperties DeserializeAlertProperties(JsonElement element)
+        internal static ReplicationAlertProperties DeserializeReplicationAlertProperties(JsonElement element)
         {
             Optional<string> sendToOwners = default;
             Optional<IReadOnlyList<string>> customEmailAddresses = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new AlertProperties(sendToOwners.Value, Optional.ToList(customEmailAddresses), locale.Value);
+            return new ReplicationAlertProperties(sendToOwners.Value, Optional.ToList(customEmailAddresses), locale.Value);
         }
     }
 }

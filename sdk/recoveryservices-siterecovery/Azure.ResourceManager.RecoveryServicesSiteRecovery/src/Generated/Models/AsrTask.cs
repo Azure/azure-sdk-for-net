@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Task of the Job.
     /// Serialized Name: ASRTask
     /// </summary>
-    public partial class ASRTask
+    public partial class AsrTask
     {
-        /// <summary> Initializes a new instance of ASRTask. </summary>
-        internal ASRTask()
+        /// <summary> Initializes a new instance of AsrTask. </summary>
+        internal AsrTask()
         {
             AllowedActions = new ChangeTrackingList<string>();
             Errors = new ChangeTrackingList<JobErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of ASRTask. </summary>
+        /// <summary> Initializes a new instance of AsrTask. </summary>
         /// <param name="taskId">
         /// The Id.
         /// Serialized Name: ASRTask.taskId
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The task error details.
         /// Serialized Name: ASRTask.errors
         /// </param>
-        internal ASRTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, TaskTypeDetails customDetails, GroupTaskDetails groupTaskCustomDetails, IReadOnlyList<JobErrorDetails> errors)
+        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, TaskTypeDetails customDetails, GroupTaskDetails groupTaskCustomDetails, IReadOnlyList<JobErrorDetails> errors)
         {
             TaskId = taskId;
             Name = name;

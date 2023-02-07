@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The properties of an add vCenter request.
         /// Serialized Name: AddVCenterRequest.properties
         /// </summary>
-        public AddVCenterRequestProperties Properties { get; set; }
+        public AddReplicationVCenterRequestProperties Properties { get; set; }
     }
 }

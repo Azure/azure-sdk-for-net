@@ -14,17 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Input properties to apply recovery point.
     /// Serialized Name: ApplyRecoveryPointInputProperties
     /// </summary>
-    public partial class ApplyRecoveryPointInputProperties
+    public partial class ApplySiteRecoveryPointInputProperties
     {
-        /// <summary> Initializes a new instance of ApplyRecoveryPointInputProperties. </summary>
+        /// <summary> Initializes a new instance of ApplySiteRecoveryPointInputProperties. </summary>
         /// <param name="providerSpecificDetails">
         /// Provider specific input for applying recovery point.
         /// Serialized Name: ApplyRecoveryPointInputProperties.providerSpecificDetails
-        /// Please note <see cref="ApplyRecoveryPointProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ApplySiteRecoveryPointProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AApplyRecoveryPointInput"/>, <see cref="A2ACrossClusterMigrationApplyRecoveryPointInput"/>, <see cref="HyperVReplicaAzureApplyRecoveryPointInput"/>, <see cref="InMageAzureV2ApplyRecoveryPointInput"/> and <see cref="InMageRcmApplyRecoveryPointInput"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="providerSpecificDetails"/> is null. </exception>
-        public ApplyRecoveryPointInputProperties(ApplyRecoveryPointProviderSpecificInput providerSpecificDetails)
+        public ApplySiteRecoveryPointInputProperties(ApplySiteRecoveryPointProviderSpecificInput providerSpecificDetails)
         {
             Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
 
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary>
         /// Provider specific input for applying recovery point.
         /// Serialized Name: ApplyRecoveryPointInputProperties.providerSpecificDetails
-        /// Please note <see cref="ApplyRecoveryPointProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ApplySiteRecoveryPointProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AApplyRecoveryPointInput"/>, <see cref="A2ACrossClusterMigrationApplyRecoveryPointInput"/>, <see cref="HyperVReplicaAzureApplyRecoveryPointInput"/>, <see cref="InMageAzureV2ApplyRecoveryPointInput"/> and <see cref="InMageRcmApplyRecoveryPointInput"/>.
         /// </summary>
-        public ApplyRecoveryPointProviderSpecificInput ProviderSpecificDetails { get; }
+        public ApplySiteRecoveryPointProviderSpecificInput ProviderSpecificDetails { get; }
     }
 }

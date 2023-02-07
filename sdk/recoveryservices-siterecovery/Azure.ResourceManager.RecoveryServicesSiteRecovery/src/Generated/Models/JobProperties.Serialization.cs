@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> friendlyName = default;
             Optional<string> state = default;
             Optional<string> stateDescription = default;
-            Optional<IReadOnlyList<ASRTask>> tasks = default;
+            Optional<IReadOnlyList<AsrTask>> tasks = default;
             Optional<IReadOnlyList<JobErrorDetails>> errors = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ASRTask> array = new List<ASRTask>();
+                    List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ASRTask.DeserializeASRTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item));
                     }
                     tasks = array;
                     continue;

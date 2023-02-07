@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of JobProperties. </summary>
         internal JobProperties()
         {
-            Tasks = new ChangeTrackingList<ASRTask>();
+            Tasks = new ChangeTrackingList<AsrTask>();
             Errors = new ChangeTrackingList<JobErrorDetails>();
             AllowedActions = new ChangeTrackingList<string>();
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
         /// </param>
-        internal JobProperties(string activityId, string scenarioName, string friendlyName, string state, string stateDescription, IReadOnlyList<ASRTask> tasks, IReadOnlyList<JobErrorDetails> errors, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string targetObjectId, string targetObjectName, string targetInstanceType, JobDetails customDetails)
+        internal JobProperties(string activityId, string scenarioName, string friendlyName, string state, string stateDescription, IReadOnlyList<AsrTask> tasks, IReadOnlyList<JobErrorDetails> errors, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string targetObjectId, string targetObjectName, string targetInstanceType, JobDetails customDetails)
         {
             ActivityId = activityId;
             ScenarioName = scenarioName;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The tasks.
         /// Serialized Name: JobProperties.tasks
         /// </summary>
-        public IReadOnlyList<ASRTask> Tasks { get; }
+        public IReadOnlyList<AsrTask> Tasks { get; }
         /// <summary>
         /// The errors.
         /// Serialized Name: JobProperties.errors

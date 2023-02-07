@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// ApplyRecoveryPoint input specific to HyperVReplicaAzure provider.
     /// Serialized Name: HyperVReplicaAzureApplyRecoveryPointInput
     /// </summary>
-    public partial class HyperVReplicaAzureApplyRecoveryPointInput : ApplyRecoveryPointProviderSpecificInput
+    public partial class HyperVReplicaAzureApplyRecoveryPointInput : ApplySiteRecoveryPointProviderSpecificInput
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureApplyRecoveryPointInput. </summary>
         public HyperVReplicaAzureApplyRecoveryPointInput()

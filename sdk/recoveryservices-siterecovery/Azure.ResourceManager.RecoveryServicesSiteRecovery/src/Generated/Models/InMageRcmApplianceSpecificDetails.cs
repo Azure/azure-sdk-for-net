@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// InMageRcm appliance specific details.
     /// Serialized Name: InMageRcmApplianceSpecificDetails
     /// </summary>
-    public partial class InMageRcmApplianceSpecificDetails : ApplianceSpecificDetails
+    public partial class InMageRcmApplianceSpecificDetails : ReplicationApplianceSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
         internal InMageRcmApplianceSpecificDetails()

@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     public static partial class RecoveryServicesSiteRecoveryExtensions
     {
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationRecoveryPointResource GetMigrationRecoveryPointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> GetReplicationAlertConfiguration(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>> GetReplicationAlertConfigurationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource GetReplicationAlertConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationCollection GetReplicationAlertConfigurations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> GetReplicationAlert(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>> GetReplicationAlertAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource GetReplicationAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertCollection GetReplicationAlerts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAppliance> GetReplicationAppliances(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAppliance> GetReplicationAppliancesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationEligibilityResultResource> GetReplicationEligibilityResult(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -110,38 +110,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VaultHealthDetails> RefreshReplicationVaultHealth(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VaultHealthDetails>> RefreshReplicationVaultHealthAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ReplicationAlertConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>, System.Collections.IEnumerable
+    public partial class ReplicationAlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>, System.Collections.IEnumerable
     {
-        protected ReplicationAlertConfigurationCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string alertSettingName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertConfigurationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string alertSettingName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertConfigurationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected ReplicationAlertCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string alertSettingName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string alertSettingName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> Get(string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>> GetAsync(string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> Get(string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>> GetAsync(string alertSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ReplicationAlertConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class ReplicationAlertData : Azure.ResourceManager.Models.ResourceData
     {
-        internal ReplicationAlertConfigurationData() { }
+        internal ReplicationAlertData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AlertProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertProperties Properties { get { throw null; } }
     }
-    public partial class ReplicationAlertConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class ReplicationAlertResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected ReplicationAlertConfigurationResource() { }
-        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationData Data { get { throw null; } }
+        protected ReplicationAlertResource() { }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string alertSettingName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertConfigurationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertConfigurationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationAlertResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAlertCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ReplicationEligibilityResultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationEligibilityResultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationEligibilityResultResource>, System.Collections.IEnumerable
     {
@@ -408,10 +408,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         protected ReplicationProtectedItemResource() { }
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource> AddDisks(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddDisksContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource>> AddDisksAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddDisksContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource> ApplyRecoveryPoint(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource>> ApplyRecoveryPointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource> AddDisks(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddDisksInputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource>> AddDisksAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddDisksInputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource> ApplyRecoveryPoint(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointInputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource>> ApplyRecoveryPointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointInputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.DisableProtectionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AVmDiskInputDetails> VmDisks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AVmManagedDiskInputDetails> VmManagedDisks { get { throw null; } }
     }
-    public partial class A2AApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointProviderSpecificInput
+    public partial class A2AApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointProviderSpecificInput
     {
         public A2AApplyRecoveryPointInput() { }
     }
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AProtectionIntentDiskInputDetails> VmDisks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AProtectionIntentManagedDiskInputDetails> VmManagedDisks { get { throw null; } }
     }
-    public partial class A2ACrossClusterMigrationApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointProviderSpecificInput
+    public partial class A2ACrossClusterMigrationApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointProviderSpecificInput
     {
         public A2ACrossClusterMigrationApplyRecoveryPointInput() { }
     }
@@ -1403,33 +1403,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string Source { get { throw null; } }
         public string Target { get { throw null; } }
     }
-    public partial class AddDisksContent
+    public partial class AddDisksInputContent
     {
-        public AddDisksContent() { }
+        public AddDisksInputContent() { }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddDisksProviderSpecificInput AddDisksInputProviderSpecificDetails { get { throw null; } set { } }
     }
     public abstract partial class AddDisksProviderSpecificInput
     {
         protected AddDisksProviderSpecificInput() { }
     }
-    public partial class AddRecoveryServicesProviderInputProperties
+    public partial class AddReplicationVCenterRequestProperties
     {
-        public AddRecoveryServicesProviderInputProperties(string machineName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderInput authenticationIdentityInput, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderInput resourceAccessIdentityInput) { }
+        public AddReplicationVCenterRequestProperties() { }
+        public string FriendlyName { get { throw null; } set { } }
+        public string IPAddress { get { throw null; } set { } }
+        public string Port { get { throw null; } set { } }
+        public string ProcessServerId { get { throw null; } set { } }
+        public string RunAsAccountId { get { throw null; } set { } }
+    }
+    public partial class AddSiteRecoveryServicesProviderInputProperties
+    {
+        public AddSiteRecoveryServicesProviderInputProperties(string machineName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderInput authenticationIdentityInput, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderInput resourceAccessIdentityInput) { }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderInput AuthenticationIdentityInput { get { throw null; } }
         public string BiosId { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderInput DataPlaneAuthenticationIdentityInput { get { throw null; } set { } }
         public string MachineId { get { throw null; } set { } }
         public string MachineName { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderInput ResourceAccessIdentityInput { get { throw null; } }
-    }
-    public partial class AddVCenterRequestProperties
-    {
-        public AddVCenterRequestProperties() { }
-        public string FriendlyName { get { throw null; } set { } }
-        public string IPAddress { get { throw null; } set { } }
-        public string Port { get { throw null; } set { } }
-        public string ProcessServerId { get { throw null; } set { } }
-        public string RunAsAccountId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AgentAutoUpdateStatus : System.IEquatable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentAutoUpdateStatus>
@@ -1518,13 +1518,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentVersionStatus left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentVersionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AlertProperties
-    {
-        internal AlertProperties() { }
-        public System.Collections.Generic.IReadOnlyList<string> CustomEmailAddresses { get { throw null; } }
-        public string Locale { get { throw null; } }
-        public string SendToOwners { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlternateLocationRecoveryOption : System.IEquatable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AlternateLocationRecoveryOption>
     {
@@ -1543,32 +1536,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AlternateLocationRecoveryOption left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AlternateLocationRecoveryOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ApplianceSpecificDetails
+    public partial class ApplySiteRecoveryPointInputContent
     {
-        protected ApplianceSpecificDetails() { }
+        public ApplySiteRecoveryPointInputContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointInputProperties properties) { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointInputProperties Properties { get { throw null; } }
     }
-    public partial class ApplyRecoveryPointContent
+    public partial class ApplySiteRecoveryPointInputProperties
     {
-        public ApplyRecoveryPointContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointInputProperties properties) { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointInputProperties Properties { get { throw null; } }
-    }
-    public partial class ApplyRecoveryPointInputProperties
-    {
-        public ApplyRecoveryPointInputProperties(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointProviderSpecificInput providerSpecificDetails) { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointProviderSpecificInput ProviderSpecificDetails { get { throw null; } }
+        public ApplySiteRecoveryPointInputProperties(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointProviderSpecificInput providerSpecificDetails) { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointProviderSpecificInput ProviderSpecificDetails { get { throw null; } }
         public string RecoveryPointId { get { throw null; } set { } }
     }
-    public abstract partial class ApplyRecoveryPointProviderSpecificInput
+    public abstract partial class ApplySiteRecoveryPointProviderSpecificInput
     {
-        protected ApplyRecoveryPointProviderSpecificInput() { }
+        protected ApplySiteRecoveryPointProviderSpecificInput() { }
     }
     public partial class AsrJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails
     {
         internal AsrJobDetails() { }
     }
-    public partial class ASRTask
+    public partial class AsrTask
     {
-        internal ASRTask() { }
+        internal AsrTask() { }
         public System.Collections.Generic.IReadOnlyList<string> AllowedActions { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.TaskTypeDetails CustomDetails { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
@@ -2138,7 +2127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public abstract partial class GroupTaskDetails
     {
         protected GroupTaskDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ASRTask> ChildTasks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask> ChildTasks { get { throw null; } }
     }
     public partial class HealthError
     {
@@ -2238,7 +2227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string RemoteContainerName { get { throw null; } }
         public string RemoteFabricName { get { throw null; } }
     }
-    public partial class HyperVReplicaAzureApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointProviderSpecificInput
+    public partial class HyperVReplicaAzureApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointProviderSpecificInput
     {
         public HyperVReplicaAzureApplyRecoveryPointInput() { }
         public string PrimaryKekCertificatePfx { get { throw null; } set { } }
@@ -2592,7 +2581,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string AgentVersion { get { throw null; } }
         public string PostUpdateRebootStatus { get { throw null; } }
     }
-    public partial class InMageAzureV2ApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointProviderSpecificInput
+    public partial class InMageAzureV2ApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointProviderSpecificInput
     {
         public InMageAzureV2ApplyRecoveryPointInput() { }
     }
@@ -2960,12 +2949,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReprotectAgentDetails ReprotectAgent { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get { throw null; } }
     }
-    public partial class InMageRcmApplianceSpecificDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplianceSpecificDetails
+    public partial class InMageRcmApplianceSpecificDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationApplianceSpecificDetails
     {
         internal InMageRcmApplianceSpecificDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmApplianceDetails> Appliances { get { throw null; } }
     }
-    public partial class InMageRcmApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplyRecoveryPointProviderSpecificInput
+    public partial class InMageRcmApplyRecoveryPointInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplySiteRecoveryPointProviderSpecificInput
     {
         public InMageRcmApplyRecoveryPointInput(string recoveryPointId) { }
         public string RecoveryPointId { get { throw null; } }
@@ -3624,7 +3613,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string TargetInstanceType { get { throw null; } }
         public string TargetObjectId { get { throw null; } }
         public string TargetObjectName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ASRTask> Tasks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask> Tasks { get { throw null; } }
     }
     public partial class JobQueryParameter
     {
@@ -4621,15 +4610,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string Name { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class ReplicationAlertConfigurationCreateOrUpdateContent
+    public partial class ReplicationAlertCreateOrUpdateContent
     {
-        public ReplicationAlertConfigurationCreateOrUpdateContent() { }
+        public ReplicationAlertCreateOrUpdateContent() { }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ConfigureAlertRequestProperties Properties { get { throw null; } set { } }
+    }
+    public partial class ReplicationAlertProperties
+    {
+        internal ReplicationAlertProperties() { }
+        public System.Collections.Generic.IReadOnlyList<string> CustomEmailAddresses { get { throw null; } }
+        public string Locale { get { throw null; } }
+        public string SendToOwners { get { throw null; } }
     }
     public partial class ReplicationAppliance
     {
         internal ReplicationAppliance() { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ApplianceSpecificDetails ReplicationApplianceProviderSpecificDetails { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationApplianceSpecificDetails ReplicationApplianceProviderSpecificDetails { get { throw null; } }
+    }
+    public abstract partial class ReplicationApplianceSpecificDetails
+    {
+        protected ReplicationApplianceSpecificDetails() { }
     }
     public partial class ReplicationEligibilityResultsErrorInfo
     {
@@ -4841,7 +4841,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ReplicationVCenterCreateOrUpdateContent
     {
         public ReplicationVCenterCreateOrUpdateContent() { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddVCenterRequestProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddReplicationVCenterRequestProperties Properties { get { throw null; } set { } }
     }
     public partial class ReplicationVCenterPatch
     {
@@ -5044,8 +5044,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     }
     public partial class SiteRecoveryServicesProviderCreateOrUpdateContent
     {
-        public SiteRecoveryServicesProviderCreateOrUpdateContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddRecoveryServicesProviderInputProperties properties) { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddRecoveryServicesProviderInputProperties Properties { get { throw null; } }
+        public SiteRecoveryServicesProviderCreateOrUpdateContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddSiteRecoveryServicesProviderInputProperties properties) { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddSiteRecoveryServicesProviderInputProperties Properties { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceSiteOperation : System.IEquatable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SourceSiteOperation>

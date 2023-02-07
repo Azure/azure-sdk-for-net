@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class ApplianceCollection
+    internal partial class ReplicationAlertListResult
     {
-        internal static ApplianceCollection DeserializeApplianceCollection(JsonElement element)
+        internal static ReplicationAlertListResult DeserializeReplicationAlertListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ReplicationAppliance>> value = default;
+            Optional<IReadOnlyList<ReplicationAlertData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReplicationAppliance> array = new List<ReplicationAppliance>();
+                    List<ReplicationAlertData> array = new List<ReplicationAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationAppliance.DeserializeReplicationAppliance(item));
+                        array.Add(ReplicationAlertData.DeserializeReplicationAlertData(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ApplianceCollection(Optional.ToList(value), nextLink.Value);
+            return new ReplicationAlertListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

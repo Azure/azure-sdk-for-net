@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of child workflow ids.
         /// Serialized Name: InlineWorkflowTaskDetails.workflowIds
         /// </param>
-        internal InlineWorkflowTaskDetails(string instanceType, IReadOnlyList<ASRTask> childTasks, IReadOnlyList<string> workflowIds) : base(instanceType, childTasks)
+        internal InlineWorkflowTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, IReadOnlyList<string> workflowIds) : base(instanceType, childTasks)
         {
             WorkflowIds = workflowIds;
             InstanceType = instanceType ?? "InlineWorkflowTaskDetails";

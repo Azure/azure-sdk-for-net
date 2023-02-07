@@ -11,15 +11,15 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ReplicationAlertConfiguration data model. </summary>
-    public partial class ReplicationAlertConfigurationData : ResourceData
+    /// <summary> A class representing the ReplicationAlert data model. </summary>
+    public partial class ReplicationAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReplicationAlertConfigurationData. </summary>
-        internal ReplicationAlertConfigurationData()
+        /// <summary> Initializes a new instance of ReplicationAlertData. </summary>
+        internal ReplicationAlertData()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationAlertConfigurationData. </summary>
+        /// <summary> Initializes a new instance of ReplicationAlertData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        internal ReplicationAlertConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal ReplicationAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationAlertProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Alert related data.
         /// Serialized Name: Alert.properties
         /// </summary>
-        public AlertProperties Properties { get; }
+        public ReplicationAlertProperties Properties { get; }
         /// <summary>
         /// Resource Location
         /// Serialized Name: Resource.location

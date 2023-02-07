@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Collection of alerts.
     /// Serialized Name: AlertCollection
     /// </summary>
-    internal partial class ReplicationAlertConfigurationListResult
+    internal partial class ReplicationAlertListResult
     {
-        /// <summary> Initializes a new instance of ReplicationAlertConfigurationListResult. </summary>
-        internal ReplicationAlertConfigurationListResult()
+        /// <summary> Initializes a new instance of ReplicationAlertListResult. </summary>
+        internal ReplicationAlertListResult()
         {
-            Value = new ChangeTrackingList<ReplicationAlertConfigurationData>();
+            Value = new ChangeTrackingList<ReplicationAlertData>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationAlertConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of ReplicationAlertListResult. </summary>
         /// <param name="value">
         /// The list of alerts.
         /// Serialized Name: AlertCollection.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: AlertCollection.nextLink
         /// </param>
-        internal ReplicationAlertConfigurationListResult(IReadOnlyList<ReplicationAlertConfigurationData> value, string nextLink)
+        internal ReplicationAlertListResult(IReadOnlyList<ReplicationAlertData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The list of alerts.
         /// Serialized Name: AlertCollection.value
         /// </summary>
-        public IReadOnlyList<ReplicationAlertConfigurationData> Value { get; }
+        public IReadOnlyList<ReplicationAlertData> Value { get; }
         /// <summary>
         /// The value of next link.
         /// Serialized Name: AlertCollection.nextLink

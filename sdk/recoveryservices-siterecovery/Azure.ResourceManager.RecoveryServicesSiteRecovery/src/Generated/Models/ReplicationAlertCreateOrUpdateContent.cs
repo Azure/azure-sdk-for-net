@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Request to configure alerts for the system.
     /// Serialized Name: ConfigureAlertRequest
     /// </summary>
-    public partial class ReplicationAlertConfigurationCreateOrUpdateContent
+    public partial class ReplicationAlertCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ReplicationAlertConfigurationCreateOrUpdateContent. </summary>
-        public ReplicationAlertConfigurationCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of ReplicationAlertCreateOrUpdateContent. </summary>
+        public ReplicationAlertCreateOrUpdateContent()
         {
         }
 

@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The properties of an alert.
     /// Serialized Name: AlertProperties
     /// </summary>
-    public partial class AlertProperties
+    public partial class ReplicationAlertProperties
     {
-        /// <summary> Initializes a new instance of AlertProperties. </summary>
-        internal AlertProperties()
+        /// <summary> Initializes a new instance of ReplicationAlertProperties. </summary>
+        internal ReplicationAlertProperties()
         {
             CustomEmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AlertProperties. </summary>
+        /// <summary> Initializes a new instance of ReplicationAlertProperties. </summary>
         /// <param name="sendToOwners">
         /// A value indicating whether to send email to subscription administrator.
         /// Serialized Name: AlertProperties.sendToOwners
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The locale for the email notification.
         /// Serialized Name: AlertProperties.locale
         /// </param>
-        internal AlertProperties(string sendToOwners, IReadOnlyList<string> customEmailAddresses, string locale)
+        internal ReplicationAlertProperties(string sendToOwners, IReadOnlyList<string> customEmailAddresses, string locale)
         {
             SendToOwners = sendToOwners;
             CustomEmailAddresses = customEmailAddresses;

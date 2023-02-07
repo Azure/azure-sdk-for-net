@@ -12,11 +12,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    public partial class ReplicationAlertConfigurationData
+    public partial class ReplicationAlertData
     {
-        internal static ReplicationAlertConfigurationData DeserializeReplicationAlertConfigurationData(JsonElement element)
+        internal static ReplicationAlertData DeserializeReplicationAlertData(JsonElement element)
         {
-            Optional<AlertProperties> properties = default;
+            Optional<ReplicationAlertProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = AlertProperties.DeserializeAlertProperties(property.Value);
+                    properties = ReplicationAlertProperties.DeserializeReplicationAlertProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     continue;
                 }
             }
-            return new ReplicationAlertConfigurationData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
+            return new ReplicationAlertData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
         }
     }
 }

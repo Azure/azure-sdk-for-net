@@ -10,13 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ApplyRecoveryPointProviderSpecificInput : IUtf8JsonSerializable
+    public partial class AddDisksInputContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("instanceType");
-            writer.WriteStringValue(InstanceType);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
             writer.WriteEndObject();
         }
     }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of GroupTaskDetails. </summary>
         protected GroupTaskDetails()
         {
-            ChildTasks = new ChangeTrackingList<ASRTask>();
+            ChildTasks = new ChangeTrackingList<AsrTask>();
         }
 
         /// <summary> Initializes a new instance of GroupTaskDetails. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The child tasks.
         /// Serialized Name: GroupTaskDetails.childTasks
         /// </param>
-        internal GroupTaskDetails(string instanceType, IReadOnlyList<ASRTask> childTasks)
+        internal GroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks)
         {
             InstanceType = instanceType;
             ChildTasks = childTasks;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The child tasks.
         /// Serialized Name: GroupTaskDetails.childTasks
         /// </summary>
-        public IReadOnlyList<ASRTask> ChildTasks { get; }
+        public IReadOnlyList<AsrTask> ChildTasks { get; }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The child tasks.
         /// Serialized Name: GroupTaskDetails.childTasks
         /// </param>
-        internal UnknownGroupTaskDetails(string instanceType, IReadOnlyList<ASRTask> childTasks) : base(instanceType, childTasks)
+        internal UnknownGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks) : base(instanceType, childTasks)
         {
             InstanceType = instanceType ?? "Unknown";
         }

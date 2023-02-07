@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The properties of an add provider request.
     /// Serialized Name: AddRecoveryServicesProviderInputProperties
     /// </summary>
-    public partial class AddRecoveryServicesProviderInputProperties
+    public partial class AddSiteRecoveryServicesProviderInputProperties
     {
-        /// <summary> Initializes a new instance of AddRecoveryServicesProviderInputProperties. </summary>
+        /// <summary> Initializes a new instance of AddSiteRecoveryServicesProviderInputProperties. </summary>
         /// <param name="machineName">
         /// The name of the machine where the provider is getting added.
         /// Serialized Name: AddRecoveryServicesProviderInputProperties.machineName
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: AddRecoveryServicesProviderInputProperties.resourceAccessIdentityInput
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/>, <paramref name="authenticationIdentityInput"/> or <paramref name="resourceAccessIdentityInput"/> is null. </exception>
-        public AddRecoveryServicesProviderInputProperties(string machineName, IdentityProviderInput authenticationIdentityInput, IdentityProviderInput resourceAccessIdentityInput)
+        public AddSiteRecoveryServicesProviderInputProperties(string machineName, IdentityProviderInput authenticationIdentityInput, IdentityProviderInput resourceAccessIdentityInput)
         {
             Argument.AssertNotNull(machineName, nameof(machineName));
             Argument.AssertNotNull(authenticationIdentityInput, nameof(authenticationIdentityInput));

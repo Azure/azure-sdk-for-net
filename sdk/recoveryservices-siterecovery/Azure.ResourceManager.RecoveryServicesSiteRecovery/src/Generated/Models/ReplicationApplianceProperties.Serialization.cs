@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ReplicationApplianceProperties DeserializeReplicationApplianceProperties(JsonElement element)
         {
-            Optional<ApplianceSpecificDetails> providerSpecificDetails = default;
+            Optional<ReplicationApplianceSpecificDetails> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerSpecificDetails"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerSpecificDetails = ApplianceSpecificDetails.DeserializeApplianceSpecificDetails(property.Value);
+                    providerSpecificDetails = ReplicationApplianceSpecificDetails.DeserializeReplicationApplianceSpecificDetails(property.Value);
                     continue;
                 }
             }

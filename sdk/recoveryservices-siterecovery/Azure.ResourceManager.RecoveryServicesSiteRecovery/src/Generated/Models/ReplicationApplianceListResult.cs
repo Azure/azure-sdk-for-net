@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Collection of appliance details.
     /// Serialized Name: ApplianceCollection
     /// </summary>
-    internal partial class ApplianceCollection
+    internal partial class ReplicationApplianceListResult
     {
-        /// <summary> Initializes a new instance of ApplianceCollection. </summary>
-        internal ApplianceCollection()
+        /// <summary> Initializes a new instance of ReplicationApplianceListResult. </summary>
+        internal ReplicationApplianceListResult()
         {
             Value = new ChangeTrackingList<ReplicationAppliance>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceCollection. </summary>
+        /// <summary> Initializes a new instance of ReplicationApplianceListResult. </summary>
         /// <param name="value">
         /// The appliance details.
         /// Serialized Name: ApplianceCollection.value
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: ApplianceCollection.nextLink
         /// </param>
-        internal ApplianceCollection(IReadOnlyList<ReplicationAppliance> value, string nextLink)
+        internal ReplicationApplianceListResult(IReadOnlyList<ReplicationAppliance> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
