@@ -40,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Metric> batch)
-       {
+        {
             _persistentStorage?.StartExporterTimer();
 
             // Prevent Azure Monitor's HTTP operations from being instrumented.
