@@ -32,12 +32,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             var uniqueId = await ServiceBusWithNewCall(user, target);
 
             // create call and assert response
-<<<<<<< HEAD
-            var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-=======
             var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
             createCallOptions.RepeatabilityHeaders = null;
->>>>>>> 1b10570db6... integrate call invite to create call
             CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
             Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);

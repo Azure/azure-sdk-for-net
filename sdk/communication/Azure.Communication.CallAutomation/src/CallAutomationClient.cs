@@ -694,6 +694,93 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary>
+        /// Create an outgoing group call to target identities.
+        /// </summary>
+        /// <param name="options">Options for the CreateCall request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> CallbackUri is not formatted correctly. </exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        /// <returns></returns>
+        public virtual async Task<Response<CreateCallResult>> CreateGroupCallAsync(CreateGroupCallOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                CreateCallRequestInternal request = CreateCallRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
+                    request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken
+                    ).ConfigureAwait(false);
+
+                var result = new CreateCallResult(
+                    GetCallConnection(createCallResponse.Value.CallConnectionId),
+                    new CallConnectionProperties(createCallResponse.Value));
+                result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result,
+                    createCallResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create an outgoing group call to target identities.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CreateCallResult> CreateGroupCall(CreateGroupCallOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                CreateCallRequestInternal request = CreateCallRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
+                    request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken
+                    );
+
+                var result = new CreateCallResult(
+                    GetCallConnection(createCallResponse.Value.CallConnectionId),
+                    new CallConnectionProperties(createCallResponse.Value));
+                result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result,
+                    createCallResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         private CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
             CallSourceInternal sourceDto = new(CommunicationIdentifierSerializer.Serialize(Source))
