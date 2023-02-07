@@ -4,11 +4,14 @@
 #nullable disable // TODO: remove and fix errors
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -46,23 +49,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
             }
 
-            builder.AddProcessor(sp =>
-            {
-                var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
-
-                if (name == null && configure != null)
-                {
-                    // If we are NOT using named options, we execute the
-                    // configuration delegate inline. The reason for this is
-                    // AzureMonitorExporterOptions is shared by all signals. Without a
-                    // name, delegates for all signals will mix together. See:
-                    // https://github.com/open-telemetry/opentelemetry-dotnet/issues/4043
-                    configure(exporterOptions);
-                }
-
-                return new StandardMetricsExtractionProcessor(exporterOptions.ConnectionString);
-            });
-
             return builder.AddProcessor(sp =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
@@ -77,7 +63,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
-                return new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential));
+                return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
+                {
+                    new StandardMetricsExtractionProcessor(exporterOptions.ConnectionString),
+                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential))
+                });
             });
         }
     }
