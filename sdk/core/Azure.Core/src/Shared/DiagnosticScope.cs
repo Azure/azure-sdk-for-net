@@ -292,8 +292,11 @@ namespace Azure.Core.Pipeline
             public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
-
-                if (_currentActivity == null)
+                if (_currentActivity != null)
+                {
+                    _currentActivity.AddTag("az.schema_url", "https://opentelemetry.io/schemas/1.17.0");
+                }
+                else
                 {
                     if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
                     {
@@ -407,7 +410,6 @@ namespace Azure.Core.Pipeline
         private static Func<Activity, string?>? GetTraceStateStringMethod;
         private static Action<Activity, string?>? SetTraceStateStringMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
-        private static Action<Activity, string, object?>? ActivityAddTagMethod;
         private static Func<object, string, int, string?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
         private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
@@ -547,34 +549,6 @@ namespace Azure.Core.Pipeline
             }
 
             SetTraceStateStringMethod(activity, tracestate);
-        }
-
-        public static void AddObjectTag(this Activity activity, string name, object value)
-        {
-            if (ActivityAddTagMethod == null)
-            {
-                var method = typeof(Activity).GetMethod("AddTag", BindingFlags.Instance | BindingFlags.Public, null, new Type[]
-                {
-                    typeof(string),
-                    typeof(object)
-                }, null);
-
-                if (method == null)
-                {
-                    ActivityAddTagMethod = (_, _, _) => { };
-                }
-                else
-                {
-                    var nameParameter = Expression.Parameter(typeof(string));
-                    var valueParameter = Expression.Parameter(typeof(object));
-
-                    ActivityAddTagMethod = Expression.Lambda<Action<Activity, string, object?>>(
-                        Expression.Call(ActivityParameter, method, nameParameter, valueParameter),
-                        ActivityParameter, nameParameter, valueParameter).Compile();
-                }
-            }
-
-            ActivityAddTagMethod(activity, name, value);
         }
 
         public static bool SupportsActivitySource()
