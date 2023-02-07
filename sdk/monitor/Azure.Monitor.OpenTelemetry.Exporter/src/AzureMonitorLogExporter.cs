@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Threading;
 using Azure.Core;
@@ -18,10 +16,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
-        private readonly AzureMonitorPersistentStorage _persistentStorage;
-        private AzureMonitorResource _resource;
+        private readonly AzureMonitorPersistentStorage? _persistentStorage;
+        private AzureMonitorResource? _resource;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options, TokenCredential credential = null) : this(new AzureMonitorTransmitter(options, credential))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options, TokenCredential? credential = null) : this(new AzureMonitorTransmitter(options, credential))
         {
         }
 
@@ -34,9 +32,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
             }
+            else
+            {
+                _persistentStorage = null;
+            }
         }
 
-        internal AzureMonitorResource LogResource => _resource ??= ParentProvider.GetResource().UpdateRoleNameAndInstance();
+        internal AzureMonitorResource? LogResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<LogRecord> batch)
