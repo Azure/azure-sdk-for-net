@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
-            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMoakCallSource(), CreateMoakTargets(), new Uri(CallBackUri)));
+            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
-            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMoakCallSource(), CreateMoakTargets(), new Uri(CallBackUri)));
+            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
