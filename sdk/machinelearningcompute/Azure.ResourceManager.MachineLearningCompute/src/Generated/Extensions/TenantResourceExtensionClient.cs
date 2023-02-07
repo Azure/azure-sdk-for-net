@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         /// <summary>
         /// Gets all available operations.
-        /// Request Path: /providers/Microsoft.MachineLearningCompute/operations
-        /// Operation Id: MachineLearningCompute_ListAvailableOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.MachineLearningCompute/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MachineLearningCompute_ListAvailableOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceOperation" /> that may take multiple service requests to iterate over. </returns>
@@ -57,8 +65,16 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         /// <summary>
         /// Gets all available operations.
-        /// Request Path: /providers/Microsoft.MachineLearningCompute/operations
-        /// Operation Id: MachineLearningCompute_ListAvailableOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.MachineLearningCompute/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MachineLearningCompute_ListAvailableOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceOperation" /> that may take multiple service requests to iterate over. </returns>

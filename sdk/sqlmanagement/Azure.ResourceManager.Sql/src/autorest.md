@@ -303,6 +303,7 @@ rename-mapping:
   MoveOperationMode: ManagedDatabaseMoveOperationMode
   ManagedInstanceDtcSecuritySettings.xaTransactionsDefaultTimeout: XATransactionsDefaultTimeoutInSeconds
   ManagedInstanceDtcSecuritySettings.xaTransactionsMaximumTimeout: XATransactionsMaximumTimeoutInSeconds
+  ManagedInstanceDtcSecuritySettings.xaTransactionsEnabled: IsXATransactionsEnabled
   QueryCheck: SqlVulnerabilityAssessmentQueryCheck
   RuleSeverity: SqlVulnerabilityAssessmentRuleSeverity
   RuleType: SqlVulnerabilityAssessmentRuleType

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Primary metrics for Forecasting task.
-    /// Serialized Name: ForecastingPrimaryMetrics
-    /// </summary>
+    /// <summary> Primary metrics for Forecasting task. </summary>
     public readonly partial struct ForecastingPrimaryMetric : IEquatable<ForecastingPrimaryMetric>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string R2ScoreValue = "R2Score";
         private const string NormalizedMeanAbsoluteErrorValue = "NormalizedMeanAbsoluteError";
 
-        /// <summary>
-        /// The Spearman&apos;s rank coefficient of correlation is a non-parametric measure of rank correlation.
-        /// Serialized Name: ForecastingPrimaryMetrics.SpearmanCorrelation
-        /// </summary>
+        /// <summary> The Spearman&apos;s rank coefficient of correlation is a non-parametric measure of rank correlation. </summary>
         public static ForecastingPrimaryMetric SpearmanCorrelation { get; } = new ForecastingPrimaryMetric(SpearmanCorrelationValue);
-        /// <summary>
-        /// The Normalized Root Mean Squared Error (NRMSE) the RMSE facilitates the comparison between models with different scales.
-        /// Serialized Name: ForecastingPrimaryMetrics.NormalizedRootMeanSquaredError
-        /// </summary>
+        /// <summary> The Normalized Root Mean Squared Error (NRMSE) the RMSE facilitates the comparison between models with different scales. </summary>
         public static ForecastingPrimaryMetric NormalizedRootMeanSquaredError { get; } = new ForecastingPrimaryMetric(NormalizedRootMeanSquaredErrorValue);
-        /// <summary>
-        /// The R2 score is one of the performance evaluation measures for forecasting-based machine learning models.
-        /// Serialized Name: ForecastingPrimaryMetrics.R2Score
-        /// </summary>
+        /// <summary> The R2 score is one of the performance evaluation measures for forecasting-based machine learning models. </summary>
         public static ForecastingPrimaryMetric R2Score { get; } = new ForecastingPrimaryMetric(R2ScoreValue);
-        /// <summary>
-        /// The Normalized Mean Absolute Error (NMAE) is a validation metric to compare the Mean Absolute Error (MAE) of (time) series with different scales.
-        /// Serialized Name: ForecastingPrimaryMetrics.NormalizedMeanAbsoluteError
-        /// </summary>
+        /// <summary> The Normalized Mean Absolute Error (NMAE) is a validation metric to compare the Mean Absolute Error (MAE) of (time) series with different scales. </summary>
         public static ForecastingPrimaryMetric NormalizedMeanAbsoluteError { get; } = new ForecastingPrimaryMetric(NormalizedMeanAbsoluteErrorValue);
         /// <summary> Determines if two <see cref="ForecastingPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(ForecastingPrimaryMetric left, ForecastingPrimaryMetric right) => left.Equals(right);

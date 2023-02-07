@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets service administrator, account administrator, and co-administrators for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators
-        /// Operation Id: ClassicAdministrators_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClassicAdministrators_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
@@ -58,8 +66,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets service administrator, account administrator, and co-administrators for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators
-        /// Operation Id: ClassicAdministrators_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClassicAdministrators_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>

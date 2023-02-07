@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningManagedIdentityAuthTypeWorkspaceConnection.
-    /// Serialized Name: ManagedIdentityAuthTypeWorkspaceConnectionProperties
-    /// </summary>
+    /// <summary> The MachineLearningManagedIdentityAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningManagedIdentityAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of MachineLearningManagedIdentityAuthTypeWorkspaceConnection. </summary>
@@ -20,31 +17,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningManagedIdentityAuthTypeWorkspaceConnection. </summary>
-        /// <param name="authType">
-        /// Authentication type of the connection target
-        /// Serialized Name: WorkspaceConnectionPropertiesV2.authType
-        /// </param>
-        /// <param name="category">
-        /// Category of the connection
-        /// Serialized Name: WorkspaceConnectionPropertiesV2.category
-        /// </param>
-        /// <param name="target"> Serialized Name: WorkspaceConnectionPropertiesV2.target. </param>
-        /// <param name="value">
-        /// Value details of the workspace connection.
-        /// Serialized Name: WorkspaceConnectionPropertiesV2.value
-        /// </param>
-        /// <param name="valueFormat">
-        /// format for the workspace connection value
-        /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
-        /// </param>
-        /// <param name="credentials"> Serialized Name: ManagedIdentityAuthTypeWorkspaceConnectionProperties.credentials. </param>
+        /// <param name="authType"> Authentication type of the connection target. </param>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentials"></param>
         internal MachineLearningManagedIdentityAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, MachineLearningWorkspaceConnectionManagedIdentity credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;
         }
 
-        /// <summary> Serialized Name: ManagedIdentityAuthTypeWorkspaceConnectionProperties.credentials. </summary>
+        /// <summary> Gets or sets the credentials. </summary>
         public MachineLearningWorkspaceConnectionManagedIdentity Credentials { get; set; }
     }
 }

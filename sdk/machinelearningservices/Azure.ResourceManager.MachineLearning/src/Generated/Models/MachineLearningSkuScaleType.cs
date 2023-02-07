@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Node scaling setting for the compute sku.
-    /// Serialized Name: SkuScaleType
-    /// </summary>
+    /// <summary> Node scaling setting for the compute sku. </summary>
     public readonly partial struct MachineLearningSkuScaleType : IEquatable<MachineLearningSkuScaleType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ManualValue = "Manual";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// Automatically scales node count.
-        /// Serialized Name: SkuScaleType.Automatic
-        /// </summary>
+        /// <summary> Automatically scales node count. </summary>
         public static MachineLearningSkuScaleType Automatic { get; } = new MachineLearningSkuScaleType(AutomaticValue);
-        /// <summary>
-        /// Node count scaled upon user request.
-        /// Serialized Name: SkuScaleType.Manual
-        /// </summary>
+        /// <summary> Node count scaled upon user request. </summary>
         public static MachineLearningSkuScaleType Manual { get; } = new MachineLearningSkuScaleType(ManualValue);
-        /// <summary>
-        /// Fixed set of nodes.
-        /// Serialized Name: SkuScaleType.None
-        /// </summary>
+        /// <summary> Fixed set of nodes. </summary>
         public static MachineLearningSkuScaleType None { get; } = new MachineLearningSkuScaleType(NoneValue);
         /// <summary> Determines if two <see cref="MachineLearningSkuScaleType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningSkuScaleType left, MachineLearningSkuScaleType right) => left.Equals(right);

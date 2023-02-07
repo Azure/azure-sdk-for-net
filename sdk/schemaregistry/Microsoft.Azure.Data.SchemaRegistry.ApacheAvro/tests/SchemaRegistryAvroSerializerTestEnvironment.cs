@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {
     public class SchemaRegistryAvroSerializerTestEnvironment : TestEnvironment
     {
-        public string SchemaRegistryEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT");
+        public string SchemaRegistryEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_AVRO");
 
         public string SchemaRegistryGroup => GetRecordedVariable("SCHEMAREGISTRY_GROUP");
 

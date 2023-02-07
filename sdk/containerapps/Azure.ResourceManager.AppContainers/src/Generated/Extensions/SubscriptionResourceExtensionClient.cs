@@ -60,8 +60,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all available workload profiles for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes
-        /// Operation Id: AvailableWorkloadProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,8 +83,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all available workload profiles for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes
-        /// Operation Id: AvailableWorkloadProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,8 +106,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all billingMeters for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters
-        /// Operation Id: BillingMeters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,8 +128,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all billingMeters for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters
-        /// Operation Id: BillingMeters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,8 +150,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all connectedEnvironments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments
-        /// Operation Id: ConnectedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -132,8 +172,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all connectedEnvironments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments
-        /// Operation Id: ConnectedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -146,8 +194,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the Container Apps in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps
-        /// Operation Id: ContainerApps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
@@ -160,8 +216,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the Container Apps in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps
-        /// Operation Id: ContainerApps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
@@ -174,8 +238,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all Managed Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
-        /// Operation Id: ManagedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -188,8 +260,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all Managed Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
-        /// Operation Id: ManagedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>

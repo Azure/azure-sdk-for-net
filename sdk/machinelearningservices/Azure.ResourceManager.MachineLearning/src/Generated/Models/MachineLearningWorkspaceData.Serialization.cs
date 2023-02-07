@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(HbiWorkspace))
+            if (Optional.IsDefined(IsHbiWorkspace))
             {
                 writer.WritePropertyName("hbiWorkspace");
-                writer.WriteBooleanValue(HbiWorkspace.Value);
+                writer.WriteBooleanValue(IsHbiWorkspace.Value);
             }
             if (Optional.IsDefined(ImageBuildCompute))
             {

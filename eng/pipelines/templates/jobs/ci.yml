@@ -16,7 +16,7 @@ parameters:
   default: not-specified
 - name: BuildSnippets
   type: boolean
-  default: false
+  default: true
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -172,9 +172,8 @@ jobs:
 
       - task: NodeTool@0
         inputs:
-          # https://github.com/nodejs/node/issues/40468
-          versionSpec: '16.6.2'
-        displayName: 'Install NodeJS'
+          versionSpec: 18.x
+        displayName: 'Use Node 18.x'
 
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
@@ -183,7 +182,7 @@ jobs:
         inputs:
           command: custom
           custom: 'tool'
-          arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20211119.1" "Azure.Sdk.Tools.SnippetGenerator"'
+          arguments: 'restore'
           workingDirectory: '$(Agent.BuildDirectory)'
 
       - task: PowerShell@2

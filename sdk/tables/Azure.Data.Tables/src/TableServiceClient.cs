@@ -761,7 +761,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Deletes a table on the service.
         /// </summary>
-        /// <param name="tableName">The name of the table to create.</param>
+        /// <param name="tableName">The name of the table to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response DeleteTable(string tableName, CancellationToken cancellationToken = default)
@@ -784,7 +784,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Deletes a table on the service.
         /// </summary>
-        /// <param name="tableName">The name of the table to create.</param>
+        /// <param name="tableName">The name of the table to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default)

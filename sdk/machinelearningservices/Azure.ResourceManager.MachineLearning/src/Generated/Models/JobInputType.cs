@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to determine the Job Input Type.
-    /// Serialized Name: JobInputType
-    /// </summary>
+    /// <summary> Enum to determine the Job Input Type. </summary>
     internal readonly partial struct JobInputType : IEquatable<JobInputType>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string MlflowModelValue = "mlflow_model";
         private const string TritonModelValue = "triton_model";
 
-        /// <summary>
-        /// literal
-        /// Serialized Name: JobInputType.literal
-        /// </summary>
+        /// <summary> literal. </summary>
         public static JobInputType Literal { get; } = new JobInputType(LiteralValue);
-        /// <summary>
-        /// uri_file
-        /// Serialized Name: JobInputType.uri_file
-        /// </summary>
+        /// <summary> uri_file. </summary>
         public static JobInputType UriFile { get; } = new JobInputType(UriFileValue);
-        /// <summary>
-        /// uri_folder
-        /// Serialized Name: JobInputType.uri_folder
-        /// </summary>
+        /// <summary> uri_folder. </summary>
         public static JobInputType UriFolder { get; } = new JobInputType(UriFolderValue);
-        /// <summary>
-        /// mltable
-        /// Serialized Name: JobInputType.mltable
-        /// </summary>
+        /// <summary> mltable. </summary>
         public static JobInputType Mltable { get; } = new JobInputType(MltableValue);
-        /// <summary>
-        /// custom_model
-        /// Serialized Name: JobInputType.custom_model
-        /// </summary>
+        /// <summary> custom_model. </summary>
         public static JobInputType CustomModel { get; } = new JobInputType(CustomModelValue);
-        /// <summary>
-        /// mlflow_model
-        /// Serialized Name: JobInputType.mlflow_model
-        /// </summary>
+        /// <summary> mlflow_model. </summary>
         public static JobInputType MlflowModel { get; } = new JobInputType(MlflowModelValue);
-        /// <summary>
-        /// triton_model
-        /// Serialized Name: JobInputType.triton_model
-        /// </summary>
+        /// <summary> triton_model. </summary>
         public static JobInputType TritonModel { get; } = new JobInputType(TritonModelValue);
         /// <summary> Determines if two <see cref="JobInputType"/> values are the same. </summary>
         public static bool operator ==(JobInputType left, JobInputType right) => left.Equals(right);

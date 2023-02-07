@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets a resource by ID.
-        /// Request Path: /{resourceId}
-        /// Operation Id: Resources_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +111,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets a resource by ID.
-        /// Request Path: /{resourceId}
-        /// Operation Id: Resources_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -124,8 +140,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves the built-in policy definition with the given name.
-        /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// Operation Id: PolicyDefinitions_GetBuiltIn
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,8 +163,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves the built-in policy definition with the given name.
-        /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// Operation Id: PolicyDefinitions_GetBuiltIn
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,8 +193,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves the built-in policy set definition with the given name.
-        /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
-        /// Operation Id: PolicySetDefinitions_GetBuiltIn
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,8 +216,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves the built-in policy set definition with the given name.
-        /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
-        /// Operation Id: PolicySetDefinitions_GetBuiltIn
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,8 +246,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves the data policy manifest with the given policy mode.
-        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -213,8 +269,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves the data policy manifest with the given policy mode.
-        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -235,8 +299,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets details about a specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,8 +322,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets details about a specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -265,8 +345,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets all resource providers for the tenant.
-        /// Request Path: /providers
-        /// Operation Id: Providers_ListAtTenantScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_ListAtTenantScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -281,8 +369,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets all resource providers for the tenant.
-        /// Request Path: /providers
-        /// Operation Id: Providers_ListAtTenantScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_ListAtTenantScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -297,8 +393,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the specified resource provider at the tenant level.
-        /// Request Path: /providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_GetAtTenantScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_GetAtTenantScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -325,8 +429,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the specified resource provider at the tenant level.
-        /// Request Path: /providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_GetAtTenantScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_GetAtTenantScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>

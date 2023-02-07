@@ -24,12 +24,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointType"> Type of the backup copy. </param>
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
-        internal GenericRecoveryPoint(string objectType, string friendlyName, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo) : base(objectType)
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        internal GenericRecoveryPoint(string objectType, string friendlyName, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
         {
             FriendlyName = friendlyName;
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointAdditionalInfo = recoveryPointAdditionalInfo;
+            RecoveryPointProperties = recoveryPointProperties;
             ObjectType = objectType ?? "GenericRecoveryPoint";
         }
 
@@ -41,5 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? RecoveryPointOn { get; set; }
         /// <summary> Additional information associated with this backup copy. </summary>
         public string RecoveryPointAdditionalInfo { get; set; }
+        /// <summary> Properties of Recovery Point. </summary>
+        public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

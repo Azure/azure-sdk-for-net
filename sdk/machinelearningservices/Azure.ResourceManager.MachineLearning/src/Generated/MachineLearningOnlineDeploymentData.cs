@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: OnlineDeploymentTrackedResource.properties
         /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
         /// </param>
@@ -39,24 +38,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// Managed service identity (system assigned and/or user assigned identities)
-        /// Serialized Name: OnlineDeploymentTrackedResource.identity
-        /// </param>
-        /// <param name="kind">
-        /// Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type.
-        /// Serialized Name: OnlineDeploymentTrackedResource.kind
-        /// </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: OnlineDeploymentTrackedResource.properties
         /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
         /// </param>
-        /// <param name="sku">
-        /// Sku details required for ARM contract for Autoscaling.
-        /// Serialized Name: OnlineDeploymentTrackedResource.sku
-        /// </param>
+        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         internal MachineLearningOnlineDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningOnlineDeploymentProperties properties, MachineLearningSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -65,27 +54,17 @@ namespace Azure.ResourceManager.MachineLearning
             Sku = sku;
         }
 
-        /// <summary>
-        /// Managed service identity (system assigned and/or user assigned identities)
-        /// Serialized Name: OnlineDeploymentTrackedResource.identity
-        /// </summary>
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type.
-        /// Serialized Name: OnlineDeploymentTrackedResource.kind
-        /// </summary>
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
         public string Kind { get; set; }
         /// <summary>
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: OnlineDeploymentTrackedResource.properties
         /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
         /// </summary>
         public MachineLearningOnlineDeploymentProperties Properties { get; set; }
-        /// <summary>
-        /// Sku details required for ARM contract for Autoscaling.
-        /// Serialized Name: OnlineDeploymentTrackedResource.sku
-        /// </summary>
+        /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         public MachineLearningSku Sku { get; set; }
     }
 }

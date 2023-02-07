@@ -51,8 +51,16 @@ namespace Azure.ResourceManager.ManagementPartner
 
         /// <summary>
         /// List all the operations.
-        /// Request Path: /providers/Microsoft.ManagementPartner/operations
-        /// Operation Id: Operation_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ManagementPartner/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
@@ -65,8 +73,16 @@ namespace Azure.ResourceManager.ManagementPartner
 
         /// <summary>
         /// List all the operations.
-        /// Request Path: /providers/Microsoft.ManagementPartner/operations
-        /// Operation Id: Operation_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ManagementPartner/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>

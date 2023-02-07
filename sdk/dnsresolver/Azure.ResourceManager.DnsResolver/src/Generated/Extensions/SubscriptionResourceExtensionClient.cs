@@ -47,8 +47,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Lists DNS resolvers in all resource groups of a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
-        /// Operation Id: DnsResolvers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolvers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -62,8 +70,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Lists DNS resolvers in all resource groups of a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
-        /// Operation Id: DnsResolvers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolvers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -77,8 +93,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Lists DNS forwarding rulesets in all resource groups of a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
-        /// Operation Id: DnsForwardingRulesets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -92,8 +116,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Lists DNS forwarding rulesets in all resource groups of a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
-        /// Operation Id: DnsForwardingRulesets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

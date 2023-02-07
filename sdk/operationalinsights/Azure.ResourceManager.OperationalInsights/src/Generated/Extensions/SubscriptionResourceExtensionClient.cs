@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets a list of all Log Analytics QueryPacks within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/queryPacks
-        /// Operation Id: QueryPacks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryPacks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LogAnalyticsQueryPackResource" /> that may take multiple service requests to iterate over. </returns>
@@ -69,8 +77,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets a list of all Log Analytics QueryPacks within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/queryPacks
-        /// Operation Id: QueryPacks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryPacks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource" /> that may take multiple service requests to iterate over. </returns>
@@ -83,8 +99,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets the Log Analytics clusters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -97,8 +121,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets the Log Analytics clusters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -111,8 +143,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets the workspaces in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/workspaces
-        /// Operation Id: Workspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -124,8 +164,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets the workspaces in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/workspaces
-        /// Operation Id: Workspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -137,8 +185,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets recently deleted workspaces in a subscription, available for recovery.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/deletedWorkspaces
-        /// Operation Id: DeletedWorkspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWorkspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -150,8 +206,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets recently deleted workspaces in a subscription, available for recovery.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/deletedWorkspaces
-        /// Operation Id: DeletedWorkspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWorkspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>

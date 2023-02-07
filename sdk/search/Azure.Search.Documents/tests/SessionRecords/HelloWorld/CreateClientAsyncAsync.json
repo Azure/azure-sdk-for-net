@@ -6,33 +6,33 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-042258db100ca8d775658a3f0cf3b9b0-662308da3f941800-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "309127ef7aaea6c82d88099b51f915d6",
+        "traceparent": "00-e33be2e1d0fc39439515439b88161c2d-3b8aa1529eafa54e-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "50fdb417b8f5607a0bc8eeb571e266b9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "309127ef-7aae-a6c8-2d88-099b51f915d6",
-        "Content-Length": "586",
+        "client-request-id": "50fdb417-b8f5-607a-0bc8-eeb571e266b9",
+        "Content-Length": "591",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 21:00:46 GMT",
-        "elapsed-time": "15",
+        "Date": "Mon, 09 Jan 2023 18:03:26 GMT",
+        "elapsed-time": "3",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "309127ef-7aae-a6c8-2d88-099b51f915d6",
+        "request-id": "50fdb417-b8f5-607a-0bc8-eeb571e266b9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "309127ef-7aae-a6c8-2d88-099b51f915d6"
+        "x-ms-client-request-id": "50fdb417-b8f5-607a-0bc8-eeb571e266b9"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.ServiceStatistics",
         "counters": {
           "documentCount": {
-            "usage": 0,
+            "usage": 10,
             "quota": null
           },
           "indexesCount": {
@@ -48,7 +48,7 @@
             "quota": 50
           },
           "storageSize": {
-            "usage": 0,
+            "usage": 79406,
             "quota": 26843545600
           },
           "synonymMaps": {
@@ -70,8 +70,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "723367569",
-    "SearchIndexName": "ypjsfjyb",
+    "RandomSeed": "518265600",
+    "SearchIndexName": "dlnpqugf",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"

@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.Analysis
 
         /// <summary>
         /// Lists all the Analysis Services servers for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -58,8 +66,16 @@ namespace Azure.ResourceManager.Analysis
 
         /// <summary>
         /// Lists all the Analysis Services servers for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -71,8 +87,16 @@ namespace Azure.ResourceManager.Analysis
 
         /// <summary>
         /// Lists eligible SKUs for Analysis Services resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus
-        /// Operation Id: Servers_ListSkusForNew
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_ListSkusForNew</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
@@ -84,8 +108,16 @@ namespace Azure.ResourceManager.Analysis
 
         /// <summary>
         /// Lists eligible SKUs for Analysis Services resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus
-        /// Operation Id: Servers_ListSkusForNew
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_ListSkusForNew</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
@@ -97,8 +129,16 @@ namespace Azure.ResourceManager.Analysis
 
         /// <summary>
         /// Check the name availability in the target location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability
-        /// Operation Id: Servers_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
@@ -121,8 +161,16 @@ namespace Azure.ResourceManager.Analysis
 
         /// <summary>
         /// Check the name availability in the target location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability
-        /// Operation Id: Servers_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>

@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for datastore credentials.
-    /// Serialized Name: DatastoreCredentials
     /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDatastoreCredentials. </summary>
-        /// <param name="credentialsType">
-        /// [Required] Credential type used to authentication with storage.
-        /// Serialized Name: DatastoreCredentials.credentialsType
-        /// </param>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         internal MachineLearningDatastoreCredentials(CredentialsType credentialsType)
         {
             CredentialsType = credentialsType;
         }
 
-        /// <summary>
-        /// [Required] Credential type used to authentication with storage.
-        /// Serialized Name: DatastoreCredentials.credentialsType
-        /// </summary>
+        /// <summary> [Required] Credential type used to authentication with storage. </summary>
         internal CredentialsType CredentialsType { get; set; }
     }
 }

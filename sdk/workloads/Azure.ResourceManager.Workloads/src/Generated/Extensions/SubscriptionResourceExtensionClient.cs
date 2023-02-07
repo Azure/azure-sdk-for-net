@@ -61,8 +61,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Lists PHP workload resources for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/phpWorkloads
-        /// Operation Id: PhpWorkloads_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/phpWorkloads</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PhpWorkloads_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
@@ -75,8 +83,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Lists PHP workload resources for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/phpWorkloads
-        /// Operation Id: PhpWorkloads_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/phpWorkloads</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PhpWorkloads_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
@@ -89,8 +105,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Get SAP sizing recommendations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SAPSizingRecommendations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSizingRecommendations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
@@ -113,8 +137,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Get SAP sizing recommendations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SAPSizingRecommendations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSizingRecommendations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
@@ -137,8 +169,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Get SAP supported SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SAPSupportedSku
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSupportedSku</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
@@ -161,8 +201,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Get SAP supported SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SAPSupportedSku
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSupportedSku</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
@@ -185,8 +233,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Get SAP Disk Configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SAPDiskConfigurations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPDiskConfigurations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
@@ -209,8 +265,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Get SAP Disk Configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SAPDiskConfigurations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPDiskConfigurations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
@@ -233,8 +297,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Get SAP Availability Zone Details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SAPAvailabilityZoneDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPAvailabilityZoneDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
@@ -257,8 +329,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Get SAP Availability Zone Details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SAPAvailabilityZoneDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPAvailabilityZoneDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
@@ -281,8 +361,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Gets all Virtual Instances for SAP in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances
-        /// Operation Id: SAPVirtualInstances_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -295,8 +383,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Gets all Virtual Instances for SAP in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances
-        /// Operation Id: SAPVirtualInstances_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -309,8 +405,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors
-        /// Operation Id: monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -323,8 +427,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors
-        /// Operation Id: monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -337,8 +449,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Lists all the available SKUs under this PR
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SkuDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -351,8 +471,16 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary>
         /// Lists all the available SKUs under this PR
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SkuDefinition" /> that may take multiple service requests to iterate over. </returns>

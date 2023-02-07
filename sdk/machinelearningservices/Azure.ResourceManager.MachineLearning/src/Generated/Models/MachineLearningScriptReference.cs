@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Script reference
-    /// Serialized Name: ScriptReference
-    /// </summary>
+    /// <summary> Script reference. </summary>
     public partial class MachineLearningScriptReference
     {
         /// <summary> Initializes a new instance of MachineLearningScriptReference. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningScriptReference. </summary>
-        /// <param name="scriptSource">
-        /// The storage source of the script: workspace.
-        /// Serialized Name: ScriptReference.scriptSource
-        /// </param>
-        /// <param name="scriptData">
-        /// The location of scripts in the mounted volume.
-        /// Serialized Name: ScriptReference.scriptData
-        /// </param>
-        /// <param name="scriptArguments">
-        /// Optional command line arguments passed to the script to run.
-        /// Serialized Name: ScriptReference.scriptArguments
-        /// </param>
-        /// <param name="timeout">
-        /// Optional time period passed to timeout command.
-        /// Serialized Name: ScriptReference.timeout
-        /// </param>
+        /// <param name="scriptSource"> The storage source of the script: workspace. </param>
+        /// <param name="scriptData"> The location of scripts in the mounted volume. </param>
+        /// <param name="scriptArguments"> Optional command line arguments passed to the script to run. </param>
+        /// <param name="timeout"> Optional time period passed to timeout command. </param>
         internal MachineLearningScriptReference(string scriptSource, string scriptData, string scriptArguments, string timeout)
         {
             ScriptSource = scriptSource;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Timeout = timeout;
         }
 
-        /// <summary>
-        /// The storage source of the script: workspace.
-        /// Serialized Name: ScriptReference.scriptSource
-        /// </summary>
+        /// <summary> The storage source of the script: workspace. </summary>
         public string ScriptSource { get; set; }
-        /// <summary>
-        /// The location of scripts in the mounted volume.
-        /// Serialized Name: ScriptReference.scriptData
-        /// </summary>
+        /// <summary> The location of scripts in the mounted volume. </summary>
         public string ScriptData { get; set; }
-        /// <summary>
-        /// Optional command line arguments passed to the script to run.
-        /// Serialized Name: ScriptReference.scriptArguments
-        /// </summary>
+        /// <summary> Optional command line arguments passed to the script to run. </summary>
         public string ScriptArguments { get; set; }
-        /// <summary>
-        /// Optional time period passed to timeout command.
-        /// Serialized Name: ScriptReference.timeout
-        /// </summary>
+        /// <summary> Optional time period passed to timeout command. </summary>
         public string Timeout { get; set; }
     }
 }

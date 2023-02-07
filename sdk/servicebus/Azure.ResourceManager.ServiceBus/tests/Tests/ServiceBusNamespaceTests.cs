@@ -79,6 +79,34 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateNamespaceWithPremiumPartitionCount()
+        {
+            IgnoreTestInLiveMode();
+            //create namespace and wait for completion
+            string namespaceName = await CreateValidNamespaceName(namespacePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+            var parameters = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
+                {
+                    Tier = ServiceBusSkuTier.Premium,
+                    Capacity = 2
+                },
+                PremiumMessagingPartitions=2,
+                IsZoneRedundant = true,
+                Location = "North Europe"
+            };
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
+            VerifyNamespaceProperties(serviceBusNamespace, false);
+            Assert.AreEqual(parameters.Sku.Capacity,serviceBusNamespace.Data.Sku.Capacity);
+            Assert.IsTrue(serviceBusNamespace.Data.IsZoneRedundant);
+            Assert.AreEqual(serviceBusNamespace.Data.PremiumMessagingPartitions, 2);
+            await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task UpdateNamespace()
         {
             IgnoreTestInLiveMode();
@@ -537,7 +565,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Uri keyVaultUri;
             if (Mode == RecordedTestMode.Playback)
             {
-                keyVaultUri = new Uri("https://ps-testing-keyvault.vault.azure.net/");
+                keyVaultUri = new Uri("https://KeyVault-rg01.vault.azure.net/");
                 firstIdentityId = new ResourceIdentifier($"/subscriptions/{_resourceGroup.Id.SubscriptionId}/resourcegroups/{_resourceGroup.Id.Name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName_1}");
                 secondIdentityId = new ResourceIdentifier($"/subscriptions/{_resourceGroup.Id.SubscriptionId}/resourcegroups/{_resourceGroup.Id.Name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName_2}");
             }

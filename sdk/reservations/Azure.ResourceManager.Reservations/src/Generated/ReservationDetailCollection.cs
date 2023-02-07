@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get specific `Reservation` details.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
@@ -80,8 +88,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get specific `Reservation` details.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
@@ -106,8 +122,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// List `Reservation`s within a single `ReservationOrder`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations
-        /// Operation Id: Reservation_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
@@ -120,8 +144,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// List `Reservation`s within a single `ReservationOrder`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations
-        /// Operation Id: Reservation_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
@@ -134,8 +166,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// List of all the revisions for the `Reservation`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions
-        /// Operation Id: Reservation_ListRevisions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_ListRevisions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +189,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// List of all the revisions for the `Reservation`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions
-        /// Operation Id: Reservation_ListRevisions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_ListRevisions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,8 +212,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
@@ -188,8 +244,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
-        /// Operation Id: Reservation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>

@@ -57,8 +57,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Retrieve all SQL migration services in the subscriptions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices
-        /// Operation Id: SqlMigrationServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlMigrationServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -71,8 +79,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Retrieve all SQL migration services in the subscriptions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices
-        /// Operation Id: SqlMigrationServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlMigrationServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -85,8 +101,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The skus action returns the list of SKUs that DMS supports.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus
-        /// Operation Id: ResourceSkus_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
@@ -99,8 +123,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The skus action returns the list of SKUs that DMS supports.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus
-        /// Operation Id: ResourceSkus_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
@@ -113,8 +145,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services
-        /// Operation Id: Services_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -127,8 +167,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services
-        /// Operation Id: Services_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -141,8 +189,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// This method checks whether a proposed top-level resource name is valid and available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
@@ -165,8 +221,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// This method checks whether a proposed top-level resource name is valid and available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
@@ -189,8 +253,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// This method returns region-specific quotas and resource usage information for the Database Migration Service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -204,8 +276,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// This method returns region-specific quotas and resource usage information for the Database Migration Service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

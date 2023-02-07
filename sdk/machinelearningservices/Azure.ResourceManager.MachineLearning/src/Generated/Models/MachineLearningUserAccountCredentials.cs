@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Settings for user account that gets created on each on the nodes of a compute.
-    /// Serialized Name: UserAccountCredentials
-    /// </summary>
+    /// <summary> Settings for user account that gets created on each on the nodes of a compute. </summary>
     public partial class MachineLearningUserAccountCredentials
     {
         /// <summary> Initializes a new instance of MachineLearningUserAccountCredentials. </summary>
-        /// <param name="adminUserName">
-        /// Name of the administrator user account which can be used to SSH to nodes.
-        /// Serialized Name: UserAccountCredentials.adminUserName
-        /// </param>
+        /// <param name="adminUserName"> Name of the administrator user account which can be used to SSH to nodes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminUserName"/> is null. </exception>
         public MachineLearningUserAccountCredentials(string adminUserName)
         {
@@ -30,18 +24,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningUserAccountCredentials. </summary>
-        /// <param name="adminUserName">
-        /// Name of the administrator user account which can be used to SSH to nodes.
-        /// Serialized Name: UserAccountCredentials.adminUserName
-        /// </param>
-        /// <param name="adminUserSshPublicKey">
-        /// SSH public key of the administrator user account.
-        /// Serialized Name: UserAccountCredentials.adminUserSshPublicKey
-        /// </param>
-        /// <param name="adminUserPassword">
-        /// Password of the administrator user account.
-        /// Serialized Name: UserAccountCredentials.adminUserPassword
-        /// </param>
+        /// <param name="adminUserName"> Name of the administrator user account which can be used to SSH to nodes. </param>
+        /// <param name="adminUserSshPublicKey"> SSH public key of the administrator user account. </param>
+        /// <param name="adminUserPassword"> Password of the administrator user account. </param>
         internal MachineLearningUserAccountCredentials(string adminUserName, string adminUserSshPublicKey, string adminUserPassword)
         {
             AdminUserName = adminUserName;
@@ -49,20 +34,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AdminUserPassword = adminUserPassword;
         }
 
-        /// <summary>
-        /// Name of the administrator user account which can be used to SSH to nodes.
-        /// Serialized Name: UserAccountCredentials.adminUserName
-        /// </summary>
+        /// <summary> Name of the administrator user account which can be used to SSH to nodes. </summary>
         public string AdminUserName { get; set; }
-        /// <summary>
-        /// SSH public key of the administrator user account.
-        /// Serialized Name: UserAccountCredentials.adminUserSshPublicKey
-        /// </summary>
+        /// <summary> SSH public key of the administrator user account. </summary>
         public string AdminUserSshPublicKey { get; set; }
-        /// <summary>
-        /// Password of the administrator user account.
-        /// Serialized Name: UserAccountCredentials.adminUserPassword
-        /// </summary>
+        /// <summary> Password of the administrator user account. </summary>
         public string AdminUserPassword { get; set; }
     }
 }

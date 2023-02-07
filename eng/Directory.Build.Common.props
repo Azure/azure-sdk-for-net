@@ -27,7 +27,7 @@
 
   <!-- Setup default project properties -->
   <PropertyGroup>
-    <LangVersion>9</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <!--
       Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
@@ -111,19 +111,20 @@
   </PropertyGroup>
 
   <!-- TargetFramework default properties -->
+  <!-- Update pipelines/templates/steps/install-dotnet.yml as needed, without re-installing SDKs already found on all supported agents -->
   <PropertyGroup>
     <!-- Client libraries are moving forward to NS 2.0 and Net 4.6.1 as the min supported versions -->
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
 
-    <RequiredTargetFrameworks>net7.0;net452;netstandard1.4;net461;netstandard2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">net7.0;netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net452;netstandard1.4;net461;netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
     <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
-    <RequiredTargetFrameworks>net7.0;net6.0;netcoreapp3.1</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
     <!-- Also test net461 on Windows. -->
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net461</RequiredTargetFrameworks>
   </PropertyGroup>

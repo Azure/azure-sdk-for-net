@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
-        /// Request Path: /{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges
-        /// Operation Id: ResourceChanges_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -62,8 +70,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
-        /// Request Path: /{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges
-        /// Operation Id: ResourceChanges_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>

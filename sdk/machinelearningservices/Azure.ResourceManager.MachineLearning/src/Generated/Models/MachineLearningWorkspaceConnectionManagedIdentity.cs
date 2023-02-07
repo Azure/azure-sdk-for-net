@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningWorkspaceConnectionManagedIdentity.
-    /// Serialized Name: WorkspaceConnectionManagedIdentity
-    /// </summary>
+    /// <summary> The MachineLearningWorkspaceConnectionManagedIdentity. </summary>
     public partial class MachineLearningWorkspaceConnectionManagedIdentity
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
@@ -21,17 +18,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
-        /// <param name="resourceId"> Serialized Name: WorkspaceConnectionManagedIdentity.resourceId. </param>
-        /// <param name="clientId"> Serialized Name: WorkspaceConnectionManagedIdentity.clientId. </param>
+        /// <param name="resourceId"></param>
+        /// <param name="clientId"></param>
         internal MachineLearningWorkspaceConnectionManagedIdentity(ResourceIdentifier resourceId, string clientId)
         {
             ResourceId = resourceId;
             ClientId = clientId;
         }
 
-        /// <summary> Serialized Name: WorkspaceConnectionManagedIdentity.resourceId. </summary>
+        /// <summary> Gets or sets the resource id. </summary>
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> Serialized Name: WorkspaceConnectionManagedIdentity.clientId. </summary>
+        /// <summary> Gets or sets the client id. </summary>
         public string ClientId { get; set; }
     }
 }

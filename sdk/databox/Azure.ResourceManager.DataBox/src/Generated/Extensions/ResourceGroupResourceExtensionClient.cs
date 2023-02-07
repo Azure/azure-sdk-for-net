@@ -52,8 +52,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method provides the list of available skus for the given subscription, resource group and location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus
-        /// Operation Id: Service_ListAvailableSkusByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ListAvailableSkusByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
@@ -68,8 +76,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method provides the list of available skus for the given subscription, resource group and location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus
-        /// Operation Id: Service_ListAvailableSkusByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ListAvailableSkusByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
@@ -84,8 +100,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputsByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputsByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
@@ -108,8 +132,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputsByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputsByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
@@ -132,8 +164,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Resource group level.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfigurationByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
@@ -156,8 +196,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Resource group level.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfigurationByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>

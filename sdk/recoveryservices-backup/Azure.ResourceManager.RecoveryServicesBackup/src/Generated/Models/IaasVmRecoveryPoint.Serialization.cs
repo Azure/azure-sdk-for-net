@@ -108,6 +108,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(RecoveryPointProperties))
+            {
+                writer.WritePropertyName("recoveryPointProperties");
+                writer.WriteObjectValue(RecoveryPointProperties);
+            }
             writer.WritePropertyName("objectType");
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryPointDiskConfiguration> recoveryPointDiskConfiguration = default;
             Optional<IList<string>> zones = default;
             Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
+            Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -273,13 +279,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointMoveReadinessInfo = dictionary;
                     continue;
                 }
+                if (property.NameEquals("recoveryPointProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("objectType"))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new IaasVmRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, sourceVmStorageType.Value, Optional.ToNullable(isSourceVmEncrypted), keyAndSecret.Value, Optional.ToNullable(isInstantIlrSessionActive), Optional.ToList(recoveryPointTierDetails), Optional.ToNullable(isManagedVirtualMachine), virtualMachineSize.Value, Optional.ToNullable(originalStorageAccountOption), osType.Value, recoveryPointDiskConfiguration.Value, Optional.ToList(zones), Optional.ToDictionary(recoveryPointMoveReadinessInfo));
+            return new IaasVmRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, sourceVmStorageType.Value, Optional.ToNullable(isSourceVmEncrypted), keyAndSecret.Value, Optional.ToNullable(isInstantIlrSessionActive), Optional.ToList(recoveryPointTierDetails), Optional.ToNullable(isManagedVirtualMachine), virtualMachineSize.Value, Optional.ToNullable(originalStorageAccountOption), osType.Value, recoveryPointDiskConfiguration.Value, Optional.ToList(zones), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value);
         }
     }
 }

@@ -7,6 +7,8 @@ Project("{15CC84B5-4F56-49E3-8B30-BD27EB697CC0}") = "Azure.ResourceManager.Custo
 EndProject
 Project("{15CC84B5-4F56-49E3-8B30-BD27EB697CC0}") = "Azure.ResourceManager.CustomerInsights.Tests", "tests\Azure.ResourceManager.CustomerInsights.Tests.csproj", "{C964C04C-8722-49C1-8306-80F1F4D6435D}"
 EndProject
+Project("{15CC84B5-4F56-49E3-8B30-BD27EB697CC0}") = "Azure.ResourceManager.CustomerInsights.Samples", "samples\Azure.ResourceManager.CustomerInsights.Samples.csproj", "{60C20286-714E-47A1-94FE-40634AEA47C6}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

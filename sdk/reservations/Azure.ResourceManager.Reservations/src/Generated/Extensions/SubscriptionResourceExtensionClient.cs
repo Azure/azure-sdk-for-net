@@ -63,8 +63,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
-        /// Operation Id: GetCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
         /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
@@ -81,8 +89,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
-        /// Operation Id: GetCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
         /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
@@ -99,8 +115,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations
-        /// Operation Id: GetAppliedReservationList
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetAppliedReservationList</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(CancellationToken cancellationToken = default)
@@ -121,8 +145,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations
-        /// Operation Id: GetAppliedReservationList
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetAppliedReservationList</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppliedReservationData> GetAppliedReservations(CancellationToken cancellationToken = default)

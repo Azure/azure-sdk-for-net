@@ -65,8 +65,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists all devcenters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters
-        /// Operation Id: DevCenters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevCenters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,8 +88,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists all devcenters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters
-        /// Operation Id: DevCenters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DevCenters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,8 +111,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists all projects in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects
-        /// Operation Id: Projects_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,8 +134,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists all projects in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects
-        /// Operation Id: Projects_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -125,8 +157,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets the current status of an async operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/operationStatuses/{operationId}
-        /// Operation Id: OperationStatuses_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
@@ -149,8 +189,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets the current status of an async operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/operationStatuses/{operationId}
-        /// Operation Id: OperationStatuses_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
@@ -173,8 +221,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists the current usages and limits in this location for the provided subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/usages
-        /// Operation Id: Usages_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -188,8 +244,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists the current usages and limits in this location for the provided subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/usages
-        /// Operation Id: Usages_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -203,8 +267,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists the Microsoft.DevCenter SKUs available in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus
-        /// Operation Id: Skus_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,8 +290,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists the Microsoft.DevCenter SKUs available in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus
-        /// Operation Id: Skus_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -233,8 +313,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists network connections in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections
-        /// Operation Id: NetworkConnections_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -248,8 +336,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists network connections in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections
-        /// Operation Id: NetworkConnections_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

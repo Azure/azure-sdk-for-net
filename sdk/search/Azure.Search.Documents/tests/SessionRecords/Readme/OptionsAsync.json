@@ -1,63 +1,60 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-eckudmjl.search.windows.net/indexes(\u0027vtuoookl\u0027)/docs/search.post.search?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027emapbvjq\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "109",
+        "Content-Length": "74",
         "Content-Type": "application/json",
-        "traceparent": "00-4f1b8e71578ce5478ef88ac667e8dc91-26eeaa68c5e22247-00",
-        "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200312.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "5776487b29885d926a82993051f756d4",
+        "traceparent": "00-2e4eddcfbcd9f86d8a59be10915435e1-64ad175e300fa068-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "35a980b7c6a4e29c868cb638ed40325e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "facets": [],
-        "filter": "rating ge 4",
-        "orderby": "rating desc",
-        "scoringParameters": [],
+        "filter": "Rating ge 4",
+        "orderby": "Rating desc",
         "search": "luxury",
         "top": 5
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1079",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 12 Mar 2020 14:32:41 GMT",
-        "elapsed-time": "9",
+        "client-request-id": "35a980b7-c6a4-e29c-868c-b638ed40325e",
+        "Content-Length": "1102",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Sat, 07 Jan 2023 21:10:55 GMT",
+        "elapsed-time": "79",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "5776487b-2988-5d92-6a82-993051f756d4",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "request-id": "35a980b7-c6a4-e29c-868c-b638ed40325e",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "35a980b7-c6a4-e29c-868c-b638ed40325e"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-eckudmjl.search.windows.net/indexes(\u0027vtuoookl\u0027)/$metadata#docs(*)",
         "value": [
           {
-            "@search.score": 0.7486069,
-            "hotelId": "1",
-            "hotelName": "Fancy Stay",
-            "description": "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.",
-            "descriptionFr": "Meilleur h\u00F4tel en ville si vous aimez les h\u00F4tels de luxe. Ils ont une magnifique piscine \u00E0 d\u00E9bordement, un spa et un concierge tr\u00E8s utile. L\u0027emplacement est parfait \u2013 en plein centre, \u00E0 proximit\u00E9 de toutes les attractions touristiques. Nous recommandons fortement cet h\u00F4tel.",
-            "category": "Luxury",
-            "tags": [
+            "@search.score": 1.355029,
+            "HotelId": "1",
+            "HotelName": "Fancy Stay",
+            "Description": "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.",
+            "DescriptionFr": "Meilleur h\u00F4tel en ville si vous aimez les h\u00F4tels de luxe. Ils ont une magnifique piscine \u00E0 d\u00E9bordement, un spa et un concierge tr\u00E8s utile. L\u0027emplacement est parfait \u2013 en plein centre, \u00E0 proximit\u00E9 de toutes les attractions touristiques. Nous recommandons fortement cet h\u00F4tel.",
+            "Category": "Luxury",
+            "Tags": [
               "pool",
               "view",
               "wifi",
               "concierge"
             ],
-            "parkingIncluded": false,
-            "smokingAllowed": false,
-            "lastRenovationDate": "2010-06-27T00:00:00Z",
-            "rating": 5,
-            "location": {
+            "ParkingIncluded": false,
+            "SmokingAllowed": false,
+            "LastRenovationDate": "2010-06-27T00:00:00Z",
+            "Rating": 5,
+            "Location": {
               "type": "Point",
               "coordinates": [
                 -122.131577,
@@ -70,16 +67,32 @@
                 }
               }
             },
-            "address": null,
-            "rooms": []
+            "GeoLocation": {
+              "type": "Point",
+              "coordinates": [
+                -122.131577,
+                47.678581
+              ],
+              "crs": {
+                "type": "name",
+                "properties": {
+                  "name": "EPSG:4326"
+                }
+              }
+            },
+            "Address": null,
+            "Rooms": []
           }
         ]
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "933102831",
-    "SearchIndexName": "vtuoookl",
-    "SearchServiceName": "azs-net-eckudmjl"
+    "RandomSeed": "596543259",
+    "SearchIndexName": "emapbvjq",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"
   }
 }

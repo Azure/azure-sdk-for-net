@@ -156,8 +156,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Gets a private endpoint connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,8 +179,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Gets a private endpoint connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,8 +209,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the python 2 package identified by package name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
-        /// Operation Id: Python2Package_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Python2Package_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="packageName"> The python package name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -208,8 +232,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the python 2 package identified by package name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
-        /// Operation Id: Python2Package_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Python2Package_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="packageName"> The python package name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,8 +262,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the module identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="moduleName"> The module name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -245,8 +285,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the module identified by module name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}
-        /// Operation Id: Module_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="moduleName"> The module name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,8 +315,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the dsc node identified by node id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}
-        /// Operation Id: DscNode_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="nodeId"> The node id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -282,8 +338,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the dsc node identified by node id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}
-        /// Operation Id: DscNode_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="nodeId"> The node id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -304,8 +368,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc node configurations by node configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodeConfigurations/{nodeConfigurationName}
-        /// Operation Id: DscNodeConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodeConfigurations/{nodeConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNodeConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -319,8 +391,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc node configurations by node configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodeConfigurations/{nodeConfigurationName}
-        /// Operation Id: DscNodeConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodeConfigurations/{nodeConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNodeConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -341,8 +421,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc configuration compilation job identified by job id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}
-        /// Operation Id: DscCompilationJob_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -356,8 +444,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc configuration compilation job identified by job id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}
-        /// Operation Id: DscCompilationJob_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -378,8 +474,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the source control identified by source control name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}
-        /// Operation Id: SourceControl_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControl_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -393,8 +497,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the source control identified by source control name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}
-        /// Operation Id: SourceControl_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControl_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -415,8 +527,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the certificate identified by certificate name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/certificates/{certificateName}
-        /// Operation Id: Certificate_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -430,8 +550,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the certificate identified by certificate name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/certificates/{certificateName}
-        /// Operation Id: Certificate_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificate_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -452,8 +580,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the connection identified by connection name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connections/{connectionName}
-        /// Operation Id: Connection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -467,8 +603,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the connection identified by connection name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connections/{connectionName}
-        /// Operation Id: Connection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -489,8 +633,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the connection type identified by connection type name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}
-        /// Operation Id: ConnectionType_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionType_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -504,8 +656,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the connection type identified by connection type name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}
-        /// Operation Id: ConnectionType_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionType_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -526,8 +686,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the credential identified by credential name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}
-        /// Operation Id: Credential_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Credential_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="credentialName"> The name of credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -541,8 +709,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the credential identified by credential name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}
-        /// Operation Id: Credential_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Credential_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="credentialName"> The name of credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -563,8 +739,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job schedule identified by job schedule name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobSchedules/{jobScheduleId}
-        /// Operation Id: JobSchedule_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobSchedules/{jobScheduleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobSchedule_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobScheduleId"> The job schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -576,8 +760,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job schedule identified by job schedule name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobSchedules/{jobScheduleId}
-        /// Operation Id: JobSchedule_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobSchedules/{jobScheduleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobSchedule_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobScheduleId"> The job schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -596,8 +788,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the schedule identified by schedule name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}
-        /// Operation Id: Schedule_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedule_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -611,8 +811,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the schedule identified by schedule name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}
-        /// Operation Id: Schedule_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedule_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -633,8 +841,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the variable identified by variable name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/variables/{variableName}
-        /// Operation Id: Variable_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/variables/{variableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Variable_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="variableName"> The name of variable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -648,8 +864,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the variable identified by variable name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/variables/{variableName}
-        /// Operation Id: Variable_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/variables/{variableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Variable_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="variableName"> The name of variable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -670,8 +894,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the watcher identified by watcher name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/watchers/{watcherName}
-        /// Operation Id: Watcher_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/watchers/{watcherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Watcher_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="watcherName"> The watcher name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -685,8 +917,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the watcher identified by watcher name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/watchers/{watcherName}
-        /// Operation Id: Watcher_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/watchers/{watcherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Watcher_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="watcherName"> The watcher name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -707,8 +947,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the configuration identified by configuration name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}
-        /// Operation Id: DscConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -722,8 +970,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the configuration identified by configuration name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}
-        /// Operation Id: DscConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -744,8 +1000,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -760,8 +1024,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job identified by job name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}
-        /// Operation Id: Job_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -783,8 +1055,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Get a single software update configuration by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}
-        /// Operation Id: SoftwareUpdateConfigurations_GetByName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -799,8 +1079,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Get a single software update configuration by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}
-        /// Operation Id: SoftwareUpdateConfigurations_GetByName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -822,8 +1110,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the runbook identified by runbook name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}
-        /// Operation Id: Runbook_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Runbook_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="runbookName"> The runbook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -837,8 +1133,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the runbook identified by runbook name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}
-        /// Operation Id: Runbook_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Runbook_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="runbookName"> The runbook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -859,8 +1163,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the webhook identified by webhook name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}
-        /// Operation Id: Webhook_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Webhook_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="webhookName"> The webhook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -874,8 +1186,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the webhook identified by webhook name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}
-        /// Operation Id: Webhook_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Webhook_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="webhookName"> The webhook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -896,8 +1216,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a hybrid runbook worker group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}
-        /// Operation Id: HybridRunbookWorkerGroup_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HybridRunbookWorkerGroup_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -911,8 +1239,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a hybrid runbook worker group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}
-        /// Operation Id: HybridRunbookWorkerGroup_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HybridRunbookWorkerGroup_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -926,8 +1262,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Get information about an Automation Account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AutomationAccountResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -950,8 +1294,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Get information about an Automation Account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AutomationAccountResource> Get(CancellationToken cancellationToken = default)
@@ -974,8 +1326,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Delete an automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1000,8 +1360,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Delete an automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1026,8 +1394,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Update an automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the update automation account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1052,8 +1428,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Update an automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the update automation account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1078,8 +1462,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Gets the private link resources that need to be created for Automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_Automation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Automation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutomationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1091,8 +1483,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Gets the private link resources that need to be created for Automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_Automation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Automation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutomationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1104,8 +1504,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the automation agent registration information.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation
-        /// Operation Id: AgentRegistrationInformation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AgentRegistrationInformation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AgentRegistration>> GetAgentRegistrationInformationAsync(CancellationToken cancellationToken = default)
@@ -1126,8 +1534,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the automation agent registration information.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation
-        /// Operation Id: AgentRegistrationInformation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AgentRegistrationInformation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AgentRegistration> GetAgentRegistrationInformation(CancellationToken cancellationToken = default)
@@ -1148,8 +1564,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Regenerate a primary or secondary agent registration key
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey
-        /// Operation Id: AgentRegistrationInformation_RegenerateKey
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AgentRegistrationInformation_RegenerateKey</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the agent registration key to be regenerated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1174,8 +1598,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Regenerate a primary or secondary agent registration key
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey
-        /// Operation Id: AgentRegistrationInformation_RegenerateKey
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AgentRegistrationInformation_RegenerateKey</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the agent registration key to be regenerated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1200,8 +1632,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job stream identified by job stream id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}
-        /// Operation Id: DscCompilationJob_GetStream
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJob_GetStream</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobId"> The job id. </param>
         /// <param name="jobStreamId"> The job stream id. </param>
@@ -1228,8 +1668,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the job stream identified by job stream id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}
-        /// Operation Id: DscCompilationJob_GetStream
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJob_GetStream</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobId"> The job id. </param>
         /// <param name="jobStreamId"> The job stream id. </param>
@@ -1256,8 +1704,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve all the job streams for the compilation Job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams
-        /// Operation Id: DscCompilationJobStream_ListByJob
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJobStream_ListByJob</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobId"> The job id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1270,8 +1726,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve all the job streams for the compilation Job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams
-        /// Operation Id: DscCompilationJobStream_ListByJob
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJobStream_ListByJob</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobId"> The job id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1284,8 +1748,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve counts for Dsc Nodes.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodecounts/{countType}
-        /// Operation Id: NodeCountInformation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodecounts/{countType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeCountInformation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="countType"> The type of counts to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1298,8 +1770,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve counts for Dsc Nodes.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodecounts/{countType}
-        /// Operation Id: NodeCountInformation_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodecounts/{countType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeCountInformation_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="countType"> The type of counts to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1312,8 +1792,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the statistics for the account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/statistics
-        /// Operation Id: Statistics_ListByAutomationAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/statistics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Statistics_ListByAutomationAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1326,8 +1814,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the statistics for the account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/statistics
-        /// Operation Id: Statistics_ListByAutomationAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/statistics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Statistics_ListByAutomationAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1340,8 +1836,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the usage for the account id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/usages
-        /// Operation Id: Usages_ListByAutomationAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByAutomationAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutomationUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -1353,8 +1857,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the usage for the account id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/usages
-        /// Operation Id: Usages_ListByAutomationAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByAutomationAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutomationUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -1366,8 +1878,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the automation keys for an account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys
-        /// Operation Id: Keys_ListByAutomationAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Keys_ListByAutomationAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutomationKey" /> that may take multiple service requests to iterate over. </returns>
@@ -1379,8 +1899,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the automation keys for an account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys
-        /// Operation Id: Keys_ListByAutomationAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Keys_ListByAutomationAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutomationKey" /> that may take multiple service requests to iterate over. </returns>
@@ -1392,8 +1920,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the linked workspace for the account id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/linkedWorkspace
-        /// Operation Id: LinkedWorkspace_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/linkedWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedWorkspace_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AutomationLinkedWorkspace>> GetLinkedWorkspaceAsync(CancellationToken cancellationToken = default)
@@ -1414,8 +1950,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the linked workspace for the account id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/linkedWorkspace
-        /// Operation Id: LinkedWorkspace_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/linkedWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedWorkspace_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AutomationLinkedWorkspace> GetLinkedWorkspace(CancellationToken cancellationToken = default)
@@ -1436,8 +1980,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a list of fields of a given type across all accessible modules.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields
-        /// Operation Id: ObjectDataTypes_ListFieldsByType
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ObjectDataTypes_ListFieldsByType</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1454,8 +2006,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a list of fields of a given type across all accessible modules.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields
-        /// Operation Id: ObjectDataTypes_ListFieldsByType
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ObjectDataTypes_ListFieldsByType</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1472,8 +2032,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Post operation to serialize or deserialize GraphRunbookContent
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/convertGraphRunbookContent
-        /// Operation Id: convertGraphRunbookContent
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/convertGraphRunbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>convertGraphRunbookContent</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input data describing the graphical runbook. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1498,8 +2066,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Post operation to serialize or deserialize GraphRunbookContent
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/convertGraphRunbookContent
-        /// Operation Id: convertGraphRunbookContent
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/convertGraphRunbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>convertGraphRunbookContent</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input data describing the graphical runbook. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1524,8 +2100,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Get a single software update configuration Run by Id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}
-        /// Operation Id: SoftwareUpdateConfigurationRuns_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurationRuns_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -1548,8 +2132,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Get a single software update configuration Run by Id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}
-        /// Operation Id: SoftwareUpdateConfigurationRuns_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurationRuns_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -1572,8 +2164,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Return list of software update configuration runs
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns
-        /// Operation Id: SoftwareUpdateConfigurationRuns_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurationRuns_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
@@ -1589,8 +2189,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Return list of software update configuration runs
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns
-        /// Operation Id: SoftwareUpdateConfigurationRuns_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurationRuns_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
@@ -1606,8 +2214,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Get a single software update configuration machine run by Id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}
-        /// Operation Id: SoftwareUpdateConfigurationMachineRuns_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurationMachineRuns_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationMachineRunId"> The Id of the software update configuration machine run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -1630,8 +2246,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Get a single software update configuration machine run by Id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}
-        /// Operation Id: SoftwareUpdateConfigurationMachineRuns_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurationMachineRuns_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationMachineRunId"> The Id of the software update configuration machine run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -1654,8 +2278,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Return list of software update configuration machine runs
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns
-        /// Operation Id: SoftwareUpdateConfigurationMachineRuns_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurationMachineRuns_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
@@ -1671,8 +2303,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Return list of software update configuration machine runs
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns
-        /// Operation Id: SoftwareUpdateConfigurationMachineRuns_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurationMachineRuns_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
@@ -1688,8 +2328,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Generates a Uri for use in creating a webhook.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri
-        /// Operation Id: Webhook_GenerateUri
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Webhook_GenerateUri</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<string>> GenerateUriWebhookAsync(CancellationToken cancellationToken = default)
@@ -1710,8 +2358,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Generates a Uri for use in creating a webhook.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri
-        /// Operation Id: Webhook_GenerateUri
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Webhook_GenerateUri</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<string> GenerateUriWebhook(CancellationToken cancellationToken = default)
@@ -1732,8 +2388,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1778,8 +2442,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1824,8 +2496,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1865,8 +2545,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1906,8 +2594,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1950,8 +2646,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}
-        /// Operation Id: AutomationAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

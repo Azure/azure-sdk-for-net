@@ -51,8 +51,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS provisioned cluster in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters
-        /// Operation Id: ProvisionedClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProvisionedClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -65,8 +73,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS provisioned cluster in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters
-        /// Operation Id: ProvisionedClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProvisionedClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -79,8 +95,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Lists the Hybrid AKS virtual networks by subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks
-        /// Operation Id: virtualNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -93,8 +117,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Lists the Hybrid AKS virtual networks by subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks
-        /// Operation Id: virtualNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -107,8 +139,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// List the Hybrid AKS storage object by subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces
-        /// Operation Id: storageSpaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>storageSpaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -121,8 +161,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// List the Hybrid AKS storage object by subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces
-        /// Operation Id: storageSpaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>storageSpaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>

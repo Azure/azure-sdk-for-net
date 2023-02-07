@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders
-        /// Operation Id: AttestationProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -57,8 +65,16 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders
-        /// Operation Id: AttestationProviders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -70,8 +86,16 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary>
         /// Get the default provider
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders
-        /// Operation Id: AttestationProviders_ListDefault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_ListDefault</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -83,8 +107,16 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary>
         /// Get the default provider
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders
-        /// Operation Id: AttestationProviders_ListDefault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/defaultProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_ListDefault</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -96,8 +128,16 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary>
         /// Get the default provider by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider
-        /// Operation Id: AttestationProviders_GetDefaultByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the default provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,8 +159,16 @@ namespace Azure.ResourceManager.Attestation
 
         /// <summary>
         /// Get the default provider by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider
-        /// Operation Id: AttestationProviders_GetDefaultByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the default provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists all the Dedicated capacities for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities
-        /// Operation Id: Capacities_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
@@ -62,8 +70,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists all the Dedicated capacities for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities
-        /// Operation Id: Capacities_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
@@ -75,8 +91,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists eligible SKUs for PowerBI Dedicated resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus
-        /// Operation Id: Capacities_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CapacitySku" /> that may take multiple service requests to iterate over. </returns>
@@ -88,8 +112,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists eligible SKUs for PowerBI Dedicated resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus
-        /// Operation Id: Capacities_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacitySku" /> that may take multiple service requests to iterate over. </returns>
@@ -101,8 +133,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Check the name availability in the target location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability
-        /// Operation Id: Capacities_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> The name of the capacity. </param>
@@ -125,8 +165,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Check the name availability in the target location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability
-        /// Operation Id: Capacities_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> The name of the capacity. </param>
@@ -149,8 +197,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists all the auto scale v-cores for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores
-        /// Operation Id: AutoScaleVCores_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
@@ -162,8 +218,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary>
         /// Lists all the auto scale v-cores for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores
-        /// Operation Id: AutoScaleVCores_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>

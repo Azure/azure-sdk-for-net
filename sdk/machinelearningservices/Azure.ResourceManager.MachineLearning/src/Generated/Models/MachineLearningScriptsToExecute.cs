@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Customized setup scripts
-    /// Serialized Name: ScriptsToExecute
-    /// </summary>
+    /// <summary> Customized setup scripts. </summary>
     public partial class MachineLearningScriptsToExecute
     {
         /// <summary> Initializes a new instance of MachineLearningScriptsToExecute. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningScriptsToExecute. </summary>
-        /// <param name="startupScript">
-        /// Script that&apos;s run every time the machine starts.
-        /// Serialized Name: ScriptsToExecute.startupScript
-        /// </param>
-        /// <param name="creationScript">
-        /// Script that&apos;s run only once during provision of the compute.
-        /// Serialized Name: ScriptsToExecute.creationScript
-        /// </param>
+        /// <param name="startupScript"> Script that&apos;s run every time the machine starts. </param>
+        /// <param name="creationScript"> Script that&apos;s run only once during provision of the compute. </param>
         internal MachineLearningScriptsToExecute(MachineLearningScriptReference startupScript, MachineLearningScriptReference creationScript)
         {
             StartupScript = startupScript;
             CreationScript = creationScript;
         }
 
-        /// <summary>
-        /// Script that&apos;s run every time the machine starts.
-        /// Serialized Name: ScriptsToExecute.startupScript
-        /// </summary>
+        /// <summary> Script that&apos;s run every time the machine starts. </summary>
         public MachineLearningScriptReference StartupScript { get; set; }
-        /// <summary>
-        /// Script that&apos;s run only once during provision of the compute.
-        /// Serialized Name: ScriptsToExecute.creationScript
-        /// </summary>
+        /// <summary> Script that&apos;s run only once during provision of the compute. </summary>
         public MachineLearningScriptReference CreationScript { get; set; }
     }
 }

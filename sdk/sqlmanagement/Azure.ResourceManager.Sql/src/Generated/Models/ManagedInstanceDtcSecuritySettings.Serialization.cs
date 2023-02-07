@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("transactionManagerCommunicationSettings");
                 writer.WriteObjectValue(TransactionManagerCommunicationSettings);
             }
-            if (Optional.IsDefined(XaTransactionsEnabled))
+            if (Optional.IsDefined(IsXATransactionsEnabled))
             {
                 writer.WritePropertyName("xaTransactionsEnabled");
-                writer.WriteBooleanValue(XaTransactionsEnabled.Value);
+                writer.WriteBooleanValue(IsXATransactionsEnabled.Value);
             }
             if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
             {

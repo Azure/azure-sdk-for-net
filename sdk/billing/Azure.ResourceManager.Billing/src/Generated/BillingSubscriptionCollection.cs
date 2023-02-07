@@ -60,8 +60,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,8 +97,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Lists the subscriptions for a billing account. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions
-        /// Operation Id: BillingSubscriptions_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -132,8 +156,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Lists the subscriptions for a billing account. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions
-        /// Operation Id: BillingSubscriptions_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -146,8 +178,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,8 +213,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}
-        /// Operation Id: BillingSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

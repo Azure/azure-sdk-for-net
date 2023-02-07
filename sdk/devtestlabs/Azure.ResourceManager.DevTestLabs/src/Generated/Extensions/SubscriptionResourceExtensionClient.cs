@@ -47,8 +47,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List labs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs
-        /// Operation Id: Labs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -65,8 +73,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List labs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs
-        /// Operation Id: Labs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -83,8 +99,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List schedules in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules
-        /// Operation Id: GlobalSchedules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalSchedules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -101,8 +125,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List schedules in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules
-        /// Operation Id: GlobalSchedules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalSchedules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>

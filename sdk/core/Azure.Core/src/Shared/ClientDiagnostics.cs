@@ -190,9 +190,8 @@ namespace Azure.Core.Pipeline
             foreach (HttpHeader responseHeader in response.Headers)
             {
                 string headerValue = sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
-#pragma warning disable CA1305
-                messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
-#pragma warning restore CA1305
+                string header = $"{responseHeader.Name}: {headerValue}";
+                messageBuilder.AppendLine(header);
             }
 
             return messageBuilder.ToString();

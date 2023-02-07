@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Name of the last operation.
-    /// Serialized Name: OperationName
-    /// </summary>
+    /// <summary> Name of the last operation. </summary>
     public readonly partial struct MachineLearningOperationName : IEquatable<MachineLearningOperationName>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ReimageValue = "Reimage";
         private const string DeleteValue = "Delete";
 
-        /// <summary>
-        /// Create
-        /// Serialized Name: OperationName.Create
-        /// </summary>
+        /// <summary> Create. </summary>
         public static MachineLearningOperationName Create { get; } = new MachineLearningOperationName(CreateValue);
-        /// <summary>
-        /// Start
-        /// Serialized Name: OperationName.Start
-        /// </summary>
+        /// <summary> Start. </summary>
         public static MachineLearningOperationName Start { get; } = new MachineLearningOperationName(StartValue);
-        /// <summary>
-        /// Stop
-        /// Serialized Name: OperationName.Stop
-        /// </summary>
+        /// <summary> Stop. </summary>
         public static MachineLearningOperationName Stop { get; } = new MachineLearningOperationName(StopValue);
-        /// <summary>
-        /// Restart
-        /// Serialized Name: OperationName.Restart
-        /// </summary>
+        /// <summary> Restart. </summary>
         public static MachineLearningOperationName Restart { get; } = new MachineLearningOperationName(RestartValue);
-        /// <summary>
-        /// Reimage
-        /// Serialized Name: OperationName.Reimage
-        /// </summary>
+        /// <summary> Reimage. </summary>
         public static MachineLearningOperationName Reimage { get; } = new MachineLearningOperationName(ReimageValue);
-        /// <summary>
-        /// Delete
-        /// Serialized Name: OperationName.Delete
-        /// </summary>
+        /// <summary> Delete. </summary>
         public static MachineLearningOperationName Delete { get; } = new MachineLearningOperationName(DeleteValue);
         /// <summary> Determines if two <see cref="MachineLearningOperationName"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOperationName left, MachineLearningOperationName right) => left.Equals(right);

@@ -59,8 +59,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: reports_ListByConfigurationProfileAssignments
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>reports_ListByConfigurationProfileAssignments</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
@@ -74,8 +82,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: reports_ListByConfigurationProfileAssignments
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>reports_ListByConfigurationProfileAssignments</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
@@ -89,8 +105,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: HCRPReports_ListByConfigurationProfileAssignments
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HCRPReports_ListByConfigurationProfileAssignments</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="machineName"> The name of the Arc machine. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
@@ -104,8 +128,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: HCRPReports_ListByConfigurationProfileAssignments
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HCRPReports_ListByConfigurationProfileAssignments</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="machineName"> The name of the Arc machine. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
@@ -119,8 +151,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: HCIReports_ListByConfigurationProfileAssignments
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HCIReports_ListByConfigurationProfileAssignments</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Arc machine. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
@@ -134,8 +174,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: HCIReports_ListByConfigurationProfileAssignments
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HCIReports_ListByConfigurationProfileAssignments</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Arc machine. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>

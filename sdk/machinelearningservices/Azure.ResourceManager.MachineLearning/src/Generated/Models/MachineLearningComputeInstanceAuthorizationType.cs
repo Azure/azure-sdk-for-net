@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The Compute Instance Authorization type. Available values are personal (default).
-    /// Serialized Name: ComputeInstanceAuthorizationType
-    /// </summary>
+    /// <summary> The Compute Instance Authorization type. Available values are personal (default). </summary>
     public readonly partial struct MachineLearningComputeInstanceAuthorizationType : IEquatable<MachineLearningComputeInstanceAuthorizationType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string PersonalValue = "personal";
 
-        /// <summary>
-        /// personal
-        /// Serialized Name: ComputeInstanceAuthorizationType.personal
-        /// </summary>
+        /// <summary> personal. </summary>
         public static MachineLearningComputeInstanceAuthorizationType Personal { get; } = new MachineLearningComputeInstanceAuthorizationType(PersonalValue);
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceAuthorizationType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputeInstanceAuthorizationType left, MachineLearningComputeInstanceAuthorizationType right) => left.Equals(right);
