@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 using AmqpLib = Microsoft.Azure.Amqp;
@@ -35,7 +36,10 @@ namespace Azure.Messaging.ServiceBus.Primitives
             var amqpMessage = AmqpLib.AmqpMessage.CreateInputMessage(bufferStream);
 
             var message = AmqpMessageConverter.Default.AmqpMessageToSBReceivedMessage(amqpMessage);
-            message.LockTokenGuid = AmqpMessageConverter.Default.ParseGuidBytes(lockTokenBytes);
+            if (GuidUtilities.TryParseGuidBytes(lockTokenBytes, out Guid lockToken))
+            {
+                message.LockTokenGuid = lockToken;
+            }
             return message;
         }
     }
