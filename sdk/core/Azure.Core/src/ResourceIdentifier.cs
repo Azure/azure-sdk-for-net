@@ -278,7 +278,7 @@ namespace Azure.Core
             return "Invalid resource id.";
         }
 
-        private static ReadOnlySpan<char> PopNextWord(ref ReadOnlySpan<char> remaining)
+        private static ReadOnlySpan<char> PopNextWord(scoped ref ReadOnlySpan<char> remaining)
         {
             int index = remaining.IndexOf(Separator);
             if (index < 0)
@@ -350,14 +350,13 @@ namespace Azure.Core
             StringBuilder builder = new StringBuilder(initial);
             if (!IsProviderResource)
             {
-                builder.Append($"/{ResourceType.GetLastType()}");
+                builder.Append('/').Append(ResourceType.GetLastType());
                 if (!string.IsNullOrWhiteSpace(Name))
-                    builder.Append($"/{Name}");
+                    builder.Append('/').Append(Name);
             }
             else
             {
-                builder.Append(ProviderStart)
-                    .Append($"{ResourceType}/{Name}");
+                builder.Append(ProviderStart).Append(ResourceType).Append('/').Append(Name);
             }
 
             return builder.ToString();

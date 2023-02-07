@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerInstance;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerInstance.Samples

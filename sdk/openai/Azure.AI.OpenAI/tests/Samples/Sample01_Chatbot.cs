@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.OpenAI.Models;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -18,13 +17,13 @@ namespace Azure.AI.OpenAI.Tests.Samples
             #region Snippet:GenerateChatbotResponse
             #region Snippet:CreateOpenAIClientTokenCredential
             string endpoint = "https://myaccount.openai.azure.com/";
-            OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+            OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             string prompt = "What is Azure OpenAI?";
             Console.Write($"Input: {prompt}");
 
-            Response<Completions> completionsResponse = client.GetCompletions(prompt);
+            Response<Completions> completionsResponse = client.GetCompletions("myDeploymentId", prompt);
             string completion = completionsResponse.Value.Choices[0].Text;
             Console.WriteLine($"Chatbot: {completion}");
             #endregion

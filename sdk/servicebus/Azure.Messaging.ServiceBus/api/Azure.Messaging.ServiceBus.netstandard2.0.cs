@@ -1007,6 +1007,14 @@ namespace Azure.Messaging.ServiceBus.Administration
         public override string ToString() { throw null; }
     }
 }
+namespace Azure.Messaging.ServiceBus.Primitives
+{
+    public static partial class ServiceBusAmqpExtensions
+    {
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage FromAmqpBytes(System.BinaryData messageBytes, System.BinaryData lockTokenBytes) { throw null; }
+        public static System.BinaryData ToAmqpBytes(this Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
+    }
+}
 namespace Microsoft.Extensions.Azure
 {
     public static partial class ServiceBusClientBuilderExtensions

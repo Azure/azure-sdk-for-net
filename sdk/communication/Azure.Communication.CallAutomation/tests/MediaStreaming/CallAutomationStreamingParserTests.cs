@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "\"audioData\": {"
                 + "\"data\": \"AQIDBAU=\","      // [1, 2, 3, 4, 5]
                 + "\"timestamp\": \"2022-08-23T11:48:05Z\","
-                + "\"participantRawId\": \"participantId\","
+                + "\"participantRawID\": \"participantId\","
                 + "\"silent\": false"
                 + "}"
                 + "}";
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             jsonData["audioData"] = new JObject();
             jsonData["audioData"]["data"] = "AQIDBAU=";
             jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
-            jsonData["audioData"]["participantRawId"] = "participantId";
+            jsonData["audioData"]["participantRawID"] = "participantId";
             jsonData["audioData"]["silent"] = false;
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
@@ -70,7 +70,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             jsonData["audioData"] = new JObject();
             jsonData["audioData"]["data"] = "AQIDBAU=";
             jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
-            jsonData["audioData"]["participantRawId"] = "participantId";
+            jsonData["audioData"]["participantRawID"] = "participantId";
             jsonData["audioData"]["silent"] = false;
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());

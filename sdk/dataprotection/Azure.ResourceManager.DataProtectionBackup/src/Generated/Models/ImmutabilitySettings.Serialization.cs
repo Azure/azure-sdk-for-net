@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ImmutabilitySettings DeserializeImmutabilitySettings(JsonElement element)
         {
-            Optional<ImmutabilityState> state = default;
+            Optional<BackupVaultImmutabilityState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new ImmutabilityState(property.Value.GetString());
+                    state = new BackupVaultImmutabilityState(property.Value.GetString());
                     continue;
                 }
             }
