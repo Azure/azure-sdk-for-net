@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
-using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
