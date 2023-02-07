@@ -29,44 +29,15 @@ namespace Azure.Data.SchemaRegistry.Tests
             switch (format)
             {
                 case Json:
-                    if (_serviceVersion == SchemaRegistryClientOptions.ServiceVersion.V2022_10)
-                    {
-                        endpoint = (group == 1) ? TestEnvironment.SchemaRegistryEndpointJson : TestEnvironment.SchemaRegistryEndpointJson2;
-                    }
-                    else
-                    {
-                        endpoint = (group == 1) ? TestEnvironment.SchemaRegistryEndpointJson2021 : TestEnvironment.SchemaRegistryEndpointJson2021_2;
-                    }
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson;
                     break;
-                case Avro:
-                    if (_serviceVersion == SchemaRegistryClientOptions.ServiceVersion.V2022_10)
-                    {
-                        endpoint = (group == 1) ? TestEnvironment.SchemaRegistryEndpointAvro : TestEnvironment.SchemaRegistryEndpointAvro2;
-                    }
-                    else
-                    {
-                        endpoint = (group == 1) ? TestEnvironment.SchemaRegistryEndpointAvro2021 : TestEnvironment.SchemaRegistryEndpointAvro2021_2;
-                    }
-                    break;
+
                 case Custom:
-                    if (_serviceVersion == SchemaRegistryClientOptions.ServiceVersion.V2022_10)
-                    {
-                        endpoint = (group == 1) ? TestEnvironment.SchemaRegistryEndpointCustom : TestEnvironment.SchemaRegistryEndpointCustom2;
-                    }
-                    else
-                    {
-                        endpoint = (group == 1) ? TestEnvironment.SchemaRegistryEndpointCustom2021 : TestEnvironment.SchemaRegistryEndpointCustom2021_2;
-                    }
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
                     break;
+
                 default:
-                    if (_serviceVersion == SchemaRegistryClientOptions.ServiceVersion.V2022_10)
-                    {
-                        endpoint = (group == 1) ? TestEnvironment.SchemaRegistryEndpointAvro : TestEnvironment.SchemaRegistryEndpointAvro2;
-                    }
-                    else
-                    {
-                        endpoint = (group == 1) ? TestEnvironment.SchemaRegistryEndpointAvro2021 : TestEnvironment.SchemaRegistryEndpointAvro2021_2;
-                    }
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
                     break;
             }
 

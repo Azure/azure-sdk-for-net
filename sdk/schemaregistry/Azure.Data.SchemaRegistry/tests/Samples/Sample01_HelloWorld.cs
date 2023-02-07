@@ -5,28 +5,59 @@ using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
+using static Azure.Data.SchemaRegistry.SchemaRegistryClientOptions;
 
 namespace Azure.Data.SchemaRegistry.Tests.Samples
 {
-    public class Sample02_HelloWorld : SamplesBase<SchemaRegistryClientTestEnvironment>
+    public class Sample01_HelloWorld : SamplesBase<SchemaRegistryClientTestEnvironment>
     {
 #pragma warning disable IDE1006 // Naming Styles
-        private SchemaRegistryClient client;
+        private SchemaRegistryClient avroClient;
+        private SchemaRegistryClient jsonClient;
+        private SchemaRegistryClient customClient;
 #pragma warning restore IDE1006 // Naming Styles
-        private SchemaProperties _schemaProperties;
-        private string _definition;
+
+        private SchemaProperties _avroSchemaProperties;
+        private string _avroDefinition;
+
+        private SchemaProperties _jsonSchemaProperties;
+        private string _jsonDefinition;
+
+        private SchemaProperties _customSchemaProperties;
+        private string _customDefinition;
+
+        private const string _avro = "Avro";
+        private const string _json = "Json";
+        private const string _custom = "Custom";
 
         [OneTimeSetUp]
-        public void CreateSchemaRegistryClient()
+        public void CreateSchemaRegistryClients()
         {
-            string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpointAvro;
+            avroClient = CreateClient(_avro);
+            jsonClient = CreateClient(_json);
+            customClient = CreateClient(_custom);
+        }
+
+        private SchemaRegistryClient CreateClient(string format)
+        {
+            string endpoint;
+            switch (format)
+            {
+                case _json:
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson;
+                    break;
+                case _custom:
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
+                    break;
+                default:
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                    break;
+            }
 
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
-            var client = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
-
-            this.client = client;
+            return new SchemaRegistryClient(fullyQualifiedNamespace: endpoint, credential: new DefaultAzureCredential());
         }
 
         [Test]
@@ -50,26 +81,26 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 ]
             }";
 
-            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
+            Response<SchemaProperties> schemaProperties = avroClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
             Assert.NotNull(schemaProperties);
-            _schemaProperties = schemaProperties.Value;
-            _definition = definition;
+            _avroSchemaProperties = schemaProperties.Value;
+            _avroDefinition = definition;
         }
 
         [Test]
         [Order(2)]
         public void RetrieveSchemaAvro()
         {
-            var schemaId = _schemaProperties.Id;
+            var schemaId = _avroSchemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchemaAvro
-            SchemaRegistrySchema schema = client.GetSchema(schemaId);
+            SchemaRegistrySchema schema = avroClient.GetSchema(schemaId);
             string definition = schema.Definition;
             #endregion
 
-            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
+            Assert.AreEqual(Regex.Replace(_avroDefinition, @"\s+", string.Empty), definition);
         }
 
         [Test]
@@ -91,37 +122,36 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 type: ""object"",
                 properties: {
                     name: {
-                    type: ""string"",
-                    required: true,
-                },
-                favoriteNumber: {
-                    type: ""integer"",
-                    required: true,
-                },
-            },
-            required: [""name"", ""favoriteNumber""],
+                        type: ""string"",
+                        required: true,
+                    },
+                    favoriteNumber: {
+                        type: ""integer"",
+                        required: true,
+                    },
+                }
             }";
 
-            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
+            Response<SchemaProperties> schemaProperties = jsonClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
             Assert.NotNull(schemaProperties);
-            _schemaProperties = schemaProperties.Value;
-            _definition = definition;
+            _jsonSchemaProperties = schemaProperties.Value;
+            _jsonDefinition = definition;
         }
 
         [Test]
         [Order(4)]
         public void RetrieveSchemaJson()
         {
-            var schemaId = _schemaProperties.Id;
+            var schemaId = _jsonSchemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchemaJson
-            SchemaRegistrySchema schema = client.GetSchema(schemaId);
+            SchemaRegistrySchema schema = jsonClient.GetSchema(schemaId);
             string definition = schema.Definition;
             #endregion
 
-            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
+            Assert.AreEqual(_jsonDefinition, definition);
         }
 
         [Test]
@@ -141,26 +171,26 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 EMAIL: string
             }";
 
-            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
+            Response<SchemaProperties> schemaProperties = customClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
             Assert.NotNull(schemaProperties);
-            _schemaProperties = schemaProperties.Value;
-            _definition = definition;
+            _customSchemaProperties = schemaProperties.Value;
+            _customDefinition = definition;
         }
 
         [Test]
         [Order(6)]
         public void RetrieveSchemaCustom()
         {
-            var schemaId = _schemaProperties.Id;
+            var schemaId = _customSchemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchemaCustom
-            SchemaRegistrySchema schema = client.GetSchema(schemaId);
+            SchemaRegistrySchema schema = customClient.GetSchema(schemaId);
             string definition = schema.Definition;
             #endregion
 
-            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
+            Assert.AreEqual(_customDefinition, definition);
         }
     }
 }
