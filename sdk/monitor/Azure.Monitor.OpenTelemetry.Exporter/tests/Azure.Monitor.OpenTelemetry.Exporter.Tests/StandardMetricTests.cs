@@ -11,6 +11,7 @@ using OpenTelemetry.Trace;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -22,13 +23,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateRequestDurationMetric));
             var traceTelemetryItems = new ConcurrentBag<TelemetryItem>();
             var metricTelemetryItems = new ConcurrentBag<TelemetryItem>();
-            var exporterOptions = new AzureMonitorExporterOptions();
-            exporterOptions.ConnectionString = "InstrumentationKey=Ikey;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
 
-            var metricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)))
-            { TemporalityPreference = MetricReaderTemporalityPreference.Delta };
-
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(metricReader);
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor();
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
@@ -37,13 +33,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
+            using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)))
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
+
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Server))
             {
                 activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
             }
 
             tracerProvider?.ForceFlush();
-            standardMetricCustomProcessor?.StandardMetricMeterProvider?.ForceFlush();
+            meterProvider?.ForceFlush();
 
             Assert.Single(traceTelemetryItems);
             Assert.Single(metricTelemetryItems);

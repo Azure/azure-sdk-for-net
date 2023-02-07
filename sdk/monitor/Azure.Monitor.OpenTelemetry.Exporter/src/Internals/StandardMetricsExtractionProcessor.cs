@@ -19,34 +19,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private AzureMonitorResource _resource;
         private readonly Meter _meter;
         private readonly Histogram<double> _requestDuration;
-        private readonly MeterProvider _meterprovider;
 
         internal static readonly IReadOnlyDictionary<string, string> s_standardMetricNameMapping = new Dictionary<string, string>()
         {
             [StandardMetricConstants.RequestDurationInstrumentName] = StandardMetricConstants.RequestDurationMetricIdValue,
         };
 
-        internal MeterProvider StandardMetricMeterProvider { get { return _meterprovider; } }
-
         internal AzureMonitorResource StandardMetricResource => _resource ??= ParentProvider.GetResource().UpdateRoleNameAndInstance();
 
-        internal StandardMetricsExtractionProcessor(MetricReader standardMetricReader)
+        internal StandardMetricsExtractionProcessor()
         {
             _meter = new Meter(StandardMetricConstants.StandardMetricMeterName);
             _requestDuration = _meter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
-
-            _meterprovider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(StandardMetricConstants.StandardMetricMeterName)
-                .AddReader(standardMetricReader)
-                .Build();
         }
 
         public override void OnEnd(Activity activity)
         {
             if (activity.Kind == ActivityKind.Server)
             {
-                activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
-                ReportRequestDurationMetric(activity, SemanticConventions.AttributeHttpStatusCode);
+                if (_requestDuration.Enabled)
+                {
+                    activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
+                    ReportRequestDurationMetric(activity, SemanticConventions.AttributeHttpStatusCode);
+                }
             }
 
             // TODO: other activity kinds
@@ -85,7 +80,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
-                        _meterprovider?.Dispose();
                         _meter?.Dispose();
                     }
                     catch (Exception)

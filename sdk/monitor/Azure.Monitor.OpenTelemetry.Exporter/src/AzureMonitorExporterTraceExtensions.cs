@@ -62,12 +62,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
-                var standardMetricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions, credential))
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta };
-
                 return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(standardMetricReader),
+                    new StandardMetricsExtractionProcessor(),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential))
                 });
             });
