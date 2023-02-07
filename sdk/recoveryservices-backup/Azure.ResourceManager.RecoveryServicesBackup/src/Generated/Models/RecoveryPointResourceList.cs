@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of RecoveryPointResourceList. </summary>
         internal RecoveryPointResourceList()
         {
-            Value = new ChangeTrackingList<RecoveryPointResourceData>();
+            Value = new ChangeTrackingList<BackupRecoveryPointData>();
         }
 
         /// <summary> Initializes a new instance of RecoveryPointResourceList. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The uri to fetch the next page of resources.
         /// Serialized Name: RecoveryPointResourceList.nextLink
         /// </param>
-        internal RecoveryPointResourceList(IReadOnlyList<RecoveryPointResourceData> value, string nextLink)
+        internal RecoveryPointResourceList(IReadOnlyList<BackupRecoveryPointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of resources.
         /// Serialized Name: RecoveryPointResourceList.value
         /// </summary>
-        public IReadOnlyList<RecoveryPointResourceData> Value { get; }
+        public IReadOnlyList<BackupRecoveryPointData> Value { get; }
         /// <summary>
         /// The uri to fetch the next page of resources.
         /// Serialized Name: RecoveryPointResourceList.nextLink

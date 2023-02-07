@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Additional information on Backup engine specific backup item.
     /// Serialized Name: DPMProtectedItem
     /// </summary>
-    public partial class DpmProtectedItem : ProtectedItem
+    public partial class DpmProtectedItem : BackupProtectedItemProperties
     {
         /// <summary> Initializes a new instance of DpmProtectedItem. </summary>
         public DpmProtectedItem()

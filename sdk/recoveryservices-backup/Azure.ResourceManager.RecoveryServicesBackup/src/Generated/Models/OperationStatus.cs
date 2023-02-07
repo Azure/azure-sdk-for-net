@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Additional information associated with this operation.
         /// Serialized Name: OperationStatus.properties
         /// Please note <see cref="OperationStatusExtendedInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OperationStatusJobExtendedInfo"/>, <see cref="OperationStatusJobsExtendedInfo"/>, <see cref="OperationStatusProvisionILRExtendedInfo"/> and <see cref="OperationStatusValidateOperationExtendedInfo"/>.
+        /// The available derived classes include <see cref="OperationStatusJobExtendedInfo"/>, <see cref="OperationStatusJobsExtendedInfo"/>, <see cref="OperationStatusProvisionIlrExtendedInfo"/> and <see cref="OperationStatusValidateOperationExtendedInfo"/>.
         /// </param>
         internal OperationStatus(string id, string name, OperationStatusValue? status, DateTimeOffset? startOn, DateTimeOffset? endOn, OperationStatusError error, OperationStatusExtendedInfo properties)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Additional information associated with this operation.
         /// Serialized Name: OperationStatus.properties
         /// Please note <see cref="OperationStatusExtendedInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OperationStatusJobExtendedInfo"/>, <see cref="OperationStatusJobsExtendedInfo"/>, <see cref="OperationStatusProvisionILRExtendedInfo"/> and <see cref="OperationStatusValidateOperationExtendedInfo"/>.
+        /// The available derived classes include <see cref="OperationStatusJobExtendedInfo"/>, <see cref="OperationStatusJobsExtendedInfo"/>, <see cref="OperationStatusProvisionIlrExtendedInfo"/> and <see cref="OperationStatusValidateOperationExtendedInfo"/>.
         /// </summary>
         public OperationStatusExtendedInfo Properties { get; }
     }

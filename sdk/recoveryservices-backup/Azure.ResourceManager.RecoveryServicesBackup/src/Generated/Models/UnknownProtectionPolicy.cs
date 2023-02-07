@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// The UnknownProtectionPolicy.
     /// Serialized Name: UnknownProtectionPolicy
     /// </summary>
-    internal partial class UnknownProtectionPolicy : ProtectionPolicy
+    internal partial class UnknownProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of UnknownProtectionPolicy. </summary>
         /// <param name="protectedItemsCount">

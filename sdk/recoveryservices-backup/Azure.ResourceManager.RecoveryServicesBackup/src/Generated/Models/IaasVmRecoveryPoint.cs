@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// IaaS VM workload specific backup copy.
     /// Serialized Name: IaasVMRecoveryPoint
     /// </summary>
-    public partial class IaasVmRecoveryPoint : RecoveryPoint
+    public partial class IaasVmRecoveryPoint : BackupRecoveryPointProperties
     {
         /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
         public IaasVmRecoveryPoint()

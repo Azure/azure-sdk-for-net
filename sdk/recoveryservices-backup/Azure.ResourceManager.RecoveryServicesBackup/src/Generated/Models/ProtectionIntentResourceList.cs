@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of ProtectionIntentResourceList. </summary>
         internal ProtectionIntentResourceList()
         {
-            Value = new ChangeTrackingList<ProtectionIntentResourceData>();
+            Value = new ChangeTrackingList<BackupProtectionIntentData>();
         }
 
         /// <summary> Initializes a new instance of ProtectionIntentResourceList. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The uri to fetch the next page of resources.
         /// Serialized Name: ProtectionIntentResourceList.nextLink
         /// </param>
-        internal ProtectionIntentResourceList(IReadOnlyList<ProtectionIntentResourceData> value, string nextLink)
+        internal ProtectionIntentResourceList(IReadOnlyList<BackupProtectionIntentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of resources.
         /// Serialized Name: ProtectionIntentResourceList.value
         /// </summary>
-        public IReadOnlyList<ProtectionIntentResourceData> Value { get; }
+        public IReadOnlyList<BackupProtectionIntentData> Value { get; }
         /// <summary>
         /// The uri to fetch the next page of resources.
         /// Serialized Name: ProtectionIntentResourceList.nextLink

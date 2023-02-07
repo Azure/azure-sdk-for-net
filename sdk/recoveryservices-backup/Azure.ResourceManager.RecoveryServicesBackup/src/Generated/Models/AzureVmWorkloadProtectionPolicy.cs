@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Azure VM (Mercury) workload-specific backup policy.
     /// Serialized Name: AzureVmWorkloadProtectionPolicy
     /// </summary>
-    public partial class AzureVmWorkloadProtectionPolicy : ProtectionPolicy
+    public partial class AzureVmWorkloadProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of AzureVmWorkloadProtectionPolicy. </summary>
         public AzureVmWorkloadProtectionPolicy()

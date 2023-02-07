@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     case "OperationStatusJobExtendedInfo": return OperationStatusJobExtendedInfo.DeserializeOperationStatusJobExtendedInfo(element);
                     case "OperationStatusJobsExtendedInfo": return OperationStatusJobsExtendedInfo.DeserializeOperationStatusJobsExtendedInfo(element);
-                    case "OperationStatusProvisionILRExtendedInfo": return OperationStatusProvisionILRExtendedInfo.DeserializeOperationStatusProvisionILRExtendedInfo(element);
+                    case "OperationStatusProvisionILRExtendedInfo": return OperationStatusProvisionIlrExtendedInfo.DeserializeOperationStatusProvisionIlrExtendedInfo(element);
                     case "OperationStatusValidateOperationExtendedInfo": return OperationStatusValidateOperationExtendedInfo.DeserializeOperationStatusValidateOperationExtendedInfo(element);
                 }
             }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="AzureRecoveryServiceVaultProtectionIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureWorkloadAutoProtectionIntent"/> and <see cref="AzureWorkloadSQLAutoProtectionIntent"/>.
     /// </summary>
-    public partial class AzureRecoveryServiceVaultProtectionIntent : ProtectionIntent
+    public partial class AzureRecoveryServiceVaultProtectionIntent : BackupProtectionIntentProperties
     {
         /// <summary> Initializes a new instance of AzureRecoveryServiceVaultProtectionIntent. </summary>
         public AzureRecoveryServiceVaultProtectionIntent()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// MAB workload-specific backup item.
     /// Serialized Name: MabFileFolderProtectedItem
     /// </summary>
-    public partial class MabFileFolderProtectedItem : ProtectedItem
+    public partial class MabFileFolderProtectedItem : BackupProtectedItemProperties
     {
         /// <summary> Initializes a new instance of MabFileFolderProtectedItem. </summary>
         public MabFileFolderProtectedItem()

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="AzureIaasVmProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureIaaSClassicComputeVmProtectedItem"/> and <see cref="AzureIaaSComputeVmProtectedItem"/>.
     /// </summary>
-    public partial class AzureIaasVmProtectedItem : ProtectedItem
+    public partial class AzureIaasVmProtectedItem : BackupProtectedItemProperties
     {
         /// <summary> Initializes a new instance of AzureIaasVmProtectedItem. </summary>
         public AzureIaasVmProtectedItem()

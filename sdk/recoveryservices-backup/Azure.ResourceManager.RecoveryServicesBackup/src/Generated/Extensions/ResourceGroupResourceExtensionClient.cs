@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private ProtectionContainerRefreshOperationResultsRestOperations _protectionContainerRefreshOperationResultsRestClient;
         private ClientDiagnostics _protectableContainersClientDiagnostics;
         private ProtectableContainersRestOperations _protectableContainersRestClient;
-        private ClientDiagnostics _protectionContainerResourceProtectionContainersClientDiagnostics;
-        private ProtectionContainersRestOperations _protectionContainerResourceProtectionContainersRestClient;
+        private ClientDiagnostics _backupProtectionContainerProtectionContainersClientDiagnostics;
+        private ProtectionContainersRestOperations _backupProtectionContainerProtectionContainersRestClient;
         private ClientDiagnostics _backupOperationResultsClientDiagnostics;
         private BackupOperationResultsRestOperations _backupOperationResultsRestClient;
         private ClientDiagnostics _backupOperationStatusesClientDiagnostics;
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private ProtectionContainerRefreshOperationResultsRestOperations ProtectionContainerRefreshOperationResultsRestClient => _protectionContainerRefreshOperationResultsRestClient ??= new ProtectionContainerRefreshOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ProtectableContainersClientDiagnostics => _protectableContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ProtectableContainersRestOperations ProtectableContainersRestClient => _protectableContainersRestClient ??= new ProtectableContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ProtectionContainerResourceProtectionContainersClientDiagnostics => _protectionContainerResourceProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProtectionContainerResource.ResourceType.Namespace, Diagnostics);
-        private ProtectionContainersRestOperations ProtectionContainerResourceProtectionContainersRestClient => _protectionContainerResourceProtectionContainersRestClient ??= new ProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProtectionContainerResource.ResourceType));
+        private ClientDiagnostics BackupProtectionContainerProtectionContainersClientDiagnostics => _backupProtectionContainerProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+        private ProtectionContainersRestOperations BackupProtectionContainerProtectionContainersRestClient => _backupProtectionContainerProtectionContainersRestClient ??= new ProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BackupProtectionContainerResource.ResourceType));
         private ClientDiagnostics BackupOperationResultsClientDiagnostics => _backupOperationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BackupOperationResultsRestOperations BackupOperationResultsRestClient => _backupOperationResultsRestClient ??= new BackupOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BackupOperationStatusesClientDiagnostics => _backupOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return GetCachedClient(Client => new BackupResourceConfigCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ProtectionIntentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProtectionIntentResources and their operations over a ProtectionIntentResource. </returns>
-        public virtual ProtectionIntentResourceCollection GetProtectionIntentResources()
+        /// <summary> Gets a collection of BackupProtectionIntentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BackupProtectionIntentResources and their operations over a BackupProtectionIntentResource. </returns>
+        public virtual BackupProtectionIntentCollection GetBackupProtectionIntents()
         {
-            return GetCachedClient(Client => new ProtectionIntentResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupProtectionIntentCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of BackupResourceVaultConfigResources in the ResourceGroupResource. </summary>
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return GetCachedClient(Client => new BackupPrivateEndpointConnectionCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ProtectionPolicyResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupProtectionPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of ProtectionPolicyResources and their operations over a ProtectionPolicyResource. </returns>
-        public virtual ProtectionPolicyResourceCollection GetProtectionPolicyResources(string vaultName)
+        /// <returns> An object representing collection of BackupProtectionPolicyResources and their operations over a BackupProtectionPolicyResource. </returns>
+        public virtual BackupProtectionPolicyCollection GetBackupProtectionPolicies(string vaultName)
         {
-            return new ProtectionPolicyResourceCollection(Client, Id, vaultName);
+            return new BackupProtectionPolicyCollection(Client, Id, vaultName);
         }
 
         /// <summary> Gets a collection of BackupJobResources in the ResourceGroupResource. </summary>
@@ -170,44 +170,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return new BackupEngineCollection(Client, Id, vaultName);
         }
 
-        /// <summary> Gets a collection of ProtectionContainerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProtectionContainerResources and their operations over a ProtectionContainerResource. </returns>
-        public virtual ProtectionContainerResourceCollection GetProtectionContainerResources()
+        /// <summary> Gets a collection of BackupProtectionContainerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BackupProtectionContainerResources and their operations over a BackupProtectionContainerResource. </returns>
+        public virtual BackupProtectionContainerCollection GetBackupProtectionContainers()
         {
-            return GetCachedClient(Client => new ProtectionContainerResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupProtectionContainerCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ResourceGuardProxyBaseResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ResourceGuardProxyResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of ResourceGuardProxyBaseResources and their operations over a ResourceGuardProxyBaseResource. </returns>
-        public virtual ResourceGuardProxyBaseResourceCollection GetResourceGuardProxyBaseResources(string vaultName)
+        /// <returns> An object representing collection of ResourceGuardProxyResources and their operations over a ResourceGuardProxyResource. </returns>
+        public virtual ResourceGuardProxyCollection GetResourceGuardProxies(string vaultName)
         {
-            return new ResourceGuardProxyBaseResourceCollection(Client, Id, vaultName);
-        }
-
-        /// <summary>
-        /// Provides a pageable list of all intents that are present within a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionIntents</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectionIntent_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectionIntentResource> GetProtectionIntentResourcesByBackupProtectionIntentAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionIntentResource(Client, ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent", "value", "nextLink", cancellationToken);
+            return new ResourceGuardProxyCollection(Client, Id, vaultName);
         }
 
         /// <summary>
@@ -227,12 +202,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectionIntentResource> GetProtectionIntentResourcesByBackupProtectionIntent(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsByBackupProtectionIntentAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionIntentResource(Client, ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionIntentsByBackupProtectionIntent", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Provides a pageable list of all intents that are present within a vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionIntents</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupProtectionIntent_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BackupProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionIntentResource> GetBackupProtectionIntentsByBackupProtectionIntent(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionIntentsByBackupProtectionIntent", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -430,12 +430,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectedItemResource> GetProtectedItemResourcesByBackupProtectedItemAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsByBackupProtectedItemAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectedItemResource(Client, ProtectedItemResourceData.DeserializeProtectedItemResourceData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectedItemsByBackupProtectedItem", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -455,12 +455,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectedItemResource> GetProtectedItemResourcesByBackupProtectedItem(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectedItemResource> GetBackupProtectedItemsByBackupProtectedItem(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectedItemResource(Client, ProtectedItemResourceData.DeserializeProtectedItemResourceData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectedItemsByBackupProtectedItem", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -867,11 +867,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RefreshProtectionContainerAsync(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ProtectionContainerResourceProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RefreshProtectionContainer");
+            using var scope = BackupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RefreshProtectionContainer");
             scope.Start();
             try
             {
-                var response = await ProtectionContainerResourceProtectionContainersRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken).ConfigureAwait(false);
+                var response = await BackupProtectionContainerProtectionContainersRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -901,11 +901,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RefreshProtectionContainer(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ProtectionContainerResourceProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RefreshProtectionContainer");
+            using var scope = BackupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RefreshProtectionContainer");
             scope.Start();
             try
             {
-                var response = ProtectionContainerResourceProtectionContainersRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken);
+                var response = BackupProtectionContainerProtectionContainersRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1121,12 +1121,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectionContainerResource> GetProtectionContainerResourcesByBackupProtectionContainerAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersByBackupProtectionContainerAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionContainersByBackupProtectionContainer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1145,12 +1145,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectionContainerResource> GetProtectionContainerResourcesByBackupProtectionContainer(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionContainerResource> GetBackupProtectionContainersByBackupProtectionContainer(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionContainersByBackupProtectionContainer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1169,12 +1169,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1193,12 +1193,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

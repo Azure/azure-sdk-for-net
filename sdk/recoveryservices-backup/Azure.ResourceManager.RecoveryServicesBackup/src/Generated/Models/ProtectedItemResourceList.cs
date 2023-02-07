@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of ProtectedItemResourceList. </summary>
         internal ProtectedItemResourceList()
         {
-            Value = new ChangeTrackingList<ProtectedItemResourceData>();
+            Value = new ChangeTrackingList<BackupProtectedItemData>();
         }
 
         /// <summary> Initializes a new instance of ProtectedItemResourceList. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The uri to fetch the next page of resources.
         /// Serialized Name: ProtectedItemResourceList.nextLink
         /// </param>
-        internal ProtectedItemResourceList(IReadOnlyList<ProtectedItemResourceData> value, string nextLink)
+        internal ProtectedItemResourceList(IReadOnlyList<BackupProtectedItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of resources.
         /// Serialized Name: ProtectedItemResourceList.value
         /// </summary>
-        public IReadOnlyList<ProtectedItemResourceData> Value { get; }
+        public IReadOnlyList<BackupProtectedItemData> Value { get; }
         /// <summary>
         /// The uri to fetch the next page of resources.
         /// Serialized Name: ProtectedItemResourceList.nextLink

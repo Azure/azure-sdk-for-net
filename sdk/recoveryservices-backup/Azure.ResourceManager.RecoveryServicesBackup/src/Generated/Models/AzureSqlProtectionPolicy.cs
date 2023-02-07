@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Azure SQL workload-specific backup policy.
     /// Serialized Name: AzureSqlProtectionPolicy
     /// </summary>
-    public partial class AzureSqlProtectionPolicy : ProtectionPolicy
+    public partial class AzureSqlProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of AzureSqlProtectionPolicy. </summary>
         public AzureSqlProtectionPolicy()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// The UnknownProtectedItem.
     /// Serialized Name: UnknownProtectedItem
     /// </summary>
-    internal partial class UnknownProtectedItem : ProtectedItem
+    internal partial class UnknownProtectedItem : BackupProtectedItemProperties
     {
         /// <summary> Initializes a new instance of UnknownProtectedItem. </summary>
         /// <param name="protectedItemType">

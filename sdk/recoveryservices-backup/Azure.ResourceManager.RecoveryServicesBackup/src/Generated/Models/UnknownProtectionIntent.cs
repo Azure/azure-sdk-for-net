@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// The UnknownProtectionIntent.
     /// Serialized Name: UnknownProtectionIntent
     /// </summary>
-    internal partial class UnknownProtectionIntent : ProtectionIntent
+    internal partial class UnknownProtectionIntent : BackupProtectionIntentProperties
     {
         /// <summary> Initializes a new instance of UnknownProtectionIntent. </summary>
         /// <param name="protectionIntentItemType">

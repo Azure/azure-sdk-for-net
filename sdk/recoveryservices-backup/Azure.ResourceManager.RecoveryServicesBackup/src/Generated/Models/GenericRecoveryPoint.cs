@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Generic backup copy.
     /// Serialized Name: GenericRecoveryPoint
     /// </summary>
-    public partial class GenericRecoveryPoint : RecoveryPoint
+    public partial class GenericRecoveryPoint : BackupRecoveryPointProperties
     {
         /// <summary> Initializes a new instance of GenericRecoveryPoint. </summary>
         public GenericRecoveryPoint()

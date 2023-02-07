@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// IaaS VM specific backup protection intent item.
     /// Serialized Name: AzureResourceProtectionIntent
     /// </summary>
-    public partial class AzureResourceProtectionIntent : ProtectionIntent
+    public partial class AzureResourceProtectionIntent : BackupProtectionIntentProperties
     {
         /// <summary> Initializes a new instance of AzureResourceProtectionIntent. </summary>
         public AzureResourceProtectionIntent()

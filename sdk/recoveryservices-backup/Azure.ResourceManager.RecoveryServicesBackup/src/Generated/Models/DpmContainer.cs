@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// DPM workload-specific protection container.
     /// Serialized Name: DpmContainer
     /// Please note <see cref="DpmContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureBackupServerContainer"/>.
+    /// The available derived classes include <see cref="BackupServerContainer"/>.
     /// </summary>
-    public partial class DpmContainer : ProtectionContainer
+    public partial class DpmContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of DpmContainer. </summary>
         public DpmContainer()

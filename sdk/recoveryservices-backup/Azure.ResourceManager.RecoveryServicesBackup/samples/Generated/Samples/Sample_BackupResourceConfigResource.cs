@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "PythonSDKBackupTestRg";
             string vaultName = "PySDKBackupTestRsVault";
             ResourceIdentifier backupResourceConfigResourceId = BackupResourceConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceConfigResource backupResourceConfigResource = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
+            BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
-            BackupResourceConfigResource result = await backupResourceConfigResource.GetAsync();
+            BackupResourceConfigResource result = await backupResourceConfig.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupResourceConfigResourceData resourceData = result.Data;
+            BackupResourceConfigData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "PythonSDKBackupTestRg";
             string vaultName = "PySDKBackupTestRsVault";
             ResourceIdentifier backupResourceConfigResourceId = BackupResourceConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceConfigResource backupResourceConfigResource = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
+            BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
-            BackupResourceConfigResourceData data = new BackupResourceConfigResourceData(new AzureLocation("placeholder"))
+            BackupResourceConfigData data = new BackupResourceConfigData(new AzureLocation("placeholder"))
             {
-                Properties = new BackupResourceConfig()
+                Properties = new BackupResourceConfigProperties()
                 {
                     StorageType = StorageType.LocallyRedundant,
                     StorageTypeState = StorageTypeState.Unlocked,
                 },
             };
-            BackupResourceConfigResource result = await backupResourceConfigResource.UpdateAsync(data);
+            BackupResourceConfigResource result = await backupResourceConfig.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupResourceConfigResourceData resourceData = result.Data;
+            BackupResourceConfigData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "sourceRG";
             string vaultName = "source-rsv";
             ResourceIdentifier backupResourceConfigResourceId = BackupResourceConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceConfigResource backupResourceConfigResource = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
+            BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
             string operationId = "00000000-0000-0000-0000-000000000000";
-            OperationStatus result = await backupResourceConfigResource.GetOperationStatusAsync(operationId);
+            OperationStatus result = await backupResourceConfig.GetOperationStatusAsync(operationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "sourceRG";
             string vaultName = "source-rsv";
             ResourceIdentifier backupResourceConfigResourceId = BackupResourceConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceConfigResource backupResourceConfigResource = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
+            BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
             PrepareDataMoveContent content = new PrepareDataMoveContent("/subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/targetRG/providers/Microsoft.RecoveryServices/vaults/target-rsv", "USGov Virginia", DataMoveLevel.Vault);
-            await backupResourceConfigResource.BMSPrepareDataMoveAsync(WaitUntil.Completed, content);
+            await backupResourceConfig.BMSPrepareDataMoveAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "targetRG";
             string vaultName = "target-rsv";
             ResourceIdentifier backupResourceConfigResourceId = BackupResourceConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceConfigResource backupResourceConfigResource = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
+            BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
             TriggerDataMoveContent content = new TriggerDataMoveContent("/subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/sourceRG/providers/Microsoft.RecoveryServices/vaults/source-rsv", "USGov Iowa", DataMoveLevel.Vault, "MTg2OTcyMzM4NzYyMjc1NDY3Nzs1YmUzYmVmNi04YjJiLTRhOTItOTllYi01NTM0MDllYjk2NjE=");
-            await backupResourceConfigResource.BMSTriggerDataMoveAsync(WaitUntil.Completed, content);
+            await backupResourceConfig.BMSTriggerDataMoveAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "sourceRG";
             string vaultName = "source-rsv";
             ResourceIdentifier backupResourceConfigResourceId = BackupResourceConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceConfigResource backupResourceConfigResource = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
+            BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
             string operationId = "00000000-0000-0000-0000-000000000000";
-            VaultStorageConfigOperationResultResponse result = await backupResourceConfigResource.GetBMSPrepareDataMoveOperationResultAsync(operationId);
+            VaultStorageConfigOperationResultResponse result = await backupResourceConfig.GetBMSPrepareDataMoveOperationResultAsync(operationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

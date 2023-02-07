@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Mab container-specific backup policy.
     /// Serialized Name: MabProtectionPolicy
     /// </summary>
-    public partial class MabProtectionPolicy : ProtectionPolicy
+    public partial class MabProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of MabProtectionPolicy. </summary>
         public MabProtectionPolicy()

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         // List protection intent with backupManagementType filter
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetProtectionIntentResourcesByBackupProtectionIntent_ListProtectionIntentWithBackupManagementTypeFilter()
+        public async Task GetBackupProtectionIntentsByBackupProtectionIntent_ListProtectionIntentWithBackupManagementTypeFilter()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureWorkload/BackupProtectionIntent_List.json
             // this example is just showing the usage of "BackupProtectionIntent_List" operation, for the dependent resources, they will have to be created separately.
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
             // invoke the operation and iterate over the result
             string vaultName = "myVault";
-            await foreach (ProtectionIntentResource item in resourceGroupResource.GetProtectionIntentResourcesByBackupProtectionIntentAsync(vaultName))
+            await foreach (BackupProtectionIntentResource item in resourceGroupResource.GetBackupProtectionIntentsByBackupProtectionIntentAsync(vaultName))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ProtectionIntentResourceData resourceData = item.Data;
+                BackupProtectionIntentData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         // List protected items with backupManagementType filter as AzureIaasVm
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetProtectedItemResourcesByBackupProtectedItem_ListProtectedItemsWithBackupManagementTypeFilterAsAzureIaasVm()
+        public async Task GetBackupProtectedItemsByBackupProtectedItem_ListProtectedItemsWithBackupManagementTypeFilterAsAzureIaasVm()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/BackupProtectedItems_List.json
             // this example is just showing the usage of "BackupProtectedItems_List" operation, for the dependent resources, they will have to be created separately.
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation and iterate over the result
             string vaultName = "NetSDKTestRsVault";
             string filter = "backupManagementType eq 'AzureIaasVM' and itemType eq 'VM'";
-            await foreach (ProtectedItemResource item in resourceGroupResource.GetProtectedItemResourcesByBackupProtectedItemAsync(vaultName, filter: filter))
+            await foreach (BackupProtectedItemResource item in resourceGroupResource.GetBackupProtectedItemsByBackupProtectedItemAsync(vaultName, filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ProtectedItemResourceData resourceData = item.Data;
+                BackupProtectedItemData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         // List Backup Protection Containers
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetProtectionContainerResourcesByBackupProtectionContainer_ListBackupProtectionContainers()
+        public async Task GetBackupProtectionContainersByBackupProtectionContainer_ListBackupProtectionContainers()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureStorage/ProtectionContainers_List.json
             // this example is just showing the usage of "BackupProtectionContainers_List" operation, for the dependent resources, they will have to be created separately.
@@ -582,11 +582,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation and iterate over the result
             string vaultName = "testVault";
             string filter = "backupManagementType eq 'AzureWorkload'";
-            await foreach (ProtectionContainerResource item in resourceGroupResource.GetProtectionContainerResourcesByBackupProtectionContainerAsync(vaultName, filter: filter))
+            await foreach (BackupProtectionContainerResource item in resourceGroupResource.GetBackupProtectionContainersByBackupProtectionContainerAsync(vaultName, filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ProtectionContainerResourceData resourceData = item.Data;
+                BackupProtectionContainerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -617,11 +617,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation and iterate over the result
             string vaultName = "testVault";
             string filter = "backupManagementType eq 'AzureWorkload'";
-            await foreach (ProtectionContainerResource item in resourceGroupResource.GetSoftDeletedProtectionContainersAsync(vaultName, filter: filter))
+            await foreach (BackupProtectionContainerResource item in resourceGroupResource.GetSoftDeletedProtectionContainersAsync(vaultName, filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ProtectionContainerResourceData resourceData = item.Data;
+                BackupProtectionContainerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

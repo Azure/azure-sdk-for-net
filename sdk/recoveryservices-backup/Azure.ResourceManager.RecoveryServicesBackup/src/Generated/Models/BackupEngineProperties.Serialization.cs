@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupServerEngine": return AzureBackupServerEngine.DeserializeAzureBackupServerEngine(element);
+                    case "AzureBackupServerEngine": return BackupServerEngine.DeserializeBackupServerEngine(element);
                     case "DpmBackupEngine": return DpmBackupEngine.DeserializeDpmBackupEngine(element);
                 }
             }

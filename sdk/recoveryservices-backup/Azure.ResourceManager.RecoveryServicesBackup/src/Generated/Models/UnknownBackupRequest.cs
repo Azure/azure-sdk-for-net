@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// The UnknownBackupRequest.
     /// Serialized Name: UnknownBackupRequest
     /// </summary>
-    internal partial class UnknownBackupRequest : BackupRequest
+    internal partial class UnknownBackupRequest : BackupRequestProperties
     {
         /// <summary> Initializes a new instance of UnknownBackupRequest. </summary>
         /// <param name="objectType">

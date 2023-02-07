@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// The UnknownRecoveryPoint.
     /// Serialized Name: UnknownRecoveryPoint
     /// </summary>
-    internal partial class UnknownRecoveryPoint : RecoveryPoint
+    internal partial class UnknownRecoveryPoint : BackupRecoveryPointProperties
     {
         /// <summary> Initializes a new instance of UnknownRecoveryPoint. </summary>
         /// <param name="objectType">

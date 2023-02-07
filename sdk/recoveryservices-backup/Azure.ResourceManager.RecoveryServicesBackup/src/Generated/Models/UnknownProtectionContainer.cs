@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// The UnknownProtectionContainer.
     /// Serialized Name: UnknownProtectionContainer
     /// </summary>
-    internal partial class UnknownProtectionContainer : ProtectionContainer
+    internal partial class UnknownProtectionContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of UnknownProtectionContainer. </summary>
         /// <param name="friendlyName">

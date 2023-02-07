@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
         internal ResourceGuardProxyBaseResourceList()
         {
-            Value = new ChangeTrackingList<ResourceGuardProxyBaseResourceData>();
+            Value = new ChangeTrackingList<ResourceGuardProxyData>();
         }
 
         /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The uri to fetch the next page of resources.
         /// Serialized Name: ResourceGuardProxyBaseResourceList.nextLink
         /// </param>
-        internal ResourceGuardProxyBaseResourceList(IReadOnlyList<ResourceGuardProxyBaseResourceData> value, string nextLink)
+        internal ResourceGuardProxyBaseResourceList(IReadOnlyList<ResourceGuardProxyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of resources.
         /// Serialized Name: ResourceGuardProxyBaseResourceList.value
         /// </summary>
-        public IReadOnlyList<ResourceGuardProxyBaseResourceData> Value { get; }
+        public IReadOnlyList<ResourceGuardProxyData> Value { get; }
         /// <summary>
         /// The uri to fetch the next page of resources.
         /// Serialized Name: ResourceGuardProxyBaseResourceList.nextLink

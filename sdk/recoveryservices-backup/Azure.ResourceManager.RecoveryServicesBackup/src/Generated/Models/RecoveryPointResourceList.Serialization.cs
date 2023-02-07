@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static RecoveryPointResourceList DeserializeRecoveryPointResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<RecoveryPointResourceData>> value = default;
+            Optional<IReadOnlyList<BackupRecoveryPointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RecoveryPointResourceData> array = new List<RecoveryPointResourceData>();
+                    List<BackupRecoveryPointData> array = new List<BackupRecoveryPointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointResourceData.DeserializeRecoveryPointResourceData(item));
+                        array.Add(BackupRecoveryPointData.DeserializeBackupRecoveryPointData(item));
                     }
                     value = array;
                     continue;

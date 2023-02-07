@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Azure Sql workload-specific container.
     /// Serialized Name: AzureSqlContainer
     /// </summary>
-    public partial class AzureSqlContainer : ProtectionContainer
+    public partial class AzureSqlContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of AzureSqlContainer. </summary>
         public AzureSqlContainer()

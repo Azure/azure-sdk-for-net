@@ -32,6 +32,31 @@ rename-mapping:
   BackupResourceVaultConfigResource: BackupResourceVaultConfig
   PrivateEndpointConnection: BackupPrivateEndpointConnectionProperties
   PrivateEndpointConnectionResource: BackupPrivateEndpointConnection
+  ProtectedItem: BackupProtectedItemProperties
+  ProtectedItemResource: BackupProtectedItem
+  ProtectionContainer: BackupProtectionContainerProperties
+  ProtectionContainerResource: BackupProtectionContainer
+  ProtectionIntent: BackupProtectionIntentProperties
+  ProtectionIntentResource: BackupProtectionIntent
+  ProtectionPolicy: BackupProtectionPolicyProperties
+  ProtectionPolicyResource: BackupProtectionPolicy
+  RecoveryPoint: BackupRecoveryPointProperties
+  RecoveryPointResource: BackupRecoveryPoint
+  ResourceGuardProxyBase: ResourceGuardProxyProperties
+  ResourceGuardProxyBaseResource: ResourceGuardProxy
+  AzureBackupGoalFeatureSupportRequest: BackupGoalFeatureSupportContent
+  AzureBackupServerContainer: BackupServerContainer
+  AzureBackupServerEngine: BackupServerEngine
+  AzureFileShareBackupRequest: FileShareBackupRequest
+  AzureFileShareProtectableItem: FileShareProtectableItem
+  AzureFileshareProtectedItem: FileshareProtectedItem
+  AzureFileshareProtectedItemExtendedInfo: FileshareProtectedItemExtendedInfo
+  AzureFileShareProtectionPolicy: FileShareProtectionPolicy
+  AzureFileShareProvisionILRRequest: FileShareProvisionIlrRequest
+  BackupRequest: BackupRequestProperties
+  BackupRequestResource: BackupRequestContent
+  ILRRequest: IlrRequestProperties
+  ILRRequestResource: ILRRequestContent
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -71,6 +96,7 @@ rename-rules:
   MAB: Mab
   DPM: Dpm
   Issqlcompression: IsSqlCompression
+  ILR: Ilr
 
 override-operation-name:
   BackupStatus_Get: GetBackupStatus
@@ -174,6 +200,11 @@ directive:
               '$ref': '#/definitions/BackupResourceConfigResource'
             }
           };
+  # The operation group should of list method be same as other method
+  - from: bms.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies']
+    transform: >
+      $.get['operationId'] = 'ResourceGuardProxy_List';
   # Here the format date-time isn't specified in swagger, hence adding it explicitly 
   - from: bms.json
     where: $.definitions.RecoveryPointProperties.properties.expiryTime

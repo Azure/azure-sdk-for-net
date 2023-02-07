@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// The base backup engine class. All workload specific backup engines derive from this class.
     /// Serialized Name: BackupEngineBase
     /// Please note <see cref="BackupEngineProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureBackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
+    /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// </summary>
     public abstract partial class BackupEngineProperties
     {

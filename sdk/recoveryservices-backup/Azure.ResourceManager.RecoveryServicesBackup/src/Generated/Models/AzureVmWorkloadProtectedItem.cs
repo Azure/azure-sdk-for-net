@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="AzureVmWorkloadProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureVmWorkloadSAPAseDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDBInstanceProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseProtectedItem"/> and <see cref="AzureVmWorkloadSQLDatabaseProtectedItem"/>.
     /// </summary>
-    public partial class AzureVmWorkloadProtectedItem : ProtectedItem
+    public partial class AzureVmWorkloadProtectedItem : BackupProtectedItemProperties
     {
         /// <summary> Initializes a new instance of AzureVmWorkloadProtectedItem. </summary>
         public AzureVmWorkloadProtectedItem()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Azure SQL workload-specific backup item.
     /// Serialized Name: AzureSqlProtectedItem
     /// </summary>
-    public partial class AzureSqlProtectedItem : ProtectedItem
+    public partial class AzureSqlProtectedItem : BackupProtectedItemProperties
     {
         /// <summary> Initializes a new instance of AzureSqlProtectedItem. </summary>
         public AzureSqlProtectedItem()

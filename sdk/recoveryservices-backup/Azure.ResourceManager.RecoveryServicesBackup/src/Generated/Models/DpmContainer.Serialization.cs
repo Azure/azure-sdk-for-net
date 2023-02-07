@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupServerContainer": return AzureBackupServerContainer.DeserializeAzureBackupServerContainer(element);
+                    case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element);
                 }
             }
             Optional<bool> canReRegister = default;

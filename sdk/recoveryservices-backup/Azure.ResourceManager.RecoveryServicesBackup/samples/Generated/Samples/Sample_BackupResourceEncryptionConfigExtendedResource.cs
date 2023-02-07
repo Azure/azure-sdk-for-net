@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "rishgrp";
             string vaultName = "rishTestVault";
             ResourceIdentifier backupResourceEncryptionConfigExtendedResourceId = BackupResourceEncryptionConfigExtendedResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceEncryptionConfigExtendedResource backupResourceEncryptionConfigExtendedResource = client.GetBackupResourceEncryptionConfigExtendedResource(backupResourceEncryptionConfigExtendedResourceId);
+            BackupResourceEncryptionConfigExtendedResource backupResourceEncryptionConfigExtended = client.GetBackupResourceEncryptionConfigExtendedResource(backupResourceEncryptionConfigExtendedResourceId);
 
             // invoke the operation
-            BackupResourceEncryptionConfigExtendedResource result = await backupResourceEncryptionConfigExtendedResource.GetAsync();
+            BackupResourceEncryptionConfigExtendedResource result = await backupResourceEncryptionConfigExtended.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupResourceEncryptionConfigExtendedResourceData resourceData = result.Data;
+            BackupResourceEncryptionConfigExtendedData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "test-rg";
             string vaultName = "source-rsv";
             ResourceIdentifier backupResourceEncryptionConfigExtendedResourceId = BackupResourceEncryptionConfigExtendedResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceEncryptionConfigExtendedResource backupResourceEncryptionConfigExtendedResource = client.GetBackupResourceEncryptionConfigExtendedResource(backupResourceEncryptionConfigExtendedResourceId);
+            BackupResourceEncryptionConfigExtendedResource backupResourceEncryptionConfigExtended = client.GetBackupResourceEncryptionConfigExtendedResource(backupResourceEncryptionConfigExtendedResourceId);
 
             // invoke the operation
-            BackupResourceEncryptionConfigExtendedResourceCreateOrUpdateContent content = new BackupResourceEncryptionConfigExtendedResourceCreateOrUpdateContent(new AzureLocation("placeholder"))
+            BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content = new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(new AzureLocation("placeholder"))
             {
                 Properties = new BackupResourceEncryptionConfig()
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     InfrastructureEncryptionState = new InfrastructureEncryptionState("true"),
                 },
             };
-            await backupResourceEncryptionConfigExtendedResource.UpdateAsync(WaitUntil.Completed, content);
+            await backupResourceEncryptionConfigExtended.UpdateAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }

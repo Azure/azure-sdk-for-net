@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// IaaS VM workload-specific backup request.
     /// Serialized Name: IaasVMBackupRequest
     /// </summary>
-    public partial class IaasVmBackupRequest : BackupRequest
+    public partial class IaasVmBackupRequest : BackupRequestProperties
     {
         /// <summary> Initializes a new instance of IaasVmBackupRequest. </summary>
         public IaasVmBackupRequest()

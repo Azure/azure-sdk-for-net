@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// BackupEngineBaseResource properties
         /// Serialized Name: BackupEngineBaseResource.properties
         /// Please note <see cref="BackupEngineProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
+        /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
         /// </param>
         /// <param name="eTag">
         /// Optional ETag.
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// BackupEngineBaseResource properties
         /// Serialized Name: BackupEngineBaseResource.properties
         /// Please note <see cref="BackupEngineProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
+        /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
         /// </summary>
         public BackupEngineProperties Properties { get; set; }
         /// <summary>

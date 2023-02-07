@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Container with items backed up using MAB backup engine.
     /// Serialized Name: MabContainer
     /// </summary>
-    public partial class MabContainer : ProtectionContainer
+    public partial class MabContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of MabContainer. </summary>
         public MabContainer()

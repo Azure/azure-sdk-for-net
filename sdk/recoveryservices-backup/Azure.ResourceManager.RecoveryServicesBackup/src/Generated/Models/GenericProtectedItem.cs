@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Base class for backup items.
     /// Serialized Name: GenericProtectedItem
     /// </summary>
-    public partial class GenericProtectedItem : ProtectedItem
+    public partial class GenericProtectedItem : BackupProtectedItemProperties
     {
         /// <summary> Initializes a new instance of GenericProtectedItem. </summary>
         public GenericProtectedItem()

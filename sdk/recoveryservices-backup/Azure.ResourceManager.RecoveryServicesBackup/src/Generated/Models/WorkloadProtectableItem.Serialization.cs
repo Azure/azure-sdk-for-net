@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShare": return AzureFileShareProtectableItem.DeserializeAzureFileShareProtectableItem(element);
+                    case "AzureFileShare": return FileShareProtectableItem.DeserializeFileShareProtectableItem(element);
                     case "AzureVmWorkloadProtectableItem": return AzureVmWorkloadProtectableItem.DeserializeAzureVmWorkloadProtectableItem(element);
                     case "IaaSVMProtectableItem": return IaasVmProtectableItem.DeserializeIaasVmProtectableItem(element);
                     case "Microsoft.ClassicCompute/virtualMachines": return AzureIaaSClassicComputeVmProtectableItem.DeserializeAzureIaaSClassicComputeVmProtectableItem(element);

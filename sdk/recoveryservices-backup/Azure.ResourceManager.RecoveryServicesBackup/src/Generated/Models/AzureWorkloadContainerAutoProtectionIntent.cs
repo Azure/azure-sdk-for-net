@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Azure workload specific protection intent item.
     /// Serialized Name: AzureWorkloadContainerAutoProtectionIntent
     /// </summary>
-    public partial class AzureWorkloadContainerAutoProtectionIntent : ProtectionIntent
+    public partial class AzureWorkloadContainerAutoProtectionIntent : BackupProtectionIntentProperties
     {
         /// <summary> Initializes a new instance of AzureWorkloadContainerAutoProtectionIntent. </summary>
         public AzureWorkloadContainerAutoProtectionIntent()

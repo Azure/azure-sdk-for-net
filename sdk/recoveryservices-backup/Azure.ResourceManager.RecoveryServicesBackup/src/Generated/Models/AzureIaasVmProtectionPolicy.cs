@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// IaaS VM workload-specific backup policy.
     /// Serialized Name: AzureIaaSVMProtectionPolicy
     /// </summary>
-    public partial class AzureIaasVmProtectionPolicy : ProtectionPolicy
+    public partial class AzureIaasVmProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of AzureIaasVmProtectionPolicy. </summary>
         public AzureIaasVmProtectionPolicy()

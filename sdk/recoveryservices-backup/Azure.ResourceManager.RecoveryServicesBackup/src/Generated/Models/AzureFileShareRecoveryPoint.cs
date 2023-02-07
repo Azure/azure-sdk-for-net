@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Azure File Share workload specific backup copy.
     /// Serialized Name: AzureFileShareRecoveryPoint
     /// </summary>
-    public partial class AzureFileShareRecoveryPoint : RecoveryPoint
+    public partial class AzureFileShareRecoveryPoint : BackupRecoveryPointProperties
     {
         /// <summary> Initializes a new instance of AzureFileShareRecoveryPoint. </summary>
         public AzureFileShareRecoveryPoint()

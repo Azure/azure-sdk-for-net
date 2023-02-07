@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Restore files/folders from a backup copy of IaaS VM.
     /// Serialized Name: IaasVmilrRegistrationRequest
     /// </summary>
-    public partial class IaasVmilrRegistrationRequest : ILRRequest
+    public partial class IaasVmilrRegistrationRequest : IlrRequestProperties
     {
         /// <summary> Initializes a new instance of IaasVmilrRegistrationRequest. </summary>
         public IaasVmilrRegistrationRequest()

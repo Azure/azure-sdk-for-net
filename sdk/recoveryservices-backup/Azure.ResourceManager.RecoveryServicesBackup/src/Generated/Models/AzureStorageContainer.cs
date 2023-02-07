@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Azure Storage Account workload-specific container.
     /// Serialized Name: AzureStorageContainer
     /// </summary>
-    public partial class AzureStorageContainer : ProtectionContainer
+    public partial class AzureStorageContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of AzureStorageContainer. </summary>
         public AzureStorageContainer()

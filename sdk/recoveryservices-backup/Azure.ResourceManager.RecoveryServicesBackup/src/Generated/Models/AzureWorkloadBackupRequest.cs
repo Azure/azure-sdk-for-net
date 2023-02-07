@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// AzureWorkload workload-specific backup request.
     /// Serialized Name: AzureWorkloadBackupRequest
     /// </summary>
-    public partial class AzureWorkloadBackupRequest : BackupRequest
+    public partial class AzureWorkloadBackupRequest : BackupRequestProperties
     {
         /// <summary> Initializes a new instance of AzureWorkloadBackupRequest. </summary>
         public AzureWorkloadBackupRequest()
