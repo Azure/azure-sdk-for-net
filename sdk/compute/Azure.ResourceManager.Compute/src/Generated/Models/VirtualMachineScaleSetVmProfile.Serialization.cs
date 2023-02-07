@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachinePriorityType> priority = default;
             Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
-            Optional<ScheduledEventsProfile> scheduledEventsProfile = default;
+            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
             Optional<string> userData = default;
             Optional<CapacityReservationProfile> capacityReservation = default;
             Optional<ApplicationProfile> applicationProfile = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(property.Value);
+                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userData"))

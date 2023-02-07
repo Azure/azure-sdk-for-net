@@ -119,6 +119,9 @@ prepend-rp-prefix:
 - PublicIPAddressSkuTier
 - StatusLevelTypes
 
+#mgmt-debug:
+#    show-serialized-names: true
+
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
   SubResource: ComputeWriteableSubResourceData
@@ -253,7 +256,8 @@ rename-mapping:
   AlternativeType: ImageAlternativeType
   VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
   RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
-  OSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
+  ScheduledEventsProfile: ComputeScheduledEventsProfile
+# OSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

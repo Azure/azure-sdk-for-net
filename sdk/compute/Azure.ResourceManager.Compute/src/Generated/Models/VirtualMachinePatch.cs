@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains.&lt;br&gt;&lt;li&gt;This is applicable only if the &apos;virtualMachineScaleSet&apos; property of this Virtual Machine is set.&lt;li&gt;The Virtual Machine Scale Set that is referenced, must have &apos;platformFaultDomainCount&apos; &amp;gt; 1.&lt;li&gt;This property cannot be updated once the Virtual Machine is created.&lt;li&gt;Fault domain assignment can be viewed in the Virtual Machine Instance View.&lt;br&gt;&lt;br&gt;Minimum api‐version: 2020‐12‐01. </summary>
         public int? PlatformFaultDomain { get; set; }
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
         /// <summary> Specifies information about the capacity reservation that is used to allocate virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </summary>

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </param>
         /// <param name="serviceArtifactReference"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using &apos;latest&apos; image version. Minimum api-version: 2022-11-01. </param>
-        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, WritableSubResource serviceArtifactReference)
+        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, WritableSubResource serviceArtifactReference)
         {
             OSProfile = osProfile;
             StorageProfile = storageProfile;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
         /// <summary> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
         /// <summary> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </summary>

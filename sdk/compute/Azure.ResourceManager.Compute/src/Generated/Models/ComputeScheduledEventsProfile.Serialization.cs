@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ScheduledEventsProfile : IUtf8JsonSerializable
+    public partial class ComputeScheduledEventsProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static ScheduledEventsProfile DeserializeScheduledEventsProfile(JsonElement element)
+        internal static ComputeScheduledEventsProfile DeserializeComputeScheduledEventsProfile(JsonElement element)
         {
             Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
             Optional<OSImageNotificationProfile> osImageNotificationProfile = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ScheduledEventsProfile(terminateNotificationProfile.Value, osImageNotificationProfile.Value);
+            return new ComputeScheduledEventsProfile(terminateNotificationProfile.Value, osImageNotificationProfile.Value);
         }
     }
 }
