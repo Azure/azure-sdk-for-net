@@ -1,6 +1,6 @@
 # Release History
 
-## 12.13.0-beta.1 (Unreleased)
+## 12.13.0-beta.1 (2023-02-07)
 - Added support for service version 2021-12-02.
 - Added support for leasing operations on DataLakeFileClient.Append(), .AppendAsync(), .Flush(), and .FlushAsync().
 - Added support for sticky bit and execution bit to both be set on permissions of a path.

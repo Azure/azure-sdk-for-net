@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -19,11 +20,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal class AmqpMessageConverter
     {
-        /// <summary>
-        /// The size, in bytes, to use for extracting the delivery tag bytes into <see cref="Guid"/>.
-        /// </summary>
-        private const int GuidSizeInBytes = 16;
-
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
@@ -554,31 +550,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             AmqpAnnotatedMessage annotatedMessage = AmqpMessageToAnnotatedMessage(amqpMessage, isPeeked);
 
             ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage);
-
-            // lock token
-
-            sbMessage.LockTokenGuid = ParseGuidBytes(amqpMessage.DeliveryTag);
+            if (GuidUtilities.TryParseGuidBytes(amqpMessage.DeliveryTag, out Guid lockToken))
+            {
+                // lock token
+                sbMessage.LockTokenGuid = lockToken;
+            };
 
             amqpMessage.Dispose();
 
             return sbMessage;
-        }
-
-        public virtual Guid ParseGuidBytes(ReadOnlyMemory<byte> bytes)
-        {
-            if (bytes.Length == GuidSizeInBytes)
-            {
-                // Use TryRead to avoid allocating an array if we are on a little endian machine.
-                if (!BitConverter.IsLittleEndian || !MemoryMarshal.TryRead<Guid>(bytes.Span, out var lockTokenGuid))
-                {
-                    // Either we are on a big endian machine or the bytes were not a valid GUID.
-                    // Even if the bytes were not valid, use the Guid constructor to leverage the Guid validation rather than throwing ourselves.
-                    lockTokenGuid = new Guid(bytes.ToArray());
-                }
-                return lockTokenGuid;
-            }
-
-            return default;
         }
 
         internal static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)

@@ -51,12 +51,12 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("temperature");
                 }
             }
-            if (Optional.IsDefined(TopP))
+            if (Optional.IsDefined(NucleusSamplingFactor))
             {
-                if (TopP != null)
+                if (NucleusSamplingFactor != null)
                 {
                     writer.WritePropertyName("top_p");
-                    writer.WriteNumberValue(TopP.Value);
+                    writer.WriteNumberValue(NucleusSamplingFactor.Value);
                 }
                 else
                 {
@@ -79,24 +79,24 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("user");
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(N))
+            if (Optional.IsDefined(SnippetCount))
             {
-                if (N != null)
+                if (SnippetCount != null)
                 {
                     writer.WritePropertyName("n");
-                    writer.WriteNumberValue(N.Value);
+                    writer.WriteNumberValue(SnippetCount.Value);
                 }
                 else
                 {
                     writer.WriteNull("n");
                 }
             }
-            if (Optional.IsDefined(Logprobs))
+            if (Optional.IsDefined(LogProbability))
             {
-                if (Logprobs != null)
+                if (LogProbability != null)
                 {
                     writer.WritePropertyName("logprobs");
-                    writer.WriteNumberValue(Logprobs.Value);
+                    writer.WriteNumberValue(LogProbability.Value);
                 }
                 else
                 {
@@ -171,12 +171,12 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("frequency_penalty");
                 }
             }
-            if (Optional.IsDefined(BestOf))
+            if (Optional.IsDefined(GenerationSampleCount))
             {
-                if (BestOf != null)
+                if (GenerationSampleCount != null)
                 {
                     writer.WritePropertyName("best_of");
-                    writer.WriteNumberValue(BestOf.Value);
+                    writer.WriteNumberValue(GenerationSampleCount.Value);
                 }
                 else
                 {
