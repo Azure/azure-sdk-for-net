@@ -50,7 +50,7 @@ override-operation-name:
   RecoveryServices_Capabilities: GetCapabilitiesRecoveryService
 
 rename-mapping:
-  DnsZoneResponse: DnsZoneResult
+  DNSZoneResponse: DnsZoneResult
   CapabilitiesResponse: CapabilitiesResult
 
 directive:

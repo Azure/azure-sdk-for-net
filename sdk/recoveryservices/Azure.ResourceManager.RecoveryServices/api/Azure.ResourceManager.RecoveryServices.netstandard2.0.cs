@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public partial class CapabilitiesResult : Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase
     {
         public CapabilitiesResult(string resourceCapabilitiesBaseType) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResponse> CapabilitiesResponseDnsZones { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> CapabilitiesResponseDnsZones { get { throw null; } }
     }
     public partial class CertificateContent
     {
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public DnsZone() { }
         public Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType? SubResource { get { throw null; } set { } }
     }
-    public partial class DnsZoneResponse : Azure.ResourceManager.RecoveryServices.Models.DnsZone
+    public partial class DnsZoneResult : Azure.ResourceManager.RecoveryServices.Models.DnsZone
     {
-        public DnsZoneResponse() { }
+        public DnsZoneResult() { }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

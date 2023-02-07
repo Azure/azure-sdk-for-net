@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Capabilities properties in response. </summary>
         internal CapabilitiesResponseProperties Properties { get; set; }
         /// <summary> Gets the capabilities response dns zones. </summary>
-        public IList<DnsZoneResponse> CapabilitiesResponseDnsZones
+        public IList<DnsZoneResult> CapabilitiesResponseDnsZones
         {
             get
             {
