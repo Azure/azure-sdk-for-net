@@ -15,8 +15,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         [JsonPropertyName("companyName")]
         public string CompanyName { get; set; }
 
-        /// <summary>Gets or sets the created date time.</summary>
-        /// <value>The created date time.</value>
+        /// <summary>Gets or sets the created date and time.</summary>
+        /// <value>The created date and time.</value>
         [JsonPropertyName("createdDateTime")]
         public string CreatedDateTime { get; set; }
 
