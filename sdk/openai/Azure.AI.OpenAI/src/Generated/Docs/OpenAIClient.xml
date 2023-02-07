@@ -191,7 +191,7 @@ Response response = await client.GetCompletionsAsync("<deploymentId>", RequestCo
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
-Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
@@ -240,7 +240,7 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetPr
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
-Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
@@ -330,7 +330,7 @@ Schema for <c>Completions</c>:
     }
   ], # Optional. Array of choices returned containing text completions to prompts sent
   usage: {
-    completion_token: number, # Required. Number of tokens received in the completion
+    completion_tokens: number, # Required. Number of tokens received in the completion
     prompt_tokens: number, # Required. Number of tokens sent in the original request
     total_tokens: number, # Required. Total number of tokens transacted in this request/response
   }, # Required. Usage counts for tokens input using the completions API
@@ -353,7 +353,7 @@ Response response = client.GetCompletions("<deploymentId>", RequestContent.Creat
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
-Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
@@ -402,7 +402,7 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetPr
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("text_offset")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
-Console.WriteLine(result.GetProperty("usage").GetProperty("completion_token").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
 ]]></code>
@@ -492,7 +492,7 @@ Schema for <c>Completions</c>:
     }
   ], # Optional. Array of choices returned containing text completions to prompts sent
   usage: {
-    completion_token: number, # Required. Number of tokens received in the completion
+    completion_tokens: number, # Required. Number of tokens received in the completion
     prompt_tokens: number, # Required. Number of tokens sent in the original request
     total_tokens: number, # Required. Total number of tokens transacted in this request/response
   }, # Required. Usage counts for tokens input using the completions API

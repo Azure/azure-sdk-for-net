@@ -46,7 +46,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourcegroups/tc-sdk-test-rg54254553?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourcegroups/tc-sdk-test-rg54254553?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -90,7 +90,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourcegroups/tc-sdk-test-rg54254553?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourcegroups/tc-sdk-test-rg54254553?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -588,7 +588,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourcegroups/tc-sdk-test-rg54254553?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourcegroups/tc-sdk-test-rg54254553?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -998,7 +998,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourcegroups/tc-sdk-test-rg54254553?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourcegroups/tc-sdk-test-rg54254553?api-version=**",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1015,7 +1015,7 @@
         "Content-Length": "0",
         "Date": "Wed, 25 Jan 2023 00:51:57 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UQzoyRFNESzoyRFRFU1Q6MkRSRzU0MjU0NTUzLU5PUlRIRVVST1BFIiwiam9iTG9jYXRpb24iOiJub3J0aGV1cm9wZSJ9?api-version=2021-04-01",
+        "Location": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1UQzoyRFNESzoyRFRFU1Q6MkRSRzU0MjU0NTUzLU5PUlRIRVVST1BFIiwiam9iTG9jYXRpb24iOiJub3J0aGV1cm9wZSJ9?api-version=**",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
