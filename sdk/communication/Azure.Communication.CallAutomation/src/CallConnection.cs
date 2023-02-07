@@ -404,10 +404,12 @@ namespace Azure.Communication.CallAutomation
                 request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
             }
 
+            /* TODO: Fix this once call invite is added here
             if (options.SipHeaders != null || options.VoipHeaders != null)
             {
                 request.CustomContext = new CustomContextInternal(options.SipHeaders,options.VoipHeaders);
             }
+            */
 
             return request;
         }

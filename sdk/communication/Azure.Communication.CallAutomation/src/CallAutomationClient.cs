@@ -81,10 +81,10 @@ namespace Azure.Communication.CallAutomation
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint.AbsoluteUri;
             _clientDiagnostics = new ClientDiagnostics(options);
-            AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsoluteUri, options.ApiVersion);
-            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsoluteUri, options.ApiVersion);
-            CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsoluteUri, options.ApiVersion);
-            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsoluteUri, options.ApiVersion);
+            AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new EventProcessor(options.EventProcessorOptions);
         }
 
