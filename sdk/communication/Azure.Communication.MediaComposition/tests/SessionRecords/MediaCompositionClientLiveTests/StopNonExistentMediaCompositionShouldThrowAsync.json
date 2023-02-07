@@ -7,11 +7,11 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-c9b3f1fb2fedd613128243853618e3cb-fade23229e86a6ab-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230201.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3d8efb52af3af8e0495e2883339d38d1",
+        "traceparent": "00-12f195fdc62c92ab385e8e66e3b3879c-e5a8ce0d3d283ecd-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230207.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c6ddbafa7fd1a967944d3ef7b8ce120b",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 01 Feb 2023 21:19:43 GMT",
+        "x-ms-date": "Tue, 07 Feb 2023 17:09:07 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,22 +19,22 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 01 Feb 2023 21:19:44 GMT",
-        "MS-CV": "OJkzUF0ghkWMjRH9voOrsQ.0",
+        "Date": "Tue, 07 Feb 2023 17:09:07 GMT",
+        "MS-CV": "3yc8kxXVQ0CJCkBkhJuEcA.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0cNfaYwAAAACZDdN1C04bQ64hr8bulBZoWVZSMzExMDAwMTE1MDIzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
+        "X-Azure-Ref": "0tIXiYwAAAAD3KA2mZsymRbk8gSFhVvwxWVZSMzExMDAwMTE1MDUzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-c9b3f1fb2fedd613128243853618e3cb-e13abe6e18a1b80b-00"
+        "traceId": "00-12f195fdc62c92ab385e8e66e3b3879c-7308dafb08c5131e-00"
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://test-media.dev.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1640487579"
+    "RandomSeed": "1467679325"
   }
 }

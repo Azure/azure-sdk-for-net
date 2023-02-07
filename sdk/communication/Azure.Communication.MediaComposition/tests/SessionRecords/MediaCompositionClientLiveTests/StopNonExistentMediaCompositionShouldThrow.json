@@ -7,11 +7,11 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-962d3499a5e811e417126e4416375c0a-48e0477de572d9eb-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230201.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1394e4c073776a046179888a7b9304bc",
+        "traceparent": "00-1142a8165a0d17e94c2cc655bc59f046-957dcf4fd5fa6f00-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230207.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a41628ef7396856db5415a424faf0c31",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 01 Feb 2023 21:19:33 GMT",
+        "x-ms-date": "Tue, 07 Feb 2023 17:08:57 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,22 +19,22 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 01 Feb 2023 21:19:34 GMT",
-        "MS-CV": "4WcmKosJtEy0\u002BXFL3GgsKg.0",
+        "Date": "Tue, 07 Feb 2023 17:08:57 GMT",
+        "MS-CV": "\u002BnI7785u6U\u002Bw\u002BNXy2NgHKg.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0ZtfaYwAAAAAnD8bie4gTSq0F8X3\u002BaEmMWVZSMzExMDAwMTE1MDIzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
+        "X-Azure-Ref": "0qoXiYwAAAAA3wWkXGhvPRZ9uZipf2a\u002BaWVZSMzExMDAwMTE1MDUzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-962d3499a5e811e417126e4416375c0a-f46d870f6ce67c1d-00"
+        "traceId": "00-1142a8165a0d17e94c2cc655bc59f046-8068306087b2f95d-00"
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://test-media.dev.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "250245705"
+    "RandomSeed": "2057601008"
   }
 }

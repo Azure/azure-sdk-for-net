@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "765",
         "Content-Type": "application/json",
-        "traceparent": "00-1b25d8b8c54719e5f5a5ec392a054d0d-6741e7448ad5373d-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230201.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8fde141a8bf62f750e168bae312d2f6d",
+        "traceparent": "00-0caab9388085191b11013f547e959d43-a357c7bd30d0f2ad-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20230207.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5eb12533f97ebb87de899e5dcfc1011d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 01 Feb 2023 21:19:38 GMT",
+        "x-ms-date": "Tue, 07 Feb 2023 17:09:02 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -65,10 +65,10 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 01 Feb 2023 21:19:39 GMT",
-        "MS-CV": "dIhKTiI/UUubUOH1uWtH5w.0",
+        "Date": "Tue, 07 Feb 2023 17:09:02 GMT",
+        "MS-CV": "Xt6gf1dHfUCuo3IwdVCsbA.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0a9faYwAAAAD3yBVHyDDgQo3xQXK\u002BitdoWVZSMzExMDAwMTE1MDIzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
+        "X-Azure-Ref": "0r4XiYwAAAAC\u002BKHi\u002B2\u002BYDTb\u002BDnLSsA9FeWVZSMzExMDAwMTE1MDUzADcwNTQzOTVlLWNlMWQtNDU1ZS1hZTVkLTIzM2NhODM5MDU1NA==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Call input and output must be of the same kind and referencing the same call. Call input kind is GroupCall and output kind is TeamsMeeting.\u0022"
@@ -76,6 +76,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://test-media.dev.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1756061384"
+    "RandomSeed": "483779946"
   }
 }
