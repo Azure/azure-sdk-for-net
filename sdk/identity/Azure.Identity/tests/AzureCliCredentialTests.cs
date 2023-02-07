@@ -26,7 +26,17 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azCliOptions));
         }
 
-        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var azCliOptions = new AzureCliCredentialOptions
+            {
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                TenantId = config.TenantId,
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azCliOptions));
+        }
 
         [Test]
         public async Task AuthenticateWithCliCredential(

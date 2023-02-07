@@ -132,11 +132,12 @@ namespace Azure.Identity.Tests
         }
 
         [TestCaseSource(nameof(GetAllowedTenantsTestCases))]
-        public async Task VerifyAllowedTenantEnforcement2(AllowedTenantsTestParameters parameters)
+        public async Task VerifyAllowedTenantEnforcementCredentials(AllowedTenantsTestParameters parameters)
         {
             // Configure the transport
             var token = Guid.NewGuid().ToString();
-            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
+            string resolvedTenantId = parameters.TokenRequestContext.TenantId ?? parameters.TenantId ?? TenantId;
+            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", resolvedTenantId);
             bool calledDiscoveryEndpoint = false;
             bool isPubClient = false;
             var mockTransport = new MockTransport(req =>
@@ -156,7 +157,7 @@ namespace Azure.Identity.Tests
                 {
                     if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
                     {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
+                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, resolvedTenantId, ExpectedUsername, ObjectId);
                     }
                     else
                     {
@@ -176,6 +177,12 @@ namespace Azure.Identity.Tests
                 DisableMetadataDiscovery = null
             };
             var credential = GetTokenCredential(config);
+
+            if (credential is SharedTokenCacheCredential)
+            {
+                Assert.Ignore("Tenant Enforcement tests do not apply to the SharedTokenCacheCredential.");
+            }
+
             isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
         }

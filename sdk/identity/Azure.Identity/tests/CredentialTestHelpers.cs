@@ -508,10 +508,17 @@ namespace Azure.Identity.Tests
             return DisableInstanceDiscovery;
         }
 
+        public static string[] ExtractAdditionalTenantProperty(TokenCredential cred)
+        {
+            var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
+            var additionallyAllowedTenantIds =  (string[])targetCred.GetType().GetProperty("AdditionallyAllowedTenantIds", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(targetCred);
+            return additionallyAllowedTenantIds;
+        }
+
         public static bool IsCredentialTypePubClient(TokenCredential cred)
         {
             var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
-            Type clientType = targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic).PropertyType;
+            Type clientType = targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic)?.PropertyType;
             return clientType == typeof(MsalPublicClient);
         }
 

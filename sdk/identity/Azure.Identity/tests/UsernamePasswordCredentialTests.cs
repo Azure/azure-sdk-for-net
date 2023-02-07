@@ -27,13 +27,14 @@ namespace Azure.Identity.Tests
         {
             if (config.TenantId == null)
             {
-                Assert.Ignore("TenantId cannot be null.");
+                Assert.Ignore("Null TenantId test does not apply to this credential");
             }
 
             var options = new UsernamePasswordCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, null));

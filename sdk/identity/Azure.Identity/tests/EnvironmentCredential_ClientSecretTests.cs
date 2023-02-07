@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+    [NonParallelizable]
     public class EnvironmentCredential_ClientSecretTests : CredentialTestBase<EnvironmentCredentialOptions>
     {
         public EnvironmentCredential_ClientSecretTests(bool isAsync) : base(isAsync)
@@ -26,7 +27,7 @@ namespace Azure.Identity.Tests
         {
             if (config.TenantId == null)
             {
-                Assert.Ignore("TenantId cannot be null.");
+                Assert.Ignore("Null TenantId test does not apply to this credential");
             }
 
             var options = new EnvironmentCredentialOptions

@@ -373,6 +373,35 @@ namespace Azure.Identity.Tests
             }
         }
 
+        [Test]
+        [TestCaseSource(nameof(AllCredentialTypes))]
+        public void AdditionallyAllowedTenantsOptionIsHonored(Type availableCredential)
+        {
+            DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, false);
+            var additionalTenant = Guid.NewGuid().ToString();
+            options.AdditionallyAllowedTenants.Add(additionalTenant);
+
+            using (new TestEnvVar(new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_CLIENT_SECRET", null},
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    {"AZURE_USERNAME", "mockusername" },
+                    { "AZURE_PASSWORD", "mockpassword" },
+                    { "AZURE_CLIENT_CERTIFICATE_PATH", null } }))
+            {
+                var credential = new DefaultAzureCredential(options);
+                Assert.AreEqual(1, credential._sources.Length);
+                var targetCred = credential._sources[0];
+                if (targetCred is SharedTokenCacheCredential || targetCred is ManagedIdentityCredential)
+                {
+                    Assert.Ignore($"Credential {availableCredential.Name} does not support additional tenants");
+                }
+                string[] additionallyAllowedTenantIds = CredentialTestHelpers.ExtractAdditionalTenantProperty(targetCred);
+
+                CollectionAssert.Contains(additionallyAllowedTenantIds, additionalTenant);
+            }
+        }
+
         private static DefaultAzureCredentialOptions GetDacOptions(Type availableCredential, bool disableInstanceDiscovery)
         {
             return new DefaultAzureCredentialOptions

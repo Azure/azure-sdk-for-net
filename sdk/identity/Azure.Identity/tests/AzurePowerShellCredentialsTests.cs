@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +12,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
-using System.Runtime.InteropServices;
 
 namespace Azure.Identity.Tests
 {
@@ -31,11 +31,22 @@ namespace Azure.Identity.Tests
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
-            return  InstrumentClient(
+            return InstrumentClient(
                 new AzurePowerShellCredential(pwshOptions, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
         }
 
-        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var pwshOptions = new AzurePowerShellCredentialOptions
+            {
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                TenantId = config.TenantId,
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(
+                new AzurePowerShellCredential(pwshOptions, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+        }
 
         [Test]
         public async Task AuthenticateWithAzurePowerShellCredential(

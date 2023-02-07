@@ -31,13 +31,23 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            var options = new ClientCertificateCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false};
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new ClientCertificateCredentialOptions
+            {
+                Transport = config.Transport,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+            };
             var pipeline = CredentialPipeline.GetInstance(options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
             return InstrumentClient(
-                new ClientCertificateCredential(TenantId, ClientId, mockCert, options, pipeline, null)
+                new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, null)
             );
         }
 
@@ -234,7 +244,7 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
-            var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");

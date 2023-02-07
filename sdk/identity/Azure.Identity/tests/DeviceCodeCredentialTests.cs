@@ -60,11 +60,17 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
             expectedCode = Guid.NewGuid().ToString();
-            var options = new DeviceCodeCredentialOptions { Transport = config.Transport, DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false};
+            var options = new DeviceCodeCredentialOptions
+            {
+                Transport = config.Transport,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
+            };
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new DeviceCodeCredential((code, _) => {
+            return InstrumentClient(new DeviceCodeCredential((code, _) =>
+            {
                 return Task.CompletedTask;
-            }, TenantId, ClientId, options, pipeline, null));
+            }, config.TenantId, ClientId, options, pipeline, null));
         }
 
         [SetUp]

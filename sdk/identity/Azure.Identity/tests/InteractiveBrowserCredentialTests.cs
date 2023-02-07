@@ -23,7 +23,8 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
             // Configure mock cache to return a token for the expected user
-            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, TenantId, "token", "refreshToken");
+            string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
+            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
             var tokenCacheOptions = new MockTokenCache(
                 () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
                 args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
@@ -33,10 +34,11 @@ namespace Azure.Identity.Tests
                 Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
                 TokenCachePersistenceOptions = tokenCacheOptions,
-                AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{TenantId}", TenantId, ClientId),
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
             };
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new InteractiveBrowserCredential(TenantId, ClientId, options, pipeline, null));
+            return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null));
         }
 
         [Test]

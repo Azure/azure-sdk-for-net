@@ -26,7 +26,17 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azdCliOptions));
         }
 
-        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var azdCliOptions = new AzureDeveloperCliCredentialOptions
+            {
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                TenantId = config.TenantId,
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azdCliOptions));
+        }
 
         [Test]
         public async Task AuthenticateWithDeveloperCliCredential(
@@ -62,7 +72,7 @@ namespace Azure.Identity.Tests
         {
             Console.WriteLine(parameters.ToDebugString());
 
-            var options = new AzureDeveloperCliCredentialOptions { TenantId = parameters.TenantId};
+            var options = new AzureDeveloperCliCredentialOptions { TenantId = parameters.TenantId };
 
             foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
             {
