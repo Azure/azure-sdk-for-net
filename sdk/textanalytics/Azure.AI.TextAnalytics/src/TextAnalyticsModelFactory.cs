@@ -1809,7 +1809,7 @@ namespace Azure.AI.TextAnalytics
             TextDocumentStatistics statistics,
             IEnumerable<HealthcareEntity> healthcareEntities,
             IEnumerable<HealthcareEntityRelation> entityRelations,
-            IDictionary<string, object> fhirBundle,
+            BinaryData fhirBundle,
             string detectedLanguage,
             IEnumerable<TextAnalyticsWarning> warnings)
         {
