@@ -328,7 +328,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("3", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute3").Value);
             CollectionAssert.Contains(activitySourceActivity.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
 
-
             Assert.Null(Activity.Current);
             Assert.AreEqual("ClientName.ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ClientName.ActivityName.Stop", stopEvent.Key);
@@ -338,8 +337,10 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));
-            CollectionAssert.DoesNotContain(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
 
+            // Since both ActivitySource and DiagnosticSource listeners are used, we should see the az.schema_url tag set even in diagnostic source because they use the same
+            // underlying activity.
+            CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
 
             Assert.AreEqual(activityAfterStart, diagnosticSourceActivity);
         }
