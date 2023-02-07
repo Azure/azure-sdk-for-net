@@ -77,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
             else if (connectionString.TryGetNonRequiredValue(Constants.EndpointSuffixKey, out string? endpointSuffix))
             {
                 var location = connectionString.GetNonRequired(Constants.LocationKey);
-                if (!TryBuildUri(prefix: Constants.IngestionPrefix, suffix: endpointSuffix!, location: location, uri: out uri))
+                if (!TryBuildUri(prefix: Constants.IngestionPrefix, suffix: endpointSuffix, location: location, uri: out uri))
                 {
                     throw new ArgumentException($"The value for {Constants.EndpointSuffixKey} is invalid. '{endpointSuffix}'");
                 }
@@ -126,7 +126,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         /// <summary>
         /// This method wraps <see cref="AzureCoreConnectionString.GetNonRequired(string)"/> in a null check.
         /// </summary>
-        internal static bool TryGetNonRequiredValue(this AzureCoreConnectionString connectionString, string key, out string? value)
+        internal static bool TryGetNonRequiredValue(this AzureCoreConnectionString connectionString, string key, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out string? value)
         {
             value = connectionString.GetNonRequired(key);
             return value != null;
