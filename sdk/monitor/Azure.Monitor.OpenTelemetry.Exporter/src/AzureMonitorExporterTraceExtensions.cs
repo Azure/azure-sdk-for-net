@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -63,9 +64,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
+                var standardMetricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions, credential))
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta };
+
                 return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(exporterOptions.ConnectionString),
+                    new StandardMetricsExtractionProcessor(standardMetricReader),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential))
                 });
             });
