@@ -18,10 +18,6 @@ namespace Azure.Communication.CallAutomation
         {
             Targets = targets;
             CallbackUri = callbackUri;
-<<<<<<< HEAD
-=======
-            RepeatabilityHeaders = new RepeatabilityHeaders();
->>>>>>> 571d4180fc... integrate call invite to create call
         }
 
         /// <summary>
@@ -36,7 +32,6 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-<<<<<<< HEAD
         /// The display caller ID number to appear for target PSTN callee.
         /// </summary>
         public PhoneNumberIdentifier SourceCallerIdNumber { get; set; }
@@ -44,11 +39,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The display name to appear for target callee.
         /// </summary>
+        /// <value></value>
         public string SourceDisplayName { get; set; }
 
         /// <summary>
-=======
->>>>>>> 571d4180fc... integrate call invite to create call
         /// The Operation context.
         /// </summary>
         public string OperationContext { get; set; }
@@ -59,14 +53,6 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
-<<<<<<< HEAD
-=======
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
-
-        /// <summary>
->>>>>>> 571d4180fc... integrate call invite to create call
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri AzureCognitiveServicesEndpointUrl { get; set; }
