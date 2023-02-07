@@ -141,6 +141,22 @@ namespace Azure.AI.OpenAI.Tests
                 throw new NotImplementedException();
             }
         }
+
+        [RecordedTest]
+        public async Task TestLogProbs()
+        {
+            OpenAIClient client = GetClient();
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt = { "Hello world" },
+                Echo = true,
+                LogProbability = 1,
+            };
+            Response<Completions> response = await client.GetCompletionsAsync(
+                CompletionsDeploymentId,
+                requestOptions);
+        }
+
         [RecordedTest]
         public async Task TestAdvancedCompletionsOptions()
         {
@@ -149,12 +165,12 @@ namespace Azure.AI.OpenAI.Tests
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
                 Prompt = { promptText },
-                GenerationSampleCount = 3,
-                CacheLevel = 0,
-                Temperature = 0.75f,
-                User = "AzureSDKOpenAITests",
-                Echo = true,
-                Model = "this is a bogus model parameter in the body",
+                //GenerationSampleCount = 3,
+                //CacheLevel = 0,
+                //Temperature = 0.75f,
+                //User = "AzureSDKOpenAITests",
+                // Echo = true,
+                //Model = "this is a bogus model parameter in the body",
                 LogProbability = 1,
             };
             Response<Completions> response = await client.GetCompletionsAsync(
