@@ -290,7 +290,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> refs/rewritten/richardcho-create-call
         [TestCaseSource(nameof(TestData_CreateGroupCall_NoCallerId))]
         public void CreateCallWithOptions_NoCallerIdValidation(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
@@ -498,6 +501,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         private static IEnumerable<object?[]> TestData_CreateGroupCall()
         {
             return new[]
@@ -513,6 +517,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
 =======
 >>>>>>> 571d4180fc... integrate call invite to create call
+=======
+>>>>>>> refs/rewritten/richardcho-create-call
         private static IEnumerable<object?[]> TestData_CreateGroupCall_NoCallerId()
         {
             return new[]
