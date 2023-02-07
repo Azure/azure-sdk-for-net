@@ -18,11 +18,11 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of VariableState. </summary>
-        /// <param name="variable"></param>
-        /// <param name="filledNARatio"></param>
-        /// <param name="effectiveCount"></param>
-        /// <param name="firstTimestamp"></param>
-        /// <param name="lastTimestamp"></param>
+        /// <param name="variable"> Variable name in variable states. </param>
+        /// <param name="filledNARatio"> Proportion of missing values that need to be filled by fillNAMethod. </param>
+        /// <param name="effectiveCount"> Number of effective data points before applying fillNAMethod. </param>
+        /// <param name="firstTimestamp"> First valid timestamp with value of input data. </param>
+        /// <param name="lastTimestamp"> Last valid timestamp with value of input data. </param>
         internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp)
         {
             Variable = variable;
@@ -32,15 +32,15 @@ namespace Azure.AI.AnomalyDetector
             LastTimestamp = lastTimestamp;
         }
 
-        /// <summary> Gets or sets the variable. </summary>
+        /// <summary> Variable name in variable states. </summary>
         public string Variable { get; set; }
-        /// <summary> Gets or sets the filled na ratio. </summary>
+        /// <summary> Proportion of missing values that need to be filled by fillNAMethod. </summary>
         public float? FilledNARatio { get; set; }
-        /// <summary> Gets or sets the effective count. </summary>
+        /// <summary> Number of effective data points before applying fillNAMethod. </summary>
         public int? EffectiveCount { get; set; }
-        /// <summary> Gets or sets the first timestamp. </summary>
+        /// <summary> First valid timestamp with value of input data. </summary>
         public DateTimeOffset? FirstTimestamp { get; set; }
-        /// <summary> Gets or sets the last timestamp. </summary>
+        /// <summary> Last valid timestamp with value of input data. </summary>
         public DateTimeOffset? LastTimestamp { get; set; }
     }
 }

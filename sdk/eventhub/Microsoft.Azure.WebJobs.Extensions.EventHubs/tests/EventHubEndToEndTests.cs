@@ -151,6 +151,32 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        [Test]
+        public async Task EventHub_Collector()
+        {
+            var (jobHost, host) = BuildHost<EventHubTestCollectorDispatch>();
+            using (jobHost)
+            {
+                await jobHost.CallAsync(nameof(EventHubTestCollectorDispatch.SendEvents));
+
+                bool result = _eventWait.WaitOne(Timeout);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task EventHub_CollectorPartitionKey()
+        {
+            var (jobHost, host) = BuildHost<EventHubTestCollectorDispatch>();
+            using (jobHost)
+            {
+                await jobHost.CallAsync(nameof(EventHubTestCollectorDispatch.SendEventsWithKey));
+
+                bool result = _eventWait.WaitOne(Timeout);
+                Assert.True(result);
+            }
+        }
+
         private static void AssertSingleDispatchLogs(IHost host)
         {
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
@@ -475,6 +501,37 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.NotNull(triggerPartitionContext.PartitionId);
                 Assert.AreNotEqual(default(LastEnqueuedEventProperties), triggerPartitionContext.ReadLastEnqueuedEventProperties());
                 Assert.True(triggerPartitionContext.IsCheckpointingAfterInvocation);
+
+                _eventWait.Set();
+            }
+        }
+
+        public class EventHubTestCollectorDispatch
+        {
+            private static string s_partitionKey = null;
+
+            public static async Task SendEvents([EventHub(TestHubName, Connection = TestHubName)] IAsyncCollector<EventData> collector)
+            {
+                await collector.AddAsync(new EventData(new BinaryData("Event 1")));
+                await collector.FlushAsync();
+            }
+
+            public static async Task SendEventsWithKey([EventHub(TestHubName, Connection = TestHubName)] IAsyncCollector<EventData> collector)
+            {
+                s_partitionKey = "test-key";
+
+                await collector.AddAsync(new EventData(new BinaryData("Event 1")), s_partitionKey);
+                await collector.FlushAsync();
+            }
+
+            public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = TestHubName)] EventData eventData)
+            {
+                Assert.AreEqual(eventData.EventBody.ToString(), "Event 1");
+
+                if (!string.IsNullOrEmpty(s_partitionKey))
+                {
+                    Assert.AreEqual(eventData.PartitionKey, s_partitionKey);
+                }
 
                 _eventWait.Set();
             }
