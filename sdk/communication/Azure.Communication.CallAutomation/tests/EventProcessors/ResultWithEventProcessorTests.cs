@@ -19,7 +19,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             int successCode = (int)HttpStatusCode.Created;
 
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
@@ -44,7 +47,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Failed with operation mismatch
             int successCode = (int)HttpStatusCode.Created;
 
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
@@ -69,7 +75,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             int successCode = (int)HttpStatusCode.OK;
 
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));
@@ -94,7 +103,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.OK;
 
             // Failed with operation mismatch
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));
