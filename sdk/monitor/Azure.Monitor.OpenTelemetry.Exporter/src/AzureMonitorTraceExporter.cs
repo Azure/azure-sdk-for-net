@@ -32,10 +32,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
             }
-            else
-            {
-                _persistentStorage = null;
-            }
         }
 
         internal AzureMonitorResource? TraceResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
