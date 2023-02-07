@@ -33,7 +33,7 @@ StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdat
     }
 };
 StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
-            #endregion
         }
     }
 }
+#endregion
