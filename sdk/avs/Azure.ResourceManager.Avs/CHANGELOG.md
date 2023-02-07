@@ -4,7 +4,6 @@
 
 ### Breaking Changes
 
-Polishing since last public beta release:
 - Corrected the format of `ScriptExecutionData.ScriptCmdletId` property. It is not a `ResourceIdentifier`.
 
 ### Features Added
