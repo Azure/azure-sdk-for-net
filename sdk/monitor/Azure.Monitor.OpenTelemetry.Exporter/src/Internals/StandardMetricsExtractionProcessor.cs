@@ -74,7 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.RequestSuccessKey, RequestData.isSuccess(activity, statusCodeAttributeValue, OperationType.Http)));
 
             // Report metric
-            _requestDuration?.Record(activity.Duration.TotalMilliseconds, tags);
+            _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
         }
 
         protected override void Dispose(bool disposing)
