@@ -5741,8 +5741,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         // Expected; do nothing.
                     }
 
-                    while (state.TryReadEvent(out _)) {}
                     state.BufferedEventCount = 0;
+                    while (state.TryReadEvent(out _)) {}
 
                     if (releaseFlag)
                     {
@@ -5754,7 +5754,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         finishedCompletionSource.TrySetResult(true);
                     }
                 })
-                .Returns(Task.CompletedTask);
+                .Returns(finishedCompletionSource.Task);
 
             mockBufferedProducer.Object.Logger = mockLogger.Object;
 
@@ -5779,7 +5779,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Start publishing and validate that publishing does not complete right away.
 
                 await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token);
-                await startedCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);;
+                await startedCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
                 await Task.Delay(500);
 
                 Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
@@ -5791,7 +5791,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             finally
             {
-                await InvokeStopPublishingAsync(mockBufferedProducer.Object, executionLimitCancellationSource.Token).IgnoreExceptions();
+                await InvokeStopPublishingAsync(mockBufferedProducer.Object, executionLimitCancellationSource.Token).AwaitWithCancellation(executionLimitCancellationSource.Token);
             }
 
             Assert.That(executionLimitCancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested for the test time limit.");
@@ -5800,7 +5800,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var partition in validPartitions)
             {
                 var state = mockBufferedProducer.Object.ActivePartitionStateMap[partition];
-                Assert.That(state.BufferedEventCount, Is.EqualTo(0), $"There should be no events in the buffer for partition: [{ partition }].");
+                Assert.That(Volatile.Read(ref state.BufferedEventCount), Is.EqualTo(0), $"There should be no events in the buffer for partition: [{ partition }].");
             }
 
             mockLogger
