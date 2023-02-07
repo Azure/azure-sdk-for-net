@@ -38,8 +38,8 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:GetStatus
 
             Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-
-            string status = statusResponse.Content.ToDynamic().state;
+            dynamic transactionStatus = statusResponse.Content.ToDynamic();
+            string status = transactionStatus.state;
 
             Console.WriteLine($"Transaction status: {status}");
 
@@ -47,7 +47,8 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             while (status == "Pending")
             {
                 statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-                status = statusResponse.Content.ToDynamic().state;
+                transactionStatus = statusResponse.Content.ToDynamic();
+                status = transactionStatus.state;
             }
 
             Console.WriteLine($"Transaction status: {status}");
@@ -80,7 +81,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:NoCollectionId
 
 #if SNIPPET
-            Response postResponse = ledgerClient.PostLedgerEntry(
+            Operation postResponse = ledgerClient.PostLedgerEntry(
 #else
             postOperation = ledgerClient.PostLedgerEntry(
 #endif
@@ -90,7 +91,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             string content = postOperation.GetRawResponse().Content.ToString();
 #if SNIPPET
-            string transactionId = postOperation.Id;
+            transactionId = postResponse.Id;
 #else
             transactionId = postOperation.Id;
 #endif
@@ -109,7 +110,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 loaded = ledgerEntry.state != "Loading";
             }
 
-			string contents = ledgerEntry.entry.contents;
+            string contents = ledgerEntry.entry.contents;
             Console.WriteLine(contents); // "Hello world!"
 
             // Now just provide the transactionId.
@@ -138,7 +139,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 RequestContent.Create(new { contents = "Hello world collection 1" }),
                 "my collection");
 #if SNIPPET
-            string transactionId = firstPostOperation.Id;
+            transactionId = firstPostOperation.Id;
 #else
             transactionId = firstPostOperation.Id;
 #endif
@@ -148,7 +149,8 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             while (status == "Pending")
             {
                 statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-                status = statusResponse.Content.ToDynamic().state;
+                transactionStatus = statusResponse.Content.ToDynamic();
+                status = transactionStatus.state;
             }
 
             // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
