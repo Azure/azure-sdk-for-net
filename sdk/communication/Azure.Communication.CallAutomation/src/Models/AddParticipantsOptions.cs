@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
         public AddParticipantsOptions(IEnumerable<CommunicationIdentifier> participantsToAdd)
         {
             ParticipantsToAdd = participantsToAdd;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -54,11 +53,6 @@ namespace Azure.Communication.CallAutomation
         /// The maximum value is 180 seconds.
         /// </summary>
         public int? InvitationTimeoutInSeconds { get; set; }
-
-        /// <summary>
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
 
         /// <summary>
         /// Sip Headers, which is used to set custom context for pstn call
