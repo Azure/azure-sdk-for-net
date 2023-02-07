@@ -287,6 +287,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                     // try hangup
                     var hangUpOptions = new HangUpOptions(true);
+<<<<<<< HEAD
+=======
+                    hangUpOptions.RepeatabilityHeaders = null;
+>>>>>>> 22062d1322... integrate call invite to create call
                     await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
