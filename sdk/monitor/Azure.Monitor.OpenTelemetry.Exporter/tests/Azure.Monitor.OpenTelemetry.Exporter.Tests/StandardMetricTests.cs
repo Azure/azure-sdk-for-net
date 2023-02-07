@@ -12,6 +12,8 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
+using System;
+using System.Threading;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -45,9 +47,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
 
             tracerProvider?.ForceFlush();
+
+            WaitForActivityExport(traceTelemetryItems);
+
             meterProvider?.ForceFlush();
 
-            Assert.Single(traceTelemetryItems);
             Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Single();
@@ -65,6 +69,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out _));
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
             Assert.Equal(StandardMetricConstants.RequestDurationMetricIdValue, metricId);
+        }
+
+        private void WaitForActivityExport(ConcurrentBag<TelemetryItem> traceTelemetryItems)
+        {
+            var result = SpinWait.SpinUntil(
+                condition: () =>
+                {
+                    Thread.Sleep(10);
+                    return traceTelemetryItems.Any();
+                },
+                timeout: TimeSpan.FromSeconds(10));
+
+            Assert.True(result, $"{nameof(WaitForActivityExport)} failed.");
         }
     }
 }
