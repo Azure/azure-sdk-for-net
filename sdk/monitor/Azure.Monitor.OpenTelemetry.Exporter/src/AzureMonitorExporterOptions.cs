@@ -35,6 +35,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.
         /// </summary>
+        public AzureMonitorExporterOptions() : this(LatestVersion)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.
+        /// </summary>
         /// <param name="version">The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.</param>
         public AzureMonitorExporterOptions(ServiceVersion version = LatestVersion)
         {
