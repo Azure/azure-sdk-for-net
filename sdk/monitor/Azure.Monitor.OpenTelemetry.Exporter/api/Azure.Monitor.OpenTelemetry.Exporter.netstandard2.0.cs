@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     public partial class AzureMonitorExporterOptions : Azure.Core.ClientOptions
     {
         public AzureMonitorExporterOptions() { }
-        public AzureMonitorExporterOptions(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion version = Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion.V2020_09_15_Preview) { }
+        public AzureMonitorExporterOptions(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion version = Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion.v2_1) { }
         public string ConnectionString { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
         public string StorageDirectory { get { throw null; } set { } }
@@ -19,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public enum ServiceVersion
         {
             V2020_09_15_Preview = 1,
+            v2_1 = 2,
         }
     }
     public static partial class AzureMonitorExporterTraceExtensions
