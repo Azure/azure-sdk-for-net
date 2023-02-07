@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             else
             {
-                Name= metric.Name;
+                Name = metric.Name;
                 Namespace = metric.MeterName;
             }
 
