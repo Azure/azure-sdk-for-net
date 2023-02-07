@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         /// <exception cref="InvalidOperationException">
         /// Any exceptions that occur while parsing the connection string will be wrapped and re-thrown.
         /// </exception>
-        public static ConnectionVars GetValues(string connectionString)
+        public static ConnectionVars GetValues(string? connectionString)
         {
             try
             {
