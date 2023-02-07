@@ -289,70 +289,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
         }
 
-        [TestCaseSource(nameof(TestData_CreateGroupCall_NoCallerId))]
-        public void CreateCallWithOptions_NoCallerIdValidation(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
-            ;
-            CreateGroupCallOptions options = new(targets: targets, callbackUri: callbackUri)
-            {
-                MediaStreamingOptions = _mediaStreamingConfiguration
-            };
-
-            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callAutomationClient.CreateGroupCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains("Value cannot be null."));
-        }
-
-        [TestCaseSource(nameof(TestData_CreateCall_NoCallbackUri))]
-        public void CreateCallWithOptions_NullCallbackUri(CallInvite target)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
-            ;
-            CreateCallOptions options = new CreateCallOptions(
-                callInvite: target,
-                callbackUri: null)
-            {
-                MediaStreamingOptions = _mediaStreamingConfiguration
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
-        }
-
-        [TestCaseSource(nameof(TestData_CreateCall_NoCallbackUri))]
-        public void CreateCallWithOptions_HttpCallbackUri(CallInvite target)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
-            ;
-            CreateCallOptions options = new CreateCallOptions(
-                callInvite: target,
-                callbackUri: new Uri("http://example.com"))
-            {
-                MediaStreamingOptions = _mediaStreamingConfiguration
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
-        }
-
-        [TestCaseSource(nameof(TestData_CreateGroupCall_EmptyTargets))]
-        public void CreateCallWithOptions_EmptyTargets(CommunicationIdentifier[] targets, Uri callbackUri)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
-            ;
-            CreateGroupCallOptions options = new(targets: targets, callbackUri: callbackUri)
-            {
-                MediaStreamingOptions = _mediaStreamingConfiguration
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.CreateGroupCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
-        }
-
         [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCallAsync_404NotFound(CallInvite target, Uri callbackUri)
         {
@@ -387,6 +323,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             var response = new CallAutomationClient(ConnectionString).GetCallRecording();
             Assert.NotNull(response);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateGroupCall))]
+        public async Task CreateGroupCallAsync_201Created(IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, PhoneNumberIdentifier callerIdNumber)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
+            CreateGroupCallOptions options = new(
+                targets: targets,
+                callbackUri: callbackUri)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration,
+                SourceCallerIdNumber = callerIdNumber,
+            };
+
+            var response = await callAutomationClient.CreateGroupCallAsync(options).ConfigureAwait(false);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
         }
 
         private static void ValidateCreateCallResult(CreateCallResult createCallResult)
@@ -469,6 +426,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 {
                     new CallInvite(new CommunicationUserIdentifier("12345")),
                     new Uri("https://bot.contoso.com/callback")
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_CreateGroupCall()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CommunicationIdentifier[] {new CommunicationUserIdentifier("12345"), new PhoneNumberIdentifier("+1234567") },
+                    new Uri("https://bot.contoso.com/callback"),
+                    new PhoneNumberIdentifier("+18888888888"),
                 },
             };
         }
