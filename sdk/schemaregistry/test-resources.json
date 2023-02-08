@@ -46,10 +46,12 @@
   "variables": {
     "apiVersion": "2022-10-01-preview",
     "schemaRegistryGroup": "azsdk_net_test_group",
+    "baseNameAvro": "[concat(parameters('baseName'), '-avro')]",
     "baseNameAvro1": "[concat(parameters('baseName'), '-avro1')]",
     "baseNameAvro2": "[concat(parameters('baseName'), '-avro2')]",
     "baseNameAvro3": "[concat(parameters('baseName'), '-avro3')]",
     "baseNameAvro4": "[concat(parameters('baseName'), '-avro4')]",
+    "schemaRegistryEndpointAvro": "[concat(parameters('baseName'), '-avro', '.servicebus.windows.net')]",
     "schemaRegistryEndpointAvro1": "[concat(parameters('baseName'), '-avro1', '.servicebus.windows.net')]",
     "schemaRegistryEndpointAvro2": "[concat(parameters('baseName'), '-avro2', '.servicebus.windows.net')]",
     "schemaRegistryEndpointAvro3": "[concat(parameters('baseName'), '-avro3', '.servicebus.windows.net')]",
@@ -75,6 +77,23 @@
   },
 
   "resources": [
+    {
+      "type": "Microsoft.EventHub/namespaces",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('baseNameAvro')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": 5
+      },
+      "properties": {
+        "zoneRedundant": false,
+        "isAutoInflateEnabled": false,
+        "maximumThroughputUnits": 0,
+        "kafkaEnabled": true
+      }
+    },
     {
       "type": "Microsoft.EventHub/namespaces",
       "apiVersion": "[variables('apiVersion')]",
@@ -282,6 +301,16 @@
     {
       "type": "Microsoft.EventHub/namespaces/schemagroups",
       "apiVersion": "[variables('apiVersion')]",
+      "name": "[format('{0}/{1}', variables('baseNameAvro'), variables('schemaRegistryGroup'))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameAvro'))]" ],
+      "properties": {
+        "schemaType": "avro"
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/schemagroups",
+      "apiVersion": "[variables('apiVersion')]",
       "name": "[format('{0}/{1}', variables('baseNameAvro1'), variables('schemaRegistryGroup'))]",
       "location": "[parameters('location')]",
       "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameAvro1'))]" ],
@@ -415,6 +444,10 @@
     "SCHEMAREGISTRY_GROUP": {
       "type": "string",
       "value": "[variables('schemaRegistryGroup')]"
+    },
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": {
+      "type": "string",
+      "value": "[variables('schemaRegistryEndpointAvro')]"
     },
     "SCHEMAREGISTRY_ENDPOINT_AVRO1": {
       "type": "string",
