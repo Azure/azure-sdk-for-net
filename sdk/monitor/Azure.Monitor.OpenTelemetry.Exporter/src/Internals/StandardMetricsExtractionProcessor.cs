@@ -18,10 +18,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private AzureMonitorResource _resource;
         private readonly Meter _meter;
         private readonly Histogram<double> _requestDuration;
+        private readonly Histogram<double> _dependencyDuration;
 
         internal static readonly IReadOnlyDictionary<string, string> s_standardMetricNameMapping = new Dictionary<string, string>()
         {
             [StandardMetricConstants.RequestDurationInstrumentName] = StandardMetricConstants.RequestDurationMetricIdValue,
+            [StandardMetricConstants.DependencyDurationInstrumentName] = StandardMetricConstants.DependencyDurationMetricIdValue,
         };
 
         internal AzureMonitorResource StandardMetricResource => _resource ??= ParentProvider.GetResource().UpdateRoleNameAndInstance();
@@ -30,6 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             _meter = new Meter(StandardMetricConstants.StandardMetricMeterName);
             _requestDuration = _meter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
+            _dependencyDuration = _meter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
         }
 
         public override void OnEnd(Activity activity)
@@ -40,6 +43,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
                     ReportRequestDurationMetric(activity, SemanticConventions.AttributeHttpStatusCode);
+                }
+            }
+            if (activity.Kind == ActivityKind.Client || activity.Kind == ActivityKind.Internal)
+            {
+                if (_dependencyDuration.Enabled)
+                {
+                    activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
+                    ReportDependencyDurationMetric(activity);
                 }
             }
 
@@ -69,6 +80,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Report metric
             _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
+        }
+
+        private void ReportDependencyDurationMetric(Activity activity)
+        {
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+
+            var dependencyTarget = monitorTags.MappedTags.GetDependencyTarget(monitorTags.activityType);
+
+            var statusCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode);
+
+            var dependencyType = monitorTags.MappedTags.GetDependencyType(monitorTags.activityType);
+
+            TagList tags = default;
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyResultCodeKey, statusCode));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsAutoCollectedKey, "True"));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsSyntheticKey, "False"));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource.RoleInstance));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource.RoleName));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencySuccessKey, activity.Status != ActivityStatusCode.Error));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyTypeKey, dependencyType));
+
+            // Report metric
+            _dependencyDuration.Record(activity.Duration.TotalMilliseconds, tags);
         }
 
         protected override void Dispose(bool disposing)
