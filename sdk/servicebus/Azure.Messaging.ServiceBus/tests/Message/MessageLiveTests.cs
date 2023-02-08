@@ -49,6 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.ApplicationProperties.Add("DateTime", DateTime.UtcNow);
                 msg.ApplicationProperties.Add("DateTimeOffset", DateTimeOffset.UtcNow);
                 msg.ApplicationProperties.Add("TimeSpan", TimeSpan.FromMinutes(5));
+                msg.ApplicationProperties.Add("null", null);
 
                 await sender.SendMessageAsync(msg);
                 var receivedMsg = await receiver.ReceiveMessageAsync();
@@ -73,10 +74,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsInstanceOf(typeof(DateTimeOffset), receivedMsg.ApplicationProperties["DateTimeOffset"]);
                 Assert.IsInstanceOf(typeof(TimeSpan), receivedMsg.ApplicationProperties["TimeSpan"]);
 
-                var bytes = receivedMsg.ToAmqpBytes();
+                Assert.IsNull(receivedMsg.ApplicationProperties["null"]);
+                var bytes = receivedMsg.GetRawAmqpMessage().ToBytes();
 
-                var copyReceivedMessage = ServiceBusAmqpExtensions.FromAmqpBytes(
-                    bytes,
+                var copyReceivedMessage = ServiceBusReceivedMessage.FromAmqpMessage(
+                    AmqpAnnotatedMessage.FromBytes(bytes),
                     BinaryData.FromBytes(receivedMsg.LockTokenGuid.ToByteArray()));
 
                 Assert.AreEqual(receivedMsg.LockToken, copyReceivedMessage.LockToken);
@@ -547,7 +549,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 amqpMessage.ApplicationProperties.Add("applicationKey2", "applicationVal2");
 
                 // message annotations
-                amqpMessage.MessageAnnotations.Add("messageAnnotationKey1", "messageAnnotationVal1");
+                amqpMessage.MessageAnnotations.Add("messageAnnotationKey1", null);
                 amqpMessage.MessageAnnotations.Add("messageAnnotationKey2", "messageAnnotationVal2");
 
                 // delivery annotations
@@ -596,7 +598,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.AreEqual(received.ApplicationProperties["applicationKey2"], "applicationVal2");
 
                 // message annotations
-                Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey1"], "messageAnnotationVal1");
+                Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey1"], null);
                 Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey2"], "messageAnnotationVal2");
 
                 // delivery annotations
@@ -679,10 +681,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     receiver = client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
+                received.AmqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = 1;
 
-                var serializedBytes = received.ToAmqpBytes();
-                var deserialized = ServiceBusAmqpExtensions.FromAmqpBytes(
-                    serializedBytes,
+                var serializedBytes = received.GetRawAmqpMessage().ToBytes();
+                var deserialized = ServiceBusReceivedMessage.FromAmqpMessage(
+                    AmqpAnnotatedMessage.FromBytes(serializedBytes),
                     BinaryData.FromBytes(received.LockTokenGuid.ToByteArray()));
                 Assert.AreEqual(received.ContentType, deserialized.ContentType);
                 Assert.AreEqual(received.CorrelationId, deserialized.CorrelationId);

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 
 namespace Azure.Messaging.ServiceBus
@@ -41,6 +42,22 @@ namespace Azure.Messaging.ServiceBus
 
         internal ServiceBusReceivedMessage(): this(body: default)
         { }
+
+        /// <summary>
+        /// Constructs a <see cref="ServiceBusReceivedMessage"/> from its serialized AMQP form.
+        /// </summary>
+        /// <param name="message">The AMQP message.</param>
+        /// <param name="lockTokenBytes">The lock token bytes.</param>
+        /// <returns></returns>
+        public static ServiceBusReceivedMessage FromAmqpMessage(AmqpAnnotatedMessage message, BinaryData lockTokenBytes)
+        {
+            var receivedMessage = new ServiceBusReceivedMessage(message);
+            if (GuidUtilities.TryParseGuidBytes(lockTokenBytes, out Guid lockToken))
+            {
+                receivedMessage.LockTokenGuid = lockToken;
+            }
+            return receivedMessage;
+        }
 
         /// <summary>
         /// Indicates whether the user has settled the message as part of their callback.
@@ -427,10 +444,6 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 return ServiceBusMessageState.Active;
-            }
-            internal set
-            {
-                AmqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = value;
             }
         }
 
