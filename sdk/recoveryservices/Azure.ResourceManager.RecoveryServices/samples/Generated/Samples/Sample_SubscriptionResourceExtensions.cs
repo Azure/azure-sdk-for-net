@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         // Capabilities for Microsoft.RecoveryServices/Vaults
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CapabilitiesRecoveryService_CapabilitiesForMicrosoftRecoveryServicesVaults()
+        public async Task GetCapabilitiesRecoveryService_CapabilitiesForMicrosoftRecoveryServicesVaults()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Capabilities.json
             // this example is just showing the usage of "RecoveryServices_Capabilities" operation, for the dependent resources, they will have to be created separately.
@@ -52,7 +52,7 @@ SubResource = VaultSubResourceType.AzureSiteRecovery,
 }
 },
             };
-            CapabilitiesResponse result = await subscriptionResource.CapabilitiesRecoveryServiceAsync(location, input);
+            CapabilitiesResult result = await subscriptionResource.GetCapabilitiesRecoveryServiceAsync(location, input);
 
             Console.WriteLine($"Succeeded: {result}");
         }
