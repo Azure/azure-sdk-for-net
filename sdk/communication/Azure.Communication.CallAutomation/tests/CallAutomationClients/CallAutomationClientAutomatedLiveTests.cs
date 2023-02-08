@@ -27,58 +27,64 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
              * 5. once call is hung up, verify disconnected event
             */
 
-            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
-            string? callConnectionId = null;
-
             try
             {
                 // create caller and receiver
-                var user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                var target = await CreateIdentityUserAsync().ConfigureAwait(false);
+                CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+                CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+                CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+                string? callConnectionId = null;
 
-                // setup service bus
-                var uniqueId = await ServiceBusWithNewCall(user, target);
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
 
-                // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-                callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+                    // create call and assert response
+                    var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                    CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+                    callConnectionId = response.CallConnectionProperties.CallConnectionId;
+                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
-                // wait for incomingcall context
-                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(incomingCallContext);
+                    // wait for incomingcall context
+                    string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(incomingCallContext);
 
-                // answer the call
-                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
-                AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
+                    // answer the call
+                    var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                    AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
 
-                // wait for callConnected
-                var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(connectedEvent);
-                Assert.IsTrue(connectedEvent is CallConnected);
-                Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                    // wait for callConnected
+                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(connectedEvent);
+                    Assert.IsTrue(connectedEvent is CallConnected);
+                    Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
 
-                // test get properties
-                Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                    // test get properties
+                    Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
-                // try hangup
-                var hangUpOptions = new HangUpOptions(true);
-                await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
-                var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(disconnectedEvent);
-                Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
-                callConnectionId = null;
+                    // try hangup
+                    var hangUpOptions = new HangUpOptions(true);
+                    await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    callConnectionId = null;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await CleanUpCall(client, callConnectionId);
+                }
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
-            }
-            finally
-            {
-                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -92,58 +98,64 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
              * 3. See if call is not established
             */
 
-            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
-            string? callConnectionId = null;
-
+            // create caller and receiver
             try
             {
-                // create caller and receiver
-                var user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                var target = await CreateIdentityUserAsync().ConfigureAwait(false);
-
-                // setup service bus
-                var uniqueId = await ServiceBusWithNewCall(user, target);
-
-                // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallSource(user),
-                    new CommunicationIdentifier[] { target },
-                    new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-                callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
-
-                // wait for incomingcall context
-                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(incomingCallContext);
-
-                // answer the call
-                var rejectCallOptions = new RejectCallOptions(incomingCallContext);
-                Response rejectResponse = await client.RejectCallAsync(rejectCallOptions);
-
-                // check reject response
-                Assert.IsFalse(rejectResponse.IsError);
+                CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+                CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+                CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+                string? callConnectionId = null;
 
                 try
                 {
-                    // test get properties
-                    Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                }
-                catch (RequestFailedException ex)
-                {
-                    if (ex.Status == 404)
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    var createCallOptions = new CreateCallOptions(
+                        new CallInvite(target),
+                        new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                    CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+                    callConnectionId = response.CallConnectionProperties.CallConnectionId;
+                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+
+                    // wait for incomingcall context
+                    string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(incomingCallContext);
+
+                    // answer the call
+                    var rejectCallOptions = new RejectCallOptions(incomingCallContext);
+                    Response rejectResponse = await client.RejectCallAsync(rejectCallOptions);
+
+                    // check reject response
+                    Assert.IsFalse(rejectResponse.IsError);
+
+                    try
                     {
-                        callConnectionId = null;
-                        return;
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
                     }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await CleanUpCall(client, callConnectionId);
                 }
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
-            }
-            finally
-            {
-                await CleanUpCall(client, callConnectionId);
             }
         }
     }

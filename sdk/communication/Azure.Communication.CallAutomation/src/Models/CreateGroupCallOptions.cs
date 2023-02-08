@@ -1,21 +1,22 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// Options for the Create Call Request.
     /// </summary>
-    public class CreateCallOptions
+    public class CreateGroupCallOptions
     {
         /// <summary>
         /// Creates a new CreateCallOptions object.
         /// </summary>
-        public CreateCallOptions(CallInvite callInvite, Uri callbackUri)
+        public CreateGroupCallOptions(IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
         {
-            CallInvite = callInvite;
+            Targets = targets;
             CallbackUri = callbackUri;
         }
 
@@ -23,12 +24,22 @@ namespace Azure.Communication.CallAutomation
         /// Call invitee information.
         /// </summary>
         /// <value></value>
-        public CallInvite CallInvite { get; }
+        public IEnumerable<CommunicationIdentifier> Targets { get; }
 
         /// <summary>
         /// The callback Uri.
         /// </summary>
         public Uri CallbackUri { get; }
+
+        /// <summary>
+        /// The display caller ID number to appear for target PSTN callee.
+        /// </summary>
+        public PhoneNumberIdentifier SourceCallerIdNumber { get; set; }
+
+        /// <summary>
+        /// The display name to appear for target callee.
+        /// </summary>
+        public string SourceDisplayName { get; set; }
 
         /// <summary>
         /// The Operation context.
