@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class BulkImportJob : IUtf8JsonSerializable
+    public partial class ImportJob : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

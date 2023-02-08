@@ -7,10 +7,10 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class BulkImportJob : IUtf8JsonSerializable
+    public partial class ImportJob : IUtf8JsonSerializable
     {
         // This class definition overrides deserialization implementation in order to allow finishedDateTime to be null in the response.
-        internal static BulkImportJob DeserializeBulkImportJob(JsonElement element)
+        internal static ImportJob DeserializeImportJob(JsonElement element)
         {
             Optional<string> id = default;
             string inputBlobUri = default;
@@ -100,7 +100,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new BulkImportJob(id.Value, inputBlobUri, outputBlobUri, Optional.ToNullable(status), Optional.ToNullable(createdDateTime), Optional.ToNullable(lastActionDateTime), Optional.ToNullable(finishedDateTime), Optional.ToNullable(purgeDateTime), error.Value);
+            return new ImportJob(id.Value, inputBlobUri, outputBlobUri, Optional.ToNullable(status), Optional.ToNullable(createdDateTime), Optional.ToNullable(lastActionDateTime), Optional.ToNullable(finishedDateTime), Optional.ToNullable(purgeDateTime), error.Value);
         }
     }
 }

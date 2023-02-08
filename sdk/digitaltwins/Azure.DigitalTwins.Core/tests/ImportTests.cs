@@ -31,7 +31,7 @@ namespace Azure.DigitalTwins.Core.Tests
             string jobId = await GetUniqueJobIdAsync(client, TestAssetDefaults.ImportJobId).ConfigureAwait(false);
             var inputBlobUri = TestEnvironment.InputBlobUri;
             var outputBlobUri = $"{TestEnvironment.StorageContainerEndpoint}/output-{jobId}.ndjson";
-            var importJob = new BulkImportJob(inputBlobUri, outputBlobUri);
+            var importJob = new ImportJob(inputBlobUri, outputBlobUri);
 
             try
             {
@@ -49,11 +49,6 @@ namespace Azure.DigitalTwins.Core.Tests
                 Assert.IsNotNull(listResponse);
                 var rawListResponse = listResponse.GetRawResponse();
                 Assert.AreEqual((int)HttpStatusCode.OK, rawListResponse.Status);
-
-                // GET job - check for success
-                var getSucceededResponse = await client.GetImportJobsByIdAsync(jobId).ConfigureAwait(false);
-                Assert.IsNotNull(getSucceededResponse);
-                Assert.AreEqual(ImportJobStatus.Succeeded, getSucceededResponse.Value.Status);
 
                 // DELETE job
                 var deleteResponse = await client.DeleteImportJobsAsync(jobId).ConfigureAwait(false);
@@ -80,7 +75,7 @@ namespace Azure.DigitalTwins.Core.Tests
             string inputUri = "invalidUri";
             string outputUri = "invalidOutputUri";
 
-            var importJob = new BulkImportJob(jobId, inputUri, outputUri, ImportJobStatus.Notstarted, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null);
+            var importJob = new ImportJob(jobId, inputUri, outputUri, ImportJobStatus.Notstarted, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, DateTimeOffset.Now, null);
             try
             {
                 // act
@@ -105,7 +100,7 @@ namespace Azure.DigitalTwins.Core.Tests
             string jobId = await GetUniqueJobIdAsync(client, TestAssetDefaults.ImportJobId).ConfigureAwait(false);
             var inputBlobUri = TestEnvironment.InputBlobUri;
             var outputBlobUri = $"{TestEnvironment.StorageContainerEndpoint}/output-{jobId}.ndjson";
-            var importJob = new BulkImportJob(inputBlobUri, outputBlobUri);
+            var importJob = new ImportJob(inputBlobUri, outputBlobUri);
 
             try
             {

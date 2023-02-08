@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job12031838810?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job11368977872?api-version=2023-02-27-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b26a6dbc38bb28741e23107a3bc01f2f-19ef2bdf217061a4-00",
+        "traceparent": "00-bc0c3379168f77134fbf037dc0317f59-f8bf238170f0cac5-00",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230207.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c02449dba1db4d6d5a9ae04ebcf203f7",
+        "x-ms-client-request-id": "a9d1698fde687f2861f0c54b6ca262a0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,8 +16,8 @@
       "ResponseHeaders": {
         "Content-Length": "167",
         "Content-Type": "application/json",
-        "Date": "Wed, 08 Feb 2023 03:53:49 GMT",
-        "Retry-After": "10"
+        "Date": "Wed, 08 Feb 2023 03:51:23 GMT",
+        "Retry-After": "13"
       },
       "ResponseBody": {
         "error": {
@@ -27,14 +27,14 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job12031838810?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job11368977872?api-version=2023-02-27-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b26a6dbc38bb28741e23107a3bc01f2f-19ef2bdf217061a4-00",
+        "traceparent": "00-bc0c3379168f77134fbf037dc0317f59-f8bf238170f0cac5-00",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230207.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c02449dba1db4d6d5a9ae04ebcf203f7",
+        "x-ms-client-request-id": "a9d1698fde687f2861f0c54b6ca262a0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -42,29 +42,29 @@
       "ResponseHeaders": {
         "Content-Length": "186",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Feb 2023 03:53:59 GMT",
-        "mise-correlation-id": "04fe23f9-3fe5-45ef-a35c-31095ed20e3f",
+        "Date": "Wed, 08 Feb 2023 03:51:36 GMT",
+        "mise-correlation-id": "9412abce-3d89-4402-8460-6bf4187d3043",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-b26a6dbc38bb28741e23107a3bc01f2f-319bcb6303f6ec97-01"
+        "traceresponse": "00-bc0c3379168f77134fbf037dc0317f59-4a427f399c4e419c-01"
       },
       "ResponseBody": {
         "error": {
           "code": "JobNotFound",
-          "message": "There is no job available that matches the provided id job12031838810. Check that the Job ID provided is valid by doing a Jobs_List API call."
+          "message": "There is no job available that matches the provided id job11368977872. Check that the Job ID provided is valid by doing a Jobs_List API call."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job12031838810?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job11368977872?api-version=2023-02-27-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "64",
         "Content-Type": "application/json",
-        "traceparent": "00-a1a66566196118f9b5b4596258b01c78-c68cc6a5be13537b-00",
+        "traceparent": "00-e9df32dd47a767ca4586b86a76ccc8e5-97f5fe9a87333fdd-00",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230207.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "7924801beeaa8b26fd6595bd5dd35df1",
+        "x-ms-client-request-id": "07cf3246c0d06d44a6fa30cf095ec970",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -75,8 +75,8 @@
       "ResponseHeaders": {
         "Content-Length": "167",
         "Content-Type": "application/json",
-        "Date": "Wed, 08 Feb 2023 03:53:59 GMT",
-        "Retry-After": "7"
+        "Date": "Wed, 08 Feb 2023 03:51:36 GMT",
+        "Retry-After": "6"
       },
       "ResponseBody": {
         "error": {
@@ -86,16 +86,16 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job12031838810?api-version=2023-02-27-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job11368977872?api-version=2023-02-27-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "64",
         "Content-Type": "application/json",
-        "traceparent": "00-a1a66566196118f9b5b4596258b01c78-c68cc6a5be13537b-00",
+        "traceparent": "00-e9df32dd47a767ca4586b86a76ccc8e5-97f5fe9a87333fdd-00",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230207.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "7924801beeaa8b26fd6595bd5dd35df1",
+        "x-ms-client-request-id": "07cf3246c0d06d44a6fa30cf095ec970",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -106,10 +106,10 @@
       "ResponseHeaders": {
         "Content-Length": "290",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Feb 2023 03:54:06 GMT",
-        "mise-correlation-id": "39123ea5-d9cd-497e-9fce-e55614679fc8",
+        "Date": "Wed, 08 Feb 2023 03:51:43 GMT",
+        "mise-correlation-id": "43cac199-f4dc-4344-aa60-861a7214b229",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-a1a66566196118f9b5b4596258b01c78-d7195008c52c9fdb-01",
+        "traceresponse": "00-e9df32dd47a767ca4586b86a76ccc8e5-0575b18547537cdc-01",
         "x-ms-error-code": "InvalidArgument"
       },
       "ResponseBody": {
@@ -123,6 +123,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "247864653"
+    "RandomSeed": "1902926133"
   }
 }
