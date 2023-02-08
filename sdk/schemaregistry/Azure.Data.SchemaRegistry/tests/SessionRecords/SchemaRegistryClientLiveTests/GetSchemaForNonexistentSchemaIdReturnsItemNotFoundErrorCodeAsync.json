@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mreddingschemaregistry-avro1.servicebus.windows.net/$schemaGroups/$schemas/92f6f312-d808-e93d-99d6-39b092282aef?api-version=2022-10",
+      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/$schemas/0edd8a46-26c9-7d45-48dd-c7c64c0ad699?api-version=2022-10",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; serialization=Avro, application/json; serialization=Json, application/octet-stream",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230207.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "7c7a0d0b7dfd1b6ece87ab119b44b36d",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fe605aaf33a87dd2ff30ee265eb3a0f4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Wed, 08 Feb 2023 18:02:04 GMT",
+        "Date": "Thu, 12 Jan 2023 00:10:04 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
@@ -23,14 +23,14 @@
       "ResponseBody": {
         "error": {
           "code": "ItemNotFound",
-          "message": "Schema id 92f6f312-d808-e93d-99d6-39b092282aef does not exist. TrackingId:2a11a207-ffb6-40d0-ac15-e26c1b1401d7_G26, SystemTracker:mreddingschemaregistry-avro1.servicebus.windows.net:$schemaGroups/$schemas/92f6f312-d808-e93d-99d6-39b092282aef, Timestamp:2023-02-08T18:02:05"
+          "message": "Schema id 0edd8a46-26c9-7d45-48dd-c7c64c0ad699 does not exist. TrackingId:662083f9-bf2a-4d21-8934-ae0a58484d6c_G14, SystemTracker:mreddingschemaregistry-avro.servicebus.windows.net:$schemaGroups/$schemas/0edd8a46-26c9-7d45-48dd-c7c64c0ad699, Timestamp:2023-01-12T00:10:05"
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "948257237",
-    "SCHEMAREGISTRY_ENDPOINT_AVRO1": "mreddingschemaregistry-avro1.servicebus.windows.net"
+    "RandomSeed": "137875088",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net"
   }
 }

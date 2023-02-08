@@ -44,13 +44,13 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             switch (format)
             {
                 case _json:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointJson4;
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson;
                     break;
                 case _custom:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom4;
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
                     break;
                 default:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro4;
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
                     break;
             }
 

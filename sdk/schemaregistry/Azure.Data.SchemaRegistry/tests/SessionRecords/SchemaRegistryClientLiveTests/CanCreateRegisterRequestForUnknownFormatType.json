@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mreddingschemaregistry-avro1.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-68396?api-version=2022-10",
+      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-25660?api-version=2022-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "5",
         "Content-Type": "text/plain; charset=utf-8",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230207.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "28ad366858fa961e576c53973f22a864",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "86c89bf3c5b81fb57fb7fd47ffa79ba9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "Hello",
       "StatusCode": 403,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Wed, 08 Feb 2023 18:01:33 GMT",
+        "Date": "Thu, 12 Jan 2023 19:01:03 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
@@ -25,15 +25,15 @@
       "ResponseBody": {
         "error": {
           "code": "NotAvaliable",
-          "message": "SubCode=40301, Schema of type Custom cannot be created within group \u0027azsdk_net_test_group\u0027 that support Avro schema type. TrackingId:28a95da9-7b09-4e02-af85-4e3c39342c25_G1, SystemTracker:NoSystemTracker, Timestamp:2023-02-08T18:01:34"
+          "message": "SubCode=40301, Schema of type Custom cannot be created within group \u0027azsdk_net_test_group\u0027 that support Avro schema type. TrackingId:edf95913-b0a5-4139-98c2-f67e8e4916a1_G2, SystemTracker:NoSystemTracker, Timestamp:2023-01-12T19:01:03"
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "50241240",
-    "SCHEMAREGISTRY_ENDPOINT_AVRO1": "mreddingschemaregistry-avro1.servicebus.windows.net",
+    "RandomSeed": "438239157",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
 }

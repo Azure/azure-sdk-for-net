@@ -24,43 +24,36 @@ namespace Azure.Data.SchemaRegistry.Tests
             _serviceVersion = version;
         }
 
-        private string GetEndpoint(string format, int group)
+        private SchemaRegistryClient CreateClient(string format)
         {
-            switch (format, group)
+            string endpoint;
+            switch (format, _serviceVersion)
             {
-                case (Avro, 1):
-                    return TestEnvironment.SchemaRegistryEndpointAvro1;
-                case (Avro, 2):
-                    return TestEnvironment.SchemaRegistryEndpointAvro2;
-                case (Avro, 3):
-                    return TestEnvironment.SchemaRegistryEndpointAvro3;
-                case (Avro, 4):
-                    return TestEnvironment.SchemaRegistryEndpointAvro4;
-                case (Json, 1):
-                    return TestEnvironment.SchemaRegistryEndpointJson1;
-                case (Json, 2):
-                    return TestEnvironment.SchemaRegistryEndpointJson2;
-                case (Json, 3):
-                    return TestEnvironment.SchemaRegistryEndpointJson3;
-                case (Json, 4):
-                    return TestEnvironment.SchemaRegistryEndpointJson4;
-                case (Custom, 1):
-                    return TestEnvironment.SchemaRegistryEndpointCustom1;
-                case (Custom, 2):
-                    return TestEnvironment.SchemaRegistryEndpointCustom2;
-                case (Custom, 3):
-                    return TestEnvironment.SchemaRegistryEndpointCustom3;
-                case (Custom, 4):
-                    return TestEnvironment.SchemaRegistryEndpointCustom4;
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                    break;
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro2021;
+                    break;
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson;
+                    break;
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson2021;
+                    break;
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
+                    break;
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom2021;
+                    break;
                 default:
-                    return TestEnvironment.SchemaRegistryEndpointAvro1;
+                    endpoint= TestEnvironment.SchemaRegistryEndpointAvro;
+                    break;
             }
-        }
 
-        private SchemaRegistryClient CreateClient(string format, int group)
-        {
             return InstrumentClient(new SchemaRegistryClient(
-                GetEndpoint(format, group),
+                endpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new SchemaRegistryClientOptions())));
         }
@@ -84,7 +77,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Custom)]
         public async Task CanRegisterSchema(string formatName)
         {
-            var client = CreateClient(format: formatName, group: 1);
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -104,7 +97,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Custom)]
         public async Task CanRegisterNewVersionOfSchema(string formatName)
         {
-            var client = CreateClient(formatName, group: 2);
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -129,7 +122,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Custom)]
         public async Task CanGetSchemaId(string formatName)
         {
-            var client = CreateClient(formatName, group: 2);
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -149,7 +142,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Custom)]
         public async Task CanGetSchema(string formatName)
         {
-            var client = CreateClient(formatName, group: 3);
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -169,7 +162,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Custom)]
         public async Task CanGetSchemaByVersion(string formatName)
         {
-            var client = CreateClient(formatName, group: 4);
+            var client = CreateClient(formatName);
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = StringToSchemaFormat(formatName);
@@ -195,7 +188,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 
         public void CanCreateRegisterRequestForUnknownFormatType()
         {
-            var client = CreateClient("Avro", 1);
+            var client = CreateClient("Avro");
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = new SchemaFormat("UnknownType");
@@ -208,7 +201,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         public void CanCreateGetSchemaPropertiesRequestForUnknownFormatType()
         {
-            var client = CreateClient("Avro", 1);
+            var client = CreateClient("Avro");
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = new SchemaFormat("UnknownType");
@@ -221,7 +214,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         public void GetSchemaForNonexistentSchemaIdReturnsItemNotFoundErrorCode()
         {
-            var client = CreateClient("Avro", 1);
+            var client = CreateClient("Avro");
             Assert.That(
                 async () => await client.GetSchemaAsync(Recording.Random.NewGuid().ToString()),
                 Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
@@ -231,7 +224,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [RecordedTest]
         public void GetSchemaPropertiesForNonexistentSchemaReturnsItemNotFoundErrorCode()
         {
-            var client = CreateClient("Avro", 1);
+            var client = CreateClient("Avro");
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             Assert.That(
