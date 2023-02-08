@@ -131,7 +131,7 @@ namespace Azure.Messaging.ServiceBus
             amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = serviceBusMessageState;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = (int)serviceBusMessageState;
 
             return new ServiceBusReceivedMessage(amqpMessage)
             {

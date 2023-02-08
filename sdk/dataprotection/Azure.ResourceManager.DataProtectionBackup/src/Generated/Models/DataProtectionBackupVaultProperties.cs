@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="storageSettings"> Storage Settings. </param>
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, SecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings)
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Resource move details for backup vault. </summary>
         public BackupVaultResourceMoveDetails ResourceMoveDetails { get; }
         /// <summary> Security Settings. </summary>
-        public SecuritySettings SecuritySettings { get; set; }
+        public BackupVaultSecuritySettings SecuritySettings { get; set; }
         /// <summary> Storage Settings. </summary>
         public IList<DataProtectionBackupStorageSetting> StorageSettings { get; }
         /// <summary> Feature Settings. </summary>
         internal FeatureSettings FeatureSettings { get; set; }
         /// <summary> CrossSubscriptionRestore state. </summary>
-        public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        public DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState
         {
             get => FeatureSettings is null ? default : FeatureSettings.CrossSubscriptionRestoreState;
             set

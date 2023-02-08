@@ -185,7 +185,7 @@
     "ClientNameCapitalCase": {
       "type": "derived",
       "datatype": "text",
-      "valueSource": "ClientName",
+      "valueSource": "clientName",
       "valueTransform": "firstUpperCase",
       "replaces": "Template"
     },

@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageCache;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache.Samples
