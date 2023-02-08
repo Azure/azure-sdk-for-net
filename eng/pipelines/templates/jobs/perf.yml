@@ -5,9 +5,6 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: ''
-- name: Services
-  type: string
-  default: ''
 - name: PackageVersions
   type: string
   default: '.*'
@@ -39,7 +36,6 @@ extends:
       parameters:
         EnableNuGetCache: false
     ServiceDirectory: ${{ parameters.ServiceDirectory }}
-    Services: ${{ parameters.Services }}
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}
