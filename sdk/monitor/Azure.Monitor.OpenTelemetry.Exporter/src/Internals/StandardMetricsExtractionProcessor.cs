@@ -18,10 +18,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private AzureMonitorResource _resource;
         private readonly Meter _meter;
         private readonly Histogram<double> _requestDuration;
+        private readonly Histogram<double> _dependencyDuration;
 
         internal static readonly IReadOnlyDictionary<string, string> s_standardMetricNameMapping = new Dictionary<string, string>()
         {
             [StandardMetricConstants.RequestDurationInstrumentName] = StandardMetricConstants.RequestDurationMetricIdValue,
+            [StandardMetricConstants.DependencyDurationInstrumentName] = StandardMetricConstants.DependencyDurationMetricIdValue,
         };
 
         internal AzureMonitorResource StandardMetricResource => _resource ??= ParentProvider.GetResource().UpdateRoleNameAndInstance();
@@ -30,6 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             _meter = new Meter(StandardMetricConstants.StandardMetricMeterName);
             _requestDuration = _meter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
+            _dependencyDuration = _meter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
         }
 
         public override void OnEnd(Activity activity)
@@ -40,6 +43,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
                     ReportRequestDurationMetric(activity, SemanticConventions.AttributeHttpStatusCode);
+                }
+            }
+            if (activity.Kind == ActivityKind.Client || activity.Kind == ActivityKind.Internal)
+            {
+                if (_dependencyDuration.Enabled)
+                {
+                    activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
+                    ReportDependencyDurationMetric(activity);
                 }
             }
 
@@ -69,6 +80,66 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Report metric
             _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
+        }
+
+        private void ReportDependencyDurationMetric(Activity activity)
+        {
+            string statusCodeAttributeValue = null;
+            string netPeerNameAttributeValue = null;
+            string netPeerPortAttributeValue = null;
+            string dependencyType = "Unknown";
+            foreach (var tag in activity.EnumerateTagObjects())
+            {
+                if (tag.Key == SemanticConventions.AttributeHttpMethod)
+                {
+                    dependencyType = "Http";
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeDbSystem)
+                {
+                    dependencyType = RemoteDependencyData.s_sqlDbs.Contains(tag.Value.ToString()) ? "SQL" : tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeRpcSystem)
+                {
+                    dependencyType = tag.Value.ToString();
+                }
+                if (tag.Key == SemanticConventions.AttributeHttpStatusCode)
+                {
+                    statusCodeAttributeValue = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeNetPeerName)
+                {
+                    netPeerNameAttributeValue = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeNetPeerPort)
+                {
+                    netPeerPortAttributeValue = tag.Value.ToString();
+                    continue;
+                }
+            }
+
+            string dependencyTarget = netPeerNameAttributeValue;
+            if (!string.IsNullOrEmpty(dependencyTarget))
+            {
+                dependencyTarget = dependencyTarget + ":" + netPeerPortAttributeValue;
+            }
+
+            TagList tags = default;
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyResultCodeKey, statusCodeAttributeValue));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsAutoCollectedKey, "True"));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsSyntheticKey, "False"));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource.RoleInstance));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource.RoleName));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencySuccessKey, activity.Status != ActivityStatusCode.Error));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyTypeKey, dependencyType));
+
+            // Report metric
+            _dependencyDuration.Record(activity.Duration.TotalMilliseconds, tags);
         }
 
         protected override void Dispose(bool disposing)
