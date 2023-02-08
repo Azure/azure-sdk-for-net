@@ -4,6 +4,10 @@
 using NUnit.Framework;
 using Azure.Core.TestFramework;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Custom;
+using System.Diagnostics;
+using System;
+using System.IO;
 
 namespace Azure.AI.OpenAI.Tests
 {
@@ -105,6 +109,33 @@ namespace Azure.AI.OpenAI.Tests
             completionsRequest.Prompt.Add("Hello world");
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest); });
             Assert.AreEqual(404, exception.Status);
+        }
+
+        [RecordedTest]
+        public async Task StreamingCompletionsTest()
+        {
+            OpenAIClient client = GetClient();
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt =
+                {
+                    "Tell me some jokes about mangos",
+                    "What are some disturbing facts about papayas?"
+                },
+                MaxTokens = 512,
+            };
+
+            using var fileWriter = File.CreateText("foo.txt");
+
+            fileWriter.WriteLine($"{Environment.TickCount} : START");
+            Response<StreamingCompletions> response = await client.GetStreamingCompletionsAsync(
+                CompletionsDeploymentId,
+                requestOptions);
+
+            await foreach (string message in response.Value.GetAsyncMessages())
+            {
+                fileWriter.WriteLine($"{Environment.TickCount} : {message}");
+            }
         }
     }
 }
