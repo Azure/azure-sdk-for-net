@@ -1,5 +1,15 @@
 # Release History
 
+## 5.1.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 5.1.0-beta.1 (2023-02-07)
 - Added logging for details of a storage queue listener on start/stop operations.
 
