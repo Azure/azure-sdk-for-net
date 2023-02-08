@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
-            Optional<IList<ReplicaContainer>> containers = default;
+            Optional<IList<ContainerAppReplicaContainer>> containers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.AppContainers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ReplicaContainer> array = new List<ReplicaContainer>();
+                            List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ReplicaContainer.DeserializeReplicaContainer(item));
+                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item));
                             }
                             containers = array;
                             continue;

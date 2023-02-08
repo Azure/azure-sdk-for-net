@@ -52,22 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "StringNotIn": return StringNotInAdvancedFilter.DeserializeStringNotInAdvancedFilter(element);
                 }
             }
-            AdvancedFilterOperatorType operatorType = default;
-            Optional<string> key = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("operatorType"))
-                {
-                    operatorType = new AdvancedFilterOperatorType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("key"))
-                {
-                    key = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownAdvancedFilter(operatorType, key.Value);
+            return UnknownAdvancedFilter.DeserializeUnknownAdvancedFilter(element);
         }
     }
 }

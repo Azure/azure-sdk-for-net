@@ -75,7 +75,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-fca396e4-9bf9-4505-9903-a825614e7e5b/test-blob-60fe4572-8ad5-ccaf-0dfc-9d2fcc3d3660?sv=2021-10-04&st=2021-02-17T17%3A51%3A31Z&se=2021-02-17T19%3A51%3A31Z&sr=b&sp=t&sig=Sanitized&comp=tags",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-fca396e4-9bf9-4505-9903-a825614e7e5b/test-blob-60fe4572-8ad5-ccaf-0dfc-9d2fcc3d3660?sv=2021-12-02&st=2021-02-17T17%3A51%3A31Z&se=2021-02-17T19%3A51%3A31Z&sr=b&sp=t&sig=Sanitized&comp=tags",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -104,7 +104,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-fca396e4-9bf9-4505-9903-a825614e7e5b/test-blob-60fe4572-8ad5-ccaf-0dfc-9d2fcc3d3660?sv=2021-10-04&st=2021-02-17T17%3A51%3A31Z&se=2021-02-17T19%3A51%3A31Z&sr=b&sp=t&sig=Sanitized&comp=tags",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-fca396e4-9bf9-4505-9903-a825614e7e5b/test-blob-60fe4572-8ad5-ccaf-0dfc-9d2fcc3d3660?sv=2021-12-02&st=2021-02-17T17%3A51%3A31Z&se=2021-02-17T19%3A51%3A31Z&sr=b&sp=t&sig=Sanitized&comp=tags",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",

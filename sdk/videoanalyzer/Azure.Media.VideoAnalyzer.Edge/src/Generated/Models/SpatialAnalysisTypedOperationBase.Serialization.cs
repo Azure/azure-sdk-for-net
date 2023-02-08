@@ -74,7 +74,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> detectorNodeConfiguration = default;
             Optional<string> trackerNodeConfiguration = default;
             Optional<string> enableFaceMaskClassifier = default;
-            string type = default;
+            string type = "SpatialAnalysisTypedOperationBase";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("debug"))

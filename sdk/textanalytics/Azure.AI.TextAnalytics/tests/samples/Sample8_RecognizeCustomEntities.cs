@@ -14,8 +14,8 @@ namespace Azure.AI.TextAnalytics.Samples
         public void RecognizeCustomEntities()
         {
             // Create a text analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            string endpoint = TestEnvironment.StaticEndpoint;
+            string apiKey = TestEnvironment.StaticApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 

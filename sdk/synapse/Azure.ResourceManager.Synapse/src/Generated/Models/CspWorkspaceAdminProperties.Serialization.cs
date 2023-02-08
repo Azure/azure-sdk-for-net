@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,23 +19,28 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(InitialWorkspaceAdminObjectId))
             {
                 writer.WritePropertyName("initialWorkspaceAdminObjectId");
-                writer.WriteStringValue(InitialWorkspaceAdminObjectId);
+                writer.WriteStringValue(InitialWorkspaceAdminObjectId.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static CspWorkspaceAdminProperties DeserializeCspWorkspaceAdminProperties(JsonElement element)
         {
-            Optional<string> initialWorkspaceAdminObjectId = default;
+            Optional<Guid> initialWorkspaceAdminObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialWorkspaceAdminObjectId"))
                 {
-                    initialWorkspaceAdminObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    initialWorkspaceAdminObjectId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new CspWorkspaceAdminProperties(initialWorkspaceAdminObjectId.Value);
+            return new CspWorkspaceAdminProperties(Optional.ToNullable(initialWorkspaceAdminObjectId));
         }
     }
 }

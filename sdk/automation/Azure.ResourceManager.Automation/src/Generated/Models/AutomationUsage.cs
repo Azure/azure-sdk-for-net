@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="currentValue"> Gets or sets the current usage value. </param>
         /// <param name="limit"> Gets or sets max limit. -1 for unlimited. </param>
         /// <param name="throttleStatus"> Gets or sets the throttle status. </param>
-        internal AutomationUsage(string id, UsageCounterName name, string unit, double? currentValue, long? limit, string throttleStatus)
+        internal AutomationUsage(string id, AutomationUsageCounterName name, string unit, double? currentValue, long? limit, string throttleStatus)
         {
             Id = id;
             Name = name;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the id of the resource. </summary>
         public string Id { get; }
         /// <summary> Gets or sets the usage counter name. </summary>
-        public UsageCounterName Name { get; }
+        public AutomationUsageCounterName Name { get; }
         /// <summary> Gets or sets the usage unit name. </summary>
         public string Unit { get; }
         /// <summary> Gets or sets the current usage value. </summary>

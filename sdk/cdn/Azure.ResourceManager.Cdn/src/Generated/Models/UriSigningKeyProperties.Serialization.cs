@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("secretSource"))
                 {
-                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("secretVersion"))

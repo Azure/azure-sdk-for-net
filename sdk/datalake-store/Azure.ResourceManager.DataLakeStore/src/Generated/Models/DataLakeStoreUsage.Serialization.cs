@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreUsage DeserializeDataLakeStoreUsage(JsonElement element)
         {
-            Optional<UsageUnit> unit = default;
-            Optional<string> id = default;
+            Optional<DataLakeStoreUsageUnit> unit = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
-            Optional<UsageName> name = default;
+            Optional<DataLakeStoreUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"))
@@ -28,12 +28,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = property.Value.GetString().ToUsageUnit();
+                    unit = property.Value.GetString().ToDataLakeStoreUsageUnit();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = DataLakeStoreUsageName.DeserializeDataLakeStoreUsageName(property.Value);
                     continue;
                 }
             }

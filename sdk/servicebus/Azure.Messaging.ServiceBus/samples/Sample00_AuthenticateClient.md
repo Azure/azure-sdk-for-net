@@ -57,9 +57,3 @@ var sasToken = $"SharedAccessSignature sr={url}&sig={sig}&se={exp}&skn={keyName}
 var credential = new AzureSasCredential(sasToken);
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample00_AuthenticateClient.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample00_AuthenticateClient.cs)

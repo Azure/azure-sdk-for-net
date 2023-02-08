@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(Prefix);
             writer.WritePropertyName("container");
             writer.WriteStringValue(Container);
+            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
+            {
+                writer.WritePropertyName("preferred-data-archive-auth-method");
+                writer.WriteStringValue(PreferredDataArchiveAuthMethod);
+            }
             writer.WriteEndObject();
         }
     }

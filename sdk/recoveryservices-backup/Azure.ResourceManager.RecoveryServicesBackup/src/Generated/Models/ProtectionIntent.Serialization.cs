@@ -58,56 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "RecoveryServiceVaultItem": return AzureRecoveryServiceVaultProtectionIntent.DeserializeAzureRecoveryServiceVaultProtectionIntent(element);
                 }
             }
-            ProtectionIntentItemType protectionIntentItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> itemId = default;
-            Optional<string> policyId = default;
-            Optional<ProtectionStatus> protectionState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("protectionIntentItemType"))
-                {
-                    protectionIntentItemType = new ProtectionIntentItemType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sourceResourceId"))
-                {
-                    sourceResourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("itemId"))
-                {
-                    itemId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("policyId"))
-                {
-                    policyId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectionState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    protectionState = new ProtectionStatus(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState));
+            return UnknownProtectionIntent.DeserializeUnknownProtectionIntent(element);
         }
     }
 }

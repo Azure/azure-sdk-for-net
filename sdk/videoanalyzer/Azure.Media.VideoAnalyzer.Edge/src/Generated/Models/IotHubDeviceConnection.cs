@@ -25,7 +25,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of IotHubDeviceConnection. </summary>
         /// <param name="deviceId"> The name of the IoT device configured and managed in IoT Hub. (case-sensitive). </param>
-        /// <param name="credentials"> IoT device connection credentials. Currently IoT device symmetric key credentials are supported. </param>
+        /// <param name="credentials">
+        /// IoT device connection credentials. Currently IoT device symmetric key credentials are supported.
+        /// Please note <see cref="CredentialsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
+        /// </param>
         internal IotHubDeviceConnection(string deviceId, CredentialsBase credentials)
         {
             DeviceId = deviceId;
@@ -34,7 +38,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> The name of the IoT device configured and managed in IoT Hub. (case-sensitive). </summary>
         public string DeviceId { get; set; }
-        /// <summary> IoT device connection credentials. Currently IoT device symmetric key credentials are supported. </summary>
+        /// <summary>
+        /// IoT device connection credentials. Currently IoT device symmetric key credentials are supported.
+        /// Please note <see cref="CredentialsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
+        /// </summary>
         public CredentialsBase Credentials { get; set; }
     }
 }

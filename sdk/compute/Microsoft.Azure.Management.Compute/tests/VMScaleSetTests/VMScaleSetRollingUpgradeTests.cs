@@ -41,7 +41,7 @@ namespace Compute.Tests
                 VirtualMachineScaleSet inputVMScaleSet;
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                     EnsureClientsInitialized(context);
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
@@ -68,6 +68,15 @@ namespace Compute.Tests
                         {
                             vmScaleSet.Overprovision = false;
                             vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Rolling;
+                            vmScaleSet.UpgradePolicy.RollingUpgradePolicy = new RollingUpgradePolicy
+                            {
+                                MaxBatchInstancePercent = 100,
+                                MaxUnhealthyInstancePercent = 100,
+                                MaxUnhealthyUpgradedInstancePercent = 100,
+                                PauseTimeBetweenBatches = "PT0S",
+                                PrioritizeUnhealthyInstances = true,
+                                RollbackFailedInstancesOnPolicyBreach = true
+                            };
                         },
                         createWithManagedDisks: true,
                         createWithPublicIpAddress: false,
@@ -419,6 +428,78 @@ namespace Compute.Tests
                 {
                     Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     // Cleanup resource group and revert default location to the original location
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources with an SLB probe to use as a health probe
+        /// Create VMScaleSet in rolling upgrade mode
+        /// Verify max surge is set correctly
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetRollingUpgradeMaxSurge")]
+        public void TestVMScaleSetRollingUpgradeMaxSurge()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // Create resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    EnsureClientsInitialized(context);
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                    VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
+                    {
+                        Extensions = new List<VirtualMachineScaleSetExtension>()
+                        {
+                            GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
+                        }
+                    };
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.Overprovision = false;
+                            vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Rolling;
+                            vmScaleSet.UpgradePolicy.RollingUpgradePolicy = new RollingUpgradePolicy()
+                            {
+                                MaxSurge = true
+                            };
+                        },
+                        createWithManagedDisks: true,
+                        createWithPublicIpAddress: false,
+                        createWithHealthProbe: true);
+
+                    ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                    Assert.True(getResponse.UpgradePolicy.RollingUpgradePolicy.MaxSurge);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }

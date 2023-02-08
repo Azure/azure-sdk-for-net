@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hub = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    hub = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("spokes"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     spokes = array;
                     continue;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     mesh = array;
                     continue;

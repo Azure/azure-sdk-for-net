@@ -123,11 +123,4 @@ foreach (DeletedSecret secret in secretsDeleted)
 }
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample3_GetSecrets.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample3_GetSecrets.cs)
-* [Asynchronous Sample3_GetSecrets.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample3_GetSecretsAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

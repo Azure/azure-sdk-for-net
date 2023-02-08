@@ -33,7 +33,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="url"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
-        /// <param name="key"> Admin Key for Azure Search service. </param>
+        /// <param name="key">
+        /// Admin Key for Azure Search service
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal AzureSearchLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, SecretBase key, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -45,7 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> URL for Azure Search service. Type: string (or Expression with resultType string). </summary>
         public object Url { get; set; }
-        /// <summary> Admin Key for Azure Search service. </summary>
+        /// <summary>
+        /// Admin Key for Azure Search service
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Key { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

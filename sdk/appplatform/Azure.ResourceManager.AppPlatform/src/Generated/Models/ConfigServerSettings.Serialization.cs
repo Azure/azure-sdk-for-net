@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ConfigServerSettings DeserializeConfigServerSettings(JsonElement element)
         {
-            Optional<ConfigServerGitProperty> gitProperty = default;
+            Optional<AppPlatformConfigServerGitProperty> gitProperty = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gitProperty"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    gitProperty = ConfigServerGitProperty.DeserializeConfigServerGitProperty(property.Value);
+                    gitProperty = AppPlatformConfigServerGitProperty.DeserializeAppPlatformConfigServerGitProperty(property.Value);
                     continue;
                 }
             }

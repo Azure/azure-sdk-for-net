@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

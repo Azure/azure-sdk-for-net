@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -22,10 +22,14 @@ namespace Azure.Communication.CallAutomation
 
         private const string RecognizeInitialSilenceTimedOutValue = "8510";
         private const string RecognizeInterDigitTimedOutValue = "8532";
+        private const string RecognizeDtmfOptionMatchedValue = "8533";
         private const string RecognizePlayPromptFailedValue = "8511";
 
         private const string RecognizeMaxDigitsReceivedValue = "8531";
+        private const string RecognizeIncorrectToneDetectedValue = "8534";
         private const string RecognizeStopToneDetectedValue = "8514";
+        private const string RecognizeSpeechOptionMatchedValue = "8545";
+        private const string RecognizeSpeechOptionNotMatchedValue = "8547";
 
         private const string PlayDownloadFailedValue = "8536";
         private const string PlayInvalidFileFormatValue = "8535";
@@ -44,6 +48,15 @@ namespace Azure.Communication.CallAutomation
         public static ReasonCode RecognizeMaxDigitsReceived { get; } = new ReasonCode(RecognizeMaxDigitsReceivedValue);
         /// <summary> Action completed as stop tone was detected. </summary>
         public static ReasonCode RecognizeStopToneDetected { get; } = new ReasonCode(RecognizeStopToneDetectedValue);
+
+        /// <summary> Action failed, play source not working. </summary>
+        public static ReasonCode RecognizeDtmfOptionMatched { get; } = new ReasonCode(RecognizeDtmfOptionMatchedValue);
+        /// <summary> Speeach option matched. </summary>
+        public static ReasonCode RecognizeSpeechOptionMatched { get; } = new ReasonCode(RecognizeSpeechOptionMatchedValue);
+        /// <summary> Speeach option  not matched. </summary>
+        public static ReasonCode RecognizeSpeechOptionNotMatched { get; } = new ReasonCode(RecognizeSpeechOptionNotMatchedValue);
+        /// <summary> Recognize with Choice that incorrect tone detected. </summary>
+        public static ReasonCode RecognizeIncorrectToneDetected { get; } = new ReasonCode(RecognizeIncorrectToneDetectedValue);
 
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static ReasonCode PlayDownloadFailed { get; } = new ReasonCode(PlayDownloadFailedValue);

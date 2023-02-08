@@ -527,7 +527,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [kusto_query_language]: https://learn.microsoft.com/azure/data-explorer/kusto/query/
 [migration_guide_app_insights]: https://aka.ms/azsdk/net/migrate/ai-monitor-query
 [migration_guide_opp_insights]: https://aka.ms/azsdk/net/migrate/monitor-query
-[msdocs_apiref]: https://learn.microsoft.com/dotnet/api/overview/azure/monitor/query?view=azure-dotnet
+[msdocs_apiref]: https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query-readme?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query
 [source]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/src
 

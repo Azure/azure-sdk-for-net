@@ -145,7 +145,7 @@
 
   <Import Project="ApiListing.targets" />
 
-  <Import Project="CodeCoverage.targets" />
+  <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
 
   <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 

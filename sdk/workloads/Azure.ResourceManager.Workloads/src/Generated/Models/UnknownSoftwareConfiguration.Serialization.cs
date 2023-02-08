@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UnknownSoftwareConfiguration DeserializeUnknownSoftwareConfiguration(JsonElement element)
         {
-            SapSoftwareInstallationType softwareInstallationType = default;
+            SapSoftwareInstallationType softwareInstallationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softwareInstallationType"))

@@ -63,6 +63,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             writer.WritePropertyName("ver");
             writer.WriteNumberValue(Version);
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
             writer.WriteEndObject();
         }
     }

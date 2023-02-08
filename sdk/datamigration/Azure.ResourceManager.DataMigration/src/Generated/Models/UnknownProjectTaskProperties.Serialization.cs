@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UnknownProjectTaskProperties DeserializeUnknownProjectTaskProperties(JsonElement element)
         {
-            TaskType taskType = default;
+            TaskType taskType = "Unknown";
             Optional<IReadOnlyList<ODataError>> errors = default;
             Optional<TaskState> state = default;
             Optional<IReadOnlyList<CommandProperties>> commands = default;

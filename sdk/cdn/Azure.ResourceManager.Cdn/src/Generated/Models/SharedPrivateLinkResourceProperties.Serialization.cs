@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateLink = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    privateLink = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("privateLinkLocation"))

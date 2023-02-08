@@ -17,16 +17,20 @@ namespace Azure.Communication.Email.Tests
 
         [Test]
         [SyncOnly]
-        [TestCase(0, 0)]
-        [TestCase(1, 0)]
-        [TestCase(0, 1)]
-        [TestCase(1, 1)]
-        public void MultipleRecipients(int ccCount, int bccCount)
+        [TestCase(0, 0, 1)]
+        [TestCase(0, 1, 0)]
+        [TestCase(0, 1, 1)]
+        [TestCase(1, 0, 0)]
+        [TestCase(1, 0, 1)]
+        [TestCase(1, 1, 0)]
+        [TestCase(1, 1, 1)]
+        public void MultipleRecipients(int toCount, int ccCount, int bccCount)
         {
-            var recipients = new EmailRecipients(DefaultRecipients(), DefaultRecipients(ccCount), DefaultRecipients(bccCount));
+            var recipients = new EmailRecipients(DefaultRecipients(toCount), DefaultRecipients(ccCount), DefaultRecipients(bccCount));
 
             Assert.AreEqual(recipients.CC.Count, ccCount);
             Assert.AreEqual(recipients.BCC.Count, bccCount);
+            Assert.AreEqual(recipients.To.Count, toCount);
         }
 
         private static List<EmailAddress> DefaultRecipients(int count = 1)

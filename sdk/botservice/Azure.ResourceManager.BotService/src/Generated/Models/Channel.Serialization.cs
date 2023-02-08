@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -60,44 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
                     case "WebChatChannel": return WebChatChannel.DeserializeWebChatChannel(element);
                 }
             }
-            string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("channelName"))
-                {
-                    channelName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("etag"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        etag = null;
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    provisioningState = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location));
+            return UnknownChannel.DeserializeUnknownChannel(element);
         }
     }
 }

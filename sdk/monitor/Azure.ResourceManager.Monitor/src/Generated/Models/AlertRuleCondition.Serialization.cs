@@ -36,27 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     case "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition": return ThresholdRuleCondition.DeserializeThresholdRuleCondition(element);
                 }
             }
-            string odataType = default;
-            Optional<RuleDataSource> dataSource = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataSource"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownAlertRuleCondition(odataType, dataSource.Value);
+            return UnknownRuleCondition.DeserializeUnknownRuleCondition(element);
         }
     }
 }

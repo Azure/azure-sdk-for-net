@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
         internal static SoftwareUpdateConfigurationRun DeserializeSoftwareUpdateConfigurationRun(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<UpdateConfigurationNavigation> softwareUpdateConfiguration = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
             Optional<string> status = default;
             Optional<TimeSpan> configuredDuration = default;
             Optional<string> osType = default;
@@ -39,7 +39,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -58,7 +63,7 @@ namespace Azure.ResourceManager.Automation.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            softwareUpdateConfiguration = UpdateConfigurationNavigation.DeserializeUpdateConfigurationNavigation(property0.Value);
+                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"))

@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.Dns.Tests
         protected AzureLocation DefaultLocation = AzureLocation.EastUS;
         protected const string DefaultResourceGroupPrefix = "DnsRG";
 
-        public DnsServiceClientTestBase(bool isAsync) : base(isAsync)
+        public DnsServiceClientTestBase(bool isAsync, RecordedTestMode? mode = null)
+            : base(isAsync, mode)
         {
         }
 
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Dns.Tests
             return lro.Value;
         }
 
-        public async Task<DnsZoneResource> CreateADnsZone(string dnsZoneName, ResourceGroupResource rg)
+        public async Task<DnsZoneResource> CreateDnsZone(string dnsZoneName, ResourceGroupResource rg)
         {
             DnsZoneCollection collection = rg.GetDnsZones();
             DnsZoneData data = new DnsZoneData("Global") { };

@@ -54,8 +54,23 @@ namespace Azure.Maps.Search
         /// <item><description> Level 4 doesn’t add any more spell checking functions. </description></item>
         /// </list>
         public int? MaxFuzzyLevel { get; set; }
-        /// <summary> A comma separated list of indexes which should be utilized for the search. Item order does not matter. Available indexes are: Addr = Address range interpolation, Geo = Geographies, PAD = Point Addresses, POI = Points of interest, Str = Streets, Xstr = Cross Streets (intersections). </summary>
-        public IList<SearchIndex> IndexFilter { get; }
+
+        /// <summary>
+        /// Indexes which should be utilized for the search.
+        ///
+        /// Available indexes are:
+        /// <list>
+        /// <item><description> <c>Addr</c> - Address ranges </description></item>
+        /// <item><description> <c>Geo</c> - Geographies </description></item>
+        /// <item><description> <c>PAD</c> - Point Addresses </description></item>
+        /// <item><description> <c>POI</c> - Points of Interest </description></item>
+        /// <item><description> <c>Str</c> - Streets </description></item>
+        /// <item><description> <c>XStr</c> - Cross Streets (intersections) </description></item>
+        /// </list>
+        ///
+        /// Value should be a list of search indices (in any order) or <c>null</c> for no indices.
+        /// </summary>
+        public IEnumerable<SearchIndex> IndexFilter { get; set; }
 
         /// <summary>
         /// Indexes for which extended postal codes should be included in the results.

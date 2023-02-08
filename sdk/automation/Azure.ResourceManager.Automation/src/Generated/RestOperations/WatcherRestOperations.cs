@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, WatcherData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="watcherName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatcherData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, WatcherData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationWatcherData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                 case 201:
                     {
-                        WatcherData value = default;
+                        AutomationWatcherData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatcherData.DeserializeWatcherData(document.RootElement);
+                        value = AutomationWatcherData.DeserializeAutomationWatcherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="watcherName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatcherData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, WatcherData data, CancellationToken cancellationToken = default)
+        public Response<AutomationWatcherData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                 case 201:
                     {
-                        WatcherData value = default;
+                        AutomationWatcherData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatcherData.DeserializeWatcherData(document.RootElement);
+                        value = AutomationWatcherData.DeserializeAutomationWatcherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatcherData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationWatcherData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WatcherData value = default;
+                        AutomationWatcherData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatcherData.DeserializeWatcherData(document.RootElement);
+                        value = AutomationWatcherData.DeserializeAutomationWatcherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WatcherData)null, message.Response);
+                    return Response.FromValue((AutomationWatcherData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatcherData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
+        public Response<AutomationWatcherData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -207,19 +207,19 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WatcherData value = default;
+                        AutomationWatcherData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatcherData.DeserializeWatcherData(document.RootElement);
+                        value = AutomationWatcherData.DeserializeAutomationWatcherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WatcherData)null, message.Response);
+                    return Response.FromValue((AutomationWatcherData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, WatcherPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="watcherName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatcherData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, WatcherPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationWatcherData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WatcherData value = default;
+                        AutomationWatcherData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatcherData.DeserializeWatcherData(document.RootElement);
+                        value = AutomationWatcherData.DeserializeAutomationWatcherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="watcherName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatcherData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, WatcherPatch patch, CancellationToken cancellationToken = default)
+        public Response<AutomationWatcherData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -301,9 +301,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WatcherData value = default;
+                        AutomationWatcherData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatcherData.DeserializeWatcherData(document.RootElement);
+                        value = AutomationWatcherData.DeserializeAutomationWatcherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatcherListResult>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationWatcherListResult>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -580,9 +580,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WatcherListResult value = default;
+                        AutomationWatcherListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatcherListResult.DeserializeWatcherListResult(document.RootElement);
+                        value = AutomationWatcherListResult.DeserializeAutomationWatcherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatcherListResult> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AutomationWatcherListResult> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -610,9 +610,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WatcherListResult value = default;
+                        AutomationWatcherListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatcherListResult.DeserializeWatcherListResult(document.RootElement);
+                        value = AutomationWatcherListResult.DeserializeAutomationWatcherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatcherListResult>> ListByAutomationAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationWatcherListResult>> ListByAutomationAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -656,9 +656,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WatcherListResult value = default;
+                        AutomationWatcherListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatcherListResult.DeserializeWatcherListResult(document.RootElement);
+                        value = AutomationWatcherListResult.DeserializeAutomationWatcherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatcherListResult> ListByAutomationAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AutomationWatcherListResult> ListByAutomationAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -688,9 +688,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        WatcherListResult value = default;
+                        AutomationWatcherListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatcherListResult.DeserializeWatcherListResult(document.RootElement);
+                        value = AutomationWatcherListResult.DeserializeAutomationWatcherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

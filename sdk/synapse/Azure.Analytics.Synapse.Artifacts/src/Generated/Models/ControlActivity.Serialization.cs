@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             string name = default;
-            string type = default;
+            string type = "Container";
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;

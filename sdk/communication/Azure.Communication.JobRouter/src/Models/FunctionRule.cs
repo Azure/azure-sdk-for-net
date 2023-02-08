@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="functionAppUri"> URL for custom azure function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public FunctionRule(Uri functionAppUri)
-            : this(null, functionAppUri?.AbsoluteUri, null)
+            : this(null, functionAppUri, null)
         {
             if (functionAppUri == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="credential"> Access credentials to Azure function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public FunctionRule(Uri functionAppUri, FunctionRuleCredential credential)
-            : this(null, functionAppUri?.AbsoluteUri, credential)
+            : this(null, functionAppUri, credential)
         {
             if (functionAppUri == null)
             {

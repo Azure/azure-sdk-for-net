@@ -65,8 +65,14 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
-        internal string ComputeHMACSHA256(string message) =>
-            Convert.ToBase64String(new HMACSHA256(AccountKeyValue).ComputeHash(Encoding.UTF8.GetBytes(message)));
+        internal string ComputeHMACSHA256(string message)
+        {
+#if NET6_0_OR_GREATER
+            return Convert.ToBase64String(HMACSHA256.HashData(AccountKeyValue, Encoding.UTF8.GetBytes(message)));
+#else
+            return Convert.ToBase64String(new HMACSHA256(AccountKeyValue).ComputeHash(Encoding.UTF8.GetBytes(message)));
+#endif
+        }
 
         /// <summary>
         /// Generates a base-64 hash signature string for an HTTP request or

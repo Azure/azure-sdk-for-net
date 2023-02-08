@@ -16,17 +16,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("kind");
             }
             writer.WriteEndObject();
         }
 
         internal static ExternalSecuritySolution DeserializeExternalSecuritySolution(JsonElement element)
         {
-            Optional<ExternalSecuritySolutionKind> kind = default;
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AAD": return AadExternalSecuritySolution.DeserializeAadExternalSecuritySolution(element);
+                    case "ATA": return AtaExternalSecuritySolution.DeserializeAtaExternalSecuritySolution(element);
+                    case "CEF": return CefExternalSecuritySolution.DeserializeCefExternalSecuritySolution(element);
+                }
+            }
+            ExternalSecuritySolutionKind? kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -38,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        kind = null;
                         continue;
                     }
                     kind = new ExternalSecuritySolutionKind(property.Value.GetString());
@@ -76,11 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new ExternalSecuritySolution(id, name, type, systemData.Value, Optional.ToNullable(kind), Optional.ToNullable(location));
+            return new ExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location));
         }
     }
 }

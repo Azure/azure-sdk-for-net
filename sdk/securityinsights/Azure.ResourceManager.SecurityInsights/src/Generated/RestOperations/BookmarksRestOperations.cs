@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bookmarkId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BookmarkData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsBookmarkData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        BookmarkData value = default;
+                        SecurityInsightsBookmarkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BookmarkData.DeserializeBookmarkData(document.RootElement);
+                        value = SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BookmarkData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsBookmarkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bookmarkId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BookmarkData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsBookmarkData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        BookmarkData value = default;
+                        SecurityInsightsBookmarkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BookmarkData.DeserializeBookmarkData(document.RootElement);
+                        value = SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BookmarkData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsBookmarkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, BookmarkData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, SecurityInsightsBookmarkData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="bookmarkId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BookmarkData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, BookmarkData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsBookmarkData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, SecurityInsightsBookmarkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        BookmarkData value = default;
+                        SecurityInsightsBookmarkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BookmarkData.DeserializeBookmarkData(document.RootElement);
+                        value = SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="bookmarkId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BookmarkData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, BookmarkData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsBookmarkData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, SecurityInsightsBookmarkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        BookmarkData value = default;
+                        SecurityInsightsBookmarkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BookmarkData.DeserializeBookmarkData(document.RootElement);
+                        value = SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,99 +369,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateExpandRequest(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, BookmarkExpandContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/bookmarks/", false);
-            uri.AppendPath(bookmarkId, true);
-            uri.AppendPath("/expand", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Expand an bookmark. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="bookmarkId"> Bookmark ID. </param>
-        /// <param name="content"> The parameters required to execute an expand operation on the given bookmark. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="bookmarkId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BookmarkExpandResponse>> ExpandAsync(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, BookmarkExpandContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateExpandRequest(subscriptionId, resourceGroupName, workspaceName, bookmarkId, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BookmarkExpandResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BookmarkExpandResponse.DeserializeBookmarkExpandResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Expand an bookmark. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="bookmarkId"> Bookmark ID. </param>
-        /// <param name="content"> The parameters required to execute an expand operation on the given bookmark. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="bookmarkId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BookmarkExpandResponse> Expand(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, BookmarkExpandContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateExpandRequest(subscriptionId, resourceGroupName, workspaceName, bookmarkId, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BookmarkExpandResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BookmarkExpandResponse.DeserializeBookmarkExpandResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

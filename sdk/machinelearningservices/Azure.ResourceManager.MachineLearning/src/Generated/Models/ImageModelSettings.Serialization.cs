@@ -75,30 +75,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("beta2");
                 }
             }
-            if (Optional.IsDefined(CheckpointDatasetId))
-            {
-                if (CheckpointDatasetId != null)
-                {
-                    writer.WritePropertyName("checkpointDatasetId");
-                    writer.WriteStringValue(CheckpointDatasetId);
-                }
-                else
-                {
-                    writer.WriteNull("checkpointDatasetId");
-                }
-            }
-            if (Optional.IsDefined(CheckpointFilename))
-            {
-                if (CheckpointFilename != null)
-                {
-                    writer.WritePropertyName("checkpointFilename");
-                    writer.WriteStringValue(CheckpointFilename);
-                }
-                else
-                {
-                    writer.WriteNull("checkpointFilename");
-                }
-            }
             if (Optional.IsDefined(CheckpointFrequency))
             {
                 if (CheckpointFrequency != null)
@@ -109,6 +85,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("checkpointFrequency");
+                }
+            }
+            if (Optional.IsDefined(CheckpointModel))
+            {
+                if (CheckpointModel != null)
+                {
+                    writer.WritePropertyName("checkpointModel");
+                    writer.WriteObjectValue(CheckpointModel);
+                }
+                else
+                {
+                    writer.WriteNull("checkpointModel");
                 }
             }
             if (Optional.IsDefined(CheckpointRunId))
@@ -313,18 +301,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("randomSeed");
                 }
             }
-            if (Optional.IsDefined(SplitRatio))
-            {
-                if (SplitRatio != null)
-                {
-                    writer.WritePropertyName("splitRatio");
-                    writer.WriteNumberValue(SplitRatio.Value);
-                }
-                else
-                {
-                    writer.WriteNull("splitRatio");
-                }
-            }
             if (Optional.IsDefined(StepLRGamma))
             {
                 if (StepLRGamma != null)
@@ -419,9 +395,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> augmentations = default;
             Optional<float?> beta1 = default;
             Optional<float?> beta2 = default;
-            Optional<string> checkpointDatasetId = default;
-            Optional<string> checkpointFilename = default;
             Optional<int?> checkpointFrequency = default;
+            Optional<MachineLearningFlowModelJobInput> checkpointModel = default;
             Optional<string> checkpointRunId = default;
             Optional<bool?> distributed = default;
             Optional<bool?> earlyStopping = default;
@@ -440,7 +415,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int?> numberOfWorkers = default;
             Optional<StochasticOptimizer> optimizer = default;
             Optional<int?> randomSeed = default;
-            Optional<float?> splitRatio = default;
             Optional<float?> stepLRGamma = default;
             Optional<int?> stepLRStepSize = default;
             Optional<int?> trainingBatchSize = default;
@@ -500,26 +474,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     beta2 = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("checkpointDatasetId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        checkpointDatasetId = null;
-                        continue;
-                    }
-                    checkpointDatasetId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("checkpointFilename"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        checkpointFilename = null;
-                        continue;
-                    }
-                    checkpointFilename = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("checkpointFrequency"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -528,6 +482,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     checkpointFrequency = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("checkpointModel"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        checkpointModel = null;
+                        continue;
+                    }
+                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value);
                     continue;
                 }
                 if (property.NameEquals("checkpointRunId"))
@@ -710,16 +674,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     randomSeed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("splitRatio"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        splitRatio = null;
-                        continue;
-                    }
-                    splitRatio = property.Value.GetSingle();
-                    continue;
-                }
                 if (property.NameEquals("stepLRGamma"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -791,7 +745,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ImageModelSettings(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), checkpointDatasetId.Value, checkpointFilename.Value, Optional.ToNullable(checkpointFrequency), checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(splitRatio), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay));
+            return new ImageModelSettings(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay));
         }
     }
 }

@@ -6,7 +6,8 @@
 This sample shows how to call GetEnvironmentByUserAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 Response response = await client.GetEnvironmentByUserAsync("<environmentName>");
 
@@ -17,14 +18,15 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetEnvironmentByUserAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 Response response = await client.GetEnvironmentByUserAsync("<environmentName>", <me>);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
-Console.WriteLine(result.GetProperty("owner").ToString());
+Console.WriteLine(result.GetProperty("user").ToString());
 Console.WriteLine(result.GetProperty("provisioningState").ToString());
 Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -46,7 +48,7 @@ Schema for <c>Environment</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -65,7 +67,8 @@ Schema for <c>Environment</c>:
 This sample shows how to call GetEnvironmentByUser with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 Response response = client.GetEnvironmentByUser("<environmentName>");
 
@@ -76,14 +79,15 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetEnvironmentByUser with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 Response response = client.GetEnvironmentByUser("<environmentName>", <me>);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
-Console.WriteLine(result.GetProperty("owner").ToString());
+Console.WriteLine(result.GetProperty("user").ToString());
 Console.WriteLine(result.GetProperty("provisioningState").ToString());
 Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -105,7 +109,7 @@ Schema for <c>Environment</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -124,7 +128,8 @@ Schema for <c>Environment</c>:
 This sample shows how to call UpdateEnvironmentAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     environmentType = "<environmentType>",
@@ -139,11 +144,12 @@ Console.WriteLine(result.ToString());
 This sample shows how to call UpdateEnvironmentAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     environmentType = "<environmentType>",
-    owner = "<owner>",
+    user = "<user>",
     description = "<description>",
     catalogName = "<catalogName>",
     catalogItemName = "<catalogItemName>",
@@ -165,7 +171,7 @@ Response response = await client.UpdateEnvironmentAsync("<environmentName>", Req
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
-Console.WriteLine(result.GetProperty("owner").ToString());
+Console.WriteLine(result.GetProperty("user").ToString());
 Console.WriteLine(result.GetProperty("provisioningState").ToString());
 Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -187,7 +193,7 @@ Request Body:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -206,7 +212,7 @@ Schema for <c>Environment</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -225,7 +231,8 @@ Schema for <c>Environment</c>:
 This sample shows how to call UpdateEnvironment with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     environmentType = "<environmentType>",
@@ -240,11 +247,12 @@ Console.WriteLine(result.ToString());
 This sample shows how to call UpdateEnvironment with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     environmentType = "<environmentType>",
-    owner = "<owner>",
+    user = "<user>",
     description = "<description>",
     catalogName = "<catalogName>",
     catalogItemName = "<catalogItemName>",
@@ -266,7 +274,7 @@ Response response = client.UpdateEnvironment("<environmentName>", RequestContent
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
-Console.WriteLine(result.GetProperty("owner").ToString());
+Console.WriteLine(result.GetProperty("user").ToString());
 Console.WriteLine(result.GetProperty("provisioningState").ToString());
 Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -288,7 +296,7 @@ Request Body:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -307,7 +315,7 @@ Schema for <c>Environment</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -326,7 +334,8 @@ Schema for <c>Environment</c>:
 This sample shows how to call GetCatalogItemAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 Response response = await client.GetCatalogItemAsync("<catalogItemId>");
 
@@ -356,7 +365,8 @@ Schema for <c>CatalogItem</c>:
 This sample shows how to call GetCatalogItem with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 Response response = client.GetCatalogItem("<catalogItemId>");
 
@@ -386,7 +396,8 @@ Schema for <c>CatalogItem</c>:
 This sample shows how to call GetCatalogItemVersionAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>");
 
@@ -479,7 +490,8 @@ Schema for <c>CatalogItemVersion</c>:
 This sample shows how to call GetCatalogItemVersion with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>");
 
@@ -572,7 +584,8 @@ Schema for <c>CatalogItemVersion</c>:
 This sample shows how to call GetEnvironmentsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetEnvironmentsAsync())
 {
@@ -584,14 +597,15 @@ await foreach (var data in client.GetEnvironmentsAsync())
 This sample shows how to call GetEnvironmentsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetEnvironmentsAsync(1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.GetProperty("owner").ToString());
+    Console.WriteLine(result.GetProperty("user").ToString());
     Console.WriteLine(result.GetProperty("provisioningState").ToString());
     Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
@@ -614,7 +628,7 @@ Schema for <c>EnvironmentListResultValue</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -633,7 +647,8 @@ Schema for <c>EnvironmentListResultValue</c>:
 This sample shows how to call GetEnvironments and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetEnvironments())
 {
@@ -645,14 +660,15 @@ foreach (var data in client.GetEnvironments())
 This sample shows how to call GetEnvironments with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetEnvironments(1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.GetProperty("owner").ToString());
+    Console.WriteLine(result.GetProperty("user").ToString());
     Console.WriteLine(result.GetProperty("provisioningState").ToString());
     Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
@@ -675,7 +691,7 @@ Schema for <c>EnvironmentListResultValue</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -694,7 +710,8 @@ Schema for <c>EnvironmentListResultValue</c>:
 This sample shows how to call GetEnvironmentsByUserAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetEnvironmentsByUserAsync())
 {
@@ -706,14 +723,15 @@ await foreach (var data in client.GetEnvironmentsByUserAsync())
 This sample shows how to call GetEnvironmentsByUserAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetEnvironmentsByUserAsync(<me>, 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.GetProperty("owner").ToString());
+    Console.WriteLine(result.GetProperty("user").ToString());
     Console.WriteLine(result.GetProperty("provisioningState").ToString());
     Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
@@ -736,7 +754,7 @@ Schema for <c>EnvironmentListResultValue</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -755,7 +773,8 @@ Schema for <c>EnvironmentListResultValue</c>:
 This sample shows how to call GetEnvironmentsByUser and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetEnvironmentsByUser())
 {
@@ -767,14 +786,15 @@ foreach (var data in client.GetEnvironmentsByUser())
 This sample shows how to call GetEnvironmentsByUser with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetEnvironmentsByUser(<me>, 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.GetProperty("owner").ToString());
+    Console.WriteLine(result.GetProperty("user").ToString());
     Console.WriteLine(result.GetProperty("provisioningState").ToString());
     Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
@@ -797,7 +817,7 @@ Schema for <c>EnvironmentListResultValue</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -811,212 +831,13 @@ Schema for <c>EnvironmentListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetArtifactsByEnvironmentAsync(String,String,RequestContext)">
-<example>
-This sample shows how to call GetArtifactsByEnvironmentAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-await foreach (var data in client.GetArtifactsByEnvironmentAsync("<environmentName>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetArtifactsByEnvironmentAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-await foreach (var data in client.GetArtifactsByEnvironmentAsync("<environmentName>", <me>))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("isDirectory").ToString());
-    Console.WriteLine(result.GetProperty("downloadUri").ToString());
-    Console.WriteLine(result.GetProperty("fileSize").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastModifiedTime").ToString());
-}
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ArtifactListResultValue</c>:
-<code>{
-  id: string, # Optional. Artifact identifier
-  name: string, # Optional. Artifact name
-  isDirectory: boolean, # Optional. Whether artifact is a directory
-  downloadUri: string, # Optional. Uri where the file contents can be downloaded
-  fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
-  createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
-  lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetArtifactsByEnvironment(String,String,RequestContext)">
-<example>
-This sample shows how to call GetArtifactsByEnvironment with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-foreach (var data in client.GetArtifactsByEnvironment("<environmentName>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetArtifactsByEnvironment with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-foreach (var data in client.GetArtifactsByEnvironment("<environmentName>", <me>))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("isDirectory").ToString());
-    Console.WriteLine(result.GetProperty("downloadUri").ToString());
-    Console.WriteLine(result.GetProperty("fileSize").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastModifiedTime").ToString());
-}
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ArtifactListResultValue</c>:
-<code>{
-  id: string, # Optional. Artifact identifier
-  name: string, # Optional. Artifact name
-  isDirectory: boolean, # Optional. Whether artifact is a directory
-  downloadUri: string, # Optional. Uri where the file contents can be downloaded
-  fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
-  createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
-  lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetArtifactsByEnvironmentAndPathAsync(String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetArtifactsByEnvironmentAndPathAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-await foreach (var data in client.GetArtifactsByEnvironmentAndPathAsync("<environmentName>", "<artifactPath>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetArtifactsByEnvironmentAndPathAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-await foreach (var data in client.GetArtifactsByEnvironmentAndPathAsync("<environmentName>", "<artifactPath>", <me>))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("isDirectory").ToString());
-    Console.WriteLine(result.GetProperty("downloadUri").ToString());
-    Console.WriteLine(result.GetProperty("fileSize").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastModifiedTime").ToString());
-}
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ArtifactListResultValue</c>:
-<code>{
-  id: string, # Optional. Artifact identifier
-  name: string, # Optional. Artifact name
-  isDirectory: boolean, # Optional. Whether artifact is a directory
-  downloadUri: string, # Optional. Uri where the file contents can be downloaded
-  fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
-  createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
-  lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetArtifactsByEnvironmentAndPath(String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetArtifactsByEnvironmentAndPath with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-foreach (var data in client.GetArtifactsByEnvironmentAndPath("<environmentName>", "<artifactPath>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetArtifactsByEnvironmentAndPath with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-foreach (var data in client.GetArtifactsByEnvironmentAndPath("<environmentName>", "<artifactPath>", <me>))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("isDirectory").ToString());
-    Console.WriteLine(result.GetProperty("downloadUri").ToString());
-    Console.WriteLine(result.GetProperty("fileSize").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastModifiedTime").ToString());
-}
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ArtifactListResultValue</c>:
-<code>{
-  id: string, # Optional. Artifact identifier
-  name: string, # Optional. Artifact name
-  isDirectory: boolean, # Optional. Whether artifact is a directory
-  downloadUri: string, # Optional. Uri where the file contents can be downloaded
-  fileSize: number, # Optional. Size of file in bytes, if the artifact is a file
-  createdTime: string (ISO 8601 Format), # Optional. Time the artifact was created
-  lastModifiedTime: string (ISO 8601 Format), # Optional. Time the artifact was last modified
-}
-</code>
-
-</remarks>
-    </member>
     <member name="GetCatalogItemsAsync(Int32,RequestContext)">
 <example>
 This sample shows how to call GetCatalogItemsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetCatalogItemsAsync())
 {
@@ -1027,7 +848,8 @@ await foreach (var data in client.GetCatalogItemsAsync())
 This sample shows how to call GetCatalogItemsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetCatalogItemsAsync(1234))
 {
@@ -1058,7 +880,8 @@ Schema for <c>CatalogItemListResultValue</c>:
 This sample shows how to call GetCatalogItems and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetCatalogItems())
 {
@@ -1069,7 +892,8 @@ foreach (var data in client.GetCatalogItems())
 This sample shows how to call GetCatalogItems with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetCatalogItems(1234))
 {
@@ -1100,7 +924,8 @@ Schema for <c>CatalogItemListResultValue</c>:
 This sample shows how to call GetCatalogItemVersionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>"))
 {
@@ -1111,7 +936,8 @@ await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>")
 This sample shows how to call GetCatalogItemVersionsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>", 1234))
 {
@@ -1205,7 +1031,8 @@ Schema for <c>CatalogItemVersionListResultValue</c>:
 This sample shows how to call GetCatalogItemVersions with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetCatalogItemVersions("<catalogItemId>"))
 {
@@ -1216,7 +1043,8 @@ foreach (var data in client.GetCatalogItemVersions("<catalogItemId>"))
 This sample shows how to call GetCatalogItemVersions with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetCatalogItemVersions("<catalogItemId>", 1234))
 {
@@ -1310,7 +1138,8 @@ Schema for <c>CatalogItemVersionListResultValue</c>:
 This sample shows how to call GetEnvironmentTypesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetEnvironmentTypesAsync())
 {
@@ -1321,7 +1150,8 @@ await foreach (var data in client.GetEnvironmentTypesAsync())
 This sample shows how to call GetEnvironmentTypesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 await foreach (var data in client.GetEnvironmentTypesAsync(1234))
 {
@@ -1352,7 +1182,8 @@ Schema for <c>EnvironmentTypeListResultValue</c>:
 This sample shows how to call GetEnvironmentTypes and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetEnvironmentTypes())
 {
@@ -1363,7 +1194,8 @@ foreach (var data in client.GetEnvironmentTypes())
 This sample shows how to call GetEnvironmentTypes with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 foreach (var data in client.GetEnvironmentTypes(1234))
 {
@@ -1394,7 +1226,8 @@ Schema for <c>EnvironmentTypeListResultValue</c>:
 This sample shows how to call CreateOrUpdateEnvironmentAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     environmentType = "<environmentType>",
@@ -1402,7 +1235,7 @@ var data = new {
 
 var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.ToString());
@@ -1410,11 +1243,12 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateEnvironmentAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     environmentType = "<environmentType>",
-    owner = "<owner>",
+    user = "<user>",
     description = "<description>",
     catalogName = "<catalogName>",
     catalogItemName = "<catalogItemName>",
@@ -1433,11 +1267,11 @@ var data = new {
 
 var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
-Console.WriteLine(result.GetProperty("owner").ToString());
+Console.WriteLine(result.GetProperty("user").ToString());
 Console.WriteLine(result.GetProperty("provisioningState").ToString());
 Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -1459,7 +1293,7 @@ Schema for <c>Environment</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -1477,7 +1311,7 @@ Schema for <c>Environment</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -1496,7 +1330,8 @@ Schema for <c>Environment</c>:
 This sample shows how to call CreateOrUpdateEnvironment with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     environmentType = "<environmentType>",
@@ -1504,7 +1339,7 @@ var data = new {
 
 var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.ToString());
@@ -1512,11 +1347,12 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateEnvironment with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     environmentType = "<environmentType>",
-    owner = "<owner>",
+    user = "<user>",
     description = "<description>",
     catalogName = "<catalogName>",
     catalogItemName = "<catalogItemName>",
@@ -1535,11 +1371,11 @@ var data = new {
 
 var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
-Console.WriteLine(result.GetProperty("owner").ToString());
+Console.WriteLine(result.GetProperty("user").ToString());
 Console.WriteLine(result.GetProperty("provisioningState").ToString());
 Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -1561,7 +1397,7 @@ Schema for <c>Environment</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -1579,7 +1415,7 @@ Schema for <c>Environment</c>:
 <code>{
   name: string, # Optional. Environment name.
   environmentType: string, # Required. Environment type.
-  owner: string, # Optional. Identifier of the owner of this Environment.
+  user: string, # Optional. The AAD object id of the owner of this Environment.
   provisioningState: string, # Optional. The provisioning state of the environment.
   resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
   description: string, # Optional. Description of the Environment.
@@ -1598,22 +1434,22 @@ Schema for <c>Environment</c>:
 This sample shows how to call DeleteEnvironmentAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeleteEnvironmentAsync with all parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>", <me>);
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1622,22 +1458,22 @@ Console.WriteLine(response.Status)
 This sample shows how to call DeleteEnvironment with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeleteEnvironment with all parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>", <me>);
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1646,7 +1482,8 @@ Console.WriteLine(response.Status)
 This sample shows how to call DeployEnvironmentActionAsync with required parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     actionId = "<actionId>",
@@ -1654,13 +1491,13 @@ var data = new {
 
 var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeployEnvironmentActionAsync with all parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     actionId = "<actionId>",
@@ -1669,8 +1506,7 @@ var data = new {
 
 var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1692,7 +1528,8 @@ Schema for <c>ActionRequest</c>:
 This sample shows how to call DeployEnvironmentAction with required parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     actionId = "<actionId>",
@@ -1700,13 +1537,13 @@ var data = new {
 
 var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeployEnvironmentAction with all parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     actionId = "<actionId>",
@@ -1715,100 +1552,7 @@ var data = new {
 
 var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: AnyObject, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="DeleteEnvironmentActionAsync(WaitUntil,String,RequestContent,String,RequestContext)">
-<example>
-This sample shows how to call DeleteEnvironmentActionAsync with required parameters and request content.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-var data = new {
-    actionId = "<actionId>",
-};
-
-var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
-]]></code>
-This sample shows how to call DeleteEnvironmentActionAsync with all parameters and request content.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-var data = new {
-    actionId = "<actionId>",
-    parameters = new {},
-};
-
-var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: AnyObject, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="DeleteEnvironmentAction(WaitUntil,String,RequestContent,String,RequestContext)">
-<example>
-This sample shows how to call DeleteEnvironmentAction with required parameters and request content.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-var data = new {
-    actionId = "<actionId>",
-};
-
-var operation = client.DeleteEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
-
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
-]]></code>
-This sample shows how to call DeleteEnvironmentAction with all parameters and request content.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
-
-var data = new {
-    actionId = "<actionId>",
-    parameters = new {},
-};
-
-var operation = client.DeleteEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
-
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1830,7 +1574,8 @@ Schema for <c>ActionRequest</c>:
 This sample shows how to call CustomEnvironmentActionAsync with required parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     actionId = "<actionId>",
@@ -1838,13 +1583,13 @@ var data = new {
 
 var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call CustomEnvironmentActionAsync with all parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     actionId = "<actionId>",
@@ -1853,8 +1598,7 @@ var data = new {
 
 var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1876,7 +1620,8 @@ Schema for <c>ActionRequest</c>:
 This sample shows how to call CustomEnvironmentAction with required parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     actionId = "<actionId>",
@@ -1884,13 +1629,13 @@ var data = new {
 
 var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call CustomEnvironmentAction with all parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var data = new {
     actionId = "<actionId>",
@@ -1899,8 +1644,7 @@ var data = new {
 
 var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>

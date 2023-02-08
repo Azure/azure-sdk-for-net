@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Workloads
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Workloads
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.ToString());
+                            errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("providerSettings"))

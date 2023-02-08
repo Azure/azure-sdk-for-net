@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "ImmediateCopyOption": return ImmediateCopySetting.DeserializeImmediateCopySetting(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionBackupCopySetting(objectType);
+            return UnknownCopyOption.DeserializeUnknownCopyOption(element);
         }
     }
 }

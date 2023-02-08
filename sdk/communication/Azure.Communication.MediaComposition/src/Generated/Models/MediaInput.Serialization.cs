@@ -44,22 +44,7 @@ namespace Azure.Communication.MediaComposition.Models
                     case "teamsMeeting": return TeamsMeetingInput.DeserializeTeamsMeetingInput(element);
                 }
             }
-            MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new MediaInputType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("placeholderImageUri"))
-                {
-                    placeholderImageUri = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MediaInput(kind, placeholderImageUri.Value);
+            return UnknownMediaInput.DeserializeUnknownMediaInput(element);
         }
     }
 }

@@ -36,22 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element);
                 }
             }
-            string odataType = default;
-            string filenamePattern = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("filenamePattern"))
-                {
-                    filenamePattern = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMediaFormatBase(odataType, filenamePattern);
+            return UnknownFormat.DeserializeUnknownFormat(element);
         }
     }
 }

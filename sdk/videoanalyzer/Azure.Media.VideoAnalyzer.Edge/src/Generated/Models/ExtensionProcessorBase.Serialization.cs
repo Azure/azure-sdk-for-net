@@ -52,7 +52,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             EndpointBase endpoint = default;
             ImageProperties image = default;
             Optional<SamplingOptions> samplingOptions = default;
-            string type = default;
+            string type = "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
             string name = default;
             IList<NodeInput> inputs = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+keep-orphaned-models:
+  - ExternalSecuritySolutionKind
+
 rename-mapping:
   OnPremiseResourceDetails.vmuuid: VmUuid|uuid
   RecommendationType.IoT_ACRAuthentication: IotAcrAuthentication
@@ -379,4 +382,45 @@ directive:
   - remove-operation: InformationProtectionPolicies_Get
   - remove-operation: Tasks_UpdateSubscriptionLevelTaskState
   - remove-operation: Tasks_UpdateResourceGroupLevelTaskState
+  - from: externalSecuritySolutions.json
+    where: $.definitions['ExternalSecuritySolutionKind']
+    transform: >
+        $ = {
+          "type": "string",
+          "description": "The kind of the external solution",
+          "enum": [
+            "CEF",
+            "ATA",
+            "AAD"
+          ],
+          "x-ms-enum": {
+            "name": "ExternalSecuritySolutionKind",
+            "modelAsString": true,
+            "values": [
+              {
+                "value": "CEF"
+              },
+              {
+                "value": "ATA"
+              },
+              {
+                "value": "AAD"
+              }
+            ]
+          }
+        };
+  - from: externalSecuritySolutions.json
+    where: $.definitions['ExternalSecuritySolution']
+    transform: >
+        $.properties['kind'] = {
+          "$ref": "#/definitions/ExternalSecuritySolutionKind"
+        };
+        $.allOf = [
+          {
+            "$ref": "../../../common/v1/types.json#/definitions/Resource"
+          },
+          {
+            "$ref": "../../../common/v1/types.json#/definitions/Location"
+          }
+        ]
 ```

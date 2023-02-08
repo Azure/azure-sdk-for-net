@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
             Optional<string> databaseName = default;
+            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterResourceId"))
@@ -44,8 +46,28 @@ namespace Azure.ResourceManager.Kusto.Models
                     databaseName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("tableLevelSharingProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("databaseShareOrigin"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    databaseShareOrigin = new KustoDatabaseShareOrigin(property.Value.GetString());
+                    continue;
+                }
             }
-            return new KustoFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName.Value);
+            return new KustoFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName.Value, tableLevelSharingProperties.Value, Optional.ToNullable(databaseShareOrigin));
         }
     }
 }

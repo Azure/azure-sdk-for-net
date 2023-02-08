@@ -42,8 +42,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a Target Type resources for given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}
-        /// Operation Id: TargetTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> String that represents a Location resource name. </param>
@@ -59,8 +67,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a Target Type resources for given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}
-        /// Operation Id: TargetTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> String that represents a Location resource name. </param>
@@ -76,8 +92,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a list of Experiment resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments
-        /// Operation Id: Experiments_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
@@ -91,8 +115,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a list of Experiment resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments
-        /// Operation Id: Experiments_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
@@ -123,8 +155,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a Experiment resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}
-        /// Operation Id: Experiments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
@@ -139,8 +179,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a Experiment resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}
-        /// Operation Id: Experiments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
@@ -172,8 +220,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a Target resource that extends a tracked regional resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}
-        /// Operation Id: Targets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
@@ -191,8 +247,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a Target resource that extends a tracked regional resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}
-        /// Operation Id: Targets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
@@ -222,6 +286,25 @@ namespace Azure.ResourceManager.Chaos
             {
                 CapabilityResource.ValidateResourceId(id);
                 return new CapabilityResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CapabilityTypeResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CapabilityTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CapabilityTypeResource" /> object. </returns>
+        public static CapabilityTypeResource GetCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CapabilityTypeResource.ValidateResourceId(id);
+                return new CapabilityTypeResource(client, id);
             }
             );
         }
@@ -284,25 +367,6 @@ namespace Azure.ResourceManager.Chaos
         }
         #endregion
 
-        #region TargetResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetResource" /> object. </returns>
-        public static TargetResource GetTargetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TargetResource.ValidateResourceId(id);
-                return new TargetResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region TargetTypeResource
         /// <summary>
         /// Gets an object representing a <see cref="TargetTypeResource" /> along with the instance operations that can be performed on it but with no data.
@@ -322,20 +386,20 @@ namespace Azure.ResourceManager.Chaos
         }
         #endregion
 
-        #region CapabilityTypeResource
+        #region TargetResource
         /// <summary>
-        /// Gets an object representing a <see cref="CapabilityTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TargetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityTypeResource" /> object. </returns>
-        public static CapabilityTypeResource GetCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TargetResource" /> object. </returns>
+        public static TargetResource GetTargetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CapabilityTypeResource.ValidateResourceId(id);
-                return new CapabilityTypeResource(client, id);
+                TargetResource.ValidateResourceId(id);
+                return new TargetResource(client, id);
             }
             );
         }

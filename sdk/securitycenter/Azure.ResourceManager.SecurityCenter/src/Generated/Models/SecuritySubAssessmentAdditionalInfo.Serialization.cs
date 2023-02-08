@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "SqlServerVulnerability": return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element);
                 }
             }
-            AssessedResourceType assessedResourceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("assessedResourceType"))
-                {
-                    assessedResourceType = new AssessedResourceType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecuritySubAssessmentAdditionalInfo(assessedResourceType);
+            return UnknownAdditionalData.DeserializeUnknownAdditionalData(element);
         }
     }
 }

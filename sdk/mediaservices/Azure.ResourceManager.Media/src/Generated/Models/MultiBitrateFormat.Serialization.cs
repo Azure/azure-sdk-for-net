@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             Optional<IList<MediaOutputFile>> outputFiles = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Media.MultiBitrateFormat";
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
             {

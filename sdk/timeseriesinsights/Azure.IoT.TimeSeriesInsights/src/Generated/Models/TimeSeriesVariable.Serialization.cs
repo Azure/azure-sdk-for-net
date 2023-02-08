@@ -36,27 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     case "numeric": return NumericVariable.DeserializeNumericVariable(element);
                 }
             }
-            string kind = default;
-            Optional<TimeSeriesExpression> filter = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("filter"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
-                    continue;
-                }
-            }
-            return new TimeSeriesVariable(kind, filter.Value);
+            return UnknownVariable.DeserializeUnknownVariable(element);
         }
     }
 }

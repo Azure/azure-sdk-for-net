@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownDatastoreSecrets DeserializeUnknownDatastoreSecrets(JsonElement element)
         {
-            SecretsType secretsType = default;
+            SecretsType secretsType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretsType"))

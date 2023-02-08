@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("username");
+            writer.WritePropertyName("userName");
             writer.WriteStringValue(Username);
             writer.WritePropertyName("source");
             writer.WriteStringValue(Source);
@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchCifsMountConfiguration DeserializeBatchCifsMountConfiguration(JsonElement element)
         {
-            string username = default;
+            string userName = default;
             string source = default;
             string relativeMountPath = default;
             Optional<string> mountOptions = default;
             string password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("userName"))
                 {
-                    username = property.Value.GetString();
+                    userName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("source"))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchCifsMountConfiguration(username, source, relativeMountPath, mountOptions.Value, password);
+            return new BatchCifsMountConfiguration(userName, source, relativeMountPath, mountOptions.Value, password);
         }
     }
 }

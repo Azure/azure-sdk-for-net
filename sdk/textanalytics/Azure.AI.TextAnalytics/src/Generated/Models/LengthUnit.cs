@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The length Unit of measurement. </summary>
-    internal readonly partial struct LengthUnit : IEquatable<LengthUnit>
+    public readonly partial struct LengthUnit : IEquatable<LengthUnit>
     {
         private readonly string _value;
 

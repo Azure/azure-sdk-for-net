@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
             Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
-            AuthenticationType authenticationType = default;
+            AuthenticationType authenticationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationProvisioningState"))

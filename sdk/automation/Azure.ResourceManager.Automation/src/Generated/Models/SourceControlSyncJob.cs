@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The end time of the job. </param>
         /// <param name="syncType"> The sync type. </param>
-        internal SourceControlSyncJob(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceControlSyncJobId, DateTimeOffset? createdOn, ProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SyncType? syncType) : base(id, name, resourceType, systemData)
+        internal SourceControlSyncJob(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType) : base(id, name, resourceType, systemData)
         {
             SourceControlSyncJobId = sourceControlSyncJobId;
             CreatedOn = createdOn;
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> The creation time of the job. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The provisioning state of the job. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SourceControlProvisioningState? ProvisioningState { get; }
         /// <summary> The start time of the job. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the job. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> The sync type. </summary>
-        public SyncType? SyncType { get; }
+        public SourceControlSyncType? SyncType { get; }
     }
 }

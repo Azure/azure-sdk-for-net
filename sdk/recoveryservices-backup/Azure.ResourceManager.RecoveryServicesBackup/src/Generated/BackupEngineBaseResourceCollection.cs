@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -61,8 +60,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Returns backup management server registered to Recovery Services Vault.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}
-        /// Operation Id: BackupEngines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="backupEngineName"> Name of the backup management server. </param>
         /// <param name="filter"> OData filter options. </param>
@@ -92,8 +99,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Returns backup management server registered to Recovery Services Vault.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}
-        /// Operation Id: BackupEngines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="backupEngineName"> Name of the backup management server. </param>
         /// <param name="filter"> OData filter options. </param>
@@ -123,8 +138,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Backup management servers registered to Recovery Services Vault. Returns a pageable list of servers.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines
-        /// Operation Id: BackupEngines_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupEngines_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
@@ -132,43 +155,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupEngineBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupEngineBaseResource> GetAllAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BackupEngineBaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _backupEngineBaseResourceBackupEnginesClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _backupEngineBaseResourceBackupEnginesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupEngineBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BackupEngineBaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _backupEngineBaseResourceBackupEnginesClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _backupEngineBaseResourceBackupEnginesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupEngineBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupEngineBaseResource(Client, BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(e)), _backupEngineBaseResourceBackupEnginesClientDiagnostics, Pipeline, "BackupEngineBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Backup management servers registered to Recovery Services Vault. Returns a pageable list of servers.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines
-        /// Operation Id: BackupEngines_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupEngines_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
@@ -176,43 +179,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupEngineBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupEngineBaseResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<BackupEngineBaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _backupEngineBaseResourceBackupEnginesClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _backupEngineBaseResourceBackupEnginesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupEngineBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BackupEngineBaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _backupEngineBaseResourceBackupEnginesClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _backupEngineBaseResourceBackupEnginesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupEngineBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupEngineBaseResource(Client, BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(e)), _backupEngineBaseResourceBackupEnginesClientDiagnostics, Pipeline, "BackupEngineBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}
-        /// Operation Id: BackupEngines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="backupEngineName"> Name of the backup management server. </param>
         /// <param name="filter"> OData filter options. </param>
@@ -240,8 +223,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}
-        /// Operation Id: BackupEngines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="backupEngineName"> Name of the backup management server. </param>
         /// <param name="filter"> OData filter options. </param>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownSchedulePolicy DeserializeUnknownSchedulePolicy(JsonElement element)
         {
-            string schedulePolicyType = default;
+            string schedulePolicyType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schedulePolicyType"))

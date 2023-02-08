@@ -34,11 +34,17 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="targets"> List of Target references. </param>
-        internal Selector(SelectorType selectorType, string id, IList<TargetReference> targets)
+        /// <param name="filter">
+        /// Model that represents available filter types that can be applied to a targets list.
+        /// Please note <see cref="Filter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SimpleFilter"/>.
+        /// </param>
+        internal Selector(SelectorType selectorType, string id, IList<TargetReference> targets, Filter filter)
         {
             SelectorType = selectorType;
             Id = id;
             Targets = targets;
+            Filter = filter;
         }
 
         /// <summary> Enum of the selector type. </summary>
@@ -47,5 +53,11 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Id { get; set; }
         /// <summary> List of Target references. </summary>
         public IList<TargetReference> Targets { get; }
+        /// <summary>
+        /// Model that represents available filter types that can be applied to a targets list.
+        /// Please note <see cref="Filter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SimpleFilter"/>.
+        /// </summary>
+        public Filter Filter { get; set; }
     }
 }

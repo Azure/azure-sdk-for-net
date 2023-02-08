@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -54,49 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "MappingDataFlow": return MappingDataFlow.DeserializeMappingDataFlow(element);
                 }
             }
-            string type = default;
-            Optional<string> description = default;
-            Optional<IList<object>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("annotations"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<object> array = new List<object>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetObject());
-                    }
-                    annotations = array;
-                    continue;
-                }
-                if (property.NameEquals("folder"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
-                    continue;
-                }
-            }
-            return new DataFlow(type, description.Value, Optional.ToList(annotations), folder.Value);
+            return UnknownDataFlow.DeserializeUnknownDataFlow(element);
         }
 
         internal partial class DataFlowConverter : JsonConverter<DataFlow>

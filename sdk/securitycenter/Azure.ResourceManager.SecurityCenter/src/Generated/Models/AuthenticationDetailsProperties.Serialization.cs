@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -32,43 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "gcpCredentials": return GcpCredentialsDetailsProperties.DeserializeGcpCredentialsDetailsProperties(element);
                 }
             }
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
-            AuthenticationType authenticationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authenticationProvisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("grantedPermissions"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<SecurityCenterCloudPermission> array = new List<SecurityCenterCloudPermission>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new SecurityCenterCloudPermission(item.GetString()));
-                    }
-                    grantedPermissions = array;
-                    continue;
-                }
-                if (property.NameEquals("authenticationType"))
-                {
-                    authenticationType = new AuthenticationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType);
+            return UnknownAuthenticationDetailsProperties.DeserializeUnknownAuthenticationDetailsProperties(element);
         }
     }
 }

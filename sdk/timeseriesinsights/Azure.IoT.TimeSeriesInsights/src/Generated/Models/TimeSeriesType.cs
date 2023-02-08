@@ -16,7 +16,11 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         /// <summary> Initializes a new instance of TimeSeriesType. </summary>
         /// <param name="name"> User-given unique name for the type. Mutable, not null. </param>
-        /// <param name="variables"> Different variables associated with the type. Not empty, not null. </param>
+        /// <param name="variables">
+        /// Different variables associated with the type. Not empty, not null.
+        /// Please note <see cref="TimeSeriesVariable"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AggregateVariable"/>, <see cref="CategoricalVariable"/> and <see cref="NumericVariable"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="variables"/> is null. </exception>
         public TimeSeriesType(string name, IDictionary<string, TimeSeriesVariable> variables)
         {
@@ -31,7 +35,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="id"> Case-sensitive unique type identifier that is immutable. Can be null on create or update requests, and then server generates the ID. Not null on get and delete operations. </param>
         /// <param name="name"> User-given unique name for the type. Mutable, not null. </param>
         /// <param name="description"> Description of the type. May be null. </param>
-        /// <param name="variables"> Different variables associated with the type. Not empty, not null. </param>
+        /// <param name="variables">
+        /// Different variables associated with the type. Not empty, not null.
+        /// Please note <see cref="TimeSeriesVariable"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AggregateVariable"/>, <see cref="CategoricalVariable"/> and <see cref="NumericVariable"/>.
+        /// </param>
         internal TimeSeriesType(string id, string name, string description, IDictionary<string, TimeSeriesVariable> variables)
         {
             Id = id;
@@ -46,7 +54,11 @@ namespace Azure.IoT.TimeSeriesInsights
         public string Name { get; set; }
         /// <summary> Description of the type. May be null. </summary>
         public string Description { get; set; }
-        /// <summary> Different variables associated with the type. Not empty, not null. </summary>
+        /// <summary>
+        /// Different variables associated with the type. Not empty, not null.
+        /// Please note <see cref="TimeSeriesVariable"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AggregateVariable"/>, <see cref="CategoricalVariable"/> and <see cref="NumericVariable"/>.
+        /// </summary>
         public IDictionary<string, TimeSeriesVariable> Variables { get; }
     }
 }

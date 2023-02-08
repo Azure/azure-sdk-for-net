@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateCode` to generate code. Notice how there are two main swaggers use to generate this client library:
 - Service V2.x
-- Service V3 
+- Service V3
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
@@ -13,6 +13,12 @@ Run `dotnet build /t:GenerateCode` to generate code. Notice how there are two ma
 input-file:
     -  https://github.com/Azure/azure-rest-api-specs/blob/7043b48f4be1fdd40757b9ef372b65f054daf48f/specification/cognitiveservices/data-plane/FormRecognizer/stable/v2.1/FormRecognizer.json
 generation1-convenience-client: true
+```
+
+## Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class: OperationDetails
 ```
 
 ## Make the API version parameterized so we generate a multi-versioned API
@@ -242,4 +248,12 @@ directive:
   where: $.parameters.QueryStringIndexType
   transform: >
     $["x-namespace"] = "Azure.AI.FormRecognizer.DocumentAnalysis"
+```
+
+``` yaml
+directive:
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/2fd7dcd89afa70ff5ba7be88bee987da62099a28/specification/cognitiveservices/data-plane/FormRecognizer/stable/2022-08-31/FormRecognizer.json
+  where: $.definitions.AnalyzeDocumentRequest.properties.urlSource
+  transform: >
+    $["x-ms-client-name"] = "uriSource";
 ```

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-11-04)
+
+This package is the first stable release of the Microsoft Azure Consumption management client library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Consumption` prefix to all single / simple model names.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Introduced partial resource implementations for some methods to better support hierarchy structure.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
 
 ## 1.0.0-beta.1 (2022-08-29)
 

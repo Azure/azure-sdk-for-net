@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceProviderData> array = new List<ResourceProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResourceProviderData>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<ResourceProviderData>(item.GetRawText()));
                     }
                     providers = array;
                     continue;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
                     }
                     outputResources = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
                     }
                     validatedResources = array;
                     continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }

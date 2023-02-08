@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static UnknownRoleManagementPolicyRule DeserializeUnknownRoleManagementPolicyRule(JsonElement element)
         {
             Optional<string> id = default;
-            RoleManagementPolicyRuleType ruleType = default;
+            RoleManagementPolicyRuleType ruleType = "Unknown";
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {

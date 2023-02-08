@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -310,7 +307,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
         public async Task AnalyzeOperationWithMultipleActionsOfSameType()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             var batchDocuments = new List<TextDocumentInput>
             {
@@ -817,7 +814,6 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeHealthcareEntitiesResultCollection analyzeHealthcareEntitiesDocumentsResults = analyzeHealthcareEntitiesActionResults.FirstOrDefault().DocumentsResults;
             Assert.AreEqual(1, analyzeHealthcareEntitiesDocumentsResults.Count);
             Assert.IsNotNull(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle);
-            Assert.Greater(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle.Count, 0);
         }
 
         [RecordedTest]
@@ -853,6 +849,46 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationAbstractSummary()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "Extractive summarization extracts sentences that collectively represent the most important or relevant information within the original content."
+                + " Abstractive summarization generates a summary with concise, coherent sentences or words which are not simply extract sentences from the original document."
+                + " These features are designed to shorten content that could be considered too long to read.",
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationAbstractSummary",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionsResults = resultCollection.AbstractSummaryResults;
+            Assert.IsNotNull(abstractSummaryActionsResults);
+
+            AbstractSummaryResultCollection abstractSummaryDocumentsResults = abstractSummaryActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, abstractSummaryDocumentsResults.Count);
+
+            AbstractSummaryResult result = abstractSummaryDocumentsResults[0];
+            Assert.Greater(result.Summaries.Count, 0);
+
+            AbstractiveSummary summary = result.Summaries.FirstOrDefault();
+            Assert.IsNotNull(summary);
+            Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);
+            Assert.Less(summary.Text.Length, documents[0].Length);
+            Assert.IsNotNull(summary.Contexts);
+            Assert.Greater(summary.Contexts.Count, 0);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
         {
@@ -878,7 +914,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
@@ -898,7 +934,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
@@ -918,7 +954,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
@@ -949,6 +985,32 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationWithDefaultLanguageThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            List<string> documents = new()
+            {
+                "The park was clean and pretty. The bathrooms and restaurant were not clean.",
+            };
+            AnalyzeActionsOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+            TextAnalyticsActions actions = new()
+            {
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() }
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
+                async () => await client.StartAnalyzeActionsAsync(documents, actions, "auto", options));
+
             Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 

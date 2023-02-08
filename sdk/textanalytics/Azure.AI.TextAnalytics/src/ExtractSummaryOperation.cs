@@ -13,8 +13,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> Pageable operation class for performing extractive summarization of documents using a long running operation. </summary>
-    public class ExtractSummaryOperation : PageableOperation<ExtractSummaryResultCollection>, IOperation<AsyncPageable<ExtractSummaryResultCollection>>
+    /// <summary>
+    /// A representation of extractive summarization being performed on a given set of documents as a pageable,
+    /// long-running operation.
+    /// </summary>
+    public class ExtractSummaryOperation
+        : PageableOperation<ExtractSummaryResultCollection>, IOperation<AsyncPageable<ExtractSummaryResultCollection>>
     {
         internal readonly IDictionary<string, int> _idToIndexMap;
 
@@ -74,10 +78,15 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtractSummaryOperation"/> class.
         /// </summary>
-        /// <param name="operationId">The identified of the operation.</param>
+        /// <param name="operationId">The identifier of the long-running operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        /// <exception cref="ArgumentException"><paramref name="operationId"/> is an empty string or does not represent a valid continuation token from the <see cref="Id"/> property returned on the original operation.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="operationId"/> or <paramref name="client"/> is null.</exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="operationId"/> is an empty string or does not represent a valid continuation token from the
+        /// <see cref="Id"/> property returned on the original operation.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="operationId"/> or <paramref name="client"/> is null.
+        /// </exception>
         public ExtractSummaryOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -105,12 +114,12 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtractSummaryOperation"/> class.
         /// </summary>
-        /// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
-        /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
-        /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        /// <param name="idToIndexMap"></param>
-        /// <param name="showStats"></param>
-        internal ExtractSummaryOperation(ServiceClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal ExtractSummaryOperation(
+            ServiceClient serviceClient,
+            ClientDiagnostics diagnostics,
+            string operationLocation,
+            IDictionary<string, int> idToIndexMap,
+            bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -124,106 +133,94 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractSummaryOperation"/> class. This constructor
-        /// is intended to be used for mocking only.
+        /// Initializes a new instance of the <see cref="ExtractSummaryOperation"/> class. This constructor is only
+        /// intended for mocking.
         /// </summary>
         protected ExtractSummaryOperation()
         {
         }
 
         /// <summary>
-        /// The last HTTP response received from the server.
+        /// Gets the last HTTP response received from the server associated with this long-running operation.
         /// </summary>
         /// <remarks>
-        /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="ExtractSummaryOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
-        /// Responses from these requests can be accessed using GetRawResponse.
+        /// An instance of the <see cref="ExtractSummaryOperation"/> class sends requests to the server via methods
+        /// such as <see cref="UpdateStatus"/>, <see cref="UpdateStatusAsync"/>, etc.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
 
         /// <summary>
-        /// Calls the server to get updated status of the long-running operation.
+        /// Updates the status of the long-running operation.
         /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        /// <returns>The HTTP response received from the server.</returns>
         /// <remarks>
-        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// This operation will update the value returned by <see cref="GetRawResponse"/> and might also update
+        /// <see cref="HasCompleted"/>, <see cref="HasValue"/>, and <see cref="Operation{T}.Value"/>.
         /// </remarks>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <returns>The HTTP response received from the server.</returns>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
             _operationInternal.UpdateStatus(cancellationToken);
 
         /// <summary>
-        /// Calls the server to get updated status of the long-running operation.
+        /// Updates the status of the long-running operation.
         /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        /// <returns>The HTTP response received from the server.</returns>
         /// <remarks>
-        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// This operation will update the value returned by <see cref="GetRawResponse"/> and might also update
+        /// <see cref="HasCompleted"/>, <see cref="HasValue"/>, and <see cref="Operation{T}.Value"/>.
         /// </remarks>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <returns>The HTTP response received from the server.</returns>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Periodically calls the server till the long-running operation completes.
+        /// Monitors the status of the long-running operation until it completes.
         /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
-        /// <returns>The last HTTP response received from the server.</returns>
         /// <remarks>
-        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// This method will periodically call <see cref="UpdateStatusAsync"/> until <see cref="HasCompleted"/> is
+        /// <c>true</c>. It will then return the final result of the operation.
         /// </remarks>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <returns>The HTTP response received from the server.</returns>
         public override async ValueTask<Response<AsyncPageable<ExtractSummaryResultCollection>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Periodically calls the server till the long-running operation completes.
+        /// Monitors the status of the long-running operation until it completes.
         /// </summary>
+        /// This method will periodically call <see cref="UpdateStatusAsync"/> until <see cref="HasCompleted"/> is
+        /// <c>true</c>. It will then return the final result of the operation.
         /// <param name="pollingInterval">
-        /// The interval between status requests to the server.
-        /// The interval can change based on information returned from the server.
-        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// The interval between status requests sent to the server. Note that this behavior can be overriden by the
+        /// server if it explicitly communicates to the client that it should wait a specific amount of time before
+        /// polling again.
         /// </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
-        /// <returns>The last HTTP response received from the server.</returns>
-        /// <remarks>
-        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
-        /// </remarks>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <returns>The HTTP response received from the server.</returns>
         public override async ValueTask<Response<AsyncPageable<ExtractSummaryResultCollection>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Cancels a pending or running <see cref="ExtractSummaryOperation"/>.
+        /// Cancels the long-running operation, provided that it is still pending or running.
         /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         public virtual void Cancel(CancellationToken cancellationToken = default) =>
             _serviceClient.CancelAnalyzeActionsJob(_jobId, cancellationToken);
 
         /// <summary>
-        /// Cancels a pending or running <see cref="ExtractSummaryOperation"/>.
+        /// Cancels the long-running operation, provided that it is still pending or running.
         /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Task"/> to track the service request.</returns>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         public virtual async Task CancelAsync(CancellationToken cancellationToken = default) =>
             await _serviceClient.CancelAnalyzeActionsJobAsync(_jobId, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Gets the final result of the long-running operation asynchronously.
+        /// Gets the final result of the long-running operation.
         /// </summary>
         /// <remarks>
-        /// Operation must complete successfully (HasValue is true) for it to provide values.
+        /// The operation must have completed successfully (i.e., <see cref="HasValue"/> is <c>true</c>).
         /// </remarks>
-        public override AsyncPageable<ExtractSummaryResultCollection> GetValuesAsync(CancellationToken cancellationToken = default)
-        {
-            // Validates that the operation has completed successfully.
-            _ = _operationInternal.Value;
-            return CreateOperationValueAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the final result of the long-running operation in synchronously.
-        /// </summary>
-        /// <remarks>
-        /// Operation must complete successfully (HasValue is true) for it to provide values.
-        /// </remarks>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
         public override Pageable<ExtractSummaryResultCollection> GetValues(CancellationToken cancellationToken = default)
         {
             // Validates that the operation has completed successfully.
@@ -236,6 +233,20 @@ namespace Azure.AI.TextAnalytics
             }
 
             return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets the final result of the long-running operation.
+        /// </summary>
+        /// <remarks>
+        /// The operation must have completed successfully (i.e., <see cref="HasValue"/> is <c>true</c>).
+        /// </remarks>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        public override AsyncPageable<ExtractSummaryResultCollection> GetValuesAsync(CancellationToken cancellationToken = default)
+        {
+            // Validates that the operation has completed successfully.
+            _ = _operationInternal.Value;
+            return CreateOperationValueAsync(cancellationToken);
         }
 
         private AsyncPageable<ExtractSummaryResultCollection> CreateOperationValueAsync(CancellationToken cancellationToken = default)
@@ -270,21 +281,18 @@ namespace Azure.AI.TextAnalytics
 
                 return OperationState<AsyncPageable<ExtractSummaryResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
                 return OperationState<AsyncPageable<ExtractSummaryResultCollection>>.Pending(rawResponse);
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
             {
-                return OperationState<AsyncPageable<ExtractSummaryResultCollection>>.Failure(rawResponse,
-                    new RequestFailedException("The operation was canceled so no value is available."));
+                return OperationState<AsyncPageable<ExtractSummaryResultCollection>>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            RequestFailedException requestFailedException = await ClientCommon
-                .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-                .ConfigureAwait(false);
-
-            return OperationState<AsyncPageable<ExtractSummaryResultCollection>>.Failure(rawResponse, requestFailedException);
+            return OperationState<AsyncPageable<ExtractSummaryResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
     }
 }

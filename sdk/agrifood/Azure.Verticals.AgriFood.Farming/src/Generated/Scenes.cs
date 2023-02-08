@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,9 +14,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Scenes.cs
     // Data plane generated sub-client. The Scenes sub-client.
     /// <summary> The Scenes sub-client. </summary>
     public partial class Scenes
+=======
+    // Data plane generated client.
+    /// <summary> The Scenes service client. </summary>
+    public partial class ScenesClient
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/ScenesClient.cs
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -295,6 +299,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
             Argument.AssertNotNull(source, nameof(source));
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Scenes.cs
             return GetScenesImplementationAsync("Scenes.GetScenes", provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
         }
 
@@ -313,6 +318,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ScenesClient.GetScenes", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/ScenesClient.cs
         }
 
         /// <summary> Returns a paginated list of scene resources. </summary>
@@ -344,6 +354,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
             Argument.AssertNotNull(source, nameof(source));
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Scenes.cs
             return GetScenesImplementation("Scenes.GetScenes", provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
         }
 
@@ -362,6 +373,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ScenesClient.GetScenes", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/ScenesClient.cs
         }
 
         /// <summary> Create a satellite data ingestion job. </summary>

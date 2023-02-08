@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-02-01";
+            _apiVersion = apiVersion ?? "2022-12-29";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SkuDescriptionList>> ListSkusAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<KustoSkuDescriptionList>> ListSkusAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -910,9 +910,9 @@ namespace Azure.ResourceManager.Kusto
             {
                 case 200:
                     {
-                        SkuDescriptionList value = default;
+                        KustoSkuDescriptionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SkuDescriptionList.DeserializeSkuDescriptionList(document.RootElement);
+                        value = KustoSkuDescriptionList.DeserializeKustoSkuDescriptionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SkuDescriptionList> ListSkus(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<KustoSkuDescriptionList> ListSkus(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -935,9 +935,9 @@ namespace Azure.ResourceManager.Kusto
             {
                 case 200:
                     {
-                        SkuDescriptionList value = default;
+                        KustoSkuDescriptionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SkuDescriptionList.DeserializeSkuDescriptionList(document.RootElement);
+                        value = KustoSkuDescriptionList.DeserializeKustoSkuDescriptionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

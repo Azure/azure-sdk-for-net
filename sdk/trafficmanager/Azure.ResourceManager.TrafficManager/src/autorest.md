@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: TrafficManager
 namespace: Azure.ResourceManager.TrafficManager
-require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/trafficmanager/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5fc05d0f0b15cbf16de942cadce464b495c66a58/specification/trafficmanager/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -38,6 +38,7 @@ rename-mapping:
   TrafficManagerNameAvailability.reason: UnavailableReason
   TrafficManagerNameAvailability.type: -|resource-type
   UserMetricsModel: TrafficManagerUserMetrics
+  AlwaysServe: TrafficManagerEndpointAlwaysServeStatus
 
 prepend-rp-prefix:
   - DnsConfig
@@ -98,6 +99,13 @@ directive:
     where: $.paths..delete.responses["200"]
     transform: >
       delete $["schema"]
+  - from: trafficmanager.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}"]..parameters[2]
+    transform:
+      delete $["enum"];
+      delete $["x-ms-enum"];
+      $["description"] = $["description"] + " Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here."
+    reason: The path parameter endpointType is defined as string in stable version, we can't change it to an enumeration.
      
 #TODO: excluding since the following REST endpoints do not have GetAll method.
 #TODO: e.g. The EndpointCollection (RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}) does not have a GetAll method

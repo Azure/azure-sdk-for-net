@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,9 +14,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingData.cs
     // Data plane generated sub-client. The PlantingData sub-client.
     /// <summary> The PlantingData sub-client. </summary>
     public partial class PlantingData
+=======
+    // Data plane generated client.
+    /// <summary> The PlantingData service client. </summary>
+    public partial class PlantingDataClient
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingDataClient.cs
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -320,6 +324,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingData.cs
             return GetAllPlantingDataByPartyIdImplementationAsync("PlantingData.GetAllPlantingDataByPartyId", partyId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
@@ -338,6 +343,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllPlantingDataByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllPlantingDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingDataClient.GetAllPlantingDataByFarmerId", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingDataClient.cs
         }
 
         /// <summary> Returns a paginated list of planting data resources under a particular party. </summary>
@@ -384,6 +394,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingData.cs
             return GetAllPlantingDataByPartyIdImplementation("PlantingData.GetAllPlantingDataByPartyId", partyId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
@@ -402,6 +413,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllPlantingDataByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllPlantingDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingDataClient.GetAllPlantingDataByFarmerId", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingDataClient.cs
         }
 
         /// <summary> Returns a paginated list of planting data resources across all parties. </summary>
@@ -443,6 +459,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='GetAllPlantingDataAsync(Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllPlantingDataAsync(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> plantingDataIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingData.cs
             return GetAllPlantingDataImplementationAsync("PlantingData.GetAllPlantingData", minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, plantingDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
@@ -461,6 +478,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllPlantingDataRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllPlantingDataNextPageRequest(nextLink, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingDataClient.GetAllPlantingData", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingDataClient.cs
         }
 
         /// <summary> Returns a paginated list of planting data resources across all parties. </summary>
@@ -502,6 +524,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='GetAllPlantingData(Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllPlantingData(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> plantingDataIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingData.cs
             return GetAllPlantingDataImplementation("PlantingData.GetAllPlantingData", minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, plantingDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
@@ -520,6 +543,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllPlantingDataRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllPlantingDataNextPageRequest(nextLink, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantingDataClient.GetAllPlantingData", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/PlantingDataClient.cs
         }
 
         /// <summary> Create cascade delete job for planting data resource. </summary>

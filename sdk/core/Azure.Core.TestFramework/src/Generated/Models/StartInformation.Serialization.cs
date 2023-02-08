@@ -17,6 +17,11 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             writer.WritePropertyName("x-recording-file");
             writer.WriteStringValue(XRecordingFile);
+            if (Optional.IsDefined(XRecordingAssetsFile))
+            {
+                writer.WritePropertyName("x-recording-assets-file");
+                writer.WriteStringValue(XRecordingAssetsFile);
+            }
             writer.WriteEndObject();
         }
     }

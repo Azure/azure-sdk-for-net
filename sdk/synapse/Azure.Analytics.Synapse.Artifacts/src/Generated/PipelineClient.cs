@@ -148,74 +148,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PipelineResource> GetPipelinesByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PipelineResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetPipelinesByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PipelineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetPipelinesByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists pipelines. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PipelineResource> GetPipelinesByWorkspace(CancellationToken cancellationToken = default)
         {
-            Page<PipelineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetPipelinesByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PipelineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetPipelinesByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a pipeline. </summary>

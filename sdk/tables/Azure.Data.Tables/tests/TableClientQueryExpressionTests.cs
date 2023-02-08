@@ -26,6 +26,7 @@ namespace Azure.Data.Tables.Tests
         private const string Row = "row";
         private const int SomeInt = 10;
         private const double SomeDouble = 10.10;
+        private static readonly string SomeDoubleRoundtrip = XmlConvert.ToString(SomeDouble);
         private const long SomeInt64 = long.MaxValue;
         private const string SomeString = "someString";
         private const bool SomeTrueBool = true;
@@ -67,8 +68,10 @@ namespace Azure.Data.Tables.Tests
         private static readonly Expression<Func<ComplexEntity, bool>> s_intExp = ent => ent.Int32 >= SomeInt;
         private static readonly Expression<Func<TableEntity, bool>> s_intExpDE = ent => ent.GetInt32("Int32") >= SomeInt;
         private static readonly Expression<Func<ComplexEntity, bool>> s_dtoExp = ent => ent.DateTimeOffset >= s_someDateTimeOffset;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtoNewExp = ent => ent.DateTimeOffset >= new DateTimeOffset(s_someDateTimeOffset.UtcTicks, TimeSpan.Zero);
         private static readonly Expression<Func<TableEntity, bool>> s_dtoExpDE = ent => ent.GetDateTime("DateTimeOffset") >= s_someDateTimeOffset;
         private static readonly Expression<Func<ComplexEntity, bool>> s_dtExp = ent => ent.DateTime < s_someDateTime;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtNewExp = ent => ent.DateTime < new DateTime(s_someDateTime.Ticks, DateTimeKind.Utc);
         private static readonly Expression<Func<TableEntity, bool>> s_dtExpDE = ent => ent.GetDateTime("DateTime") < s_someDateTime;
         private static readonly Expression<Func<ComplexEntity, bool>> s_boolTrueExp = ent => ent.Bool == SomeTrueBool;
         private static readonly Expression<Func<TableEntity, bool>> s_boolTrueExpDE = ent => ent.GetBoolean("Bool") == SomeTrueBool;
@@ -100,10 +103,12 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"String ge '{SomeString}'", s_compareToExp },
             new object[] { $"Guid eq guid'{s_someGuidString}'", s_guidExp },
             new object[] { $"Int64 ge {SomeInt64}L", s_int64Exp },
-            new object[] { $"Double ge {SomeDouble}", s_doubleExp },
+            new object[] { $"Double ge {SomeDoubleRoundtrip}", s_doubleExp },
             new object[] { $"Int32 ge {SomeInt}", s_intExp },
             new object[] { $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtoExp },
+            new object[] { $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtoNewExp },
             new object[] { $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtExp },
+            new object[] { $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtNewExp },
             new object[] { $"Bool eq true", s_boolTrueExp },
             new object[] { $"Bool eq false", s_boolFalseExp },
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("X2")))}'", s_binaryExp },
@@ -139,7 +144,7 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"String ge '{SomeString}'", s_compareToExpDE },
             new object[] { $"Guid eq guid'{s_someGuidString}'", s_guidExpDE },
             new object[] { $"Int64 ge {SomeInt64}L", s_int64ExpDE },
-            new object[] { $"Double ge {SomeDouble}", s_doubleExpDE },
+            new object[] { $"Double ge {SomeDoubleRoundtrip}", s_doubleExpDE },
             new object[] { $"Int32 ge {SomeInt}", s_intExpDE },
             new object[] { $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtoExpDE },
             new object[] { $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtExpDE },

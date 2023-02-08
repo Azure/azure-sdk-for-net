@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerEndpointData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData
     {
         public TrafficManagerEndpointData() { }
+        public Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus? AlwaysServe { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo> CustomHeaders { get { throw null; } }
         public string EndpointLocation { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus? EndpointMonitorStatus { get { throw null; } set { } }
@@ -211,6 +212,24 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public string Fqdn { get { throw null; } }
         public string RelativeName { get { throw null; } set { } }
         public long? Ttl { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TrafficManagerEndpointAlwaysServeStatus : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TrafficManagerEndpointAlwaysServeStatus(string value) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TrafficManagerEndpointCustomHeaderInfo
     {

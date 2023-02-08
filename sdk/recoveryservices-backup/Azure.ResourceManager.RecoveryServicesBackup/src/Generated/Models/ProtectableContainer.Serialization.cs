@@ -50,45 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "VMAppContainer": return AzureVmAppContainerProtectableContainer.DeserializeAzureVmAppContainerProtectableContainer(element);
                 }
             }
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            ProtectableContainerType protectableContainerType = default;
-            Optional<string> healthStatus = default;
-            Optional<string> containerId = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("friendlyName"))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("protectableContainerType"))
-                {
-                    protectableContainerType = property.Value.GetString().ToProtectableContainerType();
-                    continue;
-                }
-                if (property.NameEquals("healthStatus"))
-                {
-                    healthStatus = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("containerId"))
-                {
-                    containerId = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownProtectableContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value);
+            return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element);
         }
     }
 }

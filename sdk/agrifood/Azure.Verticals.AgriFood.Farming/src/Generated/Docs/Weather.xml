@@ -532,7 +532,287 @@ Schema for <c>WeatherDataListResponseValue</c>:
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Docs/Weather.xml
 and must not have a value greater than 250 characters.
+=======
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateDataIngestionJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new WeatherClient(endpoint, credential);
+
+var data = new {
+    boundaryId = "<boundaryId>",
+    farmerId = "<farmerId>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    extensionApiInput = new {
+        key = new {},
+    },
+};
+
+var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+]]></code>
+This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new WeatherClient(endpoint, credential);
+
+var data = new {
+    boundaryId = "<boundaryId>",
+    farmerId = "<farmerId>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    extensionApiInput = new {
+        key = new {},
+    },
+    extensionDataProviderAppId = "<extensionDataProviderAppId>",
+    extensionDataProviderApiKey = "<extensionDataProviderApiKey>",
+    name = "<name>",
+    description = "<description>",
+    properties = new {
+        key = new {},
+    },
+};
+
+var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>WeatherDataIngestionJob</c>:
+<code>{
+  boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+  farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+  extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+  extensionApiName: string, # Required. Extension api name to which request is to be made.
+  extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+  extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+Response Body:
+
+Schema for <c>WeatherDataIngestionJob</c>:
+<code>{
+  boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+  farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+  extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+  extensionApiName: string, # Required. Extension api name to which request is to be made.
+  extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+  extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateDataIngestionJob(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new WeatherClient(endpoint, credential);
+
+var data = new {
+    boundaryId = "<boundaryId>",
+    farmerId = "<farmerId>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    extensionApiInput = new {
+        key = new {},
+    },
+};
+
+var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+]]></code>
+This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new WeatherClient(endpoint, credential);
+
+var data = new {
+    boundaryId = "<boundaryId>",
+    farmerId = "<farmerId>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    extensionApiInput = new {
+        key = new {},
+    },
+    extensionDataProviderAppId = "<extensionDataProviderAppId>",
+    extensionDataProviderApiKey = "<extensionDataProviderApiKey>",
+    name = "<name>",
+    description = "<description>",
+    properties = new {
+        key = new {},
+    },
+};
+
+var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>WeatherDataIngestionJob</c>:
+<code>{
+  boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+  farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+  extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+  extensionApiName: string, # Required. Extension api name to which request is to be made.
+  extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+  extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+Response Body:
+
+Schema for <c>WeatherDataIngestionJob</c>:
+<code>{
+  boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+  farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+  extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+  extensionApiName: string, # Required. Extension api name to which request is to be made.
+  extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+  extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Docs/WeatherClient.xml
 Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
 }
 </code>
@@ -554,7 +834,7 @@ var data = new {
 
 var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -582,7 +862,7 @@ var data = new {
 
 var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -693,7 +973,7 @@ var data = new {
 
 var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -721,7 +1001,7 @@ var data = new {
 
 var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
 Console.WriteLine(result.GetProperty("partyId").ToString());

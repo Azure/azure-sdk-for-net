@@ -5,35 +5,12 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics.Models
+using Azure.AI.TextAnalytics.Models;
+
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> Represents the volume entity resolution model. </summary>
-    internal partial class VolumeResolution : BaseResolution
+    public partial class VolumeResolution : BaseResolution
     {
-        /// <summary> Initializes a new instance of VolumeResolution. </summary>
-        /// <param name="unit"> The Volume Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        public VolumeResolution(VolumeUnit unit, double value)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = ResolutionKind.VolumeResolution;
-        }
-
-        /// <summary> Initializes a new instance of VolumeResolution. </summary>
-        /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="unit"> The Volume Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        internal VolumeResolution(ResolutionKind resolutionKind, VolumeUnit unit, double value) : base(resolutionKind)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = resolutionKind;
-        }
-
-        /// <summary> The Volume Unit of measurement. </summary>
-        public VolumeUnit Unit { get; set; }
-        /// <summary> The numeric value that the extracted text denotes. </summary>
-        public double Value { get; set; }
     }
 }

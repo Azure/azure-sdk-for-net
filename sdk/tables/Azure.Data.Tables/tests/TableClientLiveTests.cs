@@ -1287,6 +1287,25 @@ namespace Azure.Data.Tables.Tests
         }
 
         [RecordedTest]
+        public async Task GetEntityAllowsEmptyRowKey()
+        {
+            TableEntity entityResults;
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate[0].RowKey = string.Empty;
+            entitiesToCreate[0].PartitionKey = string.Empty;
+
+            // Upsert the new entities.
+
+            await UpsertTestEntities(entitiesToCreate, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Get the single entity by PartitionKey and RowKey.
+
+            entityResults = (await client.GetEntityAsync<TableEntity>(string.Empty, string.Empty).ConfigureAwait(false)).Value;
+
+            Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
+        }
+
+        [RecordedTest]
         public async Task StronglyTypedModelDoubleNaNRoundTrips()
         {
             TestEntity entityResults;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -40,20 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "ZipDeflateReadSettings": return ZipDeflateReadSettings.DeserializeZipDeflateReadSettings(element);
                 }
             }
-            string type = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new CompressionReadSettings(type, additionalProperties);
+            return UnknownCompressionReadSettings.DeserializeUnknownCompressionReadSettings(element);
         }
 
         internal partial class CompressionReadSettingsConverter : JsonConverter<CompressionReadSettings>

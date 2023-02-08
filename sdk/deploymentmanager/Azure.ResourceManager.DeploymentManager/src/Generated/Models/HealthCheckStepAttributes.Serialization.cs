@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -42,44 +41,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     case "REST": return RestHealthCheckStepAttributes.DeserializeRestHealthCheckStepAttributes(element);
                 }
             }
-            string type = default;
-            Optional<TimeSpan> waitDuration = default;
-            Optional<TimeSpan> maxElasticDuration = default;
-            TimeSpan healthyStateDuration = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("waitDuration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    waitDuration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("maxElasticDuration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maxElasticDuration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("healthyStateDuration"))
-                {
-                    healthyStateDuration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-            }
-            return new UnknownHealthCheckStepAttributes(type, Optional.ToNullable(waitDuration), Optional.ToNullable(maxElasticDuration), healthyStateDuration);
+            return UnknownHealthCheckStepAttributes.DeserializeUnknownHealthCheckStepAttributes(element);
         }
     }
 }

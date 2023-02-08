@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The Age Unit of measurement. </summary>
-    internal readonly partial struct AgeUnit : IEquatable<AgeUnit>
+    public readonly partial struct AgeUnit : IEquatable<AgeUnit>
     {
         private readonly string _value;
 

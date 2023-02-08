@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> description = default;
-            FirewallPolicyRuleType ruleType = default;
+            FirewallPolicyRuleType ruleType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,9 +13,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Weather.cs
     // Data plane generated sub-client. The Weather sub-client.
     /// <summary> The Weather sub-client. </summary>
     public partial class Weather
+=======
+    // Data plane generated client.
+    /// <summary> The Weather service client. </summary>
+    public partial class WeatherClient
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/WeatherClient.cs
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -182,6 +185,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
             Argument.AssertNotNull(granularity, nameof(granularity));
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Weather.cs
             return GetWeathersImplementationAsync("Weather.GetWeathers", partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
         }
 
@@ -200,6 +204,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWeathersRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWeathersNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WeatherClient.GetWeathers", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/WeatherClient.cs
         }
 
         /// <summary> Returns a paginated list of weather data. </summary>
@@ -228,6 +237,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
             Argument.AssertNotNull(granularity, nameof(granularity));
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Weather.cs
             return GetWeathersImplementation("Weather.GetWeathers", partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
         }
 
@@ -246,6 +256,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWeathersRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWeathersNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WeatherClient.GetWeathers", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/WeatherClient.cs
         }
 
         /// <summary> Create a weather data delete job. </summary>

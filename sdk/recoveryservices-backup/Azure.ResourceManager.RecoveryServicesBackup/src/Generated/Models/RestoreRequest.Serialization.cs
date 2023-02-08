@@ -41,16 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationRequest.DeserializeIaasVmRestoreWithRehydrationRequest(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRestoreRequest(objectType);
+            return UnknownRestoreRequest.DeserializeUnknownRestoreRequest(element);
         }
     }
 }

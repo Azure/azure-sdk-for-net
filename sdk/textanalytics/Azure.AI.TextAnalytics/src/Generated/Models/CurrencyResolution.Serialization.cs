@@ -6,19 +6,20 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class CurrencyResolution : IUtf8JsonSerializable
+    public partial class CurrencyResolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ISO4217))
+            if (Optional.IsDefined(Iso4217))
             {
-                writer.WritePropertyName("ISO4217");
-                writer.WriteStringValue(ISO4217);
+                writer.WritePropertyName("iso4217");
+                writer.WriteStringValue(Iso4217);
             }
             writer.WritePropertyName("unit");
             writer.WriteStringValue(Unit);
@@ -31,15 +32,15 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CurrencyResolution DeserializeCurrencyResolution(JsonElement element)
         {
-            Optional<string> isO4217 = default;
+            Optional<string> iso4217 = default;
             string unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ISO4217"))
+                if (property.NameEquals("iso4217"))
                 {
-                    isO4217 = property.Value.GetString();
+                    iso4217 = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("unit"))
@@ -58,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CurrencyResolution(resolutionKind, isO4217.Value, unit, value);
+            return new CurrencyResolution(resolutionKind, iso4217.Value, unit, value);
         }
     }
 }

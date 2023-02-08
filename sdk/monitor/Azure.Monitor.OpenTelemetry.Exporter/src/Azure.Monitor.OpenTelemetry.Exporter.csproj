@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
-    <Version>1.0.0-beta.5</Version>
-    <PackageTags>Azure Monitor OpenTelemetry Exporter</PackageTags>
+    <Version>1.0.0-beta.8</Version>
+    <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
@@ -27,7 +27,7 @@
   <PropertyGroup>
     <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace
       https://github.com/Azure/azure-sdk-for-net/issues/17155 -->
-    <NoWarn>$(NoWarn);AZC0001;CS0108;CS1591</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
 </Project>

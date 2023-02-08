@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UnknownDeliveryRuleAction DeserializeUnknownDeliveryRuleAction(JsonElement element)
         {
-            DeliveryRuleActionType name = default;
+            DeliveryRuleActionType name = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

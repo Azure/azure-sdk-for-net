@@ -10,10 +10,10 @@
         "Content-Type": "application/json",
         "repeatability-first-sent": "Sanitized",
         "repeatability-request-id": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.25197)",
-        "x-ms-client-request-id": "8f89588d67108cb442cf4b46826f45c0",
+        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20221110.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c0d34d2fee218e4fe0d33380ca3d8984",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 12 Sep 2022 21:52:43 GMT",
+        "x-ms-date": "Thu, 10 Nov 2022 21:16:44 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -34,21 +34,22 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "api-supported-versions": "2021-10-01-preview",
+        "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Mon, 12 Sep 2022 21:52:46 GMT",
-        "mise-correlation-id": "9bd2e529-ce1d-4755-853a-1af3a2882568",
-        "Operation-Location": "https://sdk-live-test-comm.communication.azure.com/emails/20f7e78b-4c58-413a-97f3-189107bc940a/status",
+        "Date": "Thu, 10 Nov 2022 21:16:48 GMT",
+        "mise-correlation-id": "4a621b45-1ef8-49c5-ae45-7870f770958c",
+        "Operation-Location": "https://sdk-live-test-comm.communication.azure.com/emails/726ad07c-c365-4981-a740-c8982ad78d4c/status",
         "Repeatability-Result": "accepted",
-        "X-Azure-Ref": "0LaofYwAAAAD5zSL/TST\u002BQJGruzbunBGfQk9TMzIxMDAwMTA5MDA5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "x-azure-ref": "20221110T211648Z-hvb1cv81ux3d15kk2y0vp09x4g00000005k000000002cs2n",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-request-id": "20f7e78b-4c58-413a-97f3-189107bc940a"
+        "x-ms-request-id": "726ad07c-c365-4981-a740-c8982ad78d4c"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "COMMUNICATION_CONNECTION_STRING_EMAIL": "endpoint=https://sdk-live-test-comm.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1786792774",
+    "RandomSeed": "1593755159",
     "RECIPIENT_ADDRESS": "acseaastesting@gmail.com",
     "SENDER_ADDRESS": "DoNotReply@3276b20a-aa29-4ec2-9cf7-b517715b101b.azurecomm.net"
   }

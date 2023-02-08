@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-                writer.WriteStringValue(FolderPath);
+                writer.WriteObjectValue(FolderPath);
             }
             writer.WriteEndObject();
         }
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
         {
             Optional<LinkedServiceReference> linkedService = default;
-            Optional<string> folderPath = default;
+            Optional<object> folderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"))
@@ -49,7 +49,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("folderPath"))
                 {
-                    folderPath = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    folderPath = property.Value.GetObject();
                     continue;
                 }
             }

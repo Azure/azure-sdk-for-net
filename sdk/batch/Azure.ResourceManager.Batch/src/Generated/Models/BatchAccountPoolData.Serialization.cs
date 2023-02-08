@@ -132,6 +132,11 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TargetNodeCommunicationMode))
+            {
+                writer.WritePropertyName("targetNodeCommunicationMode");
+                writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToSerialString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -169,6 +174,8 @@ namespace Azure.ResourceManager.Batch
             Optional<IList<string>> applicationLicenses = default;
             Optional<BatchResizeOperationStatus> resizeOperationStatus = default;
             Optional<IList<BatchMountConfiguration>> mountConfiguration = default;
+            Optional<NodeCommunicationMode> targetNodeCommunicationMode = default;
+            Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.Batch
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -213,7 +220,7 @@ namespace Azure.ResourceManager.Batch
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -495,11 +502,31 @@ namespace Azure.ResourceManager.Batch
                             mountConfiguration = array;
                             continue;
                         }
+                        if (property0.NameEquals("targetNodeCommunicationMode"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetNodeCommunicationMode = property0.Value.GetString().ToNodeCommunicationMode();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentNodeCommunicationMode"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                currentNodeCommunicationMode = null;
+                                continue;
+                            }
+                            currentNodeCommunicationMode = property0.Value.GetString().ToNodeCommunicationMode();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(etag));
+            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToNullable(etag));
         }
     }
 }

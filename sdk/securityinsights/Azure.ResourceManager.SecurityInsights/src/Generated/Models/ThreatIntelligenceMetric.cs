@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>
-        /// <param name="lastUpdatedTimeUtc"> Last updated indicator metric. </param>
+        /// <param name="lastUpdatedOn"> Last updated indicator metric. </param>
         /// <param name="threatTypeMetrics"> Threat type metrics. </param>
         /// <param name="patternTypeMetrics"> Pattern type metrics. </param>
         /// <param name="sourceMetrics"> Source metrics. </param>
-        internal ThreatIntelligenceMetric(string lastUpdatedTimeUtc, IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics)
+        internal ThreatIntelligenceMetric(string lastUpdatedOn, IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics)
         {
-            LastUpdatedTimeUtc = lastUpdatedTimeUtc;
+            LastUpdatedOn = lastUpdatedOn;
             ThreatTypeMetrics = threatTypeMetrics;
             PatternTypeMetrics = patternTypeMetrics;
             SourceMetrics = sourceMetrics;
         }
 
         /// <summary> Last updated indicator metric. </summary>
-        public string LastUpdatedTimeUtc { get; }
+        public string LastUpdatedOn { get; }
         /// <summary> Threat type metrics. </summary>
         public IReadOnlyList<ThreatIntelligenceMetricEntity> ThreatTypeMetrics { get; }
         /// <summary> Pattern type metrics. </summary>

@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class StreamingPolicyTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaServiceIdentifier;
         private MediaServicesAccountResource _mediaService;
 
         private StreamingPolicyCollection streamingPolicyCollection => _mediaService.GetStreamingPolicies();
@@ -23,20 +22,11 @@ namespace Azure.ResourceManager.Media.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaservice"), storage.Id);
-            _mediaServiceIdentifier = mediaService.Id;
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatests");
+            _mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
         }
 
         private async Task<StreamingPolicyResource> CreateStreamingPolicy(string policyName)
@@ -56,7 +46,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string policyName = SessionRecording.GenerateAssetName("streamingPolicy");
+            string policyName = Recording.GenerateAssetName("streamingPolicy");
             var streamingPolicy = await CreateStreamingPolicy(policyName);
             Assert.IsNotNull(streamingPolicy);
             Assert.AreEqual(policyName, streamingPolicy.Data.Name);
@@ -66,7 +56,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Exist()
         {
-            string policyName = SessionRecording.GenerateAssetName("streamingPolicy");
+            string policyName = Recording.GenerateAssetName("streamingPolicy");
             await CreateStreamingPolicy(policyName);
             bool flag = await streamingPolicyCollection.ExistsAsync(policyName);
             Assert.IsTrue(flag);
@@ -76,7 +66,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Get()
         {
-            string policyName = SessionRecording.GenerateAssetName("streamingPolicy");
+            string policyName = Recording.GenerateAssetName("streamingPolicy");
             await CreateStreamingPolicy(policyName);
             var streamingPolicy = await streamingPolicyCollection.GetAsync(policyName);
             Assert.IsNotNull(policyName);
@@ -87,7 +77,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            string policyName = SessionRecording.GenerateAssetName("streamingPolicy");
+            string policyName = Recording.GenerateAssetName("streamingPolicy");
             await CreateStreamingPolicy(policyName);
             var list = await streamingPolicyCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
@@ -98,7 +88,7 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            string policyName = SessionRecording.GenerateAssetName("streamingPolicy");
+            string policyName = Recording.GenerateAssetName("streamingPolicy");
             var streamingPolicy = await CreateStreamingPolicy(policyName);
             bool flag = await streamingPolicyCollection.ExistsAsync(policyName);
             Assert.IsTrue(flag);

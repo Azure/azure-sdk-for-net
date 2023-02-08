@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static PiiEntitiesResult DeserializePiiEntitiesResult(JsonElement element)
         {
-            IList<PiiResultDocumentsItem> documents = default;
+            IList<PIIResultWithDetectedLanguage> documents = default;
             IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
@@ -51,10 +51,10 @@ namespace Azure.AI.TextAnalytics
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<PiiResultDocumentsItem> array = new List<PiiResultDocumentsItem>();
+                    List<PIIResultWithDetectedLanguage> array = new List<PIIResultWithDetectedLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PiiResultDocumentsItem.DeserializePiiResultDocumentsItem(item));
+                        array.Add(PIIResultWithDetectedLanguage.DeserializePIIResultWithDetectedLanguage(item));
                     }
                     documents = array;
                     continue;

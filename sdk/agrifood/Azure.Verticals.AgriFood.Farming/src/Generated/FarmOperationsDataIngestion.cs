@@ -13,9 +13,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmOperationsDataIngestion.cs
     // Data plane generated sub-client. The FarmOperationsDataIngestion sub-client.
     /// <summary> The FarmOperationsDataIngestion sub-client. </summary>
     public partial class FarmOperationsDataIngestion
+=======
+    // Data plane generated client.
+    /// <summary> The Farm service client. </summary>
+    public partial class FarmClient
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmClient.cs
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;

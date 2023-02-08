@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Guid vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
-            Source source = default;
+            Source source = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceId"))

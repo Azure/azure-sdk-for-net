@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
     {
         internal static MarketplaceRegistrationDefinitionList DeserializeMarketplaceRegistrationDefinitionList(JsonElement element)
         {
-            Optional<IReadOnlyList<MarketplaceRegistrationDefinitionData>> value = default;
+            Optional<IReadOnlyList<ManagedServicesMarketplaceRegistrationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MarketplaceRegistrationDefinitionData> array = new List<MarketplaceRegistrationDefinitionData>();
+                    List<ManagedServicesMarketplaceRegistrationData> array = new List<ManagedServicesMarketplaceRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceRegistrationDefinitionData.DeserializeMarketplaceRegistrationDefinitionData(item));
+                        array.Add(ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(item));
                     }
                     value = array;
                     continue;

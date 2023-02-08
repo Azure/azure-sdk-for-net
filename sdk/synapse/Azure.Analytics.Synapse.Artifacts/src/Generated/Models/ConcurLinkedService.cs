@@ -38,7 +38,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="connectionProperties"> Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientId"> Application client_id supplied by Concur App Management. </param>
         /// <param name="username"> The user name that you use to access Concur Service. </param>
-        /// <param name="password"> The password corresponding to the user name that you provided in the username field. </param>
+        /// <param name="password">
+        /// The password corresponding to the user name that you provided in the username field.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
@@ -62,7 +66,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ClientId { get; set; }
         /// <summary> The user name that you use to access Concur Service. </summary>
         public object Username { get; set; }
-        /// <summary> The password corresponding to the user name that you provided in the username field. </summary>
+        /// <summary>
+        /// The password corresponding to the user name that you provided in the username field.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public object UseEncryptedEndpoints { get; set; }

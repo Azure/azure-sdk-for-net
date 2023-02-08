@@ -32,16 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "SimpleSchedulePolicyV2": return SimpleSchedulePolicyV2.DeserializeSimpleSchedulePolicyV2(element);
                 }
             }
-            string schedulePolicyType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("schedulePolicyType"))
-                {
-                    schedulePolicyType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownSchedulePolicy(schedulePolicyType);
+            return UnknownSchedulePolicy.DeserializeUnknownSchedulePolicy(element);
         }
     }
 }

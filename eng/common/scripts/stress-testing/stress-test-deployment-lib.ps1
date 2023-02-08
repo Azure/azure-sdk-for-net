@@ -5,6 +5,19 @@ $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
 . (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
 
+$limitRangeSpec = @"
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-resource-request
+spec:
+  limits:
+  - defaultRequest:
+      cpu: 100m
+      memory: 100Mi
+    type: Container
+"@
+
 # Powershell does not (at time of writing) treat exit codes from external binaries
 # as cause for stopping execution, so do this via a wrapper function.
 # See https://github.com/PowerShell/PowerShell-RFC/pull/277
@@ -43,7 +56,7 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
     $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json -AsHashtable
     $defaultNamespace = $null
     $targetContext = $kubeContext.contexts.Where({ $_.name -eq $clusterName }) | Select -First 1
-    if ($targetContext -ne $null) {
+    if ($targetContext -ne $null -and $targetContext.PSObject.Properties.Name -match "namespace") {
         $defaultNamespace = $targetContext.context.namespace
     }
 
@@ -84,6 +97,7 @@ function DeployStressTests(
         return $true
     })]
     [System.IO.FileInfo]$LocalAddonsPath,
+    [Parameter(Mandatory=$False)][switch]$Template,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
     [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
@@ -103,12 +117,11 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources'
+    } elseif (!$clusterGroup -or !$subscription) {
+        throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
     }
 
     if ($login) {
-        if (!$clusterGroup -or !$subscription) {
-            throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not pg or prod."
-        }
         Login -subscription $subscription -clusterGroup $clusterGroup -pushImages:$pushImages
     }
 
@@ -146,11 +159,15 @@ function DeployStressTests(
             -environment $environment `
             -repositoryBase $repository `
             -pushImages:$pushImages `
-            -login:$login
+            -login:$login `
+            -clusterGroup $clusterGroup `
+            -subscription $subscription
     }
 
-    Write-Host "Releases deployed by $deployer"
-    Run helm list --all-namespaces -l deployId=$deployer
+    if ($FailedCommands.Count -lt $pkgs.Count) {
+        Write-Host "Releases deployed by $deployer"
+        Run helm list --all-namespaces -l deployId=$deployer
+    }
 
     if ($FailedCommands) {
         Write-Warning "The following commands failed:"
@@ -169,7 +186,9 @@ function DeployStressPackage(
     [string]$environment,
     [string]$repositoryBase,
     [switch]$pushImages,
-    [switch]$login
+    [switch]$login,
+    [string]$clusterGroup,
+    [string]$subscription
 ) {
     $registry = RunOrExitOnFailure az acr list -g $clusterGroup --subscription $subscription -o json
     $registryName = ($registry | ConvertFrom-Json).name
@@ -190,6 +209,9 @@ function DeployStressPackage(
 
     Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
     kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
+    if ($LASTEXITCODE) {exit $LASTEXITCODE}
+    Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
+    $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
     if ($LASTEXITCODE) {exit $LASTEXITCODE}
 
     $dockerBuildConfigs = @()
@@ -215,7 +237,9 @@ function DeployStressPackage(
                 $dockerBuildDir = Split-Path $dockerFilePath
             }
             $dockerBuildDir = [System.IO.Path]::GetFullPath($dockerBuildDir).Trim()
-            $dockerBuildConfigs += @{"dockerFilePath"=$dockerFilePath; "dockerBuildDir"=$dockerBuildDir}
+            $dockerBuildConfigs += @{"dockerFilePath"=$dockerFilePath;
+                                    "dockerBuildDir"=$dockerBuildDir;
+                                    "scenario"=$scenario}
         }
     }
     if ($pkg.Dockerfile -or $pkg.DockerBuildDir) {
@@ -238,8 +262,15 @@ function DeployStressPackage(
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             $dockerFile = Get-ChildItem $dockerFilePath
 
-            Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
+            $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
+            foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
+                $dockerBuildCmd += "--build-arg"
+                $dockerBuildCmd += "'$($buildArg.Key)'='$($buildArg.Value)'"
+            }
+            $dockerBuildCmd += $dockerBuildFolder
 
+            Run @dockerBuildCmd
+            
             Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
             Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
             Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
@@ -271,28 +302,41 @@ function DeployStressPackage(
     }
 
     Write-Host "Installing or upgrading stress test $($pkg.ReleaseName) from $($pkg.Directory)"
-    Run helm upgrade $pkg.ReleaseName $pkg.Directory `
-        -n $pkg.Namespace `
-        --install `
-        --set stress-test-addons.env=$environment `
-        --values (Join-Path $pkg.Directory generatedValues.yaml)
+
+    $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
+    $subCommand = $Template ? "template" : "upgrade"
+    $installFlag = $Template ? "" : "--install"
+    $helmCommandArg = "helm", $subCommand, $pkg.ReleaseName, $pkg.Directory, "-n", $pkg.Namespace, $installFlag, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
+
+    $result = (Run @helmCommandArg) 2>&1 | Write-Host
+
     if ($LASTEXITCODE) {
-        # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
-        # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).
-        # See https://github.com/helm/helm/issues/4558
-        Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $($pkg.ReleaseName)'"
-        return
+        # Error: UPGRADE FAILED: create: failed to create: Secret "sh.helm.release.v1.stress-test.v3" is invalid: data: Too long: must have at most 1048576 bytes
+        # Error: UPGRADE FAILED: create: failed to create: Request entity too large: limit is 3145728
+        if ($result -like "*Too long*" -or $result -like "*Too large*") {
+          $result
+          Write-Warning "*** Ensure any files or directories not part of the stress config are added to .helmignore ***"
+          Write-Warning "*** See https://helm.sh/docs/chart_template_guide/helm_ignore_file/ ***"
+          return
+        } else {
+          # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
+          # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).
+          # See https://github.com/helm/helm/issues/4558
+          Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $($pkg.ReleaseName)'"
+          return
+        }
     }
 
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
     # specific releases (thereby enabling filtering on `helm list`) is to label the underlying secret resources.
     # There is not currently support for setting these labels via the helm cli.
-    $helmReleaseConfig = kubectl get secrets `
-        -n $pkg.Namespace `
-        -l status=deployed,name=$($pkg.ReleaseName) `
-        -o jsonpath='{.items[0].metadata.name}'
-
-    Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
+    if(!$Template) {
+        $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
+                                                -n $pkg.Namespace `
+                                                -l "status=deployed,name=$($pkg.ReleaseName)" `
+                                                -o jsonpath='{.items[0].metadata.name}'
+        Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
+    }
 }
 
 function CheckDependencies()

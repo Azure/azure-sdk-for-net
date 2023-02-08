@@ -32,16 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element);
                 }
             }
-            SecretType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new SecretType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownFrontDoorSecretProperties(type);
+            return UnknownSecretProperties.DeserializeUnknownSecretProperties(element);
         }
     }
 }

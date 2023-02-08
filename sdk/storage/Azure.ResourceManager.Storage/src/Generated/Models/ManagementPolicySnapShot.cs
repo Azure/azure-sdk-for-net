@@ -16,20 +16,28 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of ManagementPolicySnapShot. </summary>
-        /// <param name="tierToCool"> The function to tier blob snapshot to cool storage. Support blob snapshot currently at Hot tier. </param>
-        /// <param name="tierToArchive"> The function to tier blob snapshot to archive storage. Support blob snapshot currently at Hot or Cool tier. </param>
+        /// <param name="tierToCool"> The function to tier blob snapshot to cool storage. </param>
+        /// <param name="tierToArchive"> The function to tier blob snapshot to archive storage. </param>
+        /// <param name="tierToCold"> The function to tier blobs to cold storage. </param>
+        /// <param name="tierToHot"> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </param>
         /// <param name="delete"> The function to delete the blob snapshot. </param>
-        internal ManagementPolicySnapShot(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation delete)
+        internal ManagementPolicySnapShot(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation tierToCold, DateAfterCreation tierToHot, DateAfterCreation delete)
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
+            TierToCold = tierToCold;
+            TierToHot = tierToHot;
             Delete = delete;
         }
 
-        /// <summary> The function to tier blob snapshot to cool storage. Support blob snapshot currently at Hot tier. </summary>
+        /// <summary> The function to tier blob snapshot to cool storage. </summary>
         public DateAfterCreation TierToCool { get; set; }
-        /// <summary> The function to tier blob snapshot to archive storage. Support blob snapshot currently at Hot or Cool tier. </summary>
+        /// <summary> The function to tier blob snapshot to archive storage. </summary>
         public DateAfterCreation TierToArchive { get; set; }
+        /// <summary> The function to tier blobs to cold storage. </summary>
+        public DateAfterCreation TierToCold { get; set; }
+        /// <summary> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </summary>
+        public DateAfterCreation TierToHot { get; set; }
         /// <summary> The function to delete the blob snapshot. </summary>
         public DateAfterCreation Delete { get; set; }
     }

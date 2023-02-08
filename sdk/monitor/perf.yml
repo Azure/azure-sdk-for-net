@@ -1,6 +1,32 @@
+parameters:
+- name: PackageVersions
+  displayName: PackageVersions (regex of package versions to run)
+  type: string
+  default: '1|source'
+- name: Tests
+  displayName: Tests (regex of tests to run)
+  type: string
+  default: '^(upload|upload-batch)$'
+- name: Arguments
+  displayName: Arguments (regex of arguments to run)
+  type: string
+  default: '.*'
+- name: Iterations
+  displayName: Iterations (times to run each test)
+  type: number
+  default: '5'
+- name: AdditionalArguments
+  displayName: AdditionalArguments (passed to PerfAutomation)
+  type: string
+  default: ' '
+
 extends:
   template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
     ServiceDirectory: monitor
-    Tests: '^(SingleUpload|BatchUpload)$'
-    
+    Services: "^monitor-ingestion$"
+    PackageVersions: ${{ parameters.PackageVersions }}
+    Tests: ${{ parameters.Tests }}
+    Arguments: ${{ parameters.Arguments }}
+    Iterations: ${{ parameters.Iterations }}
+    AdditionalArguments: ${{ parameters.AdditionalArguments }}

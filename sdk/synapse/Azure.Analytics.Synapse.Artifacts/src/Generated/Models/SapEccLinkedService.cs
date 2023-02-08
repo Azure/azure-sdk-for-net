@@ -34,7 +34,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="url"> The URL of SAP ECC OData API. For example, &apos;[https://hostname:port/sap/opu/odata/sap/servicename/]&apos;. Type: string (or Expression with resultType string). </param>
         /// <param name="username"> The username for Basic authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The password for Basic authentication. </param>
+        /// <param name="password">
+        /// The password for Basic authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential or username/password must be provided. Type: string (or Expression with resultType string). </param>
         internal SapEccLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, string url, string username, SecretBase password, string encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -49,7 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string Url { get; set; }
         /// <summary> The username for Basic authentication. Type: string (or Expression with resultType string). </summary>
         public string Username { get; set; }
-        /// <summary> The password for Basic authentication. </summary>
+        /// <summary>
+        /// The password for Basic authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential or username/password must be provided. Type: string (or Expression with resultType string). </summary>
         public string EncryptedCredential { get; set; }

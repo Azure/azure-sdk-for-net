@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UnknownInfrastructureConfiguration DeserializeUnknownInfrastructureConfiguration(JsonElement element)
         {
-            SapDeploymentType deploymentType = default;
+            SapDeploymentType deploymentType = "Unknown";
             string appResourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {

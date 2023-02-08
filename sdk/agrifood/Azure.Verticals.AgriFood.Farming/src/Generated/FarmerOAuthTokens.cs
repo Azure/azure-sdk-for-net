@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,9 +14,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmerOAuthTokens.cs
     // Data plane generated sub-client. The FarmerOAuthTokens sub-client.
     /// <summary> The FarmerOAuthTokens sub-client. </summary>
     public partial class FarmerOAuthTokens
+=======
+    // Data plane generated client.
+    /// <summary> The OAuthTokens service client. </summary>
+    public partial class OAuthTokensClient
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/OAuthTokensClient.cs
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -173,6 +177,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='GetAuthenticatedFarmersDetailsAsync(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAuthenticatedFarmersDetailsAsync(IEnumerable<string> authProviderIds = null, IEnumerable<string> partyIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmerOAuthTokens.cs
             return GetAuthenticatedFarmersDetailsImplementationAsync("FarmerOAuthTokens.GetAuthenticatedFarmersDetails", authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
@@ -191,6 +196,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOAuthTokensRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOAuthTokensNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "OAuthTokensClient.GetOAuthTokens", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/OAuthTokensClient.cs
         }
 
         /// <summary> Returns a list of OAuthToken documents. </summary>
@@ -212,6 +222,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='GetAuthenticatedFarmersDetails(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAuthenticatedFarmersDetails(IEnumerable<string> authProviderIds = null, IEnumerable<string> partyIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmerOAuthTokens.cs
             return GetAuthenticatedFarmersDetailsImplementation("FarmerOAuthTokens.GetAuthenticatedFarmersDetails", authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
@@ -230,6 +241,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOAuthTokensRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOAuthTokensNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "OAuthTokensClient.GetOAuthTokens", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/OAuthTokensClient.cs
         }
 
         /// <summary> Create remove job for OAuth token. </summary>

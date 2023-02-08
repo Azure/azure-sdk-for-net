@@ -4,7 +4,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.EdgeOrder</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider EdgeOrder</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.EdgeOrder.</Description>
     <PackageTags>azure;management;arm;resource manager;edgeorder</PackageTags>
   </PropertyGroup>
 </Project>

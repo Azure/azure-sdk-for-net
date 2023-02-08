@@ -66,6 +66,46 @@ To remove a role assignment from a service principal, the role assignment must b
 client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 ```
 
+## Creating a Role Definition
+
+You can also create custom role definitions with custom permissions:
+
+```C# Snippet:CreateRoleDefinition
+CreateOrUpdateRoleDefinitionOptions options = new CreateOrUpdateRoleDefinitionOptions(KeyVaultRoleScope.Global)
+{
+    RoleName = "Managed HSM Data Decryptor",
+    Description = "Can only decrypt data using the private key stored in Managed HSM",
+    Permissions =
+    {
+        new KeyVaultPermission()
+        {
+            DataActions =
+            {
+                KeyVaultDataAction.DecryptHsmKey
+            }
+        }
+    }
+};
+KeyVaultRoleDefinition createdDefinition = client.CreateOrUpdateRoleDefinition(options);
+```
+
+## Getting a Role Definition
+
+To get a role definition, you'll need to know the globally unique ID (GUID) instead of the name like with role assignments:
+
+```C# Snippet:GetRoleDefinition
+Guid roleDefinitionId = new Guid(createdDefinition.Name);
+KeyVaultRoleDefinition fetchedDefinition = client.GetRoleDefinition(KeyVaultRoleScope.Global, roleDefinitionId);
+```
+
+## Deleting a Role Definition
+
+To delete a role definition, you'll need to know the globally unique ID (GUID) instead of the name like with role assignments:
+
+```C# Snippet:DeleteRoleDefinition
+client.DeleteRoleDefinition(KeyVaultRoleScope.Global, roleDefinitionId);
+```
+
 <!-- LINKS -->
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential

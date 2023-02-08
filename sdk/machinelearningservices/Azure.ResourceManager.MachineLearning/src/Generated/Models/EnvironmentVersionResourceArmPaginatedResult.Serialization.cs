@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static EnvironmentVersionResourceArmPaginatedResult DeserializeEnvironmentVersionResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<EnvironmentVersionData>> value = default;
+            Optional<IReadOnlyList<MachineLearningEnvironmentVersionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EnvironmentVersionData> array = new List<EnvironmentVersionData>();
+                    List<MachineLearningEnvironmentVersionData> array = new List<MachineLearningEnvironmentVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentVersionData.DeserializeEnvironmentVersionData(item));
+                        array.Add(MachineLearningEnvironmentVersionData.DeserializeMachineLearningEnvironmentVersionData(item));
                     }
                     value = array;
                     continue;

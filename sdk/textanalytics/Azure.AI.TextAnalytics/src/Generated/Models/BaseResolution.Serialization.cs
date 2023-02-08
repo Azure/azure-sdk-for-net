@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class BaseResolution : IUtf8JsonSerializable
+    public partial class BaseResolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,16 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
                     case "WeightResolution": return WeightResolution.DeserializeWeightResolution(element);
                 }
             }
-            ResolutionKind resolutionKind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resolutionKind"))
-                {
-                    resolutionKind = new ResolutionKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new BaseResolution(resolutionKind);
+            return UnknownBaseResolution.DeserializeUnknownBaseResolution(element);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DefaultAzureCredential"/> authentication flow and requests made to Azure Identity services.
     /// </summary>
-    public class DefaultAzureCredentialOptions : TokenCredentialOptions
+    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery
     {
         private struct UpdateTracker<T>
         {
@@ -213,6 +213,11 @@ namespace Azure.Identity
         public bool ExcludeManagedIdentityCredential { get; set; }
 
         /// <summary>
+        /// Specifies whether the <see cref="AzureDeveloperCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeAzureDeveloperCliCredential { get; set; }
+
+        /// <summary>
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables single sign on authentication with development tools which write to the shared token cache.
         /// The default is <c>true</c>.
@@ -247,6 +252,9 @@ namespace Azure.Identity
         /// </summary>
         public bool ExcludeAzurePowerShellCredential { get; set; }
 
+        /// <inheriteddoc/>
+        public bool DisableInstanceDiscovery { get; set; }
+
         internal DefaultAzureCredentialOptions ShallowClone()
         {
             var options = new DefaultAzureCredentialOptions
@@ -263,13 +271,15 @@ namespace Azure.Identity
                 DeveloperCredentialTimeout = DeveloperCredentialTimeout,
                 ExcludeEnvironmentCredential = ExcludeEnvironmentCredential,
                 ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential,
+                ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential,
                 ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential,
                 ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential,
                 ExcludeAzureCliCredential = ExcludeAzureCliCredential,
                 ExcludeVisualStudioCredential = ExcludeVisualStudioCredential,
                 ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential,
                 ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential,
-                AuthorityHost = AuthorityHost
+                AuthorityHost = AuthorityHost,
+                DisableInstanceDiscovery = DisableInstanceDiscovery,
             };
 
             foreach (var addlTenant in AdditionallyAllowedTenants)

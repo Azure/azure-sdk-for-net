@@ -87,11 +87,14 @@ jobs:
             Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml"
           }
         displayName: Set variable for the project list file and coverage directory
-      - pwsh: >-
+      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+        parameters:
+          LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
+      - script: >-
           dotnet test eng/service.proj
-          --filter '(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))'
+          --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
           --framework $(TestTargetFramework)
-          --logger 'trx;LogFileName=$(TestTargetFramework).trx' --logger:'console;verbosity=normal'
+          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
@@ -102,6 +105,7 @@ jobs:
           /p:EnableSourceLink=false
           /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
           $(AdditionalTestArguments)
+          $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
       - task: PublishTestResults@2
         condition: always()
@@ -111,6 +115,11 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+        parameters:
+          ArtifactPath: $(Build.ArtifactStagingDirectory)/test.binlog
+          ArtifactName: binlog_$(Agent.JobName)
+          CustomCondition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
       - template: /eng/pipelines/templates/steps/upload-dumps.yml
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))

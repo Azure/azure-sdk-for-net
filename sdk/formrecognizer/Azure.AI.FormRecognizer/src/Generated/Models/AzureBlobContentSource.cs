@@ -22,9 +22,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             ContainerUrl = containerUrl;
         }
-
-        /// <summary> Azure Blob Storage container URL. </summary>
-        public string ContainerUrl { get; }
         /// <summary> Blob name prefix. </summary>
         public string Prefix { get; set; }
     }

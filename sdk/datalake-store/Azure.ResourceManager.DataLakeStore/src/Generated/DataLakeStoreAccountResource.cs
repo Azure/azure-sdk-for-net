@@ -88,121 +88,177 @@ namespace Azure.ResourceManager.DataLakeStore
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of FirewallRuleResources in the DataLakeStoreAccount. </summary>
-        /// <returns> An object representing collection of FirewallRuleResources and their operations over a FirewallRuleResource. </returns>
-        public virtual FirewallRuleCollection GetFirewallRules()
+        /// <summary> Gets a collection of DataLakeStoreFirewallRuleResources in the DataLakeStoreAccount. </summary>
+        /// <returns> An object representing collection of DataLakeStoreFirewallRuleResources and their operations over a DataLakeStoreFirewallRuleResource. </returns>
+        public virtual DataLakeStoreFirewallRuleCollection GetDataLakeStoreFirewallRules()
         {
-            return GetCachedClient(Client => new FirewallRuleCollection(Client, Id));
+            return GetCachedClient(Client => new DataLakeStoreFirewallRuleCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets the specified Data Lake Store firewall rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}
-        /// Operation Id: FirewallRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirewallRuleResource>> GetFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreFirewallRuleResource>> GetDataLakeStoreFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified Data Lake Store firewall rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}
-        /// Operation Id: FirewallRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FirewallRuleResource> GetFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreFirewallRuleResource> GetDataLakeStoreFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            return GetFirewallRules().Get(firewallRuleName, cancellationToken);
+            return GetDataLakeStoreFirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkRuleResources in the DataLakeStoreAccount. </summary>
-        /// <returns> An object representing collection of VirtualNetworkRuleResources and their operations over a VirtualNetworkRuleResource. </returns>
-        public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
+        /// <summary> Gets a collection of DataLakeStoreVirtualNetworkRuleResources in the DataLakeStoreAccount. </summary>
+        /// <returns> An object representing collection of DataLakeStoreVirtualNetworkRuleResources and their operations over a DataLakeStoreVirtualNetworkRuleResource. </returns>
+        public virtual DataLakeStoreVirtualNetworkRuleCollection GetDataLakeStoreVirtualNetworkRules()
         {
-            return GetCachedClient(Client => new VirtualNetworkRuleCollection(Client, Id));
+            return GetCachedClient(Client => new DataLakeStoreVirtualNetworkRuleCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets the specified Data Lake Store virtual network rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}
-        /// Operation Id: VirtualNetworkRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualNetworkRuleResource>> GetVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreVirtualNetworkRuleResource>> GetDataLakeStoreVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetVirtualNetworkRules().GetAsync(virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreVirtualNetworkRules().GetAsync(virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified Data Lake Store virtual network rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}
-        /// Operation Id: VirtualNetworkRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualNetworkRuleResource> GetVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreVirtualNetworkRuleResource> GetDataLakeStoreVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            return GetVirtualNetworkRules().Get(virtualNetworkRuleName, cancellationToken);
+            return GetDataLakeStoreVirtualNetworkRules().Get(virtualNetworkRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TrustedIdProviderResources in the DataLakeStoreAccount. </summary>
-        /// <returns> An object representing collection of TrustedIdProviderResources and their operations over a TrustedIdProviderResource. </returns>
-        public virtual TrustedIdProviderCollection GetTrustedIdProviders()
+        /// <summary> Gets a collection of DataLakeStoreTrustedIdProviderResources in the DataLakeStoreAccount. </summary>
+        /// <returns> An object representing collection of DataLakeStoreTrustedIdProviderResources and their operations over a DataLakeStoreTrustedIdProviderResource. </returns>
+        public virtual DataLakeStoreTrustedIdProviderCollection GetDataLakeStoreTrustedIdProviders()
         {
-            return GetCachedClient(Client => new TrustedIdProviderCollection(Client, Id));
+            return GetCachedClient(Client => new DataLakeStoreTrustedIdProviderCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets the specified Data Lake Store trusted identity provider.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}
-        /// Operation Id: TrustedIdProviders_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrustedIdProviders_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="trustedIdProviderName"> The name of the trusted identity provider to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trustedIdProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TrustedIdProviderResource>> GetTrustedIdProviderAsync(string trustedIdProviderName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreTrustedIdProviderResource>> GetDataLakeStoreTrustedIdProviderAsync(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            return await GetTrustedIdProviders().GetAsync(trustedIdProviderName, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreTrustedIdProviders().GetAsync(trustedIdProviderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified Data Lake Store trusted identity provider.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}
-        /// Operation Id: TrustedIdProviders_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrustedIdProviders_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="trustedIdProviderName"> The name of the trusted identity provider to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trustedIdProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TrustedIdProviderResource> GetTrustedIdProvider(string trustedIdProviderName, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreTrustedIdProviderResource> GetDataLakeStoreTrustedIdProvider(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            return GetTrustedIdProviders().Get(trustedIdProviderName, cancellationToken);
+            return GetDataLakeStoreTrustedIdProviders().Get(trustedIdProviderName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the specified Data Lake Store account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataLakeStoreAccountResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -225,8 +281,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets the specified Data Lake Store account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataLakeStoreAccountResource> Get(CancellationToken cancellationToken = default)
@@ -249,8 +313,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Deletes the specified Data Lake Store account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
-        /// Operation Id: Accounts_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,8 +347,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Deletes the specified Data Lake Store account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
-        /// Operation Id: Accounts_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -301,8 +381,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Updates the specified Data Lake Store account information.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
-        /// Operation Id: Accounts_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Parameters supplied to update the Data Lake Store account. </param>
@@ -331,8 +419,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Updates the specified Data Lake Store account information.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
-        /// Operation Id: Accounts_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Parameters supplied to update the Data Lake Store account. </param>
@@ -361,8 +457,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Attempts to enable a user managed Key Vault for encryption of the specified Data Lake Store account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/enableKeyVault
-        /// Operation Id: Accounts_EnableKeyVault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/enableKeyVault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_EnableKeyVault</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> EnableKeyVaultAsync(CancellationToken cancellationToken = default)
@@ -383,8 +487,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Attempts to enable a user managed Key Vault for encryption of the specified Data Lake Store account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/enableKeyVault
-        /// Operation Id: Accounts_EnableKeyVault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/enableKeyVault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_EnableKeyVault</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response EnableKeyVault(CancellationToken cancellationToken = default)

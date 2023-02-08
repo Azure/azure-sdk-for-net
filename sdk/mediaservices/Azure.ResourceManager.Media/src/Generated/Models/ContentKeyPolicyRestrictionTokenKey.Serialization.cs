@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey": return ContentKeyPolicyX509CertificateTokenKey.DeserializeContentKeyPolicyX509CertificateTokenKey(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownContentKeyPolicyRestrictionTokenKey(odataType);
+            return UnknownContentKeyPolicyRestrictionTokenKey.DeserializeUnknownContentKeyPolicyRestrictionTokenKey(element);
         }
     }
 }

@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     case "Wait": return WaitStepProperties.DeserializeWaitStepProperties(element);
                 }
             }
-            StepType stepType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("stepType"))
-                {
-                    stepType = property.Value.GetString().ToStepType();
-                    continue;
-                }
-            }
-            return new UnknownStepProperties(stepType);
+            return UnknownStepProperties.DeserializeUnknownStepProperties(element);
         }
     }
 }

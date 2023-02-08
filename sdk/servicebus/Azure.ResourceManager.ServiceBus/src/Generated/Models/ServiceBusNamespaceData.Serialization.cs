@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(MinimumTlsVersion))
+            {
+                writer.WritePropertyName("minimumTlsVersion");
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+            }
             if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
@@ -74,6 +79,16 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("alternateName");
                 writer.WriteStringValue(AlternateName);
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(PremiumMessagingPartitions))
+            {
+                writer.WritePropertyName("premiumMessagingPartitions");
+                writer.WriteNumberValue(PremiumMessagingPartitions.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -88,6 +103,7 @@ namespace Azure.ResourceManager.ServiceBus
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<ServiceBusMinimumTlsVersion> minimumTlsVersion = default;
             Optional<string> provisioningState = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> createdAt = default;
@@ -99,6 +115,8 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
+            Optional<ServiceBusPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<int> premiumMessagingPartitions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -118,7 +136,7 @@ namespace Azure.ResourceManager.ServiceBus
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -163,7 +181,7 @@ namespace Azure.ResourceManager.ServiceBus
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -175,6 +193,16 @@ namespace Azure.ResourceManager.ServiceBus
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("minimumTlsVersion"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            minimumTlsVersion = new ServiceBusMinimumTlsVersion(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             provisioningState = property0.Value.GetString();
@@ -265,11 +293,31 @@ namespace Azure.ResourceManager.ServiceBus
                             alternateName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicNetworkAccess = new ServiceBusPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("premiumMessagingPartitions"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            premiumMessagingPartitions = property0.Value.GetInt32();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ServiceBusNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
+            return new ServiceBusNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(premiumMessagingPartitions));
         }
     }
 }

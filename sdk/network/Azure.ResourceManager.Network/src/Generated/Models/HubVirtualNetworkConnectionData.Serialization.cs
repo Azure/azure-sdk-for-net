@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("allowHubToRemoteVnetTransit"))

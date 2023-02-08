@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "Organization": return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element);
                 }
             }
-            OrganizationMembershipType organizationMembershipType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("organizationMembershipType"))
-                {
-                    organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAwsOrganizationalInfo(organizationMembershipType);
+            return UnknownAwsOrganizationalData.DeserializeUnknownAwsOrganizationalData(element);
         }
     }
 }

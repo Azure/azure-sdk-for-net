@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element);
                 }
             }
-            string odataType = default;
+            string odataType = "#Microsoft.Media.ImageFormat";
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
             {

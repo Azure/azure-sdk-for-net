@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStringValue(UnderlyingResourceType.ToString());
             writer.WritePropertyName("mountPath");
             writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(ReadOnly))
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly");
-                writer.WriteBooleanValue(ReadOnly.Value);
+                writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(MountOptions))
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static UnknownCustomPersistentDiskProperties DeserializeUnknownCustomPersistentDiskProperties(JsonElement element)
         {
-            UnderlyingResourceType type = default;
+            UnderlyingResourceType type = "Unknown";
             string mountPath = default;
             Optional<bool> readOnly = default;
             Optional<IList<string>> mountOptions = default;

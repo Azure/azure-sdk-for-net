@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> lastModifiedUtc = default;
             Optional<IList<SecurityMLAnalyticsSettingsDataSource>> requiredDataConnectors = default;
-            Optional<IList<AttackTactic>> tactics = default;
+            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
             Optional<IList<string>> techniques = default;
             Optional<string> anomalyVersion = default;
             Optional<BinaryData> customizableObservations = default;
             Optional<TimeSpan> frequency = default;
-            Optional<SettingsStatus> settingsStatus = default;
+            Optional<AnomalySecurityMLAnalyticsSettingsStatus> settingsStatus = default;
             Optional<bool> isDefaultSettings = default;
             Optional<int> anomalySettingsVersion = default;
             Optional<Guid> settingsDefinitionId = default;
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AttackTactic> array = new List<AttackTactic>();
+                            List<SecurityInsightsAttackTactic> array = new List<SecurityInsightsAttackTactic>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AttackTactic(item.GetString()));
+                                array.Add(new SecurityInsightsAttackTactic(item.GetString()));
                             }
                             tactics = array;
                             continue;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            settingsStatus = new SettingsStatus(property0.Value.GetString());
+                            settingsStatus = new AnomalySecurityMLAnalyticsSettingsStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isDefaultSettings"))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workspaceId = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    workspaceId = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

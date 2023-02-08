@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "AzureBackupParams": return DataProtectionBackupSettings.DeserializeDataProtectionBackupSettings(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionBackupSettingsBase(objectType);
+            return UnknownBackupParameters.DeserializeUnknownBackupParameters(element);
         }
     }
 }

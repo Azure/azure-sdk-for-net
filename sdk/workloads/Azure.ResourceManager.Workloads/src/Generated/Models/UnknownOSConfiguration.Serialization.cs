@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UnknownOSConfiguration DeserializeUnknownOSConfiguration(JsonElement element)
         {
-            OSType osType = default;
+            OSType osType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"))

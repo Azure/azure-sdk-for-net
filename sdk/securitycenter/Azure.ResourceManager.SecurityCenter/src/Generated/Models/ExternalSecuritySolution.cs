@@ -10,7 +10,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Represents a security solution external to Microsoft Defender for Cloud which sends information to an OMS workspace and whose data is displayed by Microsoft Defender for Cloud. </summary>
+    /// <summary>
+    /// Represents a security solution external to Microsoft Defender for Cloud which sends information to an OMS workspace and whose data is displayed by Microsoft Defender for Cloud.
+    /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
+    /// </summary>
     public partial class ExternalSecuritySolution : ResourceData
     {
         /// <summary> Initializes a new instance of ExternalSecuritySolution. </summary>
@@ -30,9 +34,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Kind = kind;
             Location = location;
         }
-
-        /// <summary> The kind of the external solution. </summary>
-        public ExternalSecuritySolutionKind? Kind { get; set; }
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
     }

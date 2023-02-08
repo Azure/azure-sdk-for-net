@@ -71,10 +71,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="numberOfWorkers"> Number of data loader workers. Must be a non-negative integer. </param>
         /// <param name="optimizer"> Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. </param>
         /// <param name="randomSeed"> Random seed to be used when using deterministic training. </param>
-        /// <param name="splitRatio">
-        /// If validation data is not defined, this specifies the split ratio for splitting
-        /// train data into random train and validation subsets. Must be a float in the range [0, 1].
-        /// </param>
         /// <param name="stepLRGamma"> Value of gamma when learning rate scheduler is &apos;step&apos;. Must be a float in the range [0, 1]. </param>
         /// <param name="stepLRStepSize"> Value of step size when learning rate scheduler is &apos;step&apos;. Must be a positive integer. </param>
         /// <param name="trainingBatchSize"> Training batch size. Must be a positive integer. </param>
@@ -82,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a float in the range [0, 1]. </param>
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is &apos;warmup_cosine&apos;. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. Must be a float in the range[0, 1]. </param>
-        internal ImageModelDistributionSettings(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string splitRatio, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay)
+        internal ImageModelDistributionSettings(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay)
         {
             AmsGradient = amsGradient;
             Augmentations = augmentations;
@@ -105,7 +101,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             NumberOfWorkers = numberOfWorkers;
             Optimizer = optimizer;
             RandomSeed = randomSeed;
-            SplitRatio = splitRatio;
             StepLRGamma = stepLRGamma;
             StepLRStepSize = stepLRStepSize;
             TrainingBatchSize = trainingBatchSize;
@@ -176,11 +171,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Optimizer { get; set; }
         /// <summary> Random seed to be used when using deterministic training. </summary>
         public string RandomSeed { get; set; }
-        /// <summary>
-        /// If validation data is not defined, this specifies the split ratio for splitting
-        /// train data into random train and validation subsets. Must be a float in the range [0, 1].
-        /// </summary>
-        public string SplitRatio { get; set; }
         /// <summary> Value of gamma when learning rate scheduler is &apos;step&apos;. Must be a float in the range [0, 1]. </summary>
         public string StepLRGamma { get; set; }
         /// <summary> Value of step size when learning rate scheduler is &apos;step&apos;. Must be a positive integer. </summary>

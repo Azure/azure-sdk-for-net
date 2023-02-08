@@ -16,8 +16,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AppFiguresLinkedService. </summary>
         /// <param name="userName"> The username of the Appfigures source. </param>
-        /// <param name="password"> The password of the AppFigures source. </param>
-        /// <param name="clientKey"> The client key for the AppFigures source. </param>
+        /// <param name="password">
+        /// The password of the AppFigures source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="clientKey">
+        /// The client key for the AppFigures source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="password"/> or <paramref name="clientKey"/> is null. </exception>
         public AppFiguresLinkedService(object userName, SecretBase password, SecretBase clientKey)
         {
@@ -39,8 +47,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="userName"> The username of the Appfigures source. </param>
-        /// <param name="password"> The password of the AppFigures source. </param>
-        /// <param name="clientKey"> The client key for the AppFigures source. </param>
+        /// <param name="password">
+        /// The password of the AppFigures source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="clientKey">
+        /// The client key for the AppFigures source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         internal AppFiguresLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object userName, SecretBase password, SecretBase clientKey) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             UserName = userName;
@@ -51,9 +67,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The username of the Appfigures source. </summary>
         public object UserName { get; set; }
-        /// <summary> The password of the AppFigures source. </summary>
+        /// <summary>
+        /// The password of the AppFigures source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
-        /// <summary> The client key for the AppFigures source. </summary>
+        /// <summary>
+        /// The client key for the AppFigures source.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ClientKey { get; set; }
     }
 }

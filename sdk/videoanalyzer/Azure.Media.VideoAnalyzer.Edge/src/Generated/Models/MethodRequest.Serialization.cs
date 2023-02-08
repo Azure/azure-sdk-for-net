@@ -51,22 +51,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "LivePipelineSetRequestBody": return LivePipelineSetRequestBody.DeserializeLivePipelineSetRequestBody(element);
                 }
             }
-            string methodName = default;
-            Optional<string> apiVersion = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("methodName"))
-                {
-                    methodName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("@apiVersion"))
-                {
-                    apiVersion = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MethodRequest(methodName, apiVersion.Value);
+            return UnknownMethodRequest.DeserializeUnknownMethodRequest(element);
         }
     }
 }

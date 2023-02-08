@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Automation.Models
         internal static AzureQueryProperties DeserializeAzureQueryProperties(JsonElement element)
         {
             Optional<IList<string>> scope = default;
-            Optional<IList<string>> locations = default;
-            Optional<TagSettingsProperties> tagSettings = default;
+            Optional<IList<AzureLocation>> locations = default;
+            Optional<QueryTagSettingsProperties> tagSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"))
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tagSettings = TagSettingsProperties.DeserializeTagSettingsProperties(property.Value);
+                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value);
                     continue;
                 }
             }

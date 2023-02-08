@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,13 +12,13 @@ namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
-        private const string s_instanceMetadata = "{\"tenant_discovery_endpoint\":\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"login.microsoftonline.com\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}]}";
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
         private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
         private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
+        private readonly Uri _authority;
 
         internal string RedirectUrl { get; }
 
@@ -59,6 +58,7 @@ namespace Azure.Identity
             : base(pipeline, tenantId, clientId, options)
         {
             _appTokenProviderCallback = appTokenProviderCallback;
+            _authority = options?.AuthorityHost ?? AzureAuthorityHosts.AzurePublicCloud;
         }
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
@@ -69,16 +69,21 @@ namespace Azure.Identity
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
-            //special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
+            // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
+            // The authority matches the one configured in the CredentialOptions.
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
-                    .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId, false)
-                    .WithInstanceDiscoveryMetadata(s_instanceMetadata);
+                    .WithAuthority(_authority.AbsoluteUri, TenantId, false)
+                    .WithInstanceDiscovery(false);
             }
             else
             {
                 confClientBuilder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId);
+                if (DisableInstanceDiscovery)
+                {
+                    confClientBuilder.WithInstanceDiscovery(false);
+                }
             }
 
             if (_clientSecret != null)
@@ -102,7 +107,8 @@ namespace Azure.Identity
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
-            if (!string.IsNullOrEmpty(RegionalAuthority))
+            // When the appTokenProviderCallback is set, meaning this is for managed identity, the regional authority is not relevant.
+            if (_appTokenProviderCallback == null && !string.IsNullOrEmpty(RegionalAuthority))
             {
                 confClientBuilder.WithAzureRegion(RegionalAuthority);
             }

@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "New": return NewProtectionProfile.DeserializeNewProtectionProfile(element);
                 }
             }
-            string resourceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownProtectionProfileCustomDetails(resourceType);
+            return UnknownProtectionProfileCustomDetails.DeserializeUnknownProtectionProfileCustomDetails(element);
         }
     }
 }

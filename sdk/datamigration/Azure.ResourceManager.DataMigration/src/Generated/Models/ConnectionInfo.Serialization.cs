@@ -44,28 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "SqlConnectionInfo": return SqlConnectionInfo.DeserializeSqlConnectionInfo(element);
                 }
             }
-            string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userName"))
-                {
-                    userName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("password"))
-                {
-                    password = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownConnectionInfo(type, userName.Value, password.Value);
+            return UnknownConnectionInfo.DeserializeUnknownConnectionInfo(element);
         }
     }
 }

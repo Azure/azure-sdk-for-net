@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            remoteVpnSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            remoteVpnSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("routingWeight"))

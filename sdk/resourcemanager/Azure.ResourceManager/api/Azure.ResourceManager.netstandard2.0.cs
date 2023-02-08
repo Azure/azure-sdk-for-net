@@ -40,6 +40,7 @@ namespace Azure.ResourceManager
         public ArmClientOptions() { }
         public Azure.ResourceManager.ArmEnvironment? Environment { get { throw null; } set { } }
         public void SetApiVersion(Azure.Core.ResourceType resourceType, string apiVersion) { }
+        public void SetApiVersionsFromProfile(Azure.ResourceManager.AzureStackProfile profile) { }
     }
     public abstract partial class ArmCollection
     {
@@ -107,6 +108,10 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.PolicyAssignmentCollection GetPolicyAssignments() { throw null; }
         public virtual Azure.ResourceManager.Resources.TagResource GetTagResource() { throw null; }
         protected virtual bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
+    }
+    public enum AzureStackProfile
+    {
+        Profile20200901Hybrid = 0,
     }
 }
 namespace Azure.ResourceManager.ManagementGroups
@@ -443,6 +448,11 @@ namespace Azure.ResourceManager.Models
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+    }
+    public static partial class ResourceManagerModelFactory
+    {
+        public static Azure.ResourceManager.Resources.Models.SubResource SubResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.WritableSubResource WritableSubResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]

@@ -33,16 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "RequiredDomainDistribution": return ServicePlacementRequireDomainDistributionPolicy.DeserializeServicePlacementRequireDomainDistributionPolicy(element);
                 }
             }
-            ServicePlacementPolicyType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new ServicePlacementPolicyType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownManagedServicePlacementPolicy(type);
+            return UnknownServicePlacementPolicy.DeserializeUnknownServicePlacementPolicy(element);
         }
     }
 }

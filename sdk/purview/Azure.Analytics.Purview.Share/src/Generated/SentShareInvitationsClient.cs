@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
-    // Data plane generated client. The SentShareInvitations service client.
+    // Data plane generated client.
     /// <summary> The SentShareInvitations service client. </summary>
     public partial class SentShareInvitationsClient
     {
@@ -250,24 +247,9 @@ namespace Azure.Analytics.Purview.Share
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
-            return GetSentShareInvitationsImplementationAsync("SentShareInvitationsClient.GetSentShareInvitations", sentShareName, skipToken, filter, orderby, context);
-        }
-
-        private AsyncPageable<BinaryData> GetSentShareInvitationsImplementationAsync(string diagnosticsScopeName, string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context)
-                        : CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary> List all Invitations in a share. </summary>
@@ -285,24 +267,9 @@ namespace Azure.Analytics.Purview.Share
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
-            return GetSentShareInvitationsImplementation("SentShareInvitationsClient.GetSentShareInvitations", sentShareName, skipToken, filter, orderby, context);
-        }
-
-        private Pageable<BinaryData> GetSentShareInvitationsImplementation(string diagnosticsScopeName, string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context)
-                        : CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetSentShareInvitationsRequest(string sentShareName, string skipToken, string filter, string orderby, RequestContext context)

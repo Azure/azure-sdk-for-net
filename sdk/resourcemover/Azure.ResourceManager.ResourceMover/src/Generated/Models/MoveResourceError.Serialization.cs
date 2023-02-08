@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    properties = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }

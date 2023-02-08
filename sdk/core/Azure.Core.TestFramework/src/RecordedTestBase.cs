@@ -7,8 +7,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core.TestFramework.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -43,6 +46,8 @@ namespace Azure.Core.TestFramework
         protected override DateTime TestStartTime => _testStartTime;
 
         public const string SanitizeValue = "Sanitized";
+        public const string AssetsJson = "assets.json";
+        public string AssetsJsonPath { get; set; }
 
         /// <summary>
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
@@ -204,6 +209,7 @@ namespace Azure.Core.TestFramework
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;
+            AssetsJsonPath = GetAssetsJson();
         }
 
         protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile) =>
@@ -241,9 +247,46 @@ namespace Azure.Core.TestFramework
 
             string fileName = $"{name}{version}{async}.json";
 
-            return Path.Combine(
+            var repoRoot = TestEnvironment.RepositoryRoot;
+
+            // this needs to be updated to purely relative to repo root
+            var result = Path.Combine(
                 GetSessionFileDirectory(),
                 fileName);
+
+            if (!string.IsNullOrWhiteSpace(AssetsJsonPath))
+            {
+                return Regex.Replace(result.Replace(repoRoot, String.Empty), @"^[\\/]*", string.Empty);
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        private string GetAssetsJson()
+        {
+            var path = GetSessionFileDirectory();
+
+            while (true)
+            {
+                var assetsJsonPresent = File.Exists(Path.Combine(path, "assets.json"));
+
+                // Check for root .git directory or, less commonly, a .git file for git worktrees.
+                string gitRootPath = Path.Combine(path, ".git");
+                var isGitRoot = Directory.Exists(gitRootPath) || File.Exists(gitRootPath);
+
+                if (assetsJsonPresent)
+                {
+                    return Path.Combine(path, AssetsJson);
+                }
+                else if (isGitRoot)
+                {
+                    return null;
+                }
+
+                path = Path.GetDirectoryName(path);
+            }
         }
 
         private string GetSessionFileDirectory()

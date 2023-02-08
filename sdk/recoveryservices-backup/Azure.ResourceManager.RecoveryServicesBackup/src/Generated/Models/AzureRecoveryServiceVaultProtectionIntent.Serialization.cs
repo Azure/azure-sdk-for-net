@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSQLAutoProtectionIntent": return AzureWorkloadSQLAutoProtectionIntent.DeserializeAzureWorkloadSQLAutoProtectionIntent(element);
                 }
             }
-            ProtectionIntentItemType protectionIntentItemType = default;
+            ProtectionIntentItemType protectionIntentItemType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             Optional<BackupManagementType> backupManagementType = default;
             Optional<string> sourceResourceId = default;
             Optional<string> itemId = default;

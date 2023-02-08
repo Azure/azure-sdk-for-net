@@ -21,21 +21,21 @@ namespace Azure.Storage.Files.Shares.Models
         {
             Argument.AssertNotNull(nextMarker, nameof(nextMarker));
 
-            HandleList = new ChangeTrackingList<ShareFileHandle>();
+            HandleList = new ChangeTrackingList<HandleItem>();
             NextMarker = nextMarker;
         }
 
         /// <summary> Initializes a new instance of ListHandlesResponse. </summary>
         /// <param name="handleList"></param>
         /// <param name="nextMarker"></param>
-        internal ListHandlesResponse(IReadOnlyList<ShareFileHandle> handleList, string nextMarker)
+        internal ListHandlesResponse(IReadOnlyList<HandleItem> handleList, string nextMarker)
         {
             HandleList = handleList;
             NextMarker = nextMarker;
         }
 
         /// <summary> Gets the handle list. </summary>
-        public IReadOnlyList<ShareFileHandle> HandleList { get; }
+        public IReadOnlyList<HandleItem> HandleList { get; }
         /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }

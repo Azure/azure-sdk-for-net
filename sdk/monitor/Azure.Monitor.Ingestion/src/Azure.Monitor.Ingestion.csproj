@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>A library for ingesting data to Azure Monitor.</Description>
     <AssemblyTitle>Azure Monitor Ingestion client library</AssemblyTitle>
     <Version>1.0.0-beta.5</Version>
     <PackageTags>Azure Monitor Ingestion</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net5.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461</TargetFrameworks>
     <NoWarn>$(NoWarn);CA1835</NoWarn> <!--TODO: Suppressing warning in shared source-->
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
@@ -15,6 +15,7 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)GZipUtf8JsonRequestContent.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

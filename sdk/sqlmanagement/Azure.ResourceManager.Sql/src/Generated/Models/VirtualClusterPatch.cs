@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> An update request for an Azure SQL Database virtual cluster. </summary>
+    /// <summary> An update request for virtual cluster. </summary>
     public partial class VirtualClusterPatch
     {
         /// <summary> Initializes a new instance of VirtualClusterPatch. </summary>
@@ -24,11 +24,9 @@ namespace Azure.ResourceManager.Sql.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
         public ResourceIdentifier SubnetId { get; }
-        /// <summary> If the service has different generations of hardware, for the same SKU, then that can be captured here. </summary>
-        public string Family { get; set; }
+        /// <summary> Virtual cluster version. </summary>
+        public string Version { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>
         public IReadOnlyList<string> ChildResources { get; }
-        /// <summary> Specifies maintenance configuration id to apply to this virtual cluster. </summary>
-        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
     }
 }

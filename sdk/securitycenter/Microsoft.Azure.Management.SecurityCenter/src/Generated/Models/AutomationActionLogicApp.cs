@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Security.Models
 
     /// <summary>
     /// The logic app action that should be triggered. To learn more about
-    /// Security Center's Workflow Automation capabilities, visit
+    /// Microsoft Defender for Cloud's Workflow Automation capabilities, visit
     /// https://aka.ms/ASCWorkflowAutomationLearnMore
     /// </summary>
     [Newtonsoft.Json.JsonObject("LogicApp")]

@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("defaultAction");
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.Relay
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<RelayNetworkRuleSetDefaultAction> defaultAction = default;
+            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<RelayNetworkRuleSetIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +77,7 @@ namespace Azure.ResourceManager.Relay
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -93,6 +99,16 @@ namespace Azure.ResourceManager.Relay
                             defaultAction = new RelayNetworkRuleSetDefaultAction(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicNetworkAccess = new RelayPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("ipRules"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -112,7 +128,7 @@ namespace Azure.ResourceManager.Relay
                     continue;
                 }
             }
-            return new RelayNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(defaultAction), Optional.ToList(ipRules));
+            return new RelayNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(defaultAction), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipRules));
         }
     }
 }

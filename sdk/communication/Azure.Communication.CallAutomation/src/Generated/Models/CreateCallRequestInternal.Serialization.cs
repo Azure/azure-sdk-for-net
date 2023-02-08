@@ -36,6 +36,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("mediaStreamingConfiguration");
                 writer.WriteObjectValue(MediaStreamingConfiguration);
             }
+            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            {
+                writer.WritePropertyName("azureCognitiveServicesEndpointUrl");
+                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+            }
             writer.WriteEndObject();
         }
     }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of [T]. </summary>
+    /// <summary> The paginated list of Connection Monitor Tests. </summary>
     internal partial class ConnectionMonitorTestListResult
     {
         /// <summary> Initializes a new instance of ConnectionMonitorTestListResult. </summary>
@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorTestListResult. </summary>
-        /// <param name="value"> The list of [T]. </param>
-        /// <param name="nextLink"> The link to fetch the next page of [T]. </param>
+        /// <param name="value"> The list of Connection Monitor Tests. </param>
+        /// <param name="nextLink"> The link to fetch the next page of Connection Monitor Tests. </param>
         internal ConnectionMonitorTestListResult(IReadOnlyList<ConnectionMonitorTestData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of [T]. </summary>
+        /// <summary> The list of Connection Monitor Tests. </summary>
         public IReadOnlyList<ConnectionMonitorTestData> Value { get; }
-        /// <summary> The link to fetch the next page of [T]. </summary>
+        /// <summary> The link to fetch the next page of Connection Monitor Tests. </summary>
         public string NextLink { get; }
     }
 }

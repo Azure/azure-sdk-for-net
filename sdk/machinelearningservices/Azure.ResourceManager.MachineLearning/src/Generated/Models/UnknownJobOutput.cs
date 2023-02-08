@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownJobOutput. </summary>
-    internal partial class UnknownJobOutput : JobOutput
+    internal partial class UnknownJobOutput : MachineLearningJobOutput
     {
         /// <summary> Initializes a new instance of UnknownJobOutput. </summary>
         /// <param name="description"> Description for the output. </param>

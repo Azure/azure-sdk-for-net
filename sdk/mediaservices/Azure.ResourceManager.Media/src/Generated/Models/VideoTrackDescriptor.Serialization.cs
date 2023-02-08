@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element);
                 }
             }
-            string odataType = default;
+            string odataType = "#Microsoft.Media.VideoTrackDescriptor";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))

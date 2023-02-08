@@ -155,20 +155,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Optional<TemplateStatus> status = default;
+            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
             Optional<string> query = default;
             Optional<TimeSpan> queryFrequency = default;
             Optional<TimeSpan> queryPeriod = default;
-            Optional<AlertSeverity> severity = default;
-            Optional<TriggerOperator> triggerOperator = default;
+            Optional<SecurityInsightsAlertSeverity> severity = default;
+            Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
             Optional<int> triggerThreshold = default;
-            Optional<IList<AttackTactic>> tactics = default;
+            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
             Optional<IList<string>> techniques = default;
             Optional<string> version = default;
             Optional<EventGroupingSettings> eventGroupingSettings = default;
             Optional<IDictionary<string, string>> customDetails = default;
-            Optional<IList<EntityMapping>> entityMappings = default;
-            Optional<AlertDetailsOverride> alertDetailsOverride = default;
+            Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
+            Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new TemplateStatus(property0.Value.GetString());
+                            status = new SecurityInsightsAlertRuleTemplateStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("query"))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            severity = new AlertSeverity(property0.Value.GetString());
+                            severity = new SecurityInsightsAlertSeverity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("triggerOperator"))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            triggerOperator = property0.Value.GetString().ToTriggerOperator();
+                            triggerOperator = property0.Value.GetString().ToSecurityInsightsAlertRuleTriggerOperator();
                             continue;
                         }
                         if (property0.NameEquals("triggerThreshold"))
@@ -337,10 +337,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AttackTactic> array = new List<AttackTactic>();
+                            List<SecurityInsightsAttackTactic> array = new List<SecurityInsightsAttackTactic>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AttackTactic(item.GetString()));
+                                array.Add(new SecurityInsightsAttackTactic(item.GetString()));
                             }
                             tactics = array;
                             continue;
@@ -397,10 +397,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EntityMapping> array = new List<EntityMapping>();
+                            List<SecurityInsightsAlertRuleEntityMapping> array = new List<SecurityInsightsAlertRuleEntityMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EntityMapping.DeserializeEntityMapping(item));
+                                array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item));
                             }
                             entityMappings = array;
                             continue;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            alertDetailsOverride = AlertDetailsOverride.DeserializeAlertDetailsOverride(property0.Value);
+                            alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value);
                             continue;
                         }
                     }

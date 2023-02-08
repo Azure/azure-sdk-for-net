@@ -15,8 +15,8 @@ namespace Azure.AI.TextAnalytics.Samples
         public async Task SingleLabelClassifyAsync()
         {
             // Create a Text Analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            string endpoint = TestEnvironment.StaticEndpoint;
+            string apiKey = TestEnvironment.StaticApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 

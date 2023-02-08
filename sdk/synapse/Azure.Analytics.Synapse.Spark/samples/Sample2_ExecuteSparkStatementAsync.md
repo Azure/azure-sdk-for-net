@@ -2,7 +2,7 @@
 
 This sample demonstrates basic asynchronous operations with three core classes in this library: `SparkSessionClient`, `SparkSession`, and `SparkStatement`. `SparkSessionClient` is used to submit statements for execution on Azure Synapse - each method call sends a request to the service's REST API. `SparkStatement` is an entity that represents an individual statement executed within a Spark Job within Synapse. These `SparkStatement` instances are grouped within a containing `SparkSession`. The sample walks through the basics of creating, running, and canceling of requests. To get started, you'll need a connection endpoint to Azure Synapse. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.Spark/README.md) for links and instructions.
 
-## Create Spark batch client
+## Create Spark session client
 
 To submit statements to Spark running on Azure Synapse, you need to instantiate a `SparkSessionClient`. It requires an endpoint URL and a `TokenCredential`.
 

@@ -135,12 +135,12 @@ namespace Microsoft.Azure.Management.Security
         /// Get an alert that is associated a resource group or a resource in a
         /// resource group
         /// </summary>
-        /// <param name='alertName'>
-        /// Name of the alert object
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
+        /// </param>
+        /// <param name='alertName'>
+        /// Name of the alert object
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Alert>> GetResourceGroupLevelWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Alert>> GetResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the alert's state
         /// </summary>
@@ -221,10 +221,6 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -237,16 +233,16 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateSubscriptionLevelStateToInProgressWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the alert's state
         /// </summary>
-        /// <param name='alertName'>
-        /// Name of the alert object
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
+        /// </param>
+        /// <param name='alertName'>
+        /// Name of the alert object
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -260,16 +256,16 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(string resourceGroupName, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the alert's state
         /// </summary>
-        /// <param name='alertName'>
-        /// Name of the alert object
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
+        /// </param>
+        /// <param name='alertName'>
+        /// Name of the alert object
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -283,7 +279,53 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(string resourceGroupName, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update the alert's state
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='alertName'>
+        /// Name of the alert object
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(string resourceGroupName, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update the alert's state
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='alertName'>
+        /// Name of the alert object
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToInProgressWithHttpMessagesAsync(string resourceGroupName, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Simulate security alerts
         /// </summary>

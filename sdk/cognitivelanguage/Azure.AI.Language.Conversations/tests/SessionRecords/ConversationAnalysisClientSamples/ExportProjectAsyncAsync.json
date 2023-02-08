@@ -1,0 +1,623 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed/:export?stringIndexType=Utf16CodeUnit\u0026api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "0",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d791c31eb0eb2bb723fa534b3dcecfae-ca9dcfcd91f5c8ad-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221107.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b9bbb9d258ac65381cd6da288780436e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "b7dc13e6-17b7-469c-969f-189dcebb7da1",
+        "Content-Length": "0",
+        "Date": "Tue, 08 Nov 2022 01:47:22 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed/export/jobs/762af182-9bf4-4772-b221-d71d35a6ac98_638034624000000000?api-version=2022-10-01-preview",
+        "request-id": "b7dc13e6-17b7-469c-969f-189dcebb7da1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "236",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed/export/jobs/762af182-9bf4-4772-b221-d71d35a6ac98_638034624000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d791c31eb0eb2bb723fa534b3dcecfae-28876bbd965d94a6-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221107.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "baaadb07bd2795d7decab87320c1fea1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "c30a40bb-ddb5-42cc-ab3e-281dd7327b4f",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Nov 2022 01:47:22 GMT",
+        "request-id": "c30a40bb-ddb5-42cc-ab3e-281dd7327b4f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "23",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "762af182-9bf4-4772-b221-d71d35a6ac98_638034624000000000",
+        "createdDateTime": "2022-11-08T01:47:22Z",
+        "lastUpdatedDateTime": "2022-11-08T01:47:22Z",
+        "expirationDateTime": "2022-11-15T01:47:22Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed/export/jobs/762af182-9bf4-4772-b221-d71d35a6ac98_638034624000000000?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d791c31eb0eb2bb723fa534b3dcecfae-96c1aa3086bc86c8-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221107.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d60025c78b9affb8fdbb33d2f5205ac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "a7786e1a-2a48-4ae0-9548-cc7dcb739a0a",
+        "Content-Length": "462",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Nov 2022 01:47:24 GMT",
+        "request-id": "a7786e1a-2a48-4ae0-9548-cc7dcb739a0a",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "29",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "resultUrl": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed/export/jobs/762af182-9bf4-4772-b221-d71d35a6ac98_638034624000000000/result?api-version=2022-10-01-preview",
+        "jobId": "762af182-9bf4-4772-b221-d71d35a6ac98_638034624000000000",
+        "createdDateTime": "2022-11-08T01:47:22Z",
+        "lastUpdatedDateTime": "2022-11-08T01:47:22Z",
+        "expirationDateTime": "2022-11-15T01:47:22Z",
+        "status": "succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/CLUScriptDeployed/export/jobs/762af182-9bf4-4772-b221-d71d35a6ac98_638034624000000000/result?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221107.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e2127135a67f1509e125dae29fc5445b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "5559eaeb-0271-4470-aeef-ff52ed523211",
+        "Content-Length": "5499",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 08 Nov 2022 01:47:24 GMT",
+        "request-id": "5559eaeb-0271-4470-aeef-ff52ed523211",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "52",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "projectFileVersion": "2022-10-01-preview",
+        "stringIndexType": "Utf16CodeUnit",
+        "metadata": {
+          "projectKind": "Conversation",
+          "settings": {
+            "confidenceThreshold": 0.5
+          },
+          "projectName": "CLUScriptDeployed",
+          "multilingual": true,
+          "description": "",
+          "language": "en-us"
+        },
+        "assets": {
+          "projectKind": "Conversation",
+          "intents": [
+            {
+              "category": "None"
+            },
+            {
+              "category": "Send"
+            },
+            {
+              "category": "Read"
+            },
+            {
+              "category": "Setup"
+            },
+            {
+              "category": "Play"
+            },
+            {
+              "category": "Call"
+            },
+            {
+              "category": "Set"
+            },
+            {
+              "category": "Find"
+            },
+            {
+              "category": "Open"
+            }
+          ],
+          "entities": [
+            {
+              "category": "MeetingDate",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "DateTime"
+                }
+              ]
+            },
+            {
+              "category": "Artist",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Media.Artist"
+                }
+              ]
+            },
+            {
+              "category": "Song",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Media.Title"
+                }
+              ]
+            },
+            {
+              "category": "Location",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Geography.Location"
+                }
+              ]
+            },
+            {
+              "category": "Ordinal",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Quantity.Ordinal"
+                }
+              ]
+            },
+            {
+              "category": "Number",
+              "compositionSetting": "requireExactOverlap",
+              "prebuilts": [
+                {
+                  "category": "Quantity.Number"
+                }
+              ]
+            },
+            {
+              "category": "PhoneNumber",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Phone Number"
+                }
+              ]
+            },
+            {
+              "category": "Currency",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Quantity.Currency"
+                }
+              ]
+            },
+            {
+              "category": "Age",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Quantity.Age"
+                }
+              ]
+            },
+            {
+              "category": "Temperature",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Quantity.Temperature"
+                }
+              ]
+            },
+            {
+              "category": "URL",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "URL"
+                }
+              ]
+            },
+            {
+              "category": "Clothes",
+              "compositionSetting": "combineComponents",
+              "list": {
+                "sublists": [
+                  {
+                    "listKey": "Shoes",
+                    "synonyms": [
+                      {
+                        "language": "en-us",
+                        "values": [
+                          "shoes",
+                          "kicks",
+                          "sneakers",
+                          "trainers"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "listKey": "Pants",
+                    "synonyms": [
+                      {
+                        "language": "en-us",
+                        "values": [
+                          "jeans",
+                          "pants",
+                          "sweatpants",
+                          "sweat pants"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "listKey": "Shirt",
+                    "synonyms": [
+                      {
+                        "language": "en-us",
+                        "values": [
+                          "shirt",
+                          "t-shirt",
+                          "tshirt",
+                          "shirts",
+                          "t-shirts",
+                          "tshirts"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "category": "Contact",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Person.Name"
+                }
+              ]
+            },
+            {
+              "category": "Percentage",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Quantity.Percentage"
+                }
+              ]
+            },
+            {
+              "category": "Email",
+              "compositionSetting": "combineComponents",
+              "prebuilts": [
+                {
+                  "category": "Email"
+                }
+              ]
+            },
+            {
+              "category": "Speed",
+              "compositionSetting": "combineComponents"
+            }
+          ],
+          "utterances": [
+            {
+              "text": "The car has a top speed of 85mph.",
+              "language": "en-us",
+              "intent": "None",
+              "entities": [
+                {
+                  "category": "Speed",
+                  "offset": 27,
+                  "length": 5
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "select number fifty three",
+              "language": "en-us",
+              "intent": "None",
+              "entities": [
+                {
+                  "category": "Number",
+                  "offset": 14,
+                  "length": 11
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "select number five",
+              "language": "en-us",
+              "intent": "None",
+              "entities": [
+                {
+                  "category": "Number",
+                  "offset": 14,
+                  "length": 4
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "select number 7",
+              "language": "en-us",
+              "intent": "None",
+              "entities": [
+                {
+                  "category": "Number",
+                  "offset": 14,
+                  "length": 1
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "select number 5",
+              "language": "en-us",
+              "intent": "None",
+              "entities": [
+                {
+                  "category": "Number",
+                  "offset": 14,
+                  "length": 1
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "select number 2",
+              "language": "en-us",
+              "intent": "None",
+              "entities": [
+                {
+                  "category": "Number",
+                  "offset": 14,
+                  "length": 1
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "Find tshirts for $45 ",
+              "language": "en-us",
+              "intent": "Find",
+              "entities": [
+                {
+                  "category": "Clothes",
+                  "offset": 5,
+                  "length": 7
+                },
+                {
+                  "category": "Currency",
+                  "offset": 17,
+                  "length": 3
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "Read the 3rd email",
+              "language": "en-us",
+              "intent": "Read",
+              "entities": [
+                {
+                  "category": "Ordinal",
+                  "offset": 9,
+                  "length": 3
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "Setup a meeting with John tomorrow morning in Seattle",
+              "language": "en-us",
+              "intent": "Setup",
+              "entities": [
+                {
+                  "category": "Contact",
+                  "offset": 21,
+                  "length": 4
+                },
+                {
+                  "category": "MeetingDate",
+                  "offset": 26,
+                  "length": 16
+                },
+                {
+                  "category": "Location",
+                  "offset": 46,
+                  "length": 7
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "Set the temperature to 35 degrees celsius",
+              "language": "en-us",
+              "intent": "Set",
+              "entities": [
+                {
+                  "category": "Temperature",
+                  "offset": 23,
+                  "length": 18
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "Find gifts for someone who\u0027s 12 years old",
+              "language": "en-us",
+              "intent": "Find",
+              "entities": [
+                {
+                  "category": "Age",
+                  "offset": 29,
+                  "length": 12
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "Send an email to Johnson",
+              "language": "en-us",
+              "intent": "Send",
+              "entities": [
+                {
+                  "category": "Contact",
+                  "offset": 17,
+                  "length": 7
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "Read the email from jerry123@microsoft.com",
+              "language": "en-us",
+              "intent": "Read",
+              "entities": [
+                {
+                  "category": "Email",
+                  "offset": 20,
+                  "length": 22
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "play the song twist and shout by elvis presley",
+              "language": "en-us",
+              "intent": "Play",
+              "entities": [
+                {
+                  "category": "Song",
+                  "offset": 14,
+                  "length": 15
+                },
+                {
+                  "category": "Artist",
+                  "offset": 33,
+                  "length": 13
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "play fly me to the moon by frank sinatra",
+              "language": "en-us",
+              "intent": "Play",
+              "entities": [
+                {
+                  "category": "Song",
+                  "offset": 5,
+                  "length": 18
+                },
+                {
+                  "category": "Artist",
+                  "offset": 27,
+                  "length": 13
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "open www.microsoft.com",
+              "language": "en-us",
+              "intent": "Open",
+              "entities": [
+                {
+                  "category": "URL",
+                  "offset": 5,
+                  "length": 17
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "find me shoes for 30% off",
+              "language": "en-us",
+              "intent": "Find",
+              "entities": [
+                {
+                  "category": "Clothes",
+                  "offset": 8,
+                  "length": 5
+                },
+                {
+                  "category": "Percentage",
+                  "offset": 18,
+                  "length": 3
+                }
+              ],
+              "dataset": "Train"
+            },
+            {
+              "text": "call 555-4321",
+              "language": "en-us",
+              "intent": "Call",
+              "entities": [
+                {
+                  "category": "PhoneNumber",
+                  "offset": 5,
+                  "length": 8
+                }
+              ],
+              "dataset": "Train"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
+    "RandomSeed": "738739147"
+  }
+}

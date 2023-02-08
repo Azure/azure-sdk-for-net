@@ -42,7 +42,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="systemNumber"> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
         /// <param name="clientId"> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> Username to access the SAP BW server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the SAP BW server. </param>
+        /// <param name="password">
+        /// Password to access the SAP BW server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal SapBWLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object systemNumber, object clientId, object userName, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -63,7 +67,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ClientId { get; set; }
         /// <summary> Username to access the SAP BW server. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
-        /// <summary> Password to access the SAP BW server. </summary>
+        /// <summary>
+        /// Password to access the SAP BW server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

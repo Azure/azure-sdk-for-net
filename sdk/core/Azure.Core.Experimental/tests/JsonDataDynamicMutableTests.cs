@@ -2,50 +2,50 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Text.Json;
+using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.Experimental.Tests
 {
     public class JsonDataDynamicMutableTests
     {
         [Test]
         public void ArrayItemsCanBeAssigned()
         {
-            var json = JsonData.FromString("[0, 1, 2, 3]");
-            dynamic jsonData = json;
-            jsonData[1] = 2;
-            jsonData[2] = null;
-            jsonData[3] = "string";
+            dynamic json = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
 
-            Assert.AreEqual(jsonData.ToString(), "[0,2,null,\"string\"]");
+            json[1] = 2;
+            json[2] = null;
+            json[3] = "string";
+
+            Assert.AreEqual("[0,2,null,\"string\"]", json.ToString());
         }
 
         [Test]
         public void ExistingObjectPropertiesCanBeAssigned()
         {
-            var json = JsonData.FromString("{\"a\":1}");
-            dynamic jsonData = json;
-            jsonData.a = "2";
+            dynamic json = DynamicJsonTests.GetDynamicJson("{\"a\":1}");
 
-            Assert.AreEqual(json.ToString(), "{\"a\":\"2\"}");
+            json.a = "2";
+
+            Assert.AreEqual("{\"a\":\"2\"}", json.ToString());
         }
 
         [TestCaseSource(nameof(PrimitiveValues))]
         public void NewObjectPropertiesCanBeAssignedWithPrimitive<T>(T value, string expected)
         {
-            var json = JsonData.FromString("{}");
-            dynamic jsonData = json;
-            jsonData.a = value;
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            Assert.AreEqual(json.ToString(), "{\"a\":" + expected + "}");
+            json.a = value;
+
+            Assert.AreEqual("{\"a\":" + expected + "}", json.ToString());
         }
 
         [TestCaseSource(nameof(PrimitiveValues))]
         public void PrimitiveValuesCanBeParsedDirectly<T>(T value, string expected)
         {
-            dynamic json = JsonData.FromString(expected);
+            dynamic json = DynamicJsonTests.GetDynamicJson(expected);
 
             Assert.AreEqual(value, (T)json);
         }
@@ -53,42 +53,42 @@ namespace Azure.Core.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithArrays()
         {
-            var json = JsonData.FromString("{}");
-            dynamic jsonData = json;
-            jsonData.a = new JsonData(new object[] { 1, 2, null, "string" });
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            Assert.AreEqual(json.ToString(), "{\"a\":[1,2,null,\"string\"]}");
+            json.a = new MutableJsonDocument(new object[] { 1, 2, null, "string" });
+
+            Assert.AreEqual("{\"a\":[1,2,null,\"string\"]}", json.ToString());
         }
 
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithObject()
         {
-            var json = JsonData.FromString("{}");
-            dynamic jsonData = json;
-            jsonData.a = JsonData.EmptyObject();
-            jsonData.a.b = 2;
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
+            json.a = DynamicJsonTests.GetDynamicJson("{}");
+            json.a.b = 2;
+
+            Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
         }
 
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithObjectIndirectly()
         {
-            var json = JsonData.FromString("{}");
-            dynamic jsonData = json;
-            dynamic anotherJson = JsonData.EmptyObject();
-            jsonData.a = anotherJson;
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
+            dynamic anotherJson = DynamicJsonTests.GetDynamicJson("{}");
+
+            json.a = anotherJson;
             anotherJson.b = 2;
 
-            Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
+            Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
         }
 
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
         {
-            var json = JsonData.FromString("{}");
-            dynamic jsonData = json;
-            jsonData.a = new JsonData(new GeoPoint(1, 2));
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
+
+            json.a = new MutableJsonDocument(new GeoPoint(1, 2));
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
         }
@@ -96,14 +96,14 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(PrimitiveValues))]
         public void CanModifyNestedProperties<T>(T value, string expected)
         {
-            var json = JsonData.FromString("{\"a\":{\"b\":2}}");
-            dynamic jsonData = json;
-            jsonData.a.b = value;
+            dynamic json = DynamicJsonTests.GetDynamicJson("{\"a\":{\"b\":2}}");
 
-            Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":" + expected + "}}");
-            Assert.AreEqual(value, (T)jsonData.a.b);
+            json.a.b = value;
 
-            dynamic reparsedJson = JsonData.FromString(json.ToString());
+            Assert.AreEqual("{\"a\":{\"b\":" + expected + "}}", json.ToString());
+            Assert.AreEqual(value, (T)json.a.b);
+
+            dynamic reparsedJson = DynamicJsonTests.GetDynamicJson(json.ToString());
 
             Assert.AreEqual(value, (T)reparsedJson.a.b);
         }
@@ -116,10 +116,10 @@ namespace Azure.Core.Tests
             yield return new object[] {1.0, "1"};
 #if NETCOREAPP
             yield return new object[] {1.1D, "1.1"};
-            yield return new object[] {1.1F, "1.100000023841858"};
+            yield return new object[] {1.1F, "1.1"};
 #else
             yield return new object[] {1.1D, "1.1000000000000001"};
-            yield return new object[] {1.1F, "1.1000000238418579"};
+            yield return new object[] {1.1F, "1.10000002" };
 #endif
             yield return new object[] {true, "true"};
             yield return new object[] {false, "false"};

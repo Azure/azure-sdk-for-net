@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -24,32 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element);
                 }
             }
-            string instanceType = default;
-            Optional<IReadOnlyList<ASRTask>> childTasks = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("childTasks"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ASRTask> array = new List<ASRTask>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ASRTask.DeserializeASRTask(item));
-                    }
-                    childTasks = array;
-                    continue;
-                }
-            }
-            return new UnknownGroupTaskDetails(instanceType, Optional.ToList(childTasks));
+            return UnknownGroupTaskDetails.DeserializeUnknownGroupTaskDetails(element);
         }
     }
 }

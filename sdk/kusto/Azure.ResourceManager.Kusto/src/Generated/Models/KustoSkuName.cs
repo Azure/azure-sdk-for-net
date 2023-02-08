@@ -40,6 +40,12 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string StandardL16sValue = "Standard_L16s";
         private const string StandardL8sV2Value = "Standard_L8s_v2";
         private const string StandardL16sV2Value = "Standard_L16s_v2";
+        private const string StandardL8sV3Value = "Standard_L8s_v3";
+        private const string StandardL16sV3Value = "Standard_L16s_v3";
+        private const string StandardL32sV3Value = "Standard_L32s_v3";
+        private const string StandardL8asV3Value = "Standard_L8as_v3";
+        private const string StandardL16asV3Value = "Standard_L16as_v3";
+        private const string StandardL32asV3Value = "Standard_L32as_v3";
         private const string StandardE64iV3Value = "Standard_E64i_v3";
         private const string StandardE80idsV4Value = "Standard_E80ids_v4";
         private const string StandardE2aV4Value = "Standard_E2a_v4";
@@ -58,6 +64,12 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string StandardE4adsV5Value = "Standard_E4ads_v5";
         private const string StandardE8adsV5Value = "Standard_E8ads_v5";
         private const string StandardE16adsV5Value = "Standard_E16ads_v5";
+        private const string StandardEC8asV51TBPSValue = "Standard_EC8as_v5+1TB_PS";
+        private const string StandardEC8asV52TBPSValue = "Standard_EC8as_v5+2TB_PS";
+        private const string StandardEC16asV53TBPSValue = "Standard_EC16as_v5+3TB_PS";
+        private const string StandardEC16asV54TBPSValue = "Standard_EC16as_v5+4TB_PS";
+        private const string StandardEC8adsV5Value = "Standard_EC8ads_v5";
+        private const string StandardEC16adsV5Value = "Standard_EC16ads_v5";
         private const string StandardE8sV41TBPSValue = "Standard_E8s_v4+1TB_PS";
         private const string StandardE8sV42TBPSValue = "Standard_E8s_v4+2TB_PS";
         private const string StandardE16sV43TBPSValue = "Standard_E16s_v4+3TB_PS";
@@ -66,6 +78,14 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string StandardE8sV52TBPSValue = "Standard_E8s_v5+2TB_PS";
         private const string StandardE16sV53TBPSValue = "Standard_E16s_v5+3TB_PS";
         private const string StandardE16sV54TBPSValue = "Standard_E16s_v5+4TB_PS";
+        private const string StandardE2dV4Value = "Standard_E2d_v4";
+        private const string StandardE4dV4Value = "Standard_E4d_v4";
+        private const string StandardE8dV4Value = "Standard_E8d_v4";
+        private const string StandardE16dV4Value = "Standard_E16d_v4";
+        private const string StandardE2dV5Value = "Standard_E2d_v5";
+        private const string StandardE4dV5Value = "Standard_E4d_v5";
+        private const string StandardE8dV5Value = "Standard_E8d_v5";
+        private const string StandardE16dV5Value = "Standard_E16d_v5";
 
         /// <summary> Dev(No SLA)_Standard_D11_v2. </summary>
         public static KustoSkuName DevNoSlaStandardD11V2 { get; } = new KustoSkuName(DevNoSlaStandardD11V2Value);
@@ -103,6 +123,18 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoSkuName StandardL8sV2 { get; } = new KustoSkuName(StandardL8sV2Value);
         /// <summary> Standard_L16s_v2. </summary>
         public static KustoSkuName StandardL16sV2 { get; } = new KustoSkuName(StandardL16sV2Value);
+        /// <summary> Standard_L8s_v3. </summary>
+        public static KustoSkuName StandardL8sV3 { get; } = new KustoSkuName(StandardL8sV3Value);
+        /// <summary> Standard_L16s_v3. </summary>
+        public static KustoSkuName StandardL16sV3 { get; } = new KustoSkuName(StandardL16sV3Value);
+        /// <summary> Standard_L32s_v3. </summary>
+        public static KustoSkuName StandardL32sV3 { get; } = new KustoSkuName(StandardL32sV3Value);
+        /// <summary> Standard_L8as_v3. </summary>
+        public static KustoSkuName StandardL8asV3 { get; } = new KustoSkuName(StandardL8asV3Value);
+        /// <summary> Standard_L16as_v3. </summary>
+        public static KustoSkuName StandardL16asV3 { get; } = new KustoSkuName(StandardL16asV3Value);
+        /// <summary> Standard_L32as_v3. </summary>
+        public static KustoSkuName StandardL32asV3 { get; } = new KustoSkuName(StandardL32asV3Value);
         /// <summary> Standard_E64i_v3. </summary>
         public static KustoSkuName StandardE64iV3 { get; } = new KustoSkuName(StandardE64iV3Value);
         /// <summary> Standard_E80ids_v4. </summary>
@@ -139,6 +171,18 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoSkuName StandardE8adsV5 { get; } = new KustoSkuName(StandardE8adsV5Value);
         /// <summary> Standard_E16ads_v5. </summary>
         public static KustoSkuName StandardE16adsV5 { get; } = new KustoSkuName(StandardE16adsV5Value);
+        /// <summary> Standard_EC8as_v5+1TB_PS. </summary>
+        public static KustoSkuName StandardEC8asV51TBPS { get; } = new KustoSkuName(StandardEC8asV51TBPSValue);
+        /// <summary> Standard_EC8as_v5+2TB_PS. </summary>
+        public static KustoSkuName StandardEC8asV52TBPS { get; } = new KustoSkuName(StandardEC8asV52TBPSValue);
+        /// <summary> Standard_EC16as_v5+3TB_PS. </summary>
+        public static KustoSkuName StandardEC16asV53TBPS { get; } = new KustoSkuName(StandardEC16asV53TBPSValue);
+        /// <summary> Standard_EC16as_v5+4TB_PS. </summary>
+        public static KustoSkuName StandardEC16asV54TBPS { get; } = new KustoSkuName(StandardEC16asV54TBPSValue);
+        /// <summary> Standard_EC8ads_v5. </summary>
+        public static KustoSkuName StandardEC8adsV5 { get; } = new KustoSkuName(StandardEC8adsV5Value);
+        /// <summary> Standard_EC16ads_v5. </summary>
+        public static KustoSkuName StandardEC16adsV5 { get; } = new KustoSkuName(StandardEC16adsV5Value);
         /// <summary> Standard_E8s_v4+1TB_PS. </summary>
         public static KustoSkuName StandardE8sV41TBPS { get; } = new KustoSkuName(StandardE8sV41TBPSValue);
         /// <summary> Standard_E8s_v4+2TB_PS. </summary>
@@ -155,6 +199,22 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoSkuName StandardE16sV53TBPS { get; } = new KustoSkuName(StandardE16sV53TBPSValue);
         /// <summary> Standard_E16s_v5+4TB_PS. </summary>
         public static KustoSkuName StandardE16sV54TBPS { get; } = new KustoSkuName(StandardE16sV54TBPSValue);
+        /// <summary> Standard_E2d_v4. </summary>
+        public static KustoSkuName StandardE2dV4 { get; } = new KustoSkuName(StandardE2dV4Value);
+        /// <summary> Standard_E4d_v4. </summary>
+        public static KustoSkuName StandardE4dV4 { get; } = new KustoSkuName(StandardE4dV4Value);
+        /// <summary> Standard_E8d_v4. </summary>
+        public static KustoSkuName StandardE8dV4 { get; } = new KustoSkuName(StandardE8dV4Value);
+        /// <summary> Standard_E16d_v4. </summary>
+        public static KustoSkuName StandardE16dV4 { get; } = new KustoSkuName(StandardE16dV4Value);
+        /// <summary> Standard_E2d_v5. </summary>
+        public static KustoSkuName StandardE2dV5 { get; } = new KustoSkuName(StandardE2dV5Value);
+        /// <summary> Standard_E4d_v5. </summary>
+        public static KustoSkuName StandardE4dV5 { get; } = new KustoSkuName(StandardE4dV5Value);
+        /// <summary> Standard_E8d_v5. </summary>
+        public static KustoSkuName StandardE8dV5 { get; } = new KustoSkuName(StandardE8dV5Value);
+        /// <summary> Standard_E16d_v5. </summary>
+        public static KustoSkuName StandardE16dV5 { get; } = new KustoSkuName(StandardE16dV5Value);
         /// <summary> Determines if two <see cref="KustoSkuName"/> values are the same. </summary>
         public static bool operator ==(KustoSkuName left, KustoSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoSkuName"/> values are not the same. </summary>

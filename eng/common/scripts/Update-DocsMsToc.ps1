@@ -31,6 +31,12 @@ Output location for unified reference yml file
 
 .PARAMETER ReadmeFolderRoot
 The readme folder root path, use default value here for backward compability. E.g. docs-ref-services in Java, JS, Python, api/overview/azure
+
+.PARAMETER PackageSourceOverride
+Optional parameter to supply a different package source (useful for daily dev
+docs generation from pacakges which are not published to the default feed). This
+variable is meant to be used in the domain-specific business logic in
+&$GetDocsMsTocDataFn
 #>
 
 param(
@@ -41,7 +47,10 @@ param(
   [string] $OutputLocation,
 
   [Parameter(Mandatory = $false)]
-  [string] $ReadmeFolderRoot = 'docs-ref-services'
+  [string] $ReadmeFolderRoot = 'docs-ref-services',
+
+  [Parameter(Mandatory = $false)]
+  [string] $PackageSourceOverride
 )
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
@@ -53,7 +62,8 @@ Set-StrictMode -Version 3
 function GetPackageNode($package) {
   $packageInfo = &$GetDocsMsTocDataFn `
     -packageMetadata $package `
-    -docRepoLocation $DocRepoLocation
+    -docRepoLocation $DocRepoLocation `
+    -PackageSourceOverride $PackageSourceOverride
 
   return [PSCustomObject]@{
     name     = $packageInfo.PackageTocHeader

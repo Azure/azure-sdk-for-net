@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.VideoTrack": return VideoTrack.DeserializeVideoTrack(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMediaAssetTrackBase(odataType);
+            return UnknownTrackBase.DeserializeUnknownTrackBase(element);
         }
     }
 }

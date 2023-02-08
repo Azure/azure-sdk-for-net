@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter");
+                writer.WriteObjectValue(Filter);
+            }
             writer.WriteEndObject();
         }
 
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
             SelectorType type = default;
             string id = default;
             IList<TargetReference> targets = default;
+            Optional<Filter> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -57,8 +63,18 @@ namespace Azure.ResourceManager.Chaos.Models
                     targets = array;
                     continue;
                 }
+                if (property.NameEquals("filter"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    filter = Filter.DeserializeFilter(property.Value);
+                    continue;
+                }
             }
-            return new Selector(type, id, targets);
+            return new Selector(type, id, targets, filter.Value);
         }
     }
 }

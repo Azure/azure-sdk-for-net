@@ -18,7 +18,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> Specify the application&apos;s key. </param>
+        /// <param name="servicePrincipalKey">
+        /// Specify the application&apos;s key.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
         public Office365LinkedService(object office365TenantId, object servicePrincipalTenantId, object servicePrincipalId, SecretBase servicePrincipalKey)
         {
@@ -44,7 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> Specify the application&apos;s key. </param>
+        /// <param name="servicePrincipalKey">
+        /// Specify the application&apos;s key.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal Office365LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object office365TenantId, object servicePrincipalTenantId, object servicePrincipalId, SecretBase servicePrincipalKey, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -62,7 +70,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ServicePrincipalTenantId { get; set; }
         /// <summary> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </summary>
         public object ServicePrincipalId { get; set; }
-        /// <summary> Specify the application&apos;s key. </summary>
+        /// <summary>
+        /// Specify the application&apos;s key.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

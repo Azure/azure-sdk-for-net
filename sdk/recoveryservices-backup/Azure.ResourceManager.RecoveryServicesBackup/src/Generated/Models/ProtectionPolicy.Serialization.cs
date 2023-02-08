@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -50,43 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "MAB": return MabProtectionPolicy.DeserializeMabProtectionPolicy(element);
                 }
             }
-            Optional<int> protectedItemsCount = default;
-            string backupManagementType = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("protectedItemsCount"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    protectedItemsCount = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"))
-                {
-                    backupManagementType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceGuardOperationRequests"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    resourceGuardOperationRequests = array;
-                    continue;
-                }
-            }
-            return new UnknownProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests));
+            return UnknownProtectionPolicy.DeserializeUnknownProtectionPolicy(element);
         }
     }
 }

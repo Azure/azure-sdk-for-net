@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> name = default;
             Optional<string> groupId = default;
             Optional<string> rpGroupType = default;
-            string instanceType = default;
+            string instanceType = "RecoveryPlanGroupTaskDetails";
             Optional<IReadOnlyList<ASRTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UnknownDatabaseMigrationProperties DeserializeUnknownDatabaseMigrationProperties(JsonElement element)
         {
-            ResourceType kind = default;
+            ResourceType kind = "Unknown";
             Optional<string> scope = default;
             Optional<string> provisioningState = default;
             Optional<string> migrationStatus = default;

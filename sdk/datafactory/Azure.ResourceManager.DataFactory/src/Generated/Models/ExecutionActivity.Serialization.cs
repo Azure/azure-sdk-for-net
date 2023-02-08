@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
-            string type = default;
+            string type = "Execution";
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;

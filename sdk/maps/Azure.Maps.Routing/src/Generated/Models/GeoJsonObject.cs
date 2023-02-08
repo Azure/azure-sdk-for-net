@@ -7,11 +7,15 @@
 
 namespace Azure.Maps.Routing.Models
 {
-    /// <summary> A valid `GeoJSON` object. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3) for details. </summary>
-    internal partial class GeoJsonObject
+    /// <summary>
+    /// A valid `GeoJSON` object. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3) for details.
+    /// Please note <see cref="GeoJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="GeoJsonFeature"/>, <see cref="GeoJsonFeatureCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/>, <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonGeometry"/> and <see cref="GeoJsonMultiPoint"/>.
+    /// </summary>
+    internal abstract partial class GeoJsonObject
     {
         /// <summary> Initializes a new instance of GeoJsonObject. </summary>
-        public GeoJsonObject()
+        protected GeoJsonObject()
         {
         }
 

@@ -10,17 +10,13 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>24.0.0</Version>
+		<Version>25.0.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Published new api version 2022-05-01
-			- Added DisableTcpStateTracking on nic 
-			- Added new VIP Swap APIs to support extension resource design
-			- Added BillingType Property to ExpressRoutePorts
-			- Added Virtual network gateway policy group api
-			- Added DDoS Per IP SKU + Custom Policy Deprecation Swagger PR
-			- Added prefixType property to CustomIPPrefix for NRP 2022-05-01
+			- Adds a SaaS NVA swagger changes
+			- Custom Block Response support for AppGW WAF 
+			- Fixing Documentation +Bugs on PublicIPAddress & DdosProtectionPlan
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

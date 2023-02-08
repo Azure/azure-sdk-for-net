@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01-preview";
+            _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigServerResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppPlatformConfigServerData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ConfigServerResourceData value = default;
+                        AppPlatformConfigServerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfigServerResourceData.DeserializeConfigServerResourceData(document.RootElement);
+                        value = AppPlatformConfigServerData.DeserializeAppPlatformConfigServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConfigServerResourceData)null, message.Response);
+                    return Response.FromValue((AppPlatformConfigServerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigServerResourceData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<AppPlatformConfigServerData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -108,19 +108,19 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ConfigServerResourceData value = default;
+                        AppPlatformConfigServerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfigServerResourceData.DeserializeConfigServerResourceData(document.RootElement);
+                        value = AppPlatformConfigServerData.DeserializeAppPlatformConfigServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConfigServerResourceData)null, message.Response);
+                    return Response.FromValue((AppPlatformConfigServerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdatePutRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerResourceData data)
+        internal HttpMessage CreateUpdatePutRequest(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdatePutAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdatePutAsync(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdatePut(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerResourceData data, CancellationToken cancellationToken = default)
+        public Response UpdatePut(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateUpdatePatchRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerResourceData data)
+        internal HttpMessage CreateUpdatePatchRequest(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdatePatchAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdatePatchAsync(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdatePatch(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerResourceData data, CancellationToken cancellationToken = default)
+        public Response UpdatePatch(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings)
+        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerSettings settings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppPlatform
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configServerSettings);
+            content.JsonWriter.WriteObjectValue(settings);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -307,18 +307,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
-        /// <param name="configServerSettings"> Config server settings to be validated. </param>
+        /// <param name="settings"> Config server settings to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="configServerSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="settings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerSettings settings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(configServerSettings, nameof(configServerSettings));
+            Argument.AssertNotNull(settings, nameof(settings));
 
-            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, configServerSettings);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, settings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -334,18 +334,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
-        /// <param name="configServerSettings"> Config server settings to be validated. </param>
+        /// <param name="settings"> Config server settings to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="configServerSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="settings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Validate(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings, CancellationToken cancellationToken = default)
+        public Response Validate(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerSettings settings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(configServerSettings, nameof(configServerSettings));
+            Argument.AssertNotNull(settings, nameof(settings));
 
-            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, configServerSettings);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, settings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -18,37 +18,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ImageClassification : AutoMLVertical
     {
         /// <summary> Initializes a new instance of ImageClassification. </summary>
-        /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSettings"/> or <paramref name="limitSettings"/> is null. </exception>
-        public ImageClassification(ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings)
+        /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> or <paramref name="limitSettings"/> is null. </exception>
+        public ImageClassification(MachineLearningTableJobInput trainingData, ImageLimitSettings limitSettings) : base(trainingData)
         {
-            Argument.AssertNotNull(dataSettings, nameof(dataSettings));
+            Argument.AssertNotNull(trainingData, nameof(trainingData));
             Argument.AssertNotNull(limitSettings, nameof(limitSettings));
 
             SearchSpace = new ChangeTrackingList<ImageModelDistributionSettingsClassification>();
-            DataSettings = dataSettings;
             LimitSettings = limitSettings;
             TaskType = TaskType.ImageClassification;
         }
 
         /// <summary> Initializes a new instance of ImageClassification. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="targetColumnName">
+        /// Target column name: This is prediction values column.
+        /// Also known as label column name in context of classification tasks.
+        /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="primaryMetric"> Primary metric to optimize for this task. </param>
         /// <param name="modelSettings"> Settings used for training the model. </param>
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
-        /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <param name="sweepSettings"> Model sweeping and hyperparameter sweeping related settings. </param>
-        internal ImageClassification(LogVerbosity? logVerbosity, TaskType taskType, ClassificationPrimaryMetric? primaryMetric, ImageModelSettingsClassification modelSettings, IList<ImageModelDistributionSettingsClassification> searchSpace, ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings) : base(logVerbosity, taskType)
+        /// <param name="validationData"> Validation data inputs. </param>
+        /// <param name="validationDataSize">
+        /// The fraction of training dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </param>
+        internal ImageClassification(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, ImageModelSettingsClassification modelSettings, IList<ImageModelDistributionSettingsClassification> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PrimaryMetric = primaryMetric;
             ModelSettings = modelSettings;
             SearchSpace = searchSpace;
-            DataSettings = dataSettings;
             LimitSettings = limitSettings;
             SweepSettings = sweepSettings;
+            ValidationData = validationData;
+            ValidationDataSize = validationDataSize;
             TaskType = taskType;
         }
 
@@ -58,11 +68,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public ImageModelSettingsClassification ModelSettings { get; set; }
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
         public IList<ImageModelDistributionSettingsClassification> SearchSpace { get; set; }
-        /// <summary> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </summary>
-        public ImageVerticalDataSettings DataSettings { get; set; }
         /// <summary> [Required] Limit settings for the AutoML job. </summary>
         public ImageLimitSettings LimitSettings { get; set; }
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
         public ImageSweepSettings SweepSettings { get; set; }
+        /// <summary> Validation data inputs. </summary>
+        public MachineLearningTableJobInput ValidationData { get; set; }
+        /// <summary>
+        /// The fraction of training dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </summary>
+        public double? ValidationDataSize { get; set; }
     }
 }

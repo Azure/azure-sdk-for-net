@@ -22,16 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServicePlacementPolicyDescription DeserializeServicePlacementPolicyDescription(JsonElement element)
         {
-            ServicePlacementPolicyType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new ServicePlacementPolicyType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownServicePlacementPolicyDescription(type);
+            return UnknownServicePlacementPolicyDescription.DeserializeUnknownServicePlacementPolicyDescription(element);
         }
     }
 }

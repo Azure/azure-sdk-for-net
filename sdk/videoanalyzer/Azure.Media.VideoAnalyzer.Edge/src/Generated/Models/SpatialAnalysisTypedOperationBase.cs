@@ -7,7 +7,11 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for Azure Cognitive Services Spatial Analysis typed operations. </summary>
+    /// <summary>
+    /// Base class for Azure Cognitive Services Spatial Analysis typed operations.
+    /// Please note <see cref="SpatialAnalysisTypedOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/> and <see cref="SpatialAnalysisPersonZoneCrossingOperation"/>.
+    /// </summary>
     public partial class SpatialAnalysisTypedOperationBase : SpatialAnalysisOperationBase
     {
         /// <summary> Initializes a new instance of SpatialAnalysisTypedOperationBase. </summary>

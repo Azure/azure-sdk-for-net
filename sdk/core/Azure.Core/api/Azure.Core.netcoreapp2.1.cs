@@ -463,14 +463,16 @@ namespace Azure.Core
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public Azure.Core.ProcessingContext ProcessingContext { get { throw null; } }
+        public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
+        public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }
+        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
     public enum HttpPipelinePosition
     {
@@ -478,18 +480,18 @@ namespace Azure.Core
         PerRetry = 1,
         BeforeTransport = 2,
     }
-    public static partial class MultipartResponse
-    {
-        public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProcessingContext
+    public readonly partial struct MessageProcessingContext
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public int RetryNumber { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+    }
+    public static partial class MultipartResponse
+    {
+        public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -572,13 +574,13 @@ namespace Azure.Core
     public partial class RequestUriBuilder
     {
         public RequestUriBuilder() { }
+        protected bool HasPath { get { throw null; } }
+        protected bool HasQuery { get { throw null; } }
         public string? Host { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public string PathAndQuery { get { throw null; } }
-        protected int PathLength { get { throw null; } }
         public int Port { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
-        protected int QueryLength { get { throw null; } }
         public string? Scheme { get { throw null; } set { } }
         public void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
         public void AppendPath(string value) { }
@@ -1011,20 +1013,12 @@ namespace Azure.Core.Pipeline
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }
-    public abstract partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    public sealed partial class RedirectPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
-        protected RetryPolicy(Azure.Core.RetryOptions? options = null) { }
-        protected internal virtual System.TimeSpan CalculateNextDelay(Azure.Core.HttpMessage message) { throw null; }
-        protected internal virtual System.Threading.Tasks.ValueTask<System.TimeSpan> CalculateNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected static System.TimeSpan GetServerDelay(Azure.Core.HttpMessage message) { throw null; }
-        protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
-        protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
-        protected internal virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        internal RedirectPolicy() { }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        protected internal virtual bool ShouldRetry(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
-        protected internal virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
+        public static void SetAllowAutoRedirect(Azure.Core.HttpMessage message, bool allowAutoRedirect) { }
     }
     public partial class ServerCertificateCustomValidationArgs
     {

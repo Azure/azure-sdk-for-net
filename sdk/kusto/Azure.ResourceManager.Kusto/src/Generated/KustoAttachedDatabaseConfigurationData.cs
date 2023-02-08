@@ -33,7 +33,9 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="attachedDatabaseNames"> The list of databases from the clusterResourceId which are currently attached to the cluster. </param>
         /// <param name="defaultPrincipalsModificationKind"> The default principals modification kind. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        internal KustoAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoProvisioningState? provisioningState, string databaseName, ResourceIdentifier clusterResourceId, IReadOnlyList<string> attachedDatabaseNames, KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData)
+        /// <param name="databaseNameOverride"> Overrides the original database name. Relevant only when attaching to a specific database. </param>
+        /// <param name="databaseNamePrefix"> Adds a prefix to the attached databases name. When following an entire cluster, that prefix would be added to all of the databases original names from leader cluster. </param>
+        internal KustoAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoProvisioningState? provisioningState, string databaseName, ResourceIdentifier clusterResourceId, IReadOnlyList<string> attachedDatabaseNames, KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string databaseNameOverride, string databaseNamePrefix) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.Kusto
             AttachedDatabaseNames = attachedDatabaseNames;
             DefaultPrincipalsModificationKind = defaultPrincipalsModificationKind;
             TableLevelSharingProperties = tableLevelSharingProperties;
+            DatabaseNameOverride = databaseNameOverride;
+            DatabaseNamePrefix = databaseNamePrefix;
         }
 
         /// <summary> Resource location. </summary>
@@ -58,5 +62,9 @@ namespace Azure.ResourceManager.Kusto
         public KustoDatabaseDefaultPrincipalsModificationKind? DefaultPrincipalsModificationKind { get; set; }
         /// <summary> Table level sharing specifications. </summary>
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; set; }
+        /// <summary> Overrides the original database name. Relevant only when attaching to a specific database. </summary>
+        public string DatabaseNameOverride { get; set; }
+        /// <summary> Adds a prefix to the attached databases name. When following an entire cluster, that prefix would be added to all of the databases original names from leader cluster. </summary>
+        public string DatabaseNamePrefix { get; set; }
     }
 }

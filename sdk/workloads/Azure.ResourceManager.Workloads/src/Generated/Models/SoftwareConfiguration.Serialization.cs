@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element);
                 }
             }
-            SapSoftwareInstallationType softwareInstallationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("softwareInstallationType"))
-                {
-                    softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSoftwareConfiguration(softwareInstallationType);
+            return UnknownSoftwareConfiguration.DeserializeUnknownSoftwareConfiguration(element);
         }
     }
 }

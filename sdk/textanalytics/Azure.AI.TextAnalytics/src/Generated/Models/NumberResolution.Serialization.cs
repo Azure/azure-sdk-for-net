@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class NumberResolution : IUtf8JsonSerializable
+    public partial class NumberResolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("numberKind");
             writer.WriteStringValue(NumberKind.ToString());
             writer.WritePropertyName("value");
-            writer.WriteStringValue(Value);
+            writer.WriteNumberValue(Value);
             writer.WritePropertyName("resolutionKind");
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
@@ -27,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static NumberResolution DeserializeNumberResolution(JsonElement element)
         {
             NumberKind numberKind = default;
-            string value = default;
+            double value = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    value = property.Value.GetString();
+                    value = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("resolutionKind"))

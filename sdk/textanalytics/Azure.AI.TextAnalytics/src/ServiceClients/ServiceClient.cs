@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using static Azure.AI.TextAnalytics.TextAnalyticsClientOptions;
 
@@ -155,19 +153,85 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #endregion
 
+        #region Dynamic Classify
+
+        public virtual Response<ClassificationCategoryCollection> DynamicClassify(
+            string document,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassify)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            IEnumerable<string> documents,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatch)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            IEnumerable<TextDocumentInput> documents,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatch)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
+            string document,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            IEnumerable<string> documents,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatchAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            IEnumerable<TextDocumentInput> documents,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.DynamicClassifyBatchAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        #endregion
+
         #region Extract Summary
 
         public virtual ExtractSummaryOperation StartExtractSummary(IEnumerable<string> documents, string language = default, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         public virtual ExtractSummaryOperation StartExtractSummary(IEnumerable<TextDocumentInput> documents, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummary)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         public virtual Task<ExtractSummaryOperation> StartExtractSummaryAsync(IEnumerable<string> documents, string language = default, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         public virtual Task<ExtractSummaryOperation> StartExtractSummaryAsync(IEnumerable<TextDocumentInput> documents, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartExtractSummaryAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        #endregion
+
+        #region Abstract Summary
+
+        public virtual AbstractSummaryOperation StartAbstractSummary(IEnumerable<string> documents, string language = default, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractSummary)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual AbstractSummaryOperation StartAbstractSummary(IEnumerable<TextDocumentInput> documents, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractSummary)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<AbstractSummaryOperation> StartAbstractSummaryAsync(IEnumerable<string> documents, string language = default, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractSummaryAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+
+        public virtual Task<AbstractSummaryOperation> StartAbstractSummaryAsync(IEnumerable<TextDocumentInput> documents, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractSummaryAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         #endregion
 

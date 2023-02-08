@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             FactoryTriggerReference referenceTrigger = default;
-            string type = default;
+            string type = "TriggerDependencyReference";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("referenceTrigger"))

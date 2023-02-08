@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {
                 writer.WritePropertyName("publicNetworkAccess");
-                writer.WriteBooleanValue(PublicNetworkAccess.Value);
+                writer.WriteBooleanValue(IsPublicNetworkAccessAllowed.Value);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth");
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             if (Optional.IsDefined(AutomationHybridServiceUri))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> description = default;
-            Optional<Models.EncryptionProperties> encryption = default;
+            Optional<AutomationEncryptionProperties> encryption = default;
             Optional<IList<AutomationPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Automation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Automation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))

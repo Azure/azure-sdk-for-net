@@ -11,6 +11,7 @@ trigger:
     - sdk/maps/
     exclude:
     - sdk/maps/Azure.ResourceManager.Maps/
+    - sdk/maps/ci.mgmt.yml
 
 pr:
   branches:
@@ -24,10 +25,12 @@ pr:
     - sdk/maps/
     exclude:
     - sdk/maps/Azure.ResourceManager.Maps/
+    - sdk/maps/ci.mgmt.yml
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: maps
     ArtifactName: packages
     Artifacts:
@@ -35,8 +38,6 @@ extends:
       safeName: AzureMapsCommon
     - name: Azure.Maps.Rendering
       safeName: AzureMapsRendering
-    - name: Azure.ResourceManager.Maps
-      safeName: AzureResourceManagerMaps
     - name: Azure.Maps.Routing
       safeName: AzureMapsRouting
     - name: Azure.Maps.Search

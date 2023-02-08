@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             Optional<IList<TriggerPipelineReference>> pipelines = default;
-            string type = default;
+            string type = "MultiplePipelineTrigger";
             Optional<string> description = default;
             Optional<TriggerRuntimeState> runtimeState = default;
             Optional<IList<object>> annotations = default;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -30,16 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "InMageRcmFailback": return InMageRcmFailbackReplicationDetails.DeserializeInMageRcmFailbackReplicationDetails(element);
                 }
             }
-            string instanceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownReplicationProviderSpecificSettings(instanceType);
+            return UnknownReplicationProviderSpecificSettings.DeserializeUnknownReplicationProviderSpecificSettings(element);
         }
     }
 }

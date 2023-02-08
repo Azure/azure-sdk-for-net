@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static UnknownProtectionPolicy DeserializeUnknownProtectionPolicy(JsonElement element)
         {
             Optional<int> protectedItemsCount = default;
-            string backupManagementType = default;
+            string backupManagementType = "Unknown";
             Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -11,7 +11,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Base class for all control activities like IfCondition, ForEach , Until. </summary>
+    /// <summary>
+    /// Base class for all control activities like IfCondition, ForEach , Until.
+    /// Please note <see cref="ControlActivity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="IfConditionActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SwitchActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/> and <see cref="WebHookActivity"/>.
+    /// </summary>
     public partial class ControlActivity : Activity
     {
         /// <summary> Initializes a new instance of ControlActivity. </summary>

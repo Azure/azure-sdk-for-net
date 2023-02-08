@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     case "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration": return RedirectConfiguration.DeserializeRedirectConfiguration(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRouteConfiguration(odataType);
+            return UnknownRouteConfiguration.DeserializeUnknownRouteConfiguration(element);
         }
     }
 }

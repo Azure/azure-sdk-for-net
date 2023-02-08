@@ -222,6 +222,49 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, ExtractSummaryMaxSentenceCount, true);
         }
 
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32759")]
+        public async Task ExtractSummaryBatchConvenienceWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            ExtractSummaryOptions options = new() { AutoDetectionDefaultLanguage = "en" };
+
+            ExtractSummaryOperation operation = await client.StartExtractSummaryAsync(s_extractSummaryBatchConvenienceDocuments, "auto", options);
+            await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
+
+            List<ExtractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            ExtractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, SummarySentencesOrder.Offset, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32759")]
+        public async Task AnalyzeOperationExtractSummaryWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            List<string> documents = s_extractSummaryBatchConvenienceDocuments;
+            TextAnalyticsActions actions = new()
+            {
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
+                DisplayName = "ExtractSummaryWithAutoDetectedLanguage",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<ExtractSummaryActionResult> actionResults = resultCollection.ExtractSummaryResults;
+            Assert.IsNotNull(actionResults);
+
+            ExtractSummaryResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            ValidateSummaryBatchResult(results, SummarySentencesOrder.Offset, isLanguageAutoDetected: true);
+        }
+
         private void ValidateOperationProperties(ExtractSummaryOperation operation)
         {
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
@@ -235,16 +278,15 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         private void ValidateSummaryDocumentResult(
-            SummarySentenceCollection sentences,
+            IReadOnlyCollection<SummarySentence> sentences,
             int maxSentenceCount,
             SummarySentencesOrder expectedOrder)
         {
-            Assert.IsNotNull(sentences.Warnings);
             Assert.LessOrEqual(sentences.Count, maxSentenceCount);
 
             for (int i = 0; i < sentences.Count; i++)
             {
-                SummarySentence sentence = sentences[i];
+                SummarySentence sentence = sentences.ElementAt(i);
                 string originalDocument = s_extractSummaryBatchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
                 Assert.False(string.IsNullOrEmpty(originalDocument));
@@ -256,7 +298,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 if (i > 0)
                 {
-                    SummarySentence previousSentence = sentences[i - 1];
+                    SummarySentence previousSentence = sentences.ElementAt(i - 1);
 
                     if (expectedOrder == SummarySentencesOrder.Offset)
                     {
@@ -274,7 +316,8 @@ namespace Azure.AI.TextAnalytics.Tests
             ExtractSummaryResultCollection results,
             SummarySentencesOrder expectedOrder,
             int maxSentenceCount = DefaultSummaryMaxSentenceCount,
-            bool includeStatistics = false)
+            bool includeStatistics = default,
+            bool isLanguageAutoDetected = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -295,6 +338,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
                 Assert.False(result.HasError);
+                Assert.IsNotNull(result.Warnings);
 
                 if (includeStatistics)
                 {
@@ -305,6 +349,21 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
+                }
+
+                if (isLanguageAutoDetected)
+                {
+                    Assert.IsNotNull(result.DetectedLanguage);
+                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
+                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
+                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
+                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
+                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
+                }
+                else
+                {
+                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateSummaryDocumentResult(result.Sentences, maxSentenceCount, expectedOrder);

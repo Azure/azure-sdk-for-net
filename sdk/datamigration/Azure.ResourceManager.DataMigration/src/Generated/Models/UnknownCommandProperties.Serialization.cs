@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UnknownCommandProperties DeserializeUnknownCommandProperties(JsonElement element)
         {
-            CommandType commandType = default;
+            CommandType commandType = "Unknown";
             Optional<IReadOnlyList<ODataError>> errors = default;
             Optional<CommandState> state = default;
             foreach (var property in element.EnumerateObject())

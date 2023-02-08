@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.ContentKeyPolicyUnknownRestriction": return ContentKeyPolicyUnknownRestriction.DeserializeContentKeyPolicyUnknownRestriction(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownContentKeyPolicyRestriction(odataType);
+            return UnknownContentKeyPolicyRestriction.DeserializeUnknownContentKeyPolicyRestriction(element);
         }
     }
 }

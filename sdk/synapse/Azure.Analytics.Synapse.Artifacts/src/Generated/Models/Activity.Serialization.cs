@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -105,64 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
                 }
             }
-            string name = default;
-            string type = default;
-            Optional<string> description = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dependsOn"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
-                    }
-                    dependsOn = array;
-                    continue;
-                }
-                if (property.NameEquals("userProperties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<UserProperty> array = new List<UserProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
-                    }
-                    userProperties = array;
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new Activity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+            return UnknownActivity.DeserializeUnknownActivity(element);
         }
 
         internal partial class ActivityConverter : JsonConverter<Activity>

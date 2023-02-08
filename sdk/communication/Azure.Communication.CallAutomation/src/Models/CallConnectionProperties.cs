@@ -25,8 +25,11 @@ namespace Azure.Communication.CallAutomation
         {
             CallConnectionId = callConnectionPropertiesDtoInternal.CallConnectionId;
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;
-            CallSource = new CallSource(CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source.Identifier));
-            CallSource.CallerId = callConnectionPropertiesDtoInternal.Source.CallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.Source.CallerId.Value);
+            CallSource = new CallSource(CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source.Identifier))
+            {
+                CallerId = callConnectionPropertiesDtoInternal.Source.CallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.Source.CallerId.Value),
+                DisplayName = callConnectionPropertiesDtoInternal.Source.DisplayName,
+            };
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
 
             if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState ==  default(CallConnectionState))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ConnectedEnvironmentCollection DeserializeConnectedEnvironmentCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ConnectedEnvironmentData>> value = default;
+            Optional<IReadOnlyList<ContainerAppConnectedEnvironmentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectedEnvironmentData> array = new List<ConnectedEnvironmentData>();
+                    List<ContainerAppConnectedEnvironmentData> array = new List<ContainerAppConnectedEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedEnvironmentData.DeserializeConnectedEnvironmentData(item));
+                        array.Add(ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(item));
                     }
                     value = array;
                     continue;

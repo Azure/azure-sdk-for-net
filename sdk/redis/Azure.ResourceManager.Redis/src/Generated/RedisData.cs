@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="redisConfiguration"> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </param>
-        /// <param name="redisVersion"> Redis version. Only major version will be used in PUT/PATCH request with current valid values: (4, 6). </param>
+        /// <param name="redisVersion"> Redis version. This should be in the form &apos;major[.minor]&apos; (only &apos;major&apos; is required) or the value &apos;latest&apos; which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is &apos;latest&apos;. </param>
         /// <param name="enableNonSslPort"> Specifies whether the non-ssl Redis server port (6379) is enabled. </param>
         /// <param name="replicasPerMaster"> The number of replicas to be created per primary. </param>
         /// <param name="replicasPerPrimary"> The number of replicas to be created per primary. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Redis
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </summary>
         public RedisCommonConfiguration RedisConfiguration { get; set; }
-        /// <summary> Redis version. Only major version will be used in PUT/PATCH request with current valid values: (4, 6). </summary>
+        /// <summary> Redis version. This should be in the form &apos;major[.minor]&apos; (only &apos;major&apos; is required) or the value &apos;latest&apos; which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is &apos;latest&apos;. </summary>
         public string RedisVersion { get; set; }
         /// <summary> Specifies whether the non-ssl Redis server port (6379) is enabled. </summary>
         public bool? EnableNonSslPort { get; set; }

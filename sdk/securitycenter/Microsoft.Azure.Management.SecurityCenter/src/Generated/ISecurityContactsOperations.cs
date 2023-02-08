@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Security
     public partial interface ISecurityContactsOperations
     {
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// List all security contact configurations for the subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SecurityContact>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<SecurityContact>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// Get Default Security contact configurations for the subscription
         /// </summary>
         /// <param name='securityContactName'>
         /// Name of the security contact object
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse<SecurityContact>> GetWithHttpMessagesAsync(string securityContactName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// Create security contact configurations for the subscription
         /// </summary>
         /// <param name='securityContactName'>
         /// Name of the security contact object
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse<SecurityContact>> CreateWithHttpMessagesAsync(string securityContactName, SecurityContact securityContact, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Security contact configurations for the subscription
+        /// Delete security contact configurations for the subscription
         /// </summary>
         /// <param name='securityContactName'>
         /// Name of the security contact object
@@ -109,32 +109,7 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string securityContactName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Security contact configurations for the subscription
-        /// </summary>
-        /// <param name='securityContactName'>
-        /// Name of the security contact object
-        /// </param>
-        /// <param name='securityContact'>
-        /// Security contact object
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<SecurityContact>> UpdateWithHttpMessagesAsync(string securityContactName, SecurityContact securityContact, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Security contact configurations for the subscription
+        /// List all security contact configurations for the subscription
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

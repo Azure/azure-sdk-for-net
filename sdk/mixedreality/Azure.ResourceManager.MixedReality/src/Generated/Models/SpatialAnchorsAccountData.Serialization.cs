@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.MixedReality
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> storageAccountName = default;
-            Optional<string> accountId = default;
+            Optional<Guid> accountId = default;
             Optional<string> accountDomain = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.MixedReality
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("plan"))
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.MixedReality
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    plan = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.MixedReality
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -180,7 +181,12 @@ namespace Azure.ResourceManager.MixedReality
                         }
                         if (property0.NameEquals("accountId"))
                         {
-                            accountId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            accountId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("accountDomain"))
@@ -192,7 +198,7 @@ namespace Azure.ResourceManager.MixedReality
                     continue;
                 }
             }
-            return new SpatialAnchorsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, plan, sku.Value, kind.Value, storageAccountName.Value, accountId.Value, accountDomain.Value);
+            return new SpatialAnchorsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, plan, sku.Value, kind.Value, storageAccountName.Value, Optional.ToNullable(accountId), accountDomain.Value);
         }
     }
 }

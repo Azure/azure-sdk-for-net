@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         internal static UnknownDeliveryAttributeMapping DeserializeUnknownDeliveryAttributeMapping(JsonElement element)
         {
             Optional<string> name = default;
-            DeliveryAttributeMappingType type = default;
+            DeliveryAttributeMappingType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

@@ -27,8 +27,16 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Get the details of the management group.
         /// 
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// Operation Id: ManagementGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
@@ -47,8 +55,16 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Get the details of the management group.
         /// 
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// Operation Id: ManagementGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>

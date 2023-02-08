@@ -43,22 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     case "resourceGroups": return ResourceGroupResourceSettings.DeserializeResourceGroupResourceSettings(element);
                 }
             }
-            string resourceType = default;
-            string targetResourceName = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetResourceName"))
-                {
-                    targetResourceName = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMoverResourceSettings(resourceType, targetResourceName);
+            return UnknownResourceSettings.DeserializeUnknownResourceSettings(element);
         }
     }
 }

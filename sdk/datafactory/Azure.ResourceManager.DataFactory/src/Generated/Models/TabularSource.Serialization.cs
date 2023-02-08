@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<BinaryData> queryTimeout = default;
             Optional<BinaryData> additionalColumns = default;
-            string type = default;
+            string type = "TabularSource";
             Optional<BinaryData> sourceRetryCount = default;
             Optional<BinaryData> sourceRetryWait = default;
             Optional<BinaryData> maxConcurrentConnections = default;

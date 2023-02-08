@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static UnknownAdvancedFilter DeserializeUnknownAdvancedFilter(JsonElement element)
         {
-            AdvancedFilterOperatorType operatorType = default;
+            AdvancedFilterOperatorType operatorType = "Unknown";
             Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {

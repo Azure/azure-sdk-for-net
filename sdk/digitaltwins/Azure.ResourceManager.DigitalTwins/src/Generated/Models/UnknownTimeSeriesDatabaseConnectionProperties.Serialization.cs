@@ -17,13 +17,26 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStartObject();
             writer.WritePropertyName("connectionType");
             writer.WriteStringValue(ConnectionType.ToString());
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity");
+                    writer.WriteObjectValue(Identity);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static UnknownTimeSeriesDatabaseConnectionProperties DeserializeUnknownTimeSeriesDatabaseConnectionProperties(JsonElement element)
         {
-            ConnectionType connectionType = default;
+            ConnectionType connectionType = "Unknown";
             Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
+            Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionType"))
@@ -41,8 +54,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     provisioningState = new TimeSeriesDatabaseConnectionState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        identity = null;
+                        continue;
+                    }
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    continue;
+                }
             }
-            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState));
+            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value);
         }
     }
 }

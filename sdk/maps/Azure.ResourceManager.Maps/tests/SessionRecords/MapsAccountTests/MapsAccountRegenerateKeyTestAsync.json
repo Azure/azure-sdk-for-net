@@ -6,33 +6,33 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bf1c3ef42ec91141ab5e21d174d3d011-85b51118c658674e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1a9e0ddcdac49022640c7b862a433af0",
+        "traceparent": "00-cfb5cb233932d6c956b9872861d05085-c94ced1251ee328d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "33cf0d45c4742474d78b6123a3080b46",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "747",
+        "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 09 Oct 2022 03:27:43 GMT",
+        "Date": "Wed, 23 Nov 2022 08:36:12 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0fb5222b-3d29-425d-aa6b-050c83f1faf3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11956",
-        "x-ms-request-id": "0fb5222b-3d29-425d-aa6b-050c83f1faf3",
-        "x-ms-routing-request-id": "KOREASOUTH:20221009T032743Z:0fb5222b-3d29-425d-aa6b-050c83f1faf3"
+        "x-ms-correlation-request-id": "240eb1e2-31ca-43ee-b0ca-11034a4cfe14",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "240eb1e2-31ca-43ee-b0ca-11034a4cfe14",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221123T083612Z:240eb1e2-31ca-43ee-b0ca-11034a4cfe14"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "TagKey-9823": "TagValue-566",
+          "TagKey-9823": "TagValue-1254",
           "TagKey-3481": "TagValue-320",
           "TagKey-4926": "TagValue-1187",
           "TagKey-751": "TagValue-3921",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/MapsRG7127?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/MapsRG2394?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-f713d0a748152b47af29aa9e1232c8c8-10171e54a20ae048-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "ff83c4aad9f54c13729a10fb3ff0caa2",
+        "traceparent": "00-3e5b47ae8a57688a4a6a7b0c21b44bea-6228a24b162fa7b2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "48e3e4ff24e9aaaa76283dbcc07ecc14",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -76,19 +76,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "217",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 09 Oct 2022 03:27:44 GMT",
+        "Date": "Wed, 23 Nov 2022 08:36:13 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f87ed5df-ca69-4a1a-a44b-7c361bde1e0c",
-        "x-ms-ratelimit-remaining-subscription-writes": "1186",
-        "x-ms-request-id": "f87ed5df-ca69-4a1a-a44b-7c361bde1e0c",
-        "x-ms-routing-request-id": "KOREASOUTH:20221009T032745Z:f87ed5df-ca69-4a1a-a44b-7c361bde1e0c"
+        "x-ms-correlation-request-id": "848fe3f3-602e-4e50-a565-b6e77e631195",
+        "x-ms-ratelimit-remaining-subscription-writes": "1168",
+        "x-ms-request-id": "848fe3f3-602e-4e50-a565-b6e77e631195",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221123T083614Z:848fe3f3-602e-4e50-a565-b6e77e631195"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG7127",
-        "name": "MapsRG7127",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG2394",
+        "name": "MapsRG2394",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "properties": {
@@ -97,16 +97,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG7127/providers/Microsoft.Maps/accounts/maps4542?api-version=2021-12-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG2394/providers/Microsoft.Maps/accounts/maps5377?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "82",
         "Content-Type": "application/json",
-        "traceparent": "00-76fa942274d7e64a868ae42273a5446c-b0521be77ed8dc48-00",
-        "User-Agent": "azsdk-net-ResourceManager.Maps/1.0.0-alpha.20221009.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a22f24fe8a49cf1b57f50a6532f83213",
+        "traceparent": "00-d2fbe6778f3bcbd8527b7e6be1e87bba-b4c0876fdde6b2b1-00",
+        "User-Agent": "azsdk-net-ResourceManager.Maps/1.0.0-alpha.20221123.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "7616d9759f085c3efa46ee7260fbca90",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -124,16 +124,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "847",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 09 Oct 2022 03:27:47 GMT",
+        "Date": "Wed, 23 Nov 2022 08:36:16 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "18544e92-bd48-4bba-937a-18fcd4a9aeb4",
-        "x-ms-ratelimit-remaining-subscription-writes": "1185",
-        "x-ms-request-id": "bf683e47-a771-4872-a6c4-4233bb5cfb04",
-        "x-ms-routing-request-id": "KOREASOUTH:20221009T032747Z:18544e92-bd48-4bba-937a-18fcd4a9aeb4"
+        "x-ms-correlation-request-id": "a8455cf1-734c-408c-8bca-f288ee2f7d07",
+        "x-ms-ratelimit-remaining-subscription-writes": "1167",
+        "x-ms-request-id": "670cbe57-9113-4d02-8156-55640eaa0a57",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221123T083616Z:a8455cf1-734c-408c-8bca-f288ee2f7d07"
       },
       "ResponseBody": {
         "kind": "Gen1",
@@ -143,20 +143,20 @@
           "tier": "Standard"
         },
         "properties": {
-          "uniqueId": "98bfe096-b304-4428-a2a2-9db7234dd23d",
+          "uniqueId": "11f896c0-d97a-42c9-921e-bd39bb1849dd",
           "provisioningState": "Succeeded",
           "disableLocalAuth": false
         },
         "systemData": {
-          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
           "createdByType": "Application",
-          "createdAt": "2022-10-09T03:27:46.6587077Z",
-          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdAt": "2022-11-23T08:36:15.6962792Z",
+          "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-10-09T03:27:46.6587077Z"
+          "lastModifiedAt": "2022-11-23T08:36:15.6962792Z"
         },
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG7127/providers/Microsoft.Maps/accounts/maps4542",
-        "name": "maps4542",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG2394/providers/Microsoft.Maps/accounts/maps5377",
+        "name": "maps5377",
         "location": "eastus",
         "tags": {
           "key1": "value1",
@@ -165,15 +165,15 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG7127/providers/Microsoft.Maps/accounts/maps4542/listKeys?api-version=2021-12-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG2394/providers/Microsoft.Maps/accounts/maps5377/listKeys?api-version=2021-02-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-e92b6639bb5d914e913afdf9b4d4033a-f7640c67637b3948-00",
-        "User-Agent": "azsdk-net-ResourceManager.Maps/1.0.0-alpha.20221009.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f6c0ea0ae7678b33ce523f1295241bb0",
+        "traceparent": "00-3ec6faac83d10ff1c08df58703ddd265-d3f1e3a347aa276e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Maps/1.0.0-alpha.20221123.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "9c9951dd5bbf25e989fe9b3767170d94",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -182,35 +182,35 @@
         "Cache-Control": "no-cache",
         "Content-Length": "165",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 09 Oct 2022 03:27:48 GMT",
+        "Date": "Wed, 23 Nov 2022 08:36:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "72bc3fa0-3fd5-44d5-972f-bf2bbd885274",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "762644ee-8223-447a-826a-c6a70c56b4e3",
-        "x-ms-routing-request-id": "KOREASOUTH:20221009T032748Z:72bc3fa0-3fd5-44d5-972f-bf2bbd885274"
+        "x-ms-correlation-request-id": "8cd9f790-282d-409d-9ec4-da34bb59d375",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "15924960-1ddf-4e75-8ee6-734ae4c2be02",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221123T083617Z:8cd9f790-282d-409d-9ec4-da34bb59d375"
       },
       "ResponseBody": {
         "primaryKey": "Sanitized",
         "secondaryKey": "Sanitized",
-        "primaryKeyLastUpdated": "2022-10-09T03:27:46.7538958Z",
-        "secondaryKeyLastUpdated": "2022-10-09T03:27:46.7538965Z"
+        "primaryKeyLastUpdated": "2022-11-23T08:36:15.8298419Z",
+        "secondaryKeyLastUpdated": "2022-11-23T08:36:15.8298445Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG7127/providers/Microsoft.Maps/accounts/maps4542/regenerateKey?api-version=2021-12-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG2394/providers/Microsoft.Maps/accounts/maps5377/regenerateKey?api-version=2021-02-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "23",
         "Content-Type": "application/json",
-        "traceparent": "00-a38bca8daad88e49908948543b767e26-44e88ff33000d841-00",
-        "User-Agent": "azsdk-net-ResourceManager.Maps/1.0.0-alpha.20221009.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "16451ce46cc03a6167309de409e63fa2",
+        "traceparent": "00-db848a5f77db19bef4c8fde80c527f72-16c19c7ad24060cd-00",
+        "User-Agent": "azsdk-net-ResourceManager.Maps/1.0.0-alpha.20221123.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "31928d0e1f3045f7a4ebefddbb37162d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -221,19 +221,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "181",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 09 Oct 2022 03:27:48 GMT",
+        "Date": "Wed, 23 Nov 2022 08:36:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "33fd6120-6788-4d6c-bc06-cf2c28bd7d1e",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "26389ae5-61f9-4131-a72e-8a45bf5afadc",
-        "x-ms-routing-request-id": "KOREASOUTH:20221009T032748Z:33fd6120-6788-4d6c-bc06-cf2c28bd7d1e"
+        "x-ms-correlation-request-id": "fcde8d66-f973-4281-ac59-43f868ea4ab6",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "c1efe0e3-a498-4efb-a1a4-b55e66433f5b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221123T083618Z:fcde8d66-f973-4281-ac59-43f868ea4ab6"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG7127/providers/Microsoft.Maps/accounts/maps4542",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/MapsRG2394/providers/Microsoft.Maps/accounts/maps5377",
         "primaryKey": "Sanitized",
         "secondaryKey": "Sanitized"
       }
@@ -241,7 +241,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1149402585",
+    "RandomSeed": "1372879998",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

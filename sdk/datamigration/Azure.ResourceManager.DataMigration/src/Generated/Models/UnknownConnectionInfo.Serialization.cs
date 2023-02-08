@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UnknownConnectionInfo DeserializeUnknownConnectionInfo(JsonElement element)
         {
-            string type = default;
+            string type = "Unknown";
             Optional<string> userName = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())

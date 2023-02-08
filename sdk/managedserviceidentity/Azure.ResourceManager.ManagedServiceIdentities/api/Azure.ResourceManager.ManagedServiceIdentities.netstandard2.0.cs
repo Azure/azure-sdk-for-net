@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     {
         public FederatedIdentityCredentialData() { }
         public System.Collections.Generic.IList<string> Audiences { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Issuer { get { throw null; } set { } }
+        public System.Uri IssuerUri { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
     }
     public partial class FederatedIdentityCredentialResource : Azure.ResourceManager.ArmResource

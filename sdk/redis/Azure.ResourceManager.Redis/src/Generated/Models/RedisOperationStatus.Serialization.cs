@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
                     }
                     operations = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Redis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }

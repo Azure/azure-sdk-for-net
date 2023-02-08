@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareResult DeserializeHealthcareResult(JsonElement element)
         {
-            IList<HealthcareResultDocumentsItem> documents = default;
+            IList<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents = default;
             IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
@@ -51,10 +51,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<HealthcareResultDocumentsItem> array = new List<HealthcareResultDocumentsItem>();
+                    List<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> array = new List<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareResultDocumentsItem.DeserializeHealthcareResultDocumentsItem(item));
+                        array.Add(HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage.DeserializeHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(item));
                     }
                     documents = array;
                     continue;

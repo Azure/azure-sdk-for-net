@@ -50,8 +50,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("searchSpace");
                 }
             }
-            writer.WritePropertyName("dataSettings");
-            writer.WriteObjectValue(DataSettings);
             writer.WritePropertyName("limitSettings");
             writer.WriteObjectValue(LimitSettings);
             if (Optional.IsDefined(SweepSettings))
@@ -66,13 +64,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
+            if (Optional.IsDefined(ValidationData))
+            {
+                if (ValidationData != null)
+                {
+                    writer.WritePropertyName("validationData");
+                    writer.WriteObjectValue(ValidationData);
+                }
+                else
+                {
+                    writer.WriteNull("validationData");
+                }
+            }
+            if (Optional.IsDefined(ValidationDataSize))
+            {
+                if (ValidationDataSize != null)
+                {
+                    writer.WritePropertyName("validationDataSize");
+                    writer.WriteNumberValue(ValidationDataSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("validationDataSize");
+                }
+            }
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity");
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
+            if (Optional.IsDefined(TargetColumnName))
+            {
+                if (TargetColumnName != null)
+                {
+                    writer.WritePropertyName("targetColumnName");
+                    writer.WriteStringValue(TargetColumnName);
+                }
+                else
+                {
+                    writer.WriteNull("targetColumnName");
+                }
+            }
             writer.WritePropertyName("taskType");
             writer.WriteStringValue(TaskType.ToString());
+            writer.WritePropertyName("trainingData");
+            writer.WriteObjectValue(TrainingData);
             writer.WriteEndObject();
         }
 
@@ -81,11 +117,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ClassificationPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsClassification> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsClassification>> searchSpace = default;
-            ImageVerticalDataSettings dataSettings = default;
             ImageLimitSettings limitSettings = default;
             Optional<ImageSweepSettings> sweepSettings = default;
-            Optional<LogVerbosity> logVerbosity = default;
+            Optional<MachineLearningTableJobInput> validationData = default;
+            Optional<double?> validationDataSize = default;
+            Optional<MachineLearningLogVerbosity> logVerbosity = default;
+            Optional<string> targetColumnName = default;
             TaskType taskType = default;
+            MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMetric"))
@@ -123,11 +162,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     searchSpace = array;
                     continue;
                 }
-                if (property.NameEquals("dataSettings"))
-                {
-                    dataSettings = ImageVerticalDataSettings.DeserializeImageVerticalDataSettings(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("limitSettings"))
                 {
                     limitSettings = ImageLimitSettings.DeserializeImageLimitSettings(property.Value);
@@ -143,6 +177,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sweepSettings = ImageSweepSettings.DeserializeImageSweepSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("validationData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        validationData = null;
+                        continue;
+                    }
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("validationDataSize"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        validationDataSize = null;
+                        continue;
+                    }
+                    validationDataSize = property.Value.GetDouble();
+                    continue;
+                }
                 if (property.NameEquals("logVerbosity"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -150,7 +204,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logVerbosity = new LogVerbosity(property.Value.GetString());
+                    logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetColumnName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        targetColumnName = null;
+                        continue;
+                    }
+                    targetColumnName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("taskType"))
@@ -158,8 +222,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("trainingData"))
+                {
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    continue;
+                }
             }
-            return new ImageClassification(Optional.ToNullable(logVerbosity), taskType, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), dataSettings, limitSettings, sweepSettings.Value);
+            return new ImageClassification(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
         }
     }
 }

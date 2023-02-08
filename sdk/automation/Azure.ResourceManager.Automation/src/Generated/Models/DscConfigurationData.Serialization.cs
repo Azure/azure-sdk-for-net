@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(LogVerbose))
+            if (Optional.IsDefined(IsLogVerboseEnabled))
             {
                 writer.WritePropertyName("logVerbose");
-                writer.WriteBooleanValue(LogVerbose.Value);
+                writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Automation
             Optional<SystemData> systemData = default;
             Optional<DscConfigurationProvisioningState> provisioningState = default;
             Optional<int> jobCount = default;
-            Optional<IDictionary<string, DscConfigurationParameter>> parameters = default;
-            Optional<ContentSource> source = default;
+            Optional<IDictionary<string, DscConfigurationParameterDefinition>> parameters = default;
+            Optional<AutomationContentSource> source = default;
             Optional<DscConfigurationState> state = default;
             Optional<bool> logVerbose = default;
             Optional<DateTimeOffset> creationTime = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Automation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, DscConfigurationParameter> dictionary = new Dictionary<string, DscConfigurationParameter>();
+                            Dictionary<string, DscConfigurationParameterDefinition> dictionary = new Dictionary<string, DscConfigurationParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DscConfigurationParameter.DeserializeDscConfigurationParameter(property1.Value));
+                                dictionary.Add(property1.Name, DscConfigurationParameterDefinition.DeserializeDscConfigurationParameterDefinition(property1.Value));
                             }
                             parameters = dictionary;
                             continue;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            source = ContentSource.DeserializeContentSource(property0.Value);
+                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"))

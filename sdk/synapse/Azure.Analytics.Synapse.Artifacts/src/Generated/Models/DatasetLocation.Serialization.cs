@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -58,42 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
                 }
             }
-            string type = default;
-            Optional<object> folderPath = default;
-            Optional<object> fileName = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("folderPath"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    folderPath = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("fileName"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    fileName = property.Value.GetObject();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new DatasetLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+            return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element);
         }
 
         internal partial class DatasetLocationConverter : JsonConverter<DatasetLocation>

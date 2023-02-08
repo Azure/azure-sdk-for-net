@@ -47,39 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     case "TaskRunRequest": return ContainerRegistryTaskRunContent.DeserializeContainerRegistryTaskRunContent(element);
                 }
             }
-            string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isArchiveEnabled"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isArchiveEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("agentPoolName"))
-                {
-                    agentPoolName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("logTemplate"))
-                {
-                    logTemplate = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownContainerRegistryRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value);
+            return UnknownRunRequest.DeserializeUnknownRunRequest(element);
         }
     }
 }

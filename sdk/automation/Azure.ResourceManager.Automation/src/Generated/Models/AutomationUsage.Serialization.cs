@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
         internal static AutomationUsage DeserializeAutomationUsage(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<UsageCounterName> name = default;
+            Optional<AutomationUsageCounterName> name = default;
             Optional<string> unit = default;
             Optional<double> currentValue = default;
             Optional<long> limit = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = UsageCounterName.DeserializeUsageCounterName(property.Value);
+                    name = AutomationUsageCounterName.DeserializeAutomationUsageCounterName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"))

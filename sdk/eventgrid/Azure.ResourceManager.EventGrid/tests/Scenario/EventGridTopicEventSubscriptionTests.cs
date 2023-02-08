@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         private async Task<TopicEventSubscriptionResource> CreateTopicEventSubscription(string eventSubscriptionName)
         {
-            var data = new EventSubscriptionData()
+            var data = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {

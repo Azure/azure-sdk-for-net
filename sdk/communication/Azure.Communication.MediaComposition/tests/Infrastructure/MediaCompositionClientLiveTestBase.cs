@@ -17,7 +17,7 @@ namespace Azure.Communication.MediaComposition.Tests
         }
 
         /// <summary>
-        /// Creates a <see cref="MediaCompositionClient" /> with the connectionstring via environment
+        /// Creates a <see cref="MediaCompositionClient" /> with the connection string via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="MediaCompositionClient" />.</returns>

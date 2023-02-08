@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "AverageServiceLoadTrigger": return AverageServiceLoadScalingTrigger.DeserializeAverageServiceLoadScalingTrigger(element);
                 }
             }
-            ServiceScalingTriggerKind kind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new ServiceScalingTriggerKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownManagedServiceScalingTrigger(kind);
+            return UnknownScalingTrigger.DeserializeUnknownScalingTrigger(element);
         }
     }
 }

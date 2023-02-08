@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> storage size in MB capability. </summary>
@@ -13,18 +16,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
         internal PostgreSqlFlexibleServerStorageCapability()
         {
+            SupportedUpgradableTierList = new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
         /// <param name="name"> storage MB name. </param>
         /// <param name="supportedIops"> supported IOPS. </param>
         /// <param name="storageSizeInMB"> storage size in MB. </param>
+        /// <param name="supportedUpgradableTierList"></param>
         /// <param name="status"> The status. </param>
-        internal PostgreSqlFlexibleServerStorageCapability(string name, long? supportedIops, long? storageSizeInMB, string status)
+        internal PostgreSqlFlexibleServerStorageCapability(string name, long? supportedIops, long? storageSizeInMB, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedUpgradableTierList, string status)
         {
             Name = name;
             SupportedIops = supportedIops;
             StorageSizeInMB = storageSizeInMB;
+            SupportedUpgradableTierList = supportedUpgradableTierList;
             Status = status;
         }
 
@@ -34,6 +40,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public long? SupportedIops { get; }
         /// <summary> storage size in MB. </summary>
         public long? StorageSizeInMB { get; }
+        /// <summary> Gets the supported upgradable tier list. </summary>
+        public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedUpgradableTierList { get; }
         /// <summary> The status. </summary>
         public string Status { get; }
     }

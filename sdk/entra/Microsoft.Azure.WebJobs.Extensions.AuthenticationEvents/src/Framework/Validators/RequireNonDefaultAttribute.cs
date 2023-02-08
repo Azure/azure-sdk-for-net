@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators
@@ -26,8 +27,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
                 return true;
             }
 
-            var type = value.GetType();
-            return !Equals(value, Activator.CreateInstance(Nullable.GetUnderlyingType(type) ?? type));
+            if (value is IEnumerable)//We don't look for defaults values in enumerables.
+            {
+                return true;
+            }
+            else
+            {
+                var type = value.GetType();
+                return !Equals(value, Activator.CreateInstance(Nullable.GetUnderlyingType(type) ?? type));
+            }
         }
     }
 }

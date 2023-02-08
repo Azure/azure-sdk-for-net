@@ -25,11 +25,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
+        /// <param name="identity"> Managed identity properties for the endpoint. </param>
         /// <param name="connectionStringPrimaryKey"> PrimaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="connectionStringSecondaryKey"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="endpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol &apos;sb://&apos;. </param>
         /// <param name="entityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
-        internal DigitalTwinsEventHubProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, string connectionStringPrimaryKey, string connectionStringSecondaryKey, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
+        internal DigitalTwinsEventHubProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string connectionStringPrimaryKey, string connectionStringSecondaryKey, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
         {
             ConnectionStringPrimaryKey = connectionStringPrimaryKey;
             ConnectionStringSecondaryKey = connectionStringSecondaryKey;

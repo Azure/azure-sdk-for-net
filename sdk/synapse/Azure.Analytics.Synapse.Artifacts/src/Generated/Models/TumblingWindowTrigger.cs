@@ -48,7 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="delay"> Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a new run is triggered. </param>
         /// <param name="retryPolicy"> Retry policy that will be applied for failed pipeline runs. </param>
-        /// <param name="dependsOn"> Triggers that this trigger depends on. Only tumbling window triggers are supported. </param>
+        /// <param name="dependsOn">
+        /// Triggers that this trigger depends on. Only tumbling window triggers are supported.
+        /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
+        /// </param>
         internal TumblingWindowTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startTime, DateTimeOffset? endTime, object delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DependencyReference> dependsOn) : base(type, description, runtimeState, annotations, additionalProperties)
         {
             Pipeline = pipeline;
@@ -79,7 +83,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public int MaxConcurrency { get; set; }
         /// <summary> Retry policy that will be applied for failed pipeline runs. </summary>
         public RetryPolicy RetryPolicy { get; set; }
-        /// <summary> Triggers that this trigger depends on. Only tumbling window triggers are supported. </summary>
+        /// <summary>
+        /// Triggers that this trigger depends on. Only tumbling window triggers are supported.
+        /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
+        /// </summary>
         public IList<DependencyReference> DependsOn { get; }
     }
 }

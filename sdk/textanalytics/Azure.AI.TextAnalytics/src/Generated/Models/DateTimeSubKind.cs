@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The DateTime SubKind. </summary>
-    internal readonly partial struct DateTimeSubKind : IEquatable<DateTimeSubKind>
+    public readonly partial struct DateTimeSubKind : IEquatable<DateTimeSubKind>
     {
         private readonly string _value;
 

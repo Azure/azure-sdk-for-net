@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Legacy;
 using System;
 using System.IO;
 using System.Net;
@@ -76,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             switch (responseType)
             {
-                case ResponseTypes.String: return TokenIssuanceStartLegacy.ActionResponse;
+                case ResponseTypes.String: return payloads.TokenIssuanceStart.ActionResponse;
                 case ResponseTypes.HttpResponse: return CreateHttpResponse(streamWriter);
                 case ResponseTypes.HttpResponseMessage: return CreateHttpResponseMessage();
                 case ResponseTypes.AuthEventResponse: return new TestAuthResponse(HttpStatusCode.OK, payloads.TokenIssuanceStart.ActionResponse);
@@ -95,11 +94,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ResponseTypes.String:
                 case ResponseTypes.HttpResponse:
                 case ResponseTypes.HttpResponseMessage:
-                    return (code: HttpStatusCode.OK, TokenIssuanceStartLegacy.ExpectedPayload);
+                    return (code: HttpStatusCode.OK, payloads.TokenIssuanceStart.ExpectedPayload);
                 case ResponseTypes.AuthEventResponse:
                     return (code: HttpStatusCode.OK, payloads.TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown:
-                    return (code: HttpStatusCode.BadRequest, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}");
+                    return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}");
                 default:
                     return (code: HttpStatusCode.BadRequest, string.Empty);
             };
@@ -112,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var response = new DefaultHttpContext().Response;
 
-            sw.Write(TokenIssuanceStartLegacy.ActionResponse);
+            sw.Write(payloads.TokenIssuanceStart.ActionResponse);
             sw.Flush();
 
             response.Body = sw.BaseStream;
@@ -126,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(TokenIssuanceStartLegacy.ActionResponse)
+                Content = new StringContent(payloads.TokenIssuanceStart.ActionResponse)
             };
         }
 

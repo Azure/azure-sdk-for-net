@@ -42,16 +42,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 directive:
-#remove these operations as they are currently not supported but will be in the future
-  - remove-operation: ConfigurationProfilesVersions_CreateOrUpdate
-  - remove-operation: ConfigurationProfilesVersions_Get
-  - remove-operation: ConfigurationProfilesVersions_Delete
-  - remove-operation: ConfigurationProfilesVersions_ListChildResources
+  # these operations will be supported in the future
   - remove-operation: BestPracticesVersions_Get
   - remove-operation: BestPracticesVersions_ListByTenant
-  - remove-operation: ServicePrincipals_ListBySubscription
-  - remove-operation: ServicePrincipals_Get
-
 #use scope parameter on the two paths that are defined multiple times
   - from: automanage.json
     where: $.paths

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SignalR
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SignalRProvisioningState> provisioningState = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<IReadOnlyList<string>> groupIds = default;
             Optional<SignalRPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SignalR
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SignalR
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new SignalRProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SignalR
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("groupIds"))

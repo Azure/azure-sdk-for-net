@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static UnknownEventSubscriptionDestination DeserializeUnknownEventSubscriptionDestination(JsonElement element)
         {
-            EndpointType endpointType = default;
+            EndpointType endpointType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"))

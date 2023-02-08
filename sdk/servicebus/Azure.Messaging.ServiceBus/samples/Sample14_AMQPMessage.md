@@ -79,9 +79,3 @@ string customFooterValue = (string)receivedAmqpMessage.Footer["custom-footer-pro
 string customMessageAnnotation = (string)receivedAmqpMessage.MessageAnnotations["custom-message-annotation"];
 string customDeliveryAnnotation = (string)receivedAmqpMessage.DeliveryAnnotations["custom-delivery-annotation"];
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample14_AMQPMessage.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample14_AMQPMessage.cs)

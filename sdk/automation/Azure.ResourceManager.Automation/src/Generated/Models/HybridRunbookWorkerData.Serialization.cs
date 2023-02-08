@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Automation
             Optional<string> ip = default;
             Optional<DateTimeOffset> registeredDateTime = default;
             Optional<DateTimeOffset> lastSeenDateTime = default;
-            Optional<string> vmResourceId = default;
-            Optional<WorkerType> workerType = default;
+            Optional<ResourceIdentifier> vmResourceId = default;
+            Optional<HybridWorkerType> workerType = default;
             Optional<string> workerName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -129,7 +129,12 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("vmResourceId"))
                         {
-                            vmResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            vmResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("workerType"))
@@ -139,7 +144,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            workerType = new WorkerType(property0.Value.GetString());
+                            workerType = new HybridWorkerType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("workerName"))

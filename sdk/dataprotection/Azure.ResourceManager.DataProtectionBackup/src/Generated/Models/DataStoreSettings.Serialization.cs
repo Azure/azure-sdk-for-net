@@ -31,22 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "AzureOperationalStoreParameters": return OperationalDataStoreSettings.DeserializeOperationalDataStoreSettings(element);
                 }
             }
-            string objectType = default;
-            DataStoreType dataStoreType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataStoreType"))
-                {
-                    dataStoreType = new DataStoreType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDataStoreSettings(objectType, dataStoreType);
+            return UnknownDataStoreParameters.DeserializeUnknownDataStoreParameters(element);
         }
     }
 }

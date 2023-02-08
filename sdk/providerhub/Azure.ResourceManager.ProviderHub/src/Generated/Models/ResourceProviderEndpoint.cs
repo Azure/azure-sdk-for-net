@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IReadOnlyList<string> RequiredFeatures { get; }
         /// <summary> Gets the features rule. </summary>
         internal ResourceProviderEndpointFeaturesRule FeaturesRule { get; }
-        /// <summary> Gets or sets the required features policy. </summary>
+        /// <summary> Gets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;

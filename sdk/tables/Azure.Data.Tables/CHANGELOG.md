@@ -1,6 +1,21 @@
 # Release History
 
-## 12.7.0-beta.2 (2022-11-08)
+## 12.8.0 (2023-02-08)
+
+### Bugs Fixed
+- Fixed an issue where LINQ predicates containing New expressions, such as `ent => ent.TimeStamp > new DateTimeOffset(...)`, threw an exception.
+
+### Other Changes
+- `TableClient.CreateIfNotExists` / `TableClient.CreateIfNotExistsAsync` documentation corrected (methods do not return `null` if the table already exists)
+- `TableClient` and `TableServiceClient` constructors that take SAS credentials no longer throw if the URI scheme is not https if it is a loopback host
+- Removed the `new()` constraint from methods on `TableClient`
+
+## 12.7.1 (2022-12-06)
+
+### Bugs Fixed
+- Removed client side validation which prevented `GetEntity` and `GetEntityAsync` from getting an entity with an empty string as its RowKey or PartitionKey value. ([#32447](https://github.com/Azure/azure-sdk-for-net/issues/32447))
+
+## 12.7.0 (2022-11-08)
 
 ### Features Added
 - Added a `Uri` property to `TableClient` and `TableServiceClient`

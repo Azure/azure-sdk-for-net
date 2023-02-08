@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
@@ -21,16 +20,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     case "Kubernetes": return KubernetesConnectionDetails.DeserializeKubernetesConnectionDetails(element);
                 }
             }
-            string instanceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownOrchestratorSpecificConnectionDetails(instanceType);
+            return UnknownOrchestratorSpecificConnectionDetails.DeserializeUnknownOrchestratorSpecificConnectionDetails(element);
         }
     }
 }

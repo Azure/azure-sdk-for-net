@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static UnknownGroupTaskDetails DeserializeUnknownGroupTaskDetails(JsonElement element)
         {
-            string instanceType = default;
+            string instanceType = "Unknown";
             Optional<IReadOnlyList<ASRTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {

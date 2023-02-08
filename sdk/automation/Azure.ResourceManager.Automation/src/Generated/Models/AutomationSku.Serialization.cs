@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationSku DeserializeAutomationSku(JsonElement element)
         {
-            SkuNameEnum name = default;
+            AutomationSkuName name = default;
             Optional<string> family = default;
             Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = new SkuNameEnum(property.Value.GetString());
+                    name = new AutomationSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("family"))

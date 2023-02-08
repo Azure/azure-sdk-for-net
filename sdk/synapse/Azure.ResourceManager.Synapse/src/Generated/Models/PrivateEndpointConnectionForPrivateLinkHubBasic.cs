@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
         /// <param name="id"></param>
         /// <param name="properties"> Properties of a private endpoint connection. </param>
-        internal PrivateEndpointConnectionForPrivateLinkHubBasic(string id, PrivateEndpointConnectionProperties properties)
+        internal PrivateEndpointConnectionForPrivateLinkHubBasic(string id, SynapsePrivateEndpointConnectionProperties properties)
         {
             Id = id;
             Properties = properties;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Gets the id. </summary>
         public string Id { get; }
         /// <summary> Properties of a private endpoint connection. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; }
+        public SynapsePrivateEndpointConnectionProperties Properties { get; }
     }
 }

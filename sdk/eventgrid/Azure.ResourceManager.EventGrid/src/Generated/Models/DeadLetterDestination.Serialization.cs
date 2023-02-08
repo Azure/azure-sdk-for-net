@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "StorageBlob": return StorageBlobDeadLetterDestination.DeserializeStorageBlobDeadLetterDestination(element);
                 }
             }
-            DeadLetterEndPointType endpointType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endpointType"))
-                {
-                    endpointType = new DeadLetterEndPointType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDeadLetterDestination(endpointType);
+            return UnknownDeadLetterDestination.DeserializeUnknownDeadLetterDestination(element);
         }
     }
 }

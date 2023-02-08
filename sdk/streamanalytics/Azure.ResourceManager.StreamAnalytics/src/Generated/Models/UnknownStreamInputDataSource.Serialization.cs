@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static UnknownStreamInputDataSource DeserializeUnknownStreamInputDataSource(JsonElement element)
         {
-            string type = default;
+            string type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))

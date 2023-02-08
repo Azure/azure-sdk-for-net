@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
         protected DataFactoryManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$.keys.[*].value");
         }
 
         [SetUp]
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
         protected async Task<DataFactoryResource> CreateDataFactory(ResourceGroupResource resourceGroup, string dataFactoryName)
         {
-            DataFactoryData data = new DataFactoryData(resourceGroup.Data.Location);
+            DataFactoryData data = new DataFactoryData(AzureLocation.WestUS2);
             var dataFactory = await resourceGroup.GetDataFactories().CreateOrUpdateAsync(WaitUntil.Completed, dataFactoryName, data);
             return dataFactory.Value;
         }
@@ -61,10 +62,9 @@ namespace Azure.ResourceManager.DataFactory.Tests
             return linkedService.Value;
         }
 
-        protected async Task<string> GetStorageAccountAccessKey(ResourceGroupResource resourceGroup)
+        protected async Task<string> GetStorageAccountAccessKey(ResourceGroupResource resourceGroup, string storageAccountName)
         {
-            string storageAccountName = Recording.GenerateAssetName("datafactory");
-            StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, resourceGroup.Data.Location)
+            StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, AzureLocation.WestUS2)
             {
                 AccessTier = StorageAccountAccessTier.Hot,
             };

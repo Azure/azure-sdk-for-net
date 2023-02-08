@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -21,16 +20,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "OperationJobExtendedInfo": return DataProtectionOperationJobExtendedInfo.DeserializeDataProtectionOperationJobExtendedInfo(element);
                 }
             }
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionOperationExtendedInfo(objectType);
+            return UnknownOperationExtendedInfo.DeserializeUnknownOperationExtendedInfo(element);
         }
     }
 }

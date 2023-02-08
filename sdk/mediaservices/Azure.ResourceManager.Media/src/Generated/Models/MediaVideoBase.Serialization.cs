@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<TimeSpan> keyFrameInterval = default;
             Optional<InputVideoStretchMode> stretchMode = default;
             Optional<VideoSyncMode> syncMode = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Media.Video";
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {

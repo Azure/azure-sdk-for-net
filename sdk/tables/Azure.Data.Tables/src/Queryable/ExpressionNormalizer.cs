@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Azure.Data.Tables.Queryable
 {
-    internal class ExpressionNormalizer : LinqExpressionVisitor
+    internal class ExpressionNormalizer : ExpressionVisitor
     {
         private const bool LiftToNull = false;
 
@@ -35,7 +35,7 @@ namespace Azure.Data.Tables.Queryable
             return result;
         }
 
-        internal override Expression VisitBinary(BinaryExpression b)
+        protected override Expression VisitBinary(BinaryExpression b)
         {
             _underEqualityOperation = b.NodeType == ExpressionType.Equal || b.NodeType == ExpressionType.NotEqual;
 
@@ -74,8 +74,7 @@ namespace Azure.Data.Tables.Queryable
 
             return visited;
         }
-
-        internal override Expression VisitMemberAccess(MemberExpression m)
+        protected override Expression VisitMember(MemberExpression m)
         {
             Expression visited;
             if (IsImplicitBooleanComparison(m))
@@ -84,7 +83,7 @@ namespace Azure.Data.Tables.Queryable
             }
             else
             {
-                visited = base.VisitMemberAccess(m);
+                visited = base.VisitMember(m);
             }
 
             RecordRewrite(m, visited);
@@ -92,7 +91,7 @@ namespace Azure.Data.Tables.Queryable
             return visited;
         }
 
-        internal override Expression VisitUnary(UnaryExpression u)
+        protected override Expression VisitUnary(UnaryExpression u)
         {
             Expression result;
             if (u.NodeType == ExpressionType.Convert && IsImplicitBooleanComparison(u))
@@ -150,7 +149,7 @@ namespace Azure.Data.Tables.Queryable
                 ((ConstantExpression)expression).Value.Equals(0);
         }
 
-        internal override Expression VisitMethodCall(MethodCallExpression call)
+        protected override Expression VisitMethodCall(MethodCallExpression call)
         {
             Expression visited = VisitMethodCallNoRewrite(call);
             RecordRewrite(call, visited);

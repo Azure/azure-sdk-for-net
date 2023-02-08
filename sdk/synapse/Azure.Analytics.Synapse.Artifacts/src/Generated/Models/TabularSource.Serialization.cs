@@ -123,7 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<object> queryTimeout = default;
             Optional<object> additionalColumns = default;
-            string type = default;
+            string type = "TabularSource";
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
             Optional<object> maxConcurrentConnections = default;

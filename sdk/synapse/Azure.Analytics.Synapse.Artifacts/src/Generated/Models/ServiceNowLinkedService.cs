@@ -37,9 +37,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="endpoint"> The endpoint of the ServiceNow server. (i.e. &lt;instance&gt;.service-now.com). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="username"> The user name used to connect to the ServiceNow server for Basic and OAuth2 authentication. </param>
-        /// <param name="password"> The password corresponding to the user name for Basic and OAuth2 authentication. </param>
+        /// <param name="password">
+        /// The password corresponding to the user name for Basic and OAuth2 authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="clientId"> The client id for OAuth2 authentication. </param>
-        /// <param name="clientSecret"> The client secret for OAuth2 authentication. </param>
+        /// <param name="clientSecret">
+        /// The client secret for OAuth2 authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
@@ -65,11 +73,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public ServiceNowAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used to connect to the ServiceNow server for Basic and OAuth2 authentication. </summary>
         public object Username { get; set; }
-        /// <summary> The password corresponding to the user name for Basic and OAuth2 authentication. </summary>
+        /// <summary>
+        /// The password corresponding to the user name for Basic and OAuth2 authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The client id for OAuth2 authentication. </summary>
         public object ClientId { get; set; }
-        /// <summary> The client secret for OAuth2 authentication. </summary>
+        /// <summary>
+        /// The client secret for OAuth2 authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public object UseEncryptedEndpoints { get; set; }

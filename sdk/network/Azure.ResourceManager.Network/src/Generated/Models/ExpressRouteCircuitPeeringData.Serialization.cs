@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("ipv6PeeringConfig"))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRouteConnection = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            expressRouteConnection = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("connections"))

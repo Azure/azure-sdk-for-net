@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of CertificateResourceList. </summary>
         internal CertificateResourceList()
         {
-            Value = new ChangeTrackingList<CertificateResourceData>();
+            Value = new ChangeTrackingList<AppPlatformCertificateData>();
         }
 
         /// <summary> Initializes a new instance of CertificateResourceList. </summary>
         /// <param name="value"> The certificate resources list. </param>
         /// <param name="nextLink"> The link to next page of certificate list. </param>
-        internal CertificateResourceList(IReadOnlyList<CertificateResourceData> value, string nextLink)
+        internal CertificateResourceList(IReadOnlyList<AppPlatformCertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The certificate resources list. </summary>
-        public IReadOnlyList<CertificateResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformCertificateData> Value { get; }
         /// <summary> The link to next page of certificate list. </summary>
         public string NextLink { get; }
     }

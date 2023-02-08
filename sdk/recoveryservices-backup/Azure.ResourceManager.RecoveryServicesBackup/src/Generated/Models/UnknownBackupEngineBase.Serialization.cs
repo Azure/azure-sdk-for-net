@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> registrationStatus = default;
             Optional<string> backupEngineState = default;
             Optional<string> healthStatus = default;
-            BackupEngineType backupEngineType = default;
+            BackupEngineType backupEngineType = "Unknown";
             Optional<bool> canReRegister = default;
             Optional<string> backupEngineId = default;
             Optional<string> dpmVersion = default;

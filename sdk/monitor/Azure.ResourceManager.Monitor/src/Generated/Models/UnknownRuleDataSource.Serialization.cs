@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownRuleDataSource DeserializeUnknownRuleDataSource(JsonElement element)
         {
-            string odataType = default;
+            string odataType = "Unknown";
             Optional<ResourceIdentifier> resourceUri = default;
             Optional<ResourceIdentifier> legacyResourceId = default;
             Optional<string> resourceLocation = default;

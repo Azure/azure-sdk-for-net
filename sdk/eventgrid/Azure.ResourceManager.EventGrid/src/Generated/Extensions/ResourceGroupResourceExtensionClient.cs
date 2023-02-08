@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -98,281 +96,17 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// List all global event subscriptions under a resource group for a specific topic type.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalByResourceGroupForTopicType
-        /// </summary>
-        /// <param name="topicTypeName"> Name of the topic type. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSubscriptionResource> GetGlobalEventSubscriptionsForTopicTypeAsync(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
-                scope.Start();
-                try
-                {
-                    var response = await EventSubscriptionRestClient.ListGlobalByResourceGroupForTopicTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
-                scope.Start();
-                try
-                {
-                    var response = await EventSubscriptionRestClient.ListGlobalByResourceGroupForTopicTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List all global event subscriptions under a resource group for a specific topic type.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalByResourceGroupForTopicType
-        /// </summary>
-        /// <param name="topicTypeName"> Name of the topic type. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSubscriptionResource> GetGlobalEventSubscriptionsForTopicType(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
-                scope.Start();
-                try
-                {
-                    var response = EventSubscriptionRestClient.ListGlobalByResourceGroupForTopicType(Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
-                scope.Start();
-                try
-                {
-                    var response = EventSubscriptionRestClient.ListGlobalByResourceGroupForTopicTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List all event subscriptions from the given location under a specific Azure subscription and resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/locations/{location}/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListRegionalByResourceGroup
-        /// </summary>
-        /// <param name="location"> Name of the location. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSubscriptionResource> GetRegionalEventSubscriptionsAsync(AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await EventSubscriptionRestClient.ListRegionalByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await EventSubscriptionRestClient.ListRegionalByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List all event subscriptions from the given location under a specific Azure subscription and resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/locations/{location}/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListRegionalByResourceGroup
-        /// </summary>
-        /// <param name="location"> Name of the location. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSubscriptionResource> GetRegionalEventSubscriptions(AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = EventSubscriptionRestClient.ListRegionalByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = EventSubscriptionRestClient.ListRegionalByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List all event subscriptions from the given location under a specific Azure subscription and resource group and topic type.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/locations/{location}/topicTypes/{topicTypeName}/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListRegionalByResourceGroupForTopicType
-        /// </summary>
-        /// <param name="location"> Name of the location. </param>
-        /// <param name="topicTypeName"> Name of the topic type. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSubscriptionResource> GetRegionalEventSubscriptionsForTopicTypeAsync(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
-                scope.Start();
-                try
-                {
-                    var response = await EventSubscriptionRestClient.ListRegionalByResourceGroupForTopicTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
-                scope.Start();
-                try
-                {
-                    var response = await EventSubscriptionRestClient.ListRegionalByResourceGroupForTopicTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List all event subscriptions from the given location under a specific Azure subscription and resource group and topic type.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/locations/{location}/topicTypes/{topicTypeName}/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListRegionalByResourceGroupForTopicType
-        /// </summary>
-        /// <param name="location"> Name of the location. </param>
-        /// <param name="topicTypeName"> Name of the topic type. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSubscriptionResource> GetRegionalEventSubscriptionsForTopicType(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
-                scope.Start();
-                try
-                {
-                    var response = EventSubscriptionRestClient.ListRegionalByResourceGroupForTopicType(Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
-                scope.Start();
-                try
-                {
-                    var response = EventSubscriptionRestClient.ListRegionalByResourceGroupForTopicTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
         /// List event types for a topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes
-        /// Operation Id: Topics_ListEventTypes
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_ListEventTypes</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerNamespace"> Namespace of the provider of the topic. </param>
         /// <param name="resourceTypeName"> Name of the topic type. </param>
@@ -381,28 +115,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventTypeUnderTopic>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetEventTypes");
-                scope.Start();
-                try
-                {
-                    var response = await EventGridTopicTopicsRestClient.ListEventTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List event types for a topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes
-        /// Operation Id: Topics_ListEventTypes
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_ListEventTypes</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerNamespace"> Namespace of the provider of the topic. </param>
         /// <param name="resourceTypeName"> Name of the topic type. </param>
@@ -411,22 +139,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventTypeUnderTopic> GetEventTypes(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<EventTypeUnderTopic> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetEventTypes");
-                scope.Start();
-                try
-                {
-                    var response = EventGridTopicTopicsRestClient.ListEventTypes(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

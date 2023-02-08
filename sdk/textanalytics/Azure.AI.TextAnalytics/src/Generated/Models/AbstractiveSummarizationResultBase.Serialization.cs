@@ -28,15 +28,15 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummarizationResultBase DeserializeAbstractiveSummarizationResultBase(JsonElement element)
         {
-            IList<AbstractiveSummarizationResultBaseDocumentsItem> documents = default;
+            IList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<AbstractiveSummarizationResultBaseDocumentsItem> array = new List<AbstractiveSummarizationResultBaseDocumentsItem>();
+                    List<AbstractiveSummaryDocumentResultWithDetectedLanguage> array = new List<AbstractiveSummaryDocumentResultWithDetectedLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummarizationResultBaseDocumentsItem.DeserializeAbstractiveSummarizationResultBaseDocumentsItem(item));
+                        array.Add(AbstractiveSummaryDocumentResultWithDetectedLanguage.DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(item));
                     }
                     documents = array;
                     continue;

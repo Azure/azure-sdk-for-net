@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -58,77 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.VideoOverlay": return VideoOverlay.DeserializeVideoOverlay(element);
                 }
             }
-            string odataType = default;
-            string inputLabel = default;
-            Optional<TimeSpan> start = default;
-            Optional<TimeSpan> end = default;
-            Optional<TimeSpan> fadeInDuration = default;
-            Optional<TimeSpan> fadeOutDuration = default;
-            Optional<double> audioGainLevel = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputLabel"))
-                {
-                    inputLabel = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("start"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    start = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("end"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    end = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("fadeInDuration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    fadeInDuration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("fadeOutDuration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    fadeOutDuration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("audioGainLevel"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    audioGainLevel = property.Value.GetDouble();
-                    continue;
-                }
-            }
-            return new UnknownMediaOverlayBase(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel));
+            return UnknownOverlay.DeserializeUnknownOverlay(element);
         }
     }
 }

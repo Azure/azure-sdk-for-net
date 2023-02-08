@@ -3,7 +3,9 @@
 
 using System;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Messaging;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -12,6 +14,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
 {
     public class CallAutomationEventParserTests
     {
+        private static string DTMF_RESULT_JSON = "{\"recognizeResult\":{},\"collectTonesResult\":{\"tones\":[\"five\"]},\"choiceResult\":{\"label\":null,\"recognizedPhrase\":null},\"recognitionType\":\"dtmf\",\"callConnectionId\":\"callConnectionId\",\"serverCallId\":\"serverCallId\",\"correlationId\":\"correlationId\",\"operationContext\":\"operationContext\",\"resultInformation\":{\"code\":200,\"subCode\":8531,\"message\":\"Action completed, max digits received\"}}";
+        private static string CHIOCE_RESULT_JSON = "{\"recognizeResult\":{},\"collectTonesResult\":{\"tones\":[]},\"choiceResult\":{\"label\":\"testLabel\",\"recognizedPhrase\":\"testRecognizePhrase\"},\"recognitionType\":\"choices\",\"callConnectionId\":\"callConnectionId\",\"serverCallId\":\"serverCallId\",\"correlationId\":\"correlationId\",\"operationContext\":\"operationContext\",\"resultInformation\":{\"code\":200,\"subCode\":8531,\"message\":\"Action completed, max digits received\"}}";
         [Test]
         public void EventParserShouldParseEventWithEventDataAndType()
         {
@@ -184,7 +188,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var operationContext = "operation context";
             var participant1 = new CommunicationUserIdentifier("8:acs:12345");
             var participant2 = new PhoneNumberIdentifier("+123456789");
-            var participants = new CommunicationIdentifier[] { participant1, participant2};
+            var participants = new CommunicationIdentifier[] { participant1, participant2 };
             var @event = CallAutomationModelFactory.AddParticipantsFailed(callConnectionId, serverCallId, correlationId, operationContext, new ResultInformation(403, 30, "result info message"), participants);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
@@ -371,9 +375,9 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var callConnectionId = "callConnectionId";
             var serverCallId = "serverCallId";
             var correlationId = "correlationId";
-            var participant1 = new CommunicationUserIdentifier("8:acs:12345");
-            var participant2 = new PhoneNumberIdentifier("+123456789");
-            var participants = new CommunicationIdentifier[] { participant1, participant2 };
+            var participant1 = new CallParticipant(new CommunicationUserIdentifier("8:acs:12345"), false);
+            var participant2 = new CallParticipant(new PhoneNumberIdentifier("+123456789"), false);
+            var participants = new CallParticipant[] { participant1, participant2 };
             var @event = CallAutomationModelFactory.ParticipantsUpdated(callConnectionId, serverCallId, correlationId, participants);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
@@ -390,8 +394,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.IsNull(participantsUpdated.OperationContext);
                 Assert.IsNull(participantsUpdated.ResultInformation);
                 Assert.AreEqual(2, participantsUpdated.Participants.Count);
-                Assert.AreEqual("8:acs:12345", participantsUpdated.Participants[0].RawId);
-                Assert.IsTrue(participantsUpdated.Participants[1].RawId.EndsWith("123456789"));
+                Assert.AreEqual("8:acs:12345", participantsUpdated.Participants[0].Identifier.RawId);
+                Assert.IsFalse(participantsUpdated.Participants[0].IsMuted);
+                Assert.IsTrue(participantsUpdated.Participants[1].Identifier.RawId.EndsWith("123456789"));
+                Assert.IsFalse(participantsUpdated.Participants[1].IsMuted);
             }
             else
             {
@@ -497,32 +503,140 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void RecognizeCompletedEventParsed_Test()
+        public void RecognizeCompletedWithDtmfEventParsed_Test()
         {
+            CollectTonesResult collectTonesResult = new CollectTonesResult(new DtmfTone[] { DtmfTone.Five });
             RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 recognitionType: CallMediaRecognitionType.Dtmf,
-                collectTonesResult: new CollectTonesResult(new DtmfTone[] { DtmfTone.Five }),
+                collectTonesResult: collectTonesResult,
+                choiceResult: new ChoiceResult(),
                 resultInformation: new ResultInformation(
                     code: 200,
                     subCode: 8531,
                     message: "Action completed, max digits received"));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-
-            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            string jsonEvent = DTMF_RESULT_JSON;
 
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
             if (parsedEvent is RecognizeCompleted recognizeCompleted)
             {
+                RecognizeResult recognizeResult = recognizeCompleted.RecognizeResult;
+                Assert.AreEqual(recognizeResult is CollectTonesResult, true);
                 Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
-                Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
-                Assert.AreEqual(DtmfTone.Five, recognizeCompleted.CollectTonesResult.Tones.First());
-                Assert.AreEqual(ReasonCode.RecognizeMaxDigitsReceived, recognizeCompleted.ReasonCode);
+                if (recognizeResult is CollectTonesResult collectToneRecognizedResult)
+                {
+                    Assert.NotZero(collectToneRecognizedResult.Tones.Count());
+                    Assert.AreEqual(DtmfTone.Five, collectToneRecognizedResult.Tones.First());
+                }
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void RecognizeCompletedWithChoiceEventParsed_Test()
+        {
+            string jsonEvent = CHIOCE_RESULT_JSON;
+
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
+            if (parsedEvent is RecognizeCompleted recognizeCompleted)
+            {
+                RecognizeResult recognizeResult = recognizeCompleted.RecognizeResult;
+                Assert.AreEqual(recognizeResult is ChoiceResult, true);
+                Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
+                Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
+                Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
+                if (recognizeResult is ChoiceResult choiceRecongizedResult)
+                {
+                    Assert.AreEqual("testLabel", choiceRecongizedResult.Label);
+                    Assert.AreEqual("testRecognizePhrase", choiceRecongizedResult.RecognizedPhrase);
+                }
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void GetRecognizeResultFromRecognizeCompletedWithDtmf_Test()
+        {
+            CollectTonesResult collectTonesResult = new CollectTonesResult(new DtmfTone[] { DtmfTone.Five });
+            RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                recognitionType: CallMediaRecognitionType.Dtmf,
+                collectTonesResult: collectTonesResult,
+                choiceResult: new ChoiceResult(),
+                resultInformation: new ResultInformation(
+                    code: 200,
+                    subCode: 8531,
+                    message: "Action completed, max digits received"));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = DTMF_RESULT_JSON;
+
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
+            if (parsedEvent is RecognizeCompleted recognizeCompleted)
+            {
+                RecognizeResult recognizeResult = recognizeCompleted.RecognizeResult;
+                Assert.AreEqual(recognizeResult is CollectTonesResult, true);
+                Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
+                Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
+                Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
+                if (recognizeResult is CollectTonesResult collectToneRecognizedResult)
+                {
+                    Assert.NotZero(collectToneRecognizedResult.Tones.Count());
+                    Assert.AreEqual(DtmfTone.Five, collectToneRecognizedResult.Tones.First());
+                }
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void GetRecognizeResultFromRecognizeCompletedWithChoice_Test()
+        {
+            ChoiceResult choiceResult = new ChoiceResult("testLabel", "testRecognizePhrase");
+            RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                recognitionType: CallMediaRecognitionType.Choices,
+                collectTonesResult: new CollectTonesResult(),
+                choiceResult: choiceResult,
+                resultInformation: new ResultInformation(
+                    code: 200,
+                    subCode: 8531,
+                    message: "Action completed, max digits received"));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = CHIOCE_RESULT_JSON;
+
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
+            if (parsedEvent is RecognizeCompleted recognizeCompleted)
+            {
+                RecognizeResult recognizeResult = recognizeCompleted.RecognizeResult;
+                Assert.AreEqual(recognizeResult is ChoiceResult, true);
+                Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
+                Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
+                Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
+                if (recognizeResult is ChoiceResult choiceRecongizedResult)
+                {
+                    Assert.AreEqual("testLabel", choiceRecongizedResult.Label);
+                    Assert.AreEqual("testRecognizePhrase", choiceRecongizedResult.RecognizedPhrase);
+                }
             }
             else
             {

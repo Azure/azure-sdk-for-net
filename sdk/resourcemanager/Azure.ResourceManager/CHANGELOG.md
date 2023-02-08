@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.3.2 (2022-11-11)
+
+### Other Changes
+
+- Minor internal changes.
+- Polished the README and CHANGELOG files.
+
 ## 1.3.1 (2022-08-18)
 
 ### Features Added

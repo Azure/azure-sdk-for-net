@@ -47,6 +47,16 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RecordingStorageType))
+            {
+                writer.WritePropertyName("recordingStorageType");
+                writer.WriteStringValue(RecordingStorageType.Value.ToString());
+            }
+            if (Optional.IsDefined(ExternalStorageLocation))
+            {
+                writer.WritePropertyName("externalStorageLocation");
+                writer.WriteStringValue(ExternalStorageLocation);
+            }
             writer.WriteEndObject();
         }
     }

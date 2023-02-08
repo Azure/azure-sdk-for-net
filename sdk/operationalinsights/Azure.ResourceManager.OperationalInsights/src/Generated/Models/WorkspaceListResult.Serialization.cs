@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static WorkspaceListResult DeserializeWorkspaceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkspaceData>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsWorkspaceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkspaceData> array = new List<WorkspaceData>();
+                    List<OperationalInsightsWorkspaceData> array = new List<OperationalInsightsWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceData.DeserializeWorkspaceData(item));
+                        array.Add(OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(item));
                     }
                     value = array;
                     continue;

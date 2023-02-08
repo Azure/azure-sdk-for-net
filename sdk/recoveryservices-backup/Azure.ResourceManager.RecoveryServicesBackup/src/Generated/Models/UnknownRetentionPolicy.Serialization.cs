@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownRetentionPolicy DeserializeUnknownRetentionPolicy(JsonElement element)
         {
-            string retentionPolicyType = default;
+            string retentionPolicyType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionPolicyType"))

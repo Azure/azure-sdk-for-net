@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -23,84 +21,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     case "AzureActiveDirectory": return ResourceCertificateAndAadDetails.DeserializeResourceCertificateAndAadDetails(element);
                 }
             }
-            string authType = default;
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authType"))
-                {
-                    authType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("certificate"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    certificate = property.Value.GetBytesFromBase64("D");
-                    continue;
-                }
-                if (property.NameEquals("friendlyName"))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("issuer"))
-                {
-                    issuer = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resourceId = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("subject"))
-                {
-                    subject = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("thumbprint"))
-                {
-                    thumbprint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("validFrom"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    validFrom = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("validTo"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    validTo = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-            }
-            return new UnknownResourceCertificateDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo));
+            return UnknownResourceCertificateDetails.DeserializeUnknownResourceCertificateDetails(element);
         }
     }
 }

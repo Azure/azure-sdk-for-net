@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of CallSourceInternal. </summary>
         /// <param name="callerId">
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited. 
+        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
         /// </param>
         /// <param name="displayName"> Display name of the call if dialing out to a pstn number. </param>
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited. 
+        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
         /// </summary>
         public PhoneNumberIdentifierModel CallerId { get; set; }

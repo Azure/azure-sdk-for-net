@@ -5,7 +5,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallAutomation.Converters
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// Converts the RecordingState object into json correctly.

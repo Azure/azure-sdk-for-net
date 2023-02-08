@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,9 +14,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
     // Data plane generated sub-client. The Boundaries sub-client.
     /// <summary> The Boundaries sub-client. </summary>
     public partial class Boundaries
+=======
+    // Data plane generated client.
+    /// <summary> The Boundaries service client. </summary>
+    public partial class BoundariesClient
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -344,9 +348,126 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="parentType"> Type of the parent it belongs to. </param>
         /// <param name="type"> Type it belongs to. </param>
         /// <param name="parentIds"> Parent Ids of the resource. </param>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
         /// <param name="minArea"> Minimum area of the boundary (inclusive). </param>
         /// <param name="maxArea"> Maximum acreage of the boundary (inclusive). </param>
         /// <param name="boundaryIds"> Ids of the resource. </param>
+=======
+        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
+        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundariesByFarmerIdAsync(String,Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BoundariesClient.GetBoundariesByFarmerId", "value", "nextLink", context);
+        }
+
+        /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="isPrimary"> Is the boundary primary. </param>
+        /// <param name="parentType"> Type of the parent it belongs to. </param>
+        /// <param name="parentIds"> Parent Ids of the resource. </param>
+        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
+        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundariesByFarmerId(String,Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BoundariesClient.GetBoundariesByFarmerId", "value", "nextLink", context);
+        }
+
+        /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='SearchByFarmerIdAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchByFarmerIdRequest(farmerId, content, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BoundariesClient.SearchByFarmerId", "value", "nextLink", context);
+        }
+
+        /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='SearchByFarmerId(String,RequestContent,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchByFarmerIdRequest(farmerId, content, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BoundariesClient.SearchByFarmerId", "value", "nextLink", context);
+        }
+
+        /// <summary> Returns a paginated list of boundary resources across all farmers. </summary>
+        /// <param name="isPrimary"> Is the boundary primary. </param>
+        /// <param name="parentType"> Type of the parent it belongs to. </param>
+        /// <param name="parentIds"> Parent Ids of the resource. </param>
+        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
+        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -368,6 +489,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetBoundariesAsync(String,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetBoundariesAsync(string parentType = null, string type = null, IEnumerable<string> parentIds = null, double? minArea = null, double? maxArea = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
             return GetBoundariesImplementationAsync("Boundaries.GetBoundaries", parentType, type, parentIds, minArea, maxArea, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
@@ -386,6 +508,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BoundariesClient.GetBoundaries", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         }
 
         /// <summary> Returns a paginated list of boundary resources across all parties. </summary>
@@ -416,6 +543,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetBoundaries(String,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetBoundaries(string parentType = null, string type = null, IEnumerable<string> parentIds = null, double? minArea = null, double? maxArea = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
             return GetBoundariesImplementation("Boundaries.GetBoundaries", parentType, type, parentIds, minArea, maxArea, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
@@ -434,6 +562,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BoundariesClient.GetBoundaries", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         }
 
         /// <summary> Search for boundaries across all parties by fields and intersecting geometry. </summary>
@@ -445,6 +578,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='SearchAsync(RequestContent,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestContext context = null)
         {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
             Argument.AssertNotNull(content, nameof(content));
 
             return SearchImplementationAsync("Boundaries.Search", content, context);
@@ -465,6 +599,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchRequest(content, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchNextPageRequest(nextLink, content, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BoundariesClient.Search", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         }
 
         /// <summary> Search for boundaries across all parties by fields and intersecting geometry. </summary>
@@ -476,6 +615,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='Search(RequestContent,RequestContext)']/*" />
         public virtual Pageable<BinaryData> Search(RequestContent content, RequestContext context = null)
         {
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
             Argument.AssertNotNull(content, nameof(content));
 
             return SearchImplementation("Boundaries.Search", content, context);
@@ -496,6 +636,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+=======
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchRequest(content, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchNextPageRequest(nextLink, content, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BoundariesClient.Search", "value", "nextLink", context);
+>>>>>>> upstream/main:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         }
 
         /// <summary> Returns a paginated list of boundary resources under a particular party. </summary>

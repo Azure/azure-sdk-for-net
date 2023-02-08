@@ -35,17 +35,6 @@ namespace Azure.ResourceManager.Peering.Tests
             Client = GetArmClient();
         }
 
-        [TearDown]
-        public async Task GlobalTearDown()
-        {
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var peerAsns = await subscription.GetPeerAsns().GetAllAsync().ToEnumerableAsync();
-            foreach (var item in peerAsns)
-            {
-                await item.DeleteAsync(WaitUntil.Completed);
-            }
-        }
-
         protected async Task<ResourceGroupResource> CreateResourceGroup()
         {
             var subscription = await Client.GetDefaultSubscriptionAsync();

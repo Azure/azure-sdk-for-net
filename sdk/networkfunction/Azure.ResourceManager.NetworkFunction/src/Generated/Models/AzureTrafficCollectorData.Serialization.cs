@@ -35,16 +35,6 @@ namespace Azure.ResourceManager.NetworkFunction
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CollectorPolicies))
-            {
-                writer.WritePropertyName("collectorPolicies");
-                writer.WriteStartArray();
-                foreach (var item in CollectorPolicies)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub");
@@ -63,7 +53,7 @@ namespace Azure.ResourceManager.NetworkFunction
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<CollectorPolicyData>> collectorPolicies = default;
+            Optional<IReadOnlyList<SubResource>> collectorPolicies = default;
             Optional<SubResource> virtualHub = default;
             Optional<CollectorProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -120,7 +110,7 @@ namespace Azure.ResourceManager.NetworkFunction
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -139,10 +129,10 @@ namespace Azure.ResourceManager.NetworkFunction
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CollectorPolicyData> array = new List<CollectorPolicyData>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
                             }
                             collectorPolicies = array;
                             continue;
@@ -154,7 +144,7 @@ namespace Azure.ResourceManager.NetworkFunction
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            virtualHub = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

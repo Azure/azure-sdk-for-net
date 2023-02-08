@@ -1,11 +1,8 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
-
-* Add support for exporting Histogram Min and Max ([#32072](https://github.com/Azure/azure-sdk-for-net/pull/32072))
-* Add support for exporting UpDownCounter and ObservableUpDownCounter ([#32170](https://github.com/Azure/azure-sdk-for-net/pull/32170))
 
 ### Breaking Changes
 
@@ -13,8 +10,48 @@
 
 ### Other Changes
 
+## 1.0.0-beta.7 (2023-02-07)
+
+### Features Added
+
+* Added support for parsing AADAudience from ConnectionString ([#33593](https://github.com/Azure/azure-sdk-for-net/pull/33593))
+* Activity Events (SpanEvents), except those representing Exception, will be exported to TraceTelemetry table([#32980](https://github.com/Azure/azure-sdk-for-net/pull/32980))
+Exceptions reported via ActivityEvents will continue to be exported to ExceptionTelemetry table
+
+### Bugs Fixed
+
+* 4xx errors on Request telemetry will now be reported as failures ([#33617](https://github.com/Azure/azure-sdk-for-net/pull/33617))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#33859](https://github.com/Azure/azure-sdk-for-net/pull/33859))
+  - OpenTelemetry 1.4.0-rc.3
+
+## 1.0.0-beta.6 (2023-01-10)
+
+### Features Added
+
+* AAD Support ([#32986](https://github.com/Azure/azure-sdk-for-net/pull/32986))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#33152](https://github.com/Azure/azure-sdk-for-net/pull/33152))
+  - OpenTelemetry 1.4.0-rc.1
+
+## 1.0.0-beta.5 (2022-11-08)
+
+### Features Added
+
+* Add support for exporting Histogram Min and Max ([#32072](https://github.com/Azure/azure-sdk-for-net/pull/32072))
+* Add support for exporting UpDownCounter and ObservableUpDownCounter ([#32170](https://github.com/Azure/azure-sdk-for-net/pull/32170))
+
+### Other Changes
+
 * Update OpenTelemetry dependencies ([#32047](https://github.com/Azure/azure-sdk-for-net/pull/32047))
   - OpenTelemetry v1.4.0-beta.2
+* Debugging Output now includes Telemetry sent from storage. ([#32172](https://github.com/Azure/azure-sdk-for-net/pull/32172))
 
 ## 1.0.0-beta.4 (2022-10-07)
 

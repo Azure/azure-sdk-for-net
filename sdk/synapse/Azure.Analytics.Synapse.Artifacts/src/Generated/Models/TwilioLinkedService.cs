@@ -16,7 +16,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of TwilioLinkedService. </summary>
         /// <param name="userName"> The Account SID of Twilio service. </param>
-        /// <param name="password"> The auth token of Twilio service. </param>
+        /// <param name="password">
+        /// The auth token of Twilio service.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public TwilioLinkedService(object userName, SecretBase password)
         {
@@ -36,7 +40,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="userName"> The Account SID of Twilio service. </param>
-        /// <param name="password"> The auth token of Twilio service. </param>
+        /// <param name="password">
+        /// The auth token of Twilio service.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         internal TwilioLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object userName, SecretBase password) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             UserName = userName;
@@ -46,7 +54,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The Account SID of Twilio service. </summary>
         public object UserName { get; set; }
-        /// <summary> The auth token of Twilio service. </summary>
+        /// <summary>
+        /// The auth token of Twilio service.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
     }
 }

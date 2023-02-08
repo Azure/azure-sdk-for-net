@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get open request approval details
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}
-        /// Operation Id: PrivateStore_GetRequestApproval
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MarketplaceApprovalRequestResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get open request approval details
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}
-        /// Operation Id: PrivateStore_GetRequestApproval
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MarketplaceApprovalRequestResource> Get(CancellationToken cancellationToken = default)
@@ -137,8 +153,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Create approval request
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}
-        /// Operation Id: PrivateStore_CreateApprovalRequest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CreateApprovalRequest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
@@ -167,8 +191,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Create approval request
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}
-        /// Operation Id: PrivateStore_CreateApprovalRequest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CreateApprovalRequest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
@@ -197,8 +229,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get request statuses foreach plan, this api is used as a complex GET action.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/query
-        /// Operation Id: PrivateStore_QueryRequestApproval
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/query</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryRequestApproval</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The QueryApprovalRequestContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,8 +260,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get request statuses foreach plan, this api is used as a complex GET action.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/query
-        /// Operation Id: PrivateStore_QueryRequestApproval
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/query</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryRequestApproval</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The QueryApprovalRequestContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,8 +291,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Withdraw a user request approval on specific plan
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/withdrawPlan
-        /// Operation Id: PrivateStore_WithdrawPlan
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/withdrawPlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_WithdrawPlan</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The WithdrawPlanContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -266,8 +322,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Withdraw a user request approval on specific plan
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/withdrawPlan
-        /// Operation Id: PrivateStore_WithdrawPlan
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/withdrawPlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_WithdrawPlan</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The WithdrawPlanContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

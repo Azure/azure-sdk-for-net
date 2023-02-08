@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionErrorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    protectionErrorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))

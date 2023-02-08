@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> A reference to a certificate to be installed on compute nodes in a pool. This must exist inside the same account as the pool. </summary>
+    /// <summary> Warning: This object is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
     public partial class BatchCertificateReference
     {
         /// <summary> Initializes a new instance of BatchCertificateReference. </summary>

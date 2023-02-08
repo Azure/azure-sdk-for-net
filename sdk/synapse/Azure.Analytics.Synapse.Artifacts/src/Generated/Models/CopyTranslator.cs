@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> A copy activity translator. </summary>
+    /// <summary>
+    /// A copy activity translator.
+    /// Please note <see cref="CopyTranslator"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TabularTranslator"/>.
+    /// </summary>
     public partial class CopyTranslator
     {
         /// <summary> Initializes a new instance of CopyTranslator. </summary>

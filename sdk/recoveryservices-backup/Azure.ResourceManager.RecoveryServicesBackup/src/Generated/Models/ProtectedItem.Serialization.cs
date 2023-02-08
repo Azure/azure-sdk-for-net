@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -94,6 +92,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyName");
                 writer.WriteStringValue(PolicyName);
             }
+            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            {
+                writer.WritePropertyName("softDeleteRetentionPeriod");
+                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -118,167 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "Microsoft.Sql/servers/databases": return AzureSqlProtectedItem.DeserializeAzureSqlProtectedItem(element);
                 }
             }
-            string protectedItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<DataSourceType> workloadType = default;
-            Optional<string> containerName = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> policyId = default;
-            Optional<DateTimeOffset> lastRecoveryPoint = default;
-            Optional<string> backupSetName = default;
-            Optional<CreateMode> createMode = default;
-            Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
-            Optional<bool> isScheduledForDeferredDelete = default;
-            Optional<string> deferredDeleteTimeRemaining = default;
-            Optional<bool> isDeferredDeleteScheduleUpcoming = default;
-            Optional<bool> isRehydrate = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> policyName = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("protectedItemType"))
-                {
-                    protectedItemType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("workloadType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    workloadType = new DataSourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("containerName"))
-                {
-                    containerName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceResourceId"))
-                {
-                    sourceResourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("policyId"))
-                {
-                    policyId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastRecoveryPoint"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    lastRecoveryPoint = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("backupSetName"))
-                {
-                    backupSetName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("createMode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    createMode = new CreateMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("deferredDeleteTimeInUTC"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    deferredDeleteTimeInUTC = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("isScheduledForDeferredDelete"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isScheduledForDeferredDelete = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("deferredDeleteTimeRemaining"))
-                {
-                    deferredDeleteTimeRemaining = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isDeferredDeleteScheduleUpcoming"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isDeferredDeleteScheduleUpcoming = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("isRehydrate"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isRehydrate = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("resourceGuardOperationRequests"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    resourceGuardOperationRequests = array;
-                    continue;
-                }
-                if (property.NameEquals("isArchiveEnabled"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isArchiveEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("policyName"))
-                {
-                    policyName = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value);
+            return UnknownProtectedItem.DeserializeUnknownProtectedItem(element);
         }
     }
 }

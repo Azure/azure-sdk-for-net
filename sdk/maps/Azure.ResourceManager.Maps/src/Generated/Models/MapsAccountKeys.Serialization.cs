@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,15 +15,20 @@ namespace Azure.ResourceManager.Maps.Models
     {
         internal static MapsAccountKeys DeserializeMapsAccountKeys(JsonElement element)
         {
-            Optional<string> primaryKeyLastUpdated = default;
+            Optional<DateTimeOffset> primaryKeyLastUpdated = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
-            Optional<string> secondaryKeyLastUpdated = default;
+            Optional<DateTimeOffset> secondaryKeyLastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKeyLastUpdated"))
                 {
-                    primaryKeyLastUpdated = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    primaryKeyLastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("primaryKey"))
@@ -37,11 +43,16 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 if (property.NameEquals("secondaryKeyLastUpdated"))
                 {
-                    secondaryKeyLastUpdated = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    secondaryKeyLastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new MapsAccountKeys(primaryKeyLastUpdated.Value, primaryKey.Value, secondaryKey.Value, secondaryKeyLastUpdated.Value);
+            return new MapsAccountKeys(Optional.ToNullable(primaryKeyLastUpdated), primaryKey.Value, secondaryKey.Value, Optional.ToNullable(secondaryKeyLastUpdated));
         }
     }
 }

@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The information (data) Unit of measurement. </summary>
-    internal readonly partial struct InformationUnit : IEquatable<InformationUnit>
+    public readonly partial struct InformationUnit : IEquatable<InformationUnit>
     {
         private readonly string _value;
 

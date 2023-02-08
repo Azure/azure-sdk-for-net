@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("association"))

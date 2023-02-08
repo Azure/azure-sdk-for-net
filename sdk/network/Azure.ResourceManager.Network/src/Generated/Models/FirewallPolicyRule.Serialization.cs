@@ -41,28 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                     case "NetworkRule": return NetworkRule.DeserializeNetworkRule(element);
                 }
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            FirewallPolicyRuleType ruleType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"))
-                {
-                    ruleType = new FirewallPolicyRuleType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownFirewallPolicyRule(name.Value, description.Value, ruleType);
+            return UnknownFirewallPolicyRule.DeserializeUnknownFirewallPolicyRule(element);
         }
     }
 }

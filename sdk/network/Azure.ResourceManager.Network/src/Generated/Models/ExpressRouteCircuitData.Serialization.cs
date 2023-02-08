@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRoutePort = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            expressRoutePort = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("bandwidthInGbps"))

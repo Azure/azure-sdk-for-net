@@ -74,7 +74,7 @@ namespace Azure.Data.AppConfiguration
             return ReadSetting(root);
         }
 
-        private static ConfigurationSetting ReadSetting(JsonElement root)
+        public static ConfigurationSetting ReadSetting(JsonElement root)
         {
             ConfigurationSetting setting;
 
@@ -183,45 +183,6 @@ namespace Azure.Data.AppConfiguration
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
             return ReadSetting(root);
-        }
-
-        public static SettingBatch ParseBatch(Response response)
-        {
-            Stream content = response.ContentStream;
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                return ParseSettingBatch(json.RootElement);
-            }
-        }
-
-        internal static SettingBatch ParseSettingBatch(JsonElement element)
-        {
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ConfigurationSetting>> value = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("items"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ConfigurationSetting> array = new List<ConfigurationSetting>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ReadSetting(item));
-                    }
-                    value = array;
-                    continue;
-                }
-            }
-            return new SettingBatch(Optional.ToList(value).ToArray(), nextLink.Value);
         }
     }
 }

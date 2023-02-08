@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 if (property.NameEquals("subnet"))
                 {
-                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("privateIpAddress"))

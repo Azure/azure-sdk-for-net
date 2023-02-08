@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static GatewayCustomDomainResourceList DeserializeGatewayCustomDomainResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<GatewayCustomDomainResourceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformGatewayCustomDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GatewayCustomDomainResourceData> array = new List<GatewayCustomDomainResourceData>();
+                    List<AppPlatformGatewayCustomDomainData> array = new List<AppPlatformGatewayCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GatewayCustomDomainResourceData.DeserializeGatewayCustomDomainResourceData(item));
+                        array.Add(AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(item));
                     }
                     value = array;
                     continue;

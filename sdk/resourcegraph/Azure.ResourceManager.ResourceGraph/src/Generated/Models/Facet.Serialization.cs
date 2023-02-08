@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -22,22 +21,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     case "FacetResult": return FacetResult.DeserializeFacetResult(element);
                 }
             }
-            string expression = default;
-            string resultType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("expression"))
-                {
-                    expression = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownFacet(expression, resultType);
+            return UnknownFacet.DeserializeUnknownFacet(element);
         }
     }
 }

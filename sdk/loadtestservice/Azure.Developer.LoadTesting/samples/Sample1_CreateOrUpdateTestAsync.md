@@ -1,25 +1,24 @@
-# Create or Update Load Test Async
+# Create or Update Load Test
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/README.md#getting-started) for details.
 
-You can create a LoadTestclient and call the `CreateOrUpdateTestAsync` method from SubClient `LoadTestAdministrationClient`
+The sample below demonstrates how to create a new load test using the `LoadTestAdministrationClient` client.
 
 ## Create LoadTestAdministrationClient
-```C# Snippet:Azure_Developer_LoadTesting_CreatingClient
-string endpoint = TestEnvironment.Endpoint;
-TokenCredential credential = TestEnvironment.Credential;
+```C# Snippet:Azure_Developer_LoadTesting_CreateAdminClient
+// The data-plane endpoint is obtained from Control Plane APIs with "https://"
+// To obtain endpoint please follow: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting#data-plane-endpoint
+Uri endpointUrl = new Uri("https://" + <your resource URI obtained from steps above>);
+TokenCredential credential = new DefaultAzureCredential();
 
-// creating LoadTesting Client
-LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
-
-// getting appropriate Subclient
-LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
+// creating LoadTesting Administration Client
+LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
 ```
 
-## Calling CreateOrUpdateTestAsync
+## Calling CreateOrUpdateTest
 ```C# Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTestAsync
-// provide unique identifier for your test
 string testId = "my-test-id";
+Uri keyVaultSecretUrl = new Uri("https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret");
 
 // all data needs to be passed while creating a loadtest
 var data = new
@@ -35,7 +34,7 @@ var data = new
     {
         secret1 = new
         {
-            value = "https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret",
+            value = keyVaultSecretUrl.ToString(),
             type = "AKV_SECRET_URI"
         }
     },
@@ -76,15 +75,10 @@ var data = new
 try
 {
     Response response = await loadTestAdministrationClient.CreateOrUpdateTestAsync(testId, RequestContent.Create(data));
-
-    // if the test is created successfully, printing response
-    Console.WriteLine(response.Content);
+    Console.WriteLine(response.Content.ToString());
 }
-catch (Exception e)
+catch (Exception ex)
 {
-    Console.WriteLine(string.Format("Error : ", e.Message));
+    Console.WriteLine(ex.Message);
 }
 ```
-
-To see the full example source files, see:
-* [Sample1_CreateOrUpdateTestAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample1_CreateOrUpdateTestAsync.cs)

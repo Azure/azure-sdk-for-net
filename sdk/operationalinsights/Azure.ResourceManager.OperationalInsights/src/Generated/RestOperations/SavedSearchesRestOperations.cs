@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, SavedSearchData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, OperationalInsightsSavedSearchData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="savedSearchId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavedSearchData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, SavedSearchData data, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationalInsightsSavedSearchData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, OperationalInsightsSavedSearchData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        SavedSearchData value = default;
+                        OperationalInsightsSavedSearchData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SavedSearchData.DeserializeSavedSearchData(document.RootElement);
+                        value = OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="savedSearchId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavedSearchData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, SavedSearchData data, CancellationToken cancellationToken = default)
+        public Response<OperationalInsightsSavedSearchData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, OperationalInsightsSavedSearchData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        SavedSearchData value = default;
+                        OperationalInsightsSavedSearchData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SavedSearchData.DeserializeSavedSearchData(document.RootElement);
+                        value = OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="savedSearchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavedSearchData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationalInsightsSavedSearchData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -245,13 +245,13 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        SavedSearchData value = default;
+                        OperationalInsightsSavedSearchData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SavedSearchData.DeserializeSavedSearchData(document.RootElement);
+                        value = OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavedSearchData)null, message.Response);
+                    return Response.FromValue((OperationalInsightsSavedSearchData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="savedSearchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavedSearchData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken = default)
+        public Response<OperationalInsightsSavedSearchData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -278,13 +278,13 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        SavedSearchData value = default;
+                        OperationalInsightsSavedSearchData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SavedSearchData.DeserializeSavedSearchData(document.RootElement);
+                        value = OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavedSearchData)null, message.Response);
+                    return Response.FromValue((OperationalInsightsSavedSearchData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

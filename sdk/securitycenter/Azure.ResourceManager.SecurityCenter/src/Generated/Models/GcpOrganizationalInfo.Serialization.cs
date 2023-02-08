@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "Organization": return GcpParentOrganizationalInfo.DeserializeGcpParentOrganizationalInfo(element);
                 }
             }
-            OrganizationMembershipType organizationMembershipType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("organizationMembershipType"))
-                {
-                    organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownGcpOrganizationalInfo(organizationMembershipType);
+            return UnknownGcpOrganizationalData.DeserializeUnknownGcpOrganizationalData(element);
         }
     }
 }

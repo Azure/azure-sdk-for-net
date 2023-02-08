@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 switch (discriminator.GetString())
                 {
+                    case "CosmosDb": return KustoCosmosDBDataConnection.DeserializeKustoCosmosDBDataConnection(element);
                     case "EventGrid": return KustoEventGridDataConnection.DeserializeKustoEventGridDataConnection(element);
                     case "EventHub": return KustoEventHubDataConnection.DeserializeKustoEventHubDataConnection(element);
                     case "IotHub": return KustoIotHubDataConnection.DeserializeKustoIotHubDataConnection(element);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Kusto
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             Optional<string> status = default;
             Optional<string> source = default;
-            Optional<string> jobId = default;
+            Optional<Guid> jobId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -31,11 +32,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (property.NameEquals("jobId"))
                 {
-                    jobId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    jobId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationRunTaskProperties(status.Value, source.Value, jobId.Value);
+            return new SoftwareUpdateConfigurationRunTaskProperties(status.Value, source.Value, Optional.ToNullable(jobId));
         }
     }
 }

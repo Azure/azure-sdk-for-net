@@ -29,6 +29,8 @@ namespace Azure.Communication.JobRouter
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
         /// </param>
         /// <param name="scoringRuleOptions"> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </param>
         internal BestWorkerMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, RouterRule scoringRule, ScoringRuleOptions scoringRuleOptions) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors)
@@ -45,6 +47,8 @@ namespace Azure.Communication.JobRouter
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
         /// </summary>
         public RouterRule ScoringRule { get; set; }
         /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>

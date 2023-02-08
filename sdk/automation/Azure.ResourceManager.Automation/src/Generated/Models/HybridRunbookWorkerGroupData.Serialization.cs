@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<GroupTypeEnum> groupType = default;
+            Optional<HybridWorkerGroup> groupType = default;
             Optional<RunAsCredentialAssociationProperty> credential = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Automation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            groupType = new GroupTypeEnum(property0.Value.GetString());
+                            groupType = new HybridWorkerGroup(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("credential"))

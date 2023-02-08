@@ -114,16 +114,16 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="context"></param>
         /// <param name="claims"></param>
         /// <param name="query"></param>
-        /// <param name="headers"></param>
         /// <param name="subprotocols"></param>
         /// <param name="certificates"></param>
+        /// <param name="headers"></param>
         public ConnectEventRequest(
             WebPubSubConnectionContext context,
             IReadOnlyDictionary<string, string[]> claims,
             IReadOnlyDictionary<string, string[]> query,
-            IReadOnlyDictionary<string, string[]> headers,
             IEnumerable<string> subprotocols,
-            IEnumerable<WebPubSubClientCertificate> certificates) : base(context)
+            IEnumerable<WebPubSubClientCertificate> certificates,
+            IReadOnlyDictionary<string, string[]> headers) : base(context)
         {
             if (claims != null)
             {

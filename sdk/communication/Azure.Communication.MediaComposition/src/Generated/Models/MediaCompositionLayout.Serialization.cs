@@ -28,6 +28,11 @@ namespace Azure.Communication.MediaComposition.Models
                 writer.WritePropertyName("placeholderImageUri");
                 writer.WriteStringValue(PlaceholderImageUri);
             }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode");
+                writer.WriteStringValue(ScalingMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -44,33 +49,7 @@ namespace Azure.Communication.MediaComposition.Models
                     case "presenter": return PresenterLayout.DeserializePresenterLayout(element);
                 }
             }
-            LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new LayoutType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resolution"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("placeholderImageUri"))
-                {
-                    placeholderImageUri = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MediaCompositionLayout(kind, resolution.Value, placeholderImageUri.Value);
+            return UnknownLayout.DeserializeUnknownLayout(element);
         }
     }
 }

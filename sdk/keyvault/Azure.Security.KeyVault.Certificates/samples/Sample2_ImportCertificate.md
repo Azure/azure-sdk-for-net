@@ -62,11 +62,4 @@ ImportCertificateOptions importOptions = new ImportCertificateOptions(name, pem)
 client.ImportCertificate(importOptions);
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample3_ImportCertificate.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample3_ImportCertificate.cs)
-* [Asynchronous Sample3_ImportCertificateAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample3_ImportCertificateAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

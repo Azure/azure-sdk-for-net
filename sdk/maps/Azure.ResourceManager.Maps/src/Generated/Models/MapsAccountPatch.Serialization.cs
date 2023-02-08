@@ -36,32 +36,12 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth");
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
-            }
-            if (Optional.IsCollectionDefined(LinkedResources))
-            {
-                writer.WritePropertyName("linkedResources");
-                writer.WriteStartArray();
-                foreach (var item in LinkedResources)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Cors))
-            {
-                writer.WritePropertyName("cors");
-                writer.WriteObjectValue(Cors);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

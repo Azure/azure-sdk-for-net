@@ -13,10 +13,11 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_0,
-        KeyClientOptions.ServiceVersion.V7_1,
+        KeyClientOptions.ServiceVersion.V7_4_Preview_1,
+        KeyClientOptions.ServiceVersion.V7_3,
         KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3)]
+        KeyClientOptions.ServiceVersion.V7_1,
+        KeyClientOptions.ServiceVersion.V7_0)]
     [IgnoreServiceError(
         409,
         "Conflict",

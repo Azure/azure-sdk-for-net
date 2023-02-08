@@ -39,7 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="httpPath"> The partial URL corresponding to the HBase server. (i.e. /gateway/sandbox/hbase/version). </param>
         /// <param name="authenticationType"> The authentication mechanism to use to connect to the HBase server. </param>
         /// <param name="username"> The user name used to connect to the HBase instance. </param>
-        /// <param name="password"> The password corresponding to the user name. </param>
+        /// <param name="password">
+        /// The password corresponding to the user name.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
         /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
@@ -71,7 +75,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public HBaseAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used to connect to the HBase instance. </summary>
         public object Username { get; set; }
-        /// <summary> The password corresponding to the user name. </summary>
+        /// <summary>
+        /// The password corresponding to the user name.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
         public object EnableSsl { get; set; }

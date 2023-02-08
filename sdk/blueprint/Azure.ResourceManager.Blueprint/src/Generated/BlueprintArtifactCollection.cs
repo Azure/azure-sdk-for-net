@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Create or update blueprint artifact.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}
-        /// Operation Id: Artifacts_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Create or update blueprint artifact.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}
-        /// Operation Id: Artifacts_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Get a blueprint artifact.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}
-        /// Operation Id: Artifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Get a blueprint artifact.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}
-        /// Operation Id: Artifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// List artifacts for a given blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts
-        /// Operation Id: Artifacts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BlueprintArtifactResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BlueprintArtifactResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BlueprintArtifactResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _blueprintArtifactArtifactsRestClient.ListAsync(Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BlueprintArtifactResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BlueprintArtifactResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _blueprintArtifactArtifactsRestClient.ListNextPageAsync(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BlueprintArtifactResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintArtifactArtifactsRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintArtifactArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintArtifactArtifactsClientDiagnostics, Pipeline, "BlueprintArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List artifacts for a given blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts
-        /// Operation Id: Artifacts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlueprintArtifactResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BlueprintArtifactResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BlueprintArtifactResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _blueprintArtifactArtifactsRestClient.List(Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BlueprintArtifactResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BlueprintArtifactResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _blueprintArtifactArtifactsRestClient.ListNextPage(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BlueprintArtifactResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintArtifactArtifactsRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintArtifactArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintArtifactArtifactsClientDiagnostics, Pipeline, "BlueprintArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}
-        /// Operation Id: Artifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}
-        /// Operation Id: Artifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

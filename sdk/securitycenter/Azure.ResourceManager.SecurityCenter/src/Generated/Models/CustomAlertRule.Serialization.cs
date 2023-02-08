@@ -55,34 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "ThresholdCustomAlertRule": return ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(element);
                 }
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            bool isEnabled = default;
-            string ruleType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("displayName"))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isEnabled"))
-                {
-                    isEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"))
-                {
-                    ruleType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType);
+            return UnknownCustomAlertRule.DeserializeUnknownCustomAlertRule(element);
         }
     }
 }

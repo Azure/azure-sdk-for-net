@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static UnknownWorkloadNetworkDhcpEntity DeserializeUnknownWorkloadNetworkDhcpEntity(JsonElement element)
         {
-            DhcpTypeEnum dhcpType = default;
+            DhcpTypeEnum dhcpType = "Unknown";
             Optional<string> displayName = default;
             Optional<IReadOnlyList<string>> segments = default;
             Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;

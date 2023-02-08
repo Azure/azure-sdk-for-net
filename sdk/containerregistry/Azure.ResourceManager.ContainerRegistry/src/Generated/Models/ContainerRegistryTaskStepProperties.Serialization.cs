@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -42,44 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     case "FileTask": return ContainerRegistryFileTaskStep.DeserializeContainerRegistryFileTaskStep(element);
                 }
             }
-            ContainerRegistryTaskStepType type = default;
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new ContainerRegistryTaskStepType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("baseImageDependencies"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
-                    }
-                    baseImageDependencies = array;
-                    continue;
-                }
-                if (property.NameEquals("contextPath"))
-                {
-                    contextPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("contextAccessToken"))
-                {
-                    contextAccessToken = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownContainerRegistryTaskStepProperties(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value);
+            return UnknownTaskStepProperties.DeserializeUnknownTaskStepProperties(element);
         }
     }
 }

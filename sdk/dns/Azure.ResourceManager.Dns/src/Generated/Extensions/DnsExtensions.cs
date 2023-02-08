@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Lists the DNS zones in all resource groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones
-        /// Operation Id: Zones_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Lists the DNS zones in all resource groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones
-        /// Operation Id: Zones_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
@@ -58,8 +74,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Returns the DNS records specified by the referencing targetResourceIds.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference
-        /// Operation Id: DnsResourceReference_GetByTargetResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Properties for dns resource reference request. </param>
@@ -74,8 +98,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Returns the DNS records specified by the referencing targetResourceIds.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference
-        /// Operation Id: DnsResourceReference_GetByTargetResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Properties for dns resource reference request. </param>
@@ -107,8 +139,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// Operation Id: Zones_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
@@ -123,8 +163,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
-        /// Operation Id: Zones_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
@@ -137,191 +185,191 @@ namespace Azure.ResourceManager.Dns
             return resourceGroupResource.GetDnsZones().Get(zoneName, cancellationToken);
         }
 
-        #region ARecordResource
+        #region DnsARecordResource
         /// <summary>
-        /// Gets an object representing an <see cref="ARecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ARecordResource.CreateResourceIdentifier" /> to create an <see cref="ARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsARecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ARecordResource" /> object. </returns>
-        public static ARecordResource GetARecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsARecordResource" /> object. </returns>
+        public static DnsARecordResource GetDnsARecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<ARecordResource>(() =>
+            return client.GetResourceClient<DnsARecordResource>(() =>
             {
-                ARecordResource.ValidateResourceId(id);
-                return new ARecordResource(client, id);
+                DnsARecordResource.ValidateResourceId(id);
+                return new DnsARecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AaaaRecordResource
+        #region DnsAaaaRecordResource
         /// <summary>
-        /// Gets an object representing an <see cref="AaaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AaaaRecordResource.CreateResourceIdentifier" /> to create an <see cref="AaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsAaaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsAaaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AaaaRecordResource" /> object. </returns>
-        public static AaaaRecordResource GetAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsAaaaRecordResource" /> object. </returns>
+        public static DnsAaaaRecordResource GetDnsAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<AaaaRecordResource>(() =>
+            return client.GetResourceClient<DnsAaaaRecordResource>(() =>
             {
-                AaaaRecordResource.ValidateResourceId(id);
-                return new AaaaRecordResource(client, id);
+                DnsAaaaRecordResource.ValidateResourceId(id);
+                return new DnsAaaaRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CaaRecordResource
+        #region DnsCaaRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="CaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="CaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsCaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsCaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CaaRecordResource" /> object. </returns>
-        public static CaaRecordResource GetCaaRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsCaaRecordResource" /> object. </returns>
+        public static DnsCaaRecordResource GetDnsCaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<CaaRecordResource>(() =>
+            return client.GetResourceClient<DnsCaaRecordResource>(() =>
             {
-                CaaRecordResource.ValidateResourceId(id);
-                return new CaaRecordResource(client, id);
+                DnsCaaRecordResource.ValidateResourceId(id);
+                return new DnsCaaRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CnameRecordResource
+        #region DnsCnameRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="CnameRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="CnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsCnameRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsCnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CnameRecordResource" /> object. </returns>
-        public static CnameRecordResource GetCnameRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsCnameRecordResource" /> object. </returns>
+        public static DnsCnameRecordResource GetDnsCnameRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<CnameRecordResource>(() =>
+            return client.GetResourceClient<DnsCnameRecordResource>(() =>
             {
-                CnameRecordResource.ValidateResourceId(id);
-                return new CnameRecordResource(client, id);
+                DnsCnameRecordResource.ValidateResourceId(id);
+                return new DnsCnameRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MXRecordResource
+        #region DnsMXRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="MXRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MXRecordResource.CreateResourceIdentifier" /> to create a <see cref="MXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsMXRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsMXRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MXRecordResource" /> object. </returns>
-        public static MXRecordResource GetMXRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsMXRecordResource" /> object. </returns>
+        public static DnsMXRecordResource GetDnsMXRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<MXRecordResource>(() =>
+            return client.GetResourceClient<DnsMXRecordResource>(() =>
             {
-                MXRecordResource.ValidateResourceId(id);
-                return new MXRecordResource(client, id);
+                DnsMXRecordResource.ValidateResourceId(id);
+                return new DnsMXRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NSRecordResource
+        #region DnsNSRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="NSRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NSRecordResource.CreateResourceIdentifier" /> to create a <see cref="NSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsNSRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsNSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NSRecordResource" /> object. </returns>
-        public static NSRecordResource GetNSRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsNSRecordResource" /> object. </returns>
+        public static DnsNSRecordResource GetDnsNSRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<NSRecordResource>(() =>
+            return client.GetResourceClient<DnsNSRecordResource>(() =>
             {
-                NSRecordResource.ValidateResourceId(id);
-                return new NSRecordResource(client, id);
+                DnsNSRecordResource.ValidateResourceId(id);
+                return new DnsNSRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PtrRecordResource
+        #region DnsPtrRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="PtrRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="PtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsPtrRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsPtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PtrRecordResource" /> object. </returns>
-        public static PtrRecordResource GetPtrRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsPtrRecordResource" /> object. </returns>
+        public static DnsPtrRecordResource GetDnsPtrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PtrRecordResource>(() =>
+            return client.GetResourceClient<DnsPtrRecordResource>(() =>
             {
-                PtrRecordResource.ValidateResourceId(id);
-                return new PtrRecordResource(client, id);
+                DnsPtrRecordResource.ValidateResourceId(id);
+                return new DnsPtrRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SoaRecordResource
+        #region DnsSoaRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="SoaRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="SoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsSoaRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsSoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SoaRecordResource" /> object. </returns>
-        public static SoaRecordResource GetSoaRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsSoaRecordResource" /> object. </returns>
+        public static DnsSoaRecordResource GetDnsSoaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SoaRecordResource>(() =>
+            return client.GetResourceClient<DnsSoaRecordResource>(() =>
             {
-                SoaRecordResource.ValidateResourceId(id);
-                return new SoaRecordResource(client, id);
+                DnsSoaRecordResource.ValidateResourceId(id);
+                return new DnsSoaRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SrvRecordResource
+        #region DnsSrvRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="SrvRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="SrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsSrvRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsSrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SrvRecordResource" /> object. </returns>
-        public static SrvRecordResource GetSrvRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsSrvRecordResource" /> object. </returns>
+        public static DnsSrvRecordResource GetDnsSrvRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<SrvRecordResource>(() =>
+            return client.GetResourceClient<DnsSrvRecordResource>(() =>
             {
-                SrvRecordResource.ValidateResourceId(id);
-                return new SrvRecordResource(client, id);
+                DnsSrvRecordResource.ValidateResourceId(id);
+                return new DnsSrvRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TxtRecordResource
+        #region DnsTxtRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="TxtRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="TxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsTxtRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsTxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TxtRecordResource" /> object. </returns>
-        public static TxtRecordResource GetTxtRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsTxtRecordResource" /> object. </returns>
+        public static DnsTxtRecordResource GetDnsTxtRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<TxtRecordResource>(() =>
+            return client.GetResourceClient<DnsTxtRecordResource>(() =>
             {
-                TxtRecordResource.ValidateResourceId(id);
-                return new TxtRecordResource(client, id);
+                DnsTxtRecordResource.ValidateResourceId(id);
+                return new DnsTxtRecordResource(client, id);
             }
             );
         }
@@ -337,7 +385,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsZoneResource" /> object. </returns>
         public static DnsZoneResource GetDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<DnsZoneResource>(() =>
             {
                 DnsZoneResource.ValidateResourceId(id);
                 return new DnsZoneResource(client, id);

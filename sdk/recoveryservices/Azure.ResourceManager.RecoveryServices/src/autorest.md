@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServices
 namespace: Azure.ResourceManager.RecoveryServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/recoveryservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7b47689d4efc098f25f46781f05f22179c153314/specification/recoveryservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -21,6 +21,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'SubscriptionIdParameter': 'object'
 
 rename-rules:
   CPU: Cpu
@@ -44,6 +45,13 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+override-operation-name:
+  RecoveryServices_Capabilities: GetCapabilitiesRecoveryService
+
+rename-mapping:
+  DNSZoneResponse: DnsZoneResult
+  CapabilitiesResponse: CapabilitiesResult
 
 directive:
   - remove-operation: GetOperationStatus

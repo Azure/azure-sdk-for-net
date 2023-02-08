@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyTermination");
                 }
             }
-            writer.WritePropertyName("limits");
-            writer.WriteObjectValue(Limits);
             writer.WritePropertyName("samplingAlgorithm");
             writer.WriteStringValue(SamplingAlgorithm.ToString());
             writer.WriteEndObject();
@@ -36,8 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageSweepSettings DeserializeImageSweepSettings(JsonElement element)
         {
-            Optional<EarlyTerminationPolicy> earlyTermination = default;
-            ImageSweepLimitSettings limits = default;
+            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,12 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         earlyTermination = null;
                         continue;
                     }
-                    earlyTermination = EarlyTerminationPolicy.DeserializeEarlyTerminationPolicy(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("limits"))
-                {
-                    limits = ImageSweepLimitSettings.DeserializeImageSweepLimitSettings(property.Value);
+                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("samplingAlgorithm"))
@@ -62,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ImageSweepSettings(earlyTermination.Value, limits, samplingAlgorithm);
+            return new ImageSweepSettings(earlyTermination.Value, samplingAlgorithm);
         }
     }
 }

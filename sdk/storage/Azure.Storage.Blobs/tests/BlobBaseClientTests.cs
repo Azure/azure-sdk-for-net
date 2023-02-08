@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
@@ -1547,17 +1549,20 @@ namespace Azure.Storage.Blobs.Test
             // Upload a blob
             var data = GetRandomBuffer(Constants.KB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                uploadResponse = await blob.UploadAsync(stream);
             }
+
+            DateTimeOffset modifiedSince = CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response result = await blob.DownloadToAsync(
                 Stream.Null,
                 new BlobRequestConditions
                 {
-                    IfModifiedSince = Recording.UtcNow
+                    IfModifiedSince = modifiedSince
                 });
             Assert.AreEqual(304, result.Status);
         }
@@ -1571,17 +1576,20 @@ namespace Azure.Storage.Blobs.Test
             // Upload a blob
             var data = GetRandomBuffer(Constants.KB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                uploadResponse = await blob.UploadAsync(stream);
             }
+
+            DateTimeOffset modifiedSince = CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadResult> result = await blob.DownloadContentAsync(new BlobDownloadOptions
             {
                 Conditions = new BlobRequestConditions
                 {
-                    IfModifiedSince = Recording.UtcNow
+                    IfModifiedSince = modifiedSince
                 }
             });
             Assert.AreEqual(304, result.GetRawResponse().Status);
@@ -1596,17 +1604,20 @@ namespace Azure.Storage.Blobs.Test
             // Upload a blob
             var data = GetRandomBuffer(Constants.KB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                uploadResponse = await blob.UploadAsync(stream);
             }
+
+            DateTimeOffset modifiedSince = CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadStreamingResult> result = await blob.DownloadStreamingAsync(new BlobDownloadOptions
             {
                 Conditions = new BlobRequestConditions
                 {
-                    IfModifiedSince = Recording.UtcNow
+                    IfModifiedSince = modifiedSince
                 }
             });
             Assert.AreEqual(304, result.GetRawResponse().Status);
@@ -1621,16 +1632,19 @@ namespace Azure.Storage.Blobs.Test
             // Upload a blob
             var data = GetRandomBuffer(Constants.KB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                uploadResponse = await blob.UploadAsync(stream);
             }
+
+            DateTimeOffset modifiedSince = CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(
                 conditions: new BlobRequestConditions
                 {
-                    IfModifiedSince = Recording.UtcNow
+                    IfModifiedSince = modifiedSince
                 });
             Assert.AreEqual(304, result.GetRawResponse().Status);
         }
@@ -2208,6 +2222,33 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task StartCopyFromUriAsync_AccessTier_Cold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Cold
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(
+                srcBlob.Uri,
+                options);
+
+            // data copied within an account, so copy should be instantaneous
+            await operation.WaitForCompletionAsync();
+
+            // Assert
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual("Cold", response.Value.AccessTier);
         }
 
         [RecordedTest]
@@ -2934,6 +2975,31 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(AccessTier.Cool, response.Value.AccessTier);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task SyncCopyFromUriAsync_AccessTier_Cold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Cold
+            };
+
+            // Act
+            await destBlob.SyncCopyFromUriAsync(
+                srcBlob.Uri,
+                options);
+
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual("Cold", response.Value.AccessTier);
         }
 
         [RecordedTest]
@@ -3782,6 +3848,60 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedBlobClient.ExistsAsync(),
                 e => { });
+        }
+
+        [RecordedTest]
+        public async Task ExistsAsync_NotExists_NoLogWarning()
+        {
+            // Arrange
+            BlobClient nonExistentBlob = BlobsClientBuilder.GetServiceClient_SharedKey()
+                .GetBlobContainerClient(BlobsClientBuilder.GetNewContainerName())
+                .GetBlobClient(BlobsClientBuilder.GetNewBlobName());
+
+            var events = new List<(EventWrittenEventArgs EventData, string EventMessage)>();
+
+            // Act
+            bool exists;
+            using (AzureEventSourceListener listener = new AzureEventSourceListener(
+                (data, message) => events.Add((data, message)),
+                EventLevel.Informational))
+            {
+                exists = await nonExistentBlob.ExistsAsync();
+            }
+
+            // Assert
+            Assert.IsFalse(exists);
+            CollectionAssert.IsEmpty(events.Where(e => e.EventData.Level < EventLevel.Informational));
+        }
+
+        [RecordedTest]
+        public async Task ExistsAsync_Exists_CPK_NoKey_NoLogWarning()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            await blob.CreateIfNotExistsAsync();
+
+            AppendBlobClient blobClientNoKey = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+
+            var events = new List<(EventWrittenEventArgs EventData, string EventMessage)>();
+
+            // Act
+            bool exists;
+            using (AzureEventSourceListener listener = new AzureEventSourceListener(
+                (data, message) => events.Add((data, message)),
+                EventLevel.Informational))
+            {
+                exists = await blobClientNoKey.ExistsAsync();
+            }
+
+            // Assert
+            Assert.IsTrue(exists);
+            CollectionAssert.IsEmpty(events.Where(e => e.EventData.Level < EventLevel.Informational));
         }
 
         [RecordedTest]
@@ -5704,6 +5824,48 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task SetTierAsync_Cold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            await blob.SetAccessTierAsync(AccessTier.Cold);
+
+            // We are also going to test that get blob properties and list blobs return cold tier correctly.
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual("Cold", response.Value.AccessTier);
+
+            // Act
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                blobItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobItems.Count);
+            Assert.AreEqual(AccessTier.Cold, blobItems[0].Properties.AccessTier);
+
+            // Act
+            List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
+            await foreach (BlobHierarchyItem blobHierarchyItem in test.Container.GetBlobsByHierarchyAsync())
+            {
+                blobHierarchyItems.Add(blobHierarchyItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobHierarchyItems.Count);
+            Assert.AreEqual(AccessTier.Cold, blobHierarchyItems[0].Blob.Properties.AccessTier);
         }
 
         [RecordedTest]

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,22 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "TableLevelOutput": return MigrateSqlServerSqlDBTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBTaskOutputTableLevel(element);
                 }
             }
-            Optional<string> id = default;
-            string resultType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMigrateSqlServerSqlDBTaskOutput(id.Value, resultType);
+            return UnknownMigrateSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBTaskOutput(element);
         }
     }
 }

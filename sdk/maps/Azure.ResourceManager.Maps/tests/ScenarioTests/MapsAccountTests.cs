@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Maps.Tests
 
             // Create account
             var newAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-            VerifyAccountProperties(newAccount.Data, true, Name.S0);
+            VerifyAccountProperties(newAccount.Data, true, MapsSkuName.S0);
 
             // Now get the account
             var account = (await mapCollection.GetAsync(accountName)).Value;
-            VerifyAccountProperties(account.Data, true, Name.S0);
+            VerifyAccountProperties(account.Data, true, MapsSkuName.S0);
 
             // Now delete the account
             await account.DeleteAsync(WaitUntil.Completed);
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.Maps.Tests
 
             // Create account
             var newAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-            VerifyAccountProperties(newAccount.Data, true, Name.S0);
+            VerifyAccountProperties(newAccount.Data, true, MapsSkuName.S0);
 
             // Create new parameters which are almost the same, but have different tags
             var newParameters = GetDefaultMapsAccountData();
             newParameters.Tags.Clear();
             newParameters.Tags.Add("key3", "value3");
             newParameters.Tags.Add("key4", "value4");
-            newParameters.Sku.Name = Name.S1;
+            newParameters.Sku.Name = MapsSkuName.S1;
             var updatedAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, newParameters)).Value;
-            VerifyAccountProperties(updatedAccount.Data, false, skuName: Name.S1);
+            VerifyAccountProperties(updatedAccount.Data, false, skuName: MapsSkuName.S1);
             Assert.AreEqual(2, updatedAccount.Data.Tags.Count);
             Assert.AreEqual("value3", updatedAccount.Data.Tags["key3"]);
             Assert.AreEqual("value4", updatedAccount.Data.Tags["key4"]);
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Maps.Tests
             accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(2, accounts.Count);
 
-            VerifyAccountProperties(accounts.First().Data, true, Name.S0);
-            VerifyAccountProperties(accounts.Skip(1).First().Data, true, Name.S0);
+            VerifyAccountProperties(accounts.First().Data, true, MapsSkuName.S0);
+            VerifyAccountProperties(accounts.Skip(1).First().Data, true, MapsSkuName.S0);
         }
 
         [Test]
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Maps.Tests
 
             var account1 = accounts.First(
                 t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName1.Data.Name));
-            VerifyAccountProperties(account1.Data, true, Name.S0);
+            VerifyAccountProperties(account1.Data, true, MapsSkuName.S0);
 
             var account2 = accounts.First(
                 t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName2.Data.Name));
-            VerifyAccountProperties(account2.Data, true, Name.S0);
+            VerifyAccountProperties(account2.Data, true, MapsSkuName.S0);
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Maps.Tests
             Assert.NotNull(key2);
 
             // Regenerate keys and verify that keys change
-            var regenKeys = (await newAccount.RegenerateKeysAsync(new MapsKeySpecification(KeyType.Secondary))).Value;
+            var regenKeys = (await newAccount.RegenerateKeysAsync(new MapsKeySpecification(MapsKeyType.Secondary))).Value;
             var key2Regen = regenKeys.SecondaryKey;
             Assert.NotNull(key2Regen);
 

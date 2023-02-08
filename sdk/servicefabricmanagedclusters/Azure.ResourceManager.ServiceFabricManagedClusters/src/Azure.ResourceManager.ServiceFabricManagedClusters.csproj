@@ -4,7 +4,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.ServiceFabricManagedClusters</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider ServiceFabricManagedClusters</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ServiceFabric ManagedClusters.</Description>
     <PackageTags>azure;management;arm;resource manager;servicefabricmanagedclusters</PackageTags>
   </PropertyGroup>
 </Project>

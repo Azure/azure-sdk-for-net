@@ -11,6 +11,8 @@ trigger:
     - sdk/devcenter/ci.yml
     - sdk/devcenter/Azure.Developer.DevCenter/
     - sdk/devcenter/service.projects
+    - sdk/devcenter/test-resources.bicep
+    - sdk/devcenter/tests.yml
 
 pr:
   branches:
@@ -24,6 +26,8 @@ pr:
     - sdk/devcenter/ci.yml
     - sdk/devcenter/Azure.Developer.DevCenter/
     - sdk/devcenter/service.projects
+    - sdk/devcenter/test-resources.bicep
+    - sdk/devcenter/tests.yml
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> zones = default;
             Optional<IdentityInfo> identityInfo = default;
             Optional<IdentityBasedRestoreDetails> identityBasedRestoreDetails = default;
-            string objectType = default;
+            string objectType = "IaasVMRestoreRequest";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointId"))

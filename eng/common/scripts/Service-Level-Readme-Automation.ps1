@@ -21,6 +21,9 @@ The add client id/application id for ms.author.
 
 .PARAMETER ClientSecret
 The client secret of add app for ms.author.
+
+.PARAMETER ReadmeFolderRoot
+The readme folder root path, use default value here for backward compability. E.g. docs-ref-services in Java, JS, Python, api/overview/azure
 #>
 
 param(
@@ -34,121 +37,17 @@ param(
   [string]$ClientId,
 
   [Parameter(Mandatory = $false)]
-  [string]$ClientSecret
+  [string]$ClientSecret,
+
+  [Parameter(Mandatory = $false)]
+  [string]$ReadmeFolderRoot = "docs-ref-services"
 )
 . $PSScriptRoot/common.ps1
+. $PSScriptRoot/Helpers/Service-Level-Readme-Automation-Helpers.ps1
 . $PSScriptRoot/Helpers/Metadata-Helpers.ps1
 . $PSScriptRoot/Helpers/Package-Helpers.ps1
 
 Set-StrictMode -Version 3
-
-function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService, $clientTableLink, $mgmtTableLink, $serviceName)
-{
-  $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
-  $content = ""  
-  if (Test-Path (Join-Path $readmeFolder -ChildPath $clientTableLink)) {
-    $content = "## Client packages - $moniker`r`n"
-    $content += "[!INCLUDE [client-packages]($clientTableLink)]`r`n"
-  }
-  if (Test-Path (Join-Path $readmeFolder -ChildPath $mgmtTableLink)) {
-    $content += "## Management packages - $moniker`r`n"
-    $content += "[!INCLUDE [mgmt-packages]($mgmtTableLink)]`r`n"
-  }
-  if (!$content) {
-    return
-  }
-  # Generate the front-matter for docs needs
-  # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
-  $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
-    -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
-    -msService $msService
-  Add-Content -Path $readmePath -Value $metadataString -NoNewline
-
-  # Add tables, seperate client and mgmt.
-  $readmeHeader = "# Azure $serviceName SDK for $languageDisplayName - $moniker`r`n"
-  Add-Content -Path $readmePath -Value $readmeHeader
-  Add-Content -Path $readmePath -Value $content -NoNewline
-}
-
-# Update the metadata table.
-function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msService)
-{
-  $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
-  $readmeContent = Get-Content -Path $readmePath -Raw
-  $match = $readmeContent -match "^---\n*(?<metadata>(.*\n?)*?)---\n*(?<content>(.*\n?)*)"
-  $restContent = $readmeContent
-  $metadata = ""
-  if ($match) {
-    $restContent = $Matches["content"].trim()
-    $metadata = $Matches["metadata"].trim()
-  }
-  # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
-  $metadataString = GenerateDocsMsMetadata -originalMetadata $metadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
-    -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
-    -msService $msService
-  Set-Content -Path $readmePath -Value "$metadataString$restContent" -NoNewline
-}
-
-function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moniker) {
-  $tableHeader = "| Reference | Package | Source |`r`n|---|---|---|`r`n" 
-  $tableContent = ""
-  # Here is the table, the versioned value will
-  foreach ($pkg in $packageInfo) {
-    $repositoryLink = "$PackageRepositoryUri/$($pkg.Package)"
-    if (Test-Path "Function:$GetRepositoryLinkFn") {
-      $repositoryLink = &$GetRepositoryLinkFn -packageInfo $pkg
-    }
-    $packageLevelReadme = ""
-    if (Test-Path "Function:$GetPackageLevelReadmeFn") {
-      $packageLevelReadme = &$GetPackageLevelReadmeFn -packageMetadata $pkg
-    }
-    
-    $referenceLink = "[$($pkg.DisplayName)]($packageLevelReadme-readme.md)"
-    if (!(Test-Path (Join-Path $readmeFolder -ChildPath "$packageLevelReadme-readme.md"))) {
-      $referenceLink = $pkg.DisplayName
-    }
-    $githubLink = $GithubUri
-    if ($pkg.PSObject.Members.Name -contains "DirectoryPath") {
-      $githubLink = "$GithubUri/blob/main/$($pkg.DirectoryPath)"
-    }
-    $line = "|$referenceLink|[$($pkg.Package)]($repositoryLink)|[Github]($githubLink)|`r`n"
-    $tableContent += $line
-  }
-  $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
-  if($tableContent) {
-    $null = New-Item -Path $readmePath -ItemType File -Force
-    Add-Content -Path $readmePath -Value $tableHeader -NoNewline
-    Add-Content -Path $readmePath -Value $tableContent -NoNewline
-  }
-}
-
-function generate-service-level-readme($readmeBaseName, $pathPrefix, $packageInfos, $serviceName, $moniker) {
-  # Add ability to override
-  # Fetch the service readme name
-  $msService = GetDocsMsService -packageInfo $packageInfos[0] -serviceName $serviceName
-
-  $readmeFolder = "$DocRepoLocation/$pathPrefix/$moniker/"
-  $serviceReadme = "$readmeBaseName.md"
-  $clientIndexReadme  = "$readmeBaseName-client-index.md"
-  $mgmtIndexReadme  = "$readmeBaseName-mgmt-index.md"
-  $clientPackageInfo = $packageInfos.Where({ 'client' -eq $_.Type }) | Sort-Object -Property Package
-  if ($clientPackageInfo) {
-    generate-markdown-table -readmeFolder $readmeFolder -readmeName $clientIndexReadme -packageInfo $clientPackageInfo -moniker $moniker
-  }
-
-  $mgmtPackageInfo = $packageInfos.Where({ 'mgmt' -eq $_.Type }) | Sort-Object -Property Package
-  if ($mgmtPackageInfo) {
-    generate-markdown-table -readmeFolder $readmeFolder -readmeName $mgmtIndexReadme -packageInfo $mgmtPackageInfo -moniker $moniker
-  }
-  if (!(Test-Path (Join-Path $readmeFolder -ChildPath $serviceReadme))) {
-    create-metadata-table -readmeFolder $readmeFolder -readmeName $serviceReadme -moniker $moniker -msService $msService `
-      -clientTableLink $clientIndexReadme -mgmtTableLink $mgmtIndexReadme `
-      -serviceName $serviceName
-  }
-  else {
-    update-metadata-table -readmeFolder $readmeFolder -readmeName $serviceReadme -serviceName $serviceName -msService $msService
-  }
-}
 
 $fullMetadata = Get-CSVMetadata
 $monikers = @("latest", "preview")
@@ -213,12 +112,28 @@ foreach($moniker in $monikers) {
   }
   foreach ($service in $services.Keys) {
     Write-Host "Building service: $service"
-    
     $servicePackages = $packagesForService.Values.Where({ $_.ServiceName -eq $service })
     $serviceReadmeBaseName = ServiceLevelReadmeNameStyle -serviceName $service
-    $hrefPrefix = "docs-ref-services"
-  
-    generate-service-level-readme -readmeBaseName $serviceReadmeBaseName -pathPrefix $hrefPrefix `
-      -packageInfos $servicePackages -serviceName $service -moniker $moniker
+    # Github url for source code: e.g. https://github.com/Azure/azure-sdk-for-js
+    $serviceBaseName = ServiceLevelReadmeNameStyle $service
+    $author = GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
+    $msauthor = ""
+    if (!$author) {
+      LogError "Cannot fetch the author from CODEOWNER file."
+      $author = ""
+    }
+    elseif ($TenantId -and $ClientId -and $ClientSecret) {
+      $msauthor = GetMsAliasFromGithub -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret -GithubUser $author
+    }
+    # Default value
+    if (!$msauthor) {
+      LogError "No ms.author found for $author. "
+      $msauthor = $author
+    }
+    # Add ability to override
+    # Fetch the service readme name
+    $msService = GetDocsMsService -packageInfo $servicePackages[0] -serviceName $service
+    generate-service-level-readme -docRepoLocation $DocRepoLocation -readmeBaseName $serviceReadmeBaseName -pathPrefix $ReadmeFolderRoot `
+      -packageInfos $servicePackages -serviceName $service -moniker $moniker -author $author -msAuthor $msauthor -msService $msService
   }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchUserAccount
     {
         /// <summary> Initializes a new instance of BatchUserAccount. </summary>
-        /// <param name="name"> The name of the user account. </param>
+        /// <param name="name"> The name of the user account. Names can contain any Unicode characters up to a maximum length of 20. </param>
         /// <param name="password"> The password for the user account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="password"/> is null. </exception>
         public BatchUserAccount(string name, string password)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of BatchUserAccount. </summary>
-        /// <param name="name"> The name of the user account. </param>
+        /// <param name="name"> The name of the user account. Names can contain any Unicode characters up to a maximum length of 20. </param>
         /// <param name="password"> The password for the user account. </param>
         /// <param name="elevationLevel"> nonAdmin - The auto user is a standard user without elevated access. admin - The auto user is a user with elevated access and operates with full Administrator permissions. The default value is nonAdmin. </param>
         /// <param name="linuxUserConfiguration"> This property is ignored if specified on a Windows pool. If not specified, the user is created with the default options. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
             WindowsUserConfiguration = windowsUserConfiguration;
         }
 
-        /// <summary> The name of the user account. </summary>
+        /// <summary> The name of the user account. Names can contain any Unicode characters up to a maximum length of 20. </summary>
         public string Name { get; set; }
         /// <summary> The password for the user account. </summary>
         public string Password { get; set; }

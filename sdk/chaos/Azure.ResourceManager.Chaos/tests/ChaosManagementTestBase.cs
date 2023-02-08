@@ -3,9 +3,13 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Chaos.Tests.TestDependencies;
+using Azure.ResourceManager.Chaos.Tests.TestDependencies.Experiments;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Chaos.Tests
@@ -13,6 +17,24 @@ namespace Azure.ResourceManager.Chaos.Tests
     public class ChaosManagementTestBase : ManagementRecordedTestBase<ChaosManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+
+        public string ExperimentName { get; private set; }
+
+        public int VmssId { get; private set; }
+
+        public string VmssName { get; private set; }
+
+        public AzureLocation Location { get; private set; }
+
+        public SubscriptionResource SubscriptionResource { get; private set; }
+
+        public ResourceGroupResource ResourceGroupResource { get; private set; }
+
+        public ExperimentCollection ExperimentCollection { get; private set; }
+
+        public TargetTypeCollection TargetTypeCollection { get; private set; }
+
+        public MockExperimentEntities MockExperimentEntities { get; private set; }
 
         protected ChaosManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -30,12 +52,41 @@ namespace Azure.ResourceManager.Chaos.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task Initialize()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            this.Location = new AzureLocation(TestEnvironment.Location);
+            this.VmssId = this.CreateVmssId();
+            this.VmssName = string.Format(TestConstants.VmssNameFormat, TestEnvironment.Location, this.VmssId);
+            this.SubscriptionResource = await this.Client.GetDefaultSubscriptionAsync();
+            this.ResourceGroupResource = await this.SubscriptionResource.GetResourceGroupAsync(TestEnvironment.ResourceGroup).ConfigureAwait(false);
+            this.ExperimentCollection = this.ResourceGroupResource.GetExperiments();
+            this.ExperimentName = Recording.GenerateAssetName(TestConstants.ExperimentNamePrefix);
+            this.MockExperimentEntities = new MockExperimentEntities(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroup, this.VmssName);
+            this.TargetTypeCollection = this.SubscriptionResource.GetTargetTypes(this.Location.Name);
+        }
+
+        /// <summary>
+        /// Returns a VMSS Id int for each test case (Framework + Sync/Async)
+        /// </summary>
+        public int CreateVmssId()
+        {
+            if (this.Mode == RecordedTestMode.Playback)
+            {
+                return this.IsAsync ? 5 : 4;
+            }
+            var framework = RuntimeInformation.FrameworkDescription;
+            if (framework.IndexOf(TestConstants.DotNetFrameworkName, StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                return this.IsAsync ? 1 : 0;
+            }
+            else if (framework.IndexOf(TestConstants.DotNetCoreName, StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                return this.IsAsync ? 3 : 2;
+            }
+            else
+            {
+                return this.IsAsync ? 5 : 4;
+            }
         }
     }
 }

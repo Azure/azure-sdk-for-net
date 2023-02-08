@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This is the implementation of the DataFactoryExpressions</Description>
+    <AssemblyTitle>Microsoft Azure DataFactory Expressions</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <PackageTags>azure;datafactory</PackageTags>
+    <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <!--
+      netcoreapp2.1 is out of support but we'll keep is as a target for a bit
+      to give customers time to migrate without losing perf optimizations
+     -->
+    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AutoRestSharedCodeDirectory)IUtf8JsonSerializable.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)Utf8JsonWriterExtensions.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)TypeFormatters.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AutoRestSharedCodeDirectory)JsonElementExtensions.cs" LinkBase="Shared\AutoRest" />
+  </ItemGroup>
+
+</Project>

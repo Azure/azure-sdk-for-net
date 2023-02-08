@@ -15,7 +15,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     public partial class SpatialAnalysisPersonCountZoneEvents
     {
         /// <summary> Initializes a new instance of SpatialAnalysisPersonCountZoneEvents. </summary>
-        /// <param name="zone"> The named zone. </param>
+        /// <param name="zone">
+        /// The named zone.
+        /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedPolygonString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zone"/> is null. </exception>
         public SpatialAnalysisPersonCountZoneEvents(NamedPolygonBase zone)
         {
@@ -26,7 +30,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of SpatialAnalysisPersonCountZoneEvents. </summary>
-        /// <param name="zone"> The named zone. </param>
+        /// <param name="zone">
+        /// The named zone.
+        /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedPolygonString"/>.
+        /// </param>
         /// <param name="events"> The event configuration. </param>
         internal SpatialAnalysisPersonCountZoneEvents(NamedPolygonBase zone, IList<SpatialAnalysisPersonCountEvent> events)
         {
@@ -34,7 +42,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = events;
         }
 
-        /// <summary> The named zone. </summary>
+        /// <summary>
+        /// The named zone.
+        /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedPolygonString"/>.
+        /// </summary>
         public NamedPolygonBase Zone { get; set; }
         /// <summary> The event configuration. </summary>
         public IList<SpatialAnalysisPersonCountEvent> Events { get; }

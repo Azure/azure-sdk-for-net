@@ -55,45 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "SQLInstance": return AzureVmWorkloadSQLInstanceWorkloadItem.DeserializeAzureVmWorkloadSQLInstanceWorkloadItem(element);
                 }
             }
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
-            string workloadItemType = default;
-            Optional<string> friendlyName = default;
-            Optional<ProtectionStatus> protectionState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("backupManagementType"))
-                {
-                    backupManagementType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("workloadType"))
-                {
-                    workloadType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("workloadItemType"))
-                {
-                    workloadItemType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("friendlyName"))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectionState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    protectionState = new ProtectionStatus(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState));
+            return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element);
         }
     }
 }

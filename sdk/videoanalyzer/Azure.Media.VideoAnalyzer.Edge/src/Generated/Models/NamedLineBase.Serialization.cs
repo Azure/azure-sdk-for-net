@@ -31,22 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.NamedLineString": return NamedLineString.DeserializeNamedLineString(element);
                 }
             }
-            string type = default;
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new NamedLineBase(type, name);
+            return UnknownNamedLineBase.DeserializeUnknownNamedLineBase(element);
         }
     }
 }

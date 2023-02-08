@@ -1,20 +1,63 @@
 # Release History
 
-## 5.3.0-beta.1 (Unreleased)
+## 5.3.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added `FhirVersion` and `DocumentType` properties to `AnalyzeHealthcareEntitiesOptions` and `AnalyzeHealthcareEntitiesAction`.
-- Added `FhirBundle` property to `AnalyzeHealthcareEntitiesResult`.
-- Added `ConfidenceScore` property to `HealthcareEntityRelation`.
-- Added `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
-- Added `TextAnalyticsActions.ExtractSummaryActions` to perform extractive summarization in a batch of actions.
-- Added `TextAnalyticsClient.StartExtractSummary` and `StartExtractSummaryAsync` to perform extractive summarization on a collection of documents.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.3.0-beta.1 (2022-12-01)
+
+### Features Added
+- Added support for dynamic classification.
+  - Added the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+  - Added the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
+  - Added the following classes: `DynamicClassifyDocumentResultCollection` and `DynamicClassifyOptions`.
+  - Added the `ClassificationType` enum.
+- Added support for extractive summarization.
+  - Added the `TextAnalyticsActions.ExtractSummaryActions` property to support extractive summarization in a batch of actions.
+  - Added the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to perform extractive summarization on a collection of documents.
+- Added support for abstractive summarization.
+  - Added the `TextAnalyticsActions.AbstractSummaryActions` property to support abstractive summarization in a batch of actions.
+  - Added the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to perform abstractive summarization on a collection of documents.
+- Added support for Fast Healthcare Interoperability Resources (FHIR) bundles as part of healthcare text analysis.
+  - Added the `AnalyzeHealthcareEntitiesOptions.FhirVersion` and `AnalyzeHealthcareEntitiesOptions.DocumentType` properties.
+  - Added the `AnalyzeHealthcareEntitiesAction.FhirVersion` and `AnalyzeHealthcareEntitiesAction.DocumentType` properties.
+  - Added the `AnalyzeHealthcareEntitiesResult.FhirBundle` property.
+  - Added the `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
+- Added support for confidence scores in healthcare entity relations.
+  - Added the `HealthcareEntityRelation.ConfidenceScore` property.
+- Added support for named entity recognition (NER) resolutions.
+  - Added the `CategorizedEntity.Resolutions` property.
+  - Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
+  - Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
+- Added support for automatic language detection.
+  - Added the `AbstractSummaryOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `AbstractSummaryResult.DetectedLanguage` property.
+  - Added the `AnalyzeActionsOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `AnalyzeHealthcareEntitiesOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `AnalyzeHealthcareEntitiesResult.DetectedLanguage` property.
+  - Added the `AnalyzeSentimentResult.DetectedLanguage` property.
+  - Added the `ClassifyDocumentResult.DetectedLanguage` property.
+  - Added the `ExtractKeyPhrasesResult.DetectedLanguage` property.
+  - Added the `ExtractSummaryOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `ExtractSummaryResult.DetectedLanguage` property.
+  - Added the `MultiLabelClassifyOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `RecognizeCustomEntitiesOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `RecognizeEntitiesResult.DetectedLanguage` property.
+  - Added the `RecognizeLinkedEntitiesResult.DetectedLanguage` property.
+  - Added the `RecognizePiiEntitiesResult.DetectedLanguage` property.
+  - Added the `SingleLabelClassifyOptions.AutoDetectionDefaultLanguage` property.
+- Added support for script detection.
+  - Added the `DetectedLanguage.Script` property.
+  - Added the `ScriptKind` enum.
+
+### Other Changes
+The client now defaults to targeting service API version `2022-10-01-preview`.
 
 ## 5.2.0 (2022-09-08)
 

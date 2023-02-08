@@ -21,7 +21,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [Required]
         public string ODataType { get { return DataTypeIdentifier; } }
         internal abstract string DataTypeIdentifier { get; }
-
         /// <summary>Invalidates this instance.
         /// Subsequently invalidates the actions.</summary>
         internal override void Invalidate()
@@ -30,27 +29,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             AuthenticationEventJsonElement eventJsonElement = new AuthenticationEventJsonElement(Body);
             if (eventJsonElement.SetProperty<string>(ODataType, "data", "@odata.type"))
             {
-                if (Actions.Any(a => LegacyMap.Any(m => m.Value == a.GetType())))
-                    throw new Exception(AuthenticationEventResource.Ex_Leg_payload);
                 Body = eventJsonElement.ToString();
-            }
-            else//TODO: Remove when support for legacy data contracts are dropped.
-            {
-                for (int i = Actions.Count - 1; i >= 0; i--)
-                {
-                    if (LegacyMap.ContainsKey(Actions[i].GetType()))
-                    {
-                        Actions[i] = (T)Activator.CreateInstance(LegacyMap[Actions[i].GetType()], Actions[i]);
-                    }
-                }
             }
 
             base.Invalidate();
         }
-
-        //TODO: Remove when support for legacy data contracts are dropped.
-        internal static Dictionary<Type, Type> LegacyMap => new Dictionary<Type, Type>() {
-            {typeof(ProvideClaimsForToken),typeof(ProvideClaimsForTokenLegacy) }
-        };
     }
 }

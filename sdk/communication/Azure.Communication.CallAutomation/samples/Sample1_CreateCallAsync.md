@@ -31,8 +31,4 @@ CreateCallResult createCallResult = await callAutomationClient.CreateCallAsync(
 Console.WriteLine($"Call connection id: {createCallResult.CallConnectionProperties.CallConnectionId}");
 ```
 
-To see the full example source files, see:
-
-* [Make a call to a phone number recipient](https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/tests/samples/Sample1_CallClient.cs)
-
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/README.md#getting-started

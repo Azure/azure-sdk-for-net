@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))

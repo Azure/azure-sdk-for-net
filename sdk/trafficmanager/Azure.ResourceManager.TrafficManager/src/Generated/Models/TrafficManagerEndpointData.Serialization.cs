@@ -135,6 +135,11 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AlwaysServe))
+            {
+                writer.WritePropertyName("alwaysServe");
+                writer.WriteStringValue(AlwaysServe.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.TrafficManager
             Optional<IList<string>> geoMapping = default;
             Optional<IList<TrafficManagerEndpointSubnetInfo>> subnets = default;
             Optional<IList<TrafficManagerEndpointCustomHeaderInfo>> customHeaders = default;
+            Optional<TrafficManagerEndpointAlwaysServeStatus> alwaysServe = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -328,11 +334,21 @@ namespace Azure.ResourceManager.TrafficManager
                             customHeaders = array;
                             continue;
                         }
+                        if (property0.NameEquals("alwaysServe"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            alwaysServe = new TrafficManagerEndpointAlwaysServeStatus(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new TrafficManagerEndpointData(id.Value, name.Value, Optional.ToNullable(type), targetResourceId.Value, target.Value, Optional.ToNullable(endpointStatus), Optional.ToNullable(weight), Optional.ToNullable(priority), endpointLocation.Value, Optional.ToNullable(endpointMonitorStatus), Optional.ToNullable(minChildEndpoints), Optional.ToNullable(minChildEndpointsIPv4), Optional.ToNullable(minChildEndpointsIPv6), Optional.ToList(geoMapping), Optional.ToList(subnets), Optional.ToList(customHeaders));
+            return new TrafficManagerEndpointData(id.Value, name.Value, Optional.ToNullable(type), targetResourceId.Value, target.Value, Optional.ToNullable(endpointStatus), Optional.ToNullable(weight), Optional.ToNullable(priority), endpointLocation.Value, Optional.ToNullable(endpointMonitorStatus), Optional.ToNullable(minChildEndpoints), Optional.ToNullable(minChildEndpointsIPv4), Optional.ToNullable(minChildEndpointsIPv6), Optional.ToList(geoMapping), Optional.ToList(subnets), Optional.ToList(customHeaders), Optional.ToNullable(alwaysServe));
         }
     }
 }

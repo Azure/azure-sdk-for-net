@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRouteCircuit = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            expressRouteCircuit = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("serviceProviderProvisioningState"))

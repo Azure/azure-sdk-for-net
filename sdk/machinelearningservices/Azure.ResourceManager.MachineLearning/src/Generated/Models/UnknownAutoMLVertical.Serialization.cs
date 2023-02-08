@@ -20,15 +20,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("logVerbosity");
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
+            if (Optional.IsDefined(TargetColumnName))
+            {
+                if (TargetColumnName != null)
+                {
+                    writer.WritePropertyName("targetColumnName");
+                    writer.WriteStringValue(TargetColumnName);
+                }
+                else
+                {
+                    writer.WriteNull("targetColumnName");
+                }
+            }
             writer.WritePropertyName("taskType");
             writer.WriteStringValue(TaskType.ToString());
+            writer.WritePropertyName("trainingData");
+            writer.WriteObjectValue(TrainingData);
             writer.WriteEndObject();
         }
 
         internal static UnknownAutoMLVertical DeserializeUnknownAutoMLVertical(JsonElement element)
         {
-            Optional<LogVerbosity> logVerbosity = default;
-            TaskType taskType = default;
+            Optional<MachineLearningLogVerbosity> logVerbosity = default;
+            Optional<string> targetColumnName = default;
+            TaskType taskType = "Unknown";
+            MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logVerbosity"))
@@ -38,7 +54,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logVerbosity = new LogVerbosity(property.Value.GetString());
+                    logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetColumnName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        targetColumnName = null;
+                        continue;
+                    }
+                    targetColumnName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("taskType"))
@@ -46,8 +72,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("trainingData"))
+                {
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    continue;
+                }
             }
-            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), taskType);
+            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData);
         }
     }
 }

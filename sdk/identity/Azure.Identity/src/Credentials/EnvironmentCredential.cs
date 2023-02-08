@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Azure.Identity
 {
@@ -75,6 +75,15 @@ namespace Azure.Identity
             : this(CredentialPipeline.GetInstance(options), options)
         { }
 
+        /// <summary>
+        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
+        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// </summary>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public EnvironmentCredential(EnvironmentCredentialOptions options)
+            : this(CredentialPipeline.GetInstance(options), options)
+        { }
+
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
             _pipeline = pipeline;
@@ -104,10 +113,6 @@ namespace Azure.Identity
                 {
                     Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _options, _pipeline, null);
                 }
-                else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                {
-                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
-                }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
                     bool sendCertificateChain = !string.IsNullOrEmpty(clientSendCertificateChain) &&
@@ -121,7 +126,15 @@ namespace Azure.Identity
                         AdditionallyAllowedTenantsCore = new List<string>(_options.AdditionallyAllowedTenantsCore),
                         SendCertificateChain = sendCertificateChain
                     };
+                    if (_options is EnvironmentCredentialOptions environmentCredentialOptions)
+                    {
+                        clientCertificateCredentialOptions.DisableInstanceDiscovery = environmentCredentialOptions.DisableInstanceDiscovery;
+                    }
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificatePassword, clientCertificateCredentialOptions, _pipeline, null);
+                }
+                else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                {
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
                 }
             }
         }
@@ -185,7 +198,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                 throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
     }

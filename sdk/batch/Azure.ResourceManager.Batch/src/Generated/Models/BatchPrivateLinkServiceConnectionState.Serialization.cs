@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             BatchPrivateLinkServiceConnectionStatus status = default;
             Optional<string> description = default;
-            Optional<string> actionRequired = default;
+            Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.Batch.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionRequired"))
+                if (property.NameEquals("actionsRequired"))
                 {
-                    actionRequired = property.Value.GetString();
+                    actionsRequired = property.Value.GetString();
                     continue;
                 }
             }
-            return new BatchPrivateLinkServiceConnectionState(status, description.Value, actionRequired.Value);
+            return new BatchPrivateLinkServiceConnectionState(status, description.Value, actionsRequired.Value);
         }
     }
 }

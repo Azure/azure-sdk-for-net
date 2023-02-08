@@ -35,12 +35,15 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: core
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Core
       safeName: AzureCore
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
+    - name: Azure.Core.Expressions.DataFactory
+      safeName: AzureCoreExpressionsDataFactory
     - name: Microsoft.Azure.Core.NewtonsoftJson
       safeName: MicrosoftAzureCoreNewtonsoftJson
     - name: Microsoft.Azure.Core.Spatial

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Automation
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastSeen))
+            if (Optional.IsDefined(LastSeenOn))
             {
                 writer.WritePropertyName("lastSeen");
-                writer.WriteStringValue(LastSeen.Value, "O");
+                writer.WriteStringValue(LastSeenOn.Value, "O");
             }
             if (Optional.IsDefined(RegistrationOn))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))

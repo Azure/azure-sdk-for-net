@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element);
                 }
             }
-            Source source = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("source"))
-                {
-                    source = new Source(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecurityCenterResourceDetails(source);
+            return UnknownResourceDetails.DeserializeUnknownResourceDetails(element);
         }
     }
 }

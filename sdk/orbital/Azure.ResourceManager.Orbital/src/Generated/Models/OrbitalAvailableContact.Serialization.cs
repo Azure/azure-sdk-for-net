@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Orbital.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    spacecraft = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    spacecraft = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("groundStationName"))

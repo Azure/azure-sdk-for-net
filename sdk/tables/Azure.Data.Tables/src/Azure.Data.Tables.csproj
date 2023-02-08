@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>This client library enables working with the Microsoft Azure Table service</Description>
     <AssemblyTitle>Microsoft Azure.Data.Tables client library</AssemblyTitle>
-    <Version>12.7.0-beta.2</Version>
+    <Version>12.8.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.6.1</ApiCompatVersion>
+    <ApiCompatVersion>12.7.1</ApiCompatVersion>
     <DefineConstants>TableSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Tables;Microsoft;Azure;Tables;Table;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -12,8 +12,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
-    <!-- <PackageReference Include="Azure.Core" /> -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

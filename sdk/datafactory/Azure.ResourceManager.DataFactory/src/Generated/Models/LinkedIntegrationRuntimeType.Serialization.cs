@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "RBAC": return LinkedIntegrationRuntimeRbacAuthorization.DeserializeLinkedIntegrationRuntimeRbacAuthorization(element);
                 }
             }
-            string authorizationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authorizationType"))
-                {
-                    authorizationType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownLinkedIntegrationRuntimeType(authorizationType);
+            return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element);
         }
     }
 }

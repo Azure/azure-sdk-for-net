@@ -31,7 +31,7 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
         internal string TenantId { get; }
-        internal string[] AdditionallyAllowedTenantIds;
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private const string _commonTenant = "common";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
         internal MsalPublicClient Client { get; }

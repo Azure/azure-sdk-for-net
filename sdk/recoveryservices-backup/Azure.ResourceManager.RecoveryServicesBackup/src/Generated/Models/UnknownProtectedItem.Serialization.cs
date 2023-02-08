@@ -94,12 +94,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyName");
                 writer.WriteStringValue(PolicyName);
             }
+            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            {
+                writer.WritePropertyName("softDeleteRetentionPeriod");
+                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static UnknownProtectedItem DeserializeUnknownProtectedItem(JsonElement element)
         {
-            string protectedItemType = default;
+            string protectedItemType = "Unknown";
             Optional<BackupManagementType> backupManagementType = default;
             Optional<DataSourceType> workloadType = default;
             Optional<string> containerName = default;
@@ -116,6 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> resourceGuardOperationRequests = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> policyName = default;
+            Optional<int> softDeleteRetentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectedItemType"))
@@ -258,8 +264,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     policyName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("softDeleteRetentionPeriod"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    softDeleteRetentionPeriod = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new UnknownProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value);
+            return new UnknownProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod));
         }
     }
 }

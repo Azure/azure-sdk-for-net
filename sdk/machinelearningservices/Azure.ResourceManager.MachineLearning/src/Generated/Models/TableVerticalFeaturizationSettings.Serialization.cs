@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in BlockedTransformers)
                     {
-                        writer.WriteStringValue(item);
+                        writer.WriteStringValue(item.ToString());
                     }
                     writer.WriteEndArray();
                 }
@@ -49,23 +49,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("columnNameAndTypes");
-                }
-            }
-            if (Optional.IsCollectionDefined(DropColumns))
-            {
-                if (DropColumns != null)
-                {
-                    writer.WritePropertyName("dropColumns");
-                    writer.WriteStartArray();
-                    foreach (var item in DropColumns)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("dropColumns");
                 }
             }
             if (Optional.IsDefined(EnableDnnFeaturization))
@@ -118,11 +101,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TableVerticalFeaturizationSettings DeserializeTableVerticalFeaturizationSettings(JsonElement element)
         {
-            Optional<IList<string>> blockedTransformers = default;
+            Optional<IList<BlockedTransformer>> blockedTransformers = default;
             Optional<IDictionary<string, string>> columnNameAndTypes = default;
-            Optional<IList<string>> dropColumns = default;
             Optional<bool> enableDnnFeaturization = default;
-            Optional<FeaturizationMode> mode = default;
+            Optional<MachineLearningFeaturizationMode> mode = default;
             Optional<IDictionary<string, IList<ColumnTransformer>>> transformerParams = default;
             Optional<string> datasetLanguage = default;
             foreach (var property in element.EnumerateObject())
@@ -134,10 +116,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         blockedTransformers = null;
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<BlockedTransformer> array = new List<BlockedTransformer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new BlockedTransformer(item.GetString()));
                     }
                     blockedTransformers = array;
                     continue;
@@ -164,21 +146,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     columnNameAndTypes = dictionary;
                     continue;
                 }
-                if (property.NameEquals("dropColumns"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dropColumns = null;
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    dropColumns = array;
-                    continue;
-                }
                 if (property.NameEquals("enableDnnFeaturization"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -196,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = new FeaturizationMode(property.Value.GetString());
+                    mode = new MachineLearningFeaturizationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("transformerParams"))
@@ -237,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToList(dropColumns), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
+            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
         }
     }
 }

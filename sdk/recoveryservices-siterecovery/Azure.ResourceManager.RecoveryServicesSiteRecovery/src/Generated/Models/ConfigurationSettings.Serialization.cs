@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -24,16 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "VmmVirtualMachine": return VmmVirtualMachineDetails.DeserializeVmmVirtualMachineDetails(element);
                 }
             }
-            string instanceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownConfigurationSettings(instanceType);
+            return UnknownConfigurationSettings.DeserializeUnknownConfigurationSettings(element);
         }
     }
 }

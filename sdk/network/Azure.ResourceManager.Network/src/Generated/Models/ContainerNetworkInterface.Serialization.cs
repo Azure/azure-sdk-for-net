@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            container = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            container = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"))

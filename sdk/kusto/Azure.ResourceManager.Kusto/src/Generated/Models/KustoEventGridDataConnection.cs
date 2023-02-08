@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
         /// <param name="isFirstRecordIgnored"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
         /// <param name="blobStorageEventType"> The name of blob storage event type to process. </param>
-        /// <param name="managedIdentityResourceId"> Empty for non-managed identity based data connection. For system assigned identity, provide cluster resource Id.  For user assigned identity (UAI) provide the UAI resource Id. </param>
+        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </param>
         /// <param name="managedIdentityObjectId"> The object ID of managedIdentityResourceId. </param>
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public bool? IsFirstRecordIgnored { get; set; }
         /// <summary> The name of blob storage event type to process. </summary>
         public BlobStorageEventType? BlobStorageEventType { get; set; }
-        /// <summary> Empty for non-managed identity based data connection. For system assigned identity, provide cluster resource Id.  For user assigned identity (UAI) provide the UAI resource Id. </summary>
+        /// <summary> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </summary>
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
         /// <summary> The object ID of managedIdentityResourceId. </summary>
         public Guid? ManagedIdentityObjectId { get; }

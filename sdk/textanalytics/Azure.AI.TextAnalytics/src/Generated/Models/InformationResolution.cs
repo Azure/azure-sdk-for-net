@@ -5,35 +5,12 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics.Models
+using Azure.AI.TextAnalytics.Models;
+
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> Represents the information (data) entity resolution model. </summary>
-    internal partial class InformationResolution : BaseResolution
+    public partial class InformationResolution : BaseResolution
     {
-        /// <summary> Initializes a new instance of InformationResolution. </summary>
-        /// <param name="unit"> The information (data) Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        public InformationResolution(InformationUnit unit, double value)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = ResolutionKind.InformationResolution;
-        }
-
-        /// <summary> Initializes a new instance of InformationResolution. </summary>
-        /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="unit"> The information (data) Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        internal InformationResolution(ResolutionKind resolutionKind, InformationUnit unit, double value) : base(resolutionKind)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = resolutionKind;
-        }
-
-        /// <summary> The information (data) Unit of measurement. </summary>
-        public InformationUnit Unit { get; set; }
-        /// <summary> The numeric value that the extracted text denotes. </summary>
-        public double Value { get; set; }
     }
 }

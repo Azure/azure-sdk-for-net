@@ -40,13 +40,6 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            async ValueTask ProcessAsyncInner(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                OnSendingRequest(message);
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                OnReceivedResponse(message);
-            }
-
             if (!_hasOnReceivedResponse)
             {
                 // If OnReceivedResponse was not overridden we can avoid creating a state machine and return the task directly
@@ -54,7 +47,14 @@ namespace Azure.Core.Pipeline
                 return ProcessNextAsync(message, pipeline);
             }
 
-            return ProcessAsyncInner(message, pipeline);
+            return InnerProcessAsync(message, pipeline);
+        }
+
+        private async ValueTask InnerProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            OnSendingRequest(message);
+            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            OnReceivedResponse(message);
         }
 
         /// <summary>

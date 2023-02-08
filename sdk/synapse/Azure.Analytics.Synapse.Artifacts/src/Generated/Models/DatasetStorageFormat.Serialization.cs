@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -52,42 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "TextFormat": return TextFormat.DeserializeTextFormat(element);
                 }
             }
-            string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serializer"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    serializer = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("deserializer"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    deserializer = property.Value.GetObject();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new DatasetStorageFormat(type, serializer.Value, deserializer.Value, additionalProperties);
+            return UnknownDatasetStorageFormat.DeserializeUnknownDatasetStorageFormat(element);
         }
 
         internal partial class DatasetStorageFormatConverter : JsonConverter<DatasetStorageFormat>

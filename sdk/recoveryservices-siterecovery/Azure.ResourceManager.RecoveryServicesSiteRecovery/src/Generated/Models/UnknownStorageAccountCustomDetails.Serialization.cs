@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static UnknownStorageAccountCustomDetails DeserializeUnknownStorageAccountCustomDetails(JsonElement element)
         {
-            string resourceType = default;
+            string resourceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))

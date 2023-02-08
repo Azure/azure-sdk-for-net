@@ -23,6 +23,8 @@ namespace Azure.Communication.JobRouter
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
         /// </param>
         /// <param name="labelSelectors"> The label selectors to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="labelSelectors"/> is null. </exception>
@@ -45,6 +47,8 @@ namespace Azure.Communication.JobRouter
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
         /// </param>
         /// <param name="labelSelectors"> The label selectors to attach. </param>
         internal ConditionalWorkerSelectorAttachment(string kind, RouterRule condition, IList<WorkerSelector> labelSelectors) : base(kind)
@@ -61,6 +65,8 @@ namespace Azure.Communication.JobRouter
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
         /// </summary>
         public RouterRule Condition { get; set; }
         /// <summary> The label selectors to attach. </summary>

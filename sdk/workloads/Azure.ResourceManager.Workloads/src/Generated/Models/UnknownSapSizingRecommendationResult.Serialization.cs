@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static UnknownSapSizingRecommendationResult DeserializeUnknownSapSizingRecommendationResult(JsonElement element)
         {
-            SapDeploymentType deploymentType = default;
+            SapDeploymentType deploymentType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deploymentType"))

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -37,27 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "BackupPolicy": return RuleBasedBackupPolicy.DeserializeRuleBasedBackupPolicy(element);
                 }
             }
-            IList<string> datasourceTypes = default;
-            string objectType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("datasourceTypes"))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    datasourceTypes = array;
-                    continue;
-                }
-                if (property.NameEquals("objectType"))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataProtectionBackupPolicyPropertiesBase(datasourceTypes, objectType);
+            return UnknownBaseBackupPolicy.DeserializeUnknownBaseBackupPolicy(element);
         }
     }
 }

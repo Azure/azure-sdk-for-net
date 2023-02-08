@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         /// <param name="functionUri"> URL for Azure Function. </param>
         /// <param name="credential"> Credentials used to access Azure function rule. </param>
-        internal FunctionRule(string kind, string functionUri, FunctionRuleCredential credential) : base(kind)
+        internal FunctionRule(string kind, Uri functionUri, FunctionRuleCredential credential) : base(kind)
         {
             FunctionUri = functionUri;
             Credential = credential;
@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> URL for Azure Function. </summary>
-        public string FunctionUri { get; set; }
+        public Uri FunctionUri { get; set; }
         /// <summary> Credentials used to access Azure function rule. </summary>
         public FunctionRuleCredential Credential { get; set; }
     }

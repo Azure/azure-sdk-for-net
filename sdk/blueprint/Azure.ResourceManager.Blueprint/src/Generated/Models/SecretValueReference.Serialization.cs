@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 if (property.NameEquals("keyVault"))
                 {
-                    keyVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    keyVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("secretName"))

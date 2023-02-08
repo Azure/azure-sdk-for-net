@@ -2,60 +2,50 @@
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/README.md#getting-started) for details.
 
-You can create a LoadTestclient and call the `CreateOrUpdateAppComponentAsync` method from SubClient `LoadTestAdministrationClient`
+The sample below demonstrates how to create or update app components using `LoadTestAdministrationClient` client.
 
 ## Create LoadTestAdministrationClient
-```C# Snippet:Azure_Developer_LoadTesting_CreatingClient
-string endpoint = TestEnvironment.Endpoint;
-TokenCredential credential = TestEnvironment.Credential;
+```C# Snippet:Azure_Developer_LoadTesting_CreateAdminClient
+// The data-plane endpoint is obtained from Control Plane APIs with "https://"
+// To obtain endpoint please follow: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting#data-plane-endpoint
+Uri endpointUrl = new Uri("https://" + <your resource URI obtained from steps above>);
+TokenCredential credential = new DefaultAzureCredential();
 
-// creating LoadTesting Client
-LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
-
-// getting appropriate Subclient
-LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
+// creating LoadTesting Administration Client
+LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
 ```
 
 ## Calling CreateOrUpdateAppComponent
 ```C# Snippet:Azure_Developer_LoadTesting_CreateOrUpdateAppComponentAsync
-// provide unique identifier for your test
-string testId = "my-test-id";
-
-// provide unique app component id
-string appComponentId = "my-app-component-id";
-string subscriptionId = "00000000-0000-0000-0000-000000000000";
-
-string appComponentConnectionString = "/subscriptions/" + subscriptionId + "/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
-
-// all other data to be sent to AppComponent
-var data = new
-{
-    testid = testId,
-    name = "New App Component",
-    value = new
-    {
-        appComponentConnectionString = new
-        {
-            resourceId = appComponentConnectionString,
-            resourceName = "App-Service-Sample-Demo",
-            resourceType = "Microsoft.Web/sites",
-            subscriptionId = subscriptionId
-        }
-    }
-};
+string testId = "my-loadtest";
+string resourceId = TestEnvironment.ResourceId;
 
 try
 {
-    // create or update app component
-    Response response = await loadTestAdministrationClient.CreateOrUpdateAppComponentsAsync(appComponentId, RequestContent.Create(data));
+    Response response = await loadTestAdministrationClient.CreateOrUpdateAppComponentsAsync(testId,
+            RequestContent.Create(
+                    new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
+                    {
+                        { "components",  new Dictionary<string, Dictionary<string, string>>
+                            {
+                                { resourceId, new Dictionary<string, string>
+                                    {
+                                        { "resourceId", resourceId },
+                                        { "resourceName", "App-Service-Sample-Demo" },
+                                        { "resourceType", "Microsoft.Web/sites" },
+                                        { "kind", "web" }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                )
+        );
 
-    // if successfully, printing response
-    Console.WriteLine(response.Content);
+    Console.WriteLine(response.Content.ToString());
 }
-catch (Exception e)
+catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Error : ", e.Message));
+    Console.WriteLine(ex.Message);
 }
 ```
-To see the full example source files, see:
-* [Sample3_CreateOrUpdateAppComponentAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/tests/Samples/Sample3_CreateOrUpdateAppComponentAsync.cs)

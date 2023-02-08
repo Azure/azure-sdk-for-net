@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -23,22 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "MigrationLevelOutput": return MigrateSqlServerSqlMISyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(element);
                 }
             }
-            Optional<string> id = default;
-            string resultType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMigrateSqlServerSqlMISyncTaskOutput(id.Value, resultType);
+            return UnknownMigrateSqlServerSqlMISyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlMISyncTaskOutput(element);
         }
     }
 }

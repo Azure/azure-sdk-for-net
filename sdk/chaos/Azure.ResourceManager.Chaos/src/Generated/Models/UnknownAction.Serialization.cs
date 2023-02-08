@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static UnknownAction DeserializeUnknownAction(JsonElement element)
         {
-            string type = default;
+            string type = "Unknown";
             string name = default;
             foreach (var property in element.EnumerateObject())
             {

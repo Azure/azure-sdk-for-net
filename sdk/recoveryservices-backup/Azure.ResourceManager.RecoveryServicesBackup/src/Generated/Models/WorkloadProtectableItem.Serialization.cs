@@ -61,45 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "SQLInstance": return AzureVmWorkloadSQLInstanceProtectableItem.DeserializeAzureVmWorkloadSQLInstanceProtectableItem(element);
                 }
             }
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
-            string protectableItemType = default;
-            Optional<string> friendlyName = default;
-            Optional<ProtectionStatus> protectionState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("backupManagementType"))
-                {
-                    backupManagementType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("workloadType"))
-                {
-                    workloadType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectableItemType"))
-                {
-                    protectableItemType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("friendlyName"))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectionState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    protectionState = new ProtectionStatus(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownWorkloadProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState));
+            return UnknownWorkloadProtectableItem.DeserializeUnknownWorkloadProtectableItem(element);
         }
     }
 }

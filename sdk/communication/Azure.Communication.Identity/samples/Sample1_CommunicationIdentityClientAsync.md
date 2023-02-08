@@ -103,13 +103,7 @@ string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```
 
-<!--
-To see the full example source files, see:
-* [Generate user token][GenerateUserTokenCode]
--->
-
 <!-- LINKS -->
 <!--
 [ReadMe](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Administration/samples/ReadMe.md)
-[GenerateUserTokenCode](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Administration/tests/samples/Sample1_CommunicationIdentityClient.cs)
 -->

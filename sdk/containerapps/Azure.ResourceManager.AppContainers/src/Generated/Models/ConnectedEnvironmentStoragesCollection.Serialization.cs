@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ConnectedEnvironmentStoragesCollection DeserializeConnectedEnvironmentStoragesCollection(JsonElement element)
         {
-            IReadOnlyList<ConnectedEnvironmentStorageData> value = default;
+            IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ConnectedEnvironmentStorageData> array = new List<ConnectedEnvironmentStorageData>();
+                    List<ContainerAppConnectedEnvironmentStorageData> array = new List<ContainerAppConnectedEnvironmentStorageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedEnvironmentStorageData.DeserializeConnectedEnvironmentStorageData(item));
+                        array.Add(ContainerAppConnectedEnvironmentStorageData.DeserializeContainerAppConnectedEnvironmentStorageData(item));
                     }
                     value = array;
                     continue;

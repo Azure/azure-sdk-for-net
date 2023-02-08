@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.0.0-beta.2</Version>
     <PackageId>Azure.ResourceManager.RecoveryServicesBackup</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider RecoveryServicesBackup</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.RecoveryServices Backup.</Description>
     <PackageTags>azure;management;arm;resource manager;recoveryservicesbackup</PackageTags>
   </PropertyGroup>
 </Project>

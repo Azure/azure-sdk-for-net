@@ -35,7 +35,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="leaderClusterResourceId"> The name of the leader cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration cluster. </param>
         /// <param name="principalsModificationKind"> The principals modification kind of the database. </param>
-        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        /// <param name="originalDatabaseName"> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </param>
+        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
+        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string originalDatabaseName, KustoDatabaseShareOrigin? databaseShareOrigin) : base(id, name, resourceType, systemData, location, kind)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;
@@ -44,6 +47,9 @@ namespace Azure.ResourceManager.Kusto.Models
             LeaderClusterResourceId = leaderClusterResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
             PrincipalsModificationKind = principalsModificationKind;
+            TableLevelSharingProperties = tableLevelSharingProperties;
+            OriginalDatabaseName = originalDatabaseName;
+            DatabaseShareOrigin = databaseShareOrigin;
             Kind = kind;
         }
 
@@ -67,5 +73,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public string AttachedDatabaseConfigurationName { get; }
         /// <summary> The principals modification kind of the database. </summary>
         public KustoDatabasePrincipalsModificationKind? PrincipalsModificationKind { get; }
+        /// <summary> Table level sharing specifications. </summary>
+        public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; }
+        /// <summary> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </summary>
+        public string OriginalDatabaseName { get; }
+        /// <summary> The origin of the following setup. </summary>
+        public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
     }
 }

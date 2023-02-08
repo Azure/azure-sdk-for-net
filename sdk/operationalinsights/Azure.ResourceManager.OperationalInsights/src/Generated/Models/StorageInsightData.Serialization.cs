@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<SystemData> systemData = default;
             Optional<IList<string>> containers = default;
             Optional<IList<string>> tables = default;
-            Optional<StorageAccount> storageAccount = default;
+            Optional<OperationalInsightsStorageAccount> storageAccount = default;
             Optional<StorageInsightStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.OperationalInsights
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageAccount = StorageAccount.DeserializeStorageAccount(property0.Value);
+                            storageAccount = OperationalInsightsStorageAccount.DeserializeOperationalInsightsStorageAccount(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"))

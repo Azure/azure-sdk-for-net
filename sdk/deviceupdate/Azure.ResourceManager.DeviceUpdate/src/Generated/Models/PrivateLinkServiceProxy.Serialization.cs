@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    remotePrivateEndpointConnection = JsonSerializer.Deserialize<SubResource>(property.Value.ToString());
+                    remotePrivateEndpointConnection = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("groupConnectivityInformation"))

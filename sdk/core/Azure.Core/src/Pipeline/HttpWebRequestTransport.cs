@@ -65,6 +65,8 @@ namespace Azure.Core.Pipeline
 
             ServicePointHelpers.SetLimits(request.ServicePoint);
 
+            message.ClearResponse();
+
             using var registration = message.CancellationToken.Register(state => ((HttpWebRequest)state).Abort(), request);
             try
             {

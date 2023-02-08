@@ -10,13 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for endpoints. </summary>
-    public partial class EndpointBase
+    /// <summary>
+    /// Base class for endpoints.
+    /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+    /// </summary>
+    public abstract partial class EndpointBase
     {
         /// <summary> Initializes a new instance of EndpointBase. </summary>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public EndpointBase(string url)
+        protected EndpointBase(string url)
         {
             Argument.AssertNotNull(url, nameof(url));
 
@@ -25,7 +29,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of EndpointBase. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
-        /// <param name="credentials"> Credentials to be presented to the endpoint. </param>
+        /// <param name="credentials">
+        /// Credentials to be presented to the endpoint.
+        /// Please note <see cref="CredentialsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
+        /// </param>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         internal EndpointBase(string type, CredentialsBase credentials, string url)
         {
@@ -36,7 +44,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
-        /// <summary> Credentials to be presented to the endpoint. </summary>
+        /// <summary>
+        /// Credentials to be presented to the endpoint.
+        /// Please note <see cref="CredentialsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
+        /// </summary>
         public CredentialsBase Credentials { get; set; }
         /// <summary> The endpoint URL for Video Analyzer to connect to. </summary>
         public string Url { get; set; }

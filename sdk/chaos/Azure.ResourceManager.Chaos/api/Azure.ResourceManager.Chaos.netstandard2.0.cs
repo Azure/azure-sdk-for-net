@@ -363,6 +363,10 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Name { get { throw null; } }
         public string StatusUri { get { throw null; } }
     }
+    public abstract partial class Filter
+    {
+        protected Filter() { }
+    }
     public partial class KeyValuePair
     {
         public KeyValuePair(string key, string value) { }
@@ -372,6 +376,7 @@ namespace Azure.ResourceManager.Chaos.Models
     public partial class Selector
     {
         public Selector(Azure.ResourceManager.Chaos.Models.SelectorType selectorType, string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.TargetReference> targets) { }
+        public Azure.ResourceManager.Chaos.Models.Filter Filter { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.Chaos.Models.SelectorType SelectorType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.TargetReference> Targets { get { throw null; } }
@@ -382,6 +387,11 @@ namespace Azure.ResourceManager.Chaos.Models
         Random = 1,
         Tag = 2,
         List = 3,
+    }
+    public partial class SimpleFilter : Azure.ResourceManager.Chaos.Models.Filter
+    {
+        public SimpleFilter() { }
+        public System.Collections.Generic.IList<string> ParametersZones { get { throw null; } }
     }
     public partial class Step
     {

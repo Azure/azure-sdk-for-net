@@ -68,9 +68,3 @@ await Task.Delay(TimeSpan.FromSeconds(10));
 // complete the message, thereby deleting it from the service
 await receiver.CompleteMessageAsync(receivedMessage);
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample03_SendReceiveSessions.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample03_SendReceiveSessions.cs)

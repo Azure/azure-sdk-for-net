@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, LinkedServiceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, OperationalInsightsLinkedServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, LinkedServiceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, OperationalInsightsLinkedServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, LinkedServiceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, OperationalInsightsLinkedServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="linkedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LinkedServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationalInsightsLinkedServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        LinkedServiceData value = default;
+                        OperationalInsightsLinkedServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LinkedServiceData.DeserializeLinkedServiceData(document.RootElement);
+                        value = OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LinkedServiceData)null, message.Response);
+                    return Response.FromValue((OperationalInsightsLinkedServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="linkedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LinkedServiceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, CancellationToken cancellationToken = default)
+        public Response<OperationalInsightsLinkedServiceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string linkedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -277,13 +277,13 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        LinkedServiceData value = default;
+                        OperationalInsightsLinkedServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LinkedServiceData.DeserializeLinkedServiceData(document.RootElement);
+                        value = OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LinkedServiceData)null, message.Response);
+                    return Response.FromValue((OperationalInsightsLinkedServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

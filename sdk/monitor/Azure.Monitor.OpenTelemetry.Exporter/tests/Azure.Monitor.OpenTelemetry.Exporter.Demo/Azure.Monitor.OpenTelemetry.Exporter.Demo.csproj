@@ -6,8 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" VersionOverride="1.8.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="6.0.0" />
-    <PackageReference Include="OpenTelemetry.Extensions.AzureMonitor" VersionOverride="1.0.0-beta.2" />
+    <PackageReference Include="OpenTelemetry.Extensions.AzureMonitor" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
   </ItemGroup>
 

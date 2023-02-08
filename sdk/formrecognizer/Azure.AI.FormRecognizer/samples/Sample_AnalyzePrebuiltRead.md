@@ -128,9 +128,4 @@ foreach (DocumentStyle style in result.Styles)
 }
 ```
 
-To see the full example source files, see:
-
-* [Analyze with prebuilt read from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltReadFromUriAsync.cs)
-* [Analyze with prebuilt read from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltReadFromFileAsync.cs)
-
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

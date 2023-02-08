@@ -1,6 +1,6 @@
 # Mock a client for testing using the Moq library
 
-This sample illustrates how to use [Moq][moq] to create a unit test that mocks the response from a `DocumentAnalysisClient` method. For more examples of mocking, see [Moq samples][moq_samples].
+This sample illustrates how to use [Moq][moq] to create a unit test that mocks the response from a `DocumentAnalysisClient` method.
 
 ## Define a method that uses a DocumentAnalysisClient
 To show the usage of mocks, define a method that will be tested with mocked objects. For this case, assume we have a custom model that's able to analyze groceries lists. We are going to create a method that will calculate whether the total price of a list is expensive (total price > $100), only if the recognized field has a confidence greater than 70%.
@@ -101,5 +101,4 @@ Assert.IsTrue(isExpensive);
 ```
 
 [moq]: https://github.com/Moq/moq4/
-[moq_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_MockClient.cs
 [lros]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#long-running-operations

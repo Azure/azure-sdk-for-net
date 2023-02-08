@@ -34,16 +34,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "SapNetWeaver": return SapNetWeaverProviderInstanceProperties.DeserializeSapNetWeaverProviderInstanceProperties(element);
                 }
             }
-            string providerType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("providerType"))
-                {
-                    providerType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownProviderSpecificProperties(providerType);
+            return UnknownProviderSpecificProperties.DeserializeUnknownProviderSpecificProperties(element);
         }
     }
 }

@@ -455,7 +455,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
-            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+            Assert.AreEqual("InvalidImage", ex.ErrorCode);
         }
 
         [RecordedTest]

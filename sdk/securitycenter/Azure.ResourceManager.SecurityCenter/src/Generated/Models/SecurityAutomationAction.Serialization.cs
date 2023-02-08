@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "Workspace": return SecurityAutomationActionWorkspace.DeserializeSecurityAutomationActionWorkspace(element);
                 }
             }
-            ActionType actionType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("actionType"))
-                {
-                    actionType = new ActionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecurityAutomationAction(actionType);
+            return UnknownAutomationAction.DeserializeUnknownAutomationAction(element);
         }
     }
 }

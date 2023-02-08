@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "ScriptActionDetails": return RecoveryPlanScriptActionDetails.DeserializeRecoveryPlanScriptActionDetails(element);
                 }
             }
-            string instanceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRecoveryPlanActionDetails(instanceType);
+            return UnknownRecoveryPlanActionDetails.DeserializeUnknownRecoveryPlanActionDetails(element);
         }
     }
 }

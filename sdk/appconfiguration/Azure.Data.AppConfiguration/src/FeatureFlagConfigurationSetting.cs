@@ -236,7 +236,8 @@ namespace Azure.Data.AppConfiguration
                 }
 
                 var newFilters = new ObservableCollection<FeatureFlagFilter>();
-                if (conditionsProperty.TryGetProperty("client_filters", out var clientFiltersProperty))
+                if (conditionsProperty.TryGetProperty("client_filters", out var clientFiltersProperty) &&
+                    clientFiltersProperty.ValueKind == JsonValueKind.Array)
                 {
                     foreach (var clientFilter in clientFiltersProperty.EnumerateArray())
                     {

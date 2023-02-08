@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -71,73 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "VaultJob": return VaultJob.DeserializeVaultJob(element);
                 }
             }
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
-            string jobType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("entityFriendlyName"))
-                {
-                    entityFriendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("operation"))
-                {
-                    operation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("status"))
-                {
-                    status = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("startTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    startTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("endTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    endTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("activityId"))
-                {
-                    activityId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobType"))
-                {
-                    jobType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType);
+            return UnknownJob.DeserializeUnknownJob(element);
         }
     }
 }
