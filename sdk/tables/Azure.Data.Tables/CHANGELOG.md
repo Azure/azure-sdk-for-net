@@ -1,6 +1,6 @@
 # Release History
 
-## 12.8.0 (2023-02-07)
+## 12.8.0 (2023-02-08)
 
 ### Bugs Fixed
 - Fixed an issue where LINQ predicates containing New expressions, such as `ent => ent.TimeStamp > new DateTimeOffset(...)`, threw an exception.
