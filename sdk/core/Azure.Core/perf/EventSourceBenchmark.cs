@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Azure.Core.Diagnostics;
-using Azure.Core.Pipeline;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 
