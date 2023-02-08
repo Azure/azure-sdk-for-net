@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -22,6 +23,8 @@ namespace Azure.ResourceManager.Monitor.Models
             TargetResourceTypes = new ChangeTrackingList<string>();
         }
 
+        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The api-version used when creating this alert rule. </summary>
@@ -36,6 +39,8 @@ namespace Azure.ResourceManager.Monitor.Models
         public AlertSeverity? Severity { get; set; }
         /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
         public bool? IsEnabled { get; set; }
+        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The list of resource id&apos;s that this scheduled query rule is scoped to. </summary>
         public IList<string> Scopes { get; }
         /// <summary> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </summary>
@@ -71,5 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? SkipQueryValidation { get; set; }
         /// <summary> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </summary>
         public bool? AutoMitigate { get; set; }
+        /// <summary> Defines the configuration for resolving fired alerts. Relevant only for rules of the kind LogAlert. </summary>
+        public RuleResolveConfiguration RuleResolveConfiguration { get; set; }
     }
 }

@@ -110,6 +110,13 @@ namespace Azure.ResourceManager.Monitor
             return GetCachedClient(Client => new DataCollectionRuleCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of AzureMonitorWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AzureMonitorWorkspaceResources and their operations over a AzureMonitorWorkspaceResource. </returns>
+        public virtual AzureMonitorWorkspaceResourceCollection GetAzureMonitorWorkspaceResources()
+        {
+            return GetCachedClient(Client => new AzureMonitorWorkspaceResourceCollection(Client, Id));
+        }
+
         /// <summary>
         /// Send test notifications to a set of provided receivers
         /// <list type="bullet">
