@@ -226,6 +226,16 @@
       }
     },
     {
+      "type": "Microsoft.EventHub/namespaces/eventhubs",
+      "apiVersion": "2021-11-01",
+      "name": "[format('{0}/{1}', variables('baseNameAvro'), variables('eventHubName'))]",
+      "properties": {
+        "messageRetentionInDays": 7,
+        "partitionCount": 1
+      },
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameAvro'))]" ]
+    },
+    {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('eventHubsDataOwnerRoleId'))]",
