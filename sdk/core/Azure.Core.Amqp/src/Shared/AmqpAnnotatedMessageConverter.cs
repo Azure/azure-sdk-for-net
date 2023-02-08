@@ -187,7 +187,7 @@ namespace Azure.Core.Amqp.Shared
 
                 foreach (var pair in sourceMessage.ApplicationProperties)
                 {
-                    if (TryCreateAmqpPropertyValueFromNeutralProperty(pair.Value, out var amqpValue))
+                    if (TryCreateAmqpPropertyValueFromNetProperty(pair.Value, out var amqpValue))
                     {
                         message.ApplicationProperties.Map[pair.Key] = amqpValue;
                     }
@@ -204,7 +204,7 @@ namespace Azure.Core.Amqp.Shared
             {
                 foreach (var pair in sourceMessage.MessageAnnotations)
                 {
-                    if (TryCreateAmqpPropertyValueFromNeutralProperty(pair.Value, out var amqpValue))
+                    if (TryCreateAmqpPropertyValueFromNetProperty(pair.Value, out var amqpValue))
                     {
                         message.MessageAnnotations.Map[pair.Key] = amqpValue;
                     }
@@ -221,7 +221,7 @@ namespace Azure.Core.Amqp.Shared
             {
                 foreach (var pair in sourceMessage.DeliveryAnnotations)
                 {
-                    if (TryCreateAmqpPropertyValueFromNeutralProperty(pair.Value, out var amqpValue))
+                    if (TryCreateAmqpPropertyValueFromNetProperty(pair.Value, out var amqpValue))
                     {
                         message.DeliveryAnnotations.Map[pair.Key] = amqpValue;
                     }
@@ -238,7 +238,7 @@ namespace Azure.Core.Amqp.Shared
             {
                 foreach (var pair in sourceMessage.Footer)
                 {
-                    if (TryCreateAmqpPropertyValueFromNeutralProperty(pair.Value, out var amqpValue))
+                    if (TryCreateAmqpPropertyValueFromNetProperty(pair.Value, out var amqpValue))
                     {
                         message.Footer.Map[pair.Key] = amqpValue;
                     }
@@ -384,7 +384,7 @@ namespace Azure.Core.Amqp.Shared
             {
                 foreach (var pair in source.ApplicationProperties.Map)
                 {
-                    if (TryCreateNeutralPropertyFromAmqpProperty(pair.Value, out var propertyValue))
+                    if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
                         message.ApplicationProperties[pair.Key.ToString()] = propertyValue;
                     }
@@ -397,7 +397,7 @@ namespace Azure.Core.Amqp.Shared
             {
                 foreach (var pair in source.MessageAnnotations.Map)
                 {
-                    if (TryCreateNeutralPropertyFromAmqpProperty(pair.Value, out var propertyValue))
+                    if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
                         // if (SystemPropertyDateTimeKeys.Contains(pair.Key.ToString()))
                         // {
@@ -428,7 +428,7 @@ namespace Azure.Core.Amqp.Shared
             {
                 foreach (var pair in source.DeliveryAnnotations.Map)
                 {
-                    if (TryCreateNeutralPropertyFromAmqpProperty(pair.Value, out var eventValue))
+                    if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
                         // if (SystemPropertyDateTimeKeys.Contains(pair.Key.ToString()))
                         // {
@@ -459,7 +459,7 @@ namespace Azure.Core.Amqp.Shared
             {
                 foreach (var pair in source.Footer.Map)
                 {
-                    if (TryCreateNeutralPropertyFromAmqpProperty(pair.Value, out var eventValue))
+                    if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
                         message.Footer[pair.Key.ToString()] = eventValue;
                     }
@@ -507,7 +507,7 @@ namespace Azure.Core.Amqp.Shared
         {
             foreach (var item in sequenceBody)
             {
-                yield return new AmqpSequence((System.Collections.IList)item);
+                yield return new AmqpSequence((IList)item);
             }
         }
 
@@ -522,7 +522,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         private static AmqpValue TranslateValueBody(object valueBody)
         {
-            if (TryCreateAmqpPropertyValueFromNeutralProperty(valueBody, out var amqpValue, allowBodyTypes: true))
+            if (TryCreateAmqpPropertyValueFromNetProperty(valueBody, out var amqpValue, allowBodyTypes: true))
             {
                 return new AmqpValue { Value = amqpValue };
             }
@@ -596,7 +596,7 @@ namespace Azure.Core.Amqp.Shared
                 return false;
             }
 
-            if (TryCreateNeutralPropertyFromAmqpProperty(source.ValueBody.Value, out var translatedValue, allowBodyTypes: true))
+            if (TryCreateNetPropertyFromAmqpProperty(source.ValueBody.Value, out var translatedValue, allowBodyTypes: true))
             {
                 valueBody = AmqpMessageBody.FromValue(translatedValue!);
                 return true;
@@ -615,7 +615,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns><c>true</c> if an AMQP property value was able to be created; otherwise, <c>false</c>.</returns>
         ///
-        private static bool TryCreateAmqpPropertyValueFromNeutralProperty(
+        private static bool TryCreateAmqpPropertyValueFromNetProperty(
             object? propertyValue,
             out object? amqpPropertyValue,
             bool allowBodyTypes = false)
@@ -669,11 +669,11 @@ namespace Azure.Core.Amqp.Shared
                     amqpPropertyValue = new ArraySegment<byte>(byteArray);
                     break;
 
-                case AmqpType.Unknown when allowBodyTypes && propertyValue is System.Collections.IDictionary dict:
+                case AmqpType.Unknown when allowBodyTypes && propertyValue is IDictionary dict:
                     amqpPropertyValue = new AmqpMap(dict);
                     break;
 
-                case AmqpType.Unknown when allowBodyTypes && propertyValue is System.Collections.IList:
+                case AmqpType.Unknown when allowBodyTypes && propertyValue is IList:
                     amqpPropertyValue = propertyValue;
                     break;
 
@@ -695,7 +695,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns><c>true</c> if a message property value was able to be created; otherwise, <c>false</c>.</returns>
         ///
-        private static bool TryCreateNeutralPropertyFromAmqpProperty(
+        private static bool TryCreateNetPropertyFromAmqpProperty(
             object? amqpPropertyValue,
             out object? convertedPropertyValue,
             bool allowBodyTypes = false)
