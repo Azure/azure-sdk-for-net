@@ -157,9 +157,9 @@ namespace Azure.Core.Amqp
             };
 
         /// <summary>
-        ///
+        /// Converts the AMQP message into its binary serialized form.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="BinaryData"/> instance representing the serialized message.</returns>
         public virtual BinaryData ToBytes()
         {
             var stream = AmqpAnnotatedMessageConverter.ToAmqpMessage(this).ToStream();
@@ -167,10 +167,10 @@ namespace Azure.Core.Amqp
         }
 
         /// <summary>
-        ///
+        /// Constructs a message from its binary serialized form.
         /// </summary>
-        /// <param name="messageBytes"></param>
-        /// <returns></returns>
+        /// <param name="messageBytes">The bytes of the message</param>
+        /// <returns>A <see cref="AmqpAnnotatedMessage"/> based on the specified bytes.</returns>
         public static AmqpAnnotatedMessage FromBytes(BinaryData messageBytes)
         {
             var bufferStream = BufferListStream.Create(messageBytes.ToStream(), 4096);
