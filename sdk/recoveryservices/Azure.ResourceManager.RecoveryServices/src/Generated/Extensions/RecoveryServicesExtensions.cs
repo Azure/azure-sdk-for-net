@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static async Task<Response<CapabilitiesResponse>> CapabilitiesRecoveryServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        public static async Task<Response<CapabilitiesResult>> GetCapabilitiesRecoveryServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
 
-            return await GetExtensionClient(subscriptionResource).CapabilitiesRecoveryServiceAsync(location, input, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetCapabilitiesRecoveryServiceAsync(location, input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static Response<CapabilitiesResponse> CapabilitiesRecoveryService(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        public static Response<CapabilitiesResult> GetCapabilitiesRecoveryService(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
 
-            return GetExtensionClient(subscriptionResource).CapabilitiesRecoveryService(location, input, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCapabilitiesRecoveryService(location, input, cancellationToken);
         }
 
         /// <summary>

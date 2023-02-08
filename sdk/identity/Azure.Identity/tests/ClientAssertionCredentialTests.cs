@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity.Tests.Mock;
@@ -12,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientAssertionCredentialTests : CredentialTestBase
+    public class ClientAssertionCredentialTests : CredentialTestBase<ClientAssertionCredentialOptions>
     {
         public ClientAssertionCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -24,28 +21,22 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new ClientAssertionCredential(expectedTenantId, ClientId, () => "assertion", clientAssertionOptions));
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            Console.WriteLine(parameters.ToDebugString());
-
-            // no need to test with null TenantId since we can't construct this credential without it
-            if (parameters.TenantId == null)
+            if (config.TenantId == null)
             {
                 Assert.Ignore("Null TenantId test does not apply to this credential");
             }
 
-            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
-
-            var options = new ClientAssertionCredentialOptions() { MsalClient = msalClientMock, Pipeline = CredentialPipeline.GetInstance(null) };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            var options = new ClientAssertionCredentialOptions
             {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var cred = InstrumentClient(new ClientAssertionCredential(parameters.TenantId, ClientId, () => "assertion", options));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
+                Transport = config.Transport,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+            };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            options.Pipeline = pipeline;
+            return InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options));
         }
     }
 }
