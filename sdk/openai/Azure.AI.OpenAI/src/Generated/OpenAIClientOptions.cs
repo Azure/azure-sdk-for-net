@@ -22,16 +22,25 @@ namespace Azure.AI.OpenAI
             V2022_12_01 = 1,
         }
 
+        public enum ClientType
+        {
+            AzureOpenAI = 1,
+            OpenAI = 2,
+        }
+
         internal string Version { get; }
 
+        internal ClientType EndpointType { get; }
+
         /// <summary> Initializes new instance of OpenAIClientOptions. </summary>
-        public OpenAIClientOptions(ServiceVersion version = LatestVersion)
+        public OpenAIClientOptions(ServiceVersion version = LatestVersion, ClientType type = ClientType.AzureOpenAI)
         {
             Version = version switch
             {
                 ServiceVersion.V2022_12_01 => "2022-12-01",
                 _ => throw new NotSupportedException()
             };
+            EndpointType = type;
         }
     }
 }

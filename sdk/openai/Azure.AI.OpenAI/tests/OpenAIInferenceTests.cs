@@ -10,8 +10,22 @@ namespace Azure.AI.OpenAI.Tests
     public class OpenAIInferenceTests : OpenAITestBase
     {
         public OpenAIInferenceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Live)
+            : base(isAsync, RecordedTestMode.Live)
         {
+        }
+
+        [Test]
+        public void NonAzureInstanceTest()
+        {
+            var client = GetNonAzureOpenAIClient();
+            Assert.That(client, Is.InstanceOf<OpenAIClient>());
+            Response<Completions> response = client.GetNonAzureCompletions("Hello world");
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response, Is.InstanceOf<Response<Completions>>());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            Assert.That(response.Value.Choices[0].FinishReason, Is.Not.Null.Or.Empty);
         }
 
         /// <summary>
