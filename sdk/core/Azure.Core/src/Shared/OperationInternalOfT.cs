@@ -282,18 +282,7 @@ namespace Azure.Core
 
         public virtual string GetOperationId()
         {
-            var id = _operation.GetOperationId();
-            if (string.IsNullOrEmpty(id))
-            {
-                var serializeOptions = new JsonSerializerOptions { Converters = { new StreamConverter() } };
-                var lroDetails = new Dictionary<string, string>()
-                {
-                    ["FinalResponse"] = BinaryData.FromObjectAsJson<Response>(_rawResponse!, serializeOptions).ToString()
-                };
-                var lroData = BinaryData.FromObjectAsJson(lroDetails);
-                id = Convert.ToBase64String(lroData.ToArray());
-            }
-            return id;
+            return _operation.GetOperationId();
         }
 
         private static Response GetResponseFromState(OperationState<T> state)

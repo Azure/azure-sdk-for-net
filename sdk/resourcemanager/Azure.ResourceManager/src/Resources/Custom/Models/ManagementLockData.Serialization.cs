@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
@@ -15,24 +16,20 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ManagementLockData : ISerializable<ManagementLockData>
     {
-#if NET7_0_OR_GREATER
-        static ManagementLockData ISerializable<ManagementLockData>.Deserialize(ReadOnlyMemory<byte> data)
+        ManagementLockData ISerializable<ManagementLockData>.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
         {
-            using var document = JsonDocument.Parse(data);
-            return ManagementLockData.DeserializeManagementLockData(document.RootElement);
+            using var document = JsonDocument.Parse(data.ToString());
+            var model = ManagementLockData.DeserializeManagementLockData(document.RootElement);
+            bytesConsumed = data.Length;
+            return model;
         }
 
-        static ManagementLockData ISerializable<ManagementLockData>.Deserialize(Stream data)
-        {
-            using var document = JsonDocument.Parse(data);
-            return ManagementLockData.DeserializeManagementLockData(document.RootElement);
-        }
-#endif
-
-        void ISerializable<ManagementLockData>.Serialize(Span<byte> buffer)
+        bool ISerializable<ManagementLockData>.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
         {
             var writer = new Utf8JsonWriter(new MemoryStream(buffer.ToArray()));
             ((IUtf8JsonSerializable)this).Write(writer);
+            bytesWritten = buffer.Length;
+            return true;
         }
     }
 }

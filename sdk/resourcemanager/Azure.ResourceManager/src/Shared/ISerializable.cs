@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Text.Json;
 
@@ -12,16 +13,10 @@ namespace Azure.ResourceManager
     /// <summary> An interface for serializing objects into a buffer. </summary>
     public interface ISerializable<T>
     {
-        /// <summary> Serialize the object into a buffer. </summary>
-        void Serialize(Span<byte> buffer);
-#if NET7_0_OR_GREATER
-        /// <summary> Deserialize the object from a buffer. </summary>
-#pragma warning disable CA1000
-        static abstract T Deserialize(ReadOnlyMemory<byte> data);
+        /// <summary> Try to serialize the object into a buffer. </summary>
+        bool TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format = default);
 
-        /// <summary> Deserialize the object from a buffer. </summary>
-        static abstract T Deserialize(Stream data);
-#pragma warning restore CA1000
-#endif
+        /// <summary> Try to deserialize the object from a buffer. </summary>
+        T TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format = default);
     }
 }

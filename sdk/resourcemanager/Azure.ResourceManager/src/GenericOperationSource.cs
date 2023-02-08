@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -23,18 +25,20 @@ namespace Azure.ResourceManager
             _client = client;
         }
 
-        T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken) =>
-#if NET7_0_OR_GREATER
-        T.Deserialize(response.ContentStream);
-#else
-        throw new InvalidOperationException("Deserialization is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
-#endif
+        T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            ISerializable<T> serializable = (ISerializable<T>)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null);
+            var memoryStream = new MemoryStream();
+            response.ContentStream.CopyTo(memoryStream);
+            return serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+        }
 
-        ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken) =>
-#if NET7_0_OR_GREATER
-        ValueTask.FromResult(T.Deserialize(response.ContentStream));
-#else
-        throw new InvalidOperationException("Deserialization is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
-#endif
+        ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            ISerializable<T> serializable = (ISerializable<T>)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null);
+            var memoryStream = new MemoryStream();
+            response.ContentStream.CopyTo(memoryStream);
+            return new ValueTask<T>(serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed));
+        }
     }
 }

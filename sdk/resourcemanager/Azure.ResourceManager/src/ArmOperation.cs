@@ -40,10 +40,10 @@ namespace Azure.ResourceManager
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, operationTypeName, fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        /// <summary> Rehydrate an instance of the <see cref="ArmOperation"/> class. </summary>
+        /// <summary> Create an instance of the <see cref="ArmOperation"/> class from rehydration. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The id of the ArmOperation. </param>
-        public static ArmOperation Rehydrate(ArmClient client, string id)
+        public ArmOperation(ArmClient client, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
@@ -51,24 +51,7 @@ namespace Azure.ResourceManager
             var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id, out string finalResponse);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            var operation = finalResponse == null ? new OperationInternal(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy()) : OperationInternal.Succeeded(JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!);
-            return new ArmOperation(operation);
-        }
-
-        /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public static ArmOperation<R> Rehydrate<R>(ArmClient client, string id) where R: ISerializable<R>
-        {
-#if NET7_0_OR_GREATER
-            IOperationSource<R> source = new GenericOperationSource<R>(client);
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
-            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            DecodedResponse response;
-            var operation = finalResponse == null ? new OperationInternal<R>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy()) : OperationInternal<R>.Succeeded(response = JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!, source.CreateResult(response, CancellationToken.None));
-            return new ArmOperation<R>(operation);
-#else
-            throw new InvalidOperationException("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
-#endif
+            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Text.Json;
 using Azure;
@@ -15,23 +16,20 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceGroupExportResult : ISerializable<ResourceGroupExportResult>
     {
-#if NET7_0_OR_GREATER
-        static ResourceGroupExportResult ISerializable<ResourceGroupExportResult>.Deserialize(ReadOnlyMemory<byte> data)
+        ResourceGroupExportResult ISerializable<ResourceGroupExportResult>.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
         {
-            using var document = JsonDocument.Parse(data);
-            return ResourceGroupExportResult.DeserializeResourceGroupExportResult(document.RootElement);
+            using var document = JsonDocument.Parse(data.ToString());
+            var model = ResourceGroupExportResult.DeserializeResourceGroupExportResult(document.RootElement);
+            bytesConsumed = data.Length;
+            return model;
         }
 
-        static ResourceGroupExportResult ISerializable<ResourceGroupExportResult>.Deserialize(Stream data)
+        bool ISerializable<ResourceGroupExportResult>.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
         {
-            using var document = JsonDocument.Parse(data);
-            return ResourceGroupExportResult.DeserializeResourceGroupExportResult(document.RootElement);
-        }
-#endif
-
-        void ISerializable<ResourceGroupExportResult>.Serialize(Span<byte> buffer)
-        {
-            throw new InvalidOperationException("Serialization of ResourceGroupExportResult is not supported");
+            var writer = new Utf8JsonWriter(new MemoryStream(buffer.ToArray()));
+            ((IUtf8JsonSerializable)this).Write(writer);
+            bytesWritten = buffer.Length;
+            return true;
         }
 
     }

@@ -18,23 +18,20 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ResourceGroupData : ISerializable<ResourceGroupData>
     {
-        void ISerializable<ResourceGroupData>.Serialize(Span<byte> buffer)
+        ResourceGroupData ISerializable<ResourceGroupData>.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
+        {
+            using var document = JsonDocument.Parse(data.ToString());
+            var model = ResourceGroupData.DeserializeResourceGroupData(document.RootElement);
+            bytesConsumed = data.Length;
+            return model;
+        }
+
+        bool ISerializable<ResourceGroupData>.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
         {
             var writer = new Utf8JsonWriter(new MemoryStream(buffer.ToArray()));
             ((IUtf8JsonSerializable)this).Write(writer);
+            bytesWritten = buffer.Length;
+            return true;
         }
-#if NET7_0_OR_GREATER
-        static ResourceGroupData ISerializable<ResourceGroupData>.Deserialize(ReadOnlyMemory<byte> data)
-        {
-            using var document = JsonDocument.Parse(data);
-            return ResourceGroupData.DeserializeResourceGroupData(document.RootElement);
-        }
-
-        static ResourceGroupData ISerializable<ResourceGroupData>.Deserialize(Stream data)
-        {
-            using var document = JsonDocument.Parse(data);
-            return ResourceGroupData.DeserializeResourceGroupData(document.RootElement);
-        }
-#endif
     }
 }
