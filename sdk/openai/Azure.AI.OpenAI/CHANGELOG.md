@@ -1,14 +1,7 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 1.0.0-beta.2 (2023-02-08)
+- Added fix for `finish_reason` deserializer in [PR](https://github.com/Azure/azure-sdk-for-net/pull/33833)
 
 ## 1.0.0-beta.1 (2023-02-06)
 
