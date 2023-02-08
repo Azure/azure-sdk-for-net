@@ -13,18 +13,22 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         protected TestData? TestData;
 
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
         }
 
         [SetUp]
         public void SetUpTestData()
         {
-            TestData = new TestData(Recording.Random.NewGuid());
+            var testRandom = Recording.Random;
+            var randomGuid = testRandom.NewGuid();
+            TestData = new TestData(randomGuid.ToString());
         }
 
         public bool SkipSipRoutingLiveTests
