@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
         {
             Targets = targets;
             CallbackUri = callbackUri;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -51,11 +50,6 @@ namespace Azure.Communication.CallAutomation
         /// Media Streaming Configuration.
         /// </summary>
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
 
         /// <summary>
         /// The endpoint URL of the Azure Cognitive Services resource attached
