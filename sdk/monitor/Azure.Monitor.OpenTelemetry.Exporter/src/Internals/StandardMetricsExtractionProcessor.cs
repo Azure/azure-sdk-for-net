@@ -84,52 +84,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private void ReportDependencyDurationMetric(Activity activity)
         {
-            string statusCodeAttributeValue = null;
-            string netPeerNameAttributeValue = null;
-            string netPeerPortAttributeValue = null;
-            string dependencyType = "Unknown";
-            foreach (var tag in activity.EnumerateTagObjects())
-            {
-                if (tag.Key == SemanticConventions.AttributeHttpMethod)
-                {
-                    dependencyType = "Http";
-                    continue;
-                }
-                if (tag.Key == SemanticConventions.AttributeDbSystem)
-                {
-                    dependencyType = RemoteDependencyData.s_sqlDbs.Contains(tag.Value.ToString()) ? "SQL" : tag.Value.ToString();
-                    continue;
-                }
-                if (tag.Key == SemanticConventions.AttributeRpcSystem)
-                {
-                    dependencyType = tag.Value.ToString();
-                }
-                if (tag.Key == SemanticConventions.AttributeHttpStatusCode)
-                {
-                    statusCodeAttributeValue = tag.Value.ToString();
-                    continue;
-                }
-                if (tag.Key == SemanticConventions.AttributeNetPeerName)
-                {
-                    netPeerNameAttributeValue = tag.Value.ToString();
-                    continue;
-                }
-                if (tag.Key == SemanticConventions.AttributeNetPeerPort)
-                {
-                    netPeerPortAttributeValue = tag.Value.ToString();
-                    continue;
-                }
-            }
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            string dependencyTarget = netPeerNameAttributeValue;
-            if (!string.IsNullOrEmpty(dependencyTarget))
-            {
-                dependencyTarget = dependencyTarget + ":" + netPeerPortAttributeValue;
-            }
+            var dependencyTarget = monitorTags.MappedTags.GetDependencyTarget(monitorTags.activityType);
+
+            var statusCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode);
+
+            var dependencyType = monitorTags.MappedTags.GetDependencyType(monitorTags.activityType);
 
             TagList tags = default;
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyResultCodeKey, statusCodeAttributeValue));
+            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyResultCodeKey, statusCode));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsAutoCollectedKey, "True"));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsSyntheticKey, "False"));
