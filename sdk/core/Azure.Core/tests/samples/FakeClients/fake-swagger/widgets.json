@@ -8,6 +8,7 @@
             {
                 "name": "endpoint",
                 "required": true,
+                "format": "url",
                 "type": "string",
                 "in": "path",
                 "x-ms-skip-url-encoding": true,
