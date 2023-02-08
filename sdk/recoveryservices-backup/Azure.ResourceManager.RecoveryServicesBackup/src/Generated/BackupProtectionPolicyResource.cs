@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -36,8 +35,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         private readonly ClientDiagnostics _backupProtectionPolicyProtectionPoliciesClientDiagnostics;
         private readonly ProtectionPoliciesRestOperations _backupProtectionPolicyProtectionPoliciesRestClient;
-        private readonly ClientDiagnostics _protectionPolicyOperationStatusesClientDiagnostics;
-        private readonly ProtectionPolicyOperationStatusesRestOperations _protectionPolicyOperationStatusesRestClient;
         private readonly BackupProtectionPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BackupProtectionPolicyResource"/> class for mocking. </summary>
@@ -62,8 +59,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _backupProtectionPolicyProtectionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string backupProtectionPolicyProtectionPoliciesApiVersion);
             _backupProtectionPolicyProtectionPoliciesRestClient = new ProtectionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionPolicyProtectionPoliciesApiVersion);
-            _protectionPolicyOperationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _protectionPolicyOperationStatusesRestClient = new ProtectionPolicyOperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -299,80 +294,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provides the status of the asynchronous operations like backup, restore. The status can be in progress, completed
-        /// or failed. You can refer to the Operation Status enum for all the possible states of an operation. Some operations
-        /// create jobs. This method returns the list of jobs associated with operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}/operations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionPolicyOperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation ID which represents an operation whose status needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatus>> GetProtectionPolicyOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _protectionPolicyOperationStatusesClientDiagnostics.CreateScope("BackupProtectionPolicyResource.GetProtectionPolicyOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await _protectionPolicyOperationStatusesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provides the status of the asynchronous operations like backup, restore. The status can be in progress, completed
-        /// or failed. You can refer to the Operation Status enum for all the possible states of an operation. Some operations
-        /// create jobs. This method returns the list of jobs associated with operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}/operations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionPolicyOperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation ID which represents an operation whose status needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatus> GetProtectionPolicyOperationStatus(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _protectionPolicyOperationStatusesClientDiagnostics.CreateScope("BackupProtectionPolicyResource.GetProtectionPolicyOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = _protectionPolicyOperationStatusesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

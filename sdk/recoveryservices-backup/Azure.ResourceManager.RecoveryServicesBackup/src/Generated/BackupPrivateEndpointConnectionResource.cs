@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -36,8 +35,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         private readonly ClientDiagnostics _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics;
         private readonly PrivateEndpointConnectionRestOperations _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient;
-        private readonly ClientDiagnostics _privateEndpointClientDiagnostics;
-        private readonly PrivateEndpointRestOperations _privateEndpointRestClient;
         private readonly BackupPrivateEndpointConnectionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BackupPrivateEndpointConnectionResource"/> class for mocking. </summary>
@@ -62,8 +59,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string backupPrivateEndpointConnectionPrivateEndpointConnectionApiVersion);
             _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient = new PrivateEndpointConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupPrivateEndpointConnectionPrivateEndpointConnectionApiVersion);
-            _privateEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateEndpointRestClient = new PrivateEndpointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -293,76 +288,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operation status for a private endpoint connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}/operationsStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpoint_GetOperationStatus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatus>> GetOperationStatusPrivateEndpointAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _privateEndpointClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionResource.GetOperationStatusPrivateEndpoint");
-            scope.Start();
-            try
-            {
-                var response = await _privateEndpointRestClient.GetOperationStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operation status for a private endpoint connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}/operationsStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpoint_GetOperationStatus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatus> GetOperationStatusPrivateEndpoint(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _privateEndpointClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionResource.GetOperationStatusPrivateEndpoint");
-            scope.Start();
-            try
-            {
-                var response = _privateEndpointRestClient.GetOperationStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

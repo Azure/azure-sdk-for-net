@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Defines workload agnostic properties for a job.
     /// Serialized Name: Job
     /// Please note <see cref="BackupJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureIaasVmJob"/>, <see cref="AzureIaasVmJobV2"/>, <see cref="AzureStorageJob"/>, <see cref="AzureWorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
+    /// The available derived classes include <see cref="IaasVmJob"/>, <see cref="IaasVmJobV2"/>, <see cref="StorageJob"/>, <see cref="WorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
     /// </summary>
     public abstract partial class BackupJobProperties
     {

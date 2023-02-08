@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// ProtectionContainerResource properties
         /// Serialized Name: ProtectionContainerResource.properties
         /// Please note <see cref="BackupProtectionContainerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BackupServerContainer"/>, <see cref="AzureSqlContainer"/>, <see cref="AzureWorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="AzureIaaSClassicComputeVmContainer"/>, <see cref="AzureIaaSComputeVmContainer"/>, <see cref="AzureSqlAGWorkloadContainerProtectionContainer"/>, <see cref="AzureStorageContainer"/>, <see cref="AzureVmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
+        /// The available derived classes include <see cref="BackupServerContainer"/>, <see cref="SqlContainer"/>, <see cref="WorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
         /// </param>
         /// <param name="eTag">
         /// Optional ETag.
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// ProtectionContainerResource properties
         /// Serialized Name: ProtectionContainerResource.properties
         /// Please note <see cref="BackupProtectionContainerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BackupServerContainer"/>, <see cref="AzureSqlContainer"/>, <see cref="AzureWorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="AzureIaaSClassicComputeVmContainer"/>, <see cref="AzureIaaSComputeVmContainer"/>, <see cref="AzureSqlAGWorkloadContainerProtectionContainer"/>, <see cref="AzureStorageContainer"/>, <see cref="AzureVmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
+        /// The available derived classes include <see cref="BackupServerContainer"/>, <see cref="SqlContainer"/>, <see cref="WorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
         /// </summary>
         public BackupProtectionContainerProperties Properties { get; set; }
         /// <summary>

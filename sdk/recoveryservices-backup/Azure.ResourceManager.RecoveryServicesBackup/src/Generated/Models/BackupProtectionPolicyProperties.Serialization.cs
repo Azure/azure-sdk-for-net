@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureIaasVM": return AzureIaasVmProtectionPolicy.DeserializeAzureIaasVmProtectionPolicy(element);
-                    case "AzureSql": return AzureSqlProtectionPolicy.DeserializeAzureSqlProtectionPolicy(element);
+                    case "AzureIaasVM": return IaasVmProtectionPolicy.DeserializeIaasVmProtectionPolicy(element);
+                    case "AzureSql": return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element);
                     case "AzureStorage": return FileShareProtectionPolicy.DeserializeFileShareProtectionPolicy(element);
-                    case "AzureWorkload": return AzureVmWorkloadProtectionPolicy.DeserializeAzureVmWorkloadProtectionPolicy(element);
+                    case "AzureWorkload": return VmWorkloadProtectionPolicy.DeserializeVmWorkloadProtectionPolicy(element);
                     case "GenericProtectionPolicy": return GenericProtectionPolicy.DeserializeGenericProtectionPolicy(element);
                     case "MAB": return MabProtectionPolicy.DeserializeMabProtectionPolicy(element);
                 }

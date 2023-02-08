@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="azureRegion"> Azure region to hit Api. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AzureVmResourceFeatureSupportResponse>> ValidateFeatureSupportAsync(string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VmResourceFeatureSupportResponse>> ValidateFeatureSupportAsync(string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             using var scope = FeatureSupportClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateFeatureSupport");
             scope.Start();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="azureRegion"> Azure region to hit Api. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AzureVmResourceFeatureSupportResponse> ValidateFeatureSupport(string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
+        public virtual Response<VmResourceFeatureSupportResponse> ValidateFeatureSupport(string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             using var scope = FeatureSupportClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateFeatureSupport");
             scope.Start();

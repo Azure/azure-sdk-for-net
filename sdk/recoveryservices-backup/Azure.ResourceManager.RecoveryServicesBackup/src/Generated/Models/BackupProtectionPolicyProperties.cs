@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Base class for backup policy. Workload-specific backup policies are derived from this class.
     /// Serialized Name: ProtectionPolicy
     /// Please note <see cref="BackupProtectionPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureIaasVmProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
+    /// The available derived classes include <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="VmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
     /// </summary>
     public abstract partial class BackupProtectionPolicyProperties
     {

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// IaaS VM workload-specific container.
     /// Serialized Name: IaaSVMContainer
     /// Please note <see cref="IaasVmContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureIaaSClassicComputeVmContainer"/> and <see cref="AzureIaaSComputeVmContainer"/>.
+    /// The available derived classes include <see cref="IaasClassicComputeVmContainer"/> and <see cref="IaasComputeVmContainer"/>.
     /// </summary>
     public partial class IaasVmContainer : BackupProtectionContainerProperties
     {

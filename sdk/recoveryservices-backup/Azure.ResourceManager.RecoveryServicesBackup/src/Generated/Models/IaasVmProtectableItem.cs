@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// IaaS VM workload-specific backup item.
     /// Serialized Name: IaaSVMProtectableItem
     /// Please note <see cref="IaasVmProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureIaaSClassicComputeVmProtectableItem"/> and <see cref="AzureIaaSComputeVmProtectableItem"/>.
+    /// The available derived classes include <see cref="IaasClassicComputeVmProtectableItem"/> and <see cref="IaasComputeVmProtectableItem"/>.
     /// </summary>
     public partial class IaasVmProtectableItem : WorkloadProtectableItem
     {

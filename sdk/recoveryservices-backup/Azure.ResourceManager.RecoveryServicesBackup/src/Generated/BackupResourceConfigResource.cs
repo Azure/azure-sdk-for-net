@@ -38,8 +38,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupResourceStorageConfigsNonCRRRestOperations _backupResourceConfigBackupResourceStorageConfigsNonCRRRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly RecoveryServicesBackupRestOperations _defaultRestClient;
-        private readonly ClientDiagnostics _bmsPrepareDataMoveOperationResultClientDiagnostics;
-        private readonly BMSPrepareDataMoveOperationResultRestOperations _bmsPrepareDataMoveOperationResultRestClient;
         private readonly BackupResourceConfigData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BackupResourceConfigResource"/> class for mocking. </summary>
@@ -66,8 +64,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _backupResourceConfigBackupResourceStorageConfigsNonCRRRestClient = new BackupResourceStorageConfigsNonCRRRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupResourceConfigBackupResourceStorageConfigsNonCRRApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new RecoveryServicesBackupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _bmsPrepareDataMoveOperationResultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _bmsPrepareDataMoveOperationResultRestClient = new BMSPrepareDataMoveOperationResultRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -230,76 +226,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// Fetches operation status for data move operation on vault
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOperationStatus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatus>> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await _defaultRestClient.GetOperationStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches operation status for data move operation on vault
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOperationStatus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatus> GetOperationStatus(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = _defaultRestClient.GetOperationStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Prepares source vault for Data Move operation
         /// <list type="bullet">
         /// <item>
@@ -443,76 +369,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches Operation Result for Prepare Data Move
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BMSPrepareDataMoveOperationResult_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<VaultStorageConfigOperationResultResponse>> GetBMSPrepareDataMoveOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _bmsPrepareDataMoveOperationResultClientDiagnostics.CreateScope("BackupResourceConfigResource.GetBMSPrepareDataMoveOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await _bmsPrepareDataMoveOperationResultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches Operation Result for Prepare Data Move
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BMSPrepareDataMoveOperationResult_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<VaultStorageConfigOperationResultResponse> GetBMSPrepareDataMoveOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _bmsPrepareDataMoveOperationResultClientDiagnostics.CreateScope("BackupResourceConfigResource.GetBMSPrepareDataMoveOperationResult");
-            scope.Start();
-            try
-            {
-                var response = _bmsPrepareDataMoveOperationResultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, operationId, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

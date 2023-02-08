@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<string> parentContainerFabricId = default;
             Optional<string> parentContainerFriendlyName = default;
-            Optional<AzureFileShareType> azureFileShareType = default;
+            Optional<BackupFileShareType> azureFileShareType = default;
             Optional<string> backupManagementType = default;
             Optional<string> workloadType = default;
             string protectableItemType = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureFileShareType = new AzureFileShareType(property.Value.GetString());
+                    azureFileShareType = new BackupFileShareType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("backupManagementType"))

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// ProtectionIntentResource properties
         /// Serialized Name: ProtectionIntentResource.properties
         /// Please note <see cref="BackupProtectionIntentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceProtectionIntent"/>, <see cref="AzureWorkloadAutoProtectionIntent"/>, <see cref="AzureWorkloadContainerAutoProtectionIntent"/>, <see cref="AzureWorkloadSQLAutoProtectionIntent"/> and <see cref="AzureRecoveryServiceVaultProtectionIntent"/>.
+        /// The available derived classes include <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadSqlAutoProtectionIntent"/> and <see cref="RecoveryServiceVaultProtectionIntent"/>.
         /// </param>
         /// <param name="eTag">
         /// Optional ETag.
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// ProtectionIntentResource properties
         /// Serialized Name: ProtectionIntentResource.properties
         /// Please note <see cref="BackupProtectionIntentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceProtectionIntent"/>, <see cref="AzureWorkloadAutoProtectionIntent"/>, <see cref="AzureWorkloadContainerAutoProtectionIntent"/>, <see cref="AzureWorkloadSQLAutoProtectionIntent"/> and <see cref="AzureRecoveryServiceVaultProtectionIntent"/>.
+        /// The available derived classes include <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadSqlAutoProtectionIntent"/> and <see cref="RecoveryServiceVaultProtectionIntent"/>.
         /// </summary>
         public BackupProtectionIntentProperties Properties { get; set; }
         /// <summary>

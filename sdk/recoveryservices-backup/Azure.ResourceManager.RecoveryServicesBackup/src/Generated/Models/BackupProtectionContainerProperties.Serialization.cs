@@ -52,16 +52,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element);
-                    case "AzureSqlContainer": return AzureSqlContainer.DeserializeAzureSqlContainer(element);
-                    case "AzureWorkloadContainer": return AzureWorkloadContainer.DeserializeAzureWorkloadContainer(element);
+                    case "AzureSqlContainer": return SqlContainer.DeserializeSqlContainer(element);
+                    case "AzureWorkloadContainer": return WorkloadContainer.DeserializeWorkloadContainer(element);
                     case "DPMContainer": return DpmContainer.DeserializeDpmContainer(element);
                     case "GenericContainer": return GenericContainer.DeserializeGenericContainer(element);
                     case "IaasVMContainer": return IaasVmContainer.DeserializeIaasVmContainer(element);
-                    case "Microsoft.ClassicCompute/virtualMachines": return AzureIaaSClassicComputeVmContainer.DeserializeAzureIaaSClassicComputeVmContainer(element);
-                    case "Microsoft.Compute/virtualMachines": return AzureIaaSComputeVmContainer.DeserializeAzureIaaSComputeVmContainer(element);
-                    case "SQLAGWorkLoadContainer": return AzureSqlAGWorkloadContainerProtectionContainer.DeserializeAzureSqlAGWorkloadContainerProtectionContainer(element);
-                    case "StorageContainer": return AzureStorageContainer.DeserializeAzureStorageContainer(element);
-                    case "VMAppContainer": return AzureVmAppContainerProtectionContainer.DeserializeAzureVmAppContainerProtectionContainer(element);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element);
+                    case "SQLAGWorkLoadContainer": return SqlAvailabilityGroupWorkloadProtectionContainer.DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(element);
+                    case "StorageContainer": return StorageContainer.DeserializeStorageContainer(element);
+                    case "VMAppContainer": return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element);
                     case "Windows": return MabContainer.DeserializeMabContainer(element);
                 }
             }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Base class for backup copies. Workload-specific backup copies are derived from this class.
     /// Serialized Name: RecoveryPoint
     /// Please note <see cref="BackupRecoveryPointProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureFileShareRecoveryPoint"/>, <see cref="AzureWorkloadPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaRecoveryPoint"/>, <see cref="AzureWorkloadSQLPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSQLRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
+    /// The available derived classes include <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
     /// </summary>
     public abstract partial class BackupRecoveryPointProperties
     {

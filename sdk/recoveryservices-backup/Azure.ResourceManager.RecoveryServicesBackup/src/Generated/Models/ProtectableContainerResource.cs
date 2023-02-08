@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// ProtectableContainerResource properties
         /// Serialized Name: ProtectableContainerResource.properties
         /// Please note <see cref="ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureStorageProtectableContainer"/> and <see cref="AzureVmAppContainerProtectableContainer"/>.
+        /// The available derived classes include <see cref="StorageProtectableContainer"/> and <see cref="VmAppContainerProtectableContainer"/>.
         /// </param>
         /// <param name="eTag">
         /// Optional ETag.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// ProtectableContainerResource properties
         /// Serialized Name: ProtectableContainerResource.properties
         /// Please note <see cref="ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureStorageProtectableContainer"/> and <see cref="AzureVmAppContainerProtectableContainer"/>.
+        /// The available derived classes include <see cref="StorageProtectableContainer"/> and <see cref="VmAppContainerProtectableContainer"/>.
         /// </summary>
         public ProtectableContainer Properties { get; set; }
         /// <summary>

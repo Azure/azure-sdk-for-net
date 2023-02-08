@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShareRestoreRequest": return AzureFileShareRestoreRequest.DeserializeAzureFileShareRestoreRequest(element);
-                    case "AzureWorkloadPointInTimeRestoreRequest": return AzureWorkloadPointInTimeRestoreRequest.DeserializeAzureWorkloadPointInTimeRestoreRequest(element);
-                    case "AzureWorkloadRestoreRequest": return AzureWorkloadRestoreRequest.DeserializeAzureWorkloadRestoreRequest(element);
-                    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest": return AzureWorkloadSAPHanaPointInTimeRestoreRequest.DeserializeAzureWorkloadSAPHanaPointInTimeRestoreRequest(element);
-                    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest": return AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest.DeserializeAzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest(element);
-                    case "AzureWorkloadSAPHanaRestoreRequest": return AzureWorkloadSAPHanaRestoreRequest.DeserializeAzureWorkloadSAPHanaRestoreRequest(element);
-                    case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest": return AzureWorkloadSAPHanaRestoreWithRehydrateRequest.DeserializeAzureWorkloadSAPHanaRestoreWithRehydrateRequest(element);
-                    case "AzureWorkloadSQLPointInTimeRestoreRequest": return AzureWorkloadSQLPointInTimeRestoreRequest.DeserializeAzureWorkloadSQLPointInTimeRestoreRequest(element);
-                    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest": return AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest.DeserializeAzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest(element);
-                    case "AzureWorkloadSQLRestoreRequest": return AzureWorkloadSQLRestoreRequest.DeserializeAzureWorkloadSQLRestoreRequest(element);
-                    case "AzureWorkloadSQLRestoreWithRehydrateRequest": return AzureWorkloadSQLRestoreWithRehydrateRequest.DeserializeAzureWorkloadSQLRestoreWithRehydrateRequest(element);
+                    case "AzureFileShareRestoreRequest": return FileShareRestoreRequest.DeserializeFileShareRestoreRequest(element);
+                    case "AzureWorkloadPointInTimeRestoreRequest": return WorkloadPointInTimeRestoreRequest.DeserializeWorkloadPointInTimeRestoreRequest(element);
+                    case "AzureWorkloadRestoreRequest": return WorkloadRestoreRequest.DeserializeWorkloadRestoreRequest(element);
+                    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest": return WorkloadSapHanaPointInTimeRestoreRequest.DeserializeWorkloadSapHanaPointInTimeRestoreRequest(element);
+                    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest": return WorkloadSapHanaPointInTimeRestoreWithRehydrateRequest.DeserializeWorkloadSapHanaPointInTimeRestoreWithRehydrateRequest(element);
+                    case "AzureWorkloadSAPHanaRestoreRequest": return WorkloadSapHanaRestoreRequest.DeserializeWorkloadSapHanaRestoreRequest(element);
+                    case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest": return WorkloadSapHanaRestoreWithRehydrateRequest.DeserializeWorkloadSapHanaRestoreWithRehydrateRequest(element);
+                    case "AzureWorkloadSQLPointInTimeRestoreRequest": return WorkloadSqlPointInTimeRestoreRequest.DeserializeWorkloadSqlPointInTimeRestoreRequest(element);
+                    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest": return WorkloadSqlPointInTimeRestoreWithRehydrateRequest.DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateRequest(element);
+                    case "AzureWorkloadSQLRestoreRequest": return WorkloadSqlRestoreRequest.DeserializeWorkloadSqlRestoreRequest(element);
+                    case "AzureWorkloadSQLRestoreWithRehydrateRequest": return WorkloadSqlRestoreWithRehydrateRequest.DeserializeWorkloadSqlRestoreWithRehydrateRequest(element);
                     case "IaasVMRestoreRequest": return IaasVmRestoreRequest.DeserializeIaasVmRestoreRequest(element);
                     case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationRequest.DeserializeIaasVmRestoreWithRehydrationRequest(element);
                 }

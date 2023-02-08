@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.ClassicCompute/virtualMachines": return AzureIaaSClassicComputeVmProtectableItem.DeserializeAzureIaaSClassicComputeVmProtectableItem(element);
-                    case "Microsoft.Compute/virtualMachines": return AzureIaaSComputeVmProtectableItem.DeserializeAzureIaaSComputeVmProtectableItem(element);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmProtectableItem.DeserializeIaasClassicComputeVmProtectableItem(element);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmProtectableItem.DeserializeIaasComputeVmProtectableItem(element);
                 }
             }
             Optional<string> virtualMachineId = default;

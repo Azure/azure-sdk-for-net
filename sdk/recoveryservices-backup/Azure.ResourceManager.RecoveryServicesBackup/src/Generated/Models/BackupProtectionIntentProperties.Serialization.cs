@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureResourceItem": return AzureResourceProtectionIntent.DeserializeAzureResourceProtectionIntent(element);
-                    case "AzureWorkloadAutoProtectionIntent": return AzureWorkloadAutoProtectionIntent.DeserializeAzureWorkloadAutoProtectionIntent(element);
-                    case "AzureWorkloadContainerAutoProtectionIntent": return AzureWorkloadContainerAutoProtectionIntent.DeserializeAzureWorkloadContainerAutoProtectionIntent(element);
-                    case "AzureWorkloadSQLAutoProtectionIntent": return AzureWorkloadSQLAutoProtectionIntent.DeserializeAzureWorkloadSQLAutoProtectionIntent(element);
-                    case "RecoveryServiceVaultItem": return AzureRecoveryServiceVaultProtectionIntent.DeserializeAzureRecoveryServiceVaultProtectionIntent(element);
+                    case "AzureResourceItem": return ResourceProtectionIntent.DeserializeResourceProtectionIntent(element);
+                    case "AzureWorkloadAutoProtectionIntent": return WorkloadAutoProtectionIntent.DeserializeWorkloadAutoProtectionIntent(element);
+                    case "AzureWorkloadContainerAutoProtectionIntent": return WorkloadContainerAutoProtectionIntent.DeserializeWorkloadContainerAutoProtectionIntent(element);
+                    case "AzureWorkloadSQLAutoProtectionIntent": return WorkloadSqlAutoProtectionIntent.DeserializeWorkloadSqlAutoProtectionIntent(element);
+                    case "RecoveryServiceVaultItem": return RecoveryServiceVaultProtectionIntent.DeserializeRecoveryServiceVaultProtectionIntent(element);
                 }
             }
             return UnknownProtectionIntent.DeserializeUnknownProtectionIntent(element);

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SystemStateValue = "SystemState";
         private const string ClientValue = "Client";
         private const string GenericDataSourceValue = "GenericDataSource";
-        private const string SQLDataBaseValue = "SQLDataBase";
+        private const string SqlDataBaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
         private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
         private const string SAPAseDatabaseValue = "SAPAseDatabase";
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// SQLDataBase
         /// Serialized Name: WorkloadType.SQLDataBase
         /// </summary>
-        public static WorkloadType SQLDataBase { get; } = new WorkloadType(SQLDataBaseValue);
+        public static WorkloadType SqlDataBase { get; } = new WorkloadType(SqlDataBaseValue);
         /// <summary>
         /// AzureFileShare
         /// Serialized Name: WorkloadType.AzureFileShare

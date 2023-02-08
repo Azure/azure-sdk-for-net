@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// BackupRequestResource properties
         /// Serialized Name: BackupRequestResource.properties
         /// Please note <see cref="BackupRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FileShareBackupRequest"/>, <see cref="AzureWorkloadBackupRequest"/> and <see cref="IaasVmBackupRequest"/>.
+        /// The available derived classes include <see cref="FileShareBackupRequest"/>, <see cref="WorkloadBackupRequest"/> and <see cref="IaasVmBackupRequest"/>.
         /// </param>
         /// <param name="eTag">
         /// Optional ETag.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// BackupRequestResource properties
         /// Serialized Name: BackupRequestResource.properties
         /// Please note <see cref="BackupRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FileShareBackupRequest"/>, <see cref="AzureWorkloadBackupRequest"/> and <see cref="IaasVmBackupRequest"/>.
+        /// The available derived classes include <see cref="FileShareBackupRequest"/>, <see cref="WorkloadBackupRequest"/> and <see cref="IaasVmBackupRequest"/>.
         /// </summary>
         public BackupRequestProperties Properties { get; set; }
         /// <summary>

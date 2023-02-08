@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// File Share type XSync or XSMB.
         /// Serialized Name: AzureFileShareProtectableItem.azureFileShareType
         /// </param>
-        internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState, string parentContainerFabricId, string parentContainerFriendlyName, AzureFileShareType? azureFileShareType) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
+        internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState, string parentContainerFabricId, string parentContainerFriendlyName, BackupFileShareType? azureFileShareType) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
         {
             ParentContainerFabricId = parentContainerFabricId;
             ParentContainerFriendlyName = parentContainerFriendlyName;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// File Share type XSync or XSMB.
         /// Serialized Name: AzureFileShareProtectableItem.azureFileShareType
         /// </summary>
-        public AzureFileShareType? AzureFileShareType { get; set; }
+        public BackupFileShareType? AzureFileShareType { get; set; }
     }
 }

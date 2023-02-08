@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         private const string InvalidValue = "Invalid";
-        private const string SQLInstanceValue = "SQLInstance";
-        private const string SQLDataBaseValue = "SQLDataBase";
+        private const string SqlInstanceValue = "SQLInstance";
+        private const string SqlDataBaseValue = "SQLDataBase";
         private const string SAPHanaSystemValue = "SAPHanaSystem";
         private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
         private const string SAPAseSystemValue = "SAPAseSystem";
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// SQLInstance
         /// Serialized Name: WorkloadItemType.SQLInstance
         /// </summary>
-        public static WorkloadItemType SQLInstance { get; } = new WorkloadItemType(SQLInstanceValue);
+        public static WorkloadItemType SqlInstance { get; } = new WorkloadItemType(SqlInstanceValue);
         /// <summary>
         /// SQLDataBase
         /// Serialized Name: WorkloadItemType.SQLDataBase
         /// </summary>
-        public static WorkloadItemType SQLDataBase { get; } = new WorkloadItemType(SQLDataBaseValue);
+        public static WorkloadItemType SqlDataBase { get; } = new WorkloadItemType(SqlDataBaseValue);
         /// <summary>
         /// SAPHanaSystem
         /// Serialized Name: WorkloadItemType.SAPHanaSystem

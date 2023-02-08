@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// WorkloadItemResource properties
         /// Serialized Name: WorkloadItemResource.properties
         /// Please note <see cref="WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureVmWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSQLDatabaseWorkloadItem"/> and <see cref="AzureVmWorkloadSQLInstanceWorkloadItem"/>.
+        /// The available derived classes include <see cref="VmWorkloadItem"/>, <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/> and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
         /// </param>
         /// <param name="eTag">
         /// Optional ETag.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// WorkloadItemResource properties
         /// Serialized Name: WorkloadItemResource.properties
         /// Please note <see cref="WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureVmWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSQLDatabaseWorkloadItem"/> and <see cref="AzureVmWorkloadSQLInstanceWorkloadItem"/>.
+        /// The available derived classes include <see cref="VmWorkloadItem"/>, <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/> and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
         /// </summary>
         public WorkloadItem Properties { get; set; }
         /// <summary>

@@ -53,6 +53,91 @@ rename-mapping:
   AzureFileshareProtectedItemExtendedInfo: FileshareProtectedItemExtendedInfo
   AzureFileShareProtectionPolicy: FileShareProtectionPolicy
   AzureFileShareProvisionILRRequest: FileShareProvisionIlrRequest
+  AzureFileShareRecoveryPoint: FileShareRecoveryPoint
+  AzureFileShareRestoreRequest: FileShareRestoreRequest
+  AzureFileShareType: BackupFileShareType
+  AzureIaaSClassicComputeVMContainer: IaasClassicComputeVmContainer
+  AzureIaaSClassicComputeVMProtectableItem: IaasClassicComputeVmProtectableItem
+  AzureIaaSClassicComputeVMProtectedItem: IaasClassicComputeVmProtectedItem
+  AzureIaaSComputeVMContainer: IaasComputeVmContainer
+  AzureIaaSComputeVMProtectableItem: IaasComputeVmProtectableItem
+  AzureIaaSComputeVMProtectedItem: IaasComputeVmProtectedItem
+  AzureIaaSVMErrorInfo: IaasVmErrorInfo
+  AzureIaaSVMHealthDetails: IaasVmHealthDetails
+  AzureIaaSVMJob: IaasVmJob
+  AzureIaaSVMJobExtendedInfo: IaasVmJobExtendedInfo
+  AzureIaaSVMJobTaskDetails: IaasVmJobTaskDetails
+  AzureIaaSVMJobV2: IaasVmJobV2
+  AzureIaaSVMProtectedItem: IaasVmProtectedItem
+  AzureIaaSVMProtectedItemExtendedInfo: IaasVmProtectedItemExtendedInfo
+  AzureIaaSVMProtectionPolicy: IaasVmProtectionPolicy
+  AzureRecoveryServiceVaultProtectionIntent: RecoveryServiceVaultProtectionIntent
+  AzureResourceProtectionIntent: ResourceProtectionIntent
+  AzureSqlagWorkloadContainerProtectionContainer: SqlAvailabilityGroupWorkloadProtectionContainer
+  AzureSqlContainer: SqlContainer
+  AzureSqlProtectedItem: SqlProtectedItem
+  AzureSqlProtectedItemExtendedInfo: SqlProtectedItemExtendedInfo
+  AzureSqlProtectionPolicy: SqlProtectionPolicy
+  AzureStorageContainer: StorageContainer
+  AzureStorageErrorInfo: StorageErrorInfo
+  AzureStorageJob: StorageJob
+  AzureStorageJobExtendedInfo: StorageJobExtendedInfo
+  AzureStorageJobTaskDetails: StorageJobTaskDetails
+  AzureStorageProtectableContainer: StorageProtectableContainer
+  AzureVMAppContainerProtectableContainer: VmAppContainerProtectableContainer
+  AzureVMAppContainerProtectionContainer: VmAppContainerProtectionContainer
+  AzureVMResourceFeatureSupportRequest: VmResourceFeatureSupportContent
+  AzureVMResourceFeatureSupportResponse: VmResourceFeatureSupportResponse
+  AzureVmWorkloadItem: VmWorkloadItem
+  AzureVmWorkloadProtectableItem: VmWorkloadProtectableItem
+  AzureVmWorkloadProtectedItem: VmWorkloadProtectedItem
+  AzureVmWorkloadProtectedItemExtendedInfo: VmWorkloadProtectedItemExtendedInfo
+  AzureVmWorkloadProtectionPolicy: VmWorkloadProtectionPolicy
+  AzureVmWorkloadSAPAseDatabaseProtectedItem: VmWorkloadSapAseDatabaseProtectedItem
+  AzureVmWorkloadSAPAseDatabaseWorkloadItem: VmWorkloadSapAseDatabaseWorkloadItem
+  AzureVmWorkloadSAPAseSystemProtectableItem: VmWorkloadSapAseSystemProtectableItem
+  AzureVmWorkloadSAPAseSystemWorkloadItem: VmWorkloadSapAseSystemWorkloadItem
+  AzureVmWorkloadSAPHanaDatabaseProtectableItem: VmWorkloadSapHanaDatabaseProtectableItem
+  AzureVmWorkloadSAPHanaDatabaseProtectedItem: VmWorkloadSapHanaDatabaseProtectedItem
+  AzureVmWorkloadSAPHanaDatabaseWorkloadItem: VmWorkloadSapHanaDatabaseWorkloadItem
+  AzureVmWorkloadSAPHanaDBInstance: VmWorkloadSapHanaDbInstance
+  AzureVmWorkloadSAPHanaDBInstanceProtectedItem: VmWorkloadSapHanaDbInstanceProtectedItem
+  AzureVmWorkloadSAPHanaHSR: VmWorkloadSapHanaHsr
+  AzureVmWorkloadSAPHanaSystemProtectableItem: VmWorkloadSapHanaSystemProtectableItem
+  AzureVmWorkloadSAPHanaSystemWorkloadItem: VmWorkloadSapHanaSystemWorkloadItem
+  AzureVmWorkloadSQLAvailabilityGroupProtectableItem: VmWorkloadSqlAvailabilityGroupProtectableItem
+  AzureVmWorkloadSQLDatabaseProtectableItem: VmWorkloadSqlDatabaseProtectableItem
+  AzureVmWorkloadSQLDatabaseProtectedItem: VmWorkloadSqlDatabaseProtectedItem
+  AzureVmWorkloadSQLDatabaseWorkloadItem: VmWorkloadSqlDatabaseWorkloadItem
+  AzureVmWorkloadSQLInstanceProtectableItem: VmWorkloadSqlInstanceProtectableItem
+  AzureVmWorkloadSQLInstanceWorkloadItem: VmWorkloadSqlInstanceWorkloadItem
+  AzureWorkloadAutoProtectionIntent: WorkloadAutoProtectionIntent
+  AzureWorkloadBackupRequest: WorkloadBackupRequest
+  AzureWorkloadContainer: WorkloadContainer
+  AzureWorkloadContainerAutoProtectionIntent: WorkloadContainerAutoProtectionIntent
+  AzureWorkloadContainerExtendedInfo: WorkloadContainerExtendedInfo
+  AzureWorkloadErrorInfo: WorkloadErrorInfo
+  AzureWorkloadJob: WorkloadJob
+  AzureWorkloadJobExtendedInfo: WorkloadJobExtendedInfo
+  AzureWorkloadJobTaskDetails: WorkloadJobTaskDetails
+  AzureWorkloadPointInTimeRecoveryPoint: WorkloadPointInTimeRecoveryPoint
+  AzureWorkloadPointInTimeRestoreRequest: WorkloadPointInTimeRestoreRequest
+  AzureWorkloadSAPHanaPointInTimeRecoveryPoint: WorkloadSapHanaPointInTimeRecoveryPoint
+  AzureWorkloadRecoveryPoint: WorkloadRecoveryPoint
+  AzureWorkloadRestoreRequest: WorkloadRestoreRequest
+  AzureWorkloadSAPHanaPointInTimeRestoreRequest: WorkloadSapHanaPointInTimeRestoreRequest
+  AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest: WorkloadSapHanaPointInTimeRestoreWithRehydrateRequest
+  AzureWorkloadSAPHanaRecoveryPoint: WorkloadSapHanaRecoveryPoint
+  AzureWorkloadSAPHanaRestoreRequest: WorkloadSapHanaRestoreRequest
+  AzureWorkloadSAPHanaRestoreWithRehydrateRequest: WorkloadSapHanaRestoreWithRehydrateRequest
+  AzureWorkloadSQLAutoProtectionIntent: WorkloadSqlAutoProtectionIntent
+  AzureWorkloadSQLPointInTimeRecoveryPoint: WorkloadSqlPointInTimeRecoveryPoint
+  AzureWorkloadSQLPointInTimeRestoreRequest: WorkloadSqlPointInTimeRestoreRequest
+  AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest: WorkloadSqlPointInTimeRestoreWithRehydrateRequest
+  AzureWorkloadSQLRecoveryPoint: WorkloadSqlRecoveryPoint
+  AzureWorkloadSQLRecoveryPointExtendedInfo: WorkloadSqlRecoveryPointExtendedInfo
+  AzureWorkloadSQLRestoreRequest: WorkloadSqlRestoreRequest
+  AzureWorkloadSQLRestoreWithRehydrateRequest: WorkloadSqlRestoreWithRehydrateRequest
   BackupRequest: BackupRequestProperties
   BackupRequestResource: BackupRequestContent
   ILRRequest: IlrRequestProperties
@@ -97,6 +182,9 @@ rename-rules:
   DPM: Dpm
   Issqlcompression: IsSqlCompression
   ILR: Ilr
+  SQL: Sql
+  BEK: Bek
+  KEK: Kek
 
 override-operation-name:
   BackupStatus_Get: GetBackupStatus
@@ -112,9 +200,23 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}
 
 directive:
+  - remove-operation: Operation_Validate
+  - remove-operation: ValidateOperation_Trigger
+  - remove-operation: PrivateEndpoint_GetOperationStatus
+  - remove-operation: GetOperationStatus
+  - remove-operation: BMSPrepareDataMoveOperationResult_Get
   - remove-operation: ProtectedItemOperationResults_Get
   - remove-operation: ProtectionPolicyOperationResults_Get
+  - remove-operation: JobOperationResults_Get
+  - remove-operation: ExportJobsOperationResults_Get
+  - remove-operation: ValidateOperationResults_Get
+  - remove-operation: ValidateOperationStatuses_Get
+  - remove-operation: ProtectionContainerRefreshOperationResults_Get
   - remove-operation: ProtectionContainerOperationResults_Get
+  - remove-operation: ProtectedItemOperationStatuses_Get
+  - remove-operation: BackupOperationResults_Get
+  - remove-operation: BackupOperationStatuses_Get
+  - remove-operation: ProtectionPolicyOperationStatuses_Get
   - from: bms.json
     where: $.definitions
     transform: >

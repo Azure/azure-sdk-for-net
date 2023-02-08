@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Encryption mechanism: None/ SinglePass/ DoublePass
         /// Serialized Name: KeyAndSecretDetails.encryptionMechanism
         /// </param>
-        internal KeyAndSecretDetails(KEKDetails kekDetails, BEKDetails bekDetails, string encryptionMechanism)
+        internal KeyAndSecretDetails(KekDetails kekDetails, BekDetails bekDetails, string encryptionMechanism)
         {
             KekDetails = kekDetails;
             BekDetails = bekDetails;
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// KEK is encryption key for BEK.
         /// Serialized Name: KeyAndSecretDetails.kekDetails
         /// </summary>
-        public KEKDetails KekDetails { get; set; }
+        public KekDetails KekDetails { get; set; }
         /// <summary>
         /// BEK is bitlocker encryption key.
         /// Serialized Name: KeyAndSecretDetails.bekDetails
         /// </summary>
-        public BEKDetails BekDetails { get; set; }
+        public BekDetails BekDetails { get; set; }
         /// <summary>
         /// Encryption mechanism: None/ SinglePass/ DoublePass
         /// Serialized Name: KeyAndSecretDetails.encryptionMechanism

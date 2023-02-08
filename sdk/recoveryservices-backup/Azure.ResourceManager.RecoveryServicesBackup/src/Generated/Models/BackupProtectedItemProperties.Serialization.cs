@@ -107,18 +107,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureFileShareProtectedItem": return FileshareProtectedItem.DeserializeFileshareProtectedItem(element);
-                    case "AzureIaaSVMProtectedItem": return AzureIaasVmProtectedItem.DeserializeAzureIaasVmProtectedItem(element);
-                    case "AzureVmWorkloadProtectedItem": return AzureVmWorkloadProtectedItem.DeserializeAzureVmWorkloadProtectedItem(element);
-                    case "AzureVmWorkloadSAPAseDatabase": return AzureVmWorkloadSAPAseDatabaseProtectedItem.DeserializeAzureVmWorkloadSAPAseDatabaseProtectedItem(element);
-                    case "AzureVmWorkloadSAPHanaDBInstance": return AzureVmWorkloadSAPHanaDBInstanceProtectedItem.DeserializeAzureVmWorkloadSAPHanaDBInstanceProtectedItem(element);
-                    case "AzureVmWorkloadSAPHanaDatabase": return AzureVmWorkloadSAPHanaDatabaseProtectedItem.DeserializeAzureVmWorkloadSAPHanaDatabaseProtectedItem(element);
-                    case "AzureVmWorkloadSQLDatabase": return AzureVmWorkloadSQLDatabaseProtectedItem.DeserializeAzureVmWorkloadSQLDatabaseProtectedItem(element);
+                    case "AzureIaaSVMProtectedItem": return IaasVmProtectedItem.DeserializeIaasVmProtectedItem(element);
+                    case "AzureVmWorkloadProtectedItem": return VmWorkloadProtectedItem.DeserializeVmWorkloadProtectedItem(element);
+                    case "AzureVmWorkloadSAPAseDatabase": return VmWorkloadSapAseDatabaseProtectedItem.DeserializeVmWorkloadSapAseDatabaseProtectedItem(element);
+                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDbInstanceProtectedItem.DeserializeVmWorkloadSapHanaDbInstanceProtectedItem(element);
+                    case "AzureVmWorkloadSAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element);
+                    case "AzureVmWorkloadSQLDatabase": return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element);
                     case "DPMProtectedItem": return DpmProtectedItem.DeserializeDpmProtectedItem(element);
                     case "GenericProtectedItem": return GenericProtectedItem.DeserializeGenericProtectedItem(element);
                     case "MabFileFolderProtectedItem": return MabFileFolderProtectedItem.DeserializeMabFileFolderProtectedItem(element);
-                    case "Microsoft.ClassicCompute/virtualMachines": return AzureIaaSClassicComputeVmProtectedItem.DeserializeAzureIaaSClassicComputeVmProtectedItem(element);
-                    case "Microsoft.Compute/virtualMachines": return AzureIaaSComputeVmProtectedItem.DeserializeAzureIaaSComputeVmProtectedItem(element);
-                    case "Microsoft.Sql/servers/databases": return AzureSqlProtectedItem.DeserializeAzureSqlProtectedItem(element);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmProtectedItem.DeserializeIaasClassicComputeVmProtectedItem(element);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmProtectedItem.DeserializeIaasComputeVmProtectedItem(element);
+                    case "Microsoft.Sql/servers/databases": return SqlProtectedItem.DeserializeSqlProtectedItem(element);
                 }
             }
             return UnknownProtectedItem.DeserializeUnknownProtectedItem(element);

@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly JobDetailsRestOperations _backupJobJobDetailsRestClient;
         private readonly ClientDiagnostics _jobCancellationsClientDiagnostics;
         private readonly JobCancellationsRestOperations _jobCancellationsRestClient;
-        private readonly ClientDiagnostics _jobOperationResultsClientDiagnostics;
-        private readonly JobOperationResultsRestOperations _jobOperationResultsRestClient;
         private readonly BackupJobData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BackupJobResource"/> class for mocking. </summary>
@@ -64,8 +62,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _backupJobJobDetailsRestClient = new JobDetailsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupJobJobDetailsApiVersion);
             _jobCancellationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _jobCancellationsRestClient = new JobCancellationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _jobOperationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _jobOperationResultsRestClient = new JobOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -212,76 +208,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _jobCancellationsRestClient.Trigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the result of any operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> OperationID which represents the operation whose result has to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response> GetJobOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _jobOperationResultsClientDiagnostics.CreateScope("BackupJobResource.GetJobOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await _jobOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the result of any operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> OperationID which represents the operation whose result has to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response GetJobOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _jobOperationResultsClientDiagnostics.CreateScope("BackupJobResource.GetJobOperationResult");
-            scope.Start();
-            try
-            {
-                var response = _jobOperationResultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

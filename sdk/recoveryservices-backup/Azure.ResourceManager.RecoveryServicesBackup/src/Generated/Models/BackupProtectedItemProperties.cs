@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Base class for backup items.
     /// Serialized Name: ProtectedItem
     /// Please note <see cref="BackupProtectedItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="FileshareProtectedItem"/>, <see cref="AzureIaasVmProtectedItem"/>, <see cref="AzureVmWorkloadProtectedItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDBInstanceProtectedItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSQLDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, <see cref="MabFileFolderProtectedItem"/>, <see cref="AzureIaaSClassicComputeVmProtectedItem"/>, <see cref="AzureIaaSComputeVmProtectedItem"/> and <see cref="AzureSqlProtectedItem"/>.
+    /// The available derived classes include <see cref="FileshareProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDbInstanceProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, <see cref="MabFileFolderProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/> and <see cref="SqlProtectedItem"/>.
     /// </summary>
     public abstract partial class BackupProtectedItemProperties
     {

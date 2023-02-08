@@ -37,8 +37,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly ProtectedItemsRestOperations _backupProtectedItemProtectedItemsRestClient;
         private readonly ClientDiagnostics _backupsClientDiagnostics;
         private readonly BackupsRestOperations _backupsRestClient;
-        private readonly ClientDiagnostics _protectedItemOperationStatusesClientDiagnostics;
-        private readonly ProtectedItemOperationStatusesRestOperations _protectedItemOperationStatusesRestClient;
         private readonly ClientDiagnostics _recoveryPointsRecommendedForMoveClientDiagnostics;
         private readonly RecoveryPointsRecommendedForMoveRestOperations _recoveryPointsRecommendedForMoveRestClient;
         private readonly BackupProtectedItemData _data;
@@ -67,8 +65,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _backupProtectedItemProtectedItemsRestClient = new ProtectedItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectedItemProtectedItemsApiVersion);
             _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _backupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _protectedItemOperationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _protectedItemOperationStatusesRestClient = new ProtectedItemOperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _recoveryPointsRecommendedForMoveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _recoveryPointsRecommendedForMoveRestClient = new RecoveryPointsRecommendedForMoveRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -432,80 +428,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupsRestClient.Trigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the status of an operation such as triggering a backup, restore. The status can be in progress, completed
-        /// or failed. You can refer to the OperationStatus enum for all the possible states of the operation. Some operations
-        /// create jobs. This method returns the list of jobs associated with the operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/operationsStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectedItemOperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> OperationID represents the operation whose status needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatus>> GetProtectedItemOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _protectedItemOperationStatusesClientDiagnostics.CreateScope("BackupProtectedItemResource.GetProtectedItemOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await _protectedItemOperationStatusesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the status of an operation such as triggering a backup, restore. The status can be in progress, completed
-        /// or failed. You can refer to the OperationStatus enum for all the possible states of the operation. Some operations
-        /// create jobs. This method returns the list of jobs associated with the operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/operationsStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectedItemOperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> OperationID represents the operation whose status needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatus> GetProtectedItemOperationStatus(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _protectedItemOperationStatusesClientDiagnostics.CreateScope("BackupProtectedItemResource.GetProtectedItemOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = _protectedItemOperationStatusesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

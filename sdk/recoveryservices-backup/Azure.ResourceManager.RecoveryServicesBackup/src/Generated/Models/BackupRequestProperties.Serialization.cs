@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureFileShareBackupRequest": return FileShareBackupRequest.DeserializeFileShareBackupRequest(element);
-                    case "AzureWorkloadBackupRequest": return AzureWorkloadBackupRequest.DeserializeAzureWorkloadBackupRequest(element);
+                    case "AzureWorkloadBackupRequest": return WorkloadBackupRequest.DeserializeWorkloadBackupRequest(element);
                     case "IaasVMBackupRequest": return IaasVmBackupRequest.DeserializeIaasVmBackupRequest(element);
                 }
             }

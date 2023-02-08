@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// ProtectionPolicyResource properties
         /// Serialized Name: ProtectionPolicyResource.properties
         /// Please note <see cref="BackupProtectionPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureIaasVmProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
+        /// The available derived classes include <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="VmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
         /// </param>
         /// <param name="eTag">
         /// Optional ETag.
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// ProtectionPolicyResource properties
         /// Serialized Name: ProtectionPolicyResource.properties
         /// Please note <see cref="BackupProtectionPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureIaasVmProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
+        /// The available derived classes include <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="VmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
         /// </summary>
         public BackupProtectionPolicyProperties Properties { get; set; }
         /// <summary>
