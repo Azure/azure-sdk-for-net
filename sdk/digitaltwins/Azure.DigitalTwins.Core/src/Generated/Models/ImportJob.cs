@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A job which contains a reference to the operations to perform, results, and execution metadata. </summary>
-    public partial class BulkImportJob
+    public partial class ImportJob
     {
-        /// <summary> Initializes a new instance of BulkImportJob. </summary>
+        /// <summary> Initializes a new instance of ImportJob. </summary>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
         /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobUri"/> or <paramref name="outputBlobUri"/> is null. </exception>
-        public BulkImportJob(string inputBlobUri, string outputBlobUri)
+        public ImportJob(string inputBlobUri, string outputBlobUri)
         {
             Argument.AssertNotNull(inputBlobUri, nameof(inputBlobUri));
             Argument.AssertNotNull(outputBlobUri, nameof(outputBlobUri));
@@ -26,8 +26,8 @@ namespace Azure.DigitalTwins.Core
             OutputBlobUri = outputBlobUri;
         }
 
-        /// <summary> Initializes a new instance of BulkImportJob. </summary>
-        /// <param name="id"> The identifier of the bulk import job. </param>
+        /// <summary> Initializes a new instance of ImportJob. </summary>
+        /// <param name="id"> The identifier of the import job. </param>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
         /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>
         /// <param name="status"> Status of the job. </param>
@@ -35,8 +35,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="lastActionDateTime"> Last time service performed any action from the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="error"> Details of the error(s) that occurred executing the bulk job. </param>
-        internal BulkImportJob(string id, string inputBlobUri, string outputBlobUri, ImportJobStatus? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ErrorInformation error)
+        /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
+        internal ImportJob(string id, string inputBlobUri, string outputBlobUri, ImportJobStatus? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ErrorInformation error)
         {
             Id = id;
             InputBlobUri = inputBlobUri;
@@ -49,7 +49,7 @@ namespace Azure.DigitalTwins.Core
             Error = error;
         }
 
-        /// <summary> The identifier of the bulk import job. </summary>
+        /// <summary> The identifier of the import job. </summary>
         public string Id { get; }
         /// <summary> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </summary>
         public string InputBlobUri { get; set; }
@@ -65,7 +65,7 @@ namespace Azure.DigitalTwins.Core
         public DateTimeOffset? FinishedDateTime { get; }
         /// <summary> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? PurgeDateTime { get; }
-        /// <summary> Details of the error(s) that occurred executing the bulk job. </summary>
+        /// <summary> Details of the error(s) that occurred executing the import job. </summary>
         public ErrorInformation Error { get; set; }
     }
 }

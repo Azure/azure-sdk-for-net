@@ -58,13 +58,13 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Retrieves all bulk import jobs.
+        /// Retrieves all import jobs.
         /// Status codes:
         /// * 200 OK
         /// </summary>
         /// <param name="importJobsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<BulkImportJobCollection>> ListAsync(ImportJobsListOptions importJobsListOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImportJobCollection>> ListAsync(ImportJobsListOptions importJobsListOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(importJobsListOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -72,9 +72,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        BulkImportJobCollection value = default;
+                        ImportJobCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BulkImportJobCollection.DeserializeBulkImportJobCollection(document.RootElement);
+                        value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -83,13 +83,13 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Retrieves all bulk import jobs.
+        /// Retrieves all import jobs.
         /// Status codes:
         /// * 200 OK
         /// </summary>
         /// <param name="importJobsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<BulkImportJobCollection> List(ImportJobsListOptions importJobsListOptions = null, CancellationToken cancellationToken = default)
+        public Response<ImportJobCollection> List(ImportJobsListOptions importJobsListOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(importJobsListOptions);
             _pipeline.Send(message, cancellationToken);
@@ -97,9 +97,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        BulkImportJobCollection value = default;
+                        ImportJobCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BulkImportJobCollection.DeserializeBulkImportJobCollection(document.RootElement);
+                        value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,7 +107,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateAddRequest(string id, BulkImportJob importJob, ImportJobsAddOptions importJobsAddOptions)
+        internal HttpMessage CreateAddRequest(string id, ImportJob importJob, ImportJobsAddOptions importJobsAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -127,19 +127,19 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates a bulk import job.
+        /// Creates an import job.
         /// Status codes:
         /// * 201 Created
         /// * 400 Bad Request
-        ///   * JobLimitReached - The maximum number of bulk import jobs allowed has been reached.
-        ///   * ValidationFailed - The bulk job request is not valid.
+        ///   * JobLimitReached - The maximum number of import jobs allowed has been reached.
+        ///   * ValidationFailed - The import job request is not valid.
         /// </summary>
-        /// <param name="id"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
-        /// <param name="importJob"> The bulk import job being added. </param>
+        /// <param name="id"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="importJob"> The import job being added. </param>
         /// <param name="importJobsAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="importJob"/> is null. </exception>
-        public async Task<Response<BulkImportJob>> AddAsync(string id, BulkImportJob importJob, ImportJobsAddOptions importJobsAddOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImportJob>> AddAsync(string id, ImportJob importJob, ImportJobsAddOptions importJobsAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -156,9 +156,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 201:
                     {
-                        BulkImportJob value = default;
+                        ImportJob value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BulkImportJob.DeserializeBulkImportJob(document.RootElement);
+                        value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,19 +167,19 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates a bulk import job.
+        /// Creates an import job.
         /// Status codes:
         /// * 201 Created
         /// * 400 Bad Request
-        ///   * JobLimitReached - The maximum number of bulk import jobs allowed has been reached.
-        ///   * ValidationFailed - The bulk job request is not valid.
+        ///   * JobLimitReached - The maximum number of import jobs allowed has been reached.
+        ///   * ValidationFailed - The import job request is not valid.
         /// </summary>
-        /// <param name="id"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
-        /// <param name="importJob"> The bulk import job being added. </param>
+        /// <param name="id"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="importJob"> The import job being added. </param>
         /// <param name="importJobsAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="importJob"/> is null. </exception>
-        public Response<BulkImportJob> Add(string id, BulkImportJob importJob, ImportJobsAddOptions importJobsAddOptions = null, CancellationToken cancellationToken = default)
+        public Response<ImportJob> Add(string id, ImportJob importJob, ImportJobsAddOptions importJobsAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -196,9 +196,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 201:
                     {
-                        BulkImportJob value = default;
+                        ImportJob value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BulkImportJob.DeserializeBulkImportJob(document.RootElement);
+                        value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -222,17 +222,17 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Retrieves a bulk job.
+        /// Retrieves an import job.
         /// Status codes:
         /// * 200 OK
         /// * 404 Not Found
-        ///   * BulkJobNotFound - The bulk job was not found.
+        ///   * ImportJobNotFound - The import job was not found.
         /// </summary>
-        /// <param name="id"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="id"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="importJobsGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<BulkImportJob>> GetByIdAsync(string id, ImportJobsGetByIdOptions importJobsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImportJob>> GetByIdAsync(string id, ImportJobsGetByIdOptions importJobsGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -245,9 +245,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        BulkImportJob value = default;
+                        ImportJob value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BulkImportJob.DeserializeBulkImportJob(document.RootElement);
+                        value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -256,17 +256,17 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Retrieves a bulk job.
+        /// Retrieves an import job.
         /// Status codes:
         /// * 200 OK
         /// * 404 Not Found
-        ///   * BulkJobNotFound - The bulk job was not found.
+        ///   * ImportJobNotFound - The import job was not found.
         /// </summary>
-        /// <param name="id"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="id"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="importJobsGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<BulkImportJob> GetById(string id, ImportJobsGetByIdOptions importJobsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        public Response<ImportJob> GetById(string id, ImportJobsGetByIdOptions importJobsGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -279,9 +279,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        BulkImportJob value = default;
+                        ImportJob value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BulkImportJob.DeserializeBulkImportJob(document.RootElement);
+                        value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,13 +305,13 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Deletes a bulk import job.
+        /// Deletes an import job.
         /// Status codes:
         /// * 204 No Content
         /// * 400 Bad Request
-        ///   * ValidationFailed - The bulk job request is not valid.
+        ///   * ValidationFailed - The import job request is not valid.
         /// </summary>
-        /// <param name="id"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="id"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="importJobsDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -334,13 +334,13 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Deletes a bulk import job.
+        /// Deletes an import job.
         /// Status codes:
         /// * 204 No Content
         /// * 400 Bad Request
-        ///   * ValidationFailed - The bulk job request is not valid.
+        ///   * ValidationFailed - The import job request is not valid.
         /// </summary>
-        /// <param name="id"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="id"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="importJobsDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -379,17 +379,17 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Cancels a bulk import job.
+        /// Cancels an import job.
         /// Status codes:
         /// * 200 Request Accepted
         /// * 400 Bad Request
-        ///   * ValidationFailed - The bulk job request is not valid.
+        ///   * ValidationFailed - The import job request is not valid.
         /// </summary>
-        /// <param name="id"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="id"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="importJobsCancelOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<BulkImportJob>> CancelAsync(string id, ImportJobsCancelOptions importJobsCancelOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImportJob>> CancelAsync(string id, ImportJobsCancelOptions importJobsCancelOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -402,9 +402,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        BulkImportJob value = default;
+                        ImportJob value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BulkImportJob.DeserializeBulkImportJob(document.RootElement);
+                        value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -413,17 +413,17 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Cancels a bulk import job.
+        /// Cancels an import job.
         /// Status codes:
         /// * 200 Request Accepted
         /// * 400 Bad Request
-        ///   * ValidationFailed - The bulk job request is not valid.
+        ///   * ValidationFailed - The import job request is not valid.
         /// </summary>
-        /// <param name="id"> The id for the bulk import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="id"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="importJobsCancelOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<BulkImportJob> Cancel(string id, ImportJobsCancelOptions importJobsCancelOptions = null, CancellationToken cancellationToken = default)
+        public Response<ImportJob> Cancel(string id, ImportJobsCancelOptions importJobsCancelOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -436,9 +436,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        BulkImportJob value = default;
+                        ImportJob value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BulkImportJob.DeserializeBulkImportJob(document.RootElement);
+                        value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -464,7 +464,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Retrieves all bulk import jobs.
+        /// Retrieves all import jobs.
         /// Status codes:
         /// * 200 OK
         /// </summary>
@@ -472,7 +472,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="importJobsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<BulkImportJobCollection>> ListNextPageAsync(string nextLink, ImportJobsListOptions importJobsListOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImportJobCollection>> ListNextPageAsync(string nextLink, ImportJobsListOptions importJobsListOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -485,9 +485,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        BulkImportJobCollection value = default;
+                        ImportJobCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BulkImportJobCollection.DeserializeBulkImportJobCollection(document.RootElement);
+                        value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -496,7 +496,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Retrieves all bulk import jobs.
+        /// Retrieves all import jobs.
         /// Status codes:
         /// * 200 OK
         /// </summary>
@@ -504,7 +504,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="importJobsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<BulkImportJobCollection> ListNextPage(string nextLink, ImportJobsListOptions importJobsListOptions = null, CancellationToken cancellationToken = default)
+        public Response<ImportJobCollection> ListNextPage(string nextLink, ImportJobsListOptions importJobsListOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -517,9 +517,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        BulkImportJobCollection value = default;
+                        ImportJobCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BulkImportJobCollection.DeserializeBulkImportJobCollection(document.RootElement);
+                        value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

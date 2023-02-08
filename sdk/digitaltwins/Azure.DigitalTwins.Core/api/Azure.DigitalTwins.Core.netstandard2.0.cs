@@ -40,25 +40,6 @@ namespace Azure.DigitalTwins.Core
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$targetId")]
         public string TargetId { get { throw null; } set { } }
     }
-    public partial class BulkImportJob
-    {
-        public BulkImportJob(string inputBlobUri, string outputBlobUri) { }
-        public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
-        public Azure.DigitalTwins.Core.ErrorInformation Error { get { throw null; } set { } }
-        public System.DateTimeOffset? FinishedDateTime { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string InputBlobUri { get { throw null; } set { } }
-        public System.DateTimeOffset? LastActionDateTime { get { throw null; } }
-        public string OutputBlobUri { get { throw null; } set { } }
-        public System.DateTimeOffset? PurgeDateTime { get { throw null; } }
-        public Azure.DigitalTwins.Core.ImportJobStatus? Status { get { throw null; } }
-    }
-    public partial class BulkImportJobCollection
-    {
-        internal BulkImportJobCollection() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.DigitalTwins.Core.BulkImportJob> Value { get { throw null; } }
-    }
     public partial class DigitalTwinMetadata
     {
         public DigitalTwinMetadata() { }
@@ -79,10 +60,10 @@ namespace Azure.DigitalTwins.Core
         protected DigitalTwinsClient() { }
         public DigitalTwinsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DigitalTwinsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.DigitalTwins.Core.DigitalTwinsClientOptions options) { }
-        public virtual Azure.Response<Azure.DigitalTwins.Core.BulkImportJob> CancelImportJobs(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.BulkImportJob>> CancelImportJobsAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.DigitalTwins.Core.BulkImportJob> CreateImportJobs(string jobId, Azure.DigitalTwins.Core.BulkImportJob importJob, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.BulkImportJob>> CreateImportJobsAsync(string jobId, Azure.DigitalTwins.Core.BulkImportJob importJob, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.DigitalTwins.Core.ImportJob> CancelImportJobs(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.ImportJob>> CancelImportJobsAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.DigitalTwins.Core.ImportJob> CreateImportJobs(string jobId, Azure.DigitalTwins.Core.ImportJob importJob, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.ImportJob>> CreateImportJobsAsync(string jobId, Azure.DigitalTwins.Core.ImportJob importJob, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]> CreateModels(System.Collections.Generic.IEnumerable<string> dtdlModels, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData[]>> CreateModelsAsync(System.Collections.Generic.IEnumerable<string> dtdlModels, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateOrReplaceDigitalTwinAsync<T>(string digitalTwinId, T digitalTwin, Azure.ETag? ifNoneMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -111,8 +92,8 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsEventRoute>> GetEventRouteAsync(string eventRouteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.DigitalTwins.Core.DigitalTwinsEventRoute> GetEventRoutes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.DigitalTwinsEventRoute> GetEventRoutesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.DigitalTwins.Core.BulkImportJob> GetImportJobsById(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.BulkImportJob>> GetImportJobsByIdAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.DigitalTwins.Core.ImportJob> GetImportJobsById(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.ImportJob>> GetImportJobsByIdAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.DigitalTwins.Core.IncomingRelationship> GetIncomingRelationships(string digitalTwinId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.DigitalTwins.Core.DigitalTwinsModelData> GetModel(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -123,8 +104,8 @@ namespace Azure.DigitalTwins.Core
         public virtual Azure.AsyncPageable<T> GetRelationshipsAsync<T>(string digitalTwinId, string relationshipName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<T> GetRelationships<T>(string digitalTwinId, string relationshipName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<T> GetRelationship<T>(string digitalTwinId, string relationshipId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.DigitalTwins.Core.BulkImportJobCollection> ListImportJobs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.BulkImportJobCollection>> ListImportJobsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.DigitalTwins.Core.ImportJobCollection> ListImportJobs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.ImportJobCollection>> ListImportJobsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishComponentTelemetry(string digitalTwinId, string componentName, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishTelemetry(string digitalTwinId, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -183,11 +164,11 @@ namespace Azure.DigitalTwins.Core
     }
     public static partial class DigitalTwinsModelFactory
     {
-        public static Azure.DigitalTwins.Core.BulkImportJob BulkImportJob(string id = null, string inputBlobUri = null, string outputBlobUri = null, Azure.DigitalTwins.Core.ImportJobStatus? status = default(Azure.DigitalTwins.Core.ImportJobStatus?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastActionDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? finishedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? purgeDateTime = default(System.DateTimeOffset?), Azure.DigitalTwins.Core.ErrorInformation error = null) { throw null; }
-        public static Azure.DigitalTwins.Core.BulkImportJobCollection BulkImportJobCollection(System.Collections.Generic.IEnumerable<Azure.DigitalTwins.Core.BulkImportJob> value = null, string nextLink = null) { throw null; }
         public static Azure.DigitalTwins.Core.DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null) { throw null; }
         public static Azure.DigitalTwins.Core.DigitalTwinsModelData DigitalTwinsModelData(System.Collections.Generic.IReadOnlyDictionary<string, string> languageDisplayNames = null, System.Collections.Generic.IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, System.DateTimeOffset? uploadedOn = default(System.DateTimeOffset?), bool? decommissioned = default(bool?), string dtdlModel = null) { throw null; }
         public static Azure.DigitalTwins.Core.ErrorInformation ErrorInformation(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.DigitalTwins.Core.ErrorInformation> details = null, Azure.DigitalTwins.Core.InnerError innererror = null) { throw null; }
+        public static Azure.DigitalTwins.Core.ImportJob ImportJob(string id = null, string inputBlobUri = null, string outputBlobUri = null, Azure.DigitalTwins.Core.ImportJobStatus? status = default(Azure.DigitalTwins.Core.ImportJobStatus?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastActionDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? finishedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? purgeDateTime = default(System.DateTimeOffset?), Azure.DigitalTwins.Core.ErrorInformation error = null) { throw null; }
+        public static Azure.DigitalTwins.Core.ImportJobCollection ImportJobCollection(System.Collections.Generic.IEnumerable<Azure.DigitalTwins.Core.ImportJob> value = null, string nextLink = null) { throw null; }
         public static Azure.DigitalTwins.Core.IncomingRelationship IncomingRelationship(string relationshipId = null, string sourceId = null, string relationshipName = null, string relationshipLink = null) { throw null; }
     }
     public partial class ErrorInformation
@@ -203,6 +184,25 @@ namespace Azure.DigitalTwins.Core
         public GetModelsOptions() { }
         public System.Collections.Generic.IEnumerable<string> DependenciesFor { get { throw null; } set { } }
         public bool IncludeModelDefinition { get { throw null; } set { } }
+    }
+    public partial class ImportJob
+    {
+        public ImportJob(string inputBlobUri, string outputBlobUri) { }
+        public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
+        public Azure.DigitalTwins.Core.ErrorInformation Error { get { throw null; } set { } }
+        public System.DateTimeOffset? FinishedDateTime { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string InputBlobUri { get { throw null; } set { } }
+        public System.DateTimeOffset? LastActionDateTime { get { throw null; } }
+        public string OutputBlobUri { get { throw null; } set { } }
+        public System.DateTimeOffset? PurgeDateTime { get { throw null; } }
+        public Azure.DigitalTwins.Core.ImportJobStatus? Status { get { throw null; } }
+    }
+    public partial class ImportJobCollection
+    {
+        internal ImportJobCollection() { }
+        public string NextLink { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.DigitalTwins.Core.ImportJob> Value { get { throw null; } }
     }
     public enum ImportJobStatus
     {

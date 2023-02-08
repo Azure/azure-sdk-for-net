@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class BulkImportJobCollection
+    public partial class ImportJobCollection
     {
-        internal static BulkImportJobCollection DeserializeBulkImportJobCollection(JsonElement element)
+        internal static ImportJobCollection DeserializeImportJobCollection(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<BulkImportJob> value = default;
+            IReadOnlyList<ImportJob> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<BulkImportJob> array = new List<BulkImportJob>();
+                    List<ImportJob> array = new List<ImportJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BulkImportJob.DeserializeBulkImportJob(item));
+                        array.Add(ImportJob.DeserializeImportJob(item));
                     }
                     value = array;
                     continue;
@@ -39,7 +39,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new BulkImportJobCollection(value, nextLink.Value);
+            return new ImportJobCollection(value, nextLink.Value);
         }
     }
 }

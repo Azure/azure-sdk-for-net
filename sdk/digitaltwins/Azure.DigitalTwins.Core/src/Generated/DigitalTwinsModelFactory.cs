@@ -64,19 +64,19 @@ namespace Azure.DigitalTwins.Core
             return new DigitalTwinsEventRoute(id, endpointName, filter);
         }
 
-        /// <summary> Initializes a new instance of BulkImportJobCollection. </summary>
-        /// <param name="value"> The list of bulk import job objects. </param>
+        /// <summary> Initializes a new instance of ImportJobCollection. </summary>
+        /// <param name="value"> The list of import job objects. </param>
         /// <param name="nextLink"> A URI to retrieve the next page of results. </param>
-        /// <returns> A new <see cref="Core.BulkImportJobCollection"/> instance for mocking. </returns>
-        public static BulkImportJobCollection BulkImportJobCollection(IEnumerable<BulkImportJob> value = null, string nextLink = null)
+        /// <returns> A new <see cref="Core.ImportJobCollection"/> instance for mocking. </returns>
+        public static ImportJobCollection ImportJobCollection(IEnumerable<ImportJob> value = null, string nextLink = null)
         {
-            value ??= new List<BulkImportJob>();
+            value ??= new List<ImportJob>();
 
-            return new BulkImportJobCollection(value?.ToList(), nextLink);
+            return new ImportJobCollection(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of BulkImportJob. </summary>
-        /// <param name="id"> The identifier of the bulk import job. </param>
+        /// <summary> Initializes a new instance of ImportJob. </summary>
+        /// <param name="id"> The identifier of the import job. </param>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
         /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>
         /// <param name="status"> Status of the job. </param>
@@ -84,11 +84,11 @@ namespace Azure.DigitalTwins.Core
         /// <param name="lastActionDateTime"> Last time service performed any action from the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="error"> Details of the error(s) that occurred executing the bulk job. </param>
-        /// <returns> A new <see cref="Core.BulkImportJob"/> instance for mocking. </returns>
-        public static BulkImportJob BulkImportJob(string id = null, string inputBlobUri = null, string outputBlobUri = null, ImportJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ErrorInformation error = null)
+        /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
+        /// <returns> A new <see cref="Core.ImportJob"/> instance for mocking. </returns>
+        public static ImportJob ImportJob(string id = null, string inputBlobUri = null, string outputBlobUri = null, ImportJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ErrorInformation error = null)
         {
-            return new BulkImportJob(id, inputBlobUri, outputBlobUri, status, createdDateTime, lastActionDateTime, finishedDateTime, purgeDateTime, error);
+            return new ImportJob(id, inputBlobUri, outputBlobUri, status, createdDateTime, lastActionDateTime, finishedDateTime, purgeDateTime, error);
         }
     }
 }

@@ -124,8 +124,8 @@ resource storageRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-
 
 output STORAGE_CONTAINER_URI string = 'https://${storageAccount.name}.blob.${environment().suffixes.storage}/${containerName}'
 
-var deploymentScriptName = 'bulkSdkDeploymentScript'
-var blobName = 'bulkInputBlobSdkTest.ndjson'
+var deploymentScriptName = 'importJobSdkDeploymentScript'
+var blobName = 'importJobInputBlobSdkTest.ndjson'
 var storageAccountKey = storageAccount.listKeys().keys[0].value
 
 resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
@@ -138,7 +138,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
         environmentVariables: [
             {
                 name: 'INPUT_FILE'
-                value: loadFileAsBase64('./Azure.DigitalTwins.Core/tests/resources/bulkInputBlobSdkTest.ndjson')
+                value: loadFileAsBase64('./Azure.DigitalTwins.Core/tests/resources/importJobInputBlobSdkTest.ndjson')
             }
             {
                 name: 'CONTAINER_NAME'
