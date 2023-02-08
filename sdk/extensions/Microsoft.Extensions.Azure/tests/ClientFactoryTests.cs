@@ -164,7 +164,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationTenantId", clientCertificateCredential.TenantId);
 
             var additionalTenants = (string[]) typeof(ClientCertificateCredential)
-                .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientCertificateCredential);
             Assert.IsEmpty(additionalTenants);
         }
@@ -204,7 +204,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationTenantId", clientCertificateCredential.TenantId);
 
             var actualTenants = (string[]) typeof(ClientCertificateCredential)
-                .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientCertificateCredential);
             var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
@@ -232,7 +232,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
 
             var additionalTenants = (string[]) typeof(ClientSecretCredential)
-                .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientSecretCredential);
             Assert.IsEmpty(additionalTenants);
         }
@@ -262,7 +262,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
 
             var actualTenants = typeof(ClientSecretCredential)
-                .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
                 .GetValue(clientSecretCredential);
             var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
