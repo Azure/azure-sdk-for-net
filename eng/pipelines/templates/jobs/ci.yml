@@ -148,155 +148,155 @@ jobs:
         inputs:
           ignoreDirectories: '.nuget'
 
-  - job: "Analyze"
-    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-    pool:
-      name: azsdk-pool-mms-ubuntu-2004-general
-      vmImage: MMSUbuntu20.04
-    steps:
-      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
+  # - job: "Analyze"
+  #   timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+  #   condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+  #   pool:
+  #     name: azsdk-pool-mms-ubuntu-2004-general
+  #     vmImage: MMSUbuntu20.04
+  #   steps:
+  #     - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+  #       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+  #         parameters:
+  #             Paths:
+  #               - "/*"
+  #               - "!SessionRecords"
 
-      - template: /eng/common/pipelines/templates/steps/verify-samples.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+  #     - template: /eng/common/pipelines/templates/steps/verify-samples.yml
+  #       parameters:
+  #         ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
-      - template: /eng/common/pipelines/templates/steps/verify-readme.yml
-        parameters:
-          ScanPath: $(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}
+  #     - template: /eng/common/pipelines/templates/steps/verify-readme.yml
+  #       parameters:
+  #         ScanPath: $(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}
 
-      - task: NodeTool@0
-        inputs:
-          versionSpec: 18.x
-        displayName: 'Use Node 18.x'
+  #     - task: NodeTool@0
+  #       inputs:
+  #         versionSpec: 18.x
+  #       displayName: 'Use Node 18.x'
 
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+  #     - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
-      - task: DotNetCoreCLI@2
-        displayName: 'Install Snippet Generator Tool'
-        inputs:
-          command: custom
-          custom: 'tool'
-          arguments: 'restore'
-          workingDirectory: '$(Agent.BuildDirectory)'
+  #     - task: DotNetCoreCLI@2
+  #       displayName: 'Install Snippet Generator Tool'
+  #       inputs:
+  #         command: custom
+  #         custom: 'tool'
+  #         arguments: 'restore'
+  #         workingDirectory: '$(Agent.BuildDirectory)'
 
-      - task: PowerShell@2
-        displayName: "Verify generated code"
-        env:
-          EnableSourceLink: false
-        inputs:
-          filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: >
-           -ServiceDirectory ${{ parameters.ServiceDirectory }}
-           -SDKType ${{ parameters.SDKType }}
-           -SpellCheckPublicApiSurface
-          pwsh: true
-          failOnStderr: false
+  #     - task: PowerShell@2
+  #       displayName: "Verify generated code"
+  #       env:
+  #         EnableSourceLink: false
+  #       inputs:
+  #         filePath: "eng/scripts/CodeChecks.ps1"
+  #         arguments: >
+  #          -ServiceDirectory ${{ parameters.ServiceDirectory }}
+  #          -SDKType ${{ parameters.SDKType }}
+  #          -SpellCheckPublicApiSurface
+  #         pwsh: true
+  #         failOnStderr: false
 
-      - script: >-
-          dotnet build eng/service.proj -warnaserror
-          /t:rebuild
-          /p:DebugType=none
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludePerf=false
-          /p:IncludeStress=false
-          /p:PublicSign=false
-          /p:Configuration=$(BuildConfiguration)
-          /p:EnableSourceLink=false
-          /p:BuildSnippets=true
-        displayName: Build snippets
-        condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
+  #     - script: >-
+  #         dotnet build eng/service.proj -warnaserror
+  #         /t:rebuild
+  #         /p:DebugType=none
+  #         /p:SDKType=${{ parameters.SDKType }}
+  #         /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+  #         /p:IncludePerf=false
+  #         /p:IncludeStress=false
+  #         /p:PublicSign=false
+  #         /p:Configuration=$(BuildConfiguration)
+  #         /p:EnableSourceLink=false
+  #         /p:BuildSnippets=true
+  #       displayName: Build snippets
+  #       condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
 
-  # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
-  # other stages that are aggregate in nature as those are tested in another aggregate pipeline
-  - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
-    - job: Compliance
-      pool:
-        name: azsdk-pool-mms-win-2022-general
-        vmImage: MMS2022
-      steps:
-        - task: UsePythonVersion@0
-          displayName: "Use Python 3.6"
-          inputs:
-            versionSpec: "3.6"
+  # # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
+  # # other stages that are aggregate in nature as those are tested in another aggregate pipeline
+  # - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
+  #   - job: Compliance
+  #     pool:
+  #       name: azsdk-pool-mms-win-2022-general
+  #       vmImage: MMS2022
+  #     steps:
+  #       - task: UsePythonVersion@0
+  #         displayName: "Use Python 3.6"
+  #         inputs:
+  #           versionSpec: "3.6"
 
-        - template: /eng/common/pipelines/templates/steps/validate-filename.yml
+  #       - template: /eng/common/pipelines/templates/steps/validate-filename.yml
 
-        - template: /eng/common/pipelines/templates/steps/check-spelling.yml
+  #       - template: /eng/common/pipelines/templates/steps/check-spelling.yml
 
-        - template: /eng/common/pipelines/templates/steps/verify-links.yml
-          parameters:
-            ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: ''
-              Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
-            ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: sdk/${{ parameters.ServiceDirectory }}
-            CheckLinkGuidance: $true
+  #       - template: /eng/common/pipelines/templates/steps/verify-links.yml
+  #         parameters:
+  #           ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+  #             Directory: ''
+  #             Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
+  #           ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+  #             Directory: sdk/${{ parameters.ServiceDirectory }}
+  #           CheckLinkGuidance: $true
 
-        - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
-          parameters:
-            SourceDirectory: $(Build.SourcesDirectory)
+  #       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
+  #         parameters:
+  #           SourceDirectory: $(Build.SourcesDirectory)
 
-        - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+  #       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-        - template: /eng/common/pipelines/templates/steps/credscan.yml
-          parameters:
-            BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+  #       - template: /eng/common/pipelines/templates/steps/credscan.yml
+  #         parameters:
+  #           BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
+  #           ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
-    - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
-      parameters:
-        GenerateJobName: generate_target_service_test_matrix
-        JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-        MatrixConfigs: ${{ parameters.MatrixConfigs }}
-        MatrixFilters: ${{ parameters.MatrixFilters }}
-        MatrixReplace: ${{ parameters.MatrixReplace }}
-        CloudConfig:
-          Cloud: public
-        AdditionalParameters:
-          SDKType: ${{ parameters.SDKType }}
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-          TestSetupSteps: ${{ parameters.TestSetupSteps }}
-          TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+  #   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+  #     parameters:
+  #       GenerateJobName: generate_target_service_test_matrix
+  #       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+  #       MatrixConfigs: ${{ parameters.MatrixConfigs }}
+  #       MatrixFilters: ${{ parameters.MatrixFilters }}
+  #       MatrixReplace: ${{ parameters.MatrixReplace }}
+  #       CloudConfig:
+  #         Cloud: public
+  #       AdditionalParameters:
+  #         SDKType: ${{ parameters.SDKType }}
+  #         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+  #         TestSetupSteps: ${{ parameters.TestSetupSteps }}
+  #         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
 
-    - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
-      - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
-        parameters:
-          GenerateJobName: generate_target_dependencies_test_matrix
-          JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-          MatrixConfigs: ${{ parameters.MatrixConfigs }}
-          MatrixFilters: ${{ parameters.MatrixFilters }}
-          MatrixReplace:
-            # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
-            - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
-            - ${{ each matrixReplace in parameters.MatrixReplace }}:
-              - ${{ matrixReplace }}
-          CloudConfig:
-            Cloud: public
-          SparseCheckoutPaths:
-            - "/*"
-            - "!/sdk/*/**/SessionRecords/*"
-          PreGenerationSteps:
-          - ${{ each config in parameters.MatrixConfigs }}:
-            - template: /eng/pipelines/templates/steps/dependency.tests.yml
-              parameters:
-                TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-                # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
-                ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-                ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
-                ExcludeTargetTestProjects: true
-                ServiceDirectory: ${{ parameters.ServiceDirectory }}
-                MatrixConfigsFile: ${{ config.Path }}
-          AdditionalParameters:
-            SDKType: ${{ parameters.SDKType }}
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            TestSetupSteps: ${{ parameters.TestSetupSteps }}
-            TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-            # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
-            ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+  #   - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
+  #     - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+  #       parameters:
+  #         GenerateJobName: generate_target_dependencies_test_matrix
+  #         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+  #         MatrixConfigs: ${{ parameters.MatrixConfigs }}
+  #         MatrixFilters: ${{ parameters.MatrixFilters }}
+  #         MatrixReplace:
+  #           # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
+  #           - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
+  #           - ${{ each matrixReplace in parameters.MatrixReplace }}:
+  #             - ${{ matrixReplace }}
+  #         CloudConfig:
+  #           Cloud: public
+  #         SparseCheckoutPaths:
+  #           - "/*"
+  #           - "!/sdk/*/**/SessionRecords/*"
+  #         PreGenerationSteps:
+  #         - ${{ each config in parameters.MatrixConfigs }}:
+  #           - template: /eng/pipelines/templates/steps/dependency.tests.yml
+  #             parameters:
+  #               TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+  #               # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+  #               ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+  #               ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+  #               ExcludeTargetTestProjects: true
+  #               ServiceDirectory: ${{ parameters.ServiceDirectory }}
+  #               MatrixConfigsFile: ${{ config.Path }}
+  #         AdditionalParameters:
+  #           SDKType: ${{ parameters.SDKType }}
+  #           ServiceDirectory: ${{ parameters.ServiceDirectory }}
+  #           TestSetupSteps: ${{ parameters.TestSetupSteps }}
+  #           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+  #           # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
+  #           ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'

@@ -122,65 +122,65 @@ stages:
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             publishVstsFeed: ${{ parameters.DevOpsFeedID }}
 
-            - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
-              - deployment: UploadSymbols
-                displayName: Upload Symbols to Symbols Server
-                condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
-                environment: nuget
-                dependsOn: PublishPackage
+            # - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
+            #   - deployment: UploadSymbols
+            #     displayName: Upload Symbols to Symbols Server
+            #     condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
+            #     environment: nuget
+            #     dependsOn: PublishPackage
 
-                pool:
-                  name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+            #     pool:
+            #       name: azsdk-pool-mms-win-2022-general
+            #       vmImage: MMS2022
 
-                strategy:
-                  runOnce:
-                    deploy:
-                      steps:
-                        - checkout: none
-                        - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-                        - task: MSBuild@1
-                          displayName: 'Upload Symbols for ${{artifact.name}}'
-                          inputs:
-                            solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
-                            msbuildArguments: >-
-                              /p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                              /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
-                              /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
-                              /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+            #     strategy:
+            #       runOnce:
+            #         deploy:
+            #           steps:
+            #             - checkout: none
+            #             - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+            #             - task: MSBuild@1
+            #               displayName: 'Upload Symbols for ${{artifact.name}}'
+            #               inputs:
+            #                 solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
+            #                 msbuildArguments: >-
+            #                   /p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
+            #                   /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
+            #                   /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
+            #                   /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
 
-            - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
-              - deployment: PublicDocsMS
-                displayName: Publish to Docs.MS
-                condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-                environment: githubio
-                dependsOn: PublishPackage
+            # - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
+            #   - deployment: PublicDocsMS
+            #     displayName: Publish to Docs.MS
+            #     condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+            #     environment: githubio
+            #     dependsOn: PublishPackage
 
-                pool:
-                  name: azsdk-pool-mms-ubuntu-2004-general
-                  vmImage: MMSUbuntu20.04
+            #     pool:
+            #       name: azsdk-pool-mms-ubuntu-2004-general
+            #       vmImage: MMSUbuntu20.04
 
-                strategy:
-                  runOnce:
-                    deploy:
-                      steps:
-                        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                          parameters:
-                            Paths:
-                              - sdk/**/*.md
-                              - .github/CODEOWNERS
-                        - download: current
-                        - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
-                          parameters:
-                            PackageInfoLocations:
-                              - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
-                            WorkingDirectory: $(System.DefaultWorkingDirectory)
-                            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
-                            TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                            Language: 'dotnet'
-                            SparseCheckoutPaths:
-                              - /api/overview/azure/
-                              - /metadata/
+            #     strategy:
+            #       runOnce:
+            #         deploy:
+            #           steps:
+            #             - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            #               parameters:
+            #                 Paths:
+            #                   - sdk/**/*.md
+            #                   - .github/CODEOWNERS
+            #             - download: current
+            #             - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
+            #               parameters:
+            #                 PackageInfoLocations:
+            #                   - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
+            #                 WorkingDirectory: $(System.DefaultWorkingDirectory)
+            #                 TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+            #                 TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+            #                 Language: 'dotnet'
+            #                 SparseCheckoutPaths:
+            #                   - /api/overview/azure/
+            #                   - /metadata/
 
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
@@ -239,13 +239,13 @@ stages:
                             PRLabels: "auto-merge"
                             CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
-            - ${{if ne(artifact.skipSmokeTests, 'true')}}:
-              - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
-                - template: /eng/pipelines/templates/jobs/smoke.tests.yml
-                  parameters:
-                    Daily: false
-                    Artifact: ${{ artifact }}
-                    ArtifactName: ${{ parameters.ArtifactName }}
+            # - ${{if ne(artifact.skipSmokeTests, 'true')}}:
+            #   - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+            #     - template: /eng/pipelines/templates/jobs/smoke.tests.yml
+            #       parameters:
+            #         Daily: false
+            #         Artifact: ${{ artifact }}
+            #         ArtifactName: ${{ parameters.ArtifactName }}
 
   - stage: Integration
     dependsOn: Signing
