@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
+    <!--Azure.Core.Experimental reference can be removed when DynamicJson moves to Azure.Core.-->
     <PackageReference Include="Azure.Core.Experimental" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
     <PackageReference Include="Moq" />
