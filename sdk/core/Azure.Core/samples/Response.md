@@ -36,7 +36,7 @@ foreach (HttpHeader header in http.Headers)
 }
 ```
 
-## Accessing HTTP response content
+## Accessing HTTP response content using Streams
 
 ```C# Snippet:ResponseTContent
 // call a service method, which returns Response<T>
@@ -54,6 +54,18 @@ using (StreamReader reader = new StreamReader(contentStream))
     Console.WriteLine(reader.ReadToEnd());
 }
 ```
+
+## Accessing HTTP response content with `dynamic`
+
+If a service method does not return `Response<T>`, JSON content can be accessed using `dynamic`.
+
+```C# Snippet:GetDynamicJsonProperty
+Response response = await client.GetWidgetAsync("123");
+dynamic widget = response.Content.ToDynamic();
+string name = widget.Name;
+```
+
+See [dynamic content samples](DynamicContent.md) for more details.
 
 ## Accessing HTTP response well-known headers
 

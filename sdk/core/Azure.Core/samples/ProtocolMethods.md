@@ -118,6 +118,14 @@ var doc = JsonDocument.Parse(response.Content.ToMemory());
 var name = doc.RootElement.GetProperty("name").GetString();
 ```
 
+JSON properties can also be accessed using a dynamic layer.
+
+```C# Snippet:GetDynamicJsonProperty
+Response response = await client.GetWidgetAsync("123");
+dynamic widget = response.Content.ToDynamic();
+string name = widget.Name;
+```
+
 ## Configuration And Customization
 
 **Protocol methods** share the same configuration and customization as **convenience methods**. For details, see the [ReadMe](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md). You can find more samples [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/README.md).
