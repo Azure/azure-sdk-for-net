@@ -424,26 +424,27 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if ((source.Sections & SectionFlag.MessageAnnotations) > 0)
             {
-                NormalizeBrokerProperties(message.MessageAnnotations);
+                NormalizeBrokerProperties(message.MessageAnnotations, source.MessageAnnotations.Map);
             }
 
             // Delivery Annotations - special handling for Event Hub service annotations
 
             if ((source.Sections & SectionFlag.DeliveryAnnotations) > 0)
             {
-                NormalizeBrokerProperties(message.DeliveryAnnotations);
+                NormalizeBrokerProperties(message.DeliveryAnnotations, source.DeliveryAnnotations.Map);
             }
 
             return new EventData(message);
         }
 
-        private static void NormalizeBrokerProperties(IDictionary<string, object> properties)
+        private static void NormalizeBrokerProperties(IDictionary<string, object> properties, Annotations sourceProperties)
         {
-            foreach (var pair in properties)
+            foreach (var pair in sourceProperties)
             {
-                if (SystemPropertyDateTimeKeys.Contains(pair.Key))
+                string keyString = pair.Key.ToString();
+                if (SystemPropertyDateTimeKeys.Contains(keyString))
                 {
-                    properties[pair.Key] =
+                    properties[keyString] =
                         pair.Value switch
                         {
                             DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
@@ -451,9 +452,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                             _ => pair.Value
                         };
                 }
-                else if (SystemPropertyLongKeys.Contains(pair.Key))
+                else if (SystemPropertyLongKeys.Contains(keyString))
                 {
-                    properties[pair.Key] =
+                    properties[keyString] =
                         pair.Value switch
                         {
                             string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture,
