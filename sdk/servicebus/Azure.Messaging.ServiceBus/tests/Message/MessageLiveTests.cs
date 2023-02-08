@@ -528,6 +528,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 // footer
                 amqpMessage.Footer.Add("footerKey1", "footerVal1");
                 amqpMessage.Footer.Add("footerKey2", "footerVal2");
+                amqpMessage.Footer.Add("footerKey3", null);
 
                 // properties
                 amqpMessage.Properties.AbsoluteExpiryTime = DateTimeOffset.Now.AddDays(1);
@@ -553,7 +554,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 amqpMessage.MessageAnnotations.Add("messageAnnotationKey2", "messageAnnotationVal2");
 
                 // delivery annotations
-                amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey1", "deliveryAnnotationVal1");
+                amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey1", null);
                 amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey2", "deliveryAnnotationVal2");
 
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
@@ -598,16 +599,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.AreEqual(received.ApplicationProperties["applicationKey2"], "applicationVal2");
 
                 // message annotations
-                Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey1"], null);
+                Assert.IsNull(received.MessageAnnotations["messageAnnotationKey1"]);
                 Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey2"], "messageAnnotationVal2");
 
                 // delivery annotations
-                Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey1"], "deliveryAnnotationVal1");
+                Assert.IsNull(received.DeliveryAnnotations["deliveryAnnotationKey1"]);
                 Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey2"], "deliveryAnnotationVal2");
 
                 // footer
                 Assert.AreEqual("footerVal1", received.Footer["footerKey1"]);
                 Assert.AreEqual("footerVal2", received.Footer["footerKey2"]);
+                Assert.IsNull(received.Footer["footerKey3"]);
             }
         }
 

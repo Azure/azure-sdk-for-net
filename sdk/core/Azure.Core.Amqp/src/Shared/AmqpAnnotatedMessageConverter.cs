@@ -399,24 +399,6 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
-                        // if (SystemPropertyDateTimeKeys.Contains(pair.Key.ToString()))
-                        // {
-                        //     eventValue = eventValue switch
-                        //     {
-                        //         DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
-                        //         long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
-                        //         _ => eventValue
-                        //     };
-                        // }
-                        // else if (SystemPropertyLongKeys.Contains(pair.Key.ToString()))
-                        // {
-                        //     eventValue = eventValue switch
-                        //     {
-                        //         string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var longValue) => longValue,
-                        //         _ => eventValue
-                        //     };
-                        // }
-
                         message.MessageAnnotations[pair.Key.ToString()] = propertyValue;
                     }
                 }
@@ -430,24 +412,6 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
-                        // if (SystemPropertyDateTimeKeys.Contains(pair.Key.ToString()))
-                        // {
-                        //     eventValue = eventValue switch
-                        //     {
-                        //         DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
-                        //         long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
-                        //         _ => eventValue
-                        //     };
-                        // }
-                        // else if (SystemPropertyLongKeys.Contains(pair.Key.ToString()))
-                        // {
-                        //     eventValue = eventValue switch
-                        //     {
-                        //         string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var longValue) => longValue,
-                        //         _ => eventValue
-                        //     };
-                        // }
-
                         message.DeliveryAnnotations[pair.Key.ToString()] = eventValue;
                     }
                 }
