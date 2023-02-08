@@ -220,6 +220,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return host;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string GetTargetUsingNetPeerAttributes(this AzMonList tagObjects, string defaultPort)
+        {
+            string target = tagObjects.GetHostUsingNetPeerAttributes();
+            if (!string.IsNullOrWhiteSpace(target))
+            {
+                var netPeerPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerPort)?.ToString();
+                if (!string.IsNullOrWhiteSpace(netPeerPort) && netPeerPort != defaultPort)
+                {
+                    target = $"{target}:{netPeerPort}";
+                }
+            }
+
+            return target;
+        }
+
         ///<summary>
         /// Gets Http dependency target from activity tag objects.
         ///</summary>
@@ -260,16 +276,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            target = tagObjects.GetHostUsingNetPeerAttributes();
-            if (!string.IsNullOrWhiteSpace(target))
-            {
-                var netPeerPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerPort)?.ToString();
-                if (!string.IsNullOrWhiteSpace(netPeerPort) && netPeerPort != defaultPort)
-                {
-                    target = $"{target}:{netPeerPort}";
-                }
-                return target;
-            }
+            target = tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
 
             return target;
         }
@@ -288,15 +295,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             if (string.IsNullOrWhiteSpace(target))
             {
-                target = tagObjects.GetHostUsingNetPeerAttributes();
-                if (!string.IsNullOrWhiteSpace(target))
-                {
-                    var netPeerPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerPort)?.ToString();
-                    if (!string.IsNullOrWhiteSpace(netPeerPort) && netPeerPort != defaultPort)
-                    {
-                        target = $"{target}:{netPeerPort}";
-                    }
-                }
+                target = tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
             string dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
